@@ -1,0 +1,17 @@
+# Large raw CD images (input, ~740MB each) and derived ISOs
+*.bin
+*.cue
+*.iso
+work/
+
+# Extracted CD trees (reproducible)
+work/cd1/
+work/cd2/
+
+# Build artifacts
+re/build/*.o
+re/build/*.exe
+re/build/tu_all
+re/tools/__pycache__/
+__pycache__/
+*.pyc

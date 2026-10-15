@@ -1,0 +1,3953 @@
+{
+ "%.28s %02d": [
+  5159877
+ ],
+ "%02X %02X %02X %02X : %02X %02X %02X %02X %02X %02X": [
+  5139856
+ ],
+ "%02d": [
+  5159877
+ ],
+ "%02x": [
+  4263142
+ ],
+ "%08X": [
+  4218192
+ ],
+ "%d  (%d)": [
+  6682880
+ ],
+ "%d,%d": [
+  5075783,
+  6465216,
+  6465280
+ ],
+ "%d,%d,%d": [
+  4455261,
+  4490400,
+  5076263
+ ],
+ "%d,%d,%d,%d": [
+  5072176,
+  5072554
+ ],
+ "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%d,%d,%s,%s:": [
+  6673584
+ ],
+ "%d,%d,%d,%d,%d,%d,%d,%s": [
+  6675437
+ ],
+ "%d,%d,%d,%s": [
+  5060208
+ ],
+ "%d,%d,%s": [
+  6448048
+ ],
+ "%d,%d,%s,%d,%d,%d,%d,%s": [
+  6283507
+ ],
+ "%d,%s": [
+  4778496,
+  4778656
+ ],
+ "%d.%d.%d.%d": [
+  6040199,
+  6748400
+ ],
+ "%s %s": [
+  6734256,
+  6734320
+ ],
+ "%s : %s": [
+  6724960,
+  6732128
+ ],
+ "%s%d": [
+  4731952
+ ],
+ "%s,%d": [
+  6059024
+ ],
+ "%s,%d,%d,": [
+  6673584
+ ],
+ "%s,%s,%s,%d,%d,%d,%d,%d": [
+  6479356
+ ],
+ "%s,%s,%s,%d,%d,%s,%s,%lf,%lf,%lf,%d,%d,%d,%d,%s,%d,%d,%d": [
+  4263142
+ ],
+ "%s,<none>": [
+  6308976
+ ],
+ "%s-%s": [
+  6668224
+ ],
+ "%s.INI": [
+  5155328
+ ],
+ "%s.MIX": [
+  5111520
+ ],
+ "%s.PAL": [
+  5111877
+ ],
+ "%sBARL": [
+  5709121,
+  5709292
+ ],
+ ".AUD": [
+  6453552,
+  6586560
+ ],
+ ".HVA": [
+  4452285,
+  4452698,
+  5708034,
+  5708453,
+  5709292
+ ],
+ ".MMT": [
+  5160793
+ ],
+ ".SED": [
+  6039488
+ ],
+ ".SHP": [
+  4296144,
+  4451104,
+  4451318,
+  4464384,
+  5711008,
+  5711376,
+  5712304,
+  5730769,
+  6166880,
+  6237616,
+  6238606,
+  6425107,
+  6427568,
+  6443648,
+  6547680,
+  6548784
+ ],
+ ".VXL": [
+  4452048,
+  4452392,
+  5707888,
+  5708306,
+  5709121
+ ],
+ "0,NONE": [
+  5985968
+ ],
+ "100%%,100%%,100%%,100%%,100%%": [
+  6625402
+ ],
+ "29e3bb2a-2f36-11d3-a72c-0090272fa661": [
+  6183808
+ ],
+ "<none>": [
+  4256928,
+  4274288,
+  4293891,
+  4294388,
+  4294580,
+  4295968,
+  4297008,
+  4462704,
+  4481664,
+  4492976,
+  4587792,
+  4587872,
+  5060096,
+  5062688,
+  5731648,
+  5862384,
+  5862976,
+  5864974,
+  5865936,
+  6056128,
+  6089280,
+  6309360,
+  6318704,
+  6444624,
+  6478336,
+  6478458,
+  6480304,
+  6480848,
+  6548960,
+  6563536,
+  6563968,
+  6583888,
+  6626608,
+  6649584
+ ],
+ "<program name unknown>": [
+  6868047
+ ],
+ ">>> %s": [
+  6732976
+ ],
+ "AALimit": [
+  5984335
+ ],
+ "AARatio": [
+  5984335
+ ],
+ "AIAlternateProductionCreditCutoff": [
+  5972803
+ ],
+ "AIBaseSpacing": [
+  5984335
+ ],
+ "AIBuildThis": [
+  4453471
+ ],
+ "AIBuildsWalls": [
+  5972803
+ ],
+ "AIHateDelays": [
+  5972803
+ ],
+ "AIIonCannonAPCValue": [
+  5972803
+ ],
+ "AIIonCannonBaseDefenseValue": [
+  5972803
+ ],
+ "AIIonCannonConYardValue": [
+  5972803
+ ],
+ "AIIonCannonEngineerValue": [
+  5972803
+ ],
+ "AIIonCannonHarvesterValue": [
+  5972803
+ ],
+ "AIIonCannonHelipadValue": [
+  5972803
+ ],
+ "AIIonCannonMCVValue": [
+  5972803
+ ],
+ "AIIonCannonPlugValue": [
+  5972803
+ ],
+ "AIIonCannonPowerValue": [
+  5972803
+ ],
+ "AIIonCannonTempleValue": [
+  5972803
+ ],
+ "AIIonCannonThiefValue": [
+  5972803
+ ],
+ "AIIonCannonWarFactoryValue": [
+  5972803
+ ],
+ "AITriggerFailureWeightDelta": [
+  5977169
+ ],
+ "AITriggerSuccessWeightDelta": [
+  5977169
+ ],
+ "AITriggerTrackRecordCoefficient": [
+  5977169
+ ],
+ "AIUseTurbineUpgradeProbability": [
+  5972803
+ ],
+ "Accelerates": [
+  6423163
+ ],
+ "Acceleration": [
+  4479904
+ ],
+ "AccelerationFactor": [
+  6420225
+ ],
+ "Accessibility": [
+  5428464,
+  5429088
+ ],
+ "Action": [
+  6056128,
+  6059024,
+  6238132
+ ],
+ "ActiveAnim": [
+  4455261
+ ],
+ "ActiveAnimDamaged": [
+  4455261
+ ],
+ "ActiveAnimFour": [
+  4455261
+ ],
+ "ActiveAnimFourDamaged": [
+  4455261
+ ],
+ "ActiveAnimFourPowered": [
+  4455261
+ ],
+ "ActiveAnimFourPoweredLight": [
+  4455261
+ ],
+ "ActiveAnimFourX": [
+  4455261
+ ],
+ "ActiveAnimFourY": [
+  4455261
+ ],
+ "ActiveAnimFourYSort": [
+  4455261
+ ],
+ "ActiveAnimFourZAdjust": [
+  4455261
+ ],
+ "ActiveAnimPowered": [
+  4455261
+ ],
+ "ActiveAnimPoweredLight": [
+  4455261
+ ],
+ "ActiveAnimThree": [
+  4455261
+ ],
+ "ActiveAnimThreeDamaged": [
+  4455261
+ ],
+ "ActiveAnimThreePowered": [
+  4455261
+ ],
+ "ActiveAnimThreePoweredLight": [
+  4455261
+ ],
+ "ActiveAnimThreeX": [
+  4455261
+ ],
+ "ActiveAnimThreeY": [
+  4455261
+ ],
+ "ActiveAnimThreeYSort": [
+  4455261
+ ],
+ "ActiveAnimThreeZAdjust": [
+  4455261
+ ],
+ "ActiveAnimTwo": [
+  4455261
+ ],
+ "ActiveAnimTwoDamaged": [
+  4455261
+ ],
+ "ActiveAnimTwoPowered": [
+  4455261
+ ],
+ "ActiveAnimTwoPoweredLight": [
+  4455261
+ ],
+ "ActiveAnimTwoX": [
+  4455261
+ ],
+ "ActiveAnimTwoY": [
+  4455261
+ ],
+ "ActiveAnimTwoYSort": [
+  4455261
+ ],
+ "ActiveAnimTwoZAdjust": [
+  4455261
+ ],
+ "ActiveAnimX": [
+  4455261
+ ],
+ "ActiveAnimY": [
+  4455261
+ ],
+ "ActiveAnimYSort": [
+  4455261
+ ],
+ "ActiveAnimZAdjust": [
+  4455261
+ ],
+ "Adjacent": [
+  4452944
+ ],
+ "Agent": [
+  5060992
+ ],
+ "Aggressive": [
+  6345088,
+  6346000
+ ],
+ "Airburst": [
+  4479904
+ ],
+ "AirburstWeapon": [
+  4480584
+ ],
+ "AircraftFogReveal": [
+  5968333
+ ],
+ "Airspeed": [
+  5010640
+ ],
+ "AirstripLimit": [
+  5984335
+ ],
+ "AirstripRatio": [
+  5984335
+ ],
+ "AllowBurrowing": [
+  5159341
+ ],
+ "AllowShroudedSubteranneanMoves": [
+  5968333
+ ],
+ "AllowTiberium": [
+  5159341
+ ],
+ "AllowToPlace": [
+  5159341
+ ],
+ "AllowableUnitMaximums": [
+  6057466,
+  6059024
+ ],
+ "AllowableUnits": [
+  6057114,
+  6059024
+ ],
+ "AllowedToStartInMultiplayer": [
+  6423163
+ ],
+ "AlphaImage": [
+  5711376
+ ],
+ "AltHomeCell": [
+  6057614,
+  6059024
+ ],
+ "AltImage": [
+  6547680
+ ],
+ "AltNextScenario": [
+  6056128,
+  6059024
+ ],
+ "AltPalette": [
+  4292560
+ ],
+ "Ambient": [
+  5433520,
+  6057614,
+  6059024
+ ],
+ "AmbientDamage": [
+  6647104
+ ],
+ "Ammo": [
+  6423163
+ ],
+ "Anim": [
+  6647104
+ ],
+ "AnimActive": [
+  4455261
+ ],
+ "AnimAux1": [
+  4455261
+ ],
+ "AnimAux2": [
+  4455261
+ ],
+ "AnimHigh": [
+  4480686
+ ],
+ "AnimIdle": [
+  4455261
+ ],
+ "AnimList": [
+  6625007
+ ],
+ "AnimLow": [
+  4480686
+ ],
+ "AnimPalette": [
+  4480686
+ ],
+ "AnimRate": [
+  4480686
+ ],
+ "AnimationProbability": [
+  6443992
+ ],
+ "AnimationRate": [
+  6443992
+ ],
+ "Annoyance": [
+  6345088,
+  6346000
+ ],
+ "Arcing": [
+  4479904
+ ],
+ "AreTeamMembersRecruitable": [
+  6345598,
+  6346000
+ ],
+ "Armament: %s": [
+  4732784
+ ],
+ "Armor": [
+  5010640,
+  5711376
+ ],
+ "Armor: %s": [
+  4732848
+ ],
+ "Armory": [
+  4453471
+ ],
+ "Artillary": [
+  4453471
+ ],
+ "AttachedParticleSystem": [
+  6647648
+ ],
+ "AttachedSystem": [
+  6562222
+ ],
+ "AttackDelay": [
+  5984335
+ ],
+ "AttackInterval": [
+  5984335
+ ],
+ "AttackingAircraftSightRange": [
+  5972803
+ ],
+ "Attempted a typeid of NULL pointer!": [
+  6827965
+ ],
+ "AutoCrush": [
+  6423163
+ ],
+ "Autocreate": [
+  6345088,
+  6346000
+ ],
+ "AutocreateTime": [
+  5984335
+ ],
+ "AuxBuilding": [
+  6238371
+ ],
+ "AuxSound1": [
+  6421219
+ ],
+ "AuxSound2": [
+  6421219
+ ],
+ "AvoidThreats": [
+  6345598,
+  6346000
+ ],
+ "BARRACKS": [
+  4499232
+ ],
+ "BATTLE*.INI": [
+  5085504
+ ],
+ "BATTLE.INI": [
+  5085663
+ ],
+ "BUILDNGZ.SHP": [
+  4449024
+ ],
+ "BarracksLimit": [
+  5984335
+ ],
+ "BarracksRatio": [
+  5984335
+ ],
+ "BaseBias": [
+  5972803
+ ],
+ "BaseDefenseDelay": [
+  5972803
+ ],
+ "BaseNormal": [
+  4452944
+ ],
+ "BaseSizeAdd": [
+  5984335
+ ],
+ "BaseUnit": [
+  5971837
+ ],
+ "Basic": [
+  5433520,
+  6046428,
+  6046547,
+  6056128,
+  6056679,
+  6057114,
+  6057466,
+  6057614
+ ],
+ "Battles": [
+  4483168
+ ],
+ "BehavesLike": [
+  5861520,
+  5865819
+ ],
+ "BestLowPowerBuildRateCoefficient": [
+  5977169
+ ],
+ "BibShape": [
+  4451318
+ ],
+ "Biome": [
+  5428464,
+  5429088
+ ],
+ "BlackTile": [
+  5155328
+ ],
+ "BlendedFog": [
+  5972803
+ ],
+ "BlockagePathDelay": [
+  5984335
+ ],
+ "Blue": [
+  6057614,
+  6059024
+ ],
+ "BlueTint": [
+  5433520
+ ],
+ "BounceAnim": [
+  4293891,
+  6561611
+ ],
+ "BounceSound": [
+  4293891,
+  6561611
+ ],
+ "Bouncer": [
+  4294879
+ ],
+ "Bouncy": [
+  4479904
+ ],
+ "BridgeBottomLeft1": [
+  5155328
+ ],
+ "BridgeBottomLeft2": [
+  5155328
+ ],
+ "BridgeBottomRight1": [
+  5155328
+ ],
+ "BridgeBottomRight2": [
+  5155328
+ ],
+ "BridgeMiddle1": [
+  5155328
+ ],
+ "BridgeMiddle2": [
+  5155328
+ ],
+ "BridgeRepairHut": [
+  4453471
+ ],
+ "BridgeSet": [
+  5155328
+ ],
+ "BridgeTopLeft1": [
+  5155328
+ ],
+ "BridgeTopLeft2": [
+  5155328
+ ],
+ "BridgeTopRight1": [
+  5155328
+ ],
+ "BridgeTopRight2": [
+  5155328
+ ],
+ "BridgeVoxelMax": [
+  5970372
+ ],
+ "Brief": [
+  6056128,
+  6059024
+ ],
+ "Briefing": [
+  6056128,
+  6059024
+ ],
+ "Bright": [
+  6625007,
+  6647648
+ ],
+ "BuildAA": [
+  5983697
+ ],
+ "BuildBarracks": [
+  5982574
+ ],
+ "BuildConst": [
+  5981824
+ ],
+ "BuildDefense": [
+  5983272
+ ],
+ "BuildHelipad": [
+  5983910
+ ],
+ "BuildLimit": [
+  6421219
+ ],
+ "BuildPDefense": [
+  5983485
+ ],
+ "BuildPower": [
+  5982057
+ ],
+ "BuildRadar": [
+  5984123
+ ],
+ "BuildRefinery": [
+  5982315
+ ],
+ "BuildSpeed": [
+  5972803
+ ],
+ "BuildTech": [
+  5982817
+ ],
+ "BuildTime": [
+  5010640
+ ],
+ "BuildWeapons": [
+  5983059
+ ],
+ "Buildup": [
+  4455261
+ ],
+ "BuildupTime": [
+  5972803
+ ],
+ "Burn": [
+  6166880
+ ],
+ "Burst": [
+  6647104
+ ],
+ "CONIN$": [
+  6901594
+ ],
+ "CONOUT$": [
+  6901625
+ ],
+ "C_SHADOW.SHP": [
+  5155328
+ ],
+ "Cameo": [
+  6425107,
+  6427568
+ ],
+ "Camera": [
+  6647648
+ ],
+ "CameraRange": [
+  5970595
+ ],
+ "Capturable": [
+  4452944
+ ],
+ "CarriesCrate": [
+  6547680
+ ],
+ "CarryOverCap": [
+  6056679,
+  6059024
+ ],
+ "CarryOverMoney": [
+  6056128,
+  6059024
+ ],
+ "Carryall": [
+  4256512
+ ],
+ "Category": [
+  6421219
+ ],
+ "CellAnim": [
+  5730448
+ ],
+ "CellTags": [
+  4679197
+ ],
+ "ChainReaction": [
+  5730769
+ ],
+ "ChargeAnim": [
+  4453471
+ ],
+ "ChargeToDrainRatio": [
+  5977169
+ ],
+ "Charges": [
+  6647648
+ ],
+ "ChargingVoice": [
+  6238132
+ ],
+ "CivEvac": [
+  6057614,
+  6059024
+ ],
+ "Civilian": [
+  5060992
+ ],
+ "Clear": [
+  4678544
+ ],
+ "ClearTile": [
+  5155328
+ ],
+ "ClearToGreenLat": [
+  5155328
+ ],
+ "ClearToPaveLat": [
+  5155328
+ ],
+ "ClearToRoughLat": [
+  5155328
+ ],
+ "ClearToSandLat": [
+  5155328
+ ],
+ "CliffBackImpassability": [
+  5970595
+ ],
+ "CliffRamps": [
+  5155328
+ ],
+ "CliffSet": [
+  5155328
+ ],
+ "CloakDelay": [
+  5972803
+ ],
+ "CloakGenerator": [
+  4453471
+ ],
+ "CloakRadiusInCells": [
+  4453471
+ ],
+ "CloakStop": [
+  6421219
+ ],
+ "Cloakable": [
+  6423163
+ ],
+ "CloakingSpeed": [
+  6420225
+ ],
+ "CloakingStages": [
+  5970595
+ ],
+ "CloseEnough": [
+  5972803
+ ],
+ "Cluster": [
+  4479904
+ ],
+ "Color": [
+  4479904,
+  5010640,
+  6456640
+ ],
+ "ColorList": [
+  5864704
+ ],
+ "ColorSpeed": [
+  5864974
+ ],
+ "CompEasyBonus": [
+  5984335
+ ],
+ "ComputerBaseDefenseResponse": [
+  5984335
+ ],
+ "ConcreteWalls": [
+  5984335
+ ],
+ "ConditionRedSparkingProbability": [
+  5977169
+ ],
+ "ConditionYellowSparkingProbability": [
+  5977169
+ ],
+ "ConstructionYard": [
+  4453471
+ ],
+ "Conventional": [
+  6625007
+ ],
+ "Cost": [
+  5010640,
+  6423163
+ ],
+ "Cost: %d": [
+  4732432
+ ],
+ "Crate": [
+  5730448
+ ],
+ "CrateGoodie": [
+  6547680
+ ],
+ "CrateTrigger": [
+  5730448
+ ],
+ "Crater": [
+  4292560,
+  6166880
+ ],
+ "CraterLevel": [
+  5968333
+ ],
+ "Crawls": [
+  5060992
+ ],
+ "CreditReserve": [
+  5984335
+ ],
+ "Crew": [
+  5972741
+ ],
+ "CrewEscape": [
+  5969606
+ ],
+ "Crewed": [
+  6423163
+ ],
+ "CrushSound": [
+  5711376
+ ],
+ "Crushable": [
+  5711376
+ ],
+ "Crusher": [
+  6423163
+ ],
+ "CurleyShuffle": [
+  5972803
+ ],
+ "CustomRotor": [
+  4256512
+ ],
+ "Cyborg": [
+  5060992
+ ],
+ "D:\\Projects\\TSun\\Code\\DSAudio.Cpp": [
+  4737744,
+  4738192,
+  4738832,
+  4738960,
+  4739296,
+  4742464,
+  4742688,
+  4743584,
+  4744448,
+  4746128
+ ],
+ "D:\\Projects\\TSun\\Code\\wwmous.cpp": [
+  6761056,
+  6761318,
+  6762176,
+  6763007,
+  6763426,
+  6765072,
+  6765232
+ ],
+ "Damage": [
+  4293102,
+  5864704,
+  6562107,
+  6647104
+ ],
+ "DamageDelay": [
+  5972803
+ ],
+ "DamageLevels": [
+  5730769
+ ],
+ "DamageParticleSystems": [
+  6422929
+ ],
+ "DamageRadius": [
+  4294770,
+  6562107
+ ],
+ "DamageSmokeOffset": [
+  6423163
+ ],
+ "DamageToFirestormDamageCoefficient": [
+  5977169
+ ],
+ "DamagedDoor": [
+  4455261
+ ],
+ "Deacc": [
+  5864974
+ ],
+ "DeaccelerationFactor": [
+  6420225
+ ],
+ "Debris": [
+  6456640
+ ],
+ "DebrisMaximums": [
+  6420863
+ ],
+ "DebrisTypes": [
+  6420225
+ ],
+ "DefenseLimit": [
+  5984335
+ ],
+ "DefenseRatio": [
+  5984335
+ ],
+ "Deform": [
+  6625402
+ ],
+ "DeformThreshhold": [
+  6625402
+ ],
+ "Degenerates": [
+  4479904
+ ],
+ "DeleteOnStateLimit": [
+  5864974
+ ],
+ "DemandLoad": [
+  4293327,
+  4455261,
+  5730769
+ ],
+ "DemandLoadBuildup": [
+  4455261
+ ],
+ "DeployTime": [
+  6423163
+ ],
+ "DeployToFire": [
+  6547680
+ ],
+ "DeployingAnim": [
+  4451318
+ ],
+ "DeploysInto": [
+  6422317
+ ],
+ "Description": [
+  4483024,
+  5428464,
+  5429088,
+  5429808
+ ],
+ "DestroyableBridges": [
+  6172304,
+  6172672
+ ],
+ "DestroyableCliffs": [
+  5155328
+ ],
+ "DetailLevel": [
+  4293327
+ ],
+ "Digest": [
+  4488000,
+  6101702
+ ],
+ "DirtRoadCurve": [
+  5155328
+ ],
+ "DirtRoadJunction": [
+  5155328
+ ],
+ "DirtRoadSlopes": [
+  5155328
+ ],
+ "DirtRoadStraight": [
+  5155328
+ ],
+ "DirtTrackTunnels": [
+  5155328
+ ],
+ "DirtTunnels": [
+  5155328
+ ],
+ "Disableable": [
+  6423163
+ ],
+ "Disguise": [
+  5972490
+ ],
+ "Disguised": [
+  5060992
+ ],
+ "DissolveUnfilledTeamDelay": [
+  5972803
+ ],
+ "Dock": [
+  6421219
+ ],
+ "DockUnload": [
+  4453471
+ ],
+ "Doggie": [
+  5060992
+ ],
+ "DoorAnim": [
+  4451318
+ ],
+ "DoorStages": [
+  4455261
+ ],
+ "DoubleOwned": [
+  6419856
+ ],
+ "DrawFlat": [
+  5730769
+ ],
+ "DropPodAngle": [
+  5969442
+ ],
+ "DropPodHeight": [
+  5969442
+ ],
+ "DropPodSpeed": [
+  5969442
+ ],
+ "DropPodWeapon": [
+  5968333
+ ],
+ "Dropping": [
+  4479904
+ ],
+ "Droppod": [
+  6345088,
+  6346000
+ ],
+ "DumbMyEffectivenessCoefficient": [
+  5977169
+ ],
+ "DumbTargetDistanceCoefficient": [
+  5977169
+ ],
+ "DumbTargetEffectivenessCoefficient": [
+  5977169
+ ],
+ "DumbTargetSpecialThreatCoefficient": [
+  5977169
+ ],
+ "DumbTargetStrengthCoefficient": [
+  5977169
+ ],
+ "Duration": [
+  6561424
+ ],
+ "EMEffect": [
+  6625402
+ ],
+ "EMPulseCannon": [
+  4453471
+ ],
+ "ERROR": [
+  6654651
+ ],
+ "EWGates": [
+  5984335
+ ],
+ "Elasticity": [
+  4293327,
+  4479904,
+  6561152
+ ],
+ "Elite": [
+  6421156
+ ],
+ "EliteAbilities": [
+  6423163
+ ],
+ "EndOfGame": [
+  6056128,
+  6059024
+ ],
+ "EndStateAI": [
+  5864974
+ ],
+ "EnemyHouseThreatBonus": [
+  5977169
+ ],
+ "Engineer": [
+  5060992,
+  5972553
+ ],
+ "ExitCoord": [
+  4453471
+ ],
+ "ExpireAnim": [
+  4294388,
+  6561981
+ ],
+ "ExpireSound": [
+  4293891,
+  6561611
+ ],
+ "Explodes": [
+  5730448,
+  6419856
+ ],
+ "Explosion": [
+  6422512
+ ],
+ "ExplosiveVoxelDebris": [
+  5969606
+ ],
+ "ExtraDamageStage": [
+  4455261
+ ],
+ "ExtraLight": [
+  4455261
+ ],
+ "FACTORY": [
+  4499232
+ ],
+ "Factory": [
+  4452944
+ ],
+ "Fearless": [
+  5060992
+ ],
+ "FileName": [
+  5159341
+ ],
+ "Fill": [
+  4678544,
+  5433520
+ ],
+ "FillEarliestTeamProbability": [
+  5972803
+ ],
+ "FillSilos": [
+  6056679,
+  6059024
+ ],
+ "FinalDamageState": [
+  5864974
+ ],
+ "FinalMovie": [
+  4483024
+ ],
+ "FineDiffControl": [
+  5972803
+ ],
+ "Fire": [
+  6625007
+ ],
+ "FireAngle": [
+  6423163,
+  6425107
+ ],
+ "FireProne": [
+  5060992
+ ],
+ "FireUp": [
+  5060992
+ ],
+ "Firepower": [
+  5010640
+ ],
+ "FirestormWall": [
+  4453471
+ ],
+ "FiringFrames": [
+  6547680
+ ],
+ "FixedAlliance": [
+  6172304,
+  6172672
+ ],
+ "Flamer": [
+  4292560
+ ],
+ "FlashFrameTime": [
+  5977169
+ ],
+ "Flat": [
+  4292560,
+  4453471
+ ],
+ "FlightLevel": [
+  5970595,
+  6419856
+ ],
+ "Floater": [
+  4479904
+ ],
+ "FogOfWar": [
+  6172304,
+  6172672
+ ],
+ "Foundation": [
+  4455261,
+  6443648
+ ],
+ "Fraidycat": [
+  5060992
+ ],
+ "FreeAfterPlaying": [
+  4293327
+ ],
+ "FreeBuildup": [
+  4455261
+ ],
+ "FreeRadar": [
+  6057614,
+  6059024
+ ],
+ "FreeUnit": [
+  4452944
+ ],
+ "Full": [
+  6345088,
+  6346000
+ ],
+ "GAPLUG": [
+  4978292
+ ],
+ "GDIBarracks": [
+  4453471
+ ],
+ "GDIBaseDefenseCoefficient": [
+  5984335
+ ],
+ "GDIFirestormGenerator": [
+  5971649
+ ],
+ "GDIGateOne": [
+  5971085
+ ],
+ "GDIGateTwo": [
+  5971148
+ ],
+ "GDIHunterSeeker": [
+  5971712
+ ],
+ "GDIPowerPlant": [
+  5971398
+ ],
+ "GDIPowerTurbine": [
+  5971461
+ ],
+ "GDIWallDefense": [
+  5984335
+ ],
+ "GDIWallDefenseCoefficient": [
+  5984335
+ ],
+ "GameSpeedBias": [
+  5972803
+ ],
+ "Gate": [
+  4453471
+ ],
+ "GateCloseDelay": [
+  4453471
+ ],
+ "GateStages": [
+  4455261
+ ],
+ "General": [
+  5155328
+ ],
+ "GetActiveWindow": [
+  6888342
+ ],
+ "GetLastActivePopup": [
+  6888342
+ ],
+ "Green": [
+  6057614,
+  6059024
+ ],
+ "GreenTile": [
+  5155328
+ ],
+ "GreenTint": [
+  5433520
+ ],
+ "Ground": [
+  5433520,
+  6057614,
+  6059024
+ ],
+ "Groundspeed": [
+  5010640
+ ],
+ "Group": [
+  6318288,
+  6318576,
+  6345598,
+  6346000
+ ],
+ "Growth": [
+  6456640
+ ],
+ "GrowthPercentage": [
+  6456640
+ ],
+ "GrowthRate": [
+  5972803
+ ],
+ "GuardRange": [
+  6419856
+ ],
+ "GuardSlower": [
+  6345088,
+  6346000
+ ],
+ "HalfDamageSmokeLocation": [
+  6547680
+ ],
+ "HalfDamageSmokeLocation1": [
+  4452944
+ ],
+ "HalfDamageSmokeLocation2": [
+  4452944
+ ],
+ "Harvester": [
+  6547680
+ ],
+ "HarvesterDumpRate": [
+  5972803
+ ],
+ "HarvesterImmune": [
+  6172304,
+  6172672
+ ],
+ "HarvesterLoadRate": [
+  5972803
+ ],
+ "HarvesterUnit": [
+  5971900
+ ],
+ "HasRadialIndicator": [
+  5711376
+ ],
+ "HasSpotlight": [
+  4452944
+ ],
+ "HasStupidGuardMode": [
+  4453471
+ ],
+ "Height": [
+  4453471,
+  5428464,
+  5429088,
+  6166880
+ ],
+ "HeightBase": [
+  5155328
+ ],
+ "Helipad": [
+  4452944
+ ],
+ "HelipadLimit": [
+  5984335
+ ],
+ "HelipadRatio": [
+  5984335
+ ],
+ "High": [
+  4479904,
+  5730448
+ ],
+ "HoldsWhat": [
+  5861520
+ ],
+ "HomeCell": [
+  6057614,
+  6059024
+ ],
+ "Hospital": [
+  4453471
+ ],
+ "House": [
+  6345088,
+  6346000
+ ],
+ "HoverAcceleration": [
+  5969606
+ ],
+ "HoverBob": [
+  5969606
+ ],
+ "HoverBoost": [
+  5969606
+ ],
+ "HoverBrake": [
+  5969606
+ ],
+ "HoverDampen": [
+  5969606
+ ],
+ "HoverHeight": [
+  5969606
+ ],
+ "HoverPad": [
+  4453471
+ ],
+ "HunterSeeker": [
+  6423163
+ ],
+ "HunterSeekerAscentSpeed": [
+  5977169
+ ],
+ "HunterSeekerDescendProximity": [
+  5977169
+ ],
+ "HunterSeekerDescentSpeed": [
+  5977169
+ ],
+ "HunterSeekerDetonateProximity": [
+  5977169
+ ],
+ "HunterSeekerEmergeSpeed": [
+  5977169
+ ],
+ "ICBMLauncher": [
+  4453471
+ ],
+ "IRepairRate": [
+  5972803
+ ],
+ "IRepairStep": [
+  5972803
+ ],
+ "ISO%s.PAL": [
+  5155328
+ ],
+ "Ice1Set": [
+  5155328
+ ],
+ "Ice2Set": [
+  5155328
+ ],
+ "Ice3Set": [
+  5155328
+ ],
+ "IceBreakingWeight": [
+  5970595
+ ],
+ "IceCrackingWeight": [
+  5970595
+ ],
+ "IceGrowthEnabled": [
+  6057614,
+  6059024
+ ],
+ "IceShoreSet": [
+  5155328
+ ],
+ "IgnoreGlobalAITriggers": [
+  6056679,
+  6059024
+ ],
+ "IgnoresFirestorm": [
+  5711376
+ ],
+ "Image": [
+  4451318,
+  4479904,
+  5711376,
+  6457022
+ ],
+ "Immune": [
+  5711376
+ ],
+ "ImmuneToVeins": [
+  6423163
+ ],
+ "ImpatientVoice": [
+  6238132
+ ],
+ "Inaccuate": [
+  4479904
+ ],
+ "Inert": [
+  6172304,
+  6172672
+ ],
+ "InfDeath": [
+  6625402
+ ],
+ "InfantryBaseMult": [
+  5984335
+ ],
+ "InfantryReserve": [
+  5984335
+ ],
+ "Infiltrate": [
+  5060992
+ ],
+ "InitTime": [
+  6046428,
+  6059024
+ ],
+ "InitialVeteran": [
+  6172304,
+  6172672
+ ],
+ "Insignificant": [
+  5711376
+ ],
+ "Intro": [
+  6056128,
+  6059024
+ ],
+ "Invisible": [
+  6423163
+ ],
+ "InvisibleInGame": [
+  4453471
+ ],
+ "Inviso": [
+  4479904
+ ],
+ "IonAmbient": [
+  6057614,
+  6059024
+ ],
+ "IonBlue": [
+  6057614,
+  6059024
+ ],
+ "IonGreen": [
+  6057614,
+  6059024
+ ],
+ "IonGround": [
+  6057614,
+  6059024
+ ],
+ "IonImmune": [
+  6345598,
+  6346000
+ ],
+ "IonLevel": [
+  6057614,
+  6059024
+ ],
+ "IonLightningDamage": [
+  5972803
+ ],
+ "IonLightningFrequency": [
+  5972803
+ ],
+ "IonLightningRandomness": [
+  5972803
+ ],
+ "IonRed": [
+  6057614,
+  6059024
+ ],
+ "IonSensitive": [
+  6647648
+ ],
+ "IonStormDuration": [
+  5972803
+ ],
+ "IonStormWarhead": [
+  5972803
+ ],
+ "IonStormWarning": [
+  5972803
+ ],
+ "IonStorms": [
+  6172304,
+  6172672
+ ],
+ "IsARock": [
+  5730769
+ ],
+ "IsAnimated": [
+  6443992
+ ],
+ "IsAnimatedTiberium": [
+  4293891
+ ],
+ "IsBaseDefense": [
+  4453471,
+  6345598,
+  6346000
+ ],
+ "IsBigLaser": [
+  6647648
+ ],
+ "IsDropship": [
+  6419856
+ ],
+ "IsFlamingGuy": [
+  4293891
+ ],
+ "IsFlammable": [
+  6443648
+ ],
+ "IsLaser": [
+  6647648
+ ],
+ "IsMeteor": [
+  4293730,
+  6561152
+ ],
+ "IsPlug": [
+  4453471
+ ],
+ "IsPowered": [
+  6238132
+ ],
+ "IsRailgun": [
+  6647648
+ ],
+ "IsSonic": [
+  6647104
+ ],
+ "IsTemple": [
+  4453471
+ ],
+ "IsThreatRatingNode": [
+  4453471
+ ],
+ "IsTiberium": [
+  4293327,
+  6561152
+ ],
+ "IsTilter": [
+  6547680
+ ],
+ "IsTrain": [
+  6419856
+ ],
+ "IsVeinhole": [
+  6443648
+ ],
+ "IsVeinholeMonster": [
+  5730769
+ ],
+ "IsVeins": [
+  4293730,
+  5730769
+ ],
+ "Joe_Bostic": [
+  6668224
+ ],
+ "JumpJet": [
+  5060992
+ ],
+ "Land": [
+  5730448
+ ],
+ "Landable": [
+  4256512
+ ],
+ "Language.dll": [
+  4647888
+ ],
+ "LargeVisceroid": [
+  5968176,
+  6547680
+ ],
+ "Laser": [
+  5861520
+ ],
+ "LaserColor": [
+  5861520
+ ],
+ "LaserDuration": [
+  6647648
+ ],
+ "LaserFence": [
+  4453471
+ ],
+ "LaserFencePost": [
+  4453471
+ ],
+ "LaserInnerColor": [
+  6647648
+ ],
+ "LaserOuterColor": [
+  6647648
+ ],
+ "LaserOuterSpread": [
+  6647648
+ ],
+ "LastTilesInSet": [
+  5155328,
+  5158232
+ ],
+ "LegalTarget": [
+  5711376
+ ],
+ "LeptonsPerSightIncrease": [
+  5972803
+ ],
+ "Level": [
+  4678544,
+  5433520,
+  6057614,
+  6059024
+ ],
+ "Lifetime": [
+  5861520
+ ],
+ "LightBlueTint": [
+  4453471
+ ],
+ "LightGreenTint": [
+  4453471
+ ],
+ "LightIntensity": [
+  4453471
+ ],
+ "LightRedTint": [
+  4453471
+ ],
+ "LightSize": [
+  5861520
+ ],
+ "LightVisibility": [
+  4453471
+ ],
+ "Lighting": [
+  5433520,
+  6057614,
+  6059024
+ ],
+ "LightningRod": [
+  6422512
+ ],
+ "Loadable": [
+  6345088,
+  6346000
+ ],
+ "Lob_18_": [
+  6684416,
+  6689017,
+  6726160,
+  6732592
+ ],
+ "Lob_18_%d": [
+  6688880
+ ],
+ "Lobber": [
+  6647648
+ ],
+ "LocalSize": [
+  4679549,
+  5433520
+ ],
+ "Locomotor": [
+  6420225
+ ],
+ "LoopCount": [
+  4293102
+ ],
+ "LoopEnd": [
+  4293102
+ ],
+ "LoopStart": [
+  4293102
+ ],
+ "LooseRecruit": [
+  6345088,
+  6346000
+ ],
+ "Lose": [
+  6056128,
+  6059024
+ ],
+ "MCVDeploy": [
+  6172304,
+  6172672
+ ],
+ "MMRampBase": [
+  5155328
+ ],
+ "ManualControl": [
+  6238422
+ ],
+ "ManualReload": [
+  6422512
+ ],
+ "MarbleMadness": [
+  5159341
+ ],
+ "MaxAngularVelocity": [
+  6561375
+ ],
+ "MaxDC": [
+  5864704
+ ],
+ "MaxDebris": [
+  6420225
+ ],
+ "MaxEC": [
+  5864704
+ ],
+ "MaxVeinholeGrowth": [
+  5977169
+ ],
+ "MaxWaypointPathLength": [
+  5977169
+ ],
+ "MaxXYVel": [
+  4293327,
+  6561424
+ ],
+ "MaxZVel": [
+  6561424
+ ],
+ "MaximumAIDefensiveTeams": [
+  5972803
+ ],
+ "MaximumBaseDefenseValue": [
+  5984335
+ ],
+ "MaximumQueuedObjects": [
+  5977169
+ ],
+ "Medians": [
+  5155328
+ ],
+ "MessageBoxA": [
+  6888342
+ ],
+ "Meteorites": [
+  6172304,
+  6172672
+ ],
+ "Microsoft Visual C++ Runtime Library": [
+  6868047
+ ],
+ "MidPoint": [
+  4455261
+ ],
+ "MinAngularVelocity": [
+  6561152
+ ],
+ "MinProductionSpeed": [
+  5968333
+ ],
+ "MinZVel": [
+  4293327,
+  6561424
+ ],
+ "MinZVelocity": [
+  5864974
+ ],
+ "MinimumAIDefensiveTeams": [
+  5972803
+ ],
+ "MinimumRange": [
+  6647104
+ ],
+ "MiscPaveTile": [
+  5155328
+ ],
+ "MissileROTVar": [
+  5968333
+ ],
+ "MissileSpeedVar": [
+  5968333
+ ],
+ "MonorailSlopes": [
+  5155328
+ ],
+ "Morphable": [
+  5159341
+ ],
+ "MoveToShroud": [
+  6419856
+ ],
+ "MovementPerturbationCoefficient": [
+  5861520
+ ],
+ "MovementRestrictedTo": [
+  6547680
+ ],
+ "MovementZone": [
+  6425107
+ ],
+ "Multiplay": [
+  5010640
+ ],
+ "MultiplayPassive": [
+  5010640
+ ],
+ "MultiplayerAICM": [
+  5972803
+ ],
+ "MultiplayerOnly": [
+  6056128,
+  6059024
+ ],
+ "MultipleFactory": [
+  5968333
+ ],
+ "MyEffectivenessCoefficient": [
+  6424724
+ ],
+ "MyEffectivenessCoefficientDefault": [
+  5977169
+ ],
+ "NODBarracks": [
+  4453471
+ ],
+ "NSGates": [
+  5984335
+ ],
+ "Name": [
+  4218656,
+  4218800,
+  6056128,
+  6059024
+ ],
+ "Name: %s": [
+  4732432
+ ],
+ "NaturalParticleLocation": [
+  6422929
+ ],
+ "NaturalParticleSystem": [
+  6422803
+ ],
+ "NewINIFormat": [
+  6056128,
+  6059024
+ ],
+ "NewTheater": [
+  4292560,
+  5711376
+ ],
+ "Next": [
+  4293102
+ ],
+ "NextParticle": [
+  5864974
+ ],
+ "NextParticleOffset": [
+  5864974
+ ],
+ "NextScenario": [
+  6056128,
+  6059024
+ ],
+ "No Name": [
+  5159341
+ ],
+ "No digest here mate. Nope.": [
+  6101702
+ ],
+ "NoAutoFire": [
+  6423163
+ ],
+ "NoMovingFire": [
+  6547680
+ ],
+ "NoUseTileLandType": [
+  5730769
+ ],
+ "NodAIBuildsWalls": [
+  5972803
+ ],
+ "NodAdvancedPower": [
+  5971586
+ ],
+ "NodBaseDefenseCoefficient": [
+  5984335
+ ],
+ "NodGateOne": [
+  5971210
+ ],
+ "NodGateTwo": [
+  5971273
+ ],
+ "NodHunterSeeker": [
+  5971774
+ ],
+ "NodRegularPower": [
+  5971524
+ ],
+ "Nominal": [
+  6423163
+ ],
+ "NonMarbleMadness": [
+  5159341
+ ],
+ "NormalZAdjust": [
+  4455261
+ ],
+ "Normalized": [
+  4292560,
+  5864974,
+  6425107,
+  6561152
+ ],
+ "Not available": [
+  4880096
+ ],
+ "NukeSilo": [
+  4453471
+ ],
+ "NumLoopFrames": [
+  5864974
+ ],
+ "NumPlayers": [
+  5428464,
+  5429088
+ ],
+ "Official": [
+  6046428,
+  6059024
+ ],
+ "OnAgeCheck": [
+  6738208
+ ],
+ "OnTransOnly": [
+  6345088,
+  6346000
+ ],
+ "OneFrameLight": [
+  5861520
+ ],
+ "OneTimeOnly": [
+  6056679,
+  6059024
+ ],
+ "OnlyTargetHouseEnemy": [
+  6345598,
+  6346000
+ ],
+ "Overrides": [
+  5730448
+ ],
+ "Owner": [
+  6423163
+ ],
+ "PBarrelLength": [
+  6425107
+ ],
+ "PBarrelThickness": [
+  6425107
+ ],
+ "POWER": [
+  4499232
+ ],
+ "PROGBAR2.SHP": [
+  5430800
+ ],
+ "PadAircraft": [
+  5972097
+ ],
+ "Paranoid": [
+  5984335
+ ],
+ "Paratrooper": [
+  5972361
+ ],
+ "Particle": [
+  6624880
+ ],
+ "ParticleCap": [
+  5861520
+ ],
+ "ParticlesPerCoord": [
+  5861520
+ ],
+ "Passengers": [
+  6423163
+ ],
+ "Passive": [
+  6547680
+ ],
+ "PathDelay": [
+  5984335
+ ],
+ "PatrolScan": [
+  5984335
+ ],
+ "PaveTile": [
+  5155328
+ ],
+ "PavedRoadEnds": [
+  5155328
+ ],
+ "PavedRoadSlopes": [
+  5155328
+ ],
+ "PavedRoads": [
+  5155328
+ ],
+ "Percent": [
+  6056679,
+  6059024
+ ],
+ "PhysicalSize": [
+  6420225
+ ],
+ "Pilot": [
+  5972678
+ ],
+ "PingPong": [
+  4292560
+ ],
+ "PipScale": [
+  6423163
+ ],
+ "PitchAngle": [
+  6419856
+ ],
+ "PitchSpeed": [
+  6420225
+ ],
+ "PlaceAnywhere": [
+  4453471
+ ],
+ "PlacementDelay": [
+  5970595
+ ],
+ "Player": [
+  5433520,
+  6046547,
+  6057614,
+  6059024
+ ],
+ "Points": [
+  6423163
+ ],
+ "PositionPerturbationCoefficient": [
+  5861520
+ ],
+ "PostScore": [
+  6056128,
+  6059024
+ ],
+ "Power": [
+  4453471,
+  6456640
+ ],
+ "PowerEmergency": [
+  5984335
+ ],
+ "PowerSurplus": [
+  5984335
+ ],
+ "PowerUp%01dAnim": [
+  4455261
+ ],
+ "PowerUp%01dDamagedAnim": [
+  4455261
+ ],
+ "PowerUp%01dLocXX": [
+  4455261
+ ],
+ "PowerUp%01dLocYY": [
+  4455261
+ ],
+ "PowerUp%01dLocZZ": [
+  4455261
+ ],
+ "PowerUp%01dYSort": [
+  4455261
+ ],
+ "Powered": [
+  4452944
+ ],
+ "PowersUpBuilding": [
+  4453471
+ ],
+ "PowersUpToLevel": [
+  4453471
+ ],
+ "PreMapSelect": [
+  6056128,
+  6059024
+ ],
+ "PreProductionAnim": [
+  4455261
+ ],
+ "PreProductionAnimDamaged": [
+  4455261
+ ],
+ "PreProductionAnimX": [
+  4455261
+ ],
+ "PreProductionAnimY": [
+  4455261
+ ],
+ "PreProductionAnimYSort": [
+  4455261
+ ],
+ "PreProductionAnimZAdjust": [
+  4455261
+ ],
+ "Prebuild": [
+  6345088,
+  6346000
+ ],
+ "Prefix": [
+  5010640
+ ],
+ "Prerequisite": [
+  6423163
+ ],
+ "PrerequisiteBarracks": [
+  5968333
+ ],
+ "PrerequisiteFactory": [
+  5968333
+ ],
+ "PrerequisitePower": [
+  5968333
+ ],
+ "PrerequisiteRadar": [
+  5968333
+ ],
+ "PrerequisiteTech": [
+  5968333
+ ],
+ "Primary": [
+  6420863
+ ],
+ "PrimaryFireFLH": [
+  6425107
+ ],
+ "PrimaryFirePixelOffset": [
+  4455261
+ ],
+ "Priority": [
+  6345088,
+  6346000
+ ],
+ "ProductionAnim": [
+  4455261
+ ],
+ "ProductionAnimDamaged": [
+  4455261
+ ],
+ "ProductionAnimX": [
+  4455261
+ ],
+ "ProductionAnimY": [
+  4455261
+ ],
+ "ProductionAnimYSort": [
+  4455261
+ ],
+ "ProductionAnimZAdjust": [
+  4455261
+ ],
+ "Projectile": [
+  6648254
+ ],
+ "ProneDamage": [
+  6625402
+ ],
+ "Proximity": [
+  4479904
+ ],
+ "RADAR": [
+  4499232
+ ],
+ "Radar": [
+  4452944
+ ],
+ "RadarCombatFlashTime": [
+  5977169
+ ],
+ "RadarEventColorSpeed": [
+  5977169
+ ],
+ "RadarEventDurations": [
+  5977169
+ ],
+ "RadarEventMinRadius": [
+  5977169
+ ],
+ "RadarEventRotationSpeed": [
+  5977169
+ ],
+ "RadarEventSpeed": [
+  5977169
+ ],
+ "RadarEventSuppressionDistances": [
+  5977169
+ ],
+ "RadarEventVisibilityDurations": [
+  5977169
+ ],
+ "RadarInvisible": [
+  5711376
+ ],
+ "RadarVisible": [
+  6423163
+ ],
+ "RadialColor": [
+  5711376
+ ],
+ "Radius": [
+  5864974
+ ],
+ "RampBase": [
+  5155328
+ ],
+ "RampSmooth": [
+  5155328
+ ],
+ "RandMap.Sed": [
+  5429808,
+  6101584,
+  6730977
+ ],
+ "RandomLoopDelay": [
+  4293327
+ ],
+ "RandomMap": [
+  5428464,
+  5429088,
+  5429808
+ ],
+ "RandomRate": [
+  4294879
+ ],
+ "Range": [
+  6647104
+ ],
+ "Ranged": [
+  4479904
+ ],
+ "Rate": [
+  4292560
+ ],
+ "RechargeTime": [
+  6238422
+ ],
+ "RechargeVoice": [
+  6238132
+ ],
+ "Recoilless": [
+  4453471
+ ],
+ "Recruiter": [
+  6345088,
+  6346000
+ ],
+ "RedTint": [
+  5433520
+ ],
+ "Refinery": [
+  4453471
+ ],
+ "RefineryLimit": [
+  5984335
+ ],
+ "RefineryRatio": [
+  5984335
+ ],
+ "RefundPercent": [
+  5972803
+ ],
+ "RegionSize": [
+  5428464,
+  5429088
+ ],
+ "Reinforce": [
+  6345088,
+  6346000
+ ],
+ "ReloadRate": [
+  5972803
+ ],
+ "Remapable": [
+  6425107
+ ],
+ "RepairBay": [
+  5970595
+ ],
+ "RepairPercent": [
+  5972803
+ ],
+ "RepairRate": [
+  5972803
+ ],
+ "RepairStep": [
+  5972803
+ ],
+ "Repairable": [
+  6423163
+ ],
+ "Report": [
+  4292560,
+  6647104
+ ],
+ "RequiredForRMG": [
+  5159341
+ ],
+ "RevealByHeight": [
+  5968333
+ ],
+ "RevealTriggerRadius": [
+  5977169
+ ],
+ "Reverse": [
+  4292560
+ ],
+ "Rocker": [
+  6625007
+ ],
+ "Rocks": [
+  5155328
+ ],
+ "RollAngle": [
+  6420176
+ ],
+ "RotCount": [
+  6425107
+ ],
+ "Rotates": [
+  4480584
+ ],
+ "Rotors": [
+  4256512
+ ],
+ "RoughGround": [
+  5155328
+ ],
+ "RoughTile": [
+  5155328
+ ],
+ "Ruggedness": [
+  5428464,
+  5429088
+ ],
+ "RunningFrames": [
+  4293891
+ ],
+ "SAVEGAME.NET": [
+  5214656
+ ],
+ "SBarrelLength": [
+  6425107
+ ],
+ "SBarrelThickness": [
+  6425107
+ ],
+ "SCRN%04d.pcx": [
+  5121904
+ ],
+ "SLOP01Z.%s": [
+  5155328
+ ],
+ "SPEECH%02d.MIX": [
+  5112384
+ ],
+ "SYNC%01d.TXT": [
+  5888736
+ ],
+ "SandTile": [
+  5155328
+ ],
+ "Saw game completion due to player defeat": [
+  4952011
+ ],
+ "Scenario": [
+  4483024
+ ],
+ "Scorch": [
+  4292560
+ ],
+ "ScrapVoxelDebris": [
+  5970532
+ ],
+ "Script": [
+  6345598,
+  6346000
+ ],
+ "Secondary": [
+  6421093
+ ],
+ "SecondaryFireFLH": [
+  6425107
+ ],
+ "SecondaryFirePixelOffset": [
+  4455261
+ ],
+ "Seed": [
+  5428464,
+  5429088
+ ],
+ "Selectable": [
+  5711376
+ ],
+ "SelfHealing": [
+  6423163
+ ],
+ "SensorArray": [
+  4453471
+ ],
+ "Sensors": [
+  6423163
+ ],
+ "SeparateAircraft": [
+  5972803
+ ],
+ "Sequence": [
+  5060208
+ ],
+ "SetName": [
+  5159341
+ ],
+ "Shadow": [
+  4479904
+ ],
+ "ShadowCaster": [
+  5159341
+ ],
+ "ShadowIndex": [
+  6425107
+ ],
+ "ShadowTiles": [
+  5159341
+ ],
+ "ShareBarrelData": [
+  6561611
+ ],
+ "ShareBodyData": [
+  6561611
+ ],
+ "ShareSource": [
+  6562324
+ ],
+ "ShareTurretData": [
+  6561611
+ ],
+ "ShorePieces": [
+  5155328
+ ],
+ "ShouldFogRemove": [
+  4293891
+ ],
+ "ShouldUseCellDrawer": [
+  4294879
+ ],
+ "Side": [
+  5010640
+ ],
+ "SidebarImage": [
+  6238528
+ ],
+ "Sight": [
+  6423163
+ ],
+ "SiloDamage": [
+  4453471
+ ],
+ "Size": [
+  4678544,
+  5433520
+ ],
+ "SkipMapSelect": [
+  6056679,
+  6059024
+ ],
+ "SkipScore": [
+  6056679,
+  6059024
+ ],
+ "SlopeSetPieces": [
+  5155328
+ ],
+ "SlopeSetPieces2": [
+  5155328
+ ],
+ "Slowdown": [
+  5861520
+ ],
+ "SlowdownDistance": [
+  6420225
+ ],
+ "SmallVisceroid": [
+  5968276,
+  6547680
+ ],
+ "SmartAI": [
+  5010640
+ ],
+ "SnowOccupationBits": [
+  6443992
+ ],
+ "SparkSpawnFrames": [
+  5861520
+ ],
+ "Sparky": [
+  6625007
+ ],
+ "SpawnCount": [
+  4293730,
+  6561611
+ ],
+ "SpawnCutoff": [
+  5861520
+ ],
+ "SpawnDirection": [
+  5861520
+ ],
+ "SpawnFrames": [
+  5861520
+ ],
+ "SpawnRadius": [
+  5861520
+ ],
+ "SpawnSparkPercentage": [
+  5861520
+ ],
+ "SpawnTranslucencyCutoff": [
+  5861520
+ ],
+ "Spawns": [
+  4293327,
+  5861520,
+  6561424
+ ],
+ "SpawnsTiberium": [
+  6443648
+ ],
+ "SpecialAnim": [
+  4455261
+ ],
+ "SpecialAnimDamaged": [
+  4455261
+ ],
+ "SpecialAnimPowered": [
+  4455261
+ ],
+ "SpecialAnimPoweredLight": [
+  4455261
+ ],
+ "SpecialAnimThree": [
+  4455261
+ ],
+ "SpecialAnimThreeDamaged": [
+  4455261
+ ],
+ "SpecialAnimThreePowered": [
+  4455261
+ ],
+ "SpecialAnimThreePoweredLight": [
+  4455261
+ ],
+ "SpecialAnimThreeX": [
+  4455261
+ ],
+ "SpecialAnimThreeY": [
+  4455261
+ ],
+ "SpecialAnimThreeYSort": [
+  4455261
+ ],
+ "SpecialAnimThreeZAdjust": [
+  4455261
+ ],
+ "SpecialAnimTwo": [
+  4455261
+ ],
+ "SpecialAnimTwoDamaged": [
+  4455261
+ ],
+ "SpecialAnimTwoPowered": [
+  4455261
+ ],
+ "SpecialAnimTwoPoweredLight": [
+  4455261
+ ],
+ "SpecialAnimTwoX": [
+  4455261
+ ],
+ "SpecialAnimTwoY": [
+  4455261
+ ],
+ "SpecialAnimTwoYSort": [
+  4455261
+ ],
+ "SpecialAnimTwoZAdjust": [
+  4455261
+ ],
+ "SpecialAnimX": [
+  4455261
+ ],
+ "SpecialAnimY": [
+  4455261
+ ],
+ "SpecialAnimYSort": [
+  4455261
+ ],
+ "SpecialAnimZAdjust": [
+  4455261
+ ],
+ "SpecialThreatValue": [
+  6425107
+ ],
+ "SpecialZOverlay": [
+  4451318
+ ],
+ "SpecialZOverlayZAdjust": [
+  4455261
+ ],
+ "Speed": [
+  6423163,
+  6647104
+ ],
+ "SpeedType": [
+  6547680
+ ],
+ "SpiralDeltaPerCoord": [
+  5861520
+ ],
+ "SpiralRadius": [
+  5861520
+ ],
+ "SpotlightAcceleration": [
+  5977169
+ ],
+ "SpotlightAngle": [
+  5977169
+ ],
+ "SpotlightLocationRadius": [
+  5977169
+ ],
+ "SpotlightMovementRadius": [
+  5977169
+ ],
+ "SpotlightRadius": [
+  5977169
+ ],
+ "SpotlightSpeed": [
+  5977169
+ ],
+ "Spread": [
+  6456640,
+  6624880
+ ],
+ "SpreadPercentage": [
+  6456640
+ ],
+ "Start": [
+  4293102
+ ],
+ "StartColor1": [
+  5864974
+ ],
+ "StartColor2": [
+  5864974
+ ],
+ "StartFrame": [
+  5864974
+ ],
+ "StartSound": [
+  4293891,
+  6561611
+ ],
+ "StartStateAI": [
+  5864974
+ ],
+ "StartingDropships": [
+  6056679,
+  6059024
+ ],
+ "StateAIAdvance": [
+  5864974
+ ],
+ "Sticky": [
+  4292560
+ ],
+ "Storage": [
+  6421219
+ ],
+ "Stray": [
+  5972803
+ ],
+ "Strength": [
+  5711376,
+  5730448
+ ],
+ "Suffix": [
+  5010640
+ ],
+ "Suicide": [
+  6345088,
+  6346000
+ ],
+ "SuperWeapon": [
+  4453471
+ ],
+ "SuperWeapon2": [
+  4453471
+ ],
+ "Supress": [
+  6647104
+ ],
+ "Surface": [
+  4292560
+ ],
+ "SurvivorDivisor": [
+  5972803
+ ],
+ "SurvivorRate": [
+  5972803
+ ],
+ "SuspendDelay": [
+  5972803
+ ],
+ "SuspendPriority": [
+  5972803
+ ],
+ "SuspendVoice": [
+  6238132
+ ],
+ "TECH": [
+  4499232
+ ],
+ "TILE": [
+  5159341
+ ],
+ "TREE%d%d": [
+  5474240
+ ],
+ "TS%d": [
+  6584944,
+  6585017
+ ],
+ "TargetDistanceCoefficient": [
+  6425107
+ ],
+ "TargetDistanceCoefficientDefault": [
+  5977169
+ ],
+ "TargetEffectivenessCoefficient": [
+  6424820
+ ],
+ "TargetEffectivenessCoefficientDefault": [
+  5977169
+ ],
+ "TargetLaser": [
+  6423163
+ ],
+ "TargetSpecialThreatCoefficient": [
+  6424916
+ ],
+ "TargetSpecialThreatCoefficientDefault": [
+  5977169
+ ],
+ "TargetStrengthCoefficient": [
+  6425011
+ ],
+ "TargetStrengthCoefficientDefault": [
+  5977169
+ ],
+ "TaskForce": [
+  6345888,
+  6346000
+ ],
+ "TeamAddSelect_%d": [
+  5114912
+ ],
+ "TeamCenter_%d": [
+  5115280
+ ],
+ "TeamCreate_%d": [
+  5114112
+ ],
+ "TeamDelays": [
+  5972803
+ ],
+ "TeamSelect_%d": [
+  5114480
+ ],
+ "TechLevel": [
+  5433520,
+  6345088,
+  6346000,
+  6423163
+ ],
+ "Technician": [
+  5972615
+ ],
+ "TemperateOccupationBits": [
+  6443992
+ ],
+ "TerrainPalette": [
+  4455261
+ ],
+ "TeslaLimit": [
+  5984335
+ ],
+ "TeslaRatio": [
+  5984335
+ ],
+ "Theater": [
+  4292560,
+  4678544,
+  5433520,
+  5711376,
+  6046547
+ ],
+ "Theme": [
+  6056128,
+  6059024
+ ],
+ "Thief": [
+  5060992
+ ],
+ "ThreatAvoidanceCoefficient": [
+  6420225
+ ],
+ "ThreatPosed": [
+  6423163
+ ],
+ "Tiberium": [
+  5428464,
+  5429088,
+  5730448,
+  6625007
+ ],
+ "TiberiumChainReaction": [
+  4292560
+ ],
+ "TiberiumDeathToVisceroid": [
+  6057614,
+  6059024
+ ],
+ "TiberiumExplosive": [
+  6172304,
+  6172672
+ ],
+ "TiberiumFarScan": [
+  5984335
+ ],
+ "TiberiumGrows": [
+  6172304,
+  6172672
+ ],
+ "TiberiumGrowthEnabled": [
+  6057614,
+  6059024
+ ],
+ "TiberiumHeal": [
+  5968333,
+  6423163
+ ],
+ "TiberiumLayout": [
+  5428464,
+  5429088
+ ],
+ "TiberiumNearScan": [
+  5984335
+ ],
+ "TiberiumProof": [
+  5060992
+ ],
+ "TiberiumSpawnType": [
+  4293730
+ ],
+ "TiberiumSpreadRadius": [
+  4293730
+ ],
+ "TiberiumSpreads": [
+  6172304,
+  6172672
+ ],
+ "TiberiumTransmogrify": [
+  5972803
+ ],
+ "TickTank": [
+  4453471
+ ],
+ "Tile%02dAnim": [
+  5160210
+ ],
+ "Tile%02dAttachesTo": [
+  5160210
+ ],
+ "Tile%02dXOffset": [
+  5160210
+ ],
+ "Tile%02dYOffset": [
+  5160210
+ ],
+ "Tile%02dZAdjust": [
+  5160210
+ ],
+ "TileSet%04d": [
+  5155328,
+  5158232
+ ],
+ "Tiled": [
+  4294879
+ ],
+ "TilesInSet": [
+  5155328,
+  5158232
+ ],
+ "TiltsWhenCrushes": [
+  6423163
+ ],
+ "Time": [
+  5428464,
+  5429088
+ ],
+ "TimerInherit": [
+  6056128,
+  6059024
+ ],
+ "TireVoxelDebris": [
+  5970372
+ ],
+ "ToOverlay": [
+  4453471
+ ],
+ "ToProtect": [
+  6423163
+ ],
+ "ToSnowTheater": [
+  5159341
+ ],
+ "ToTemperateTheater": [
+  5159341
+ ],
+ "TogglePower": [
+  4453471
+ ],
+ "TooBigToFitUnderBridge": [
+  6547680
+ ],
+ "TotalAITeamCap": [
+  5972803
+ ],
+ "TrackTunnels": [
+  5155328
+ ],
+ "TrackedDownhill": [
+  5970595
+ ],
+ "TrackedUphill": [
+  5970595
+ ],
+ "Trailer": [
+  4479904
+ ],
+ "TrailerAnim": [
+  4294580,
+  6562044
+ ],
+ "TrailerSeperation": [
+  4294770
+ ],
+ "TrainBridgeSet": [
+  5155328
+ ],
+ "TrainCrate": [
+  6056679,
+  6059024
+ ],
+ "Trainable": [
+  6423163
+ ],
+ "Translucency": [
+  4293327,
+  5864974
+ ],
+ "TranslucencyDetailLevel": [
+  4293327
+ ],
+ "Translucent": [
+  4292560,
+  6561152
+ ],
+ "Translucent25State": [
+  5864974
+ ],
+ "Translucent50State": [
+  5864974
+ ],
+ "TransportsReturnOnUnload": [
+  6345598,
+  6346000
+ ],
+ "TreeFlammability": [
+  5968333
+ ],
+ "TreeStrength": [
+  5977169
+ ],
+ "TruckCrate": [
+  6056679,
+  6059024
+ ],
+ "TunnelSpeed": [
+  5969606
+ ],
+ "Tunnels": [
+  5155328
+ ],
+ "TurboBoost": [
+  6647648
+ ],
+ "Turret": [
+  6422512
+ ],
+ "TurretAnim": [
+  4455261
+ ],
+ "TurretAnimDamaged": [
+  4455261
+ ],
+ "TurretAnimIsVoxel": [
+  4455261
+ ],
+ "TurretAnimX": [
+  4455261
+ ],
+ "TurretAnimY": [
+  4455261
+ ],
+ "TurretAnimYSort": [
+  4455261
+ ],
+ "TurretAnimZAdjust": [
+  4455261
+ ],
+ "TurretNotExportedOnGround": [
+  6425107
+ ],
+ "TurretOffset": [
+  6425107
+ ],
+ "TurretSpins": [
+  6422512
+ ],
+ "Type": [
+  6238132
+ ],
+ "TypeImmune": [
+  6419856
+ ],
+ "URepairRate": [
+  5972803
+ ],
+ "UndeploysInto": [
+  6422449
+ ],
+ "UnderDoorAnim": [
+  4451318
+ ],
+ "UnitReload": [
+  4453471
+ ],
+ "UnitRepair": [
+  4453471
+ ],
+ "Unsellable": [
+  4452944
+ ],
+ "Upgrades": [
+  4455261
+ ],
+ "UrbanPresence": [
+  5428464,
+  5429088
+ ],
+ "UseChargeDrain": [
+  6238422
+ ],
+ "UseFireParticles": [
+  6647648
+ ],
+ "UseMinDefenseRule": [
+  5972803
+ ],
+ "UseNormalLight": [
+  4294879
+ ],
+ "UseSparkParticles": [
+  6647648
+ ],
+ "UseTurretShadow": [
+  6547680
+ ],
+ "VEINHOLE.%s": [
+  6570112
+ ],
+ "Value": [
+  6456640
+ ],
+ "VariableNames": [
+  6055600,
+  6055712
+ ],
+ "Vegetation": [
+  5428464,
+  5429088
+ ],
+ "VehicleThief": [
+  5060992
+ ],
+ "VeinDamage": [
+  5977169
+ ],
+ "VeinGrowthEnabled": [
+  6057614,
+  6059024
+ ],
+ "Veinhole": [
+  6625402
+ ],
+ "VeinholeGrowthRate": [
+  5977169
+ ],
+ "VeinholeMonsterStrength": [
+  5977169
+ ],
+ "VeinholeShrinkRate": [
+  5977169
+ ],
+ "VeinholeTypeClass": [
+  5977169
+ ],
+ "Velocity": [
+  5864974
+ ],
+ "VelocityPerturbationCoefficient": [
+  5861520
+ ],
+ "Verses": [
+  6625402
+ ],
+ "VeryHigh": [
+  4479904
+ ],
+ "VeteranAbilities": [
+  6423163
+ ],
+ "VeteranArmor": [
+  5969606
+ ],
+ "VeteranCap": [
+  5969606
+ ],
+ "VeteranCombat": [
+  5969606
+ ],
+ "VeteranLevel": [
+  6345088,
+  6346000
+ ],
+ "VeteranROF": [
+  5969606
+ ],
+ "VeteranRatio": [
+  5969606
+ ],
+ "VeteranSight": [
+  5969606
+ ],
+ "VeteranSpeed": [
+  5969606
+ ],
+ "Visceroids": [
+  6172304,
+  6172672
+ ],
+ "VisibleLoad": [
+  6425107
+ ],
+ "VoiceAttack": [
+  6421219
+ ],
+ "VoiceComment": [
+  5060992
+ ],
+ "VoiceDie": [
+  6421219
+ ],
+ "VoiceFeedback": [
+  6421219
+ ],
+ "VoiceMove": [
+  6421219
+ ],
+ "VoiceSelect": [
+  6421219
+ ],
+ "Voxel": [
+  5711376
+ ],
+ "VoxelIndex": [
+  6561611
+ ],
+ "WalkFrames": [
+  6547680
+ ],
+ "WalkRate": [
+  6419856
+ ],
+ "Wall": [
+  4452944,
+  5730448,
+  6625007
+ ],
+ "WallBuildSpeedCoefficient": [
+  5977169
+ ],
+ "WallOwner": [
+  5010640
+ ],
+ "WallTower": [
+  5971336
+ ],
+ "WarLimit": [
+  5984335
+ ],
+ "WarRatio": [
+  5984335
+ ],
+ "Warhead": [
+  4294770,
+  5864704,
+  6562107,
+  6647648
+ ],
+ "Water": [
+  4678544
+ ],
+ "WaterAmount": [
+  5428464,
+  5429088
+ ],
+ "WaterBound": [
+  4452944,
+  6443648
+ ],
+ "WaterCaves": [
+  5155328
+ ],
+ "WaterCliffs": [
+  5155328
+ ],
+ "WaterSet": [
+  5155328
+ ],
+ "WaterfallEast": [
+  5155328
+ ],
+ "WaterfallNorth": [
+  5155328
+ ],
+ "WaterfallSouth": [
+  5155328
+ ],
+ "WaterfallWest": [
+  5155328
+ ],
+ "Waypoint": [
+  6345598,
+  6346000
+ ],
+ "Waypoints": [
+  6062048
+ ],
+ "WeaponType": [
+  6238048
+ ],
+ "WeaponsFactory": [
+  4453471
+ ],
+ "WeedCapacity": [
+  5977169
+ ],
+ "Weeder": [
+  4452944,
+  6547680
+ ],
+ "Weight": [
+  6420225
+ ],
+ "WheeledDownhill": [
+  5970595
+ ],
+ "WheeledUphill": [
+  5970595
+ ],
+ "Whiner": [
+  6345088,
+  6346000
+ ],
+ "Width": [
+  5428464,
+  5429088,
+  6166880
+ ],
+ "WindDirection": [
+  5970595
+ ],
+ "WindEffect": [
+  5864974
+ ],
+ "Wood": [
+  6625007
+ ],
+ "WorstLowPowerBuildRateCoefficient": [
+  5977169
+ ],
+ "XVelocity": [
+  5864974
+ ],
+ "XXICON": [
+  6427568
+ ],
+ "YDrawOffset": [
+  4293891
+ ],
+ "YSortAdjust": [
+  4293327
+ ],
+ "YVelocity": [
+  5864974
+ ],
+ "ZFudgeBridge": [
+  6423163
+ ],
+ "ZFudgeCliff": [
+  6423163
+ ],
+ "ZFudgeColumn": [
+  6423163
+ ],
+ "ZFudgeTunnel": [
+  6423163
+ ],
+ "ZShapePointMove": [
+  4455261
+ ],
+ "ZVelocityRange": [
+  5864974
+ ],
+ "ZoomInFactor": [
+  5968333
+ ],
+ "[%s]": [
+  6680882
+ ],
+ "[%s] : %s": [
+  6732064
+ ],
+ "\\StringFileInfo\\%04X%04X\\ProductVersion": [
+  6579936
+ ],
+ "\\VarFileInfo\\Translation": [
+  6579936
+ ],
+ "\\\\.\\vwin32": [
+  4511504,
+  4511792
+ ],
+ "arrow_dd.pcx": [
+  5790176
+ ],
+ "arrow_du.pcx": [
+  5790176
+ ],
+ "arrow_ud.pcx": [
+  5790176
+ ],
+ "arrow_uu.pcx": [
+  5790176
+ ],
+ "b%ce_li%d.pcx": [
+  5935264
+ ],
+ "b%ce_mi%d.pcx": [
+  5935264
+ ],
+ "b%ce_ri%d.pcx": [
+  5935264
+ ],
+ "bar_ll.pcx": [
+  5790176
+ ],
+ "bar_lr.pcx": [
+  5790176
+ ],
+ "bar_ul.pcx": [
+  5790176
+ ],
+ "bar_ur.pcx": [
+  5790176
+ ],
+ "bde_li24.pcx": [
+  5790176
+ ],
+ "bde_li30.pcx": [
+  5790176
+ ],
+ "bde_mi24.pcx": [
+  5790176
+ ],
+ "bde_mi30.pcx": [
+  5790176
+ ],
+ "bde_ri24.pcx": [
+  5790176
+ ],
+ "bde_ri30.pcx": [
+  5790176
+ ],
+ "bst_chkd.pcx": [
+  5790176
+ ],
+ "bst_chkg.pcx": [
+  5790176
+ ],
+ "bst_uchk.pcx": [
+  5790176
+ ],
+ "bst_uckg.pcx": [
+  5790176
+ ],
+ "bud_li24.pcx": [
+  5790176
+ ],
+ "bud_li30.pcx": [
+  5790176
+ ],
+ "bud_mi24.pcx": [
+  5790176
+ ],
+ "bud_mi30.pcx": [
+  5790176
+ ],
+ "bud_ri24.pcx": [
+  5790176
+ ],
+ "bud_ri30.pcx": [
+  5790176
+ ],
+ "bue_li24.pcx": [
+  5790176
+ ],
+ "bue_li30.pcx": [
+  5790176
+ ],
+ "bue_mi24.pcx": [
+  5790176
+ ],
+ "bue_mi30.pcx": [
+  5790176
+ ],
+ "bue_ri24.pcx": [
+  5790176
+ ],
+ "bue_ri30.pcx": [
+  5790176
+ ],
+ "ccd_i.pcx": [
+  5790176
+ ],
+ "cce_i.pcx": [
+  5790176
+ ],
+ "cud_i.pcx": [
+  5790176
+ ],
+ "cue_i.pcx": [
+  5790176
+ ],
+ "dWindows": [
+  6555751
+ ],
+ "dbak6440.pcx": [
+  5790176
+ ],
+ "dlgsys": [
+  5935856
+ ],
+ "dlgsysa.pcx": [
+  5790176
+ ],
+ "dlgsysi.pcx": [
+  5790176
+ ],
+ "dnarrowp.pcx": [
+  5790176
+ ],
+ "dnarrowr.pcx": [
+  5790176
+ ],
+ "e+000": [
+  6838665
+ ],
+ "gdii.pcx": [
+  5790176
+ ],
+ "leftbar.pcx": [
+  5790176
+ ],
+ "nodi.pcx": [
+  5790176
+ ],
+ "none": [
+  4256928,
+  4293891,
+  4294388,
+  4294580,
+  4295968,
+  4297008,
+  4462704,
+  4481664,
+  5060096,
+  5062688,
+  5731648,
+  5862976,
+  6089280,
+  6309360,
+  6318704,
+  6444624,
+  6480304,
+  6480848,
+  6548960,
+  6563536,
+  6563968,
+  6626608,
+  6649584
+ ],
+ "rPos": [
+  6555751
+ ],
+ "rightbar.pcx": [
+  5790176
+ ],
+ "sb_psh_d.pcx": [
+  5790176
+ ],
+ "sb_psh_u.pcx": [
+  5790176
+ ],
+ "sb_rel_d.pcx": [
+  5790176
+ ],
+ "sb_rel_u.pcx": [
+  5790176
+ ],
+ "sbgripb.pcx": [
+  5790176
+ ],
+ "sbgripm.pcx": [
+  5790176
+ ],
+ "sbgript.pcx": [
+  5790176
+ ],
+ "tab_fbl.pcx": [
+  5790176
+ ],
+ "tab_fbm.pcx": [
+  5790176
+ ],
+ "tab_fbr.pcx": [
+  5790176
+ ],
+ "tab_fml.pcx": [
+  5790176
+ ],
+ "tab_fmr.pcx": [
+  5790176
+ ],
+ "tab_ftl.pcx": [
+  5790176
+ ],
+ "tab_ftm.pcx": [
+  5790176
+ ],
+ "tab_ftr.pcx": [
+  5790176
+ ],
+ "tab_tld.pcx": [
+  5790176
+ ],
+ "tab_tlu.pcx": [
+  5790176
+ ],
+ "tab_tmd.pcx": [
+  5790176
+ ],
+ "tab_tmu.pcx": [
+  5790176
+ ],
+ "tab_trd.pcx": [
+  5790176
+ ],
+ "tab_tru.pcx": [
+  5790176
+ ],
+ "trakgrip.pcx": [
+  5790176
+ ],
+ "trofl.pcx": [
+  5790176
+ ],
+ "trofm.pcx": [
+  5790176
+ ],
+ "trofr.pcx": [
+  5790176
+ ],
+ "uparrowp.pcx": [
+  5790176
+ ],
+ "uparrowr.pcx": [
+  5790176
+ ],
+ "user32.dll": [
+  6888342
+ ],
+ "wodact.pcx": [
+  5790176
+ ],
+ "wodban.pcx": [
+  5790176
+ ],
+ "wodclan.pcx": [
+  5790176
+ ],
+ "woddcon.pcx": [
+  5790176
+ ],
+ "wodfgame.pcx": [
+  5790176
+ ],
+ "wodfind.pcx": [
+  5790176
+ ],
+ "wodhelp.pcx": [
+  5790176
+ ],
+ "wodkick.pcx": [
+  5790176
+ ],
+ "wodleave.pcx": [
+  5790176
+ ],
+ "wodopt.pcx": [
+  5790176
+ ],
+ "wodref.pcx": [
+  5790176
+ ],
+ "wodsqlch.pcx": [
+  5790176
+ ],
+ "wodtrny.pcx": [
+  5790176
+ ],
+ "wolacpt.pcx": [
+  5790176
+ ],
+ "wolclan.pcx": [
+  5790176
+ ],
+ "wolhost.pcx": [
+  5790176
+ ],
+ "woloper.pcx": [
+  5790176,
+  6681189
+ ],
+ "wolpriv.pcx": [
+  5790176
+ ],
+ "wolsqlch.pcx": [
+  5790176,
+  6681373
+ ],
+ "woltrny.pcx": [
+  5790176
+ ],
+ "woluser.pcx": [
+  5790176
+ ],
+ "wolvoice.pcx": [
+  5790176
+ ],
+ "wouact.pcx": [
+  5790176
+ ],
+ "wouban.pcx": [
+  5790176
+ ],
+ "wouclan.pcx": [
+  5790176
+ ],
+ "woudcon.pcx": [
+  5790176
+ ],
+ "woufgame.pcx": [
+  5790176
+ ],
+ "woufind.pcx": [
+  5790176
+ ],
+ "wouhelp.pcx": [
+  5790176
+ ],
+ "woukick.pcx": [
+  5790176
+ ],
+ "wouleave.pcx": [
+  5790176
+ ],
+ "wouopt.pcx": [
+  5790176
+ ],
+ "wouref.pcx": [
+  5790176
+ ],
+ "wousqlch.pcx": [
+  5790176
+ ],
+ "woutrny.pcx": [
+  5790176
+ ]
+}
