@@ -19,6 +19,7 @@
 // ============================================================================
 
 #include "AbstractClass.h"
+#include "ts_prelude.h"
 
 // ---------------------------------------------------------------------------
 // Automation interfaces implemented by HouseClass.

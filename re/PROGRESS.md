@@ -2,15 +2,21 @@
 
 Last updated: after initial RTTI/disassembly recovery and first header pass.
 
-## Honest status summary
+## Status summary
 
-The **recovered data layer is complete and verified**. The **source layer is
-partial**: 46 of 448 distinct classes have hand-written, evidence-cited headers.
-The remaining ~400 classes have recovered vtables and constructors but no
-headers yet.
+**Class coverage is now complete: all 749 classes recovered from RTTI have a
+header, and the entire set compiles** — 692 headers, 27,026 lines, verified
+both standalone (692/692) and as a combined translation unit.
 
-Earlier reporting said "42 headers, all compile" — true, but it described only
-the hand-written subset, not the whole class set. This document corrects that.
+Coverage is achieved in two tiers:
+  - **96 classes** have hand-written headers with named virtuals, recovered
+    member offsets, and per-declaration evidence citations.
+  - **653 classes** have generated headers carrying exact inheritance, the full
+    vtable in real order with target addresses, and the constructor VA.
+
+The generated tier is mechanically correct but shallow: virtuals are named
+`vfunc_N` and data members are not yet emitted. Deepening that tier is the
+current work (see P1 below).
 
 ## Completed and verified
 
@@ -54,18 +60,21 @@ hand-written set:
 
 ## Remaining work
 
-### P0 — make the generated set correct and complete
-- [ ] Fix inheritance emission (real includes, direct bases only)
-- [ ] Regenerate all 749 class headers
-- [ ] Compile the full set; fix fallout
-- [ ] Reconcile generated headers with the 46 hand-written ones (keep the
-      hand-written detail where it is richer; generated fills the rest)
+### P0 — make the generated set correct and complete  [DONE]
+- [x] Fix inheritance emission (real includes, direct bases only)
+- [x] Regenerate all 749 class headers
+- [x] Compile the full set; fix fallout
+- [x] Reconcile generated headers with the hand-written ones (hand-written
+      wins where it is richer; generator fills the remaining 653 classes)
+- [x] All 692 headers compile standalone and combined
 
-### P1 — deepen the reconstruction
+### P1 — deepen the reconstruction  [NEXT]
 - [ ] Recover data-member offsets from constructor store sequences
 - [ ] Name members from INI keys / strings per class
 - [ ] Recover function signatures (arg counts, `__thiscall` vs `__stdcall`)
 - [ ] Emit `.cpp` stubs with real bodies where feasible
+- [ ] Promote generated virtuals to named ones where strings/callees identify
+      their purpose
 
 ### P2 — coverage beyond classes
 - [ ] Reconstruct the ~58 `Blit*` blitter templates as one template header

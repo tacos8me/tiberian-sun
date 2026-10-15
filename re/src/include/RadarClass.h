@@ -28,7 +28,8 @@
 // ============================================================================
 
 #include "DisplayClass.h"
-#include "ts_prelude.h"   // gadget/UI bases (GScreenClass, GadgetClass, ...)
+#include "ts_prelude.h"
+#include "GadgetClass.h"   // gadget/UI bases (GScreenClass, GadgetClass, ...)
 
 class RadarClass : public DisplayClass
 {

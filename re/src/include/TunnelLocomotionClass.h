@@ -21,6 +21,7 @@
 #define TUNNELLOCOMOTIONCLASS_H
 
 #include "LocomotionClass.h"
+#include "ts_prelude.h"
 
 class TunnelLocomotionClass : public LocomotionClass
 {

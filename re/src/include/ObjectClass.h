@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "AbstractClass.h"
+#include "ts_prelude.h"
 
 class ObjectClass : public AbstractClass
 {

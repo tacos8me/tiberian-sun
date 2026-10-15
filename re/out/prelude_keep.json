@@ -1,0 +1,21 @@
+[
+ "BounceClass",
+ "CDownloadEventSink",
+ "CNetUtilEventSink",
+ "CellStruct",
+ "CoordStruct",
+ "DiskSwap",
+ "IApplication",
+ "IClassFactory",
+ "IConnectionPoint",
+ "IEnumConnectionPoints",
+ "IEnumConnections",
+ "IFlyControl",
+ "IGameMap",
+ "ILinkStream",
+ "ISequentialStream",
+ "ISwizzle",
+ "LARGE_INTEGER",
+ "Node",
+ "ULARGE_INTEGER"
+]

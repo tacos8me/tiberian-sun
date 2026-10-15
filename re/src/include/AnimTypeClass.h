@@ -20,6 +20,7 @@
 #define ANIMTYPECLASS_H
 
 #include "ObjectTypeClass.h"
+#include "ts_prelude.h"
 
 class AnimTypeClass : public ObjectTypeClass
 {

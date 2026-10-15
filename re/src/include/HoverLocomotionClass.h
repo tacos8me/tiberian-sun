@@ -19,6 +19,7 @@
 #define HOVERLOCOMOTIONCLASS_H
 
 #include "LocomotionClass.h"
+#include "ts_prelude.h"
 
 class HoverLocomotionClass : public LocomotionClass
 {

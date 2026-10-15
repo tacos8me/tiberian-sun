@@ -14,6 +14,7 @@
 // ============================================================================
 
 #include "TechnoTypeClass.h"
+#include "ts_prelude.h"
 
 class BuildingTypeClass : public TechnoTypeClass
 {

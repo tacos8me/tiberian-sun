@@ -16,6 +16,7 @@
 // ============================================================================
 
 #include "AbstractClass.h"
+#include "ts_prelude.h"
 
 // ---------------------------------------------------------------------------
 // AbstractTypeClass — intermediate base for all rules.ini "type" records.

@@ -22,6 +22,7 @@
 #define WEAPONTYPECLASS_H
 
 #include "ObjectTypeClass.h"  // declares AbstractTypeClass (no separate header)
+#include "ts_prelude.h"
 
 class WeaponTypeClass : public AbstractTypeClass
 {

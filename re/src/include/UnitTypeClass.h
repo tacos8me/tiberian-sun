@@ -12,6 +12,7 @@
 // ============================================================================
 
 #include "TechnoTypeClass.h"
+#include "ts_prelude.h"
 
 class UnitTypeClass : public TechnoTypeClass
 {

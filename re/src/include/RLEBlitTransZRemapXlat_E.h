@@ -1,0 +1,26 @@
+#pragma once
+// ==========================================================================
+// RLEBlitTransZRemapXlat_E.h  —  reconstructed from GAME.EXE (C&C Tiberian Sun, 1999)
+//
+// RTTI class   : class RLEBlitTransZRemapXlat<E>
+// vtable       : 0x0069b75c  (2 slots)
+// constructor  : 0x00460d69
+//
+// Virtual slots are in real vtable order; each carries its target
+// address as evidence. Slots named vfunc_N have no established
+// semantics yet.
+// ==========================================================================
+
+#include "ts_prelude.h"
+#include "RLEBlitter.h"
+
+class RLEBlitTransZRemapXlat_E : public RLEBlitter
+{
+public:
+    // ---- vtable 0x0069b75c (2 slots) ----
+    virtual void vfunc_0();  // [0] 0x00469990
+    virtual void vfunc_1();  // [1] 0x00463650
+
+    RLEBlitTransZRemapXlat_E();  // 0x00460d69
+    virtual ~RLEBlitTransZRemapXlat_E();
+};

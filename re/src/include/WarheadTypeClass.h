@@ -21,6 +21,7 @@
 #define WARHEADTYPECLASS_H
 
 #include "ObjectTypeClass.h"  // declares AbstractTypeClass (no separate header)
+#include "ts_prelude.h"
 
 class WarheadTypeClass : public AbstractTypeClass
 {

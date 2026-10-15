@@ -34,6 +34,7 @@
 #define TRIGGERTYPECLASS_H
 
 #include <windows.h>
+#include "ts_prelude.h"
 
 class TriggerTypeClass
 {

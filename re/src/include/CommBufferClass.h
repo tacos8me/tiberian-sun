@@ -1,0 +1,24 @@
+#pragma once
+// ==========================================================================
+// CommBufferClass.h  —  reconstructed from GAME.EXE (C&C Tiberian Sun, 1999)
+//
+// RTTI class   : class CommBufferClass
+// vtable       : 0x0069b094  (1 slots)
+// constructor  : 0x0045d99e
+//
+// Virtual slots are in real vtable order; each carries its target
+// address as evidence. Slots named vfunc_N have no established
+// semantics yet.
+// ==========================================================================
+
+#include "ts_prelude.h"
+
+class CommBufferClass
+{
+public:
+    // ---- vtable 0x0069b094 (1 slots) ----
+    virtual void vfunc_0();  // [0] 0x0045ea80
+
+    CommBufferClass();  // 0x0045d99e
+    virtual ~CommBufferClass();
+};

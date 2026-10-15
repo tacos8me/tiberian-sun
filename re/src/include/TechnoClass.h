@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "ObjectClass.h"
+#include "ts_prelude.h"
 
 // ---------------------------------------------------------------------------
 // RadioClass / MissionClass — intermediate bases of TechnoClass.

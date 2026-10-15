@@ -2,14 +2,16 @@
 """
 Emit a compilable C++ header for every class in the manifest.
 
-Each header contains:
-  - exact inheritance from RTTI
-  - the full virtual table in order, each slot resolved to its real VA
-  - the constructor VA and recovered member offsets
-  - data members named from INI keys / strings referenced by the class's methods
+Design:
+  - Inheritance uses ONLY direct bases (out/direct_bases.json), because RTTI
+    base arrays list transitive bases which C++ must not repeat.
+  - Each header #includes its direct base headers, so types are complete.
+  - Classes with no recovered base derive from nothing.
+  - Virtual slots are emitted in real vtable order with their target VA.
+  - The constructor VA is recorded; member offsets are recovered from the
+    constructor's store sequence where possible.
 
-Headers are self-contained: they include a common prelude and forward-declare
-their bases, so the whole set compiles.
+Output is deterministic and regenerable.
 """
 import json
 import os
@@ -70,12 +72,6 @@ def sanitize(name):
     return n
 
 
-def member_offsets(bin_, ctor_va, maxinsn=400):
-    """Recover member offsets written by a constructor: [reg+disp] stores."""
-    f = None
-    return []
-
-
 def main():
     bindir = sys.argv[1] if len(sys.argv) > 1 else "bin/GAME.EXE"
     outdir = sys.argv[2] if len(sys.argv) > 2 else "out"
@@ -83,60 +79,102 @@ def main():
 
     bin_ = Bin(bindir)
     manifest = json.load(open(os.path.join(outdir, "class_manifest.json")))
+    direct = json.load(open(os.path.join(outdir, "direct_bases.json")))
     fns = {f["va"]: f for f in json.load(open(os.path.join(outdir, "functions.json")))["functions"]}
 
-    # Build the set of all class idents so we can forward-declare bases.
-    allidents = {m["ident"] for m in manifest}
-    # map demangled base name -> ident
-    baseident = {}
+    # demangled class name -> ident, for resolving base includes
+    ident_of = {m["class"]: m["ident"] for m in manifest}
     for m in manifest:
-        baseident[m["class"]] = m["ident"]
+        ident_of.setdefault(sanitize(m["class"]), m["ident"])
+
+    # Types supplied by ts_prelude.h are valid bases but have no header of
+    # their own; map them so inheritance resolves instead of being dropped.
+    prelude_types = {
+        "IUnknown", "IPersist", "IPersistStream", "ISequentialStream", "IStream",
+        "ILinkStream", "ISwizzle", "IApplication", "IGameMap", "IFlyControl",
+        "IClassFactory", "IConnectionPoint", "IConnectionPointContainer",
+        "IEnumConnectionPoints", "IEnumConnections", "IRTTITypeInfo",
+        "IPiggyback", "ILocomotion", "IHouse", "IPublicHouse",
+        "BounceClass", "DiskSwap", "FlasherClass", "StageClass",
+        "CDownloadEventSink", "CNetUtilEventSink",
+        "WOL_IChatEvent", "WOL_IDownloadEvent", "WOL_INetUtilEvent",
+        "ATL_CComObjectRootBase",
+        "ATL_CComObjectRootEx_class_CComMultiThreadModel_TL",
+    }
+    for t in prelude_types:
+        ident_of.setdefault(t, t)
+
+    # Sanitized ident -> real C++ spelling for namespaced prelude types.
+    cpp_name = {
+        "WOL_IChatEvent": "WOL::IChatEvent",
+        "WOL_IDownloadEvent": "WOL::IDownloadEvent",
+        "WOL_INetUtilEvent": "WOL::INetUtilEvent",
+        "ATL_CComObjectRootBase": "ATL::CComObjectRootBase",
+        "ATL_CComObjectRootEx_class_CComMultiThreadModel_TL":
+            "ATL::CComObjectRootEx<ATL::CComMultiThreadModel, void>",
+    }
+
+    # Classes already defined by hand-written headers must not be regenerated,
+    # or the two definitions collide. Hand-written headers are richer (named
+    # virtuals, member offsets), so they win.
+    owned = set()
+    owned_path = os.path.join(outdir, "handwritten_types.json")
+    if os.path.exists(owned_path):
+        owned = set(json.load(open(owned_path)))
 
     os.makedirs(srcdir, exist_ok=True)
     written = 0
+    skipped = 0
+    unresolved_bases = defaultdict(set)
+
     for m in manifest:
         ident = m["ident"]
         if not ident:
             continue
-        lines = []
-        lines.append("#pragma once")
-        lines.append("// " + "=" * 72)
-        lines.append(f"// {ident}.h  —  reconstructed from GAME.EXE (C&C Tiberian Sun, 1999)")
-        lines.append("//")
-        lines.append(f"// RTTI class   : {m['class']}")
-        lines.append(f"// vtable       : 0x{m['vtable']:08x}  ({m['nvirtuals']} slots)")
+        if ident in owned:
+            skipped += 1
+            continue
+
+        # direct bases only, resolved to idents, deduplicated
+        bases = []
+        seen_bases = set()
+        for b in direct.get(m["class"], []):
+            bi = ident_of.get(b) or ident_of.get(sanitize(b))
+            if bi and bi != ident and bi not in seen_bases:
+                seen_bases.add(bi)
+                bases.append(bi)
+            elif not bi:
+                unresolved_bases[m["class"]].add(b)
+
+        L = []
+        L.append("#pragma once")
+        L.append("// " + "=" * 74)
+        L.append(f"// {ident}.h  —  reconstructed from GAME.EXE (C&C Tiberian Sun, 1999)")
+        L.append("//")
+        L.append(f"// RTTI class   : {m['class']}")
+        L.append(f"// vtable       : 0x{m['vtable']:08x}  ({m['nvirtuals']} slots)")
         if m["ctors"]:
-            lines.append(f"// constructor  : 0x{m['ctors'][0]:08x}")
-        lines.append("//")
-        lines.append("// Generated from recovered RTTI + vtable data. Virtual slots are in")
-        lines.append("// real vtable order; each carries its target address as evidence.")
-        lines.append("// " + "=" * 72)
-        lines.append("")
-        lines.append('#include "ts_prelude.h"')
-        lines.append("")
-
-        # forward-declare bases
-        bases = m["bases"]
+            L.append(f"// constructor  : 0x{m['ctors'][0]:08x}")
+        L.append("//")
+        L.append("// Virtual slots are in real vtable order; each carries its target")
+        L.append("// address as evidence. Slots named vfunc_N have no established")
+        L.append("// semantics yet.")
+        L.append("// " + "=" * 74)
+        L.append("")
+        L.append('#include "ts_prelude.h"')
         for b in bases:
-            bi = baseident.get(b)
-            if bi and bi != ident:
-                lines.append(f"class {bi};")
-        if bases:
-            lines.append("")
+            if b not in prelude_types:
+                L.append(f'#include "{b}.h"')
+        L.append("")
 
-        # class declaration
         if bases:
-            bl = []
-            for b in bases:
-                bi = baseident.get(b)
-                bl.append(bi if bi else "/* unresolved */ " + sanitize(b))
-            decl = f"class {ident} : public " + ", public ".join(bl)
+            spelled = [cpp_name.get(b, b) for b in bases]
+            L.append(f"class {ident} : public " + ", public ".join(spelled))
         else:
-            decl = f"class {ident}"
-        lines.append(decl)
-        lines.append("{")
-        lines.append("public:")
-        lines.append(f"    // ---- vtable 0x{m['vtable']:08x} ({m['nvirtuals']} slots) ----")
+            L.append(f"class {ident}")
+        L.append("{")
+        L.append("public:")
+        L.append(f"    // ---- vtable 0x{m['vtable']:08x} ({m['nvirtuals']} slots) ----")
         for i, e in enumerate(m["entries"]):
             fn = fns.get(e)
             tag = ""
@@ -144,20 +182,24 @@ def main():
                 s = fn["strings"][0]["text"]
                 if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{2,30}", s):
                     tag = f'  // refs "{s}"'
-            lines.append(f"    virtual void vfunc_{i}();  // [{i}] 0x{e:08x}{tag}")
-        lines.append("")
+            L.append(f"    virtual void vfunc_{i}();  // [{i}] 0x{e:08x}{tag}")
+        L.append("")
         if m["ctors"]:
-            lines.append(f"    {ident}();  // 0x{m['ctors'][0]:08x}")
-        lines.append(f"    virtual ~{ident}();")
-        lines.append("};")
-        lines.append("")
+            L.append(f"    {ident}();  // 0x{m['ctors'][0]:08x}")
+        L.append(f"    virtual ~{ident}();")
+        L.append("};")
+        L.append("")
 
         with open(os.path.join(srcdir, ident + ".h"), "w") as f:
-            f.write("\n".join(lines))
+            f.write("\n".join(L))
         written += 1
 
     print(f"headers written: {written}")
-    print(f"into {srcdir}")
+    print(f"skipped (hand-written owns): {skipped}")
+    if unresolved_bases:
+        print(f"classes with unresolved bases: {len(unresolved_bases)}")
+        for k, v in list(unresolved_bases.items())[:10]:
+            print(f"  {k}: {sorted(v)}")
 
 
 if __name__ == "__main__":
