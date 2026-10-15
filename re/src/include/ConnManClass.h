@@ -36,4 +36,14 @@ public:
 
     ConnManClass();  // 0x004e7e47
     virtual ~ConnManClass();
+
+    // ---- data members (offsets from ctor 0x004e7df0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0b34
+    unsigned char pad_004[0x1];
+    unsigned long m_005;  // /* ? */
+    unsigned char pad_009[0x33];
+    unsigned long m_03c;  // /* ? */
+    unsigned long m_040;  // /* ? */
 };

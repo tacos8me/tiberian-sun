@@ -23,4 +23,21 @@ public:
 
     LightConvertClass();  // 0x004f62d5
     virtual ~LightConvertClass();
+
+    // ---- data members (offsets from ctor 0x004f6250) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a163c
+    unsigned char pad_004[0x184];
+    unsigned long m_188;  // /* ? */
+    unsigned long m_18c;  // /* ? */
+    unsigned long m_190;  // /* ? */
+    unsigned long m_194;  // zero-initialised
+    unsigned long m_198;  // /* ? */
+    unsigned long m_19c;  // /* ? */
+    unsigned long m_1a0;  // /* ? */
+    unsigned long m_1a4;  // /* ? */
+    unsigned long m_1a8;  // /* ? */
+    unsigned long m_1ac;  // /* ? */
+    unsigned long m_1b0;  // zero-initialised
 };

@@ -27,4 +27,21 @@ public:
 
     DynamicVectorClass_articleSystemTypeClass();  // 0x006134aa
     virtual ~DynamicVectorClass_articleSystemTypeClass();
+
+    // ---- data members (offsets from ctor 0x006131dd) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0x10];
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned char pad_018[0x8];
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // /* ? */
+    unsigned char pad_028[0x10];
+    unsigned long m_038;  // init 0x6a5b58
+    unsigned long m_03c;  // /* ? */
+    unsigned long m_040;  // /* ? */
+    unsigned long m_044;  // init 0x1
+    unsigned long m_048;  // /* ? */
+    unsigned long m_04c;  // /* ? */
 };

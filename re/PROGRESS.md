@@ -68,8 +68,9 @@ hand-written set:
       wins where it is richer; generator fills the remaining 653 classes)
 - [x] All 692 headers compile standalone and combined
 
-### P1 — deepen the reconstruction  [NEXT]
-- [ ] Recover data-member offsets from constructor store sequences
+### P1 — deepen the reconstruction  [IN PROGRESS]
+- [x] Recover data-member offsets from constructor store sequences
+      (2070 offsets across 257 classes; emitted into generated headers)
 - [ ] Name members from INI keys / strings per class
 - [ ] Recover function signatures (arg counts, `__thiscall` vs `__stdcall`)
 - [ ] Emit `.cpp` stubs with real bodies where feasible
@@ -102,11 +103,36 @@ hand-written set:
 
 ## How to resume
 
+The whole reconstruction is one reproducible command:
+
 ```bash
 cd re
-python3 tools/rtti.py bin/GAME.EXE out
-python3 tools/disasm.py bin/GAME.EXE out
-python3 tools/gen_manifest.py bin/GAME.EXE out
+./tools/pipeline.sh              # regenerate everything from bin/GAME.EXE
+./tools/pipeline.sh --verify-only   # verify the current tree
+```
+
+Individual stages, in order:
+
+```bash
+python3 tools/rtti.py bin/GAME.EXE out          # RTTI recovery
+python3 tools/disasm.py bin/GAME.EXE out        # disassembly
+python3 tools/gen_manifest.py bin/GAME.EXE out  # per-class vtable/ctor
+python3 tools/reduce_bases.py out               # direct-base reduction
+python3 tools/gen_members.py bin/GAME.EXE out   # member offsets
 python3 tools/gen_headers.py bin/GAME.EXE out src/include
-g++ -std=c++03 -fsyntax-only -Isrc/include -Ibuild/shim build/tu_all.cpp
+python3 tools/reconcile_prelude.py src/include
+python3 tools/make_selfcontained.py src/include build/shim
+python3 tools/verify.py src/include build/shim
+```
+
+## Verification status
+
+`tools/verify.py` currently reports:
+
+```
+[1] standalone compile: 691/691
+[2] combined TU compile: PASS
+[3] class coverage: 749/749 (100.0%)
+[4] vtable->class bindings: 200/200 verified
+VERIFICATION PASSED
 ```

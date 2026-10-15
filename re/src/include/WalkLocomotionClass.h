@@ -19,7 +19,6 @@
 #define WALKLOCOMOTIONCLASS_H
 
 #include "LocomotionClass.h"
-#include "ts_prelude.h"
 
 class WalkLocomotionClass : public LocomotionClass, public IPiggyback
 {

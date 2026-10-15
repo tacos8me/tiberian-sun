@@ -23,4 +23,9 @@ public:
 
     non_rtti_object();  // 0x00682f40
     virtual ~non_rtti_object();
+
+    // ---- data members (offsets from ctor 0x00682f29) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a7d40
 };

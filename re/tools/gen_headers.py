@@ -81,6 +81,8 @@ def main():
     manifest = json.load(open(os.path.join(outdir, "class_manifest.json")))
     direct = json.load(open(os.path.join(outdir, "direct_bases.json")))
     fns = {f["va"]: f for f in json.load(open(os.path.join(outdir, "functions.json")))["functions"]}
+    members_path = os.path.join(outdir, "members.json")
+    members = json.load(open(members_path)) if os.path.exists(members_path) else {}
 
     # demangled class name -> ident, for resolving base includes
     ident_of = {m["class"]: m["ident"] for m in manifest}
@@ -187,6 +189,34 @@ def main():
         if m["ctors"]:
             L.append(f"    {ident}();  // 0x{m['ctors'][0]:08x}")
         L.append(f"    virtual ~{ident}();")
+
+        # ---- data members recovered from the constructor ----
+        md = members.get(m["class"])
+        if md and md.get("members"):
+            L.append("")
+            L.append(f"    // ---- data members (offsets from ctor 0x{md['ctor']:08x}) ----")
+            L.append("    // Offsets are exact; names are not yet recovered, so members")
+            L.append("    // are emitted as byte blobs at their real displacements.")
+            prev_end = 0
+            for mem in md["members"]:
+                off = mem["off"]
+                if off < prev_end:
+                    continue
+                if off > prev_end:
+                    L.append(f"    unsigned char pad_{prev_end:03x}[0x{off - prev_end:x}];")
+                kind = mem["kind"]
+                if kind == "vtable":
+                    L.append(f"    void* vptr_{off:03x};  // vtable 0x{mem['value']:08x}")
+                    prev_end = off + 4
+                elif kind == "zero":
+                    L.append(f"    unsigned long m_{off:03x};  // zero-initialised")
+                    prev_end = off + 4
+                elif kind == "imm":
+                    L.append(f"    unsigned long m_{off:03x};  // init 0x{mem['value']:x}")
+                    prev_end = off + 4
+                else:
+                    L.append(f"    unsigned long m_{off:03x};  // /* ? */")
+                    prev_end = off + 4
         L.append("};")
         L.append("")
 

@@ -26,4 +26,13 @@ public:
 
     VectorClass_struct_SubzoneConnectionStruct();  // 0x0040134c
     virtual ~VectorClass_struct_SubzoneConnectionStruct();
+
+    // ---- data members (offsets from ctor 0x00401320) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x698634
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned char pad_00c[0x1];
+    unsigned long m_00d;  // /* ? */
 };

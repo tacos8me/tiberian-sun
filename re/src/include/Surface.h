@@ -53,4 +53,9 @@ public:
 
     Surface();  // 0x0040698b
     virtual ~Surface();
+
+    // ---- data members (offsets from ctor 0x00406980) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x698c78
 };

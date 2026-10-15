@@ -12,7 +12,6 @@
 // ============================================================================
 
 #include "TechnoTypeClass.h"
-#include "ts_prelude.h"
 
 class InfantryTypeClass : public TechnoTypeClass
 {

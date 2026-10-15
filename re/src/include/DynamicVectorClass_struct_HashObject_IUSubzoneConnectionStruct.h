@@ -27,4 +27,12 @@ public:
 
     DynamicVectorClass_struct_HashObject_IUSubzoneConnectionStruct();  // 0x00502293
     virtual ~DynamicVectorClass_struct_HashObject_IUSubzoneConnectionStruct();
+
+    // ---- data members (offsets from ctor 0x00502223) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a1b2c
+    unsigned char pad_004[0xc];
+    unsigned long m_010;  // zero-initialised
+    unsigned long m_014;  // init 0xa
 };

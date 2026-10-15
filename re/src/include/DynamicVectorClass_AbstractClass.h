@@ -27,4 +27,35 @@ public:
 
     DynamicVectorClass_AbstractClass();  // 0x004449e8
     virtual ~DynamicVectorClass_AbstractClass();
+
+    // ---- data members (offsets from ctor 0x00444828) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0xc];
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned char pad_01c[0x4];
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // /* ? */
+    unsigned long m_028;  // /* ? */
+    unsigned long m_02c;  // init 0x69aa58
+    unsigned char pad_030[0xc];
+    unsigned long m_03c;  // zero-initialised
+    unsigned long m_040;  // init 0xa
+    unsigned long m_044;  // /* ? */
+    unsigned long m_048;  // /* ? */
+    unsigned char pad_04c[0xc];
+    unsigned long m_058;  // /* ? */
+    unsigned char pad_05c[0xc];
+    unsigned long m_068;  // /* ? */
+    unsigned char pad_06c[0x28];
+    unsigned long m_094;  // /* ? */
+    unsigned long m_098;  // /* ? */
+    unsigned char pad_09c[0x8];
+    unsigned long m_0a4;  // /* ? */
+    unsigned long m_0a8;  // /* ? */
+    unsigned long m_0ac;  // /* ? */
+    unsigned long m_0b0;  // /* ? */
 };

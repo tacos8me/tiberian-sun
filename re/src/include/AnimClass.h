@@ -31,7 +31,6 @@
 // ============================================================================
 
 #include "ObjectClass.h"
-#include "ts_prelude.h"
 
 class AnimClass : public ObjectClass
 {

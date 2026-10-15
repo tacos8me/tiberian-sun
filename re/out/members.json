@@ -1,0 +1,12151 @@
+{
+ "class AbstractClass": {
+  "ident": "AbstractClass",
+  "ctor": 4216560,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6916704
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6916676
+   },
+   {
+    "off": 8,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class AbstractTypeClass": {
+  "ident": "AbstractTypeClass",
+  "ctor": 4218192,
+  "this_reg": "ebp",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6916840
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6916812
+   },
+   {
+    "off": 45,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class AircraftClass": {
+  "ident": "AircraftClass",
+  "ctor": 4226400,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6917456
+   },
+   {
+    "off": 840,
+    "kind": "imm",
+    "value": 6917392
+   },
+   {
+    "off": 844,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 848,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 849,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 850,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 851,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 852,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 856,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 864,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 868,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 872,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class AllianceCommandClass": {
+  "ident": "AllianceCommandClass",
+  "ctor": 5104573,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948476
+   }
+  ]
+ },
+ "class AlphaShapeClass": {
+  "ident": "AlphaShapeClass",
+  "ctor": 4266480,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6920172
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6920144
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 44,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class AnimClass": {
+  "ident": "AnimClass",
+  "ctor": 4271920,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class AnimTypeClass": {
+  "ident": "AnimTypeClass",
+  "ctor": 4290672,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6920892
+   }
+  ]
+ },
+ "class BSurface": {
+  "ident": "BSurface",
+  "ctor": 4219072,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6917096
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "imm",
+    "value": 2
+   }
+  ]
+ },
+ "class BlitPlainXlat<E>": {
+  "ident": "BlitPlainXlat_E",
+  "ctor": 4590576,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928308
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitPlainXlatAlpha<G>": {
+  "ident": "BlitPlainXlatAlpha_G",
+  "ctor": 4591748,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTrans<E>": {
+  "ident": "BlitTrans_E",
+  "ctor": 6773008,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "imm",
+    "value": 6978628
+   }
+  ]
+ },
+ "class BlitTransLucent25Alpha<G>": {
+  "ident": "BlitTransLucent25Alpha_G",
+  "ctor": 4592095,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent25AlphaZRead<G>": {
+  "ident": "BlitTransLucent25AlphaZRead_G",
+  "ctor": 4592717,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent25AlphaZReadWarp<G>": {
+  "ident": "BlitTransLucent25AlphaZReadWarp_G",
+  "ctor": 4592942,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927652
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent25AlphaZReadWrite<G>": {
+  "ident": "BlitTransLucent25AlphaZReadWrite_G",
+  "ctor": 4593368,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent50AlphaZRead<G>": {
+  "ident": "BlitTransLucent50AlphaZRead_G",
+  "ctor": 4592642,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent50AlphaZReadWrite<G>": {
+  "ident": "BlitTransLucent50AlphaZReadWrite_G",
+  "ctor": 4593293,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent75Alpha<G>": {
+  "ident": "BlitTransLucent75Alpha_G",
+  "ctor": 4591951,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent75AlphaZRead<G>": {
+  "ident": "BlitTransLucent75AlphaZRead_G",
+  "ctor": 4592567,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent75AlphaZReadWarp<G>": {
+  "ident": "BlitTransLucent75AlphaZReadWarp_G",
+  "ctor": 4592792,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927684
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent75AlphaZReadWrite<G>": {
+  "ident": "BlitTransLucent75AlphaZReadWrite_G",
+  "ctor": 4593218,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransRemapDest<E>": {
+  "ident": "BlitTransRemapDest_E",
+  "ctor": 4590706,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928260
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransRemapXlat<E>": {
+  "ident": "BlitTransRemapXlat_E",
+  "ctor": 4590742,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928244
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransXlat<E>": {
+  "ident": "BlitTransXlat_E",
+  "ctor": 4590625,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928292
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransXlatAlphaZRead<G>": {
+  "ident": "BlitTransXlatAlphaZRead_G",
+  "ctor": 4592419,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransXlatAlphaZReadWrite<G>": {
+  "ident": "BlitTransXlatAlphaZReadWrite_G",
+  "ctor": 4593070,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927620
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransXlatWriteAlpha<G>": {
+  "ident": "BlitTransXlatWriteAlpha_G",
+  "ctor": 4592130,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927908
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransZRemapXlat<E>": {
+  "ident": "BlitTransZRemapXlat_E",
+  "ctor": 4590661,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928276
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransZRemapXlatAlpha<G>": {
+  "ident": "BlitTransZRemapXlatAlpha_G",
+  "ctor": 4591879,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransZRemapXlatAlphaZRead<G>": {
+  "ident": "BlitTransZRemapXlatAlphaZRead_G",
+  "ctor": 4592492,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransZRemapXlatAlphaZReadWrite<G>": {
+  "ident": "BlitTransZRemapXlatAlphaZReadWrite_G",
+  "ctor": 4593143,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927700
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTranslucent50NonzeroAlpha<G>": {
+  "ident": "BlitTranslucent50NonzeroAlpha_G",
+  "ctor": 4592249,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927876
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTranslucent50ZeroAlpha<G>": {
+  "ident": "BlitTranslucent50ZeroAlpha_G",
+  "ctor": 4592299,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927860
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTranslucentWriteAlpha<G>": {
+  "ident": "BlitTranslucentWriteAlpha_G",
+  "ctor": 4592196,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927892
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class Blitter": {
+  "ident": "Blitter",
+  "ctor": 4626544,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928324
+   }
+  ]
+ },
+ "class BlowStraw": {
+  "ident": "BlowStraw",
+  "ctor": 5534690,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 56,
+    "kind": "imm",
+    "value": 6921160
+   },
+   {
+    "off": 152,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "imm",
+    "value": 6955784
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BufferStraw": {
+  "ident": "BufferStraw",
+  "ctor": 4679549,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 16,
+    "kind": "imm",
+    "value": 6916952
+   },
+   {
+    "off": 24,
+    "kind": "imm",
+    "value": 6917096
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "imm",
+    "value": 2
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 6929356
+   },
+   {
+    "off": 68,
+    "kind": "imm",
+    "value": 6929372
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BuildingClass": {
+  "ident": "BuildingClass",
+  "ctor": 4347184,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6922960
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6922932
+   },
+   {
+    "off": 696,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 700,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 708,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 712,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 716,
+    "kind": "imm",
+    "value": 1
+   }
+  ]
+ },
+ "class BuildingLightClass": {
+  "ident": "BuildingLightClass",
+  "ctor": 4329184,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6922168
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6922140
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BuildingTypeClass": {
+  "ident": "BuildingTypeClass",
+  "ctor": 4447248,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BulletTypeClass": {
+  "ident": "BulletTypeClass",
+  "ctor": 4479232,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6924924
+   }
+  ]
+ },
+ "class CCFileClass": {
+  "ident": "CCFileClass",
+  "ctor": 4296328,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6921160
+   },
+   {
+    "off": 100,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class CD": {
+  "ident": "CD",
+  "ctor": 4486192,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6925328
+   }
+  ]
+ },
+ "class CDFileClass": {
+  "ident": "CDFileClass",
+  "ctor": 4296328,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6921160
+   },
+   {
+    "off": 100,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class CacheStraw": {
+  "ident": "CacheStraw",
+  "ctor": 5064528,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 19,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 27,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 6929372
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 632,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 1152,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class CenterBaseCommandClass": {
+  "ident": "CenterBaseCommandClass",
+  "ctor": 5104682,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948448
+   }
+  ]
+ },
+ "class CenterREventCommandClass": {
+  "ident": "CenterREventCommandClass",
+  "ctor": 5103919,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948644
+   }
+  ]
+ },
+ "class CenterViewCommandClass": {
+  "ident": "CenterViewCommandClass",
+  "ctor": 5104791,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948420
+   }
+  ]
+ },
+ "class CommandClass": {
+  "ident": "CommandClass",
+  "ctor": 5114368,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6949176
+   }
+  ]
+ },
+ "class ConnManClass": {
+  "ident": "ConnManClass",
+  "ctor": 5144048,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6949684
+   },
+   {
+    "off": 5,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class ConnectionPointClass": {
+  "ident": "ConnectionPointClass",
+  "ctor": 4636176,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928492
+   }
+  ]
+ },
+ "class ControlClass": {
+  "ident": "ControlClass",
+  "ctor": 4588832,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6926668
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class ConvertClass": {
+  "ident": "ConvertClass",
+  "ctor": 4589376,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6926856
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 140,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 144,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 152,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 156,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 160,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 180,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 184,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 192,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 196,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 200,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 204,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 208,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 212,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 216,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 220,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 224,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 228,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 232,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 236,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 240,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 244,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 248,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 252,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 256,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 260,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 264,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 268,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 272,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 276,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 280,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 284,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 288,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 296,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 300,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 312,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 328,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 332,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 336,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 344,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 348,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 352,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 356,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 360,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 364,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 368,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 372,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 376,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 380,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 384,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 388,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class CounterClass": {
+  "ident": "CounterClass",
+  "ctor": 4633200,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928364
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DSurface": {
+  "ident": "DSurface",
+  "ctor": 4748048,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6938044
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 25,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DeployCommandClass": {
+  "ident": "DeployCommandClass",
+  "ctor": 5105227,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948308
+   }
+  ]
+ },
+ "class DynamicVectorClass<AbstractClass*>": {
+  "ident": "DynamicVectorClass_AbstractClass",
+  "ctor": 4474920,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 14,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "imm",
+    "value": 6924888
+   },
+   {
+    "off": 60,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 152,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<ButtonFadeEffect*>": {
+  "ident": "DynamicVectorClass_ButtonFadeEffect",
+  "ctor": 4723249,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 19,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 27,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 35,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 43,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 71,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 73,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 74,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 75,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 117,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 140,
+    "kind": "imm",
+    "value": 6937908
+   },
+   {
+    "off": 156,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "imm",
+    "value": 6937936
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 192,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 196,
+    "kind": "imm",
+    "value": 6937964
+   },
+   {
+    "off": 212,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 216,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 220,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 236,
+    "kind": "imm",
+    "value": 5
+   },
+   {
+    "off": 248,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 252,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 264,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 276,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 280,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 284,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 288,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 312,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 328,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 332,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 372,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 376,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 380,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 392,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 400,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 404,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 408,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 412,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 492,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 496,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 624,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 628,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 664,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 688,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<CrossDissolveEffect*>": {
+  "ident": "DynamicVectorClass_CrossDissolveEffect",
+  "ctor": 4723249,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 19,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 27,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 35,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 43,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 71,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 73,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 74,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 75,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 117,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 140,
+    "kind": "imm",
+    "value": 6937908
+   },
+   {
+    "off": 156,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "imm",
+    "value": 6937936
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 192,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 196,
+    "kind": "imm",
+    "value": 6937964
+   },
+   {
+    "off": 212,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 216,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 220,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 236,
+    "kind": "imm",
+    "value": 5
+   },
+   {
+    "off": 248,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 252,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 264,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 276,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 280,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 284,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 288,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 312,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 328,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 332,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 372,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 376,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 380,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 392,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 400,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 404,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 408,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 412,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 492,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 496,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 624,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 628,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 664,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 688,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<D&*>": {
+  "ident": "DynamicVectorClass_D",
+  "ctor": 5481744,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 14,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 15,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 6954840
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 70,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 92,
+    "kind": "imm",
+    "value": 1072693248
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 140,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 144,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 152,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 156,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class DynamicVectorClass<G&*>": {
+  "ident": "DynamicVectorClass_G",
+  "ctor": 5152960,
+  "this_reg": "ebp",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6951640
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6951612
+   },
+   {
+    "off": 200,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 201,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 202,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 203,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 204,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 206,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 296,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 300,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "imm",
+    "value": 6951804
+   },
+   {
+    "off": 312,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 321,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 328,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 332,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 336,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 344,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 348,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 352,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 356,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 360,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 364,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 368,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 369,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 370,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 371,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 372,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 376,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 380,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 384,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 388,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 389,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 405,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 406,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 408,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<TechnoTypeClass*>": {
+  "ident": "DynamicVectorClass_TechnoTypeClass",
+  "ctor": 4722113,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 19,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 35,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 43,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 46,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 71,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 73,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 74,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 75,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "imm",
+    "value": 6937964
+   },
+   {
+    "off": 117,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 132,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 136,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 140,
+    "kind": "imm",
+    "value": 6937908
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "imm",
+    "value": 6937936
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 192,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 196,
+    "kind": "imm",
+    "value": 6937964
+   },
+   {
+    "off": 212,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 216,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 220,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 236,
+    "kind": "imm",
+    "value": 5
+   },
+   {
+    "off": 240,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 244,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 248,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 252,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 264,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 272,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 276,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 280,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 284,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 288,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 328,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 332,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 400,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 404,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 408,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 412,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 492,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 496,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 624,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 628,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 664,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 688,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<W4PassabilityType>": {
+  "ident": "DynamicVectorClass_W4PassabilityType",
+  "ctor": 5273920,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 2
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "imm",
+    "value": 6953856
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 89,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "imm",
+    "value": 300
+   }
+  ]
+ },
+ "class DynamicVectorClass<articleSystemTypeClass**>": {
+  "ident": "DynamicVectorClass_articleSystemTypeClass",
+  "ctor": 6369757,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "imm",
+    "value": 6970200
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 69,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<class DistributionObject<AITriggerTypeClass*>, DiscreteDistributionClass<class AITriggerTypeClass>>": {
+  "ident": "DynamicVectorClass_class_DistributionObject_AITriggerTypeClass_DiscreteDistributionClass_class_AITriggerTypeClass",
+  "ctor": 6343648,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 6945516
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 53,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 6969084
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<class DistributionObject<BuildingTypeClass*>, DiscreteDistributionClass<class BuildingTypeClass>>": {
+  "ident": "DynamicVectorClass_class_DistributionObject_BuildingTypeClass_DiscreteDistributionClass_class_BuildingTypeClass",
+  "ctor": 4984622,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 19,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 22,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "imm",
+    "value": 6945600
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 105,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 137,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 140,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 144,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 152,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 156,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 160,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<class DistributionObject<CellClass*>, DiscreteDistributionClass<class CellClass>>": {
+  "ident": "DynamicVectorClass_class_DistributionObject_CellClass_DiscreteDistributionClass_class_CellClass",
+  "ctor": 4870458,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6940456
+   },
+   {
+    "off": 16,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class DynamicVectorClass<class RGBClass>": {
+  "ident": "DynamicVectorClass_class_RGBClass",
+  "ctor": 5867628,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6960404
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class DynamicVectorClass<class WaypointClass>": {
+  "ident": "DynamicVectorClass_class_WaypointClass",
+  "ctor": 6641632,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6976752
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6976724
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 24,
+    "kind": "imm",
+    "value": 6976852
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 37,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class DynamicVectorClass<class oxelAnimTypeClass*>": {
+  "ident": "DynamicVectorClass_class_oxelAnimTypeClass",
+  "ctor": 6004947,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6962484
+   },
+   {
+    "off": 16,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class DynamicVectorClass<ircraftTypeClass&*>": {
+  "ident": "DynamicVectorClass_ircraftTypeClass",
+  "ctor": 6008707,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6962596
+   },
+   {
+    "off": 16,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class DynamicVectorClass<nimTypeClass&*>": {
+  "ident": "DynamicVectorClass_nimTypeClass",
+  "ctor": 6005843,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6962512
+   },
+   {
+    "off": 16,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class DynamicVectorClass<struct AngerStruct>": {
+  "ident": "DynamicVectorClass_struct_AngerStruct",
+  "ctor": 4929856,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6944832
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<struct HashObject<II>>": {
+  "ident": "DynamicVectorClass_struct_HashObject_II",
+  "ctor": 5251376,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6953800
+   },
+   {
+    "off": 16,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class DynamicVectorClass<struct HashObject<IUSubzoneConnectionStruct>>": {
+  "ident": "DynamicVectorClass_struct_HashObject_IUSubzoneConnectionStruct",
+  "ctor": 5251619,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6953772
+   },
+   {
+    "off": 16,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class DynamicVectorClass<struct HashObject<struct RadarTrackingStruct>, TechnoClass*>": {
+  "ident": "DynamicVectorClass_struct_HashObject_struct_RadarTrackingStruct_TechnoClass",
+  "ctor": 5909712,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 256
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<struct ScoutStruct>": {
+  "ident": "DynamicVectorClass_struct_ScoutStruct",
+  "ctor": 4929856,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6944832
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<struct SubzoneConnectionStruct>": {
+  "ident": "DynamicVectorClass_struct_SubzoneConnectionStruct",
+  "ctor": 5352026,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 38,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "imm",
+    "value": 6953884
+   },
+   {
+    "off": 92,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 96,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 101,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 104,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 108,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<struct nitTypeClass*>": {
+  "ident": "DynamicVectorClass_struct_nitTypeClass",
+  "ctor": 6007811,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6962568
+   },
+   {
+    "off": 16,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class EMPulseClass": {
+  "ident": "EMPulseClass",
+  "ctor": 4779520,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6938340
+   }
+  ]
+ },
+ "class EnumConnectionPointsClass": {
+  "ident": "EnumConnectionPointsClass",
+  "ctor": 4637312,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928556
+   }
+  ]
+ },
+ "class EnumConnectionsClass": {
+  "ident": "EnumConnectionsClass",
+  "ctor": 4634848,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928432
+   }
+  ]
+ },
+ "class FileStraw": {
+  "ident": "FileStraw",
+  "ctor": 4488000,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 6925580
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "imm",
+    "value": 1732584193
+   },
+   {
+    "off": 80,
+    "kind": "imm",
+    "value": 4023233417
+   },
+   {
+    "off": 84,
+    "kind": "imm",
+    "value": 2562383102
+   },
+   {
+    "off": 88,
+    "kind": "imm",
+    "value": 271733878
+   },
+   {
+    "off": 92,
+    "kind": "imm",
+    "value": 3285377520
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class FontClass": {
+  "ident": "FontClass",
+  "ctor": 6759792,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6978396
+   }
+  ]
+ },
+ "class FootClass": {
+  "ident": "FootClass",
+  "ctor": 4833520,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6939456
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6939428
+   },
+   {
+    "off": 536,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 540,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 542,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 544,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 546,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 552,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 556,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 560,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 564,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 566,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 568,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 570,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 572,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 576,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 580,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 584,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 588,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 592,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 596,
+    "kind": "imm",
+    "value": 1072693248
+   },
+   {
+    "off": 624,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 628,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 656,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 660,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 664,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 668,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 764,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 772,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 776,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 780,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 788,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 792,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 800,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 804,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 808,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 820,
+    "kind": "imm",
+    "value": 255
+   },
+   {
+    "off": 821,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 822,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 823,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 824,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 825,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 826,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 827,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 828,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 829,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 830,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 831,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 832,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 833,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 834,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 835,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 836,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 837,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 838,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 839,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class GadgetClass": {
+  "ident": "GadgetClass",
+  "ctor": 4872544,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6940492
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 29,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 30,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class GuardCommandClass": {
+  "ident": "GuardCommandClass",
+  "ctor": 5105009,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948364
+   }
+  ]
+ },
+ "class HouseClass": {
+  "ident": "HouseClass",
+  "ctor": 4929856,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6945304
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6945276
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 6945212
+   },
+   {
+    "off": 24,
+    "kind": "imm",
+    "value": 6945172
+   },
+   {
+    "off": 28,
+    "kind": "imm",
+    "value": 6945148
+   },
+   {
+    "off": 340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 348,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class HouseTypeClass": {
+  "ident": "HouseTypeClass",
+  "ctor": 5010064,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6945732
+   }
+  ]
+ },
+ "class InfantryClass": {
+  "ident": "InfantryClass",
+  "ctor": 5027104,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6946612
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class InfantryTypeClass": {
+  "ident": "InfantryTypeClass",
+  "ctor": 5059072,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6947628
+   }
+  ]
+ },
+ "class IsometricTileClass": {
+  "ident": "IsometricTileClass",
+  "ctor": 5148816,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6949864
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6949836
+   },
+   {
+    "off": 47,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class IsometricTileTypeClass": {
+  "ident": "IsometricTileTypeClass",
+  "ctor": 5152960,
+  "this_reg": "ebp",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6951640
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6951612
+   },
+   {
+    "off": 200,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 201,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 202,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 203,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 204,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 206,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 296,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 300,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "imm",
+    "value": 6951804
+   },
+   {
+    "off": 312,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 321,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 328,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 332,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 336,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 344,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 348,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 352,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 356,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 360,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 364,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 368,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 369,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 370,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 371,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 372,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 376,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 380,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 384,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 388,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 389,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 405,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 406,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 408,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class LCWStraw": {
+  "ident": "LCWStraw",
+  "ctor": 5194992,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6952228
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class LSidebarDownCommandClass": {
+  "ident": "LSidebarDownCommandClass",
+  "ctor": 5103047,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948868
+   }
+  ]
+ },
+ "class LSidebarPageDownCommandClass": {
+  "ident": "LSidebarPageDownCommandClass",
+  "ctor": 5103701,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948700
+   }
+  ]
+ },
+ "class LSidebarPageUpCommandClass": {
+  "ident": "LSidebarPageUpCommandClass",
+  "ctor": 5103374,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948784
+   }
+  ]
+ },
+ "class LSidebarUpCommandClass": {
+  "ident": "LSidebarUpCommandClass",
+  "ctor": 5102720,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948952
+   }
+  ]
+ },
+ "class LZOStraw": {
+  "ident": "LZOStraw",
+  "ctor": 5224784,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6953116
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class LightConvertClass": {
+  "ident": "LightConvertClass",
+  "ctor": 5202512,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6952508
+   },
+   {
+    "off": 392,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 396,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 400,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 404,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 408,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 412,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 416,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 420,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 424,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 428,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 432,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class LocomotionClass": {
+  "ident": "LocomotionClass",
+  "ctor": 5025312,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6946340
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6946140
+   }
+  ]
+ },
+ "class MSAnim": {
+  "ident": "MSAnim",
+  "ctor": 5601040,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6956144
+   }
+  ]
+ },
+ "class MissionClass": {
+  "ident": "MissionClass",
+  "ctor": 5531408,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6955248
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6955220
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class MixFileClass": {
+  "ident": "MixFileClass",
+  "ctor": 5534352,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6955800
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 17,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 18,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class NextObjectCommandClass": {
+  "ident": "NextObjectCommandClass",
+  "ctor": 5105381,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948252
+   }
+  ]
+ },
+ "class ObjectClass": {
+  "ident": "ObjectClass",
+  "ctor": 5694496,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6957184
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6957156
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "imm",
+    "value": 255
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 45,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 46,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 47,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 49,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 50,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 51,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 53,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class OverlayClass": {
+  "ident": "OverlayClass",
+  "ctor": 5722240,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6957904
+   }
+  ]
+ },
+ "class OverlayTypeClass": {
+  "ident": "OverlayTypeClass",
+  "ctor": 5729264,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6958396
+   }
+  ]
+ },
+ "class PKStraw": {
+  "ident": "PKStraw",
+  "ctor": 5845168,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6959728
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class ParticleClass": {
+  "ident": "ParticleClass",
+  "ctor": 5814832,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6958720
+   }
+  ]
+ },
+ "class ParticleSystemClass": {
+  "ident": "ParticleSystemClass",
+  "ctor": 5824352,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6959208
+   }
+  ]
+ },
+ "class ParticleSystemTypeClass": {
+  "ident": "ParticleSystemTypeClass",
+  "ctor": 5861008,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6960012
+   }
+  ]
+ },
+ "class ParticleTypeClass": {
+  "ident": "ParticleTypeClass",
+  "ctor": 5863872,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6960240
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6960212
+   },
+   {
+    "off": 205,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 296,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 300,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 312,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 356,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 357,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 358,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 359,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 360,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 361,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 364,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 368,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 372,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 376,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 380,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 384,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 388,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 392,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 396,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 400,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 404,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 408,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 409,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 410,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 411,
+    "kind": "imm",
+    "value": 4
+   },
+   {
+    "off": 412,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 413,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 414,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 415,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 416,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 420,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class PrevObjectCommandClass": {
+  "ident": "PrevObjectCommandClass",
+  "ctor": 5105336,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948280
+   }
+  ]
+ },
+ "class RLEBlitTransDarkenZRead<G>": {
+  "ident": "RLEBlitTransDarkenZRead_G",
+  "ctor": 4593782,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransDarkenZReadWrite<G>": {
+  "ident": "RLEBlitTransDarkenZReadWrite_G",
+  "ctor": 4594210,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent25<G>": {
+  "ident": "RLEBlitTransLucent25_G",
+  "ctor": 4593654,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent25AlphaZRead<G>": {
+  "ident": "RLEBlitTransLucent25AlphaZRead_G",
+  "ctor": 4595076,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent25AlphaZReadWarp<G>": {
+  "ident": "RLEBlitTransLucent25AlphaZReadWarp_G",
+  "ctor": 4595301,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent25AlphaZReadWrite<G>": {
+  "ident": "RLEBlitTransLucent25AlphaZReadWrite_G",
+  "ctor": 4595663,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927020
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent25ZRead<G>": {
+  "ident": "RLEBlitTransLucent25ZRead_G",
+  "ctor": 4593932,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent25ZReadWrite<G>": {
+  "ident": "RLEBlitTransLucent25ZReadWrite_G",
+  "ctor": 4594360,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent50<G>": {
+  "ident": "RLEBlitTransLucent50_G",
+  "ctor": 4593604,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent50AlphaZRead<G>": {
+  "ident": "RLEBlitTransLucent50AlphaZRead_G",
+  "ctor": 4595001,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent50AlphaZReadWarp<G>": {
+  "ident": "RLEBlitTransLucent50AlphaZReadWarp_G",
+  "ctor": 4595226,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent50AlphaZReadWrite<G>": {
+  "ident": "RLEBlitTransLucent50AlphaZReadWrite_G",
+  "ctor": 4595588,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927032
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent50ZReadWarp<G>": {
+  "ident": "RLEBlitTransLucent50ZReadWarp_G",
+  "ctor": 4594032,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent50ZReadWrite<G>": {
+  "ident": "RLEBlitTransLucent50ZReadWrite_G",
+  "ctor": 4594310,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75<G>": {
+  "ident": "RLEBlitTransLucent75_G",
+  "ctor": 4593554,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75Alpha<G>": {
+  "ident": "RLEBlitTransLucent75Alpha_G",
+  "ctor": 4594564,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75AlphaZRead<G>": {
+  "ident": "RLEBlitTransLucent75AlphaZRead_G",
+  "ctor": 4594926,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75AlphaZReadWarp<G>": {
+  "ident": "RLEBlitTransLucent75AlphaZReadWarp_G",
+  "ctor": 4595151,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75AlphaZReadWrite<G>": {
+  "ident": "RLEBlitTransLucent75AlphaZReadWrite_G",
+  "ctor": 4595513,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927044
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75ZRead<G>": {
+  "ident": "RLEBlitTransLucent75ZRead_G",
+  "ctor": 4593832,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75ZReadWarp<G>": {
+  "ident": "RLEBlitTransLucent75ZReadWarp_G",
+  "ctor": 4593982,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75ZReadWrite<G>": {
+  "ident": "RLEBlitTransLucent75ZReadWrite_G",
+  "ctor": 4594260,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransRemapDest<E>": {
+  "ident": "RLEBlitTransRemapDest_E",
+  "ctor": 4590961,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928208
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransRemapDestZRead<E>": {
+  "ident": "RLEBlitTransRemapDestZRead_E",
+  "ctor": 4591231,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928160
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransRemapDestZReadWrite<E>": {
+  "ident": "RLEBlitTransRemapDestZReadWrite_E",
+  "ctor": 4591501,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928112
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransRemapXlat<E>": {
+  "ident": "RLEBlitTransRemapXlat_E",
+  "ctor": 4591000,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928196
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransRemapXlatZRead<E>": {
+  "ident": "RLEBlitTransRemapXlatZRead_E",
+  "ctor": 4591270,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928148
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransRemapXlatZReadWrite<E>": {
+  "ident": "RLEBlitTransRemapXlatZReadWrite_E",
+  "ctor": 4591540,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928100
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransXlat<E>": {
+  "ident": "RLEBlitTransXlat_E",
+  "ctor": 4590877,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928232
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransXlat<G>": {
+  "ident": "RLEBlitTransXlat_G",
+  "ctor": 4593415,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransXlatAlpha<G>": {
+  "ident": "RLEBlitTransXlatAlpha_G",
+  "ctor": 4594416,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransXlatAlphaZReadWrite<G>": {
+  "ident": "RLEBlitTransXlatAlphaZReadWrite_G",
+  "ctor": 4595365,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransXlatZRead<E>": {
+  "ident": "RLEBlitTransXlatZRead_E",
+  "ctor": 4591144,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928184
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransXlatZRead<G>": {
+  "ident": "RLEBlitTransXlatZRead_G",
+  "ctor": 4593693,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransXlatZReadWrite<E>": {
+  "ident": "RLEBlitTransXlatZReadWrite_E",
+  "ctor": 4591414,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928136
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransXlatZReadWrite<G>": {
+  "ident": "RLEBlitTransXlatZReadWrite_G",
+  "ctor": 4594121,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransZRemapXlat<E>": {
+  "ident": "RLEBlitTransZRemapXlat_E",
+  "ctor": 4590913,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928220
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransZRemapXlat<G>": {
+  "ident": "RLEBlitTransZRemapXlat_G",
+  "ctor": 4593463,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransZRemapXlatAlpha<G>": {
+  "ident": "RLEBlitTransZRemapXlatAlpha_G",
+  "ctor": 4594489,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransZRemapXlatAlphaZRead<G>": {
+  "ident": "RLEBlitTransZRemapXlatAlphaZRead_G",
+  "ctor": 4594851,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransZRemapXlatAlphaZReadWrite<G>": {
+  "ident": "RLEBlitTransZRemapXlatAlphaZReadWrite_G",
+  "ctor": 4595438,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927068
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransZRemapXlatZRead<E>": {
+  "ident": "RLEBlitTransZRemapXlatZRead_E",
+  "ctor": 4591183,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928172
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransZRemapXlatZRead<G>": {
+  "ident": "RLEBlitTransZRemapXlatZRead_G",
+  "ctor": 4593741,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransZRemapXlatZReadWrite<E>": {
+  "ident": "RLEBlitTransZRemapXlatZReadWrite_E",
+  "ctor": 4591453,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928124
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransZRemapXlatZReadWrite<G>": {
+  "ident": "RLEBlitTransZRemapXlatZReadWrite_G",
+  "ctor": 4594169,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitter": {
+  "ident": "RLEBlitter",
+  "ctor": 4626768,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928340
+   }
+  ]
+ },
+ "class RSidebarDownCommandClass": {
+  "ident": "RSidebarDownCommandClass",
+  "ctor": 5103156,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948840
+   }
+  ]
+ },
+ "class RSidebarPageDownCommandClass": {
+  "ident": "RSidebarPageDownCommandClass",
+  "ctor": 5103810,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948672
+   }
+  ]
+ },
+ "class RSidebarPageUpCommandClass": {
+  "ident": "RSidebarPageUpCommandClass",
+  "ctor": 5103483,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948756
+   }
+  ]
+ },
+ "class RSidebarUpCommandClass": {
+  "ident": "RSidebarUpCommandClass",
+  "ctor": 5102829,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948924
+   }
+  ]
+ },
+ "class RadioClass": {
+  "ident": "RadioClass",
+  "ctor": 5920528,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6960952
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6960924
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class RawFileClass": {
+  "ident": "RawFileClass",
+  "ctor": 5923104,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6961640
+   },
+   {
+    "off": 16,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 20,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 28,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class ScatterCommandClass": {
+  "ident": "ScatterCommandClass",
+  "ctor": 5104900,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948392
+   }
+  ]
+ },
+ "class ScorePrintClass": {
+  "ident": "ScorePrintClass",
+  "ctor": 6069936,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6962916
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 32,
+    "kind": "imm",
+    "value": 60
+   },
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 3
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class ScoreTimeClass": {
+  "ident": "ScoreTimeClass",
+  "ctor": 6069467,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6962916
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 32,
+    "kind": "imm",
+    "value": 60
+   },
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 3
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class ScrollECommandClass": {
+  "ident": "ScrollECommandClass",
+  "ctor": 5102393,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6949036
+   }
+  ]
+ },
+ "class ScrollNCommandClass": {
+  "ident": "ScrollNCommandClass",
+  "ctor": 5102176,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6949092
+   }
+  ]
+ },
+ "class ScrollSCommandClass": {
+  "ident": "ScrollSCommandClass",
+  "ctor": 5102284,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6949064
+   }
+  ]
+ },
+ "class ScrollWCommandClass": {
+  "ident": "ScrollWCommandClass",
+  "ctor": 5102502,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6949008
+   }
+  ]
+ },
+ "class SelectViewCommandClass": {
+  "ident": "SelectViewCommandClass",
+  "ctor": 5104464,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948504
+   }
+  ]
+ },
+ "class SideClass": {
+  "ident": "SideClass",
+  "ctor": 6127200,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6963940
+   }
+  ]
+ },
+ "class SidebarDownCommandClass": {
+  "ident": "SidebarDownCommandClass",
+  "ctor": 5102938,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948896
+   }
+  ]
+ },
+ "class SidebarPageDownCommandClass": {
+  "ident": "SidebarPageDownCommandClass",
+  "ctor": 5103592,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948728
+   }
+  ]
+ },
+ "class SidebarPageUpCommandClass": {
+  "ident": "SidebarPageUpCommandClass",
+  "ctor": 5103265,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948812
+   }
+  ]
+ },
+ "class SidebarUpCommandClass": {
+  "ident": "SidebarUpCommandClass",
+  "ctor": 5102611,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948980
+   }
+  ]
+ },
+ "class SmudgeClass": {
+  "ident": "SmudgeClass",
+  "ctor": 6163840,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6964648
+   }
+  ]
+ },
+ "class StopCommandClass": {
+  "ident": "StopCommandClass",
+  "ctor": 5105118,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948336
+   }
+  ]
+ },
+ "class Straw": {
+  "ident": "Straw",
+  "ctor": 4679549,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 16,
+    "kind": "imm",
+    "value": 6916952
+   },
+   {
+    "off": 24,
+    "kind": "imm",
+    "value": 6917096
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "imm",
+    "value": 2
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 6929356
+   },
+   {
+    "off": 68,
+    "kind": "imm",
+    "value": 6929372
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class Surface": {
+  "ident": "Surface",
+  "ctor": 4221312,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6917240
+   }
+  ]
+ },
+ "class TActionClass": {
+  "ident": "TActionClass",
+  "ctor": 6282736,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6968164
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6968136
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TEventClass": {
+  "ident": "TEventClass",
+  "ctor": 6445664,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6971592
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6971564
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TabClass": {
+  "ident": "TabClass",
+  "ctor": 5571184,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6955852
+   }
+  ]
+ },
+ "class Tactical": {
+  "ident": "Tactical",
+  "ctor": 6245168,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6967960
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6967932
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 89,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "imm",
+    "value": 1072693248
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 140,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 144,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3352,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3356,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3360,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3364,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3368,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3372,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3376,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 3377,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3378,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3380,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3396,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3400,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3404,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3408,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3412,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3416,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3424,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3476,
+    "kind": "imm",
+    "value": 1084926628
+   },
+   {
+    "off": 3480,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3484,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3488,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3492,
+    "kind": "imm",
+    "value": 3232410276
+   },
+   {
+    "off": 3496,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3500,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3504,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3508,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3512,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3516,
+    "kind": "imm",
+    "value": 1065353216
+   },
+   {
+    "off": 3520,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TagClass": {
+  "ident": "TagClass",
+  "ctor": 6304224,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6968304
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6968276
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 37,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TagTypeClass": {
+  "ident": "TagTypeClass",
+  "ctor": 6307552,
+  "this_reg": "ebp",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6968500
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6968472
+   },
+   {
+    "off": 96,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TechnoClass": {
+  "ident": "TechnoClass",
+  "ctor": 6350768,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6969312
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6969284
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 144,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 152,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 156,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 160,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 180,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 184,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 192,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 200,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 204,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 212,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 216,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 220,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 224,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 228,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 232,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 236,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 240,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 244,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 248,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 256,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 260,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 264,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 268,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 276,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 280,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 284,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 288,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 296,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 312,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 328,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 332,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 336,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 344,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 348,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 352,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 356,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 480,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 484,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 492,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 496,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 498,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 500,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 501,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 502,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 503,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 504,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 505,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 506,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 507,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 508,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 509,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 510,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 511,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 512,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 513,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 514,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 515,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 516,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 517,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 518,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 519,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 520,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 521,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 522,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 523,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 524,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 528,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TechnoTypeClass": {
+  "ident": "TechnoTypeClass",
+  "ctor": 6417820,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6970352
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6970324
+   },
+   {
+    "off": 205,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 888,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 892,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 896,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 900,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 904,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 908,
+    "kind": "imm",
+    "value": 6962248
+   },
+   {
+    "off": 924,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 928,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 936,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 940,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 944,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 948,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 952,
+    "kind": "imm",
+    "value": 6970536
+   },
+   {
+    "off": 968,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 972,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 980,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 984,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 988,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 992,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 996,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1000,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1076,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1077,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1078,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1079,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1080,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1081,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1082,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1083,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1084,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1085,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1086,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1087,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1088,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1089,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1090,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1091,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1092,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1093,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1094,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1095,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1096,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1097,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1098,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1099,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1101,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1102,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1103,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1105,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1106,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1107,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1109,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1110,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1111,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1113,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1120,
+    "kind": "imm",
+    "value": 5
+   },
+   {
+    "off": 1124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1128,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TerrainTypeClass": {
+  "ident": "TerrainTypeClass",
+  "ctor": 6442784,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6971308
+   }
+  ]
+ },
+ "class TogglePowerCommandClass": {
+  "ident": "TogglePowerCommandClass",
+  "ctor": 5104137,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948588
+   }
+  ]
+ },
+ "class ToggleRadarCommandClass": {
+  "ident": "ToggleRadarCommandClass",
+  "ctor": 5104028,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948616
+   }
+  ]
+ },
+ "class ToggleRepairCommandClass": {
+  "ident": "ToggleRepairCommandClass",
+  "ctor": 5104355,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948532
+   }
+  ]
+ },
+ "class ToggleSellCommandClass": {
+  "ident": "ToggleSellCommandClass",
+  "ctor": 5104246,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6948560
+   }
+  ]
+ },
+ "class TriggerClass": {
+  "ident": "TriggerClass",
+  "ctor": 6473872,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6972232
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6972204
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "imm",
+    "value": 1
+   }
+  ]
+ },
+ "class TriggerTypeClass": {
+  "ident": "TriggerTypeClass",
+  "ctor": 6477040,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6972380
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6972352
+   },
+   {
+    "off": 96,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 101,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 102,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 103,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TypeList<H>": {
+  "ident": "TypeList_H",
+  "ctor": 4494336,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 8,
+    "kind": "imm",
+    "value": 6925628
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "imm",
+    "value": 6925656
+   },
+   {
+    "off": 21,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 564,
+    "kind": "imm",
+    "value": 6925628
+   }
+  ]
+ },
+ "class TypeList<TeamTypeClass*>": {
+  "ident": "TypeList_TeamTypeClass",
+  "ctor": 4940439,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "imm",
+    "value": 6945516
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TypeList<TechnoTypeClass*>": {
+  "ident": "TypeList_TechnoTypeClass",
+  "ctor": 4496256,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 6925712
+   },
+   {
+    "off": 25,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 568,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TypeList<articleSystemTypeClass**>": {
+  "ident": "TypeList_articleSystemTypeClass",
+  "ctor": 6417820,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6970352
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6970324
+   },
+   {
+    "off": 205,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 888,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 892,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 896,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 900,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 904,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 908,
+    "kind": "imm",
+    "value": 6962248
+   },
+   {
+    "off": 924,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 928,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 936,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 940,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 944,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 948,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 952,
+    "kind": "imm",
+    "value": 6970536
+   },
+   {
+    "off": 968,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 972,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 980,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 984,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 988,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 992,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 996,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1000,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1076,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1077,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1078,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1079,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1080,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1081,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1082,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1083,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1084,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1085,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1086,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1087,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1088,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1089,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1090,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1091,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1092,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1093,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1094,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1095,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1096,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1097,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1098,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1099,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1101,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1102,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1103,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1105,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1106,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1107,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1109,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1110,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1111,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1113,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1120,
+    "kind": "imm",
+    "value": 5
+   },
+   {
+    "off": 1124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1128,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TypeList<class RGBClass>": {
+  "ident": "TypeList_class_RGBClass",
+  "ctor": 4497840,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 15,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 17,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 18,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 22,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "imm",
+    "value": 6925768
+   },
+   {
+    "off": 33,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 576,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class UnitClass": {
+  "ident": "UnitClass",
+  "ctor": 6491328,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6973068
+   }
+  ]
+ },
+ "class UnitTypeClass": {
+  "ident": "UnitTypeClass",
+  "ctor": 6546544,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6974068
+   }
+  ]
+ },
+ "class VectorClass<AbstractClass*>": {
+  "ident": "VectorClass_AbstractClass",
+  "ctor": 4475915,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 12,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "imm",
+    "value": 6924860
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 152,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<ButtonFadeEffect*>": {
+  "ident": "VectorClass_ButtonFadeEffect",
+  "ctor": 4731634,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 129,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 140,
+    "kind": "imm",
+    "value": 6937868
+   },
+   {
+    "off": 144,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 153,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 172,
+    "kind": "imm",
+    "value": 6937840
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 180,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 185,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 196,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 200,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 204,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 209,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 780,
+    "kind": "imm",
+    "value": 6921160
+   },
+   {
+    "off": 876,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<CrossDissolveEffect*>": {
+  "ident": "VectorClass_CrossDissolveEffect",
+  "ctor": 4731634,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 129,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 140,
+    "kind": "imm",
+    "value": 6937868
+   },
+   {
+    "off": 144,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 153,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 172,
+    "kind": "imm",
+    "value": 6937840
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 180,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 185,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 196,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 200,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 204,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 209,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 780,
+    "kind": "imm",
+    "value": 6921160
+   },
+   {
+    "off": 876,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<D&*>": {
+  "ident": "VectorClass_D",
+  "ctor": 5481946,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 14,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 15,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 6954812
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 70,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 92,
+    "kind": "imm",
+    "value": 1072693248
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 140,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 144,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 152,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 156,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class VectorClass<FileEntryClass*>": {
+  "ident": "VectorClass_FileEntryClass",
+  "ctor": 5210192,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6952980
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<FoggedObjectClass*>": {
+  "ident": "VectorClass_FoggedObjectClass",
+  "ctor": 4434656,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6924056
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class VectorClass<G&*>": {
+  "ident": "VectorClass_G",
+  "ctor": 5153616,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6951640
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6951612
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "imm",
+    "value": 6951832
+   },
+   {
+    "off": 312,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 321,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 332,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<H>": {
+  "ident": "VectorClass_H",
+  "ctor": 4494336,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 8,
+    "kind": "imm",
+    "value": 6925628
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "imm",
+    "value": 6925656
+   },
+   {
+    "off": 21,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 564,
+    "kind": "imm",
+    "value": 6925628
+   }
+  ]
+ },
+ "class VectorClass<IConnectionPoint*>": {
+  "ident": "VectorClass_IConnectionPoint",
+  "ctor": 4637312,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928528
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class VectorClass<MSAnim*>": {
+  "ident": "VectorClass_MSAnim",
+  "ctor": 5620160,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6956752
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<MSAnimEntry*>": {
+  "ident": "VectorClass_MSAnimEntry",
+  "ctor": 5610048,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6956400
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "imm",
+    "value": 6956428
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 57,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "imm",
+    "value": 6956456
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 81,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<MSSfx*>": {
+  "ident": "VectorClass_MSSfx",
+  "ctor": 5620160,
+  "this_reg": "ebp",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6956780
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<MSSfxEntry*>": {
+  "ident": "VectorClass_MSSfxEntry",
+  "ctor": 5610048,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6956400
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "imm",
+    "value": 6956428
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 57,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "imm",
+    "value": 6956456
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 81,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<MSTextEntry*>": {
+  "ident": "VectorClass_MSTextEntry",
+  "ctor": 5613472,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 6956568
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 49,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "imm",
+    "value": 6956596
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 73,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "imm",
+    "value": 6956624
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 97,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<MapSelection*>": {
+  "ident": "VectorClass_MapSelection",
+  "ctor": 5613472,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 6956568
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 49,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "imm",
+    "value": 6956596
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 73,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "imm",
+    "value": 6956624
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 97,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<MapStage*>": {
+  "ident": "VectorClass_MapStage",
+  "ctor": 5610048,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6956400
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "imm",
+    "value": 6956428
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 57,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "imm",
+    "value": 6956456
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 81,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<ToolTip*>": {
+  "ident": "VectorClass_ToolTip",
+  "ctor": 6466208,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6972156
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<W4DiskID>": {
+  "ident": "VectorClass_W4DiskID",
+  "ctor": 6116400,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 348,
+    "kind": "imm",
+    "value": 6963864
+   },
+   {
+    "off": 352,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 356,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 361,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<W4PassabilityType>": {
+  "ident": "VectorClass_W4PassabilityType",
+  "ctor": 5274348,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 2
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "imm",
+    "value": 6953828
+   }
+  ]
+ },
+ "class VectorClass<WinsockBufferType*, WinsockInterfaceClass>": {
+  "ident": "VectorClass_WinsockBufferType_WinsockInterfaceClass",
+  "ctor": 6744688,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6978044
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6978160
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 17,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "imm",
+    "value": 6978160
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 41,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<_N>": {
+  "ident": "VectorClass_N",
+  "ctor": 4686366,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 19,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "imm",
+    "value": 6915888
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "imm",
+    "value": 6929436
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 113,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 124,
+    "kind": "imm",
+    "value": 6921728
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 137,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 180,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 196,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 200,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 202,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 208,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 210,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 212,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 214,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<articleSystemTypeClass**>": {
+  "ident": "VectorClass_articleSystemTypeClass",
+  "ctor": 6370878,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 56,
+    "kind": "imm",
+    "value": 6970172
+   }
+  ]
+ },
+ "class VectorClass<class BaseNodeClass>": {
+  "ident": "VectorClass_class_BaseNodeClass",
+  "ctor": 4323584,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6921756
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class VectorClass<class Cell>": {
+  "ident": "VectorClass_class_Cell",
+  "ctor": 4322816,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6921728
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 16,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class VectorClass<class DistributionObject<AITriggerTypeClass*>, DiscreteDistributionClass<class AITriggerTypeClass>>": {
+  "ident": "VectorClass_class_DistributionObject_AITriggerTypeClass_DiscreteDistributionClass_class_AITriggerTypeClass",
+  "ctor": 6344396,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 6945544
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 53,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 6969056
+   }
+  ]
+ },
+ "class VectorClass<class DistributionObject<BuildingTypeClass*>, DiscreteDistributionClass<class BuildingTypeClass>>": {
+  "ident": "VectorClass_class_DistributionObject_BuildingTypeClass_DiscreteDistributionClass_class_BuildingTypeClass",
+  "ctor": 4984920,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 19,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 22,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 32,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "imm",
+    "value": 6945600
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "imm",
+    "value": 6921672
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 105,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 124,
+    "kind": "imm",
+    "value": 6945664
+   },
+   {
+    "off": 128,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 132,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 137,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 140,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 144,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 156,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 160,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<class DistributionObject<CellClass*>, DiscreteDistributionClass<class CellClass>>": {
+  "ident": "VectorClass_class_DistributionObject_CellClass_DiscreteDistributionClass_class_CellClass",
+  "ctor": 4863952,
+  "this_reg": "esp",
+  "members": [
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 30,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "imm",
+    "value": 6940428
+   },
+   {
+    "off": 64,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<class Point2D>": {
+  "ident": "VectorClass_class_Point2D",
+  "ctor": 5613472,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 6956568
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 49,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "imm",
+    "value": 6956596
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 73,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "imm",
+    "value": 6956624
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 97,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<ircraftTypeClass&*>": {
+  "ident": "VectorClass_ircraftTypeClass",
+  "ctor": 5953296,
+  "this_reg": "ecx",
+  "members": [
+   {
+    "off": 0,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<nimTypeClass&*>": {
+  "ident": "VectorClass_nimTypeClass",
+  "ctor": 5953296,
+  "this_reg": "ecx",
+  "members": [
+   {
+    "off": 0,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct AngerStruct>": {
+  "ident": "VectorClass_struct_AngerStruct",
+  "ctor": 4935936,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6945304
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6945276
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 6945212
+   },
+   {
+    "off": 24,
+    "kind": "imm",
+    "value": 6945172
+   },
+   {
+    "off": 28,
+    "kind": "imm",
+    "value": 6945148
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "imm",
+    "value": 6944860
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 53,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 6922904
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 77,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 296,
+    "kind": "imm",
+    "value": 6944688
+   },
+   {
+    "off": 300,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 309,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1020,
+    "kind": "imm",
+    "value": 6945460
+   },
+   {
+    "off": 1024,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1028,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1033,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1044,
+    "kind": "imm",
+    "value": 6945488
+   },
+   {
+    "off": 1048,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1052,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1057,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1268,
+    "kind": "imm",
+    "value": 6921656
+   },
+   {
+    "off": 1488,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct CrackedIceStruct, MapClass>": {
+  "ident": "VectorClass_struct_CrackedIceStruct_MapClass",
+  "ctor": 5249936,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6953456
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 6953688
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 77,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 196,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 200,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 204,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 209,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 220,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 224,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 228,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 233,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 332,
+    "kind": "imm",
+    "value": 6953744
+   },
+   {
+    "off": 336,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 345,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 356,
+    "kind": "imm",
+    "value": 6953576
+   },
+   {
+    "off": 360,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 364,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 369,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4484,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4488,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4492,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4497,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct DrawRecord, FoggedObjectClass>": {
+  "ident": "VectorClass_struct_DrawRecord_FoggedObjectClass",
+  "ctor": 4826560,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6939160
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6939132
+   },
+   {
+    "off": 76,
+    "kind": "imm",
+    "value": 6939292
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 89,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct HashObject<II>>": {
+  "ident": "VectorClass_struct_HashObject_II",
+  "ctor": 5382752,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6953912
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct HashObject<IUSubzoneConnectionStruct>>": {
+  "ident": "VectorClass_struct_HashObject_IUSubzoneConnectionStruct",
+  "ctor": 5383280,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6953940
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct HashObject<struct RadarTrackingStruct>, TechnoClass*>": {
+  "ident": "VectorClass_struct_HashObject_struct_RadarTrackingStruct_TechnoClass",
+  "ctor": 5909712,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 256
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct ScoutStruct>": {
+  "ident": "VectorClass_struct_ScoutStruct",
+  "ctor": 4935936,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6945304
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6945276
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 6945212
+   },
+   {
+    "off": 24,
+    "kind": "imm",
+    "value": 6945172
+   },
+   {
+    "off": 28,
+    "kind": "imm",
+    "value": 6945148
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "imm",
+    "value": 6944860
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 53,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 6922904
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 77,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 296,
+    "kind": "imm",
+    "value": 6944688
+   },
+   {
+    "off": 300,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 309,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1020,
+    "kind": "imm",
+    "value": 6945460
+   },
+   {
+    "off": 1024,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1028,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1033,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1044,
+    "kind": "imm",
+    "value": 6945488
+   },
+   {
+    "off": 1048,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1052,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1057,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1268,
+    "kind": "imm",
+    "value": 6921656
+   },
+   {
+    "off": 1488,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct SubzoneConnectionStruct>": {
+  "ident": "VectorClass_struct_SubzoneConnectionStruct",
+  "ctor": 4199200,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6915636
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct SubzoneTrackingStruct>": {
+  "ident": "VectorClass_struct_SubzoneTrackingStruct",
+  "ctor": 5249936,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6953716
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct ZoneConnectionClass>": {
+  "ident": "VectorClass_struct_ZoneConnectionClass",
+  "ctor": 5249936,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6953456
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 6953688
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 77,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 196,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 200,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 204,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 209,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 220,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 224,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 228,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 233,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 332,
+    "kind": "imm",
+    "value": 6953744
+   },
+   {
+    "off": 336,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 345,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 356,
+    "kind": "imm",
+    "value": 6953576
+   },
+   {
+    "off": 360,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 364,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 369,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4484,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4488,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4492,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4497,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct nitTypeClass*>": {
+  "ident": "VectorClass_struct_nitTypeClass",
+  "ctor": 5953296,
+  "this_reg": "ecx",
+  "members": [
+   {
+    "off": 0,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class VectorClass<struct tagCONNECTDATA>": {
+  "ident": "VectorClass_struct_tagCONNECTDATA",
+  "ctor": 4634848,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928404
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class VoxelAnimClass": {
+  "ident": "VoxelAnimClass",
+  "ctor": 6553712,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6974292
+   }
+  ]
+ },
+ "class VoxelAnimTypeClass": {
+  "ident": "VoxelAnimTypeClass",
+  "ctor": 6560464,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6974764
+   }
+  ]
+ },
+ "class WarheadTypeClass": {
+  "ident": "WarheadTypeClass",
+  "ctor": 6624112,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6976020
+   }
+  ]
+ },
+ "class WaveClass": {
+  "ident": "WaveClass",
+  "ctor": 6627824,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6976196
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class WaypointPathClass": {
+  "ident": "WaypointPathClass",
+  "ctor": 6641632,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6976752
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6976724
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 24,
+    "kind": "imm",
+    "value": 6976852
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 37,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
+ "class WeaponTypeClass": {
+  "ident": "WeaponTypeClass",
+  "ctor": 6646416,
+  "this_reg": "eax",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6976916
+   }
+  ]
+ },
+ "class XSurface": {
+  "ident": "XSurface",
+  "ctor": 4219072,
+  "this_reg": "edi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6917096
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "imm",
+    "value": 2
+   }
+  ]
+ },
+ "class __non_rtti_object": {
+  "ident": "non_rtti_object",
+  "ctor": 6827817,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6978880
+   }
+  ]
+ },
+ "class _com_error": {
+  "ident": "com_error",
+  "ctor": 6897744,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6982672
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class type_info": {
+  "ident": "type_info",
+  "ctor": 6826205,
+  "this_reg": "esi",
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6978820
+   }
+  ]
+ }
+}

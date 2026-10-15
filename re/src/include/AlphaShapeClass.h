@@ -27,4 +27,16 @@ public:
 
     AlphaShapeClass();  // 0x00411a15
     virtual ~AlphaShapeClass();
+
+    // ---- data members (offsets from ctor 0x004119f0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6997ec
+    unsigned long m_004;  // init 0x6997d0
+    unsigned char pad_008[0xc];
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned char pad_01c[0xc];
+    unsigned long m_028;  // zero-initialised
+    unsigned long m_02c;  // zero-initialised
 };

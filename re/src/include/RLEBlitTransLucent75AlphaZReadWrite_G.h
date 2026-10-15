@@ -23,4 +23,12 @@ public:
 
     RLEBlitTransLucent75AlphaZReadWrite_G();  // 0x00462339
     virtual ~RLEBlitTransLucent75AlphaZReadWrite_G();
+
+    // ---- data members (offsets from ctor 0x00461f39) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69b2c4
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // /* ? */
 };

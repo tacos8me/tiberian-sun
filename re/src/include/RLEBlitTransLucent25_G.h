@@ -23,4 +23,11 @@ public:
 
     RLEBlitTransLucent25_G();  // 0x00461bf6
     virtual ~RLEBlitTransLucent25_G();
+
+    // ---- data members (offsets from ctor 0x004617f6) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69b3d8
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
 };

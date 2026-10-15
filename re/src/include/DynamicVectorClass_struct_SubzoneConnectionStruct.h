@@ -27,4 +27,39 @@ public:
 
     DynamicVectorClass_struct_SubzoneConnectionStruct();  // 0x0051aabd
     virtual ~DynamicVectorClass_struct_SubzoneConnectionStruct();
+
+    // ---- data members (offsets from ctor 0x0051aa5a) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0x10];
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
+    unsigned char pad_024[0x2];
+    unsigned long m_026;  // /* ? */
+    unsigned char pad_02a[0x2];
+    unsigned long m_02c;  // /* ? */
+    unsigned long m_030;  // /* ? */
+    unsigned char pad_034[0x4];
+    unsigned long m_038;  // /* ? */
+    unsigned char pad_03c[0x4];
+    unsigned long m_040;  // /* ? */
+    unsigned char pad_044[0x4];
+    unsigned long m_048;  // /* ? */
+    unsigned long m_04c;  // /* ? */
+    unsigned char pad_050[0x8];
+    unsigned long m_058;  // init 0x6a1b9c
+    unsigned long m_05c;  // zero-initialised
+    unsigned long m_060;  // zero-initialised
+    unsigned char pad_064[0x1];
+    unsigned long m_065;  // zero-initialised
+    unsigned char pad_069[0x3];
+    unsigned long m_06c;  // init 0xa
+    unsigned long m_070;  // /* ? */
+    unsigned long m_074;  // /* ? */
+    unsigned long m_078;  // /* ? */
+    unsigned char pad_07c[0x4];
+    unsigned long m_080;  // /* ? */
 };

@@ -27,4 +27,12 @@ public:
 
     DynamicVectorClass_ircraftTypeClass();  // 0x005baf85
     virtual ~DynamicVectorClass_ircraftTypeClass();
+
+    // ---- data members (offsets from ctor 0x005baf83) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a3da4
+    unsigned char pad_004[0xc];
+    unsigned long m_010;  // zero-initialised
+    unsigned long m_014;  // init 0xa
 };

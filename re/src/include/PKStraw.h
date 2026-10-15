@@ -25,4 +25,19 @@ public:
 
     PKStraw();  // 0x00593101
     virtual ~PKStraw();
+
+    // ---- data members (offsets from ctor 0x005930b0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a3270
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // init 0x1
+    unsigned long m_010;  // /* ? */
+    unsigned char pad_014[0x20];
+    unsigned long m_034;  // /* ? */
+    unsigned long m_038;  // /* ? */
+    unsigned char pad_03c[0x100];
+    unsigned long m_13c;  // /* ? */
+    unsigned long m_140;  // /* ? */
 };

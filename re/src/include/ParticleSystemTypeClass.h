@@ -27,4 +27,9 @@ public:
 
     ParticleSystemTypeClass();  // 0x00596f94
     virtual ~ParticleSystemTypeClass();
+
+    // ---- data members (offsets from ctor 0x00596e90) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a338c
 };

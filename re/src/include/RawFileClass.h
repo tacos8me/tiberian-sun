@@ -38,4 +38,14 @@ public:
 
     RawFileClass();  // 0x005a6125
     virtual ~RawFileClass();
+
+    // ---- data members (offsets from ctor 0x005a6120) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a39e8
+    unsigned char pad_004[0xc];
+    unsigned long m_010;  // init 0xffffffff
+    unsigned long m_014;  // zero-initialised
+    unsigned char pad_018[0x4];
+    unsigned long m_01c;  // zero-initialised
 };

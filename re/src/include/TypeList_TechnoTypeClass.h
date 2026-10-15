@@ -27,4 +27,19 @@ public:
 
     TypeList_TechnoTypeClass();  // 0x00449bd9
     virtual ~TypeList_TechnoTypeClass();
+
+    // ---- data members (offsets from ctor 0x00449b80) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0xc];
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // init 0x69ad90
+    unsigned char pad_018[0x1];
+    unsigned long m_019;  // /* ? */
+    unsigned char pad_01d[0x7];
+    unsigned long m_024;  // /* ? */
+    unsigned long m_028;  // init 0xa
+    unsigned char pad_02c[0x20c];
+    unsigned long m_238;  // /* ? */
 };

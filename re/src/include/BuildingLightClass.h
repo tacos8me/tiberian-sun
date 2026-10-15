@@ -27,4 +27,25 @@ public:
 
     BuildingLightClass();  // 0x00420f5a
     virtual ~BuildingLightClass();
+
+    // ---- data members (offsets from ctor 0x00420ee0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x699fb8
+    unsigned long m_004;  // init 0x699f9c
+    unsigned char pad_008[0x48];
+    unsigned long m_050;  // /* ? */
+    unsigned long m_054;  // /* ? */
+    unsigned long m_058;  // /* ? */
+    unsigned long m_05c;  // /* ? */
+    unsigned long m_060;  // /* ? */
+    unsigned long m_064;  // /* ? */
+    unsigned long m_068;  // /* ? */
+    unsigned long m_06c;  // /* ? */
+    unsigned long m_070;  // /* ? */
+    unsigned long m_074;  // /* ? */
+    unsigned long m_078;  // /* ? */
+    unsigned long m_07c;  // /* ? */
+    unsigned long m_080;  // /* ? */
+    unsigned long m_084;  // /* ? */
 };

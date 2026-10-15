@@ -27,4 +27,23 @@ public:
 
     TActionClass();  // 0x005fde29
     virtual ~TActionClass();
+
+    // ---- data members (offsets from ctor 0x005fddf0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a5364
+    unsigned long m_004;  // init 0x6a5348
+    unsigned char pad_008[0xc];
+    unsigned long m_014;  // init 0xffffffff
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // /* ? */
+    unsigned long m_028;  // /* ? */
+    unsigned long m_02c;  // /* ? */
+    unsigned long m_030;  // /* ? */
+    unsigned long m_034;  // /* ? */
+    unsigned long m_038;  // /* ? */
+    unsigned long m_03c;  // /* ? */
+    unsigned long m_040;  // /* ? */
 };

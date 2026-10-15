@@ -21,7 +21,6 @@
 // ============================================================================
 
 #include "AbstractClass.h"
-#include "ts_prelude.h"
 
 class CellClass : public AbstractClass
 {

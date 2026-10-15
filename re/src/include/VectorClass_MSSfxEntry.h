@@ -26,4 +26,25 @@ public:
 
     VectorClass_MSSfxEntry();  // 0x00559a53
     virtual ~VectorClass_MSSfxEntry();
+
+    // ---- data members (offsets from ctor 0x00559a40) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a2570
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned char pad_00c[0x1];
+    unsigned long m_00d;  // /* ? */
+    unsigned char pad_011[0x1b];
+    unsigned long m_02c;  // init 0x6a258c
+    unsigned long m_030;  // /* ? */
+    unsigned long m_034;  // /* ? */
+    unsigned char pad_038[0x1];
+    unsigned long m_039;  // /* ? */
+    unsigned char pad_03d[0x7];
+    unsigned long m_044;  // init 0x6a25a8
+    unsigned long m_048;  // /* ? */
+    unsigned long m_04c;  // /* ? */
+    unsigned char pad_050[0x1];
+    unsigned long m_051;  // /* ? */
 };

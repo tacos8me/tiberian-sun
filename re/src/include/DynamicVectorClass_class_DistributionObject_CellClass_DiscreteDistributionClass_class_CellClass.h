@@ -27,4 +27,12 @@ public:
 
     DynamicVectorClass_class_DistributionObject_CellClass_DiscreteDistributionClass_class_CellClass();  // 0x004a513c
     virtual ~DynamicVectorClass_class_DistributionObject_CellClass_DiscreteDistributionClass_class_CellClass();
+
+    // ---- data members (offsets from ctor 0x004a513a) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69e728
+    unsigned char pad_004[0xc];
+    unsigned long m_010;  // zero-initialised
+    unsigned long m_014;  // init 0xa
 };

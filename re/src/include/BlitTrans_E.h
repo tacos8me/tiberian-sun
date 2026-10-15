@@ -24,4 +24,19 @@ public:
 
     BlitTrans_E();  // 0x006759c1
     virtual ~BlitTrans_E();
+
+    // ---- data members (offsets from ctor 0x00675910) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0x10];
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned char pad_01c[0x4];
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // /* ? */
+    unsigned long m_028;  // /* ? */
+    unsigned long m_02c;  // /* ? */
+    unsigned char pad_030[0x48];
+    unsigned long m_078;  // init 0x6a7c44
 };

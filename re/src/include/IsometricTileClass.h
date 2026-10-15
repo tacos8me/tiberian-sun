@@ -27,4 +27,14 @@ public:
 
     IsometricTileClass();  // 0x004e90b8
     virtual ~IsometricTileClass();
+
+    // ---- data members (offsets from ctor 0x004e9090) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0be8
+    unsigned long m_004;  // init 0x6a0bcc
+    unsigned char pad_008[0x27];
+    unsigned long m_02f;  // zero-initialised
+    unsigned char pad_033[0x19];
+    unsigned long m_04c;  // /* ? */
 };

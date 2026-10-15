@@ -26,4 +26,16 @@ public:
 
     VectorClass_class_DistributionObject_AITriggerTypeClass_DiscreteDistributionClass_class_AITriggerTypeClass();  // 0x0060ced4
     virtual ~VectorClass_class_DistributionObject_AITriggerTypeClass_DiscreteDistributionClass_class_AITriggerTypeClass();
+
+    // ---- data members (offsets from ctor 0x0060cecc) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0x24];
+    unsigned long m_024;  // init 0x69fb08
+    unsigned long m_028;  // /* ? */
+    unsigned char pad_02c[0x4];
+    unsigned long m_030;  // /* ? */
+    unsigned long m_034;  // /* ? */
+    unsigned char pad_038[0x8];
+    unsigned long m_040;  // init 0x6a56e0
 };

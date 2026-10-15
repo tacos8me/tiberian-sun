@@ -27,4 +27,17 @@ public:
 
     BuildingClass();  // 0x00425570
     virtual ~BuildingClass();
+
+    // ---- data members (offsets from ctor 0x00425530) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69a2d0
+    unsigned long m_004;  // init 0x69a2b4
+    unsigned char pad_008[0x2b0];
+    unsigned long m_2b8;  // /* ? */
+    unsigned long m_2bc;  // /* ? */
+    unsigned char pad_2c0[0x4];
+    unsigned long m_2c4;  // /* ? */
+    unsigned long m_2c8;  // /* ? */
+    unsigned long m_2cc;  // init 0x1
 };

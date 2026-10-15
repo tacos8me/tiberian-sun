@@ -27,4 +27,16 @@ public:
 
     TagClass();  // 0x00603210
     virtual ~TagClass();
+
+    // ---- data members (offsets from ctor 0x006031e0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a53f0
+    unsigned long m_004;  // init 0x6a53d4
+    unsigned char pad_008[0xc];
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // /* ? */
 };

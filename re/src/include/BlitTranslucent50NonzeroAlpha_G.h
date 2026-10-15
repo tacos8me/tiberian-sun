@@ -24,4 +24,11 @@ public:
 
     BlitTranslucent50NonzeroAlpha_G();  // 0x00461679
     virtual ~BlitTranslucent50NonzeroAlpha_G();
+
+    // ---- data members (offsets from ctor 0x00461279) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69b604
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
 };

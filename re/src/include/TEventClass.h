@@ -27,4 +27,16 @@ public:
 
     TEventClass();  // 0x00625a84
     virtual ~TEventClass();
+
+    // ---- data members (offsets from ctor 0x00625a60) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a60c8
+    unsigned long m_004;  // init 0x6a60ac
+    unsigned char pad_008[0xc];
+    unsigned long m_014;  // init 0xffffffff
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // /* ? */
 };

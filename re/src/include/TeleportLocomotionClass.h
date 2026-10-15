@@ -13,7 +13,6 @@
 #define TELEPORTLOCOMOTIONCLASS_H
 
 #include "LocomotionClass.h"
-#include "ts_prelude.h"
 
 class TeleportLocomotionClass : public LocomotionClass
 {

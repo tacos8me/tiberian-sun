@@ -24,4 +24,16 @@ public:
 
     BlowStraw();  // 0x00547415
     virtual ~BlowStraw();
+
+    // ---- data members (offsets from ctor 0x005473e2) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0x38];
+    unsigned long m_038;  // init 0x699bc8
+    unsigned char pad_03c[0x5c];
+    unsigned long m_098;  // /* ? */
+    unsigned char pad_09c[0x14];
+    unsigned long m_0b0;  // init 0x6a2308
+    unsigned char pad_0b4[0x8];
+    unsigned long m_0bc;  // /* ? */
 };

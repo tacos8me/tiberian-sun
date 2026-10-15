@@ -26,4 +26,38 @@ public:
 
     VectorClass_N();  // 0x0047861e
     virtual ~VectorClass_N();
+
+    // ---- data members (offsets from ctor 0x0047821e) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0x13];
+    unsigned long m_013;  // init 0x1
+    unsigned char pad_017[0x1];
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // init 0x698730
+    unsigned char pad_020[0x14];
+    unsigned long m_034;  // /* ? */
+    unsigned long m_038;  // /* ? */
+    unsigned char pad_03c[0x10];
+    unsigned long m_04c;  // /* ? */
+    unsigned char pad_050[0x14];
+    unsigned long m_064;  // init 0x69bc1c
+    unsigned long m_068;  // /* ? */
+    unsigned long m_06c;  // /* ? */
+    unsigned char pad_070[0x1];
+    unsigned long m_071;  // zero-initialised
+    unsigned char pad_075[0x7];
+    unsigned long m_07c;  // init 0x699e00
+    unsigned long m_080;  // /* ? */
+    unsigned char pad_084[0x4];
+    unsigned long m_088;  // /* ? */
+    unsigned char pad_08c[0x24];
+    unsigned long m_0b0;  // /* ? */
+    unsigned long m_0b4;  // /* ? */
+    unsigned char pad_0b8[0xc];
+    unsigned long m_0c4;  // /* ? */
+    unsigned long m_0c8;  // /* ? */
+    unsigned char pad_0cc[0x4];
+    unsigned long m_0d0;  // /* ? */
+    unsigned long m_0d4;  // /* ? */
 };

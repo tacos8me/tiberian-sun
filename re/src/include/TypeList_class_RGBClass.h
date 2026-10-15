@@ -27,4 +27,21 @@ public:
 
     TypeList_class_RGBClass();  // 0x0044a209
     virtual ~TypeList_class_RGBClass();
+
+    // ---- data members (offsets from ctor 0x0044a1b0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0xf];
+    unsigned long m_00f;  // init 0x1
+    unsigned char pad_013[0x1];
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // init 0x69adc8
+    unsigned char pad_020[0x1];
+    unsigned long m_021;  // /* ? */
+    unsigned char pad_025[0x7];
+    unsigned long m_02c;  // /* ? */
+    unsigned long m_030;  // init 0xa
+    unsigned char pad_034[0x20c];
+    unsigned long m_240;  // /* ? */
 };

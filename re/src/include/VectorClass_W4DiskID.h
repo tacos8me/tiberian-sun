@@ -26,4 +26,14 @@ public:
 
     VectorClass_W4DiskID();  // 0x005d545b
     virtual ~VectorClass_W4DiskID();
+
+    // ---- data members (offsets from ctor 0x005d5430) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0x15c];
+    unsigned long m_15c;  // init 0x6a4298
+    unsigned long m_160;  // /* ? */
+    unsigned long m_164;  // /* ? */
+    unsigned char pad_168[0x1];
+    unsigned long m_169;  // /* ? */
 };

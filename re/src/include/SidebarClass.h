@@ -21,9 +21,10 @@
 // ============================================================================
 
 #include "RadarClass.h"
+#include "ControlClass.h"
+#include "GadgetClass.h"
 #include "PowerClass.h"
-#include "ts_prelude.h"
-#include "ControlClass.h"   // gadget/UI bases (GScreenClass, GadgetClass, ...)
+#include "ts_prelude.h"   // gadget/UI bases (GScreenClass, GadgetClass, ...)
 
 class SidebarClass : public PowerClass
 {

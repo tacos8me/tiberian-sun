@@ -23,4 +23,11 @@ public:
 
     RLEBlitTransZRemapXlatZRead_E();  // 0x00460e77
     virtual ~RLEBlitTransZRemapXlatZRead_E();
+
+    // ---- data members (offsets from ctor 0x00460e4f) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69b72c
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
 };

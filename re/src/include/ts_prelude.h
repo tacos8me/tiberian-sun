@@ -1,3 +1,7 @@
+struct GScreenClass {
+    virtual ~GScreenClass() {}
+    virtual void _dummy_GScreen() {}
+};
 #pragma once
 // ============================================================================
 // ts_prelude.h — shared types for the reconstructed Tiberian Sun headers.
@@ -31,6 +35,7 @@ struct IUnknown {
     virtual ULONG   __stdcall AddRef() = 0;
     virtual ULONG   __stdcall Release() = 0;
 };
+   // defined by its own reconstructed header
 struct IPersist;   // defined by its own reconstructed header
 struct IPersistStream;   // defined by its own reconstructed header
 struct ISequentialStream {
@@ -118,13 +123,8 @@ struct BounceClass {
 struct DiskSwap {
     virtual ~DiskSwap() {}
 };
-struct PowerClass;   // defined by its own reconstructed header
-struct GScreenClass {
-    virtual ~GScreenClass() {}
-    virtual void _dummy_GScreen() {}
-};
-struct FlasherClass;   // defined by TechnoClass.h (richer vtable detail)
-struct StageClass;   // defined by TechnoClass.h (richer vtable detail)
+struct FlasherClass;   // defined by its own reconstructed header
+struct StageClass;   // defined by its own reconstructed header
 struct CDownloadEventSink {
     virtual ~CDownloadEventSink() {}
 };
@@ -133,4 +133,4 @@ struct CNetUtilEventSink {
 };
 
 // --- container node templates referenced as bases --------------------------
-// Node<T,Key> is defined by INIClass.h (hand-written header).
+// Node<T,Key> is defined by INIClass.h.

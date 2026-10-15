@@ -25,4 +25,19 @@ public:
 
     ScoreTimeClass();  // 0x005ca0db
     virtual ~ScoreTimeClass();
+
+    // ---- data members (offsets from ctor 0x005c9cdb) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a3ee4
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned char pad_00c[0x4];
+    unsigned long m_010;  // /* ? */
+    unsigned char pad_014[0x4];
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // zero-initialised
+    unsigned long m_020;  // init 0x3c
+    unsigned long m_024;  // init 0x3
+    unsigned long m_028;  // /* ? */
 };

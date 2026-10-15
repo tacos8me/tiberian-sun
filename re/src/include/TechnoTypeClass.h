@@ -17,7 +17,6 @@
 // ============================================================================
 
 #include "ObjectTypeClass.h"
-#include "ts_prelude.h"
 
 class TechnoTypeClass : public ObjectTypeClass
 {

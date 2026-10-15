@@ -26,4 +26,9 @@ public:
 
     VectorClass_struct_nitTypeClass();  // 0x005ad85e
     virtual ~VectorClass_struct_nitTypeClass();
+
+    // ---- data members (offsets from ctor 0x005ad710) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // /* ? */
 };

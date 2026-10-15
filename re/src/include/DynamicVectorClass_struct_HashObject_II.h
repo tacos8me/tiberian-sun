@@ -27,4 +27,12 @@ public:
 
     DynamicVectorClass_struct_HashObject_II();  // 0x005021c8
     virtual ~DynamicVectorClass_struct_HashObject_II();
+
+    // ---- data members (offsets from ctor 0x00502130) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a1b48
+    unsigned char pad_004[0xc];
+    unsigned long m_010;  // zero-initialised
+    unsigned long m_014;  // init 0xa
 };

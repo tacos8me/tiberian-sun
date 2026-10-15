@@ -27,4 +27,9 @@ public:
 
     EnumConnectionPointsClass();  // 0x0046c2a9
     virtual ~EnumConnectionPointsClass();
+
+    // ---- data members (offsets from ctor 0x0046c280) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69b8ac
 };

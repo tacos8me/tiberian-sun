@@ -26,4 +26,9 @@ public:
 
     VectorClass_nimTypeClass();  // 0x005ad81a
     virtual ~VectorClass_nimTypeClass();
+
+    // ---- data members (offsets from ctor 0x005ad710) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // /* ? */
 };

@@ -26,4 +26,16 @@ public:
 
     VectorClass_struct_DrawRecord_FoggedObjectClass();  // 0x0049a7b0
     virtual ~VectorClass_struct_DrawRecord_FoggedObjectClass();
+
+    // ---- data members (offsets from ctor 0x0049a5c0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69e218
+    unsigned long m_004;  // init 0x69e1fc
+    unsigned char pad_008[0x44];
+    unsigned long m_04c;  // init 0x69e29c
+    unsigned long m_050;  // /* ? */
+    unsigned long m_054;  // /* ? */
+    unsigned char pad_058[0x1];
+    unsigned long m_059;  // /* ? */
 };

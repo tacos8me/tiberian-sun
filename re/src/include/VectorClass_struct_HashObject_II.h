@@ -26,4 +26,13 @@ public:
 
     VectorClass_struct_HashObject_II();  // 0x0052228c
     virtual ~VectorClass_struct_HashObject_II();
+
+    // ---- data members (offsets from ctor 0x00522260) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a1bb8
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned char pad_00c[0x1];
+    unsigned long m_00d;  // /* ? */
 };

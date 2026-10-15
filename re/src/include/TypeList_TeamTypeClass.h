@@ -27,4 +27,15 @@ public:
 
     TypeList_TeamTypeClass();  // 0x004b633d
     virtual ~TypeList_TeamTypeClass();
+
+    // ---- data members (offsets from ctor 0x004b6297) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned char pad_000[0x10];
+    unsigned long m_010;  // /* ? */
+    unsigned char pad_014[0x8];
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // init 0x69faec
+    unsigned char pad_024[0x18];
+    unsigned long m_03c;  // /* ? */
 };
