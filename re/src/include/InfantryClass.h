@@ -262,6 +262,23 @@ public:
     // ---- data members (offsets from ctor 0x004cb517) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69ff34
-    unsigned long m_004;  // /* ? */
+    unsigned long m_000;  // init 0x69ff50
+    unsigned char pad_004[0x24];
+    unsigned long m_028;  // /* ? */
+    unsigned char pad_02c[0x108];
+    unsigned long m_134;  // /* ? */
+    unsigned char pad_138[0xc0];
+    unsigned long m_1f8;  // /* ? */
+    unsigned char pad_1fc[0x14c];
+    unsigned long m_348;  // /* ? */
+    unsigned long m_34c;  // init 0xffffffff
+    unsigned long m_350;  // /* ? */
+    unsigned char pad_354[0x4];
+    unsigned long m_358;  // /* ? */
+    unsigned long m_35c;  // /* ? */
+    unsigned long m_360;  // /* ? */
+    unsigned long m_364;  // /* ? */
+    unsigned long m_368;  // /* ? */
+    unsigned char pad_36c[0x4];
+    unsigned long m_370;  // /* ? */
 };

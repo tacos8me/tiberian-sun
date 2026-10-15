@@ -62,8 +62,16 @@ public:
     SmudgeTypeClass();  // 0x005e15bd
     virtual ~SmudgeTypeClass();
 
-    // ---- data members (offsets from ctor 0x005e15bd) ----
+    // ---- data members (offsets from ctor 0x005e1572) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4774
+    unsigned long m_000;  // init 0x6a4790
+    unsigned char pad_004[0xc4];
+    unsigned long m_0c8;  // /* ? */
+    unsigned long m_0cc;  // /* ? */
+    unsigned char pad_0d0[0x54];
+    unsigned long m_124;  // init 0xffffffff
+    unsigned long Width;  // +0x128 (INI key)
+    unsigned long Height;  // +0x12c (INI key)
+    unsigned long Crater;  // +0x130 (INI key)
 };

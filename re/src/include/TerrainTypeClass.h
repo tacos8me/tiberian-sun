@@ -64,5 +64,23 @@ public:
     // ---- data members (offsets from ctor 0x00624f1d) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a5fac
+    unsigned long m_000;  // init 0x6a5fc8
+    unsigned char pad_004[0x60];
+    unsigned long m_064;  // init 0x1
+    unsigned long m_068;  // init 0xffffffff
+    unsigned char pad_06c[0x5c];
+    unsigned long m_0c8;  // init 0x1
+    unsigned char pad_0cc[0x1];
+    unsigned long m_0cd;  // init 0x1
+    unsigned char pad_0d1[0x53];
+    unsigned long m_124;  // init 0xffffffff
+    unsigned long m_128;  // /* ? */
+    unsigned long m_12c;  // /* ? */
+    unsigned long m_130;  // /* ? */
+    unsigned long m_134;  // /* ? */
+    unsigned long m_138;  // /* ? */
+    unsigned long m_13c;  // /* ? */
+    unsigned long WaterBound;  // +0x140 (INI key)
+    unsigned long IsVeinhole;  // +0x144 (INI key)
+    unsigned long m_148;  // /* ? */
 };

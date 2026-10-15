@@ -61,8 +61,12 @@ public:
     VoxelAnimTypeClass();  // 0x00641bc3
     virtual ~VoxelAnimTypeClass();
 
-    // ---- data members (offsets from ctor 0x00641bb7) ----
+    // ---- data members (offsets from ctor 0x00641cab) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a6d2c
+    unsigned long m_000;  // init 0x6a6d48
+    unsigned long m_004;  // init 0x6a6d2c
+    unsigned char pad_008[0x6c];
+    unsigned long m_074;  // /* ? */
+    unsigned long m_078;  // /* ? */
 };

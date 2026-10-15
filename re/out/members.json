@@ -151,7 +151,42 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6918476
+    "value": 6918504
+   },
+   {
+    "off": 892,
+    "kind": "imm",
+    "value": 32
+   },
+   {
+    "off": 1077,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1136,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 1140,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1141,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1142,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1143,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -202,6 +237,127 @@
    }
   ]
  },
+ "class AnimClass": {
+  "ident": "AnimClass",
+  "ctor": 4272044,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6920336
+   },
+   {
+    "off": 53,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 232,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 236,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 240,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 244,
+    "kind": "imm",
+    "value": 1072693248
+   },
+   {
+    "off": 248,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 252,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 253,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 254,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 255,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 256,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 257,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 258,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 259,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 260,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 261,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 262,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class AnimFile": {
   "ident": "AnimFile",
   "ctor": 4286896,
@@ -230,7 +386,167 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6920892
+    "value": 6920920
+   },
+   {
+    "off": 200,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 201,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 202,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 203,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 204,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 205,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 206,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 468,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 469,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 470,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 471,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 472,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 473,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 474,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 475,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 476,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 477,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 478,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 479,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 480,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 481,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 482,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 483,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 484,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 485,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 486,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 487,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 488,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 489,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 490,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 491,
+    "kind": "imm",
+    "value": 1
    }
   ]
  },
@@ -1970,7 +2286,167 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6922932
+    "value": 6922960
+   },
+   {
+    "off": 644,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 648,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 652,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 696,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 736,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 748,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 752,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 756,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 757,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 758,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 759,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 760,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 761,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 762,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 763,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 764,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 765,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 766,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 767,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 768,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 769,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 770,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 771,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 772,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 773,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 774,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 775,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 776,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 777,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 778,
+    "kind": "imm",
+    "value": 1000
+   },
+   {
+    "off": 780,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 781,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -2067,7 +2543,437 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6924092
+    "value": 6924120
+   },
+   {
+    "off": 1078,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1228,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1244,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1328,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1332,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1336,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1344,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1348,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1352,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1356,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1360,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1376,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1380,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1384,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1388,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1392,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1396,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2000,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2004,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2008,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2012,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2016,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2020,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2040,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2042,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 2043,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2044,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2045,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2046,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2047,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 2048,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2049,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2050,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2051,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2052,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2053,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2054,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2055,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2056,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2057,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2058,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2059,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2060,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2061,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 2062,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2063,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2064,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2065,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2066,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2067,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2068,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2069,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2070,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2071,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2072,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2073,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2074,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2075,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2076,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2077,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2078,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2079,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2080,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2081,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2082,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2083,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2084,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2088,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2092,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2096,
+    "kind": "imm",
+    "value": 9
+   },
+   {
+    "off": 2100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2105,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2106,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2107,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2108,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 2109,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2110,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2111,
+    "kind": "imm",
+    "value": 20
+   },
+   {
+    "off": 2112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2113,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2114,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2115,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 2116,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -2078,7 +2984,82 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6924336
+    "value": 6924364
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 160,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 165,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 184,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 192,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 196,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 197,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -2089,7 +3070,187 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6924924
+    "value": 6924952
+   },
+   {
+    "off": 200,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 201,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 202,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 203,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 204,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 205,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 206,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 293,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 294,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 295,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 296,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 297,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 298,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 299,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 300,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 301,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 302,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 303,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 305,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 306,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 307,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 312,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "imm",
+    "value": 1072168960
+   },
+   {
+    "off": 328,
+    "kind": "imm",
+    "value": 3
+   },
+   {
+    "off": 332,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 336,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 344,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 348,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 349,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 350,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -9844,7 +11005,27 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6938340
+    "value": 6938368
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -9933,7 +11114,107 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6938588
+    "value": 6938616
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "imm",
+    "value": 6938716
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 57,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 93,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -10632,6 +11913,71 @@
   "members": [
    {
     "off": 0,
+    "kind": "imm",
+    "value": 6945760
+   },
+   {
+    "off": 96,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 100,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 104,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 156,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "imm",
+    "value": 65
+   },
+   {
+    "off": 173,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 174,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 175,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 176,
     "kind": "reg",
     "value": null
    }
@@ -10982,10 +12328,85 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6946612
+    "value": 6946640
    },
    {
-    "off": 4,
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 504,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 840,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 844,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 848,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 856,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 860,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 864,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 865,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 866,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 867,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 868,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 869,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 872,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 880,
     "kind": "reg",
     "value": null
    }
@@ -10998,7 +12419,137 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6947628
+    "value": 6947656
+   },
+   {
+    "off": 199,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 892,
+    "kind": "imm",
+    "value": 8
+   },
+   {
+    "off": 1091,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1093,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1096,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1097,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1156,
+    "kind": "imm",
+    "value": 6925656
+   },
+   {
+    "off": 1169,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1172,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1176,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 1184,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1185,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1186,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 1187,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1188,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1189,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1190,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1191,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1192,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1193,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1194,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1195,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1196,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1197,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1198,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -13057,12 +14608,122 @@
  },
  "class ObjectTypeClass": {
   "ident": "ObjectTypeClass",
-  "ctor": 5706579,
+  "ctor": 5706760,
   "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6957712
+   },
    {
     "off": 4,
     "kind": "imm",
     "value": 6957684
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 212,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 216,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 220,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 224,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 228,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 232,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 236,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 240,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 244,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 248,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 252,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 256,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 260,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 264,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 268,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 272,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 276,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 280,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 284,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 288,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -13084,7 +14745,12 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6957904
+    "value": 6957932
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -13095,7 +14761,122 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6958396
+    "value": 6958424
+   },
+   {
+    "off": 200,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 201,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 203,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 206,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 292,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 296,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 300,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 312,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 313,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 314,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 315,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 317,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 318,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 319,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 321,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 322,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 323,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 325,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -13249,7 +15030,47 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6958720
+    "value": 6958748
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 82,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 200,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 202,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 204,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 207,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 208,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 209,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -13260,16 +15081,61 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6959208
+    "value": 6959236
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 152,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 153,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class ParticleSystemTypeClass": {
   "ident": "ParticleSystemTypeClass",
-  "ctor": 5861219,
+  "ctor": 5861374,
   "members": [
    {
     "off": 0,
+    "kind": "imm",
+    "value": 6960040
+   },
+   {
+    "off": 4,
     "kind": "imm",
     "value": 6960012
    }
@@ -14933,7 +16799,42 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6963940
+    "value": 6963968
+   },
+   {
+    "off": 96,
+    "kind": "imm",
+    "value": 6925656
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 109,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "imm",
+    "value": 10
    }
   ]
  },
@@ -15156,18 +17057,78 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6964648
+    "value": 6964676
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class SmudgeTypeClass": {
   "ident": "SmudgeTypeClass",
-  "ctor": 6165949,
+  "ctor": 6165874,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6965108
+    "value": 6965136
+   },
+   {
+    "off": 200,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 201,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 202,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 203,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 204,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 206,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 292,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 296,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 300,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 305,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -15357,7 +17318,77 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6967292
+    "value": 6967320
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "imm",
+    "value": 4500
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 165,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 166,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 167,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -17553,7 +19584,12 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6970848
+    "value": 6970876
+   },
+   {
+    "off": 53,
+    "kind": "imm",
+    "value": 1
    }
   ]
  },
@@ -17564,7 +19600,117 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6971308
+    "value": 6971336
+   },
+   {
+    "off": 100,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 104,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 200,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 201,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 202,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 203,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 205,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 292,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 296,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 300,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 301,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 302,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 304,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 312,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 321,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 322,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 323,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 328,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -18142,12 +20288,27 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6972500
+    "value": 6972528
    },
    {
-    "off": 142,
+    "off": 20,
     "kind": "reg",
     "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 432,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -18572,13 +20733,88 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6973068
+    "value": 6973096
+   },
+   {
+    "off": 40,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 308,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 504,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 840,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 844,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 848,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 852,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 856,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 860,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 864,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 868,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 869,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 870,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 871,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 872,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class UnitTypeClass": {
   "ident": "UnitTypeClass",
-  "ctor": 6546895,
+  "ctor": 6546678,
   "members": [
    {
     "off": 0,
@@ -18586,9 +20822,24 @@
     "value": 6974096
    },
    {
-    "off": 4,
+    "off": 892,
     "kind": "imm",
-    "value": 6974068
+    "value": 32
+   },
+   {
+    "off": 1136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1177,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 1178,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -24060,18 +26311,68 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6974292
+    "value": 6974320
+   },
+   {
+    "off": 160,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 177,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 180,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class VoxelAnimTypeClass": {
   "ident": "VoxelAnimTypeClass",
-  "ctor": 6560695,
+  "ctor": 6560939,
   "members": [
    {
     "off": 0,
     "kind": "imm",
+    "value": 6974792
+   },
+   {
+    "off": 4,
+    "kind": "imm",
     "value": 6974764
+   },
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -24215,32 +26516,67 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6976196
+    "value": 6976224
    },
    {
-    "off": 4,
+    "off": 216,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 8,
+    "off": 220,
+    "kind": "imm",
+    "value": 1072693248
+   },
+   {
+    "off": 296,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 12,
+    "off": 332,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 16,
+    "off": 336,
+    "kind": "imm",
+    "value": 160
+   },
+   {
+    "off": 368,
+    "kind": "imm",
+    "value": 6953576
+   },
+   {
+    "off": 372,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 20,
+    "off": 376,
+    "kind": "imm",
+    "value": 5
+   },
+   {
+    "off": 380,
     "kind": "reg",
     "value": null
+   },
+   {
+    "off": 381,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 384,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 388,
+    "kind": "imm",
+    "value": 10
    }
   ]
  },
@@ -24318,7 +26654,47 @@
    {
     "off": 0,
     "kind": "imm",
-    "value": 6976916
+    "value": 6976944
+   },
+   {
+    "off": 207,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 208,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 209,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 210,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 211,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 212,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 213,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 214,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
