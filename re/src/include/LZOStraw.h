@@ -18,14 +18,13 @@ class LZOStraw : public Straw
 {
 public:
     // ---- vtable 0x006a189c (3 slots) ----
-    virtual void vfunc_0();  // [0] 0x004fbba0
-    virtual void vfunc_1();  // [1] 0x005f1020
-    virtual void vfunc_2();  // [2] 0x004fb9f0
+    virtual void vfunc_1(int a0);  // [1] 0x005f1020  // __thiscall
+    virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x004fb9f0  // __thiscall
 
     LZOStraw();  // 0x004fb97c
     virtual ~LZOStraw();
 
-    // ---- data members (offsets from ctor 0x004fb950) ----
+    // ---- data members (offsets from ctor 0x004fb949) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a189c

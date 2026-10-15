@@ -17,12 +17,18 @@ class TClassFactory_class_TEventClass : public IClassFactory, public IUnknown
 {
 public:
     // ---- vtable 0x006a4a18 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x005ea040
-    virtual void vfunc_1();  // [1] 0x005ea0b0
-    virtual void vfunc_2();  // [2] 0x005ea0d0
-    virtual void vfunc_3();  // [3] 0x005ea100
-    virtual void vfunc_4();  // [4] 0x005ea180
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x005ea040  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x005ea0b0  // __stdcall
+    virtual void vfunc_2(int a0);  // [2] 0x005ea0d0  // __stdcall
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ea100  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x005ea180  // __stdcall, returns int
 
     TClassFactory_class_TEventClass();  // 0x005ea03b
     virtual ~TClassFactory_class_TEventClass();
+
+    // ---- data members (offsets from ctor 0x005ea021) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a4a18
+    unsigned long m_004;  // zero-initialised
 };

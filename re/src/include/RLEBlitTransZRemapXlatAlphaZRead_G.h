@@ -18,17 +18,15 @@ class RLEBlitTransZRemapXlatAlphaZRead_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b294 (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x0046a750
-    virtual void vfunc_1();  // [1] 0x00468320
+    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8);  // [1] 0x00468320  // __thiscall
 
     RLEBlitTransZRemapXlatAlphaZRead_G();  // 0x004620a3
     virtual ~RLEBlitTransZRemapXlatAlphaZRead_G();
 
-    // ---- data members (offsets from ctor 0x00461ca3) ----
+    // ---- data members (offsets from ctor 0x0046a74b) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b2dc
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    unsigned long m_000;  // init 0x69b294
+    unsigned char pad_004[0x8];
+    unsigned long m_00c;  // zero-initialised
 };

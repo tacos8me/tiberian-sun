@@ -18,12 +18,11 @@ class DynamicVectorClass_ConvertClass : public VectorClass_ConvertClass
 {
 public:
     // ---- vtable 0x0069b1d0 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0046ad00
-    virtual void vfunc_1();  // [1] 0x0046aa50
-    virtual void vfunc_2();  // [2] 0x0046abd0
-    virtual void vfunc_3();  // [3] 0x00463330
-    virtual void vfunc_4();  // [4] 0x0046ac80
-    virtual void vfunc_5();  // [5] 0x00463360
+    virtual void vfunc_1(int a0);  // [1] 0x0046aa50  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0046abd0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x00463330  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0046ac80  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00463360  // __stdcall, returns int
 
     DynamicVectorClass_ConvertClass();  // 0x004606c3
     virtual ~DynamicVectorClass_ConvertClass();

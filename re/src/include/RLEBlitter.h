@@ -17,13 +17,12 @@ class RLEBlitter
 {
 public:
     // ---- vtable 0x0069b7d4 (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x00469970
-    virtual void vfunc_1();  // [1] 0x006829a5
+    virtual void vfunc_1();  // [1] 0x006829a5  // __cdecl
 
     RLEBlitter();  // 0x0046995b
     virtual ~RLEBlitter();
 
-    // ---- data members (offsets from ctor 0x00469950) ----
+    // ---- data members (offsets from ctor 0x0046a32b) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69b7d4

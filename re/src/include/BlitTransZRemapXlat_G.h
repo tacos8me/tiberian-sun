@@ -18,9 +18,8 @@ class BlitTransZRemapXlat_G : public Blitter
 {
 public:
     // ---- vtable 0x0069b6b4 (3 slots) ----
-    virtual void vfunc_0();  // [0] 0x00469b10
-    virtual void vfunc_1();  // [1] 0x00463fe0
-    virtual void vfunc_2();  // [2] 0x00464030
+    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [1] 0x00463fe0  // __stdcall
+    virtual void vfunc_2(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [2] 0x00464030  // __stdcall
 
     BlitTransZRemapXlat_G();  // 0x004610be
     virtual ~BlitTransZRemapXlat_G();

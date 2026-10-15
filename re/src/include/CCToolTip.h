@@ -18,13 +18,19 @@ class CCToolTip : public ToolTipManager
 {
 public:
     // ---- vtable 0x006a7654 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0065c3b0
-    virtual void vfunc_1();  // [1] 0x0044be30
-    virtual void vfunc_2();  // [2] 0x0044bfb0
-    virtual void vfunc_3();  // [3] 0x0044c010
-    virtual void vfunc_4();  // [4] 0x0044c030
-    virtual void vfunc_5();  // [5] 0x0044c1a0
+    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5);  // [1] 0x0044be30  // __thiscall
+    virtual void vfunc_2(int a0);  // [2] 0x0044bfb0  // __thiscall
+    virtual void vfunc_3(int a0);  // [3] 0x0044c010  // __stdcall
+    virtual void vfunc_4(int a0, int a1, int a2, int a3);  // [4] 0x0044c030  // __thiscall
+    virtual void vfunc_5(int a0);  // [5] 0x0044c1a0  // __stdcall, returns int
 
     CCToolTip();  // 0x0065bc24
     virtual ~CCToolTip();
+
+    // ---- data members (offsets from ctor 0x0065bc03) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a7654
+    unsigned char pad_004[0x15c];
+    unsigned long m_160;  // init 0x7
 };

@@ -17,13 +17,21 @@ class VectorClass_SideClass
 {
 public:
     // ---- vtable 0x0069f388 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004b1520
-    virtual void vfunc_1();  // [1] 0x004ad790
-    virtual void vfunc_2();  // [2] 0x004ad7d0
-    virtual void vfunc_3();  // [3] 0x004ad880
-    virtual void vfunc_4();  // [4] 0x004ad8b0
-    virtual void vfunc_5();  // [5] 0x004ad8f0
+    virtual void vfunc_1(int a0);  // [1] 0x004ad790  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004ad7d0  // __thiscall
+    virtual void vfunc_3();  // [3] 0x004ad880  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004ad8b0  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x004ad8f0  // __stdcall, returns int
 
     VectorClass_SideClass();  // 0x004a843e
     virtual ~VectorClass_SideClass();
+
+    // ---- data members (offsets from ctor 0x004b1519) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69f388
+    unsigned long m_004;  // zero-initialised
+    unsigned long m_008;  // zero-initialised
+    unsigned char pad_00c[0x1];
+    unsigned long m_00d;  // zero-initialised
 };

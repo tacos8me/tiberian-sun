@@ -17,12 +17,18 @@ class TClassFactory_class_SideClass : public IClassFactory, public IUnknown
 {
 public:
     // ---- vtable 0x006a4988 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x005e9740
-    virtual void vfunc_1();  // [1] 0x005e97b0
-    virtual void vfunc_2();  // [2] 0x005e97d0
-    virtual void vfunc_3();  // [3] 0x005e9800
-    virtual void vfunc_4();  // [4] 0x005e9880
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x005e9740  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x005e97b0  // __stdcall
+    virtual void vfunc_2(int a0);  // [2] 0x005e97d0  // __stdcall
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005e9800  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x005e9880  // __stdcall, returns int
 
     TClassFactory_class_SideClass();  // 0x005e973b
     virtual ~TClassFactory_class_SideClass();
+
+    // ---- data members (offsets from ctor 0x005e9721) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a4988
+    unsigned long m_004;  // zero-initialised
 };

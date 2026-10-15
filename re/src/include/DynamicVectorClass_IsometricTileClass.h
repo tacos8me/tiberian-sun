@@ -18,12 +18,11 @@ class DynamicVectorClass_IsometricTileClass : public VectorClass_IsometricTileCl
 {
 public:
     // ---- vtable 0x006986cc (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004023b0
-    virtual void vfunc_1();  // [1] 0x00402100
-    virtual void vfunc_2();  // [2] 0x00402280
-    virtual void vfunc_3();  // [3] 0x004020b0
-    virtual void vfunc_4();  // [4] 0x00402330
-    virtual void vfunc_5();  // [5] 0x004020e0
+    virtual void vfunc_1(int a0);  // [1] 0x00402100  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00402280  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x004020b0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00402330  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x004020e0  // __stdcall, returns int
 
     DynamicVectorClass_IsometricTileClass();  // 0x00402053
     virtual ~DynamicVectorClass_IsometricTileClass();

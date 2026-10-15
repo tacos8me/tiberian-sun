@@ -18,12 +18,11 @@ class MixFileClass : public GenericNode
 {
 public:
     // ---- vtable 0x006a2318 (1 slots) ----
-    virtual void vfunc_0();  // [0] 0x00547c00
 
     MixFileClass();  // 0x005472cb
     virtual ~MixFileClass();
 
-    // ---- data members (offsets from ctor 0x00547290) ----
+    // ---- data members (offsets from ctor 0x0054728e) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a2318

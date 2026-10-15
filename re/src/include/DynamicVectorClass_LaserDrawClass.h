@@ -18,12 +18,11 @@ class DynamicVectorClass_LaserDrawClass : public VectorClass_LaserDrawClass
 {
 public:
     // ---- vtable 0x006a14cc (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004f3820
-    virtual void vfunc_1();  // [1] 0x004f3570
-    virtual void vfunc_2();  // [2] 0x004f36f0
-    virtual void vfunc_3();  // [3] 0x004f3520
-    virtual void vfunc_4();  // [4] 0x004f37a0
-    virtual void vfunc_5();  // [5] 0x004f3550
+    virtual void vfunc_1(int a0);  // [1] 0x004f3570  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004f36f0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x004f3520  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004f37a0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x004f3550  // __stdcall, returns int
 
     DynamicVectorClass_LaserDrawClass();  // 0x004f2953
     virtual ~DynamicVectorClass_LaserDrawClass();

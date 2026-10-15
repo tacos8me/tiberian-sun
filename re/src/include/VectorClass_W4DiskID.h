@@ -17,17 +17,16 @@ class VectorClass_W4DiskID
 {
 public:
     // ---- vtable 0x006a4298 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x005d7190
-    virtual void vfunc_1();  // [1] 0x005d6500
-    virtual void vfunc_2();  // [2] 0x005d6540
-    virtual void vfunc_3();  // [3] 0x005d65f0
-    virtual void vfunc_4();  // [4] 0x005d6620
-    virtual void vfunc_5();  // [5] 0x005d6660
+    virtual void vfunc_1(int a0);  // [1] 0x005d6500  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x005d6540  // __thiscall
+    virtual void vfunc_3();  // [3] 0x005d65f0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x005d6620  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x005d6660  // __stdcall, returns int
 
     VectorClass_W4DiskID();  // 0x005d545b
     virtual ~VectorClass_W4DiskID();
 
-    // ---- data members (offsets from ctor 0x005d5430) ----
+    // ---- data members (offsets from ctor 0x005d5421) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned char pad_000[0x15c];

@@ -18,16 +18,25 @@ class WWFontClass : public FontClass
 {
 public:
     // ---- vtable 0x006a7b34 (9 slots) ----
-    virtual void vfunc_0();  // [0] 0x00672570
-    virtual void vfunc_1();  // [1] 0x00671c40
-    virtual void vfunc_2();  // [2] 0x00671c80
-    virtual void vfunc_3();  // [3] 0x00671ce0
-    virtual void vfunc_4();  // [4] 0x00671db0
-    virtual void vfunc_5();  // [5] 0x00671de0
-    virtual void vfunc_6();  // [6] 0x00671eb0
-    virtual void vfunc_7();  // [7] 0x00671e10
-    virtual void vfunc_8();  // [8] 0x00671e60
+    virtual void vfunc_1(int a0);  // [1] 0x00671c40  // __thiscall, returns int
+    virtual void vfunc_2(int a0);  // [2] 0x00671c80  // __thiscall, returns int
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x00671ce0  // __thiscall
+    virtual void vfunc_4();  // [4] 0x00671db0  // __cdecl
+    virtual void vfunc_5();  // [5] 0x00671de0  // __cdecl
+    virtual void vfunc_6(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17);  // [6] 0x00671eb0  // __thiscall
+    virtual void vfunc_7(int a0);  // [7] 0x00671e10  // __thiscall
+    virtual void vfunc_8(int a0);  // [8] 0x00671e60  // __thiscall
 
     WWFontClass();  // 0x00671bb7
     virtual ~WWFontClass();
+
+    // ---- data members (offsets from ctor 0x00671b87) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a7b34
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // zero-initialised
+    unsigned long m_010;  // zero-initialised
+    unsigned long m_014;  // /* ? */
 };

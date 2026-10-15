@@ -18,12 +18,11 @@ class DynamicVectorClass_WarheadTypeClass : public VectorClass_WarheadTypeClass
 {
 public:
     // ---- vtable 0x006989c4 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00404e00
-    virtual void vfunc_1();  // [1] 0x00404b50
-    virtual void vfunc_2();  // [2] 0x00404cd0
-    virtual void vfunc_3();  // [3] 0x00404b00
-    virtual void vfunc_4();  // [4] 0x00404d80
-    virtual void vfunc_5();  // [5] 0x00404b30
+    virtual void vfunc_1(int a0);  // [1] 0x00404b50  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00404cd0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x00404b00  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00404d80  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00404b30  // __stdcall, returns int
 
     DynamicVectorClass_WarheadTypeClass();  // 0x004049d3
     virtual ~DynamicVectorClass_WarheadTypeClass();

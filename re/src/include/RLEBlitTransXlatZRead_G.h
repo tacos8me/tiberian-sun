@@ -18,16 +18,15 @@ class RLEBlitTransXlatZRead_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b390 (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x0046a3f0
-    virtual void vfunc_1();  // [1] 0x00466c80
+    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5);  // [1] 0x00466c80
 
     RLEBlitTransXlatZRead_G();  // 0x00461c1d
     virtual ~RLEBlitTransXlatZRead_G();
 
-    // ---- data members (offsets from ctor 0x0046181d) ----
+    // ---- data members (offsets from ctor 0x00461b37) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b3d8
+    unsigned long m_000;  // init 0x69b3c0
     unsigned long m_004;  // /* ? */
     unsigned long m_008;  // /* ? */
 };

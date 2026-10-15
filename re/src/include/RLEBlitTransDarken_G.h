@@ -18,9 +18,15 @@ class RLEBlitTransDarken_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b3c0 (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x0046a370
-    virtual void vfunc_1();  // [1] 0x00466a20
+    virtual void vfunc_1(int a0, int a1);  // [1] 0x00466a20  // __thiscall
 
     RLEBlitTransDarken_G();  // 0x00461b60
     virtual ~RLEBlitTransDarken_G();
+
+    // ---- data members (offsets from ctor 0x00461b37) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69b3c0
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
 };

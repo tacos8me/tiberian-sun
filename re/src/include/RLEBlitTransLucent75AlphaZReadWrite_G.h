@@ -18,17 +18,15 @@ class RLEBlitTransLucent75AlphaZReadWrite_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b228 (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x0046a990
-    virtual void vfunc_1();  // [1] 0x004692e0
+    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9);  // [1] 0x004692e0
 
     RLEBlitTransLucent75AlphaZReadWrite_G();  // 0x00462339
     virtual ~RLEBlitTransLucent75AlphaZReadWrite_G();
 
-    // ---- data members (offsets from ctor 0x00461f39) ----
+    // ---- data members (offsets from ctor 0x0046a98b) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b2c4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    unsigned long m_000;  // init 0x69b228
+    unsigned char pad_004[0x4];
+    unsigned long m_008;  // zero-initialised
 };

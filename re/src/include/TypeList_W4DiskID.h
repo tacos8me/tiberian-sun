@@ -18,13 +18,17 @@ class TypeList_W4DiskID : public DynamicVectorClass_W4DiskID
 {
 public:
     // ---- vtable 0x006a427c (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x005d64b0
-    virtual void vfunc_1();  // [1] 0x005d6500
-    virtual void vfunc_2();  // [2] 0x005d66e0
-    virtual void vfunc_3();  // [3] 0x005d6320
-    virtual void vfunc_4();  // [4] 0x005d67e0
-    virtual void vfunc_5();  // [5] 0x005d6350
+    virtual void vfunc_1(int a0);  // [1] 0x005d6500  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x005d66e0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x005d6320  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x005d67e0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x005d6350  // __stdcall, returns int
 
     TypeList_W4DiskID();  // 0x005d5258
     virtual ~TypeList_W4DiskID();
+
+    // ---- data members (offsets from ctor 0x005d5201) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a427c
 };

@@ -18,57 +18,86 @@ class ListClass : public ControlClass
 {
 public:
     // ---- vtable 0x006a1654 (50 slots) ----
-    virtual void vfunc_0();  // [0] 0x004f7930
     virtual void vfunc_1();  // [1] 0x004a5b00
     virtual void vfunc_2();  // [2] 0x004a5b10
-    virtual void vfunc_3();  // [3] 0x004f76e0
-    virtual void vfunc_4();  // [4] 0x004f7780
-    virtual void vfunc_5();  // [5] 0x004f7730
-    virtual void vfunc_6();  // [6] 0x004f6980
-    virtual void vfunc_7();  // [7] 0x004f69b0
-    virtual void vfunc_8();  // [8] 0x004f6930
-    virtual void vfunc_9();  // [9] 0x004f77d0
-    virtual void vfunc_10();  // [10] 0x004a5be0
-    virtual void vfunc_11();  // [11] 0x004a5bb0
-    virtual void vfunc_12();  // [12] 0x004a5b20
-    virtual void vfunc_13();  // [13] 0x004a5de0
-    virtual void vfunc_14();  // [14] 0x0045afe0
-    virtual void vfunc_15();  // [15] 0x004a5ad0
+    virtual void vfunc_3(int a0);  // [3] 0x004f76e0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004f7780  // __thiscall
+    virtual void vfunc_5(int a0);  // [5] 0x004f7730  // __thiscall
+    virtual void vfunc_6();  // [6] 0x004f6980  // __cdecl
+    virtual void vfunc_7();  // [7] 0x004f69b0  // __cdecl
+    virtual void vfunc_8();  // [8] 0x004f6930  // __cdecl, returns int
+    virtual void vfunc_9();  // [9] 0x004f77d0  // __thiscall
+    virtual void vfunc_10(int a0, int a1);  // [10] 0x004a5be0  // __thiscall
+    virtual void vfunc_11(int a0);  // [11] 0x004a5bb0  // __thiscall
+    virtual void vfunc_12();  // [12] 0x004a5b20  // __thiscall
+    virtual void vfunc_13(int a0);  // [13] 0x004a5de0  // __thiscall, returns int
+    virtual void vfunc_14();  // [14] 0x0045afe0  // __cdecl
+    virtual void vfunc_15();  // [15] 0x004a5ad0  // __thiscall
     virtual void vfunc_16();  // [16] 0x004a5ac0
-    virtual void vfunc_17();  // [17] 0x00460610
-    virtual void vfunc_18();  // [18] 0x004f78a0
-    virtual void vfunc_19();  // [19] 0x004f73e0
-    virtual void vfunc_20();  // [20] 0x004a5e60
-    virtual void vfunc_21();  // [21] 0x004a5e90
-    virtual void vfunc_22();  // [22] 0x004a5eb0
-    virtual void vfunc_23();  // [23] 0x004a5ec0
-    virtual void vfunc_24();  // [24] 0x0045aff0
-    virtual void vfunc_25();  // [25] 0x004f6e10
-    virtual void vfunc_26();  // [26] 0x004a5f00
-    virtual void vfunc_27();  // [27] 0x004f71f0
-    virtual void vfunc_28();  // [28] 0x004a5e30
-    virtual void vfunc_29();  // [29] 0x004f7100
-    virtual void vfunc_30();  // [30] 0x004a5a60
-    virtual void vfunc_31();  // [31] 0x00460600
-    virtual void vfunc_32();  // [32] 0x004f6fd0
-    virtual void vfunc_33();  // [33] 0x004f6f40
-    virtual void vfunc_34();  // [34] 0x004f74b0
-    virtual void vfunc_35();  // [35] 0x004f72f0
-    virtual void vfunc_36();  // [36] 0x0045b000
-    virtual void vfunc_37();  // [37] 0x004f73d0
-    virtual void vfunc_38();  // [38] 0x004f73b0
-    virtual void vfunc_39();  // [39] 0x004f7390
-    virtual void vfunc_40();  // [40] 0x004f7880
-    virtual void vfunc_41();  // [41] 0x004f7000
-    virtual void vfunc_42();  // [42] 0x004f70d0
-    virtual void vfunc_43();  // [43] 0x004f7580
-    virtual void vfunc_44();  // [44] 0x004f78e0
-    virtual void vfunc_45();  // [45] 0x004f7810
-    virtual void vfunc_46();  // [46] 0x004f75e0
-    virtual void vfunc_47();  // [47] 0x004f7440
-    virtual void vfunc_48();  // [48] 0x004f7340
-    virtual void vfunc_49();  // [49] 0x004f75f0
+    virtual void vfunc_17();  // [17] 0x00460610  // __cdecl
+    virtual void vfunc_18();  // [18] 0x004f78a0  // __thiscall
+    virtual void vfunc_19(int a0, int a1, int a2);  // [19] 0x004f73e0  // __thiscall
+    virtual void vfunc_20();  // [20] 0x004a5e60  // __thiscall
+    virtual void vfunc_21();  // [21] 0x004a5e90  // __cdecl
+    virtual void vfunc_22();  // [22] 0x004a5eb0  // __cdecl, returns int
+    virtual void vfunc_23();  // [23] 0x004a5ec0  // __cdecl, returns int
+    virtual void vfunc_24();  // [24] 0x0045aff0  // __cdecl
+    virtual void vfunc_25(int a0, int a1);  // [25] 0x004f6e10  // __stdcall
+    virtual void vfunc_26(int a0, int a1);  // [26] 0x004a5f00  // __stdcall
+    virtual void vfunc_27(int a0);  // [27] 0x004f71f0  // __thiscall
+    virtual void vfunc_28(int a0);  // [28] 0x004a5e30  // __stdcall
+    virtual void vfunc_29(int a0, int a1);  // [29] 0x004f7100  // __thiscall, returns int
+    virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
+    virtual void vfunc_31(int a0);  // [31] 0x00460600  // __stdcall
+    virtual void vfunc_32(int a0);  // [32] 0x004f6fd0  // __thiscall
+    virtual void vfunc_33(int a0);  // [33] 0x004f6f40  // __thiscall
+    virtual void vfunc_34();  // [34] 0x004f74b0  // __thiscall, returns int
+    virtual void vfunc_35(int a0);  // [35] 0x004f72f0  // __thiscall
+    virtual void vfunc_36();  // [36] 0x0045b000  // __cdecl
+    virtual void vfunc_37();  // [37] 0x004f73d0  // __cdecl
+    virtual void vfunc_38();  // [38] 0x004f73b0  // __cdecl, returns int
+    virtual void vfunc_39(int a0);  // [39] 0x004f7390  // __stdcall
+    virtual void vfunc_40(int a0);  // [40] 0x004f7880  // __stdcall
+    virtual void vfunc_41(int a0);  // [41] 0x004f7000  // __thiscall
+    virtual void vfunc_42(int a0);  // [42] 0x004f70d0  // __thiscall
+    virtual void vfunc_43();  // [43] 0x004f7580  // __thiscall, returns int
+    virtual void vfunc_44(int a0);  // [44] 0x004f78e0  // __thiscall
+    virtual void vfunc_45(int a0);  // [45] 0x004f7810  // __thiscall
+    virtual void vfunc_46(int a0);  // [46] 0x004f75e0  // __stdcall
+    virtual void vfunc_47(int a0);  // [47] 0x004f7440  // __thiscall
+    virtual void vfunc_48(int a0);  // [48] 0x004f7340  // __thiscall
+    virtual void vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5);  // [49] 0x004f75f0  // __thiscall
 
     ListClass();  // 0x004f6b99
     virtual ~ListClass();
+
+    // ---- data members (offsets from ctor 0x004f6ac7) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a1654
+    unsigned char pad_004[0x28];
+    unsigned long m_02c;  // /* ? */
+    unsigned long m_030;  // /* ? */
+    unsigned long m_034;  // init 0x6a1720
+    unsigned long m_038;  // /* ? */
+    unsigned long m_03c;  // /* ? */
+    unsigned long m_040;  // init 0x1
+    unsigned long m_044;  // /* ? */
+    unsigned long m_048;  // init 0xa
+    unsigned long m_04c;  // /* ? */
+    unsigned long m_050;  // /* ? */
+    unsigned long m_054;  // zero-initialised
+    unsigned char pad_058[0xc];
+    unsigned long m_064;  // /* ? */
+    unsigned char pad_068[0x48];
+    unsigned long m_0b0;  // /* ? */
+    unsigned long m_0b4;  // /* ? */
+    unsigned char pad_0b8[0x44];
+    unsigned long m_0fc;  // /* ? */
+    unsigned long m_100;  // /* ? */
+    unsigned long m_104;  // /* ? */
+    unsigned long m_108;  // /* ? */
+    unsigned char pad_10c[0x38];
+    unsigned long m_144;  // /* ? */
+    unsigned long m_148;  // /* ? */
 };

@@ -18,12 +18,11 @@ class DynamicVectorClass_struct_AcceleratorTracker : public VectorClass_struct_A
 {
 public:
     // ---- vtable 0x006a2764 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x005601c0
-    virtual void vfunc_1();  // [1] 0x0055fda0
-    virtual void vfunc_2();  // [2] 0x0055ff90
-    virtual void vfunc_3();  // [3] 0x0055faf0
-    virtual void vfunc_4();  // [4] 0x00560090
-    virtual void vfunc_5();  // [5] 0x0055fb20
+    virtual void vfunc_1(int a0);  // [1] 0x0055fda0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0055ff90  // __thiscall
+    virtual void vfunc_3();  // [3] 0x0055faf0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00560090  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x0055fb20  // __stdcall, returns int
 
     DynamicVectorClass_struct_AcceleratorTracker();  // 0x0055f723
     virtual ~DynamicVectorClass_struct_AcceleratorTracker();

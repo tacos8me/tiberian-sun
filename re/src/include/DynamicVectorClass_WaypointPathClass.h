@@ -18,12 +18,11 @@ class DynamicVectorClass_WaypointPathClass : public VectorClass_WaypointPathClas
 {
 public:
     // ---- vtable 0x006a749c (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00656740
-    virtual void vfunc_1();  // [1] 0x00656490
-    virtual void vfunc_2();  // [2] 0x00656610
-    virtual void vfunc_3();  // [3] 0x00655fd0
-    virtual void vfunc_4();  // [4] 0x006566c0
-    virtual void vfunc_5();  // [5] 0x00656000
+    virtual void vfunc_1(int a0);  // [1] 0x00656490  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00656610  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x00655fd0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x006566c0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00656000  // __stdcall, returns int
 
     DynamicVectorClass_WaypointPathClass();  // 0x00655663
     virtual ~DynamicVectorClass_WaypointPathClass();

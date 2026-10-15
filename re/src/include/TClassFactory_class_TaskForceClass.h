@@ -17,12 +17,18 @@ class TClassFactory_class_TaskForceClass : public IClassFactory, public IUnknown
 {
 public:
     // ---- vtable 0x006a4b38 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x005eb240
-    virtual void vfunc_1();  // [1] 0x005eb2b0
-    virtual void vfunc_2();  // [2] 0x005eb2d0
-    virtual void vfunc_3();  // [3] 0x005eb300
-    virtual void vfunc_4();  // [4] 0x005eb380
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x005eb240  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x005eb2b0  // __stdcall
+    virtual void vfunc_2(int a0);  // [2] 0x005eb2d0  // __stdcall
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005eb300  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x005eb380  // __stdcall, returns int
 
     TClassFactory_class_TaskForceClass();  // 0x005eb23b
     virtual ~TClassFactory_class_TaskForceClass();
+
+    // ---- data members (offsets from ctor 0x005eb221) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a4b38
+    unsigned long m_004;  // zero-initialised
 };

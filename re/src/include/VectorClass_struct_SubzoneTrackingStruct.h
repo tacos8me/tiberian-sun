@@ -17,17 +17,15 @@ class VectorClass_struct_SubzoneTrackingStruct
 {
 public:
     // ---- vtable 0x006a1af4 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00522000
-    virtual void vfunc_1();  // [1] 0x00520eb0
-    virtual void vfunc_2();  // [2] 0x00520f00
-    virtual void vfunc_3();  // [3] 0x00521120
-    virtual void vfunc_4();  // [4] 0x005211a0
-    virtual void vfunc_5();  // [5] 0x005211f0
+    virtual void vfunc_1(int a0);  // [1] 0x00520eb0  // __stdcall
+    virtual void vfunc_2(int a0, int a1, int a2, int a3, int a4, int a5);  // [2] 0x00520f00  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x005211a0  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x005211f0  // __stdcall, returns int
 
     VectorClass_struct_SubzoneTrackingStruct();  // 0x00501d47
     virtual ~VectorClass_struct_SubzoneTrackingStruct();
 
-    // ---- data members (offsets from ctor 0x00501b90) ----
+    // ---- data members (offsets from ctor 0x00501d2e) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a1af4

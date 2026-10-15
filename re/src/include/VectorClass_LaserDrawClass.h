@@ -17,13 +17,21 @@ class VectorClass_LaserDrawClass
 {
 public:
     // ---- vtable 0x006a14e8 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004f37d0
-    virtual void vfunc_1();  // [1] 0x004f3570
-    virtual void vfunc_2();  // [2] 0x004f35b0
-    virtual void vfunc_3();  // [3] 0x004f3660
-    virtual void vfunc_4();  // [4] 0x004f3690
-    virtual void vfunc_5();  // [5] 0x004f36d0
+    virtual void vfunc_1(int a0);  // [1] 0x004f3570  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004f35b0  // __thiscall
+    virtual void vfunc_3();  // [3] 0x004f3660  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004f3690  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x004f36d0  // __stdcall, returns int
 
     VectorClass_LaserDrawClass();  // 0x004f2984
     virtual ~VectorClass_LaserDrawClass();
+
+    // ---- data members (offsets from ctor 0x004f37c6) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a14e8
+    unsigned long m_004;  // zero-initialised
+    unsigned long m_008;  // zero-initialised
+    unsigned char pad_00c[0x1];
+    unsigned long m_00d;  // zero-initialised
 };

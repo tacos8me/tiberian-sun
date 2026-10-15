@@ -18,17 +18,15 @@ class RLEBlitTransLucent75AlphaZReadWarp_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b264 (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x0046a850
-    virtual void vfunc_1();  // [1] 0x00468a00
+    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9);  // [1] 0x00468a00
 
     RLEBlitTransLucent75AlphaZReadWarp_G();  // 0x004621cf
     virtual ~RLEBlitTransLucent75AlphaZReadWarp_G();
 
-    // ---- data members (offsets from ctor 0x00461dcf) ----
+    // ---- data members (offsets from ctor 0x0046a84b) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b2dc
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    unsigned long m_000;  // init 0x69b264
+    unsigned char pad_004[0x4];
+    unsigned long m_008;  // zero-initialised
 };

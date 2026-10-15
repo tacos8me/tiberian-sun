@@ -1,0 +1,2351 @@
+{
+ "0x405f20": {
+  "nkeys": 1,
+  "keys": [
+   "Name"
+  ],
+  "owners": []
+ },
+ "0x405fb0": {
+  "nkeys": 1,
+  "keys": [
+   "Name"
+  ],
+  "owners": []
+ },
+ "0x40f300": {
+  "nkeys": 4,
+  "keys": [
+   "Landable",
+   "Carryall",
+   "Rotors",
+   "CustomRotor"
+  ],
+  "owners": []
+ },
+ "0x417fd0": {
+  "nkeys": 16,
+  "keys": [
+   "Theater",
+   "NewTheater",
+   "Report",
+   "AltPalette",
+   "Flat",
+   "Flamer",
+   "Normalized",
+   "Surface",
+   "Translucent",
+   "Scorch",
+   "Crater",
+   "Sticky",
+   "PingPong",
+   "Reverse",
+   "TiberiumChainReaction",
+   "Rate"
+  ],
+  "owners": []
+ },
+ "0x43f250": {
+  "nkeys": 15,
+  "keys": [
+   "HasSpotlight",
+   "HalfDamageSmokeLocation1",
+   "HalfDamageSmokeLocation2",
+   "Radar",
+   "WaterBound",
+   "Adjacent",
+   "Capturable",
+   "Powered",
+   "Unsellable",
+   "BaseNormal",
+   "Wall",
+   "Weeder",
+   "Helipad",
+   "Factory",
+   "FreeUnit"
+  ],
+  "owners": []
+ },
+ "0x445ba0": {
+  "nkeys": 19,
+  "keys": [
+   "Elasticity",
+   "Acceleration",
+   "Color",
+   "Arcing",
+   "Floater",
+   "High",
+   "VeryHigh",
+   "Shadow",
+   "Dropping",
+   "Inviso",
+   "Proximity",
+   "Ranged",
+   "Inaccuate",
+   "Degenerates",
+   "Bouncy",
+   "Airburst",
+   "Cluster",
+   "Image",
+   "Trailer"
+  ],
+  "owners": []
+ },
+ "0x4467d0": {
+  "nkeys": 3,
+  "keys": [
+   "FinalMovie",
+   "Scenario",
+   "Description"
+  ],
+  "owners": []
+ },
+ "0x476390": {
+  "nkeys": 6,
+  "keys": [
+   "Size",
+   "Level",
+   "Clear",
+   "Fill",
+   "Water",
+   "Theater"
+  ],
+  "owners": [
+   {
+    "class": "class DisplayClass",
+    "ident": "DisplayClass",
+    "slot": 31
+   },
+   {
+    "class": "class MouseClass",
+    "ident": "MouseClass",
+    "slot": 31
+   },
+   {
+    "class": "class PowerClass",
+    "ident": "PowerClass",
+    "slot": 31
+   },
+   {
+    "class": "class RadarClass",
+    "ident": "RadarClass",
+    "slot": 31
+   },
+   {
+    "class": "class ScrollClass",
+    "ident": "ScrollClass",
+    "slot": 31
+   },
+   {
+    "class": "class SidebarClass",
+    "ident": "SidebarClass",
+    "slot": 31
+   },
+   {
+    "class": "class TabClass",
+    "ident": "TabClass",
+    "slot": 31
+   }
+  ]
+ },
+ "0x4c74d0": {
+  "nkeys": 14,
+  "keys": [
+   "Suffix",
+   "Color",
+   "Prefix",
+   "Firepower",
+   "Groundspeed",
+   "Airspeed",
+   "Armor",
+   "Cost",
+   "BuildTime",
+   "Multiplay",
+   "MultiplayPassive",
+   "WallOwner",
+   "SmartAI",
+   "Side"
+  ],
+  "owners": []
+ },
+ "0x4d3980": {
+  "nkeys": 17,
+  "keys": [
+   "VoiceComment",
+   "Cyborg",
+   "Fearless",
+   "Fraidycat",
+   "Infiltrate",
+   "Civilian",
+   "Engineer",
+   "TiberiumProof",
+   "Disguised",
+   "Agent",
+   "Thief",
+   "VehicleThief",
+   "Doggie",
+   "JumpJet",
+   "Crawls",
+   "FireUp",
+   "FireProne"
+  ],
+  "owners": []
+ },
+ "0x52d4f0": {
+  "nkeys": 30,
+  "keys": [
+   "Description",
+   "RandomMap",
+   "Width",
+   "RandomMap",
+   "Height",
+   "RandomMap",
+   "NumPlayers",
+   "RandomMap",
+   "Seed",
+   "RandomMap",
+   "Biome",
+   "RandomMap",
+   "Time",
+   "RandomMap",
+   "RegionSize",
+   "RandomMap",
+   "Ruggedness",
+   "RandomMap",
+   "Accessibility",
+   "RandomMap",
+   "WaterAmount",
+   "RandomMap",
+   "Tiberium",
+   "RandomMap",
+   "TiberiumLayout",
+   "RandomMap",
+   "Vegetation",
+   "RandomMap",
+   "UrbanPresence",
+   "RandomMap"
+  ],
+  "owners": [
+   {
+    "class": "class MapSeedClass",
+    "ident": "MapSeedClass",
+    "slot": 2
+   }
+  ]
+ },
+ "0x52d760": {
+  "nkeys": 30,
+  "keys": [
+   "Description",
+   "RandomMap",
+   "Width",
+   "RandomMap",
+   "Height",
+   "RandomMap",
+   "NumPlayers",
+   "RandomMap",
+   "Seed",
+   "RandomMap",
+   "Biome",
+   "RandomMap",
+   "Time",
+   "RandomMap",
+   "RegionSize",
+   "RandomMap",
+   "Ruggedness",
+   "RandomMap",
+   "Accessibility",
+   "RandomMap",
+   "WaterAmount",
+   "RandomMap",
+   "Tiberium",
+   "RandomMap",
+   "TiberiumLayout",
+   "RandomMap",
+   "Vegetation",
+   "RandomMap",
+   "UrbanPresence",
+   "RandomMap"
+  ],
+  "owners": [
+   {
+    "class": "class MapSeedClass",
+    "ident": "MapSeedClass",
+    "slot": 1
+   }
+  ]
+ },
+ "0x52da30": {
+  "nkeys": 2,
+  "keys": [
+   "Description",
+   "RandomMap"
+  ],
+  "owners": [
+   {
+    "class": "class MapSeedClass",
+    "ident": "MapSeedClass",
+    "slot": 4
+   }
+  ]
+ },
+ "0x52e8b0": {
+  "nkeys": 20,
+  "keys": [
+   "Theater",
+   "Size",
+   "LocalSize",
+   "Level",
+   "Fill",
+   "TechLevel",
+   "Player",
+   "Basic",
+   "Ambient",
+   "Lighting",
+   "RedTint",
+   "Lighting",
+   "GreenTint",
+   "Lighting",
+   "BlueTint",
+   "Lighting",
+   "Ground",
+   "Lighting",
+   "Level",
+   "Lighting"
+  ],
+  "owners": []
+ },
+ "0x572610": {
+  "nkeys": 17,
+  "keys": [
+   "Image",
+   "AlphaImage",
+   "CrushSound",
+   "Crushable",
+   "RadarInvisible",
+   "Selectable",
+   "LegalTarget",
+   "Armor",
+   "Strength",
+   "Immune",
+   "Insignificant",
+   "HasRadialIndicator",
+   "RadialColor",
+   "IgnoresFirestorm",
+   "Theater",
+   "NewTheater",
+   "Voxel"
+  ],
+  "owners": []
+ },
+ "0x577090": {
+  "nkeys": 10,
+  "keys": [
+   "Land",
+   "Strength",
+   "Wall",
+   "High",
+   "Tiberium",
+   "Crate",
+   "CrateTrigger",
+   "Explodes",
+   "Overrides",
+   "CellAnim"
+  ],
+  "owners": []
+ },
+ "0x597090": {
+  "nkeys": 23,
+  "keys": [
+   "HoldsWhat",
+   "Spawns",
+   "SpawnFrames",
+   "ParticleCap",
+   "SpawnRadius",
+   "Slowdown",
+   "SpawnCutoff",
+   "SpawnTranslucencyCutoff",
+   "Lifetime",
+   "BehavesLike",
+   "SpawnDirection",
+   "ParticlesPerCoord",
+   "SpiralDeltaPerCoord",
+   "SpiralRadius",
+   "PositionPerturbationCoefficient",
+   "MovementPerturbationCoefficient",
+   "VelocityPerturbationCoefficient",
+   "Laser",
+   "LaserColor",
+   "SparkSpawnFrames",
+   "LightSize",
+   "OneFrameLight",
+   "SpawnSparkPercentage"
+  ],
+  "owners": []
+ },
+ "0x597d00": {
+  "nkeys": 5,
+  "keys": [
+   "ColorList",
+   "MaxDC",
+   "MaxEC",
+   "Damage",
+   "Warhead"
+  ],
+  "owners": []
+ },
+ "0x5b1130": {
+  "nkeys": 1,
+  "keys": [
+   "LargeVisceroid"
+  ],
+  "owners": []
+ },
+ "0x5b4680": {
+  "nkeys": 1,
+  "keys": [
+   "BuildConst"
+  ],
+  "owners": []
+ },
+ "0x5c68c0": {
+  "nkeys": 32,
+  "keys": [
+   "Name",
+   "Basic",
+   "Briefing",
+   "NextScenario",
+   "Basic",
+   "AltNextScenario",
+   "Basic",
+   "Intro",
+   "Basic",
+   "Brief",
+   "Basic",
+   "Basic",
+   "Lose",
+   "Basic",
+   "Action",
+   "Basic",
+   "PostScore",
+   "Basic",
+   "PreMapSelect",
+   "Basic",
+   "MultiplayerOnly",
+   "Basic",
+   "TimerInherit",
+   "Basic",
+   "EndOfGame",
+   "Basic",
+   "Theme",
+   "Basic",
+   "NewINIFormat",
+   "Basic",
+   "CarryOverMoney",
+   "Basic"
+  ],
+  "owners": []
+ },
+ "0x5c7410": {
+  "nkeys": 63,
+  "keys": [
+   "CivEvac",
+   "Briefing",
+   "NextScenario",
+   "AltNextScenario",
+   "Name",
+   "NewINIFormat",
+   "CarryOverCap",
+   "EndOfGame",
+   "SkipScore",
+   "OneTimeOnly",
+   "SkipMapSelect",
+   "Official",
+   "IgnoreGlobalAITriggers",
+   "TruckCrate",
+   "TrainCrate",
+   "Percent",
+   "AllowableUnits",
+   "AllowableUnitMaximums",
+   "Player",
+   "Intro",
+   "Brief",
+   "Lose",
+   "Action",
+   "PostScore",
+   "PreMapSelect",
+   "Theme",
+   "CarryOverMoney",
+   "TimerInherit",
+   "FillSilos",
+   "StartingDropships",
+   "HomeCell",
+   "AltHomeCell",
+   "MultiplayerOnly",
+   "TiberiumGrowthEnabled",
+   "VeinGrowthEnabled",
+   "IceGrowthEnabled",
+   "TiberiumDeathToVisceroid",
+   "FreeRadar",
+   "InitTime",
+   "Lighting",
+   "Ambient",
+   "Lighting",
+   "Lighting",
+   "Green",
+   "Lighting",
+   "Blue",
+   "Lighting",
+   "Ground",
+   "Lighting",
+   "Level",
+   "Lighting",
+   "IonAmbient",
+   "Lighting",
+   "IonRed",
+   "Lighting",
+   "IonGreen",
+   "Lighting",
+   "IonBlue",
+   "Lighting",
+   "IonGround",
+   "Lighting",
+   "IonLevel",
+   "Lighting"
+  ],
+  "owners": []
+ },
+ "0x5e1960": {
+  "nkeys": 4,
+  "keys": [
+   "Crater",
+   "Burn",
+   "Width",
+   "Height"
+  ],
+  "owners": []
+ },
+ "0x5f2f60": {
+  "nkeys": 1,
+  "keys": [
+   "WeaponType"
+  ],
+  "owners": []
+ },
+ "0x6068d0": {
+  "nkeys": 1,
+  "keys": [
+   "Group"
+  ],
+  "owners": []
+ },
+ "0x60d180": {
+  "nkeys": 18,
+  "keys": [
+   "House",
+   "VeteranLevel",
+   "Loadable",
+   "Full",
+   "Annoyance",
+   "GuardSlower",
+   "Autocreate",
+   "Prebuild",
+   "Reinforce",
+   "Droppod",
+   "Recruiter",
+   "Whiner",
+   "Suicide",
+   "LooseRecruit",
+   "Aggressive",
+   "OnTransOnly",
+   "Priority",
+   "TechLevel"
+  ],
+  "owners": []
+ },
+ "0x60d510": {
+  "nkeys": 28,
+  "keys": [
+   "VeteranLevel",
+   "Loadable",
+   "Full",
+   "Annoyance",
+   "GuardSlower",
+   "House",
+   "Recruiter",
+   "Autocreate",
+   "Prebuild",
+   "Reinforce",
+   "Droppod",
+   "Whiner",
+   "LooseRecruit",
+   "Aggressive",
+   "Suicide",
+   "Priority",
+   "TechLevel",
+   "Group",
+   "OnTransOnly",
+   "AvoidThreats",
+   "IonImmune",
+   "TransportsReturnOnUnload",
+   "AreTeamMembersRecruitable",
+   "IsBaseDefense",
+   "OnlyTargetHouseEnemy",
+   "Waypoint",
+   "Script",
+   "TaskForce"
+  ],
+  "owners": []
+ },
+ "0x61f590": {
+  "nkeys": 10,
+  "keys": [
+   "TypeImmune",
+   "WalkRate",
+   "MoveToShroud",
+   "IsTrain",
+   "DoubleOwned",
+   "GuardRange",
+   "Explodes",
+   "FlightLevel",
+   "IsDropship",
+   "PitchAngle"
+  ],
+  "owners": []
+ },
+ "0x6213b0": {
+  "nkeys": 5,
+  "keys": [
+   "XXICON",
+   "Cameo",
+   "XXICON",
+   "XXICON",
+   "Cameo"
+  ],
+  "owners": []
+ },
+ "0x625280": {
+  "nkeys": 5,
+  "keys": [
+   "IsVeinhole",
+   "WaterBound",
+   "SpawnsTiberium",
+   "IsFlammable",
+   "Foundation"
+  ],
+  "owners": []
+ },
+ "0x628540": {
+  "nkeys": 8,
+  "keys": [
+   "Spread",
+   "SpreadPercentage",
+   "Growth",
+   "GrowthPercentage",
+   "Value",
+   "Power",
+   "Color",
+   "Debris"
+  ],
+  "owners": []
+ },
+ "0x63e8e0": {
+  "nkeys": 18,
+  "keys": [
+   "CrateGoodie",
+   "NoMovingFire",
+   "DeployToFire",
+   "Harvester",
+   "Weeder",
+   "SpeedType",
+   "IsTilter",
+   "CarriesCrate",
+   "TooBigToFitUnderBridge",
+   "HalfDamageSmokeLocation",
+   "UseTurretShadow",
+   "WalkFrames",
+   "FiringFrames",
+   "Passive",
+   "MovementRestrictedTo",
+   "SmallVisceroid",
+   "LargeVisceroid",
+   "AltImage"
+  ],
+  "owners": []
+ },
+ "0x641d80": {
+  "nkeys": 6,
+  "keys": [
+   "Normalized",
+   "Translucent",
+   "IsTiberium",
+   "IsMeteor",
+   "Elasticity",
+   "MinAngularVelocity"
+  ],
+  "owners": []
+ },
+ "0x651670": {
+  "nkeys": 2,
+  "keys": [
+   "Spread",
+   "Particle"
+  ],
+  "owners": []
+ },
+ "0x656d40": {
+  "nkeys": 10,
+  "keys": [
+   "AmbientDamage",
+   "IsSonic",
+   "Supress",
+   "Burst",
+   "Damage",
+   "Speed",
+   "Range",
+   "MinimumRange",
+   "Report",
+   "Anim"
+  ],
+  "owners": []
+ },
+ "0x66d120": {
+  "nkeys": 1,
+  "keys": [
+   "OnAgeCheck"
+  ],
+  "owners": [
+   {
+    "class": "class ATL::CComObject<class CNetUtilEventSink>",
+    "ident": "ATL_CComObject_class_CNetUtilEventSink",
+    "slot": 7
+   }
+  ]
+ },
+ "0x4181ee": {
+  "nkeys": 6,
+  "keys": [
+   "Damage",
+   "Start",
+   "LoopStart",
+   "LoopEnd",
+   "LoopCount",
+   "Next"
+  ],
+  "owners": []
+ },
+ "0x43f45f": {
+  "nkeys": 51,
+  "keys": [
+   "HoverPad",
+   "IsTemple",
+   "IsPlug",
+   "TogglePower",
+   "UnitRepair",
+   "UnitReload",
+   "DockUnload",
+   "Gate",
+   "ConstructionYard",
+   "NukeSilo",
+   "Refinery",
+   "WeaponsFactory",
+   "LaserFencePost",
+   "LaserFence",
+   "FirestormWall",
+   "Hospital",
+   "Armory",
+   "GDIBarracks",
+   "NODBarracks",
+   "EMPulseCannon",
+   "TickTank",
+   "SuperWeapon",
+   "SuperWeapon2",
+   "CloakGenerator",
+   "SensorArray",
+   "CloakRadiusInCells",
+   "LightVisibility",
+   "LightIntensity",
+   "LightRedTint",
+   "LightGreenTint",
+   "LightBlueTint",
+   "GateCloseDelay",
+   "InvisibleInGame",
+   "PowersUpBuilding",
+   "PowersUpToLevel",
+   "BridgeRepairHut",
+   "HasStupidGuardMode",
+   "PlaceAnywhere",
+   "ICBMLauncher",
+   "Artillary",
+   "ExitCoord",
+   "AIBuildThis",
+   "IsBaseDefense",
+   "IsThreatRatingNode",
+   "Power",
+   "Height",
+   "Recoilless",
+   "Flat",
+   "SiloDamage",
+   "ChargeAnim",
+   "ToOverlay"
+  ],
+  "owners": []
+ },
+ "0x445e48": {
+  "nkeys": 2,
+  "keys": [
+   "Rotates",
+   "AirburstWeapon"
+  ],
+  "owners": []
+ },
+ "0x4eaa00": {
+  "nkeys": 120,
+  "keys": [
+   "RampBase",
+   "General",
+   "RampSmooth",
+   "General",
+   "MMRampBase",
+   "General",
+   "ClearTile",
+   "General",
+   "RoughTile",
+   "General",
+   "SandTile",
+   "General",
+   "GreenTile",
+   "General",
+   "PaveTile",
+   "General",
+   "MiscPaveTile",
+   "General",
+   "ClearToRoughLat",
+   "General",
+   "ClearToSandLat",
+   "General",
+   "ClearToGreenLat",
+   "General",
+   "ClearToPaveLat",
+   "General",
+   "HeightBase",
+   "General",
+   "BlackTile",
+   "General",
+   "BridgeSet",
+   "General",
+   "TrainBridgeSet",
+   "General",
+   "CliffSet",
+   "General",
+   "ShorePieces",
+   "General",
+   "WaterSet",
+   "General",
+   "Ice1Set",
+   "General",
+   "Ice2Set",
+   "General",
+   "Ice3Set",
+   "General",
+   "IceShoreSet",
+   "General",
+   "SlopeSetPieces",
+   "General",
+   "SlopeSetPieces2",
+   "General",
+   "MonorailSlopes",
+   "General",
+   "Tunnels",
+   "General",
+   "TrackTunnels",
+   "General",
+   "DirtTunnels",
+   "General",
+   "DirtTrackTunnels",
+   "General",
+   "WaterfallEast",
+   "General",
+   "WaterfallWest",
+   "General",
+   "WaterfallNorth",
+   "General",
+   "WaterfallSouth",
+   "General",
+   "CliffRamps",
+   "General",
+   "PavedRoads",
+   "General",
+   "PavedRoadEnds",
+   "General",
+   "Medians",
+   "General",
+   "RoughGround",
+   "General",
+   "DirtRoadJunction",
+   "General",
+   "DirtRoadCurve",
+   "General",
+   "DirtRoadStraight",
+   "General",
+   "DestroyableCliffs",
+   "General",
+   "WaterCaves",
+   "General",
+   "WaterCliffs",
+   "General",
+   "PavedRoadSlopes",
+   "General",
+   "DirtRoadSlopes",
+   "General",
+   "Rocks",
+   "General",
+   "BridgeTopLeft1",
+   "General",
+   "BridgeTopLeft2",
+   "General",
+   "BridgeBottomRight1",
+   "General",
+   "BridgeBottomRight2",
+   "General",
+   "BridgeTopRight1",
+   "General",
+   "BridgeTopRight2",
+   "General",
+   "BridgeBottomLeft1",
+   "General",
+   "BridgeBottomLeft2",
+   "General",
+   "BridgeMiddle1",
+   "General",
+   "BridgeMiddle2",
+   "General",
+   "TilesInSet",
+   "LastTilesInSet"
+  ],
+  "owners": []
+ },
+ "0x4d3670": {
+  "nkeys": 1,
+  "keys": [
+   "Sequence"
+  ],
+  "owners": []
+ },
+ "0x5771d1": {
+  "nkeys": 8,
+  "keys": [
+   "DamageLevels",
+   "DemandLoad",
+   "NoUseTileLandType",
+   "IsVeinholeMonster",
+   "IsVeins",
+   "ChainReaction",
+   "DrawFlat",
+   "IsARock"
+  ],
+  "owners": []
+ },
+ "0x597e0e": {
+  "nkeys": 24,
+  "keys": [
+   "StartFrame",
+   "NumLoopFrames",
+   "Translucency",
+   "WindEffect",
+   "Velocity",
+   "Deacc",
+   "Radius",
+   "DeleteOnStateLimit",
+   "EndStateAI",
+   "StartStateAI",
+   "StateAIAdvance",
+   "Translucent50State",
+   "Translucent25State",
+   "Normalized",
+   "ColorSpeed",
+   "XVelocity",
+   "YVelocity",
+   "MinZVelocity",
+   "ZVelocityRange",
+   "NextParticleOffset",
+   "StartColor1",
+   "StartColor2",
+   "FinalDamageState",
+   "NextParticle"
+  ],
+  "owners": []
+ },
+ "0x5b1194": {
+  "nkeys": 1,
+  "keys": [
+   "SmallVisceroid"
+  ],
+  "owners": []
+ },
+ "0x5b4769": {
+  "nkeys": 1,
+  "keys": [
+   "BuildPower"
+  ],
+  "owners": []
+ },
+ "0x5e3000": {
+  "nkeys": 13,
+  "keys": [
+   "TiberiumExplosive",
+   "MCVDeploy",
+   "InitialVeteran",
+   "IonStorms",
+   "Meteorites",
+   "Visceroids",
+   "TiberiumGrows",
+   "TiberiumSpreads",
+   "DestroyableBridges",
+   "FixedAlliance",
+   "FogOfWar",
+   "Inert",
+   "HarvesterImmune"
+  ],
+  "owners": []
+ },
+ "0x5c6ae7": {
+  "nkeys": 20,
+  "keys": [
+   "CarryOverCap",
+   "Basic",
+   "SkipScore",
+   "Basic",
+   "OneTimeOnly",
+   "Basic",
+   "SkipMapSelect",
+   "Basic",
+   "TruckCrate",
+   "Basic",
+   "TrainCrate",
+   "Basic",
+   "FillSilos",
+   "Basic",
+   "IgnoreGlobalAITriggers",
+   "Basic",
+   "Percent",
+   "Basic",
+   "StartingDropships",
+   "Basic"
+  ],
+  "owners": []
+ },
+ "0x5e2e90": {
+  "nkeys": 13,
+  "keys": [
+   "TiberiumGrows",
+   "TiberiumSpreads",
+   "TiberiumExplosive",
+   "DestroyableBridges",
+   "MCVDeploy",
+   "InitialVeteran",
+   "FixedAlliance",
+   "HarvesterImmune",
+   "FogOfWar",
+   "Inert",
+   "IonStorms",
+   "Meteorites",
+   "Visceroids"
+  ],
+  "owners": []
+ },
+ "0x5f2fb4": {
+  "nkeys": 7,
+  "keys": [
+   "RechargeVoice",
+   "ChargingVoice",
+   "ImpatientVoice",
+   "SuspendVoice",
+   "Action",
+   "IsPowered",
+   "Type"
+  ],
+  "owners": []
+ },
+ "0x6069f0": {
+  "nkeys": 1,
+  "keys": [
+   "Group"
+  ],
+  "owners": []
+ },
+ "0x60d37e": {
+  "nkeys": 9,
+  "keys": [
+   "Group",
+   "AvoidThreats",
+   "IonImmune",
+   "IsBaseDefense",
+   "OnlyTargetHouseEnemy",
+   "TransportsReturnOnUnload",
+   "AreTeamMembersRecruitable",
+   "Waypoint",
+   "Script"
+  ],
+  "owners": []
+ },
+ "0x61f6d0": {
+  "nkeys": 1,
+  "keys": [
+   "RollAngle"
+  ],
+  "owners": []
+ },
+ "0x6253d8": {
+  "nkeys": 5,
+  "keys": [
+   "IsAnimated",
+   "AnimationRate",
+   "AnimationProbability",
+   "TemperateOccupationBits",
+   "SnowOccupationBits"
+  ],
+  "owners": []
+ },
+ "0x6286be": {
+  "nkeys": 1,
+  "keys": [
+   "Image"
+  ],
+  "owners": []
+ },
+ "0x641e5f": {
+  "nkeys": 1,
+  "keys": [
+   "MaxAngularVelocity"
+  ],
+  "owners": []
+ },
+ "0x6516ef": {
+  "nkeys": 9,
+  "keys": [
+   "Conventional",
+   "Wall",
+   "Wood",
+   "Tiberium",
+   "Sparky",
+   "Rocker",
+   "Fire",
+   "Bright",
+   "AnimList"
+  ],
+  "owners": []
+ },
+ "0x656f60": {
+  "nkeys": 17,
+  "keys": [
+   "Camera",
+   "IsLaser",
+   "Charges",
+   "TurboBoost",
+   "UseFireParticles",
+   "UseSparkParticles",
+   "IsRailgun",
+   "Lobber",
+   "LaserInnerColor",
+   "LaserOuterColor",
+   "LaserOuterSpread",
+   "LaserDuration",
+   "IsBigLaser",
+   "Bright",
+   "IonSensitive",
+   "AttachedParticleSystem",
+   "Warhead"
+  ],
+  "owners": []
+ },
+ "0x691b96": {
+  "nkeys": 3,
+  "keys": [
+   "MessageBoxA",
+   "GetActiveWindow",
+   "GetLastActivePopup"
+  ],
+  "owners": []
+ },
+ "0x4182cf": {
+  "nkeys": 12,
+  "keys": [
+   "DetailLevel",
+   "TranslucencyDetailLevel",
+   "RandomLoopDelay",
+   "Translucency",
+   "IsTiberium",
+   "YSortAdjust",
+   "DemandLoad",
+   "FreeAfterPlaying",
+   "Elasticity",
+   "MaxXYVel",
+   "MinZVel",
+   "Spawns"
+  ],
+  "owners": []
+ },
+ "0x43fb5d": {
+  "nkeys": 98,
+  "keys": [
+   "Foundation",
+   "Foundation",
+   "MidPoint",
+   "DoorStages",
+   "DamagedDoor",
+   "TerrainPalette",
+   "GateStages",
+   "PrimaryFirePixelOffset",
+   "SecondaryFirePixelOffset",
+   "ExtraDamageStage",
+   "SpecialZOverlayZAdjust",
+   "NormalZAdjust",
+   "ZShapePointMove",
+   "ExtraLight",
+   "DemandLoad",
+   "DemandLoadBuildup",
+   "FreeBuildup",
+   "Buildup",
+   "AnimIdle",
+   "AnimActive",
+   "AnimAux1",
+   "AnimAux2",
+   "ActiveAnim",
+   "ActiveAnimDamaged",
+   "ActiveAnimX",
+   "ActiveAnimY",
+   "ActiveAnimZAdjust",
+   "ActiveAnimYSort",
+   "ActiveAnimPowered",
+   "ActiveAnimPoweredLight",
+   "ActiveAnimTwo",
+   "ActiveAnimTwoDamaged",
+   "ActiveAnimTwoX",
+   "ActiveAnimTwoY",
+   "ActiveAnimTwoZAdjust",
+   "ActiveAnimTwoYSort",
+   "ActiveAnimTwoPowered",
+   "ActiveAnimTwoPoweredLight",
+   "ActiveAnimThree",
+   "ActiveAnimThreeDamaged",
+   "ActiveAnimThreeX",
+   "ActiveAnimThreeY",
+   "ActiveAnimThreeZAdjust",
+   "ActiveAnimThreeYSort",
+   "ActiveAnimThreePowered",
+   "ActiveAnimThreePoweredLight",
+   "ActiveAnimFour",
+   "ActiveAnimFourDamaged",
+   "ActiveAnimFourX",
+   "ActiveAnimFourY",
+   "ActiveAnimFourZAdjust",
+   "ActiveAnimFourYSort",
+   "ActiveAnimFourPowered",
+   "ActiveAnimFourPoweredLight",
+   "SpecialAnim",
+   "SpecialAnimDamaged",
+   "SpecialAnimX",
+   "SpecialAnimY",
+   "SpecialAnimZAdjust",
+   "SpecialAnimYSort",
+   "SpecialAnimPowered",
+   "SpecialAnimPoweredLight",
+   "SpecialAnimTwo",
+   "SpecialAnimTwoDamaged",
+   "SpecialAnimTwoX",
+   "SpecialAnimTwoY",
+   "SpecialAnimTwoZAdjust",
+   "SpecialAnimTwoYSort",
+   "SpecialAnimTwoPowered",
+   "SpecialAnimTwoPoweredLight",
+   "SpecialAnimThree",
+   "SpecialAnimThreeDamaged",
+   "SpecialAnimThreeX",
+   "SpecialAnimThreeY",
+   "SpecialAnimThreeZAdjust",
+   "SpecialAnimThreeYSort",
+   "SpecialAnimThreePowered",
+   "SpecialAnimThreePoweredLight",
+   "ProductionAnim",
+   "ProductionAnimDamaged",
+   "ProductionAnimX",
+   "ProductionAnimY",
+   "ProductionAnimZAdjust",
+   "ProductionAnimYSort",
+   "PreProductionAnim",
+   "PreProductionAnimDamaged",
+   "PreProductionAnimX",
+   "PreProductionAnimY",
+   "PreProductionAnimZAdjust",
+   "PreProductionAnimYSort",
+   "TurretAnim",
+   "TurretAnimDamaged",
+   "TurretAnimX",
+   "TurretAnimY",
+   "TurretAnimZAdjust",
+   "TurretAnimYSort",
+   "TurretAnimIsVoxel",
+   "Upgrades"
+  ],
+  "owners": []
+ },
+ "0x43ebf6": {
+  "nkeys": 6,
+  "keys": [
+   "DeployingAnim",
+   "DoorAnim",
+   "UnderDoorAnim",
+   "SpecialZOverlay",
+   "BibShape",
+   "Image"
+  ],
+  "owners": []
+ },
+ "0x445eae": {
+  "nkeys": 4,
+  "keys": [
+   "AnimLow",
+   "AnimHigh",
+   "AnimRate",
+   "AnimPalette"
+  ],
+  "owners": []
+ },
+ "0x447b40": {
+  "nkeys": 1,
+  "keys": [
+   "Digest"
+  ],
+  "owners": []
+ },
+ "0x4eb9ad": {
+  "nkeys": 14,
+  "keys": [
+   "SetName",
+   "TILE",
+   "FileName",
+   "MarbleMadness",
+   "NonMarbleMadness",
+   "Morphable",
+   "AllowToPlace",
+   "AllowBurrowing",
+   "AllowTiberium",
+   "RequiredForRMG",
+   "ToSnowTheater",
+   "ToTemperateTheater",
+   "ShadowCaster",
+   "ShadowTiles"
+  ],
+  "owners": []
+ },
+ "0x5c7fe0": {
+  "nkeys": 1,
+  "keys": [
+   "Waypoints"
+  ],
+  "owners": []
+ },
+ "0x47661d": {
+  "nkeys": 3,
+  "keys": [
+   "CellTags",
+   "CellTags",
+   "CellTags"
+  ],
+  "owners": []
+ },
+ "0x5c42dc": {
+  "nkeys": 4,
+  "keys": [
+   "InitTime",
+   "Basic",
+   "Official",
+   "Basic"
+  ],
+  "owners": []
+ },
+ "0x5b11cd": {
+  "nkeys": 17,
+  "keys": [
+   "TiberiumHeal",
+   "PrerequisitePower",
+   "PrerequisiteFactory",
+   "PrerequisiteBarracks",
+   "PrerequisiteRadar",
+   "PrerequisiteTech",
+   "ZoomInFactor",
+   "RevealByHeight",
+   "AllowShroudedSubteranneanMoves",
+   "AircraftFogReveal",
+   "MinProductionSpeed",
+   "MultipleFactory",
+   "CraterLevel",
+   "TreeFlammability",
+   "MissileROTVar",
+   "MissileSpeedVar",
+   "DropPodWeapon"
+  ],
+  "owners": []
+ },
+ "0x5b486b": {
+  "nkeys": 1,
+  "keys": [
+   "BuildRefinery"
+  ],
+  "owners": []
+ },
+ "0x5c6c9a": {
+  "nkeys": 2,
+  "keys": [
+   "AllowableUnits",
+   "Basic"
+  ],
+  "owners": []
+ },
+ "0x5f30a3": {
+  "nkeys": 1,
+  "keys": [
+   "AuxBuilding"
+  ],
+  "owners": []
+ },
+ "0x60d4a0": {
+  "nkeys": 1,
+  "keys": [
+   "TaskForce"
+  ],
+  "owners": []
+ },
+ "0x61f701": {
+  "nkeys": 11,
+  "keys": [
+   "PitchSpeed",
+   "Locomotor",
+   "CloakingSpeed",
+   "ThreatAvoidanceCoefficient",
+   "SlowdownDistance",
+   "DeaccelerationFactor",
+   "AccelerationFactor",
+   "Weight",
+   "PhysicalSize",
+   "MaxDebris",
+   "DebrisTypes"
+  ],
+  "owners": []
+ },
+ "0x641e90": {
+  "nkeys": 5,
+  "keys": [
+   "Duration",
+   "MinZVel",
+   "MaxZVel",
+   "MaxXYVel",
+   "Spawns"
+  ],
+  "owners": []
+ },
+ "0x65187a": {
+  "nkeys": 7,
+  "keys": [
+   "InfDeath",
+   "Deform",
+   "DeformThreshhold",
+   "EMEffect",
+   "ProneDamage",
+   "Veinhole",
+   "Verses"
+  ],
+  "owners": []
+ },
+ "0x6571be": {
+  "nkeys": 1,
+  "keys": [
+   "Projectile"
+  ],
+  "owners": []
+ },
+ "0x418462": {
+  "nkeys": 5,
+  "keys": [
+   "SpawnCount",
+   "IsMeteor",
+   "IsVeins",
+   "TiberiumSpreadRadius",
+   "TiberiumSpawnType"
+  ],
+  "owners": []
+ },
+ "0x5c4353": {
+  "nkeys": 3,
+  "keys": [
+   "Theater",
+   "Player",
+   "Basic"
+  ],
+  "owners": []
+ },
+ "0x59815b": {
+  "nkeys": 1,
+  "keys": [
+   "BehavesLike"
+  ],
+  "owners": []
+ },
+ "0x44a720": {
+  "nkeys": 5,
+  "keys": [
+   "POWER",
+   "FACTORY",
+   "BARRACKS",
+   "RADAR",
+   "TECH"
+  ],
+  "owners": []
+ },
+ "0x5b1622": {
+  "nkeys": 3,
+  "keys": [
+   "DropPodHeight",
+   "DropPodSpeed",
+   "DropPodAngle"
+  ],
+  "owners": []
+ },
+ "0x5b496e": {
+  "nkeys": 1,
+  "keys": [
+   "BuildBarracks"
+  ],
+  "owners": []
+ },
+ "0x5f30d6": {
+  "nkeys": 3,
+  "keys": [
+   "UseChargeDrain",
+   "ManualControl",
+   "RechargeTime"
+  ],
+  "owners": []
+ },
+ "0x61f97f": {
+  "nkeys": 2,
+  "keys": [
+   "DebrisMaximums",
+   "Primary"
+  ],
+  "owners": []
+ },
+ "0x641f4b": {
+  "nkeys": 9,
+  "keys": [
+   "SpawnCount",
+   "ShareBodyData",
+   "ShareTurretData",
+   "ShareBarrelData",
+   "VoxelIndex",
+   "StartSound",
+   "BounceSound",
+   "ExpireSound",
+   "BounceAnim"
+  ],
+  "owners": []
+ },
+ "0x418503": {
+  "nkeys": 9,
+  "keys": [
+   "IsAnimatedTiberium",
+   "ShouldFogRemove",
+   "IsFlamingGuy",
+   "RunningFrames",
+   "YDrawOffset",
+   "StartSound",
+   "BounceSound",
+   "ExpireSound",
+   "BounceAnim"
+  ],
+  "owners": []
+ },
+ "0x47677d": {
+  "nkeys": 1,
+  "keys": [
+   "LocalSize"
+  ],
+  "owners": []
+ },
+ "0x4bf674": {
+  "nkeys": 1,
+  "keys": [
+   "GAPLUG"
+  ],
+  "owners": []
+ },
+ "0x5b4a61": {
+  "nkeys": 1,
+  "keys": [
+   "BuildTech"
+  ],
+  "owners": []
+ },
+ "0x5c6dfa": {
+  "nkeys": 2,
+  "keys": [
+   "AllowableUnitMaximums",
+   "Basic"
+  ],
+  "owners": []
+ },
+ "0x5f3140": {
+  "nkeys": 1,
+  "keys": [
+   "SidebarImage"
+  ],
+  "owners": []
+ },
+ "0x61fa65": {
+  "nkeys": 1,
+  "keys": [
+   "Secondary"
+  ],
+  "owners": []
+ },
+ "0x6420bd": {
+  "nkeys": 1,
+  "keys": [
+   "ExpireAnim"
+  ],
+  "owners": []
+ },
+ "0x5d1ac6": {
+  "nkeys": 1,
+  "keys": [
+   "Digest"
+  ],
+  "owners": []
+ },
+ "0x4186f4": {
+  "nkeys": 1,
+  "keys": [
+   "ExpireAnim"
+  ],
+  "owners": []
+ },
+ "0x5b16c6": {
+  "nkeys": 16,
+  "keys": [
+   "CrewEscape",
+   "TunnelSpeed",
+   "HoverDampen",
+   "HoverBob",
+   "HoverHeight",
+   "HoverBoost",
+   "HoverAcceleration",
+   "HoverBrake",
+   "VeteranRatio",
+   "VeteranCombat",
+   "VeteranSpeed",
+   "VeteranSight",
+   "VeteranArmor",
+   "VeteranROF",
+   "VeteranCap",
+   "ExplosiveVoxelDebris"
+  ],
+  "owners": []
+ },
+ "0x5b4b53": {
+  "nkeys": 1,
+  "keys": [
+   "BuildWeapons"
+  ],
+  "owners": []
+ },
+ "0x5c6e8e": {
+  "nkeys": 41,
+  "keys": [
+   "TiberiumGrowthEnabled",
+   "Basic",
+   "VeinGrowthEnabled",
+   "Basic",
+   "IceGrowthEnabled",
+   "Basic",
+   "TiberiumDeathToVisceroid",
+   "Basic",
+   "FreeRadar",
+   "Basic",
+   "HomeCell",
+   "Basic",
+   "AltHomeCell",
+   "Basic",
+   "CivEvac",
+   "Basic",
+   "Ambient",
+   "Lighting",
+   "Lighting",
+   "Green",
+   "Lighting",
+   "Blue",
+   "Lighting",
+   "Ground",
+   "Lighting",
+   "Level",
+   "Lighting",
+   "IonAmbient",
+   "Lighting",
+   "IonRed",
+   "Lighting",
+   "IonGreen",
+   "Lighting",
+   "IonBlue",
+   "Lighting",
+   "IonGround",
+   "Lighting",
+   "IonLevel",
+   "Lighting",
+   "Player",
+   "Basic"
+  ],
+  "owners": []
+ },
+ "0x61faa4": {
+  "nkeys": 1,
+  "keys": [
+   "Elite"
+  ],
+  "owners": []
+ },
+ "0x6420fc": {
+  "nkeys": 1,
+  "keys": [
+   "TrailerAnim"
+  ],
+  "owners": []
+ },
+ "0x658abb": {
+  "nkeys": 1,
+  "keys": [
+   "ERROR"
+  ],
+  "owners": []
+ },
+ "0x4187b4": {
+  "nkeys": 1,
+  "keys": [
+   "TrailerAnim"
+  ],
+  "owners": []
+ },
+ "0x446860": {
+  "nkeys": 3,
+  "keys": [
+   "Battles",
+   "Battles",
+   "Battles"
+  ],
+  "owners": []
+ },
+ "0x5b19c4": {
+  "nkeys": 2,
+  "keys": [
+   "BridgeVoxelMax",
+   "TireVoxelDebris"
+  ],
+  "owners": []
+ },
+ "0x5b4c28": {
+  "nkeys": 1,
+  "keys": [
+   "BuildDefense"
+  ],
+  "owners": []
+ },
+ "0x5c66b0": {
+  "nkeys": 2,
+  "keys": [
+   "VariableNames",
+   "VariableNames"
+  ],
+  "owners": []
+ },
+ "0x61fae3": {
+  "nkeys": 12,
+  "keys": [
+   "VoiceMove",
+   "VoiceSelect",
+   "VoiceAttack",
+   "VoiceDie",
+   "VoiceFeedback",
+   "AuxSound1",
+   "AuxSound2",
+   "CloakStop",
+   "Storage",
+   "BuildLimit",
+   "Category",
+   "Dock"
+  ],
+  "owners": []
+ },
+ "0x64213b": {
+  "nkeys": 3,
+  "keys": [
+   "Damage",
+   "DamageRadius",
+   "Warhead"
+  ],
+  "owners": []
+ },
+ "0x418872": {
+  "nkeys": 3,
+  "keys": [
+   "TrailerSeperation",
+   "DamageRadius",
+   "Warhead"
+  ],
+  "owners": []
+ },
+ "0x5b1a64": {
+  "nkeys": 1,
+  "keys": [
+   "ScrapVoxelDebris"
+  ],
+  "owners": []
+ },
+ "0x5b4cfd": {
+  "nkeys": 1,
+  "keys": [
+   "BuildPDefense"
+  ],
+  "owners": []
+ },
+ "0x61ff2d": {
+  "nkeys": 1,
+  "keys": [
+   "DeploysInto"
+  ],
+  "owners": []
+ },
+ "0x6421ae": {
+  "nkeys": 1,
+  "keys": [
+   "AttachedSystem"
+  ],
+  "owners": []
+ },
+ "0x4188df": {
+  "nkeys": 5,
+  "keys": [
+   "Bouncer",
+   "Tiled",
+   "ShouldUseCellDrawer",
+   "UseNormalLight",
+   "RandomRate"
+  ],
+  "owners": []
+ },
+ "0x5b1aa3": {
+  "nkeys": 13,
+  "keys": [
+   "CloakingStages",
+   "IceCrackingWeight",
+   "IceBreakingWeight",
+   "CliffBackImpassability",
+   "PlacementDelay",
+   "TrackedUphill",
+   "TrackedDownhill",
+   "WheeledUphill",
+   "WheeledDownhill",
+   "WindDirection",
+   "CameraRange",
+   "FlightLevel",
+   "RepairBay"
+  ],
+  "owners": []
+ },
+ "0x5b4dd1": {
+  "nkeys": 1,
+  "keys": [
+   "BuildAA"
+  ],
+  "owners": []
+ },
+ "0x5c6720": {
+  "nkeys": 2,
+  "keys": [
+   "VariableNames",
+   "VariableNames"
+  ],
+  "owners": []
+ },
+ "0x61ffb1": {
+  "nkeys": 1,
+  "keys": [
+   "UndeploysInto"
+  ],
+  "owners": []
+ },
+ "0x5b1c8d": {
+  "nkeys": 1,
+  "keys": [
+   "GDIGateOne"
+  ],
+  "owners": []
+ },
+ "0x5b4ea6": {
+  "nkeys": 1,
+  "keys": [
+   "BuildHelipad"
+  ],
+  "owners": []
+ },
+ "0x61fff0": {
+  "nkeys": 5,
+  "keys": [
+   "LightningRod",
+   "ManualReload",
+   "TurretSpins",
+   "Turret",
+   "Explosion"
+  ],
+  "owners": []
+ },
+ "0x642214": {
+  "nkeys": 1,
+  "keys": [
+   "ShareSource"
+  ],
+  "owners": []
+ },
+ "0x5b1ccc": {
+  "nkeys": 1,
+  "keys": [
+   "GDIGateTwo"
+  ],
+  "owners": []
+ },
+ "0x5b4f7b": {
+  "nkeys": 1,
+  "keys": [
+   "BuildRadar"
+  ],
+  "owners": []
+ },
+ "0x620113": {
+  "nkeys": 1,
+  "keys": [
+   "NaturalParticleSystem"
+  ],
+  "owners": []
+ },
+ "0x5b1d0a": {
+  "nkeys": 1,
+  "keys": [
+   "NodGateOne"
+  ],
+  "owners": []
+ },
+ "0x5b504f": {
+  "nkeys": 42,
+  "keys": [
+   "ConcreteWalls",
+   "NSGates",
+   "EWGates",
+   "AttackInterval",
+   "AttackDelay",
+   "PatrolScan",
+   "CreditReserve",
+   "PathDelay",
+   "BlockagePathDelay",
+   "TiberiumNearScan",
+   "TiberiumFarScan",
+   "AutocreateTime",
+   "InfantryReserve",
+   "InfantryBaseMult",
+   "PowerSurplus",
+   "BaseSizeAdd",
+   "RefineryRatio",
+   "RefineryLimit",
+   "BarracksRatio",
+   "BarracksLimit",
+   "WarRatio",
+   "WarLimit",
+   "DefenseRatio",
+   "DefenseLimit",
+   "AARatio",
+   "AALimit",
+   "TeslaRatio",
+   "TeslaLimit",
+   "HelipadRatio",
+   "HelipadLimit",
+   "AirstripRatio",
+   "AirstripLimit",
+   "CompEasyBonus",
+   "Paranoid",
+   "PowerEmergency",
+   "AIBaseSpacing",
+   "GDIWallDefense",
+   "GDIWallDefenseCoefficient",
+   "NodBaseDefenseCoefficient",
+   "GDIBaseDefenseCoefficient",
+   "MaximumBaseDefenseValue",
+   "ComputerBaseDefenseResponse"
+  ],
+  "owners": []
+ },
+ "0x620191": {
+  "nkeys": 2,
+  "keys": [
+   "NaturalParticleLocation",
+   "DamageParticleSystems"
+  ],
+  "owners": []
+ },
+ "0x4eb558": {
+  "nkeys": 2,
+  "keys": [
+   "TilesInSet",
+   "LastTilesInSet"
+  ],
+  "owners": []
+ },
+ "0x5b1d49": {
+  "nkeys": 1,
+  "keys": [
+   "NodGateTwo"
+  ],
+  "owners": []
+ },
+ "0x62027b": {
+  "nkeys": 41,
+  "keys": [
+   "DamageSmokeOffset",
+   "Nominal",
+   "Cloakable",
+   "Sensors",
+   "PipScale",
+   "Prerequisite",
+   "Sight",
+   "TechLevel",
+   "Speed",
+   "Cost",
+   "Ammo",
+   "Points",
+   "ThreatPosed",
+   "Owner",
+   "Trainable",
+   "Crewed",
+   "Repairable",
+   "Invisible",
+   "RadarVisible",
+   "SelfHealing",
+   "NoAutoFire",
+   "Passengers",
+   "FireAngle",
+   "DeployTime",
+   "Disableable",
+   "ToProtect",
+   "TiberiumHeal",
+   "ImmuneToVeins",
+   "AllowedToStartInMultiplayer",
+   "TargetLaser",
+   "HunterSeeker",
+   "Crusher",
+   "AutoCrush",
+   "TiltsWhenCrushes",
+   "Accelerates",
+   "ZFudgeCliff",
+   "ZFudgeColumn",
+   "ZFudgeTunnel",
+   "ZFudgeBridge",
+   "VeteranAbilities",
+   "EliteAbilities"
+  ],
+  "owners": []
+ },
+ "0x5b1d88": {
+  "nkeys": 1,
+  "keys": [
+   "WallTower"
+  ],
+  "owners": []
+ },
+ "0x620894": {
+  "nkeys": 1,
+  "keys": [
+   "MyEffectivenessCoefficient"
+  ],
+  "owners": []
+ },
+ "0x5b1dc6": {
+  "nkeys": 1,
+  "keys": [
+   "GDIPowerPlant"
+  ],
+  "owners": []
+ },
+ "0x6208f4": {
+  "nkeys": 1,
+  "keys": [
+   "TargetEffectivenessCoefficient"
+  ],
+  "owners": []
+ },
+ "0x5b1e05": {
+  "nkeys": 1,
+  "keys": [
+   "GDIPowerTurbine"
+  ],
+  "owners": []
+ },
+ "0x620954": {
+  "nkeys": 1,
+  "keys": [
+   "TargetSpecialThreatCoefficient"
+  ],
+  "owners": []
+ },
+ "0x5b1e44": {
+  "nkeys": 1,
+  "keys": [
+   "NodRegularPower"
+  ],
+  "owners": []
+ },
+ "0x6209b3": {
+  "nkeys": 1,
+  "keys": [
+   "TargetStrengthCoefficient"
+  ],
+  "owners": []
+ },
+ "0x5b1e82": {
+  "nkeys": 1,
+  "keys": [
+   "NodAdvancedPower"
+  ],
+  "owners": []
+ },
+ "0x620a13": {
+  "nkeys": 21,
+  "keys": [
+   "TargetDistanceCoefficient",
+   "SpecialThreatValue",
+   "FireAngle",
+   "TurretOffset",
+   "RotCount",
+   "Remapable",
+   "Normalized",
+   "VisibleLoad",
+   "ShadowIndex",
+   "Cameo",
+   "PrimaryFireFLH",
+   "PBarrelLength",
+   "PBarrelThickness",
+   "SecondaryFireFLH",
+   "SBarrelLength",
+   "SBarrelThickness",
+   "PrimaryFireFLH",
+   "PBarrelLength",
+   "PBarrelThickness",
+   "TurretNotExportedOnGround",
+   "MovementZone"
+  ],
+  "owners": []
+ },
+ "0x5b1ec1": {
+  "nkeys": 1,
+  "keys": [
+   "GDIFirestormGenerator"
+  ],
+  "owners": []
+ },
+ "0x5b1f00": {
+  "nkeys": 1,
+  "keys": [
+   "GDIHunterSeeker"
+  ],
+  "owners": []
+ },
+ "0x5b1f3e": {
+  "nkeys": 1,
+  "keys": [
+   "NodHunterSeeker"
+  ],
+  "owners": []
+ },
+ "0x5b1f7d": {
+  "nkeys": 1,
+  "keys": [
+   "BaseUnit"
+  ],
+  "owners": []
+ },
+ "0x5b1fbc": {
+  "nkeys": 1,
+  "keys": [
+   "HarvesterUnit"
+  ],
+  "owners": []
+ },
+ "0x5b2081": {
+  "nkeys": 1,
+  "keys": [
+   "PadAircraft"
+  ],
+  "owners": []
+ },
+ "0x5b2189": {
+  "nkeys": 1,
+  "keys": [
+   "Paratrooper"
+  ],
+  "owners": []
+ },
+ "0x5b220a": {
+  "nkeys": 1,
+  "keys": [
+   "Disguise"
+  ],
+  "owners": []
+ },
+ "0x5b2249": {
+  "nkeys": 1,
+  "keys": [
+   "Engineer"
+  ],
+  "owners": []
+ },
+ "0x5b2287": {
+  "nkeys": 1,
+  "keys": [
+   "Technician"
+  ],
+  "owners": []
+ },
+ "0x5b22c6": {
+  "nkeys": 1,
+  "keys": [
+   "Pilot"
+  ],
+  "owners": []
+ },
+ "0x5b2305": {
+  "nkeys": 1,
+  "keys": [
+   "Crew"
+  ],
+  "owners": []
+ },
+ "0x5b2343": {
+  "nkeys": 61,
+  "keys": [
+   "CurleyShuffle",
+   "FineDiffControl",
+   "TeamDelays",
+   "AIHateDelays",
+   "AIUseTurbineUpgradeProbability",
+   "NodAIBuildsWalls",
+   "AIBuildsWalls",
+   "FillEarliestTeamProbability",
+   "MinimumAIDefensiveTeams",
+   "MaximumAIDefensiveTeams",
+   "TotalAITeamCap",
+   "UseMinDefenseRule",
+   "DissolveUnfilledTeamDelay",
+   "MultiplayerAICM",
+   "AIIonCannonConYardValue",
+   "AIIonCannonWarFactoryValue",
+   "AIIonCannonPowerValue",
+   "AIIonCannonEngineerValue",
+   "AIIonCannonThiefValue",
+   "AIIonCannonHarvesterValue",
+   "AIIonCannonMCVValue",
+   "AIIonCannonAPCValue",
+   "AIIonCannonBaseDefenseValue",
+   "AIIonCannonPlugValue",
+   "AIIonCannonHelipadValue",
+   "AIIonCannonTempleValue",
+   "CloakDelay",
+   "GameSpeedBias",
+   "BaseBias",
+   "SeparateAircraft",
+   "BaseDefenseDelay",
+   "SuspendPriority",
+   "SuspendDelay",
+   "SurvivorRate",
+   "SurvivorDivisor",
+   "ReloadRate",
+   "BuildupTime",
+   "HarvesterDumpRate",
+   "HarvesterLoadRate",
+   "BuildSpeed",
+   "DamageDelay",
+   "GrowthRate",
+   "RefundPercent",
+   "RepairPercent",
+   "RepairStep",
+   "IRepairStep",
+   "RepairRate",
+   "URepairRate",
+   "IRepairRate",
+   "Stray",
+   "CloseEnough",
+   "BlendedFog",
+   "AttackingAircraftSightRange",
+   "LeptonsPerSightIncrease",
+   "TiberiumTransmogrify",
+   "IonLightningFrequency",
+   "IonLightningRandomness",
+   "IonLightningDamage",
+   "IonStormDuration",
+   "IonStormWarning",
+   "IonStormWarhead"
+  ],
+  "owners": []
+ },
+ "0x5b3451": {
+  "nkeys": 41,
+  "keys": [
+   "SpotlightMovementRadius",
+   "SpotlightLocationRadius",
+   "SpotlightSpeed",
+   "SpotlightAcceleration",
+   "SpotlightAngle",
+   "SpotlightRadius",
+   "RevealTriggerRadius",
+   "ChargeToDrainRatio",
+   "WallBuildSpeedCoefficient",
+   "ConditionRedSparkingProbability",
+   "AITriggerSuccessWeightDelta",
+   "AITriggerFailureWeightDelta",
+   "AITriggerTrackRecordCoefficient",
+   "WeedCapacity",
+   "FlashFrameTime",
+   "RadarCombatFlashTime",
+   "RadarEventSpeed",
+   "RadarEventRotationSpeed",
+   "RadarEventSuppressionDistances",
+   "RadarEventVisibilityDurations",
+   "RadarEventDurations",
+   "RadarEventMinRadius",
+   "RadarEventColorSpeed",
+   "HunterSeekerDetonateProximity",
+   "HunterSeekerDescendProximity",
+   "HunterSeekerDescentSpeed",
+   "HunterSeekerAscentSpeed",
+   "HunterSeekerEmergeSpeed",
+   "DumbMyEffectivenessCoefficient",
+   "DumbTargetStrengthCoefficient",
+   "DumbTargetDistanceCoefficient",
+   "EnemyHouseThreatBonus",
+   "VeinholeMonsterStrength",
+   "MaxVeinholeGrowth",
+   "VeinholeGrowthRate",
+   "VeinholeShrinkRate",
+   "VeinDamage",
+   "VeinholeTypeClass",
+   "MaximumQueuedObjects",
+   "MaxWaypointPathLength",
+   "TreeStrength"
+  ],
+  "owners": []
+ }
+}

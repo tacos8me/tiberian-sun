@@ -17,17 +17,16 @@ class VectorClass_H
 {
 public:
     // ---- vtable 0x0069ad3c (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0044b880
-    virtual void vfunc_1();  // [1] 0x0044af30
-    virtual void vfunc_2();  // [2] 0x0044af70
-    virtual void vfunc_3();  // [3] 0x0044b020
-    virtual void vfunc_4();  // [4] 0x0044b050
-    virtual void vfunc_5();  // [5] 0x0044b090
+    virtual void vfunc_1(int a0);  // [1] 0x0044af30  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0044af70  // __thiscall
+    virtual void vfunc_3();  // [3] 0x0044b020  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0044b050  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x0044b090  // __stdcall, returns int
 
     VectorClass_H();  // 0x004494fd
     virtual ~VectorClass_H();
 
-    // ---- data members (offsets from ctor 0x00449400) ----
+    // ---- data members (offsets from ctor 0x004493f7) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned char pad_000[0x8];

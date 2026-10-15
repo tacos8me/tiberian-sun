@@ -18,14 +18,13 @@ class LCWStraw : public Straw
 {
 public:
     // ---- vtable 0x006a1524 (3 slots) ----
-    virtual void vfunc_0();  // [0] 0x004f4700
-    virtual void vfunc_1();  // [1] 0x005f1020
-    virtual void vfunc_2();  // [2] 0x004f45a0
+    virtual void vfunc_1(int a0);  // [1] 0x005f1020  // __thiscall
+    virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x004f45a0  // __thiscall
 
     LCWStraw();  // 0x004f4528
     virtual ~LCWStraw();
 
-    // ---- data members (offsets from ctor 0x004f44f0) ----
+    // ---- data members (offsets from ctor 0x004f44e9) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a1524

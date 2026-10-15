@@ -18,17 +18,16 @@ class DynamicVectorClass_struct_HashObject_struct_RadarTrackingStruct_TechnoClas
 {
 public:
     // ---- vtable 0x006a36d8 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x005a52a0
-    virtual void vfunc_1();  // [1] 0x005a4f50
-    virtual void vfunc_2();  // [2] 0x005a5150
-    virtual void vfunc_3();  // [3] 0x005a4f00
-    virtual void vfunc_4();  // [4] 0x005a5260
-    virtual void vfunc_5();  // [5] 0x005a4f30
+    virtual void vfunc_1(int a0);  // [1] 0x005a4f50  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x005a5150  // __thiscall
+    virtual void vfunc_3();  // [3] 0x005a4f00  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x005a5260  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x005a4f30  // __stdcall, returns int
 
     DynamicVectorClass_struct_HashObject_struct_RadarTrackingStruct_TechnoClass();  // 0x005a2d3e
     virtual ~DynamicVectorClass_struct_HashObject_struct_RadarTrackingStruct_TechnoClass();
 
-    // ---- data members (offsets from ctor 0x005a2cd0) ----
+    // ---- data members (offsets from ctor 0x005a2cec) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x100

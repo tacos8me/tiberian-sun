@@ -17,13 +17,21 @@ class VectorClass_ThemeControl
 {
 public:
     // ---- vtable 0x0069f824 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004b0ad0
-    virtual void vfunc_1();  // [1] 0x004ab010
-    virtual void vfunc_2();  // [2] 0x004ab050
-    virtual void vfunc_3();  // [3] 0x004ab100
-    virtual void vfunc_4();  // [4] 0x004ab130
-    virtual void vfunc_5();  // [5] 0x004ab170
+    virtual void vfunc_1(int a0);  // [1] 0x004ab010  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004ab050  // __thiscall
+    virtual void vfunc_3();  // [3] 0x004ab100  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004ab130  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x004ab170  // __stdcall, returns int
 
     VectorClass_ThemeControl();  // 0x004a91ce
     virtual ~VectorClass_ThemeControl();
+
+    // ---- data members (offsets from ctor 0x004b0ac9) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69f824
+    unsigned long m_004;  // zero-initialised
+    unsigned long m_008;  // zero-initialised
+    unsigned char pad_00c[0x1];
+    unsigned long m_00d;  // zero-initialised
 };

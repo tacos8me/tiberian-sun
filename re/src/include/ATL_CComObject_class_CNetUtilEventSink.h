@@ -17,14 +17,13 @@ class ATL_CComObject_class_CNetUtilEventSink : public CNetUtilEventSink, public 
 {
 public:
     // ---- vtable 0x006a7970 (8 slots) ----
-    virtual void vfunc_0();  // [0] 0x0066d240
-    virtual void vfunc_1();  // [1] 0x0066d1d0
-    virtual void vfunc_2();  // [2] 0x0066d1f0
-    virtual void vfunc_3();  // [3] 0x0066d180
-    virtual void vfunc_4();  // [4] 0x0066ca60
-    virtual void vfunc_5();  // [5] 0x0066ca50
-    virtual void vfunc_6();  // [6] 0x0066d040
-    virtual void vfunc_7();  // [7] 0x0066d120  // refs "OnAgeCheck"
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x0066d240  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x0066d1d0  // __stdcall
+    virtual void vfunc_3(int a0, int a1, int a2, int a3, int a4);  // [3] 0x0066d180  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x0066ca60
+    virtual void vfunc_5(int a0, int a1);  // [5] 0x0066ca50  // __stdcall, returns int
+    virtual void vfunc_6(int a0, int a1, int a2, int a3, int a4, int a5);  // [6] 0x0066d040
+    virtual void vfunc_7(int a0, int a1, int a2, int a3);  // [7] 0x0066d120  // __stdcall, returns int  // refs "OnAgeCheck"
 
     ATL_CComObject_class_CNetUtilEventSink();  // 0x0066ca3b
     virtual ~ATL_CComObject_class_CNetUtilEventSink();

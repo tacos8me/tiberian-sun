@@ -17,25 +17,31 @@ class VectorClass_class_DistributionObject_AITriggerTypeClass_DiscreteDistributi
 {
 public:
     // ---- vtable 0x006a56e0 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0060e300
-    virtual void vfunc_1();  // [1] 0x0060df10
-    virtual void vfunc_2();  // [2] 0x0060df70
-    virtual void vfunc_3();  // [3] 0x0060e080
-    virtual void vfunc_4();  // [4] 0x0060e0c0
-    virtual void vfunc_5();  // [5] 0x0060e110
+    virtual void vfunc_1(int a0);  // [1] 0x0060df10  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0060df70  // __thiscall
+    virtual void vfunc_3();  // [3] 0x0060e080  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0060e0c0  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x0060e110  // __stdcall, returns int
 
     VectorClass_class_DistributionObject_AITriggerTypeClass_DiscreteDistributionClass_class_AITriggerTypeClass();  // 0x0060ced4
     virtual ~VectorClass_class_DistributionObject_AITriggerTypeClass_DiscreteDistributionClass_class_AITriggerTypeClass();
 
-    // ---- data members (offsets from ctor 0x0060cecc) ----
+    // ---- data members (offsets from ctor 0x0060cbd5) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_000[0x24];
-    unsigned long m_024;  // init 0x69fb08
+    unsigned char pad_000[0x18];
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // zero-initialised
+    unsigned long m_024;  // init 0x69faec
     unsigned long m_028;  // /* ? */
     unsigned char pad_02c[0x4];
     unsigned long m_030;  // /* ? */
     unsigned long m_034;  // /* ? */
     unsigned char pad_038[0x8];
-    unsigned long m_040;  // init 0x6a56e0
+    unsigned long m_040;  // init 0x6a56fc
+    unsigned char pad_044[0xc];
+    unsigned long m_050;  // /* ? */
+    unsigned long m_054;  // init 0xa
+    unsigned long m_058;  // /* ? */
 };

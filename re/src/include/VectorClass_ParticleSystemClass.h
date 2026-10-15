@@ -17,13 +17,21 @@ class VectorClass_ParticleSystemClass
 {
 public:
     // ---- vtable 0x0069f008 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004b0d00
-    virtual void vfunc_1();  // [1] 0x004ab8b0
-    virtual void vfunc_2();  // [2] 0x004ab8f0
-    virtual void vfunc_3();  // [3] 0x004ab9a0
-    virtual void vfunc_4();  // [4] 0x004ab9d0
-    virtual void vfunc_5();  // [5] 0x004aba10
+    virtual void vfunc_1(int a0);  // [1] 0x004ab8b0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004ab8f0  // __thiscall
+    virtual void vfunc_3();  // [3] 0x004ab9a0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004ab9d0  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x004aba10  // __stdcall, returns int
 
     VectorClass_ParticleSystemClass();  // 0x004a7bbe
     virtual ~VectorClass_ParticleSystemClass();
+
+    // ---- data members (offsets from ctor 0x004b0cf9) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69f008
+    unsigned long m_004;  // zero-initialised
+    unsigned long m_008;  // zero-initialised
+    unsigned char pad_00c[0x1];
+    unsigned long m_00d;  // zero-initialised
 };

@@ -18,14 +18,14 @@ class FileStraw : public Straw
 {
 public:
     // ---- vtable 0x0069ad0c (3 slots) ----
-    virtual void vfunc_0();  // [0] 0x0044aba0
-    virtual void vfunc_1();  // [1] 0x005f1020
-    virtual void vfunc_2();  // [2] 0x006742c0
+    virtual void vfunc_0(int a0);  // [0] 0x0044aba0  // __thiscall
+    virtual void vfunc_1(int a0);  // [1] 0x005f1020  // __thiscall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x006742c0  // __thiscall
 
     FileStraw();  // 0x00447b77
     virtual ~FileStraw();
 
-    // ---- data members (offsets from ctor 0x00447b40) ----
+    // ---- data members (offsets from ctor 0x00447b37) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned char pad_000[0x14];

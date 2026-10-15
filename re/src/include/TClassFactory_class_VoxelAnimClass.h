@@ -17,12 +17,18 @@ class TClassFactory_class_VoxelAnimClass : public IClassFactory, public IUnknown
 {
 public:
     // ---- vtable 0x006a4a48 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x005ea340
-    virtual void vfunc_1();  // [1] 0x005ea3b0
-    virtual void vfunc_2();  // [2] 0x005ea3d0
-    virtual void vfunc_3();  // [3] 0x005ea400
-    virtual void vfunc_4();  // [4] 0x005ea480
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x005ea340  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x005ea3b0  // __stdcall
+    virtual void vfunc_2(int a0);  // [2] 0x005ea3d0  // __stdcall
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ea400  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x005ea480  // __stdcall, returns int
 
     TClassFactory_class_VoxelAnimClass();  // 0x005ea33b
     virtual ~TClassFactory_class_VoxelAnimClass();
+
+    // ---- data members (offsets from ctor 0x005ea321) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a4a48
+    unsigned long m_004;  // zero-initialised
 };

@@ -17,17 +17,16 @@ class VectorClass_MSAnim
 {
 public:
     // ---- vtable 0x006a26d0 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0055d430
-    virtual void vfunc_1();  // [1] 0x0055cf20
-    virtual void vfunc_2();  // [2] 0x0055cf60
-    virtual void vfunc_3();  // [3] 0x0055d010
-    virtual void vfunc_4();  // [4] 0x0055d040
-    virtual void vfunc_5();  // [5] 0x0055d080
+    virtual void vfunc_1(int a0);  // [1] 0x0055cf20  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0055cf60  // __thiscall
+    virtual void vfunc_3();  // [3] 0x0055d010  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0055d040  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x0055d080  // __stdcall, returns int
 
     VectorClass_MSAnim();  // 0x0055c265
     virtual ~VectorClass_MSAnim();
 
-    // ---- data members (offsets from ctor 0x0055c1c0) ----
+    // ---- data members (offsets from ctor 0x0055c1b1) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a26d0

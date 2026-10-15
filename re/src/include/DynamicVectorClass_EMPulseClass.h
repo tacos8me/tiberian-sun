@@ -18,12 +18,11 @@ class DynamicVectorClass_EMPulseClass : public VectorClass_EMPulseClass
 {
 public:
     // ---- vtable 0x0069deac (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0048f950
-    virtual void vfunc_1();  // [1] 0x0048f6a0
-    virtual void vfunc_2();  // [2] 0x0048f820
-    virtual void vfunc_3();  // [3] 0x0048f650
-    virtual void vfunc_4();  // [4] 0x0048f8d0
-    virtual void vfunc_5();  // [5] 0x0048f680
+    virtual void vfunc_1(int a0);  // [1] 0x0048f6a0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0048f820  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x0048f650  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0048f8d0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x0048f680  // __stdcall, returns int
 
     DynamicVectorClass_EMPulseClass();  // 0x0048ed83
     virtual ~DynamicVectorClass_EMPulseClass();

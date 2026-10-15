@@ -17,17 +17,16 @@ class VectorClass_struct_SubzoneConnectionStruct
 {
 public:
     // ---- vtable 0x00698634 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00401590
-    virtual void vfunc_1();  // [1] 0x004013d0
-    virtual void vfunc_2();  // [2] 0x00401410
-    virtual void vfunc_3();  // [3] 0x00401500
-    virtual void vfunc_4();  // [4] 0x00401530
-    virtual void vfunc_5();  // [5] 0x00401570
+    virtual void vfunc_1(int a0);  // [1] 0x004013d0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00401410  // __thiscall
+    virtual void vfunc_3();  // [3] 0x00401500  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00401530  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x00401570  // __stdcall, returns int
 
     VectorClass_struct_SubzoneConnectionStruct();  // 0x0040134c
     virtual ~VectorClass_struct_SubzoneConnectionStruct();
 
-    // ---- data members (offsets from ctor 0x00401320) ----
+    // ---- data members (offsets from ctor 0x00401311) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x698634

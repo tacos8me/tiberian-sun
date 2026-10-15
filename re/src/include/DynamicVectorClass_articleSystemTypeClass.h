@@ -18,17 +18,16 @@ class DynamicVectorClass_articleSystemTypeClass : public VectorClass_articleSyst
 {
 public:
     // ---- vtable 0x006a5b58 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0061e560
-    virtual void vfunc_1();  // [1] 0x0061e2b0
-    virtual void vfunc_2();  // [2] 0x0061e430
-    virtual void vfunc_3();  // [3] 0x0061e260
-    virtual void vfunc_4();  // [4] 0x0061e4e0
-    virtual void vfunc_5();  // [5] 0x0061e290
+    virtual void vfunc_1(int a0);  // [1] 0x0061e2b0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0061e430  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x0061e260  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0061e4e0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x0061e290  // __stdcall, returns int
 
     DynamicVectorClass_articleSystemTypeClass();  // 0x006134aa
     virtual ~DynamicVectorClass_articleSystemTypeClass();
 
-    // ---- data members (offsets from ctor 0x006131dd) ----
+    // ---- data members (offsets from ctor 0x00613413) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned char pad_000[0x10];

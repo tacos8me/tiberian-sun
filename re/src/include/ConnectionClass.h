@@ -17,17 +17,28 @@ class ConnectionClass
 {
 public:
     // ---- vtable 0x0069b09c (10 slots) ----
-    virtual void vfunc_0();  // [0] 0x0045f0e0
-    virtual void vfunc_1();  // [1] 0x0045eb50
-    virtual void vfunc_2();  // [2] 0x0045eb70
-    virtual void vfunc_3();  // [3] 0x0045ec10
-    virtual void vfunc_4();  // [4] 0x0045edf0
-    virtual void vfunc_5();  // [5] 0x0045ee80
-    virtual void vfunc_6();  // [6] 0x0045f020
-    virtual void vfunc_7();  // [7] 0x0045eeb0
-    virtual void vfunc_8();  // [8] 0x0045f030
-    virtual void vfunc_9();  // [9] 0x006829a5
+    virtual void vfunc_1(int a0);  // [1] 0x0045eb50
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0045eb70  // __thiscall
+    virtual void vfunc_3(int a0, int a1);  // [3] 0x0045ec10  // __thiscall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x0045edf0  // __thiscall, returns int
+    virtual void vfunc_5();  // [5] 0x0045ee80  // __thiscall, returns int
+    virtual void vfunc_6();  // [6] 0x0045f020  // __cdecl, returns int
+    virtual void vfunc_7(int a0, int a1);  // [7] 0x0045eeb0  // __thiscall, returns int
+    virtual void vfunc_8();  // [8] 0x0045f030  // __thiscall, returns int
+    virtual void vfunc_9();  // [9] 0x006829a5  // __cdecl
 
     ConnectionClass();  // 0x0045eac5
     virtual ~ConnectionClass();
+
+    // ---- data members (offsets from ctor 0x0045ea9e) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69b09c
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
 };

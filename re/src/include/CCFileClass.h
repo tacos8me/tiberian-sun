@@ -18,28 +18,27 @@ class CCFileClass : public CDFileClass
 {
 public:
     // ---- vtable 0x00699bc8 (17 slots) ----
-    virtual void vfunc_0();  // [0] 0x004190f0
-    virtual void vfunc_1();  // [1] 0x00419090
-    virtual void vfunc_2();  // [2] 0x0044e320
-    virtual void vfunc_3();  // [3] 0x005a6850
-    virtual void vfunc_4();  // [4] 0x005a6890
-    virtual void vfunc_5();  // [5] 0x004475d0
-    virtual void vfunc_6();  // [6] 0x00447610
-    virtual void vfunc_7();  // [7] 0x00447650
-    virtual void vfunc_8();  // [8] 0x004190d0
-    virtual void vfunc_9();  // [9] 0x00447490
-    virtual void vfunc_10();  // [10] 0x00447520
-    virtual void vfunc_11();  // [11] 0x00447580
-    virtual void vfunc_12();  // [12] 0x00447460
-    virtual void vfunc_13();  // [13] 0x00447620
-    virtual void vfunc_14();  // [14] 0x00447780
-    virtual void vfunc_15();  // [15] 0x00447830
-    virtual void vfunc_16();  // [16] 0x00447430
+    virtual void vfunc_1();  // [1] 0x00419090  // __cdecl
+    virtual void vfunc_2(int a0);  // [2] 0x0044e320  // __thiscall
+    virtual void vfunc_3();  // [3] 0x005a6850  // __thiscall, returns int
+    virtual void vfunc_4();  // [4] 0x005a6890  // __thiscall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x004475d0  // __thiscall
+    virtual void vfunc_6();  // [6] 0x00447610  // __cdecl
+    virtual void vfunc_7(int a0);  // [7] 0x00447650  // __thiscall, returns int
+    virtual void vfunc_8(int a0, int a1);  // [8] 0x004190d0  // __thiscall
+    virtual void vfunc_9(int a0, int a1);  // [9] 0x00447490  // __thiscall
+    virtual void vfunc_10(int a0);  // [10] 0x00447520
+    virtual void vfunc_11();  // [11] 0x00447580  // __thiscall
+    virtual void vfunc_12(int a0, int a1);  // [12] 0x00447460  // __thiscall
+    virtual void vfunc_13();  // [13] 0x00447620  // __thiscall
+    virtual void vfunc_14(int a0, int a1, int a2, int a3, int a4, int a5);  // [14] 0x00447780  // __thiscall
+    virtual void vfunc_15(int a0);  // [15] 0x00447830  // __thiscall
+    virtual void vfunc_16(int a0, int a1, int a2);  // [16] 0x00447430  // __stdcall
 
     CCFileClass();  // 0x00418ec3
     virtual ~CCFileClass();
 
-    // ---- data members (offsets from ctor 0x00418e88) ----
+    // ---- data members (offsets from ctor 0x00418dcb) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned char pad_000[0x4];

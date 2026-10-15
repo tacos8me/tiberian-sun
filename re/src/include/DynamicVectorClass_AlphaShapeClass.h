@@ -18,12 +18,11 @@ class DynamicVectorClass_AlphaShapeClass : public VectorClass_AlphaShapeClass
 {
 public:
     // ---- vtable 0x00699798 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00412b60
-    virtual void vfunc_1();  // [1] 0x004128b0
-    virtual void vfunc_2();  // [2] 0x00412a30
-    virtual void vfunc_3();  // [3] 0x00412860
-    virtual void vfunc_4();  // [4] 0x00412ae0
-    virtual void vfunc_5();  // [5] 0x00412890
+    virtual void vfunc_1(int a0);  // [1] 0x004128b0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00412a30  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x00412860  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00412ae0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00412890  // __stdcall, returns int
 
     DynamicVectorClass_AlphaShapeClass();  // 0x00411993
     virtual ~DynamicVectorClass_AlphaShapeClass();

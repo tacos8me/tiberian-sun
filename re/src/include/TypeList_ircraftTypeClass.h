@@ -18,13 +18,17 @@ class TypeList_ircraftTypeClass : public DynamicVectorClass_ircraftTypeClass
 {
 public:
     // ---- vtable 0x006a3bf4 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x005b9d30
-    virtual void vfunc_1();  // [1] 0x005badc0
-    virtual void vfunc_2();  // [2] 0x005bafa0
-    virtual void vfunc_3();  // [3] 0x005b9b50
-    virtual void vfunc_4();  // [4] 0x005bb0a0
-    virtual void vfunc_5();  // [5] 0x005b9b80
+    virtual void vfunc_1(int a0);  // [1] 0x005badc0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x005bafa0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x005b9b50  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x005bb0a0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x005b9b80  // __stdcall, returns int
 
     TypeList_ircraftTypeClass();  // 0x005abf9b
     virtual ~TypeList_ircraftTypeClass();
+
+    // ---- data members (offsets from ctor 0x005abee9) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a3c80
 };

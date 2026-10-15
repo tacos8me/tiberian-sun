@@ -18,13 +18,20 @@ class DynamicVectorClass_struct_CrackedIceStruct_MapClass : public VectorClass_s
 {
 public:
     // ---- vtable 0x006a1a84 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00522210
-    virtual void vfunc_1();  // [1] 0x005214f0
-    virtual void vfunc_2();  // [2] 0x00521700
-    virtual void vfunc_3();  // [3] 0x00520720
-    virtual void vfunc_4();  // [4] 0x00521820
-    virtual void vfunc_5();  // [5] 0x00520750
+    virtual void vfunc_1(int a0);  // [1] 0x005214f0  // __stdcall
+    virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x00521700  // __thiscall
+    virtual void vfunc_3();  // [3] 0x00520720  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00521820  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00520750  // __stdcall, returns int
 
     DynamicVectorClass_struct_CrackedIceStruct_MapClass();  // 0x005019d0
     virtual ~DynamicVectorClass_struct_CrackedIceStruct_MapClass();
+
+    // ---- data members (offsets from ctor 0x0050192a) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a1abc
+    unsigned char pad_004[0xc];
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
 };

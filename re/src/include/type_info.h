@@ -17,13 +17,8 @@ class type_info
 {
 public:
     // ---- vtable 0x006a7d04 (1 slots) ----
-    virtual void vfunc_0();  // [0] 0x00682906
+    virtual void vfunc_0(int a0);  // [0] 0x00682906  // __thiscall
 
     type_info();  // 0x006828e4
     virtual ~type_info();
-
-    // ---- data members (offsets from ctor 0x006828dd) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a7d04
 };

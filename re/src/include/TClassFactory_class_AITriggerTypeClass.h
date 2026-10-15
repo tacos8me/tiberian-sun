@@ -17,12 +17,18 @@ class TClassFactory_class_AITriggerTypeClass : public IClassFactory, public IUnk
 {
 public:
     // ---- vtable 0x006a4e68 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x005ee540
-    virtual void vfunc_1();  // [1] 0x005ee5b0
-    virtual void vfunc_2();  // [2] 0x005ee5d0
-    virtual void vfunc_3();  // [3] 0x005ee600
-    virtual void vfunc_4();  // [4] 0x005ee680
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x005ee540  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x005ee5b0  // __stdcall
+    virtual void vfunc_2(int a0);  // [2] 0x005ee5d0  // __stdcall
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ee600  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x005ee680  // __stdcall, returns int
 
     TClassFactory_class_AITriggerTypeClass();  // 0x005ee53b
     virtual ~TClassFactory_class_AITriggerTypeClass();
+
+    // ---- data members (offsets from ctor 0x005ee521) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a4e68
+    unsigned long m_004;  // zero-initialised
 };

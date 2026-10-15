@@ -17,11 +17,11 @@ class TiberianSunClassFactory : public IClassFactory, public IUnknown
 {
 public:
     // ---- vtable 0x0069f804 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x00419410
-    virtual void vfunc_1();  // [1] 0x004a9460
-    virtual void vfunc_2();  // [2] 0x004a9470
-    virtual void vfunc_3();  // [3] 0x00419470
-    virtual void vfunc_4();  // [4] 0x004a9480
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x00419410  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x004a9460  // __stdcall, returns int
+    virtual void vfunc_2(int a0);  // [2] 0x004a9470  // __stdcall, returns int
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x00419470  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x004a9480  // __stdcall, returns int
 
     TiberianSunClassFactory();  // 0x004a8ff6
     virtual ~TiberianSunClassFactory();

@@ -18,10 +18,16 @@ class BlitTransXlatZReadWrite_G : public Blitter
 {
 public:
     // ---- vtable 0x0069b5b4 (3 slots) ----
-    virtual void vfunc_0();  // [0] 0x00469d10
-    virtual void vfunc_1();  // [1] 0x00464a50
-    virtual void vfunc_2();  // [2] 0x00464ad0
+    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [1] 0x00464a50  // __stdcall
+    virtual void vfunc_2(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [2] 0x00464ad0  // __stdcall
 
     BlitTransXlatZReadWrite_G();  // 0x0046136b
     virtual ~BlitTransXlatZReadWrite_G();
+
+    // ---- data members (offsets from ctor 0x004611c7) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69b644
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
 };

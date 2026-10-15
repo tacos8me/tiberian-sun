@@ -68,14 +68,25 @@ hand-written set:
       wins where it is richer; generator fills the remaining 653 classes)
 - [x] All 692 headers compile standalone and combined
 
-### P1 — deepen the reconstruction  [IN PROGRESS]
+### P1 — deepen the reconstruction  [DONE]
 - [x] Recover data-member offsets from constructor store sequences
-      (2070 offsets across 257 classes; emitted into generated headers)
-- [ ] Name members from INI keys / strings per class
-- [ ] Recover function signatures (arg counts, `__thiscall` vs `__stdcall`)
+      (4160 offsets across 628 classes)
+- [x] Name members from INI keys (135 members across 20 classes, each traced
+      to the key string VA and the reader function that stores it)
+- [x] Recover function signatures (8689 functions: 3176 __stdcall,
+      3012 __thiscall, 1216 __cdecl)
+- [x] Name virtuals where evidence exists (1242 names across 624 classes)
+- [x] Fix primary-vtable selection (virtual slots recovered rose from 5604
+      to 9810 — the earlier figure was truncated by picking a secondary
+      interface vtable)
+
+### P2 — next
 - [ ] Emit `.cpp` stubs with real bodies where feasible
-- [ ] Promote generated virtuals to named ones where strings/callees identify
-      their purpose
+- [ ] Reconstruct the ~58 `Blit*` blitter templates as one template header
+- [ ] Reconstruct `TypeList<>` / `VectorClass<>` / `Node<>` container templates
+- [ ] Reconstruct the Pipe/Straw IO hierarchy (20 classes)
+- [ ] Reconstruct the MS* multimedia classes
+- [ ] Reconstruct the WOL/ATL COM layer
 
 ### P2 — coverage beyond classes
 - [ ] Reconstruct the ~58 `Blit*` blitter templates as one template header

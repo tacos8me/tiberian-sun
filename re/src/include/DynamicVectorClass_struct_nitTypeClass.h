@@ -18,21 +18,22 @@ class DynamicVectorClass_struct_nitTypeClass : public VectorClass_struct_nitType
 {
 public:
     // ---- vtable 0x006a3d88 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x005bb5c0
-    virtual void vfunc_1();  // [1] 0x005baa40
-    virtual void vfunc_2();  // [2] 0x005bac20
-    virtual void vfunc_3();  // [3] 0x005b9a80
-    virtual void vfunc_4();  // [4] 0x005bad20
-    virtual void vfunc_5();  // [5] 0x005b9ab0
+    virtual void vfunc_1(int a0);  // [1] 0x005baa40  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x005bac20  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x005b9a80  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x005bad20  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x005b9ab0  // __stdcall, returns int
 
     DynamicVectorClass_struct_nitTypeClass();  // 0x005bac05
     virtual ~DynamicVectorClass_struct_nitTypeClass();
 
-    // ---- data members (offsets from ctor 0x005bac03) ----
+    // ---- data members (offsets from ctor 0x005babbb) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a3d88
-    unsigned char pad_004[0xc];
+    unsigned long m_000;  // init 0x6a3cd4
+    unsigned long m_004;  // zero-initialised
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // init 0x1
     unsigned long m_010;  // zero-initialised
     unsigned long m_014;  // init 0xa
 };

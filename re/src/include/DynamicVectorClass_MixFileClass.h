@@ -18,12 +18,11 @@ class DynamicVectorClass_MixFileClass : public VectorClass_MixFileClass
 {
 public:
     // ---- vtable 0x00698824 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00402f10
-    virtual void vfunc_1();  // [1] 0x00402c60
-    virtual void vfunc_2();  // [2] 0x00402de0
-    virtual void vfunc_3();  // [3] 0x00402c10
-    virtual void vfunc_4();  // [4] 0x00402e90
-    virtual void vfunc_5();  // [5] 0x00402c40
+    virtual void vfunc_1(int a0);  // [1] 0x00402c60  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00402de0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x00402c10  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00402e90  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00402c40  // __stdcall, returns int
 
     DynamicVectorClass_MixFileClass();  // 0x00402bb3
     virtual ~DynamicVectorClass_MixFileClass();

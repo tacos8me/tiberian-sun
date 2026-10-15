@@ -18,8 +18,18 @@ class Node_INISection_INIClass : public GenericNode
 {
 public:
     // ---- vtable 0x006a0418 (1 slots) ----
-    virtual void vfunc_0();  // [0] 0x004d7fa0
 
     Node_INISection_INIClass();  // 0x004d4b02
     virtual ~Node_INISection_INIClass();
+
+    // ---- data members (offsets from ctor 0x004d6b4b) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0418
+    unsigned long m_004;  // /* ? */
+    unsigned char pad_008[0x4];
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    unsigned char pad_014[0x28];
+    unsigned long m_03c;  // /* ? */
 };

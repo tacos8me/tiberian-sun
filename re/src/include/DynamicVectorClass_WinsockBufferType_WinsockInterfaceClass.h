@@ -18,12 +18,11 @@ class DynamicVectorClass_WinsockBufferType_WinsockInterfaceClass : public Vector
 {
 public:
     // ---- vtable 0x006a7a54 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0066f450
-    virtual void vfunc_1();  // [1] 0x0066f1a0
-    virtual void vfunc_2();  // [2] 0x0066f320
-    virtual void vfunc_3();  // [3] 0x0066f150
-    virtual void vfunc_4();  // [4] 0x0066f3d0
-    virtual void vfunc_5();  // [5] 0x0066f180
+    virtual void vfunc_1(int a0);  // [1] 0x0066f1a0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0066f320  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x0066f150  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0066f3d0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x0066f180  // __stdcall, returns int
 
     DynamicVectorClass_WinsockBufferType_WinsockInterfaceClass();  // 0x0066ea16
     virtual ~DynamicVectorClass_WinsockBufferType_WinsockInterfaceClass();

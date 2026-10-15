@@ -139,8 +139,15 @@ def main():
         if not ident:
             continue
         bases = [b["demangled"] for b in c["bases"][1:]]
-        primary = vts[0]
-        ents = vtable_entries(bin_, primary["vtable_va"])
+        # A class can have several vtables (primary + interface sub-objects).
+        # The primary is the one with the most code entries; picking the wrong
+        # one truncates the virtual interface.
+        best = None
+        for v in vts:
+            e = vtable_entries(bin_, v["vtable_va"])
+            if best is None or len(e) > len(best[1]):
+                best = (v, e)
+        primary, ents = best
         ctors = find_ctor(bin_, primary["vtable_va"])
         manifest.append({
             "class": cname,

@@ -18,13 +18,19 @@ class MSFadeAnim : public MSShapeAnim
 {
 public:
     // ---- vtable 0x006a24a8 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x005598a0
-    virtual void vfunc_1();  // [1] 0x00557690
-    virtual void vfunc_2();  // [2] 0x005576a0
-    virtual void vfunc_3();  // [3] 0x005576f0
-    virtual void vfunc_4();  // [4] 0x00558120
-    virtual void vfunc_5();  // [5] 0x00558500
+    virtual void vfunc_1(int a0);  // [1] 0x00557690  // __stdcall
+    virtual void vfunc_2();  // [2] 0x005576a0  // __thiscall
+    virtual void vfunc_3();  // [3] 0x005576f0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00558120  // __thiscall
+    virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5);  // [5] 0x00558500  // __thiscall
 
     MSFadeAnim();  // 0x00558110
     virtual ~MSFadeAnim();
+
+    // ---- data members (offsets from ctor 0x005580d4) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a24a8
+    unsigned char pad_004[0x3c];
+    unsigned long m_040;  // /* ? */
 };

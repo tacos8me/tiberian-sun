@@ -17,17 +17,16 @@ class VectorClass_struct_tagCONNECTDATA
 {
 public:
     // ---- vtable 0x0069b814 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0046cd40
-    virtual void vfunc_1();  // [1] 0x0046c820
-    virtual void vfunc_2();  // [2] 0x0046c880
-    virtual void vfunc_3();  // [3] 0x0046c940
-    virtual void vfunc_4();  // [4] 0x0046c970
-    virtual void vfunc_5();  // [5] 0x0046c9c0
+    virtual void vfunc_1(int a0);  // [1] 0x0046c820  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0046c880  // __thiscall
+    virtual void vfunc_3();  // [3] 0x0046c940  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0046c970  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x0046c9c0  // __stdcall, returns int
 
     VectorClass_struct_tagCONNECTDATA();  // 0x0046b93b
     virtual ~VectorClass_struct_tagCONNECTDATA();
 
-    // ---- data members (offsets from ctor 0x0046b8e0) ----
+    // ---- data members (offsets from ctor 0x0046b8de) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69b814

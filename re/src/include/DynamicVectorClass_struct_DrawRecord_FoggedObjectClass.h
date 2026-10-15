@@ -18,13 +18,20 @@ class DynamicVectorClass_struct_DrawRecord_FoggedObjectClass : public VectorClas
 {
 public:
     // ---- vtable 0x0069e280 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0049bc30
-    virtual void vfunc_1();  // [1] 0x0049b880
-    virtual void vfunc_2();  // [2] 0x0049ba90
-    virtual void vfunc_3();  // [3] 0x0049b830
-    virtual void vfunc_4();  // [4] 0x0049bba0
-    virtual void vfunc_5();  // [5] 0x0049b860
+    virtual void vfunc_1(int a0);  // [1] 0x0049b880  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0049ba90  // __thiscall
+    virtual void vfunc_3();  // [3] 0x0049b830  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0049bba0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x0049b860  // __stdcall, returns int
 
     DynamicVectorClass_struct_DrawRecord_FoggedObjectClass();  // 0x0049985f
     virtual ~DynamicVectorClass_struct_DrawRecord_FoggedObjectClass();
+
+    // ---- data members (offsets from ctor 0x0049993b) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69e280
+    unsigned char pad_004[0xc];
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // init 0xa
 };

@@ -18,21 +18,22 @@ class DynamicVectorClass_struct_HashObject_II : public VectorClass_struct_HashOb
 {
 public:
     // ---- vtable 0x006a1b48 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00522260
-    virtual void vfunc_1();  // [1] 0x00521c50
-    virtual void vfunc_2();  // [2] 0x00521c90
-    virtual void vfunc_3();  // [3] 0x005207c0
-    virtual void vfunc_4();  // [4] 0x00521d70
-    virtual void vfunc_5();  // [5] 0x005207f0
+    virtual void vfunc_1(int a0);  // [1] 0x00521c50  // __stdcall
+    virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x00521c90  // __thiscall
+    virtual void vfunc_3();  // [3] 0x005207c0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00521d70  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x005207f0  // __stdcall, returns int
 
     DynamicVectorClass_struct_HashObject_II();  // 0x005021c8
     virtual ~DynamicVectorClass_struct_HashObject_II();
 
-    // ---- data members (offsets from ctor 0x00502130) ----
+    // ---- data members (offsets from ctor 0x005502ae) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a1b48
-    unsigned char pad_004[0xc];
+    unsigned long m_000;  // init 0x6a1bb8
+    unsigned long m_004;  // zero-initialised
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // init 0x1
     unsigned long m_010;  // zero-initialised
     unsigned long m_014;  // init 0xa
 };

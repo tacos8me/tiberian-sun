@@ -18,28 +18,45 @@ class UDPInterfaceClass : public WinsockInterfaceClass
 {
 public:
     // ---- vtable 0x006a7a94 (21 slots) ----
-    virtual void vfunc_0();  // [0] 0x0066ff30
-    virtual void vfunc_1();  // [1] 0x0066eb20
-    virtual void vfunc_2();  // [2] 0x0066ed50
-    virtual void vfunc_3();  // [3] 0x0066ede0
-    virtual void vfunc_4();  // [4] 0x0066fbe0
-    virtual void vfunc_5();  // [5] 0x0066ebb0
-    virtual void vfunc_6();  // [6] 0x0066ec00
-    virtual void vfunc_7();  // [7] 0x0066eb40
-    virtual void vfunc_8();  // [8] 0x0066eb90
-    virtual void vfunc_9();  // [9] 0x0066ef50
-    virtual void vfunc_10();  // [10] 0x0066efa0
-    virtual void vfunc_11();  // [11] 0x0066f8f0
-    virtual void vfunc_12();  // [12] 0x0066f890
-    virtual void vfunc_13();  // [13] 0x0066fef0
-    virtual void vfunc_14();  // [14] 0x0066ff00
-    virtual void vfunc_15();  // [15] 0x0066f990
-    virtual void vfunc_16();  // [16] 0x0066fcd0
-    virtual void vfunc_17();  // [17] 0x0066f030
-    virtual void vfunc_18();  // [18] 0x0066ff10
-    virtual void vfunc_19();  // [19] 0x0066ff20
-    virtual void vfunc_20();  // [20] 0x0066e9a0
+    virtual void vfunc_1();  // [1] 0x0066eb20  // __thiscall
+    virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x0066ed50  // __thiscall, returns int
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x0066ede0  // __thiscall
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x0066fbe0  // __stdcall
+    virtual void vfunc_5();  // [5] 0x0066ebb0  // __thiscall
+    virtual void vfunc_6();  // [6] 0x0066ec00  // __thiscall
+    virtual void vfunc_7();  // [7] 0x0066eb40  // __thiscall
+    virtual void vfunc_8();  // [8] 0x0066eb90  // __thiscall
+    virtual void vfunc_9(int a0);  // [9] 0x0066ef50  // __stdcall
+    virtual void vfunc_10();  // [10] 0x0066efa0  // __thiscall
+    virtual void vfunc_11(int a0);  // [11] 0x0066f8f0  // __thiscall
+    virtual void vfunc_12();  // [12] 0x0066f890  // __thiscall
+    virtual void vfunc_13();  // [13] 0x0066fef0  // __cdecl, returns int
+    virtual void vfunc_14();  // [14] 0x0066ff00  // __cdecl, returns int
+    virtual void vfunc_15(int a0);  // [15] 0x0066f990  // __thiscall
+    virtual void vfunc_16(int a0, int a1, int a2, int a3);  // [16] 0x0066fcd0  // __thiscall, returns int
+    virtual void vfunc_17(int a0, int a1);  // [17] 0x0066f030  // __stdcall
+    virtual void vfunc_18();  // [18] 0x0066ff10  // __cdecl
+    virtual void vfunc_19(int a0);  // [19] 0x0066ff20  // __stdcall
+    virtual void vfunc_20(int a0);  // [20] 0x0066e9a0  // __stdcall
 
     UDPInterfaceClass();  // 0x0066f73c
     virtual ~UDPInterfaceClass();
+
+    // ---- data members (offsets from ctor 0x0066f6c2) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a7a94
+    unsigned char pad_004[0x444];
+    unsigned long m_448;  // /* ? */
+    unsigned long m_44c;  // /* ? */
+    unsigned long m_450;  // /* ? */
+    unsigned long m_454;  // init 0x1
+    unsigned long m_458;  // /* ? */
+    unsigned long m_45c;  // /* ? */
+    unsigned long m_460;  // /* ? */
+    unsigned long m_464;  // /* ? */
+    unsigned long m_468;  // /* ? */
+    unsigned long m_46c;  // init 0x1
+    unsigned long m_470;  // /* ? */
+    unsigned long m_474;  // /* ? */
 };

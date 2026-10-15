@@ -17,17 +17,16 @@ class VectorClass_FileEntryClass
 {
 public:
     // ---- vtable 0x006a1848 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004f9690
-    virtual void vfunc_1();  // [1] 0x004f9430
-    virtual void vfunc_2();  // [2] 0x004f9470
-    virtual void vfunc_3();  // [3] 0x004f9520
-    virtual void vfunc_4();  // [4] 0x004f9550
-    virtual void vfunc_5();  // [5] 0x004f9590
+    virtual void vfunc_1(int a0);  // [1] 0x004f9430  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004f9470  // __thiscall
+    virtual void vfunc_3();  // [3] 0x004f9520  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004f9550  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x004f9590  // __stdcall, returns int
 
     VectorClass_FileEntryClass();  // 0x004f808d
     virtual ~VectorClass_FileEntryClass();
 
-    // ---- data members (offsets from ctor 0x004f8050) ----
+    // ---- data members (offsets from ctor 0x004f804b) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a1814

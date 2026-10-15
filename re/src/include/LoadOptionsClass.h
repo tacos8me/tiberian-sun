@@ -17,12 +17,21 @@ class LoadOptionsClass
 {
 public:
     // ---- vtable 0x006a1814 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x004f9360
-    virtual void vfunc_1();  // [1] 0x004f9100
-    virtual void vfunc_2();  // [2] 0x004f9150
-    virtual void vfunc_3();  // [3] 0x004f91a0
-    virtual void vfunc_4();  // [4] 0x004f91c0
+    virtual void vfunc_1(int a0);  // [1] 0x004f9100  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004f9150  // __stdcall
+    virtual void vfunc_3(int a0);  // [3] 0x004f91a0  // __stdcall
+    virtual void vfunc_4(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8);  // [4] 0x004f91c0
 
     LoadOptionsClass();  // 0x004f8032
     virtual ~LoadOptionsClass();
+
+    // ---- data members (offsets from ctor 0x004f7ff7) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a1814
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // init 0x6cc528
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // init 0x800
+    unsigned long m_014;  // /* ? */
 };

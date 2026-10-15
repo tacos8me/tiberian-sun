@@ -18,12 +18,11 @@ class DynamicVectorClass_BulletTypeClass : public VectorClass_BulletTypeClass
 {
 public:
     // ---- vtable 0x0069f644 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004b1d90
-    virtual void vfunc_1();  // [1] 0x004af670
-    virtual void vfunc_2();  // [2] 0x004af7f0
-    virtual void vfunc_3();  // [3] 0x004a9fa0
-    virtual void vfunc_4();  // [4] 0x004af8a0
-    virtual void vfunc_5();  // [5] 0x004a9fd0
+    virtual void vfunc_1(int a0);  // [1] 0x004af670  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004af7f0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x004a9fa0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004af8a0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x004a9fd0  // __stdcall, returns int
 
     DynamicVectorClass_BulletTypeClass();  // 0x004a8a93
     virtual ~DynamicVectorClass_BulletTypeClass();

@@ -3,25 +3,22 @@
 Recover data-member offsets for each class from its constructor.
 
 Method:
-  1. Locate the constructor: the function containing the store of the class's
-     vtable pointer.
-  2. Walk that function's instructions and collect every store to
-     [reg+disp] where reg holds `this` (the register the vtable was stored
-     through). Those displacements are member offsets.
-  3. Classify each member by the value stored: vtable pointer, zero-init,
-     immediate, or a call result.
-  4. Name members from INI keys / strings referenced by the class's methods
-     where a correspondence can be established.
+  1. Find every store site of the class's vtable pointer.
+  2. For each site, locate the enclosing function by scanning backwards for a
+     function boundary (prologue, alignment padding, or a preceding ret).
+     This does NOT depend on the disassembler's function list, which misses
+     constructors that were never seeded.
+  3. Disassemble that function and collect stores to [this+disp], where `this`
+     is the register the vtable was stored through.
+  4. Classify each member by the value stored.
 
-Output: out/members.json  { class -> { ctor, members: [ {off, kind, value} ] } }
+Output: out/members.json
 """
 import capstone
 import json
 import os
-import re
 import struct
 import sys
-from collections import defaultdict
 
 IB = 0x400000
 
@@ -46,10 +43,6 @@ class Bin:
                 return self.data[o:o + n]
         return None
 
-    def u32(self, va):
-        b = self.rd(va, 4)
-        return struct.unpack("<I", b)[0] if b and len(b) == 4 else None
-
     def in_text(self, va):
         t = self.text
         return t[0] <= va < t[1]
@@ -61,18 +54,45 @@ class Bin:
         return None
 
 
-def find_enclosing_function(fns, va):
-    """Find the recovered function whose body contains va."""
+def find_function_start(bin_, site, back=0x600):
+    """Scan backwards from a store site to the enclosing function's start.
+
+    Boundaries we accept:
+      - 'push ebp; mov ebp,esp' prologue
+      - a run of int3/nop padding immediately before the candidate
+      - a 'ret' immediately before the candidate
+    """
+    lo = max(bin_.text[0], site - back)
     best = None
-    for f in fns:
-        if f["va"] <= va < f["end"]:
-            if best is None or f["size"] < best["size"]:
-                best = f
-    return best
+    va = site
+    while va > lo:
+        b = bin_.rd(va, 3)
+        if not b or len(b) < 3:
+            va -= 1
+            continue
+        # prologue
+        if b[0] == 0x55 and b[1] == 0x8B and b[2] == 0xEC:
+            return va
+        # padding before this address => function start
+        prev = bin_.rd(va - 1, 1)
+        if prev and prev[0] in (0xCC, 0x90):
+            # walk back over the whole padding run
+            p = va - 1
+            while p > lo:
+                pb = bin_.rd(p, 1)
+                if pb and pb[0] in (0xCC, 0x90):
+                    p -= 1
+                else:
+                    break
+            cand = p + 1
+            if best is None:
+                best = cand
+            return cand
+        va -= 1
+    return best if best is not None else (site & ~0xF)
 
 
-def disasm_range(bin_, start, maxlen=0x800):
-    """Disassemble from start until a ret, for constructor analysis."""
+def disasm_func(bin_, start, maxlen=0x1000):
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
     md.detail = True
     code = bin_.rd(start, maxlen)
@@ -83,63 +103,41 @@ def disasm_range(bin_, start, maxlen=0x800):
         out.append(ins)
         if ins.mnemonic in ("ret", "retn"):
             break
-        if len(out) > 2000:
+        if len(out) > 3000:
             break
     return out
 
 
-def main():
-    bindir = sys.argv[1] if len(sys.argv) > 1 else "bin/GAME.EXE"
-    outdir = sys.argv[2] if len(sys.argv) > 2 else "out"
+def recover(bin_, vtva):
+    """Return (ctor_va, members) for a vtable, or (None, [])."""
+    pat = struct.pack("<I", vtva)
+    sites = []
+    start = 0
+    while True:
+        j = bin_.data.find(pat, start)
+        if j < 0:
+            break
+        va = bin_.va_of(j)
+        if va is not None and bin_.in_text(va):
+            sites.append(va)
+        start = j + 1
+    if not sites:
+        return None, []
 
-    bin_ = Bin(bindir)
-    man = json.load(open(os.path.join(outdir, "class_manifest.json")))
-    fns = json.load(open(os.path.join(outdir, "functions.json")))["functions"]
-
-    result = {}
-    for m in man:
-        if not m["ctors"]:
+    for site in sites:
+        ctor = find_function_start(bin_, site)
+        if ctor is None:
             continue
-        vtva = m["vtable"]
-        # find the store site of the vtable pointer
-        pat = struct.pack("<I", vtva)
-        sites = []
-        start = 0
-        while True:
-            j = bin_.data.find(pat, start)
-            if j < 0:
-                break
-            va = bin_.va_of(j)
-            if va is not None and bin_.in_text(va):
-                sites.append(va)
-            start = j + 1
-        if not sites:
+        insns = disasm_func(bin_, ctor)
+        if not insns:
             continue
-        site = sites[0]
-        # the constructor is the function containing the store; if the store
-        # is not inside a recovered function, disassemble backwards to find
-        # the enclosing prologue.
-        f = find_enclosing_function(fns, site)
-        if f:
-            ctor_va = f["va"]
-            insns = disasm_range(bin_, ctor_va)
-        else:
-            # scan backwards for a prologue (push ebp; mov ebp,esp) or a
-            # 16-byte aligned start
-            ctor_va = site & ~0xF
-            while ctor_va > site - 0x400:
-                b = bin_.rd(ctor_va, 3)
-                if b and b[0] == 0x55 and b[1] == 0x8B and b[2] == 0xEC:
-                    break
-                ctor_va -= 1
-            insns = disasm_range(bin_, ctor_va)
-
-        # find the register the vtable was stored through (usually esi/edi/ecx)
+        # the register the vtable is stored through is `this`
         this_reg = None
         for ins in insns:
             if ins.mnemonic == "mov" and len(ins.operands) == 2:
                 dst, src = ins.operands
-                if (dst.type == capstone.x86.X86_OP_MEM and src.type == capstone.x86.X86_OP_IMM
+                if (dst.type == capstone.x86.X86_OP_MEM
+                        and src.type == capstone.x86.X86_OP_IMM
                         and src.imm == vtva):
                     this_reg = ins.reg_name(dst.mem.base)
                     break
@@ -158,10 +156,9 @@ def main():
             if ins.reg_name(dst.mem.base) != this_reg:
                 continue
             off = dst.mem.disp
-            if off < 0 or off > 0x4000:
+            if off < 0 or off > 0x8000:
                 continue
-            kind = "unknown"
-            val = None
+            kind, val = "unknown", None
             if src.type == capstone.x86.X86_OP_IMM:
                 val = src.imm
                 if bin_.in_text(val):
@@ -174,15 +171,30 @@ def main():
                 kind = "reg"
             members.append({"off": off, "kind": kind, "value": val})
 
-        # dedupe by offset, keep first
-        seen = {}
-        for mem in members:
-            seen.setdefault(mem["off"], mem)
+        if members:
+            seen = {}
+            for mem in members:
+                seen.setdefault(mem["off"], mem)
+            return ctor, [seen[k] for k in sorted(seen)]
+    return None, []
+
+
+def main():
+    bindir = sys.argv[1] if len(sys.argv) > 1 else "bin/GAME.EXE"
+    outdir = sys.argv[2] if len(sys.argv) > 2 else "out"
+
+    bin_ = Bin(bindir)
+    man = json.load(open(os.path.join(outdir, "class_manifest.json")))
+
+    result = {}
+    for m in man:
+        ctor, members = recover(bin_, m["vtable"])
+        if ctor is None:
+            continue
         result[m["class"]] = {
             "ident": m["ident"],
-            "ctor": ctor_va,
-            "this_reg": this_reg,
-            "members": [seen[k] for k in sorted(seen)],
+            "ctor": ctor,
+            "members": members,
         }
 
     with open(os.path.join(outdir, "members.json"), "w") as f:

@@ -17,12 +17,18 @@ class TClassFactory_class_InfantryTypeClass : public IClassFactory, public IUnkn
 {
 public:
     // ---- vtable 0x006a4b98 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x005eb840
-    virtual void vfunc_1();  // [1] 0x005eb8b0
-    virtual void vfunc_2();  // [2] 0x005eb8d0
-    virtual void vfunc_3();  // [3] 0x005eb900
-    virtual void vfunc_4();  // [4] 0x005eb980
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x005eb840  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x005eb8b0  // __stdcall
+    virtual void vfunc_2(int a0);  // [2] 0x005eb8d0  // __stdcall
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005eb900  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x005eb980  // __stdcall, returns int
 
     TClassFactory_class_InfantryTypeClass();  // 0x005eb83b
     virtual ~TClassFactory_class_InfantryTypeClass();
+
+    // ---- data members (offsets from ctor 0x005eb821) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a4b98
+    unsigned long m_004;  // zero-initialised
 };

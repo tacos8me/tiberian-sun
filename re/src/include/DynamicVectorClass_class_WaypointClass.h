@@ -18,17 +18,16 @@ class DynamicVectorClass_class_WaypointClass : public VectorClass_class_Waypoint
 {
 public:
     // ---- vtable 0x006a7554 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00656020
-    virtual void vfunc_1();  // [1] 0x006560e0
-    virtual void vfunc_2();  // [2] 0x00656310
-    virtual void vfunc_3();  // [3] 0x00655f60
-    virtual void vfunc_4();  // [4] 0x00656450
-    virtual void vfunc_5();  // [5] 0x00655fa0
+    virtual void vfunc_1(int a0);  // [1] 0x006560e0  // __stdcall
+    virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x00656310  // __thiscall
+    virtual void vfunc_3();  // [3] 0x00655f60  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00656450  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00655fa0  // __stdcall, returns int
 
     DynamicVectorClass_class_WaypointClass();  // 0x00655801
     virtual ~DynamicVectorClass_class_WaypointClass();
 
-    // ---- data members (offsets from ctor 0x006557e0) ----
+    // ---- data members (offsets from ctor 0x006557d1) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a74f0

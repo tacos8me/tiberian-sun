@@ -17,10 +17,16 @@ class MSEngine
 {
 public:
     // ---- vtable 0x006a266c (3 slots) ----
-    virtual void vfunc_0();  // [0] 0x0055cc50
-    virtual void vfunc_1();  // [1] 0x00542040
-    virtual void vfunc_2();  // [2] 0x0055cc40
+    virtual void vfunc_0(int a0);  // [0] 0x0055cc50  // __thiscall
+    virtual void vfunc_1(int a0);  // [1] 0x00542040  // __stdcall
+    virtual void vfunc_2();  // [2] 0x0055cc40  // __cdecl
 
     MSEngine();  // 0x0055c193
     virtual ~MSEngine();
+
+    // ---- data members (offsets from ctor 0x0055c127) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a266c
+    unsigned long m_004;  // /* ? */
 };

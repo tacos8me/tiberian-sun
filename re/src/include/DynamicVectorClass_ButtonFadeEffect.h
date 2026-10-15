@@ -18,17 +18,16 @@ class DynamicVectorClass_ButtonFadeEffect : public VectorClass_ButtonFadeEffect
 {
 public:
     // ---- vtable 0x0069dd50 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00483f50
-    virtual void vfunc_1();  // [1] 0x004839f0
-    virtual void vfunc_2();  // [2] 0x00483b70
-    virtual void vfunc_3();  // [3] 0x00483950
-    virtual void vfunc_4();  // [4] 0x00483c20
-    virtual void vfunc_5();  // [5] 0x00483980
+    virtual void vfunc_1(int a0);  // [1] 0x004839f0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00483b70  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x00483950  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00483c20  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00483980  // __stdcall, returns int
 
     DynamicVectorClass_ButtonFadeEffect();  // 0x004812ed
     virtual ~DynamicVectorClass_ButtonFadeEffect();
 
-    // ---- data members (offsets from ctor 0x00481231) ----
+    // ---- data members (offsets from ctor 0x004812be) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned char pad_000[0x13];
@@ -37,13 +36,14 @@ public:
     unsigned long m_01b;  // init 0x1
     unsigned char pad_01f[0x4];
     unsigned long m_023;  // zero-initialised
-    unsigned char pad_027[0x4];
-    unsigned long m_02b;  // zero-initialised
-    unsigned char pad_02f[0x1];
+    unsigned char pad_027[0x9];
     unsigned long m_030;  // /* ? */
     unsigned char pad_034[0x4];
     unsigned long m_038;  // /* ? */
-    unsigned char pad_03c[0xb];
+    unsigned long m_03c;  // /* ? */
+    unsigned char pad_040[0x2];
+    unsigned long m_042;  // init 0x1
+    unsigned char pad_046[0x1];
     unsigned long m_047;  // init 0x1
     unsigned long m_04b;  // zero-initialised
     unsigned char pad_04f[0x1];
@@ -90,20 +90,15 @@ public:
     unsigned long m_130;  // /* ? */
     unsigned char pad_134[0x4];
     unsigned long m_138;  // zero-initialised
-    unsigned char pad_13c[0x4];
-    unsigned long m_140;  // /* ? */
-    unsigned long m_144;  // /* ? */
+    unsigned char pad_13c[0xc];
     unsigned long m_148;  // /* ? */
-    unsigned long m_14c;  // /* ? */
-    unsigned char pad_150[0x24];
+    unsigned char pad_14c[0x28];
     unsigned long m_174;  // zero-initialised
     unsigned long m_178;  // /* ? */
     unsigned long m_17c;  // /* ? */
     unsigned char pad_180[0x8];
     unsigned long m_188;  // /* ? */
-    unsigned char pad_18c[0x4];
-    unsigned long m_190;  // /* ? */
-    unsigned long m_194;  // /* ? */
+    unsigned char pad_18c[0xc];
     unsigned long m_198;  // /* ? */
     unsigned long m_19c;  // /* ? */
     unsigned char pad_1a0[0x4c];
@@ -112,7 +107,10 @@ public:
     unsigned char pad_1f4[0x7c];
     unsigned long m_270;  // /* ? */
     unsigned long m_274;  // /* ? */
-    unsigned char pad_278[0x20];
+    unsigned char pad_278[0x10];
+    unsigned long m_288;  // /* ? */
+    unsigned long m_28c;  // /* ? */
+    unsigned char pad_290[0x8];
     unsigned long m_298;  // /* ? */
     unsigned char pad_29c[0x14];
     unsigned long m_2b0;  // /* ? */

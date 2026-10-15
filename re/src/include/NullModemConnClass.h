@@ -18,17 +18,24 @@ class NullModemConnClass : public ConnectionClass
 {
 public:
     // ---- vtable 0x006a27d4 (10 slots) ----
-    virtual void vfunc_0();  // [0] 0x0056a430
     virtual void vfunc_1();  // [1] 0x0056a420
-    virtual void vfunc_2();  // [2] 0x0045eb70
-    virtual void vfunc_3();  // [3] 0x0045ec10
-    virtual void vfunc_4();  // [4] 0x0045edf0
-    virtual void vfunc_5();  // [5] 0x0045ee80
-    virtual void vfunc_6();  // [6] 0x0045f020
-    virtual void vfunc_7();  // [7] 0x0045eeb0
-    virtual void vfunc_8();  // [8] 0x0045f030
-    virtual void vfunc_9();  // [9] 0x0056a330
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0045eb70  // __thiscall
+    virtual void vfunc_3(int a0, int a1);  // [3] 0x0045ec10  // __thiscall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x0045edf0  // __thiscall, returns int
+    virtual void vfunc_5();  // [5] 0x0045ee80  // __thiscall, returns int
+    virtual void vfunc_6();  // [6] 0x0045f020  // __cdecl, returns int
+    virtual void vfunc_7(int a0, int a1);  // [7] 0x0045eeb0  // __thiscall, returns int
+    virtual void vfunc_8();  // [8] 0x0045f030  // __thiscall, returns int
+    virtual void vfunc_9(int a0, int a1, int a2, int a3);  // [9] 0x0056a330  // __thiscall, returns int
 
     NullModemConnClass();  // 0x0056a2ce
     virtual ~NullModemConnClass();
+
+    // ---- data members (offsets from ctor 0x0056a29c) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a27d4
+    unsigned char pad_004[0x34];
+    unsigned long m_038;  // init 0xffffffff
+    unsigned long m_03c;  // /* ? */
 };

@@ -17,13 +17,21 @@ class VectorClass_IsometricTileClass
 {
 public:
     // ---- vtable 0x006986e8 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00402360
-    virtual void vfunc_1();  // [1] 0x00402100
-    virtual void vfunc_2();  // [2] 0x00402140
-    virtual void vfunc_3();  // [3] 0x004021f0
-    virtual void vfunc_4();  // [4] 0x00402220
-    virtual void vfunc_5();  // [5] 0x00402260
+    virtual void vfunc_1(int a0);  // [1] 0x00402100  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00402140  // __thiscall
+    virtual void vfunc_3();  // [3] 0x004021f0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00402220  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x00402260  // __stdcall, returns int
 
     VectorClass_IsometricTileClass();  // 0x0040207e
     virtual ~VectorClass_IsometricTileClass();
+
+    // ---- data members (offsets from ctor 0x00402356) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6986e8
+    unsigned long m_004;  // zero-initialised
+    unsigned long m_008;  // zero-initialised
+    unsigned char pad_00c[0x1];
+    unsigned long m_00d;  // zero-initialised
 };

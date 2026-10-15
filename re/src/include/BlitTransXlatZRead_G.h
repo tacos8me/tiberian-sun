@@ -18,9 +18,8 @@ class BlitTransXlatZRead_G : public Blitter
 {
 public:
     // ---- vtable 0x0069b654 (3 slots) ----
-    virtual void vfunc_0();  // [0] 0x00469bd0
-    virtual void vfunc_1();  // [1] 0x00464310
-    virtual void vfunc_2();  // [2] 0x00464380
+    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [1] 0x00464310  // __stdcall
+    virtual void vfunc_2(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [2] 0x00464380  // __stdcall
 
     BlitTransXlatZRead_G();  // 0x004611b6
     virtual ~BlitTransXlatZRead_G();

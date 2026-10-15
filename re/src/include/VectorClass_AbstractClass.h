@@ -17,36 +17,20 @@ class VectorClass_AbstractClass
 {
 public:
     // ---- vtable 0x0069aa3c (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00445570
-    virtual void vfunc_1();  // [1] 0x00445310
-    virtual void vfunc_2();  // [2] 0x00445350
-    virtual void vfunc_3();  // [3] 0x00445400
-    virtual void vfunc_4();  // [4] 0x00445430
-    virtual void vfunc_5();  // [5] 0x00445470
+    virtual void vfunc_1(int a0);  // [1] 0x00445310  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00445350  // __thiscall
+    virtual void vfunc_3();  // [3] 0x00445400  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00445430  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x00445470  // __stdcall, returns int
 
     VectorClass_AbstractClass();  // 0x00444e10
     virtual ~VectorClass_AbstractClass();
 
-    // ---- data members (offsets from ctor 0x00444c0b) ----
+    // ---- data members (offsets from ctor 0x00444de0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_000[0xc];
-    unsigned long m_00c;  // zero-initialised
-    unsigned long m_010;  // /* ? */
-    unsigned char pad_014[0x18];
+    unsigned char pad_000[0x2c];
     unsigned long m_02c;  // init 0x69aa3c
     unsigned char pad_030[0x14];
     unsigned long m_044;  // /* ? */
-    unsigned char pad_048[0x10];
-    unsigned long m_058;  // /* ? */
-    unsigned char pad_05c[0xc];
-    unsigned long m_068;  // /* ? */
-    unsigned char pad_06c[0x28];
-    unsigned long m_094;  // /* ? */
-    unsigned long m_098;  // /* ? */
-    unsigned char pad_09c[0x8];
-    unsigned long m_0a4;  // /* ? */
-    unsigned long m_0a8;  // /* ? */
-    unsigned long m_0ac;  // /* ? */
-    unsigned long m_0b0;  // /* ? */
 };

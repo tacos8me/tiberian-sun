@@ -18,9 +18,9 @@ class SHAStraw : public Straw
 {
 public:
     // ---- vtable 0x006a2320 (3 slots) ----
-    virtual void vfunc_0();  // [0] 0x00547ce0
-    virtual void vfunc_1();  // [1] 0x005f1020
-    virtual void vfunc_2();  // [2] 0x005d7be0
+    virtual void vfunc_0(int a0);  // [0] 0x00547ce0  // __thiscall
+    virtual void vfunc_1(int a0);  // [1] 0x005f1020  // __thiscall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x005d7be0  // __thiscall
 
     SHAStraw();  // 0x0054788b
     virtual ~SHAStraw();

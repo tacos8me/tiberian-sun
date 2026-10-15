@@ -18,16 +18,23 @@ class LayerClass : public DynamicVectorClass_ObjectClass
 {
 public:
     // ---- vtable 0x0069ba60 (9 slots) ----
-    virtual void vfunc_0();  // [0] 0x00478880
-    virtual void vfunc_1();  // [1] 0x00402540
-    virtual void vfunc_2();  // [2] 0x004026c0
-    virtual void vfunc_3();  // [3] 0x004024f0
-    virtual void vfunc_4();  // [4] 0x00402770
-    virtual void vfunc_5();  // [5] 0x00402520
-    virtual void vfunc_6();  // [6] 0x004f3ac0
-    virtual void vfunc_7();  // [7] 0x00402480
-    virtual void vfunc_8();  // [8] 0x00402490
+    virtual void vfunc_1(int a0);  // [1] 0x00402540  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004026c0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x004024f0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00402770  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00402520  // __stdcall, returns int
+    virtual void vfunc_6(int a0, int a1);  // [6] 0x004f3ac0  // __thiscall
+    virtual void vfunc_7();  // [7] 0x00402480  // __cdecl
+    virtual void vfunc_8();  // [8] 0x00402490  // __cdecl
 
     LayerClass();  // 0x004722d3
     virtual ~LayerClass();
+
+    // ---- data members (offsets from ctor 0x00472292) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // /* ? */
+    unsigned long m_004;  // init 0x1
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // init 0xa
 };

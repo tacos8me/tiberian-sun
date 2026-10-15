@@ -17,12 +17,18 @@ class TClassFactory_class_WeaponTypeClass : public IClassFactory, public IUnknow
 {
 public:
     // ---- vtable 0x006a4df0 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x005eddc0
-    virtual void vfunc_1();  // [1] 0x005ede30
-    virtual void vfunc_2();  // [2] 0x005ede50
-    virtual void vfunc_3();  // [3] 0x005ede80
-    virtual void vfunc_4();  // [4] 0x005edf00
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x005eddc0  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x005ede30  // __stdcall
+    virtual void vfunc_2(int a0);  // [2] 0x005ede50  // __stdcall
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ede80  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x005edf00  // __stdcall, returns int
 
     TClassFactory_class_WeaponTypeClass();  // 0x005eddbb
     virtual ~TClassFactory_class_WeaponTypeClass();
+
+    // ---- data members (offsets from ctor 0x005edda1) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a4df0
+    unsigned long m_004;  // zero-initialised
 };

@@ -17,27 +17,19 @@ class VectorClass_struct_ScoutStruct
 {
 public:
     // ---- vtable 0x0069fad0 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004c67c0
-    virtual void vfunc_1();  // [1] 0x004c5aa0
-    virtual void vfunc_2();  // [2] 0x004c5b00
-    virtual void vfunc_3();  // [3] 0x004c5bf0
-    virtual void vfunc_4();  // [4] 0x004c5c20
-    virtual void vfunc_5();  // [5] 0x004c5c70
+    virtual void vfunc_1(int a0);  // [1] 0x004c5aa0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004c5b00  // __thiscall
+    virtual void vfunc_3();  // [3] 0x004c5bf0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004c5c20  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x004c5c70  // __stdcall, returns int
 
     VectorClass_struct_ScoutStruct();  // 0x004b54d7
     virtual ~VectorClass_struct_ScoutStruct();
 
-    // ---- data members (offsets from ctor 0x004b5100) ----
+    // ---- data members (offsets from ctor 0x004b5433) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69fa18
-    unsigned long m_004;  // init 0x69f9fc
-    unsigned char pad_008[0xc];
-    unsigned long m_014;  // init 0x69f9bc
-    unsigned long m_018;  // init 0x69f994
-    unsigned long m_01c;  // init 0x69f97c
-    unsigned char pad_020[0x4];
-    unsigned long m_024;  // /* ? */
+    unsigned char pad_000[0x28];
     unsigned long m_028;  // init 0x69f85c
     unsigned long m_02c;  // /* ? */
     unsigned long m_030;  // /* ? */
@@ -69,6 +61,4 @@ public:
     unsigned long m_421;  // /* ? */
     unsigned char pad_425[0xcf];
     unsigned long m_4f4;  // init 0x699db8
-    unsigned char pad_4f8[0xd8];
-    unsigned long m_5d0;  // /* ? */
 };

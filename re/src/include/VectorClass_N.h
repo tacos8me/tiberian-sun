@@ -17,30 +17,21 @@ class VectorClass_N
 {
 public:
     // ---- vtable 0x0069bc1c (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00478cb0
-    virtual void vfunc_1();  // [1] 0x00478a50
-    virtual void vfunc_2();  // [2] 0x00478a90
-    virtual void vfunc_3();  // [3] 0x00478b40
-    virtual void vfunc_4();  // [4] 0x00478b70
-    virtual void vfunc_5();  // [5] 0x00478bb0
+    virtual void vfunc_1(int a0);  // [1] 0x00478a50  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00478a90  // __thiscall
+    virtual void vfunc_3();  // [3] 0x00478b40  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00478b70  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x00478bb0  // __stdcall, returns int
 
     VectorClass_N();  // 0x0047861e
     virtual ~VectorClass_N();
 
-    // ---- data members (offsets from ctor 0x0047821e) ----
+    // ---- data members (offsets from ctor 0x00478615) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_000[0x13];
-    unsigned long m_013;  // init 0x1
-    unsigned char pad_017[0x1];
-    unsigned long m_018;  // /* ? */
+    unsigned char pad_000[0x1c];
     unsigned long m_01c;  // init 0x698730
-    unsigned char pad_020[0x14];
-    unsigned long m_034;  // /* ? */
-    unsigned long m_038;  // /* ? */
-    unsigned char pad_03c[0x10];
-    unsigned long m_04c;  // /* ? */
-    unsigned char pad_050[0x14];
+    unsigned char pad_020[0x44];
     unsigned long m_064;  // init 0x69bc1c
     unsigned long m_068;  // /* ? */
     unsigned long m_06c;  // /* ? */
@@ -51,13 +42,4 @@ public:
     unsigned long m_080;  // /* ? */
     unsigned char pad_084[0x4];
     unsigned long m_088;  // /* ? */
-    unsigned char pad_08c[0x24];
-    unsigned long m_0b0;  // /* ? */
-    unsigned long m_0b4;  // /* ? */
-    unsigned char pad_0b8[0xc];
-    unsigned long m_0c4;  // /* ? */
-    unsigned long m_0c8;  // /* ? */
-    unsigned char pad_0cc[0x4];
-    unsigned long m_0d0;  // /* ? */
-    unsigned long m_0d4;  // /* ? */
 };

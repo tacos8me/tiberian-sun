@@ -17,19 +17,24 @@ class VectorClass_articleSystemTypeClass
 {
 public:
     // ---- vtable 0x006a5b3c (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0061e510
-    virtual void vfunc_1();  // [1] 0x0061e2b0
-    virtual void vfunc_2();  // [2] 0x0061e2f0
-    virtual void vfunc_3();  // [3] 0x0061e3a0
-    virtual void vfunc_4();  // [4] 0x0061e3d0
-    virtual void vfunc_5();  // [5] 0x0061e410
+    virtual void vfunc_1(int a0);  // [1] 0x0061e2b0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0061e2f0  // __thiscall
+    virtual void vfunc_3();  // [3] 0x0061e3a0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0061e3d0  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x0061e410  // __stdcall, returns int
 
     VectorClass_articleSystemTypeClass();  // 0x0061364c
     virtual ~VectorClass_articleSystemTypeClass();
 
-    // ---- data members (offsets from ctor 0x0061363e) ----
+    // ---- data members (offsets from ctor 0x00613556) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_000[0x38];
+    unsigned char pad_000[0x10];
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned char pad_018[0x8];
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // /* ? */
+    unsigned char pad_028[0x10];
     unsigned long m_038;  // init 0x6a5b3c
 };

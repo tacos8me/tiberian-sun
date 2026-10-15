@@ -18,13 +18,20 @@ class DynamicVectorClass_NodeNameType : public VectorClass_NodeNameType
 {
 public:
     // ---- vtable 0x006a41b8 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x005d73c0
-    virtual void vfunc_1();  // [1] 0x005d6cd0
-    virtual void vfunc_2();  // [2] 0x005d6e50
-    virtual void vfunc_3();  // [3] 0x005d6410
-    virtual void vfunc_4();  // [4] 0x005d6f00
-    virtual void vfunc_5();  // [5] 0x005d6440
+    virtual void vfunc_1(int a0);  // [1] 0x005d6cd0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x005d6e50  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x005d6410  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x005d6f00  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x005d6440  // __stdcall, returns int
 
     DynamicVectorClass_NodeNameType();  // 0x005d3751
     virtual ~DynamicVectorClass_NodeNameType();
+
+    // ---- data members (offsets from ctor 0x005d36d9) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a41b8
+    unsigned char pad_004[0xc];
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
 };

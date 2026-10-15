@@ -18,8 +18,7 @@ class RLEBlitTransLucent25ZReadWarp_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b330 (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x0046a4f0
-    virtual void vfunc_1();  // [1] 0x00467480
+    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5);  // [1] 0x00467480
 
     RLEBlitTransLucent25ZReadWarp_G();  // 0x00461da2
     virtual ~RLEBlitTransLucent25ZReadWarp_G();

@@ -18,8 +18,8 @@ class bad_cast : public exception
 {
 public:
     // ---- vtable 0x006a7dd0 (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x006831cb
-    virtual void vfunc_1();  // [1] 0x006878ac
+    virtual void vfunc_0(int a0);  // [0] 0x006831cb  // __thiscall
+    virtual void vfunc_1();  // [1] 0x006878ac  // __cdecl, returns int
 
     bad_cast();  // 0x006831c1
     virtual ~bad_cast();

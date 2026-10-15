@@ -18,25 +18,31 @@ if [ ! -f "$BIN" ]; then
 fi
 
 if [ "${1:-}" != "--verify-only" ]; then
-  echo "== 1/7 RTTI recovery =="
+  echo "== 1/9 RTTI recovery =="
   python3 tools/rtti.py "$BIN" "$OUT"
 
-  echo "== 2/7 disassembly =="
+  echo "== 2/9 disassembly =="
   python3 tools/disasm.py "$BIN" "$OUT"
 
-  echo "== 3/7 class manifest =="
+  echo "== 3/9 class manifest =="
   python3 tools/gen_manifest.py "$BIN" "$OUT"
 
-  echo "== 4/7 direct-base reduction =="
+  echo "== 4/9 direct-base reduction =="
   python3 tools/reduce_bases.py "$OUT"
 
-  echo "== 5/7 data members =="
+  echo "== 5/9 data members =="
   python3 tools/gen_members.py "$BIN" "$OUT"
 
-  echo "== 6/7 header generation =="
+  echo "== 6/9 member naming =="
+  python3 tools/name_members.py "$BIN" "$OUT"
+
+  echo "== 7/9 signatures =="
+  python3 tools/gen_signatures.py "$BIN" "$OUT"
+
+  echo "== 8/9 header generation =="
   python3 tools/gen_headers.py "$BIN" "$OUT" "$SRC"
 
-  echo "== 7/7 prelude reconciliation =="
+  echo "== 9/9 prelude reconciliation =="
   python3 tools/reconcile_prelude.py "$SRC"
   python3 tools/make_selfcontained.py "$SRC" build/shim
 fi

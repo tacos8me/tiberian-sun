@@ -17,12 +17,18 @@ class TClassFactory_class_DropPodLocomotionClass : public IClassFactory, public 
 {
 public:
     // ---- vtable 0x006a4d48 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x005ed340
-    virtual void vfunc_1();  // [1] 0x005ed3b0
-    virtual void vfunc_2();  // [2] 0x005ed3d0
-    virtual void vfunc_3();  // [3] 0x005ed400
-    virtual void vfunc_4();  // [4] 0x005ed480
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x005ed340  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x005ed3b0  // __stdcall
+    virtual void vfunc_2(int a0);  // [2] 0x005ed3d0  // __stdcall
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ed400  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x005ed480  // __stdcall, returns int
 
     TClassFactory_class_DropPodLocomotionClass();  // 0x005ed33b
     virtual ~TClassFactory_class_DropPodLocomotionClass();
+
+    // ---- data members (offsets from ctor 0x005ed321) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a4d48
+    unsigned long m_004;  // zero-initialised
 };

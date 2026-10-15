@@ -18,16 +18,15 @@ class RLEBlitTransRemapXlat_E : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b744 (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x004699d0
-    virtual void vfunc_1();  // [1] 0x00463760
+    virtual void vfunc_1(int a0, int a1, int a2, int a3);  // [1] 0x00463760  // __thiscall
 
     RLEBlitTransRemapXlat_E();  // 0x00460dc0
     virtual ~RLEBlitTransRemapXlat_E();
 
-    // ---- data members (offsets from ctor 0x00460d98) ----
+    // ---- data members (offsets from ctor 0x00460be1) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b744
+    unsigned long m_000;  // init 0x69b7b4
     unsigned long m_004;  // /* ? */
     unsigned long m_008;  // /* ? */
 };

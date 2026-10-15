@@ -17,8 +17,8 @@ class exception
 {
 public:
     // ---- vtable 0x006a7f54 (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x006877d4
-    virtual void vfunc_1();  // [1] 0x006878ac
+    virtual void vfunc_0(int a0);  // [0] 0x006877d4  // __thiscall
+    virtual void vfunc_1();  // [1] 0x006878ac  // __cdecl, returns int
 
     exception();  // 0x006877cf
     virtual ~exception();

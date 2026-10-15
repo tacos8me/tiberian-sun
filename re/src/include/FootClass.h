@@ -3,8 +3,8 @@
 // FootClass.h  —  reconstructed from GAME.EXE (C&C Tiberian Sun, 1999)
 //
 // RTTI class   : class FootClass
-// vtable       : 0x0069e324  (6 slots)
-// constructor  : 0x0049c2ca
+// vtable       : 0x0069e340  (236 slots)
+// constructor  : 0x0049c2c3
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -17,55 +17,255 @@
 class FootClass : public TechnoClass
 {
 public:
-    // ---- vtable 0x0069e324 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00405af0
-    virtual void vfunc_1();  // [1] 0x00405b00
-    virtual void vfunc_2();  // [2] 0x00405b10
-    virtual void vfunc_3();  // [3] 0x00405740
-    virtual void vfunc_4();  // [4] 0x00405750
-    virtual void vfunc_5();  // [5] 0x00405760
+    // ---- vtable 0x0069e340 (236 slots) ----
+    virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x00405790  // __stdcall, returns int
+    virtual void Init(int a0);  // [1] 0x00405830  // __stdcall, returns int
+    virtual void Shutdown(int a0);  // [2] 0x00405840  // __stdcall, returns int
+    virtual void vfunc_3();  // [3] 0x006829a5  // __cdecl
+    virtual void Release(int a0);  // [4] 0x00405990  // __stdcall
+    virtual void vfunc_5(int a0, int a1);  // [5] 0x004a1d80  // __stdcall
+    virtual void vfunc_6(int a0, int a1, int a2, int a3, int a4, int a5);  // [6] 0x004a1ff0
+    virtual void GetType(int a0, int a1);  // [7] 0x00405910  // __stdcall, returns int
+    virtual void vfunc_8(int a0);  // [8] 0x004a4b40  // __thiscall
+    virtual void vfunc_9();  // [9] 0x0060f180  // __cdecl
+    virtual void vfunc_10(int a0, int a1);  // [10] 0x004a0ca0  // __thiscall
+    virtual void vfunc_11();  // [11] 0x006829a5  // __cdecl
+    virtual void vfunc_12();  // [12] 0x006829a5  // __cdecl
+    virtual void vfunc_13(int a0, int a1, int a2);  // [13] 0x004a23c0  // __thiscall
+    virtual void vfunc_14();  // [14] 0x00612db0  // __cdecl
+    virtual void vfunc_15();  // [15] 0x00612dc0  // __cdecl
+    virtual void Compute_CRC();  // [16] 0x004059f0  // __cdecl, returns int
+    virtual void vfunc_17();  // [17] 0x00570a20  // __cdecl, returns int
+    virtual void vfunc_18(int a0);  // [18] 0x00570960  // __stdcall
+    virtual void vfunc_19(int a0);  // [19] 0x004a26e0  // __thiscall
+    virtual void vfunc_20();  // [20] 0x00570e80  // __cdecl
+    virtual void vfunc_21(int a0, int a1);  // [21] 0x004a4a30  // __thiscall
+    virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
+    virtual void vfunc_23(int a0);  // [23] 0x004a16e0  // __thiscall
+    virtual void vfunc_24();  // [24] 0x0060eb70  // __thiscall
+    virtual void vfunc_25(int a0, int a1);  // [25] 0x004a1690  // __thiscall
+    virtual void vfunc_26();  // [26] 0x0056e820
+    virtual void vfunc_27(int a0, int a1, int a2);  // [27] 0x004a4270  // __thiscall, returns int
+    virtual void vfunc_28(int a0, int a1);  // [28] 0x004a4360  // __thiscall
+    virtual void vfunc_29();  // [29] 0x004a2140  // __thiscall
+    virtual void vfunc_30();  // [30] 0x00570ef0  // __cdecl
+    virtual void vfunc_31();  // [31] 0x004167d0  // __cdecl
+    virtual void vfunc_32();  // [32] 0x0060eb10  // __thiscall
+    virtual void vfunc_33();  // [33] 0x004a4b00  // __cdecl, returns int
+    virtual void vfunc_34();  // [34] 0x0061b1b0  // __cdecl
+    virtual void vfunc_35();  // [35] 0x004167e0  // __cdecl, returns int
+    virtual void vfunc_36();  // [36] 0x00616470  // __thiscall
+    virtual void vfunc_37(int a0, int a1, int a2, int a3, int a4);  // [37] 0x004a1080  // __thiscall
+    virtual void vfunc_38();  // [38] 0x00616410  // __thiscall
+    virtual void vfunc_39();  // [39] 0x00616130  // __thiscall
+    virtual void vfunc_40(int a0);  // [40] 0x0040e5d0  // __stdcall
+    virtual void vfunc_41(int a0);  // [41] 0x0040e600  // __stdcall
+    virtual void vfunc_42(int a0);  // [42] 0x0040e630  // __stdcall
+    virtual void vfunc_43(int a0, int a1);  // [43] 0x0060edd0  // __thiscall
+    virtual void vfunc_44(int a0);  // [44] 0x0040e660  // __stdcall
+    virtual void vfunc_45();  // [45] 0x00570ed0  // __cdecl
+    virtual void vfunc_46();  // [46] 0x004a4120  // __cdecl
+    virtual void vfunc_47();  // [47] 0x0040e7c0  // __cdecl
+    virtual void vfunc_48(int a0, int a1, int a2, int a3, int a4);  // [48] 0x004a1cc0  // __thiscall
+    virtual void vfunc_49(int a0, int a1);  // [49] 0x0049ec30  // __thiscall
+    virtual void vfunc_50(int a0);  // [50] 0x004a0a00  // __thiscall
+    virtual void vfunc_51(int a0);  // [51] 0x00617760  // __thiscall
+    virtual void vfunc_52(int a0);  // [52] 0x005700c0  // __thiscall
+    virtual void vfunc_53(int a0);  // [53] 0x0056ea70  // __thiscall
+    virtual void vfunc_54(int a0);  // [54] 0x00570480  // __stdcall
+    virtual void vfunc_55(int a0);  // [55] 0x00570500  // __stdcall
+    virtual void vfunc_56();  // [56] 0x004a4a10  // __thiscall
+    virtual void vfunc_57();  // [57] 0x00617ce0  // __cdecl
+    virtual void vfunc_58(int a0);  // [58] 0x0061b480  // __stdcall, returns int
+    virtual void vfunc_59(int a0, int a1, int a2);  // [59] 0x0056f480  // __thiscall
+    virtual void vfunc_60(int a0);  // [60] 0x005701b0  // __thiscall, returns int
+    virtual void vfunc_61(int a0, int a1, int a2, int a3, int a4);  // [61] 0x00610880  // __thiscall
+    virtual void vfunc_62(int a0, int a1, int a2, int a3, int a4, int a5);  // [62] 0x0060fb90  // __thiscall
+    virtual void vfunc_63(int a0, int a1);  // [63] 0x004a1cb0  // __stdcall
+    virtual void vfunc_64();  // [64] 0x00570990
+    virtual void vfunc_65();  // [65] 0x0060f590
+    virtual void vfunc_66();  // [66] 0x0061c1e0
+    virtual void vfunc_67();  // [67] 0x0049c590
+    virtual void vfunc_68();  // [68] 0x0056f000
+    virtual void vfunc_69();  // [69] 0x0056f160
+    virtual void vfunc_70();  // [70] 0x0040e690
+    virtual void vfunc_71();  // [71] 0x0056f680
+    virtual void vfunc_72();  // [72] 0x0049f500
+    virtual void vfunc_73();  // [73] 0x0049ee70
+    virtual void vfunc_74();  // [74] 0x00612dd0
+    virtual void vfunc_75();  // [75] 0x00613f10
+    virtual void vfunc_76();  // [76] 0x0056eda0
+    virtual void vfunc_77();  // [77] 0x00611540
+    virtual void vfunc_78();  // [78] 0x006164c0
+    virtual void vfunc_79();  // [79] 0x0049eda0
+    virtual void vfunc_80();  // [80] 0x0056ec90
+    virtual void vfunc_81();  // [81] 0x0056eca0
+    virtual void vfunc_82();  // [82] 0x0056ecb0
+    virtual void vfunc_83();  // [83] 0x0061a4d0
+    virtual void vfunc_84();  // [84] 0x005468d0
+    virtual void vfunc_85();  // [85] 0x00546d60
+    virtual void vfunc_86();  // [86] 0x0049fae0
+    virtual void vfunc_87();  // [87] 0x00570240
+    virtual void vfunc_88();  // [88] 0x004a03a0
+    virtual void vfunc_89();  // [89] 0x0060f490
+    virtual void vfunc_90();  // [90] 0x0056ece0
+    virtual void vfunc_91();  // [91] 0x004a1160
+    virtual void vfunc_92();  // [92] 0x004a2cd0
+    virtual void vfunc_93();  // [93] 0x0056ed00
+    virtual void vfunc_94();  // [94] 0x004a0e20
+    virtual void vfunc_95();  // [95] 0x004a0e70
+    virtual void vfunc_96();  // [96] 0x0040e6a0
+    virtual void vfunc_97();  // [97] 0x004a2170
+    virtual void vfunc_98();  // [98] 0x0040e6c0
+    virtual void vfunc_99();  // [99] 0x00570ce0
+    virtual void vfunc_100();  // [100] 0x00570d00
+    virtual void vfunc_101();  // [101] 0x00570d50
+    virtual void vfunc_102();  // [102] 0x00570370
+    virtual void vfunc_103();  // [103] 0x005703b0
+    virtual void vfunc_104();  // [104] 0x00570360
+    virtual void vfunc_105();  // [105] 0x00546d20
+    virtual void vfunc_106();  // [106] 0x004a4b10
+    virtual void vfunc_107();  // [107] 0x00546750
+    virtual void vfunc_108();  // [108] 0x00546760
+    virtual void vfunc_109();  // [109] 0x00546770
+    virtual void vfunc_110();  // [110] 0x0049da30
+    virtual void vfunc_111();  // [111] 0x0049d8e0
+    virtual void vfunc_112();  // [112] 0x0049da90
+    virtual void vfunc_113();  // [113] 0x0049e7f0
+    virtual void vfunc_114();  // [114] 0x005467c0
+    virtual void vfunc_115();  // [115] 0x0049dbe0
+    virtual void vfunc_116();  // [116] 0x0049cfb0
+    virtual void vfunc_117();  // [117] 0x004a1480
+    virtual void vfunc_118();  // [118] 0x00546800
+    virtual void vfunc_119();  // [119] 0x00546810
+    virtual void vfunc_120();  // [120] 0x00546820
+    virtual void vfunc_121();  // [121] 0x004a0660
+    virtual void vfunc_122();  // [122] 0x00546840
+    virtual void vfunc_123();  // [123] 0x00546850
+    virtual void vfunc_124();  // [124] 0x00546860
+    virtual void vfunc_125();  // [125] 0x00546870
+    virtual void vfunc_126();  // [126] 0x00546880
+    virtual void vfunc_127();  // [127] 0x004a4420
+    virtual void vfunc_128();  // [128] 0x0049d080
+    virtual void vfunc_129();  // [129] 0x005468b0
+    virtual void vfunc_130();  // [130] 0x004a0330
+    virtual void vfunc_131();  // [131] 0x004a0370
+    virtual void vfunc_132();  // [132] 0x00547110
+    virtual void vfunc_133();  // [133] 0x005a58a0
+    virtual void vfunc_134();  // [134] 0x005a57d0
+    virtual void vfunc_135();  // [135] 0x0040e700
+    virtual void vfunc_136();  // [136] 0x004a2690
+    virtual void vfunc_137();  // [137] 0x0060eb20
+    virtual void vfunc_138();  // [138] 0x0040e7a0
+    virtual void vfunc_139();  // [139] 0x0061cb60
+    virtual void vfunc_140();  // [140] 0x00612de0
+    virtual void vfunc_141();  // [141] 0x0040e710
+    virtual void vfunc_142();  // [142] 0x00613d60
+    virtual void vfunc_143();  // [143] 0x00613c60
+    virtual void vfunc_144();  // [144] 0x004a4b20
+    virtual void vfunc_145();  // [145] 0x00616450
+    virtual void vfunc_146();  // [146] 0x0061cfa0
+    virtual void vfunc_147();  // [147] 0x0061b1e0
+    virtual void vfunc_148();  // [148] 0x0061d000
+    virtual void vfunc_149();  // [149] 0x0061b210
+    virtual void vfunc_150();  // [150] 0x0061bf60
+    virtual void vfunc_151();  // [151] 0x0061b1c0
+    virtual void vfunc_152();  // [152] 0x004a2340
+    virtual void vfunc_153();  // [153] 0x00614770
+    virtual void vfunc_154();  // [154] 0x0049c620
+    virtual void vfunc_155();  // [155] 0x0060ed00
+    virtual void vfunc_156();  // [156] 0x0061df10
+    virtual void vfunc_157();  // [157] 0x0061dd70
+    virtual void vfunc_158();  // [158] 0x004a1a50
+    virtual void vfunc_159();  // [159] 0x004a1b30
+    virtual void vfunc_160();  // [160] 0x0061bd30
+    virtual void vfunc_161();  // [161] 0x0061bf10
+    virtual void vfunc_162();  // [162] 0x0060efa0
+    virtual void vfunc_163();  // [163] 0x0061b1f0
+    virtual void vfunc_164();  // [164] 0x0061b2c0
+    virtual void vfunc_165();  // [165] 0x0061a450
+    virtual void vfunc_166();  // [166] 0x00616160
+    virtual void vfunc_167();  // [167] 0x006161b0
+    virtual void vfunc_168();  // [168] 0x006143a0
+    virtual void vfunc_169();  // [169] 0x0061a560
+    virtual void vfunc_170();  // [170] 0x004a13b0
+    virtual void vfunc_171();  // [171] 0x0061d9d0
+    virtual void vfunc_172();  // [172] 0x0061db90
+    virtual void vfunc_173();  // [173] 0x0040e720
+    virtual void vfunc_174();  // [174] 0x004a49c0
+    virtual void vfunc_175();  // [175] 0x0061b2e0
+    virtual void vfunc_176();  // [176] 0x0061b340
+    virtual void vfunc_177();  // [177] 0x0061b3a0
+    virtual void vfunc_178();  // [178] 0x00615820
+    virtual void vfunc_179();  // [179] 0x0061dd50
+    virtual void vfunc_180();  // [180] 0x0061b400
+    virtual void vfunc_181();  // [181] 0x0049de00
+    virtual void vfunc_182();  // [182] 0x006114b0
+    virtual void vfunc_183();  // [183] 0x004a0bb0
+    virtual void vfunc_184();  // [184] 0x00613f90
+    virtual void vfunc_185();  // [185] 0x004a0c10
+    virtual void vfunc_186();  // [186] 0x006142e0
+    virtual void vfunc_187(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [187] 0x006148b0  // __thiscall
+    virtual void vfunc_188();  // [188] 0x004a27c0
+    virtual void vfunc_189();  // [189] 0x00614530
+    virtual void vfunc_190(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11);  // [190] 0x0061c360  // __thiscall
+    virtual void vfunc_191();  // [191] 0x0040e730
+    virtual void vfunc_192();  // [192] 0x0040e780
+    virtual void vfunc_193();  // [193] 0x00616550
+    virtual void vfunc_194();  // [194] 0x00613760
+    virtual void vfunc_195();  // [195] 0x0061c650
+    virtual void vfunc_196();  // [196] 0x0060f8f0
+    virtual void vfunc_197();  // [197] 0x004a2880
+    virtual void vfunc_198();  // [198] 0x004a19a0
+    virtual void vfunc_199();  // [199] 0x00610870
+    virtual void vfunc_200();  // [200] 0x00610c50
+    virtual void vfunc_201();  // [201] 0x0061b4f0
+    virtual void vfunc_202();  // [202] 0x0061bc30
+    virtual void vfunc_203();  // [203] 0x00617b90
+    virtual void vfunc_204();  // [204] 0x00617c30
+    virtual void vfunc_205();  // [205] 0x0061d9a0
+    virtual void vfunc_206();  // [206] 0x0061b490
+    virtual void vfunc_207();  // [207] 0x0040e790
+    virtual void vfunc_208();  // [208] 0x004a0830
+    virtual void vfunc_209();  // [209] 0x0049f8e0
+    virtual void vfunc_210();  // [210] 0x0061d4c0
+    virtual void vfunc_211();  // [211] 0x0061d4f0
+    virtual void vfunc_212();  // [212] 0x0061d520
+    virtual void vfunc_213();  // [213] 0x0061df20
+    virtual void vfunc_214();  // [214] 0x004a2c50
+    virtual void vfunc_215();  // [215] 0x004a2800
+    virtual void vfunc_216();  // [216] 0x0040e7b0
+    virtual void vfunc_217();  // [217] 0x004a11e0
+    virtual void vfunc_218();  // [218] 0x004a2850
+    virtual void vfunc_219();  // [219] 0x0040e7d0
+    virtual void vfunc_220(int a0);  // [220] 0x0049dd90  // __thiscall
+    virtual void vfunc_221();  // [221] 0x0049dd60
+    virtual void vfunc_222();  // [222] 0x004a22c0
+    virtual void vfunc_223();  // [223] 0x0040e7e0
+    virtual void vfunc_224();  // [224] 0x0040e840
+    virtual void vfunc_225();  // [225] 0x0040e850
+    virtual void vfunc_226();  // [226] 0x0040e860
+    virtual void vfunc_227();  // [227] 0x0040e870
+    virtual void vfunc_228();  // [228] 0x004a0e10
+    virtual void vfunc_229();  // [229] 0x0040e880
+    virtual void vfunc_230();  // [230] 0x004a1c20
+    virtual void vfunc_231(int a0, int a1, int a2, int a3);  // [231] 0x0049de30  // __thiscall
+    virtual void vfunc_232();  // [232] 0x0040e890
+    virtual void vfunc_233();  // [233] 0x0049c520
+    virtual void vfunc_234();  // [234] 0x004a2330
+    virtual void vfunc_235();  // [235] 0x004a4140
 
-    FootClass();  // 0x0049c2ca
+    FootClass();  // 0x0049c2c3
     virtual ~FootClass();
 
-    // ---- data members (offsets from ctor 0x0049c0f0) ----
+    // ---- data members (offsets from ctor 0x0049c1cf) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69e340
     unsigned long m_004;  // init 0x69e324
-    unsigned char pad_008[0x210];
-    unsigned long m_218;  // init 0xffffffff
-    unsigned long m_21c;  // /* ? */
-    unsigned long m_220;  // /* ? */
-    unsigned char pad_224[0x4];
-    unsigned long m_228;  // /* ? */
-    unsigned long m_22c;  // /* ? */
-    unsigned long m_230;  // /* ? */
-    unsigned long m_234;  // /* ? */
-    unsigned long m_238;  // /* ? */
-    unsigned long m_23c;  // /* ? */
-    unsigned long m_240;  // /* ? */
-    unsigned long m_244;  // /* ? */
-    unsigned long m_248;  // /* ? */
-    unsigned long m_24c;  // /* ? */
-    unsigned long m_250;  // /* ? */
-    unsigned long m_254;  // init 0x3ff00000
-    unsigned char pad_258[0x18];
-    unsigned long m_270;  // /* ? */
-    unsigned long m_274;  // /* ? */
-    unsigned char pad_278[0x18];
-    unsigned long m_290;  // /* ? */
-    unsigned long m_294;  // /* ? */
-    unsigned long m_298;  // /* ? */
+    unsigned char pad_008[0x294];
     unsigned long m_29c;  // init 0xffffffff
-    unsigned char pad_2a0[0x5c];
-    unsigned long m_2fc;  // /* ? */
-    unsigned char pad_300[0x4];
-    unsigned long m_304;  // /* ? */
-    unsigned long m_308;  // init 0xa
-    unsigned long m_30c;  // /* ? */
-    unsigned char pad_310[0x4];
-    unsigned long m_314;  // /* ? */
+    unsigned char pad_2a0[0x78];
     unsigned long m_318;  // /* ? */
     unsigned char pad_31c[0x4];
     unsigned long m_320;  // /* ? */

@@ -18,12 +18,11 @@ class DynamicVectorClass_TEventClass : public VectorClass_TEventClass
 {
 public:
     // ---- vtable 0x006a6074 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00626c90
-    virtual void vfunc_1();  // [1] 0x006269e0
-    virtual void vfunc_2();  // [2] 0x00626b60
-    virtual void vfunc_3();  // [3] 0x00626990
-    virtual void vfunc_4();  // [4] 0x00626c10
-    virtual void vfunc_5();  // [5] 0x006269c0
+    virtual void vfunc_1(int a0);  // [1] 0x006269e0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00626b60  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x00626990  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00626c10  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x006269c0  // __stdcall, returns int
 
     DynamicVectorClass_TEventClass();  // 0x00625a03
     virtual ~DynamicVectorClass_TEventClass();

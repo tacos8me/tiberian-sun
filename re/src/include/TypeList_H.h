@@ -18,17 +18,16 @@ class TypeList_H : public DynamicVectorClass_H
 {
 public:
     // ---- vtable 0x0069ad58 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x0044ad70
-    virtual void vfunc_1();  // [1] 0x0044af30
-    virtual void vfunc_2();  // [2] 0x0044b0b0
-    virtual void vfunc_3();  // [3] 0x0044ac70
-    virtual void vfunc_4();  // [4] 0x0044b160
-    virtual void vfunc_5();  // [5] 0x0044aca0
+    virtual void vfunc_1(int a0);  // [1] 0x0044af30  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0044b0b0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x0044ac70  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x0044b160  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x0044aca0  // __stdcall, returns int
 
     TypeList_H();  // 0x00449458
     virtual ~TypeList_H();
 
-    // ---- data members (offsets from ctor 0x00449400) ----
+    // ---- data members (offsets from ctor 0x004493f7) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned char pad_000[0x8];

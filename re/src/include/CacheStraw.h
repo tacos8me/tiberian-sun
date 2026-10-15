@@ -18,14 +18,14 @@ class CacheStraw : public Straw
 {
 public:
     // ---- vtable 0x006a0420 (3 slots) ----
-    virtual void vfunc_0();  // [0] 0x004d7ff0
-    virtual void vfunc_1();  // [1] 0x005f1020
-    virtual void vfunc_2();  // [2] 0x0046dfa0
+    virtual void vfunc_0(int a0);  // [0] 0x004d7ff0  // __thiscall
+    virtual void vfunc_1(int a0);  // [1] 0x005f1020  // __thiscall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0046dfa0  // __thiscall
 
     CacheStraw();  // 0x004d47ba
     virtual ~CacheStraw();
 
-    // ---- data members (offsets from ctor 0x004d4750) ----
+    // ---- data members (offsets from ctor 0x004d4745) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned char pad_000[0x13];

@@ -83,6 +83,12 @@ def main():
     fns = {f["va"]: f for f in json.load(open(os.path.join(outdir, "functions.json")))["functions"]}
     members_path = os.path.join(outdir, "members.json")
     members = json.load(open(members_path)) if os.path.exists(members_path) else {}
+    mn_path = os.path.join(outdir, "member_names.json")
+    member_names = json.load(open(mn_path)) if os.path.exists(mn_path) else {}
+    vn_path = os.path.join(outdir, "virtual_names.json")
+    virtual_names = json.load(open(vn_path)) if os.path.exists(vn_path) else {}
+    sg_path = os.path.join(outdir, "signatures.json")
+    signatures = json.load(open(sg_path)) if os.path.exists(sg_path) else {}
 
     # demangled class name -> ident, for resolving base includes
     ident_of = {m["class"]: m["ident"] for m in manifest}
@@ -177,6 +183,7 @@ def main():
         L.append("{")
         L.append("public:")
         L.append(f"    // ---- vtable 0x{m['vtable']:08x} ({m['nvirtuals']} slots) ----")
+        vnames = virtual_names.get(m["class"]) or virtual_names.get(m["ident"]) or {}
         for i, e in enumerate(m["entries"]):
             fn = fns.get(e)
             tag = ""
@@ -184,7 +191,34 @@ def main():
                 s = fn["strings"][0]["text"]
                 if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{2,30}", s):
                     tag = f'  // refs "{s}"'
-            L.append(f"    virtual void vfunc_{i}();  // [{i}] 0x{e:08x}{tag}")
+            vn = vnames.get(str(i))
+            sg = signatures.get(hex(e), {})
+            cc = sg.get("cc")
+            na = sg.get("nargs")
+            # build an honest signature: only state what was recovered
+            if na is not None and na > 0:
+                args = ", ".join(f"int a{k}" for k in range(na))
+            elif na == 0:
+                args = ""
+            else:
+                args = ""
+            # Return type is recorded as a comment, not in the declaration:
+            # the heuristic can disagree with a base class and break overrides.
+            ret = "void"
+            bits = []
+            if cc:
+                bits.append(cc)
+            if sg.get("ret"):
+                bits.append(f"returns {sg['ret']}")
+            cctag = ("  // " + ", ".join(bits)) if bits else ""
+            if vn and vn.startswith("~"):
+                # The destructor is emitted explicitly below; skip it here to
+                # avoid a duplicate declaration.
+                continue
+            elif vn:
+                L.append(f"    virtual {ret} {vn}({args});  // [{i}] 0x{e:08x}{cctag}{tag}")
+            else:
+                L.append(f"    virtual {ret} vfunc_{i}({args});  // [{i}] 0x{e:08x}{cctag}{tag}")
         L.append("")
         if m["ctors"]:
             L.append(f"    {ident}();  // 0x{m['ctors'][0]:08x}")
@@ -192,6 +226,11 @@ def main():
 
         # ---- data members recovered from the constructor ----
         md = members.get(m["class"])
+        _mn = member_names.get(m["class"]) or member_names.get(m["ident"]) or {}
+        named = _mn.get("members", {})
+        # A key can map to several offsets (repeated INI reads). Only the first
+        # use of a name is emitted; later ones fall back to m_XXX.
+        _used_names = set()
         if md and md.get("members"):
             L.append("")
             L.append(f"    // ---- data members (offsets from ctor 0x{md['ctor']:08x}) ----")
@@ -205,8 +244,13 @@ def main():
                 if off > prev_end:
                     L.append(f"    unsigned char pad_{prev_end:03x}[0x{off - prev_end:x}];")
                 kind = mem["kind"]
+                nm = named.get(str(off), {}).get("name")
                 if kind == "vtable":
                     L.append(f"    void* vptr_{off:03x};  // vtable 0x{mem['value']:08x}")
+                    prev_end = off + 4
+                elif nm and nm not in _used_names:
+                    _used_names.add(nm)
+                    L.append(f"    unsigned long {nm};  // +0x{off:03x} (INI key)")
                     prev_end = off + 4
                 elif kind == "zero":
                     L.append(f"    unsigned long m_{off:03x};  // zero-initialised")

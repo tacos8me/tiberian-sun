@@ -18,9 +18,8 @@ class BlitTransDarken_G : public Blitter
 {
 public:
     // ---- vtable 0x0069b6a4 (3 slots) ----
-    virtual void vfunc_0();  // [0] 0x00469b30
-    virtual void vfunc_1();  // [1] 0x00464060
-    virtual void vfunc_2();  // [2] 0x004640a0
+    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [1] 0x00464060  // __stdcall
+    virtual void vfunc_2(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [2] 0x004640a0  // __stdcall
 
     BlitTransDarken_G();  // 0x004610e0
     virtual ~BlitTransDarken_G();

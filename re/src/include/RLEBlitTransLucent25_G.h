@@ -18,16 +18,15 @@ class RLEBlitTransLucent25_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b39c (2 slots) ----
-    virtual void vfunc_0();  // [0] 0x0046a3d0
-    virtual void vfunc_1();  // [1] 0x00466be0
+    virtual void vfunc_1(int a0, int a1, int a2);  // [1] 0x00466be0  // __thiscall
 
     RLEBlitTransLucent25_G();  // 0x00461bf6
     virtual ~RLEBlitTransLucent25_G();
 
-    // ---- data members (offsets from ctor 0x004617f6) ----
+    // ---- data members (offsets from ctor 0x00461b37) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b3d8
+    unsigned long m_000;  // init 0x69b3c0
     unsigned long m_004;  // /* ? */
     unsigned long m_008;  // /* ? */
 };

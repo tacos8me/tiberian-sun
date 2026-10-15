@@ -3,8 +3,8 @@
 // CStreamClass.h  —  reconstructed from GAME.EXE (C&C Tiberian Sun, 1999)
 //
 // RTTI class   : class CStreamClass
-// vtable       : 0x0069b904  (5 slots)
-// constructor  : 0x0046e087
+// vtable       : 0x0069b91c  (15 slots)
+// constructor  : 0x0046e080
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -16,13 +16,36 @@
 class CStreamClass : public IStream, public ISequentialStream, public IUnknown, public ILinkStream
 {
 public:
-    // ---- vtable 0x0069b904 (5 slots) ----
-    virtual void vfunc_0();  // [0] 0x0046ea40
-    virtual void vfunc_1();  // [1] 0x0046ea50
-    virtual void vfunc_2();  // [2] 0x0046ea60
-    virtual void vfunc_3();  // [3] 0x0046e240
-    virtual void vfunc_4();  // [4] 0x0046e2d0
+    // ---- vtable 0x0069b91c (15 slots) ----
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x0046e1b0  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x0046e150  // __stdcall
+    virtual void vfunc_2(int a0);  // [2] 0x0046e170  // __stdcall
+    virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x0046e380  // __stdcall, returns int
+    virtual void vfunc_4(int a0, int a1, int a2, int a3);  // [4] 0x0046e4f0  // __stdcall, returns int
+    virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4);  // [5] 0x0046e620  // __stdcall
+    virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x0046e670  // __stdcall
+    virtual void vfunc_7(int a0, int a1, int a2, int a3, int a4, int a5);  // [7] 0x0046e6c0  // __stdcall
+    virtual void vfunc_8(int a0, int a1);  // [8] 0x0046e700  // __stdcall
+    virtual void vfunc_9(int a0);  // [9] 0x0046e730  // __stdcall
+    virtual void vfunc_10(int a0, int a1, int a2, int a3, int a4, int a5);  // [10] 0x0046e760  // __stdcall
+    virtual void vfunc_11(int a0, int a1, int a2, int a3, int a4, int a5);  // [11] 0x0046e7a0  // __stdcall
+    virtual void vfunc_12(int a0, int a1, int a2);  // [12] 0x0046e7e0  // __stdcall
+    virtual void vfunc_13(int a0, int a1);  // [13] 0x0046e810  // __stdcall
 
-    CStreamClass();  // 0x0046e087
+    CStreamClass();  // 0x0046e080
     virtual ~CStreamClass();
+
+    // ---- data members (offsets from ctor 0x0046e033) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69b91c
+    unsigned long m_004;  // init 0x69b904
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // init 0xffff
 };

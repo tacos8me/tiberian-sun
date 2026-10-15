@@ -18,12 +18,11 @@ class DynamicVectorClass_VoxelAnimClass : public VectorClass_VoxelAnimClass
 {
 public:
     // ---- vtable 0x0069897c (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004046b0
-    virtual void vfunc_1();  // [1] 0x00404400
-    virtual void vfunc_2();  // [2] 0x00404580
-    virtual void vfunc_3();  // [3] 0x004043b0
-    virtual void vfunc_4();  // [4] 0x00404630
-    virtual void vfunc_5();  // [5] 0x004043e0
+    virtual void vfunc_1(int a0);  // [1] 0x00404400  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00404580  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x004043b0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00404630  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x004043e0  // __stdcall, returns int
 
     DynamicVectorClass_VoxelAnimClass();  // 0x00404353
     virtual ~DynamicVectorClass_VoxelAnimClass();

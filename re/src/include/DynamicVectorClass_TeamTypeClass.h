@@ -18,12 +18,11 @@ class DynamicVectorClass_TeamTypeClass : public VectorClass_TeamTypeClass
 {
 public:
     // ---- vtable 0x0069f414 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004b1750
-    virtual void vfunc_1();  // [1] 0x004adeb0
-    virtual void vfunc_2();  // [2] 0x004ae030
-    virtual void vfunc_3();  // [3] 0x004a9c80
-    virtual void vfunc_4();  // [4] 0x004ae0e0
-    virtual void vfunc_5();  // [5] 0x004a9cb0
+    virtual void vfunc_1(int a0);  // [1] 0x004adeb0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004ae030  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x004a9c80  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004ae0e0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x004a9cb0  // __stdcall, returns int
 
     DynamicVectorClass_TeamTypeClass();  // 0x004a8593
     virtual ~DynamicVectorClass_TeamTypeClass();

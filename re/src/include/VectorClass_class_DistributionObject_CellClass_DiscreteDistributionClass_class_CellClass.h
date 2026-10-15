@@ -17,12 +17,11 @@ class VectorClass_class_DistributionObject_CellClass_DiscreteDistributionClass_c
 {
 public:
     // ---- vtable 0x0069e70c (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004a5430
-    virtual void vfunc_1();  // [1] 0x004a4e90
-    virtual void vfunc_2();  // [2] 0x004a4ef0
-    virtual void vfunc_3();  // [3] 0x004a5000
-    virtual void vfunc_4();  // [4] 0x004a5040
-    virtual void vfunc_5();  // [5] 0x004a5090
+    virtual void vfunc_1(int a0);  // [1] 0x004a4e90  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004a4ef0  // __thiscall
+    virtual void vfunc_3();  // [3] 0x004a5000  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004a5040  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x004a5090  // __stdcall, returns int
 
     VectorClass_class_DistributionObject_CellClass_DiscreteDistributionClass_class_CellClass();  // 0x004a3869
     virtual ~VectorClass_class_DistributionObject_CellClass_DiscreteDistributionClass_class_CellClass();

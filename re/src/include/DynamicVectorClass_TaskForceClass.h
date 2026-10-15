@@ -18,12 +18,11 @@ class DynamicVectorClass_TaskForceClass : public VectorClass_TaskForceClass
 {
 public:
     // ---- vtable 0x0069f3dc (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004b16b0
-    virtual void vfunc_1();  // [1] 0x004adc50
-    virtual void vfunc_2();  // [2] 0x004addd0
-    virtual void vfunc_3();  // [3] 0x004a9c30
-    virtual void vfunc_4();  // [4] 0x004ade80
-    virtual void vfunc_5();  // [5] 0x004a9c60
+    virtual void vfunc_1(int a0);  // [1] 0x004adc50  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004addd0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x004a9c30  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004ade80  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x004a9c60  // __stdcall, returns int
 
     DynamicVectorClass_TaskForceClass();  // 0x004a8513
     virtual ~DynamicVectorClass_TaskForceClass();

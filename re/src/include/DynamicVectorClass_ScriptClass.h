@@ -18,12 +18,11 @@ class DynamicVectorClass_ScriptClass : public VectorClass_ScriptClass
 {
 public:
     // ---- vtable 0x006988d4 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00403ff0
-    virtual void vfunc_1();  // [1] 0x00403d40
-    virtual void vfunc_2();  // [2] 0x00403ec0
-    virtual void vfunc_3();  // [3] 0x00403cf0
-    virtual void vfunc_4();  // [4] 0x00403f70
-    virtual void vfunc_5();  // [5] 0x00403d20
+    virtual void vfunc_1(int a0);  // [1] 0x00403d40  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00403ec0  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x00403cf0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00403f70  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00403d20  // __stdcall, returns int
 
     DynamicVectorClass_ScriptClass();  // 0x00403c93
     virtual ~DynamicVectorClass_ScriptClass();

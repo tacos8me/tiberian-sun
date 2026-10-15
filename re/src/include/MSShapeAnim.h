@@ -18,13 +18,30 @@ class MSShapeAnim : public MSAnim
 {
 public:
     // ---- vtable 0x006a248c (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00559860
-    virtual void vfunc_1();  // [1] 0x00557690
-    virtual void vfunc_2();  // [2] 0x005576a0
-    virtual void vfunc_3();  // [3] 0x005576f0
-    virtual void vfunc_4();  // [4] 0x00557c30
-    virtual void vfunc_5();  // [5] 0x00557f90
+    virtual void vfunc_1(int a0);  // [1] 0x00557690  // __stdcall
+    virtual void vfunc_2();  // [2] 0x005576a0  // __thiscall
+    virtual void vfunc_3();  // [3] 0x005576f0  // __thiscall
+    virtual void vfunc_4(int a0, int a1, int a2);  // [4] 0x00557c30  // __thiscall
+    virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5);  // [5] 0x00557f90  // __thiscall
 
     MSShapeAnim();  // 0x00557b20
     virtual ~MSShapeAnim();
+
+    // ---- data members (offsets from ctor 0x00557adf) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a248c
+    unsigned char pad_004[0xc];
+    unsigned long m_010;  // /* ? */
+    unsigned char pad_014[0x4];
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // /* ? */
+    unsigned long m_028;  // /* ? */
+    unsigned long m_02c;  // /* ? */
+    unsigned long m_030;  // /* ? */
+    unsigned long m_034;  // /* ? */
+    unsigned long m_038;  // /* ? */
+    unsigned long m_03c;  // /* ? */
 };

@@ -17,13 +17,21 @@ class VectorClass_OverlayTypeClass
 {
 public:
     // ---- vtable 0x0069f4a0 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004b1840
-    virtual void vfunc_1();  // [1] 0x004ae370
-    virtual void vfunc_2();  // [2] 0x004ae3b0
-    virtual void vfunc_3();  // [3] 0x004ae460
-    virtual void vfunc_4();  // [4] 0x004ae490
-    virtual void vfunc_5();  // [5] 0x004ae4d0
+    virtual void vfunc_1(int a0);  // [1] 0x004ae370  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004ae3b0  // __thiscall
+    virtual void vfunc_3();  // [3] 0x004ae460  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x004ae490  // __stdcall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x004ae4d0  // __stdcall, returns int
 
     VectorClass_OverlayTypeClass();  // 0x004a86be
     virtual ~VectorClass_OverlayTypeClass();
+
+    // ---- data members (offsets from ctor 0x004b1839) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69f4a0
+    unsigned long m_004;  // zero-initialised
+    unsigned long m_008;  // zero-initialised
+    unsigned char pad_00c[0x1];
+    unsigned long m_00d;  // zero-initialised
 };

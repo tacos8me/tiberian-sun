@@ -18,12 +18,11 @@ class DynamicVectorClass_E : public VectorClass_E
 {
 public:
     // ---- vtable 0x006a7aec (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00670380
-    virtual void vfunc_1();  // [1] 0x006700d0
-    virtual void vfunc_2();  // [2] 0x00670250
-    virtual void vfunc_3();  // [3] 0x00670080
-    virtual void vfunc_4();  // [4] 0x00670300
-    virtual void vfunc_5();  // [5] 0x006700b0
+    virtual void vfunc_1(int a0);  // [1] 0x006700d0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00670250  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x00670080  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00670300  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x006700b0  // __stdcall, returns int
 
     DynamicVectorClass_E();  // 0x0066f6db
     virtual ~DynamicVectorClass_E();

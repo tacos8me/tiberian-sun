@@ -18,17 +18,16 @@ class DynamicVectorClass_AbstractClass : public VectorClass_AbstractClass
 {
 public:
     // ---- vtable 0x0069aa58 (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x004455c0
-    virtual void vfunc_1();  // [1] 0x00445310
-    virtual void vfunc_2();  // [2] 0x00445490
-    virtual void vfunc_3();  // [3] 0x004452a0
-    virtual void vfunc_4();  // [4] 0x00445540
-    virtual void vfunc_5();  // [5] 0x004452d0
+    virtual void vfunc_1(int a0);  // [1] 0x00445310  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00445490  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x004452a0  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00445540  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x004452d0  // __stdcall, returns int
 
     DynamicVectorClass_AbstractClass();  // 0x004449e8
     virtual ~DynamicVectorClass_AbstractClass();
 
-    // ---- data members (offsets from ctor 0x00444828) ----
+    // ---- data members (offsets from ctor 0x0044492a) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned char pad_000[0xc];
@@ -36,10 +35,7 @@ public:
     unsigned long m_010;  // /* ? */
     unsigned long m_014;  // /* ? */
     unsigned long m_018;  // /* ? */
-    unsigned char pad_01c[0x4];
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // /* ? */
-    unsigned long m_028;  // /* ? */
+    unsigned char pad_01c[0x10];
     unsigned long m_02c;  // init 0x69aa58
     unsigned char pad_030[0xc];
     unsigned long m_03c;  // zero-initialised

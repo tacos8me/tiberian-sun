@@ -18,21 +18,22 @@ class DynamicVectorClass_struct_HashObject_IUSubzoneConnectionStruct : public Ve
 {
 public:
     // ---- vtable 0x006a1b2c (6 slots) ----
-    virtual void vfunc_0();  // [0] 0x00522470
-    virtual void vfunc_1();  // [1] 0x00521da0
-    virtual void vfunc_2();  // [2] 0x00521de0
-    virtual void vfunc_3();  // [3] 0x00520810
-    virtual void vfunc_4();  // [4] 0x00521ee0
-    virtual void vfunc_5();  // [5] 0x00520840
+    virtual void vfunc_1(int a0);  // [1] 0x00521da0  // __stdcall
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x00521de0  // __thiscall
+    virtual void vfunc_3();  // [3] 0x00520810  // __thiscall
+    virtual void vfunc_4(int a0);  // [4] 0x00521ee0  // __stdcall
+    virtual void vfunc_5(int a0);  // [5] 0x00520840  // __stdcall, returns int
 
     DynamicVectorClass_struct_HashObject_IUSubzoneConnectionStruct();  // 0x00502293
     virtual ~DynamicVectorClass_struct_HashObject_IUSubzoneConnectionStruct();
 
-    // ---- data members (offsets from ctor 0x00502223) ----
+    // ---- data members (offsets from ctor 0x00550325) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a1b2c
-    unsigned char pad_004[0xc];
-    unsigned long m_010;  // zero-initialised
+    unsigned long m_000;  // init 0x6a1bd4
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // init 0x1
+    unsigned long m_010;  // /* ? */
     unsigned long m_014;  // init 0xa
 };
