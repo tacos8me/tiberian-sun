@@ -17,6 +17,7 @@ class VectorClass_class_DistributionObject_AITriggerTypeClass_DiscreteDistributi
 {
 public:
     // ---- vtable 0x006a56e0 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0060e300  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0060df10  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0060df70  // __thiscall
     virtual void vfunc_3();  // [3] 0x0060e080  // __thiscall

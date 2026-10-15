@@ -18,6 +18,7 @@ class WWFontClass : public FontClass
 {
 public:
     // ---- vtable 0x006a7b34 (9 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00672570  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00671c40  // __thiscall, returns int
     virtual void vfunc_2(int a0);  // [2] 0x00671c80  // __thiscall, returns int
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x00671ce0  // __thiscall

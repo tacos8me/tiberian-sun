@@ -17,6 +17,7 @@ class VectorClass_class_Point2D
 {
 public:
     // ---- vtable 0x006a2618 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0055bd50  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055ae80  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055aee0  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055afb0  // __thiscall

@@ -17,6 +17,7 @@ class WinsockInterfaceClass
 {
 public:
     // ---- vtable 0x006a79fc (21 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0066f0c0  // __thiscall
     virtual void vfunc_1();  // [1] 0x0066eb20  // __thiscall
     virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x0066ed50  // __thiscall, returns int
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x0066ede0  // __thiscall

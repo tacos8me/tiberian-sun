@@ -12,12 +12,13 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "GenericNode.h"
+#include "INIClass.h"
 
 class MixFileClass : public GenericNode
 {
 public:
     // ---- vtable 0x006a2318 (1 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00547c00  // __thiscall
 
     MixFileClass();  // 0x005472cb
     virtual ~MixFileClass();

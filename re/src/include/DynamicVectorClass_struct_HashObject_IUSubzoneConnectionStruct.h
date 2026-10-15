@@ -18,6 +18,7 @@ class DynamicVectorClass_struct_HashObject_IUSubzoneConnectionStruct : public Ve
 {
 public:
     // ---- vtable 0x006a1b2c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00522470  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00521da0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00521de0  // __thiscall
     virtual void vfunc_3();  // [3] 0x00520810  // __thiscall

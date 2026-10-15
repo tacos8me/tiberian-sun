@@ -18,6 +18,7 @@ class DynamicVectorClass_class_BaseNodeClass : public VectorClass_class_BaseNode
 {
 public:
     // ---- vtable 0x00699de4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0041f900  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0041f430  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x0041f490  // __thiscall
     virtual void vfunc_3();  // [3] 0x0041f390  // __thiscall

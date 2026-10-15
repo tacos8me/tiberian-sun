@@ -18,6 +18,7 @@ class TypeList_struct_nitTypeClass : public DynamicVectorClass_struct_nitTypeCla
 {
 public:
     // ---- vtable 0x006a3c10 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005b9ce0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005baa40  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005bac20  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x005b9a80  // __thiscall

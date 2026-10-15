@@ -49,7 +49,7 @@ public:
     virtual void vfunc_28(int a0, int a1, int a2, int a3);  // [28] 0x005a1890  // __thiscall
     virtual void vfunc_29(int a0);  // [29] 0x005a3aa0  // __thiscall
     virtual void vfunc_30(int a0);  // [30] 0x005a3c60  // __thiscall
-    virtual void Read_INI(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11);  // [31] 0x00476390  // __thiscall  // refs "Size"
+    virtual void vfunc_31(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11);  // [31] 0x00476390  // __thiscall  // refs "Size"
     virtual void vfunc_32(int a0);  // [32] 0x00594820  // __stdcall, returns int
     virtual void vfunc_33(int a0, int a1, int a2, int a3);  // [33] 0x00594790  // __cdecl
     virtual void vfunc_34();  // [34] 0x004787f0  // __thiscall

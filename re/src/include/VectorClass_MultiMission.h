@@ -17,6 +17,7 @@ class VectorClass_MultiMission
 {
 public:
     // ---- vtable 0x006a420c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005d7230  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005d6810  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005d6850  // __thiscall
     virtual void vfunc_3();  // [3] 0x005d6900  // __thiscall

@@ -18,6 +18,7 @@ class DynamicVectorClass_struct_DrawRecord_FoggedObjectClass : public VectorClas
 {
 public:
     // ---- vtable 0x0069e280 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0049bc30  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0049b880  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0049ba90  // __thiscall
     virtual void vfunc_3();  // [3] 0x0049b830  // __thiscall

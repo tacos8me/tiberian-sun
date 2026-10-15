@@ -18,14 +18,14 @@ class FootClass : public TechnoClass
 {
 public:
     // ---- vtable 0x0069e340 (236 slots) ----
-    virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x00405790  // __stdcall, returns int
-    virtual void Init(int a0);  // [1] 0x00405830  // __stdcall, returns int
-    virtual void Shutdown(int a0);  // [2] 0x00405840  // __stdcall, returns int
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x00405790  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x00405830  // __stdcall, returns int
+    virtual void vfunc_2(int a0);  // [2] 0x00405840  // __stdcall, returns int
     virtual void vfunc_3();  // [3] 0x006829a5  // __cdecl
-    virtual void Release(int a0);  // [4] 0x00405990  // __stdcall
+    virtual void vfunc_4(int a0);  // [4] 0x00405990  // __stdcall
     virtual void vfunc_5(int a0, int a1);  // [5] 0x004a1d80  // __stdcall
     virtual void vfunc_6(int a0, int a1, int a2, int a3, int a4, int a5);  // [6] 0x004a1ff0
-    virtual void GetType(int a0, int a1);  // [7] 0x00405910  // __stdcall, returns int
+    virtual void vfunc_7(int a0, int a1);  // [7] 0x00405910  // __stdcall, returns int
     virtual void vfunc_8(int a0);  // [8] 0x004a4b40  // __thiscall
     virtual void vfunc_9();  // [9] 0x0060f180  // __cdecl
     virtual void vfunc_10(int a0, int a1);  // [10] 0x004a0ca0  // __thiscall
@@ -34,7 +34,7 @@ public:
     virtual void vfunc_13(int a0, int a1, int a2);  // [13] 0x004a23c0  // __thiscall
     virtual void vfunc_14();  // [14] 0x00612db0  // __cdecl
     virtual void vfunc_15();  // [15] 0x00612dc0  // __cdecl
-    virtual void Compute_CRC();  // [16] 0x004059f0  // __cdecl, returns int
+    virtual void vfunc_16();  // [16] 0x004059f0  // __cdecl, returns int
     virtual void vfunc_17();  // [17] 0x00570a20  // __cdecl, returns int
     virtual void vfunc_18(int a0);  // [18] 0x00570960  // __stdcall
     virtual void vfunc_19(int a0);  // [19] 0x004a26e0  // __thiscall

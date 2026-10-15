@@ -17,6 +17,7 @@ class VectorClass_WaypointPathClass
 {
 public:
     // ---- vtable 0x006a74b8 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x006566f0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00656490  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x006564d0  // __thiscall
     virtual void vfunc_3();  // [3] 0x00656580  // __thiscall

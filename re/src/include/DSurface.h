@@ -18,6 +18,7 @@ class DSurface : public XSurface
 {
 public:
     // ---- vtable 0x0069ddbc (37 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0048c930  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2);  // [1] 0x0048c900  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2, int a3, int a4);  // [2] 0x00487cf0  // __thiscall
     virtual void vfunc_3(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [3] 0x00487d40  // __thiscall

@@ -17,6 +17,7 @@ class VectorClass_NodeNameType
 {
 public:
     // ---- vtable 0x006a4244 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005d7370  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005d6cd0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005d6d10  // __thiscall
     virtual void vfunc_3();  // [3] 0x005d6dc0  // __thiscall

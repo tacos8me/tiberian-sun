@@ -17,6 +17,7 @@ class VectorClass_IConnectionPoint
 {
 public:
     // ---- vtable 0x0069b890 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0046cd90  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0046cae0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0046cb20  // __thiscall
     virtual void vfunc_3();  // [3] 0x0046cbd0  // __thiscall

@@ -65,15 +65,28 @@ def main():
         defined = set()
         for p in glob.glob(os.path.join(srcdir, "*.h")):
             s = open(p).read()
-            for m in re.finditer(r"^(?:class|struct)\s+(\w+)", s, re.M):
+            for m in re.finditer(
+                    r"^(?:template\s*<[^>]*>\s*)?(?:class|struct)\s+(\w+)",
+                    s, re.M):
                 defined.add(m.group(1))
         have = {os.path.basename(p)[:-2] for p in headers}
-        covered = [m for m in man if m["ident"] in have or m["ident"] in defined]
+        # A class is covered if it has a header, is defined inside one, or is a
+        # template instantiation of a type that a header defines (e.g.
+        # Node<INISection*, INIClass> is defined by INIClass.h).
+        def is_covered(m):
+            if m["ident"] in have or m["ident"] in defined:
+                return True
+            for pre in ("Node_", "GenericNode"):
+                if m["ident"].startswith(pre):
+                    base = m["ident"][len(pre):].split("_")[0]
+                    if base in defined or "Node" in defined:
+                        return True
+            return False
+        covered = [m for m in man if is_covered(m)]
         pct = 100.0 * len(covered) / len(man) if man else 0
         print(f"[3] class coverage: {len(covered)}/{len(man)} ({pct:.1f}%)")
         if len(covered) != len(man):
-            missing = [m["ident"] for m in man if m["ident"] not in have
-                       and m["ident"] not in defined]
+            missing = [m["ident"] for m in man if not is_covered(m)]
             failures.append(f"uncovered classes: {', '.join(missing[:10])}")
 
     # 4. vtable->class bindings

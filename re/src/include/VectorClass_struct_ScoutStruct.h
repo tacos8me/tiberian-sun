@@ -17,6 +17,7 @@ class VectorClass_struct_ScoutStruct
 {
 public:
     // ---- vtable 0x0069fad0 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004c67c0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004c5aa0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004c5b00  // __thiscall
     virtual void vfunc_3();  // [3] 0x004c5bf0  // __thiscall

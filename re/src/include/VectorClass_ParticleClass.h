@@ -17,6 +17,7 @@ class VectorClass_ParticleClass
 {
 public:
     // ---- vtable 0x0069f120 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b0990  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004aab50  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004aab90  // __thiscall
     virtual void vfunc_3();  // [3] 0x004aac40  // __thiscall

@@ -18,6 +18,7 @@ class DynamicVectorClass_AbstractClass : public VectorClass_AbstractClass
 {
 public:
     // ---- vtable 0x0069aa58 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004455c0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00445310  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00445490  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004452a0  // __thiscall

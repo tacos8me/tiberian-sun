@@ -18,6 +18,7 @@ class RLEBlitTransLucent50AlphaZReadWrite_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b21c (2 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0046a9d0  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9);  // [1] 0x004694b0
 
     RLEBlitTransLucent50AlphaZReadWrite_G();  // 0x00462384

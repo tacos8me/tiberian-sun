@@ -18,6 +18,7 @@ class BlitTranslucent50ZeroAlpha_G : public Blitter
 {
 public:
     // ---- vtable 0x0069b4b4 (3 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00469fd0  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [1] 0x00465890  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [2] 0x00465920  // __stdcall
 

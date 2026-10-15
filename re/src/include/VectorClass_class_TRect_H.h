@@ -17,6 +17,7 @@ class VectorClass_class_TRect_H
 {
 public:
     // ---- vtable 0x006a26b4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0055d3e0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055cd10  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055cd80  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055ce70  // __thiscall

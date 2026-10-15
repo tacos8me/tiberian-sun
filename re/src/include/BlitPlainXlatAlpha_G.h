@@ -18,6 +18,7 @@ class BlitPlainXlatAlpha_G : public Blitter
 {
 public:
     // ---- vtable 0x0069b554 (3 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00469dd0  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [1] 0x00464ed0  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [2] 0x00464f70  // __stdcall
 

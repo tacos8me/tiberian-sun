@@ -17,6 +17,7 @@ class VectorClass_struct_DirtyAreaStruct
 {
 public:
     // ---- vtable 0x006a5228 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005fd9e0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005fd390  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x005fd410  // __thiscall
     virtual void vfunc_3();  // [3] 0x005fd530  // __thiscall

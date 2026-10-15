@@ -17,6 +17,7 @@ class VectorClass_FileEntryClass
 {
 public:
     // ---- vtable 0x006a1848 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004f9690  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004f9430  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004f9470  // __thiscall
     virtual void vfunc_3();  // [3] 0x004f9520  // __thiscall

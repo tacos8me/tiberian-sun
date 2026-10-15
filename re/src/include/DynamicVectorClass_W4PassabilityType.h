@@ -18,6 +18,7 @@ class DynamicVectorClass_W4PassabilityType : public VectorClass_W4PassabilityTyp
 {
 public:
     // ---- vtable 0x006a1b80 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00522710  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005219f0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00521b70  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x00520770  // __thiscall

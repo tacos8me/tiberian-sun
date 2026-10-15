@@ -17,6 +17,7 @@ class VectorClass_class_BaseNodeClass
 {
 public:
     // ---- vtable 0x00699e1c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0041fac0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0041f430  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0041f950  // __thiscall
     virtual void vfunc_3();  // [3] 0x0041fa20  // __thiscall

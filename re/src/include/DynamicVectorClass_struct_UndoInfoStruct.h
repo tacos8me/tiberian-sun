@@ -18,6 +18,7 @@ class DynamicVectorClass_struct_UndoInfoStruct : public VectorClass_struct_UndoI
 {
 public:
     // ---- vtable 0x006a4564 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005e0ae0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005e0730  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005e0940  // __thiscall
     virtual void vfunc_3();  // [3] 0x005e06d0  // __thiscall

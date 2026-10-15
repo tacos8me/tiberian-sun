@@ -17,8 +17,10 @@ class VectorClass_struct_SubzoneTrackingStruct
 {
 public:
     // ---- vtable 0x006a1af4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00522000  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00520eb0  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2, int a3, int a4, int a5);  // [2] 0x00520f00  // __thiscall
+    virtual void vfunc_3(int a0, int a1);  // [3] 0x00521120  // __thiscall
     virtual void vfunc_4(int a0);  // [4] 0x005211a0  // __stdcall, returns int
     virtual void vfunc_5(int a0);  // [5] 0x005211f0  // __stdcall, returns int
 

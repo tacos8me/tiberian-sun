@@ -17,6 +17,7 @@ class VectorClass_UnitTypeClass
 {
 public:
     // ---- vtable 0x0069f5b8 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1b60  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004aef50  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004aef90  // __thiscall
     virtual void vfunc_3();  // [3] 0x004af040  // __thiscall

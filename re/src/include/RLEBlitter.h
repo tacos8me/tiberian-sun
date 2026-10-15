@@ -17,6 +17,7 @@ class RLEBlitter
 {
 public:
     // ---- vtable 0x0069b7d4 (2 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00469970  // __thiscall
     virtual void vfunc_1();  // [1] 0x006829a5  // __cdecl
 
     RLEBlitter();  // 0x0046995b

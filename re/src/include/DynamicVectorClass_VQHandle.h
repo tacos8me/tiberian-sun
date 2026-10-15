@@ -18,6 +18,7 @@ class DynamicVectorClass_VQHandle : public VectorClass_VQHandle
 {
 public:
     // ---- vtable 0x006a70b4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0064ed60  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0064eab0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0064ec30  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x0064ea60  // __thiscall

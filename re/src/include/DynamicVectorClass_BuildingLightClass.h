@@ -18,6 +18,7 @@ class DynamicVectorClass_BuildingLightClass : public VectorClass_BuildingLightCl
 {
 public:
     // ---- vtable 0x0069efb4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b0940  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004aa8f0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004aaa70  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a95a0  // __thiscall

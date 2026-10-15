@@ -18,6 +18,7 @@ class RLEBlitTransDarkenZRead_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b378 (2 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0046a430  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4);  // [1] 0x00466e70
 
     RLEBlitTransDarkenZRead_G();  // 0x00461c76

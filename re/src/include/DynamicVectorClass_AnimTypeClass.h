@@ -18,6 +18,7 @@ class DynamicVectorClass_AnimTypeClass : public VectorClass_AnimTypeClass
 {
 public:
     // ---- vtable 0x0069f5d4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1c50  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004af1b0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004af330  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a9f00  // __thiscall

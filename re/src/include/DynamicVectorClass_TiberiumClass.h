@@ -18,6 +18,7 @@ class DynamicVectorClass_TiberiumClass : public VectorClass_TiberiumClass
 {
 public:
     // ---- vtable 0x006a61f4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0062a420  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0062a170  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0062a2f0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x0062a120  // __thiscall

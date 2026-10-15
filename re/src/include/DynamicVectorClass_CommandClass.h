@@ -18,6 +18,7 @@ class DynamicVectorClass_CommandClass : public VectorClass_CommandClass
 {
 public:
     // ---- vtable 0x00698650 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004019c0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00401710  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00401890  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004016c0  // __thiscall

@@ -18,6 +18,7 @@ class DynamicVectorClass_UnitTypeClass : public VectorClass_UnitTypeClass
 {
 public:
     // ---- vtable 0x0069f59c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1bb0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004aef50  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004af0d0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a9eb0  // __thiscall

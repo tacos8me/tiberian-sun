@@ -18,6 +18,7 @@ class DynamicVectorClass_struct_ScoutStruct : public VectorClass_struct_ScoutStr
 {
 public:
     // ---- vtable 0x0069fa7c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004c6810  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004c5aa0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004c5c90  // __thiscall
     virtual void vfunc_3();  // [3] 0x004c5290  // __thiscall

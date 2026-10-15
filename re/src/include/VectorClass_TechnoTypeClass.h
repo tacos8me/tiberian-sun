@@ -17,6 +17,7 @@ class VectorClass_TechnoTypeClass
 {
 public:
     // ---- vtable 0x0069ad74 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0044b8d0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0044b210  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0044b250  // __thiscall
     virtual void vfunc_3();  // [3] 0x0044b300  // __thiscall

@@ -17,6 +17,7 @@ class VectorClass_LaserDrawClass
 {
 public:
     // ---- vtable 0x006a14e8 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004f37d0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004f3570  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004f35b0  // __thiscall
     virtual void vfunc_3();  // [3] 0x004f3660  // __thiscall

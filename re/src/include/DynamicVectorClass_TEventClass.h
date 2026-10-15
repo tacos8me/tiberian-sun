@@ -18,6 +18,7 @@ class DynamicVectorClass_TEventClass : public VectorClass_TEventClass
 {
 public:
     // ---- vtable 0x006a6074 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00626c90  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x006269e0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00626b60  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x00626990  // __thiscall

@@ -18,6 +18,7 @@ class DynamicVectorClass_PendingCellClass_LightSourceClass : public VectorClass_
 {
 public:
     // ---- vtable 0x006a1574 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004f5cd0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004f5980  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004f5b00  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004f56d0  // __thiscall

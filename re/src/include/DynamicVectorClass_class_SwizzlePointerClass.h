@@ -18,6 +18,7 @@ class DynamicVectorClass_class_SwizzlePointerClass : public VectorClass_class_Sw
 {
 public:
     // ---- vtable 0x006a50bc (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005f3d20  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005f39e0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005f3ba0  // __thiscall
     virtual void vfunc_3();  // [3] 0x005f3990  // __thiscall

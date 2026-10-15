@@ -17,6 +17,7 @@ class VectorClass_MapRegionClass
 {
 public:
     // ---- vtable 0x006a1dc4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00540a00  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005403f0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00540430  // __thiscall
     virtual void vfunc_3();  // [3] 0x005404e0  // __thiscall

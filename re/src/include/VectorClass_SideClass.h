@@ -17,6 +17,7 @@ class VectorClass_SideClass
 {
 public:
     // ---- vtable 0x0069f388 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1520  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004ad790  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004ad7d0  // __thiscall
     virtual void vfunc_3();  // [3] 0x004ad880  // __thiscall

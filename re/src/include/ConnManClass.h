@@ -17,6 +17,7 @@ class ConnManClass
 {
 public:
     // ---- vtable 0x006a0b7c (16 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004e8ae0  // __thiscall
     virtual void vfunc_1();  // [1] 0x006829a5  // __cdecl
     virtual void vfunc_2();  // [2] 0x006829a5  // __cdecl
     virtual void vfunc_3();  // [3] 0x006829a5  // __cdecl

@@ -18,6 +18,7 @@ class RLEBlitTransXlatZReadWrite_E : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b708 (2 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00469a70  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4);  // [1] 0x00463b80
 
     RLEBlitTransXlatZReadWrite_E();  // 0x00460f52

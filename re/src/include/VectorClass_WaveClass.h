@@ -17,6 +17,7 @@ class VectorClass_WaveClass
 {
 public:
     // ---- vtable 0x0069f078 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b0da0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004abb10  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004abb50  // __thiscall
     virtual void vfunc_3();  // [3] 0x004abc00  // __thiscall

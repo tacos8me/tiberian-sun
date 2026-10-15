@@ -18,6 +18,7 @@ class RLEBlitTransRemapDestZRead_E : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b720 (2 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00469a30  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4);  // [1] 0x004639c0
 
     RLEBlitTransRemapDestZRead_E();  // 0x00460e9b

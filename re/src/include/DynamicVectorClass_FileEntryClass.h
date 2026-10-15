@@ -18,6 +18,7 @@ class DynamicVectorClass_FileEntryClass : public VectorClass_FileEntryClass
 {
 public:
     // ---- vtable 0x006a182c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004f96e0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004f9430  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004f95b0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004f93e0  // __thiscall

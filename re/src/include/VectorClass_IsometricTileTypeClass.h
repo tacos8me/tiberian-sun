@@ -17,6 +17,7 @@ class VectorClass_IsometricTileTypeClass
 {
 public:
     // ---- vtable 0x0069f6d0 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1e80  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004afb30  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004afb70  // __thiscall
     virtual void vfunc_3();  // [3] 0x004afc20  // __thiscall

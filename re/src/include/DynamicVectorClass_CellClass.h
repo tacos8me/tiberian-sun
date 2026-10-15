@@ -18,6 +18,7 @@ class DynamicVectorClass_CellClass : public VectorClass_CellClass
 {
 public:
     // ---- vtable 0x006a2d14 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00576950  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00521870  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00576870  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x005767d0  // __thiscall

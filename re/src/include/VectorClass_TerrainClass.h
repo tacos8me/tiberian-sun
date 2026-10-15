@@ -17,6 +17,7 @@ class VectorClass_TerrainClass
 {
 public:
     // ---- vtable 0x0069f190 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1020  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004ac490  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004ac4d0  // __thiscall
     virtual void vfunc_3();  // [3] 0x004ac580  // __thiscall

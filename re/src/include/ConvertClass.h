@@ -17,6 +17,7 @@ class ConvertClass
 {
 public:
     // ---- vtable 0x0069b208 (1 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00463210  // __thiscall
 
     ConvertClass();  // 0x0046093d
     virtual ~ConvertClass();

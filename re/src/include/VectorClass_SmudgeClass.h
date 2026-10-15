@@ -17,6 +17,7 @@ class VectorClass_SmudgeClass
 {
 public:
     // ---- vtable 0x0069f158 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b0f80  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004ac230  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004ac270  // __thiscall
     virtual void vfunc_3();  // [3] 0x004ac320  // __thiscall

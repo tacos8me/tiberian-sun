@@ -17,6 +17,7 @@ class VectorClass_CrossDissolveEffect
 {
 public:
     // ---- vtable 0x0069dd0c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00483fa0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00483c50  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00483c90  // __thiscall
     virtual void vfunc_3();  // [3] 0x00483d40  // __thiscall

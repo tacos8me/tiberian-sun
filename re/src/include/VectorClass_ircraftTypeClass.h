@@ -17,6 +17,7 @@ class VectorClass_ircraftTypeClass
 {
 public:
     // ---- vtable 0x006a3cf0 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005bb610  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005badc0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005bae00  // __thiscall
     virtual void vfunc_3();  // [3] 0x005baeb0  // __thiscall

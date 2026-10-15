@@ -17,6 +17,7 @@ class VectorClass_struct_DrawRecord_FoggedObjectClass
 {
 public:
     // ---- vtable 0x0069e29c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0049bbe0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0049b880  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0049b8e0  // __thiscall
     virtual void vfunc_3();  // [3] 0x0049b9f0  // __thiscall

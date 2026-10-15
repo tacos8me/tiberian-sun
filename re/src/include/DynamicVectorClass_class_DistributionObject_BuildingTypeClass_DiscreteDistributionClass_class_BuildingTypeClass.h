@@ -18,6 +18,7 @@ class DynamicVectorClass_class_DistributionObject_BuildingTypeClass_DiscreteDist
 {
 public:
     // ---- vtable 0x0069fb80 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004c69f0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004c6290  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004c64b0  // __thiscall
     virtual void vfunc_3();  // [3] 0x004c5380  // __thiscall

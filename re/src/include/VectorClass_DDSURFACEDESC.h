@@ -17,6 +17,7 @@ class VectorClass_DDSURFACEDESC
 {
 public:
     // ---- vtable 0x0069b95c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00470100  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0046fea0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0046fee0  // __thiscall
     virtual void vfunc_3();  // [3] 0x0046ff90  // __thiscall

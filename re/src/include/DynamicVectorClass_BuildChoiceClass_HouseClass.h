@@ -18,6 +18,7 @@ class DynamicVectorClass_BuildChoiceClass_HouseClass : public VectorClass_BuildC
 {
 public:
     // ---- vtable 0x0069f944 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004c68b0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004c5dd0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004c5f50  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004c52e0  // __thiscall

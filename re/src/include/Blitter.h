@@ -17,6 +17,7 @@ class Blitter
 {
 public:
     // ---- vtable 0x0069b7c4 (3 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00469890  // __thiscall
     virtual void vfunc_1();  // [1] 0x006829a5  // __cdecl
     virtual void vfunc_2();  // [2] 0x006829a5  // __cdecl
 

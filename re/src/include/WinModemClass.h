@@ -17,6 +17,7 @@ class WinModemClass
 {
 public:
     // ---- vtable 0x006a7620 (10 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00658db0  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4);  // [1] 0x00657c00  // __thiscall
     virtual void vfunc_2(int a0);  // [2] 0x00658050  // __stdcall
     virtual void vfunc_3(int a0);  // [3] 0x00658060  // __cdecl

@@ -18,6 +18,7 @@ class CCFileClass : public CDFileClass
 {
 public:
     // ---- vtable 0x00699bc8 (17 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004190f0  // __thiscall
     virtual void vfunc_1();  // [1] 0x00419090  // __cdecl
     virtual void vfunc_2(int a0);  // [2] 0x0044e320  // __thiscall
     virtual void vfunc_3();  // [3] 0x005a6850  // __thiscall, returns int

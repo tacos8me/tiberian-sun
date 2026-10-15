@@ -18,6 +18,7 @@ class LZOStraw : public Straw
 {
 public:
     // ---- vtable 0x006a189c (3 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004fbba0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005f1020  // __thiscall
     virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x004fb9f0  // __thiscall
 

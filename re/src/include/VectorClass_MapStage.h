@@ -17,6 +17,7 @@ class VectorClass_MapStage
 {
 public:
     // ---- vtable 0x006a2570 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0055bf30  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055b630  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055b670  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055b720  // __thiscall

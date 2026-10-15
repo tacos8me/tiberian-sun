@@ -17,6 +17,7 @@ class VectorClass_G
 {
 public:
     // ---- vtable 0x00699d70 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0041dd60  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0041da60  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0041daa0  // __thiscall
     virtual void vfunc_3();  // [3] 0x0041db50  // __thiscall

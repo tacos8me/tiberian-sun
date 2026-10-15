@@ -18,6 +18,7 @@ class RLEBlitTransZRemapXlatAlphaZReadWrite_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b234 (2 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0046a950  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10);  // [1] 0x00469100  // __thiscall
 
     RLEBlitTransZRemapXlatAlphaZReadWrite_G();  // 0x004622ee

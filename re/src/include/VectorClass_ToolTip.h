@@ -17,6 +17,7 @@ class VectorClass_ToolTip
 {
 public:
     // ---- vtable 0x006a62fc (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0062b7f0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0062b590  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0062b5d0  // __thiscall
     virtual void vfunc_3();  // [3] 0x0062b680  // __thiscall

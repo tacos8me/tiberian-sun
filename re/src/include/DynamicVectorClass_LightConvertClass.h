@@ -18,6 +18,7 @@ class DynamicVectorClass_LightConvertClass : public VectorClass_LightConvertClas
 {
 public:
     // ---- vtable 0x00698688 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00401d90  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00401ae0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00401c60  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x00401a90  // __thiscall

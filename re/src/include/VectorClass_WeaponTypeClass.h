@@ -17,6 +17,7 @@ class VectorClass_WeaponTypeClass
 {
 public:
     // ---- vtable 0x00698a20 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004053b0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00405150  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00405190  // __thiscall
     virtual void vfunc_3();  // [3] 0x00405240  // __thiscall

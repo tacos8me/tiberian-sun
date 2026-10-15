@@ -17,6 +17,7 @@ class VectorClass_MSTextEntry
 {
 public:
     // ---- vtable 0x006a2634 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0055bdf0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055b170  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055b1b0  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055b260  // __thiscall

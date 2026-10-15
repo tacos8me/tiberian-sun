@@ -17,6 +17,7 @@ class VectorClass_BuildingTypeClass
 {
 public:
     // ---- vtable 0x0069f548 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1a20  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004aea90  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004aead0  // __thiscall
     virtual void vfunc_3();  // [3] 0x004aeb80  // __thiscall

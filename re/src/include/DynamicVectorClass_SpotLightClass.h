@@ -18,6 +18,7 @@ class DynamicVectorClass_SpotLightClass : public VectorClass_SpotLightClass
 {
 public:
     // ---- vtable 0x006a2e0c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00578940  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00578690  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00578810  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x00578640  // __thiscall

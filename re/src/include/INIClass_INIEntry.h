@@ -12,12 +12,13 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "GenericNode.h"
+#include "INIClass.h"
 
 class INIClass_INIEntry : public GenericNode
 {
 public:
     // ---- vtable 0x006a0408 (1 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004d7ed0  // __thiscall
 
     INIClass_INIEntry();  // 0x004d4d82
     virtual ~INIClass_INIEntry();

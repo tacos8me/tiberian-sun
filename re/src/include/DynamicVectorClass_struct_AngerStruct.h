@@ -18,6 +18,7 @@ class DynamicVectorClass_struct_AngerStruct : public VectorClass_struct_AngerStr
 {
 public:
     // ---- vtable 0x0069fa98 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004c6770  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004c5770  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004c5960  // __thiscall
     virtual void vfunc_3();  // [3] 0x004c5240  // __thiscall

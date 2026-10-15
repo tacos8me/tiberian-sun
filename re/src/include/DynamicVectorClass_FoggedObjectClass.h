@@ -18,6 +18,7 @@ class DynamicVectorClass_FoggedObjectClass : public VectorClass_FoggedObjectClas
 {
 public:
     // ---- vtable 0x0069a6fc (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0043aae0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0043a880  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0043a8c0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x0043a2f0  // __thiscall

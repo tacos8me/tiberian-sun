@@ -18,6 +18,7 @@ class DynamicVectorClass_uildingTypeClass : public VectorClass_uildingTypeClass
 {
 public:
     // ---- vtable 0x0069fb40 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004c66d0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004c5510  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004c5690  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004c51f0  // __thiscall

@@ -17,6 +17,7 @@ class VectorClass_TagTypeClass
 {
 public:
     // ---- vtable 0x006a547c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00604a40  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x006047e0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00604820  // __thiscall
     virtual void vfunc_3();  // [3] 0x006048d0  // __thiscall

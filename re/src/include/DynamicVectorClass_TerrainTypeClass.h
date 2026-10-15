@@ -18,6 +18,7 @@ class DynamicVectorClass_TerrainTypeClass : public VectorClass_TerrainTypeClass
 {
 public:
     // ---- vtable 0x0069f4f4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b19d0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004ae830  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004ae9b0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a9dc0  // __thiscall

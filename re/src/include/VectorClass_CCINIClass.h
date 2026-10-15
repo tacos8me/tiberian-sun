@@ -17,6 +17,7 @@ class VectorClass_CCINIClass
 {
 public:
     // ---- vtable 0x006a0468 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004e3740  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004e3240  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004e3280  // __thiscall
     virtual void vfunc_3();  // [3] 0x004e3330  // __thiscall

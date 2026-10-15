@@ -17,6 +17,7 @@ class VectorClass_CommandClass
 {
 public:
     // ---- vtable 0x0069866c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00401970  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00401710  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00401750  // __thiscall
     virtual void vfunc_3();  // [3] 0x00401800  // __thiscall

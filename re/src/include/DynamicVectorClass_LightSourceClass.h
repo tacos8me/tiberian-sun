@@ -18,6 +18,7 @@ class DynamicVectorClass_LightSourceClass : public VectorClass_LightSourceClass
 {
 public:
     // ---- vtable 0x006a153c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004f5c30  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004f5720  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004f58a0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004f5680  // __thiscall

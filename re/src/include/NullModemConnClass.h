@@ -18,6 +18,7 @@ class NullModemConnClass : public ConnectionClass
 {
 public:
     // ---- vtable 0x006a27d4 (10 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0056a430  // __thiscall
     virtual void vfunc_1();  // [1] 0x0056a420
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0045eb70  // __thiscall
     virtual void vfunc_3(int a0, int a1);  // [3] 0x0045ec10  // __thiscall, returns int

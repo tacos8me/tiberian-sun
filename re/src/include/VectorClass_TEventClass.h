@@ -17,6 +17,7 @@ class VectorClass_TEventClass
 {
 public:
     // ---- vtable 0x006a6090 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00626c40  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x006269e0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00626a20  // __thiscall
     virtual void vfunc_3();  // [3] 0x00626ad0  // __thiscall

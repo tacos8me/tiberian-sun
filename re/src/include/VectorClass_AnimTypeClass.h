@@ -17,6 +17,7 @@ class VectorClass_AnimTypeClass
 {
 public:
     // ---- vtable 0x0069f5f0 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1c00  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004af1b0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004af1f0  // __thiscall
     virtual void vfunc_3();  // [3] 0x004af2a0  // __thiscall

@@ -17,6 +17,7 @@ class VectorClass_ShadowControlClass
 {
 public:
     // ---- vtable 0x006a5260 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005fda80  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005fd780  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005fd7c0  // __thiscall
     virtual void vfunc_3();  // [3] 0x005fd870  // __thiscall

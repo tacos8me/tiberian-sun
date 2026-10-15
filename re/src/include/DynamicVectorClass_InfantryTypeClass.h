@@ -18,6 +18,7 @@ class DynamicVectorClass_InfantryTypeClass : public VectorClass_InfantryTypeClas
 {
 public:
     // ---- vtable 0x0069f60c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1cf0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004af410  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004af590  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a9f50  // __thiscall

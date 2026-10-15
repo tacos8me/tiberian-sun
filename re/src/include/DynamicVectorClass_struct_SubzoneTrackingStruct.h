@@ -18,8 +18,10 @@ class DynamicVectorClass_struct_SubzoneTrackingStruct : public VectorClass_struc
 {
 public:
     // ---- vtable 0x006a1aa0 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00522140  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00520eb0  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x00521220  // __thiscall
+    virtual void vfunc_3(int a0, int a1);  // [3] 0x00520670  // __thiscall
     virtual void vfunc_4(int a0);  // [4] 0x005213d0  // __stdcall
     virtual void vfunc_5(int a0);  // [5] 0x005206f0  // __stdcall, returns int
 

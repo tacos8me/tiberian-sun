@@ -18,6 +18,7 @@ class DynamicVectorClass_TileInsertType_IsometricTileTypeClass : public VectorCl
 {
 public:
     // ---- vtable 0x006a1284 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004effc0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004efc70  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004efdf0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004ef9c0  // __thiscall

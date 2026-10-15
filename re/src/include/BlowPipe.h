@@ -18,6 +18,7 @@ class BlowPipe : public Pipe
 {
 public:
     // ---- vtable 0x006a3258 (5 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00592ff0  // __thiscall
     virtual void vfunc_1();  // [1] 0x00423470  // __thiscall
     virtual void vfunc_2();  // [2] 0x0044ab70
     virtual void vfunc_3(int a0);  // [3] 0x00591f40  // __thiscall

@@ -17,6 +17,7 @@ class VectorClass_BuildChoiceClass_HouseClass
 {
 public:
     // ---- vtable 0x0069f960 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004c6860  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004c5dd0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004c5e10  // __thiscall
     virtual void vfunc_3();  // [3] 0x004c5ec0  // __thiscall

@@ -18,6 +18,7 @@ class DynamicVectorClass_class_Point2D : public VectorClass_class_Point2D
 {
 public:
     // ---- vtable 0x006a25fc (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0055bda0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055ae80  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x0055b050  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055aca0  // __thiscall

@@ -18,6 +18,7 @@ class DynamicVectorClass_SideClass : public VectorClass_SideClass
 {
 public:
     // ---- vtable 0x0069f36c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1570  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004ad790  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004ad910  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a9b90  // __thiscall

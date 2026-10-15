@@ -17,6 +17,7 @@ class VectorClass_ConvertClass
 {
 public:
     // ---- vtable 0x0069b1ec (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0046acb0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0046aa50  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0046aa90  // __thiscall
     virtual void vfunc_3();  // [3] 0x0046ab40  // __thiscall

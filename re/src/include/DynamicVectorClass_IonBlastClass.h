@@ -18,6 +18,7 @@ class DynamicVectorClass_IonBlastClass : public VectorClass_IonBlastClass
 {
 public:
     // ---- vtable 0x006a0a64 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004e69b0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004e6700  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004e6880  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004e66b0  // __thiscall

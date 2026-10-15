@@ -17,6 +17,7 @@ class VectorClass_struct_HashObject_IUSubzoneConnectionStruct
 {
 public:
     // ---- vtable 0x006a1bd4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005227b0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00521da0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00522520  // __thiscall
     virtual void vfunc_3();  // [3] 0x00522620  // __thiscall

@@ -17,6 +17,7 @@ class Animate
 {
 public:
     // ---- vtable 0x00699a90 (8 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00417570  // __thiscall
     virtual void vfunc_1();  // [1] 0x006829a5  // __cdecl
     virtual void vfunc_2();  // [2] 0x006829a5  // __cdecl
     virtual void vfunc_3();  // [3] 0x006829a5  // __cdecl

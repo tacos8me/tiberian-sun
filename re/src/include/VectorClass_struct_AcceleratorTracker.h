@@ -17,6 +17,7 @@ class VectorClass_struct_AcceleratorTracker
 {
 public:
     // ---- vtable 0x006a2780 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00560170  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055fda0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055fe00  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055fef0  // __thiscall

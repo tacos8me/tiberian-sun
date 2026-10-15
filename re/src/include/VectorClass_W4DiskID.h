@@ -17,6 +17,7 @@ class VectorClass_W4DiskID
 {
 public:
     // ---- vtable 0x006a4298 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005d7190  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005d6500  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005d6540  // __thiscall
     virtual void vfunc_3();  // [3] 0x005d65f0  // __thiscall

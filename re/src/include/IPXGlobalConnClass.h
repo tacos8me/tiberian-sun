@@ -18,6 +18,7 @@ class IPXGlobalConnClass : public IPXConnClass
 {
 public:
     // ---- vtable 0x006a0af4 (13 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004e7a40  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004e6f10
     virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x004e79e0  // __stdcall
     virtual void vfunc_3(int a0, int a1);  // [3] 0x004e7a00  // __stdcall

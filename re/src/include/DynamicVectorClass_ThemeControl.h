@@ -18,6 +18,7 @@ class DynamicVectorClass_ThemeControl : public VectorClass_ThemeControl
 {
 public:
     // ---- vtable 0x006a61cc (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00627ec0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004ab010  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00627de0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x00627d90  // __thiscall

@@ -17,6 +17,7 @@ class VectorClass_AlphaLightingRemapClass
 {
 public:
     // ---- vtable 0x006992e8 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00411680  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00411420  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00411460  // __thiscall
     virtual void vfunc_3();  // [3] 0x00411510  // __thiscall

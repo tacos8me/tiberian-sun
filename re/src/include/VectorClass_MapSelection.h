@@ -17,6 +17,7 @@ class VectorClass_MapSelection
 {
 public:
     // ---- vtable 0x006a2650 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0055be90  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055b3d0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055b410  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055b4c0  // __thiscall

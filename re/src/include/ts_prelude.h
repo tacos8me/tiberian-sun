@@ -35,7 +35,6 @@ struct IUnknown {
     virtual ULONG   __stdcall AddRef() = 0;
     virtual ULONG   __stdcall Release() = 0;
 };
-   // defined by its own reconstructed header
 struct IPersist;   // defined by its own reconstructed header
 struct IPersistStream;   // defined by its own reconstructed header
 struct ISequentialStream {

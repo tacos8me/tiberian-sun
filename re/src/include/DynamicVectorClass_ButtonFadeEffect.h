@@ -18,6 +18,7 @@ class DynamicVectorClass_ButtonFadeEffect : public VectorClass_ButtonFadeEffect
 {
 public:
     // ---- vtable 0x0069dd50 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00483f50  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004839f0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00483b70  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x00483950  // __thiscall

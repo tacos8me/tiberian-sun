@@ -18,6 +18,7 @@ class DynamicVectorClass_PhoneEntryClass : public VectorClass_PhoneEntryClass
 {
 public:
     // ---- vtable 0x006a419c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005d7460  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005d6f30  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005d70b0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x005d6460  // __thiscall

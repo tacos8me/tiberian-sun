@@ -18,6 +18,7 @@ class DynamicVectorClass_ScoreAnimClass : public VectorClass_ScoreAnimClass
 {
 public:
     // ---- vtable 0x006a3e34 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005c8970  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005c83b0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005c8530  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x005c82b0  // __thiscall

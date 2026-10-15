@@ -17,6 +17,7 @@ class VectorClass_HWND
 {
 public:
     // ---- vtable 0x006a2748 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005600d0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055fb40  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055fb80  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055fc30  // __thiscall

@@ -18,6 +18,7 @@ class DynamicVectorClass_OverlayTypeClass : public VectorClass_OverlayTypeClass
 {
 public:
     // ---- vtable 0x0069f484 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1890  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004ae370  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004ae4f0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a9d20  // __thiscall

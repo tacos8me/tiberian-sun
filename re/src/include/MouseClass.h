@@ -22,6 +22,7 @@ public:
     virtual void vfunc_1(int a0);  // [1] 0x00402ad0  // __stdcall, returns int
     virtual void vfunc_2(int a0);  // [2] 0x00402ae0  // __stdcall, returns int
     virtual void vfunc_3(int a0, int a1);  // [3] 0x00502000  // __stdcall
+    virtual void vfunc_4(int a0);  // [4] 0x00402b20  // __thiscall
     virtual void vfunc_5();  // [5] 0x0054f650  // __cdecl
     virtual void vfunc_6(int a0);  // [6] 0x004b2e50  // __thiscall
     virtual void vfunc_7();  // [7] 0x0054f670  // __thiscall
@@ -46,8 +47,9 @@ public:
     virtual void vfunc_26(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [26] 0x00507150  // __thiscall
     virtual void vfunc_27(int a0, int a1, int a2, int a3);  // [27] 0x005a1440  // __stdcall
     virtual void vfunc_28(int a0, int a1, int a2, int a3);  // [28] 0x005a1890  // __thiscall
+    virtual void vfunc_29(int a0, int a1, int a2);  // [29] 0x0054f690  // __thiscall
     virtual void vfunc_30(int a0);  // [30] 0x0054ff20  // __thiscall
-    virtual void Read_INI(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11);  // [31] 0x00476390  // __thiscall  // refs "Size"
+    virtual void vfunc_31(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11);  // [31] 0x00476390  // __thiscall  // refs "Size"
     virtual void vfunc_32(int a0);  // [32] 0x005dca40  // __thiscall
     virtual void vfunc_33(int a0);  // [33] 0x005dc4a0
     virtual void vfunc_34();  // [34] 0x005d04a0  // __thiscall

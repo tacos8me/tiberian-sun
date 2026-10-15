@@ -18,6 +18,7 @@ class RandomStraw : public Straw
 {
 public:
     // ---- vtable 0x006a3b78 (3 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005ab990  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005f1020  // __thiscall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005ab930  // __thiscall
 

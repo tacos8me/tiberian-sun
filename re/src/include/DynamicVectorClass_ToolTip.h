@@ -18,6 +18,7 @@ class DynamicVectorClass_ToolTip : public VectorClass_ToolTip
 {
 public:
     // ---- vtable 0x006a62e0 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0062b840  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0062b590  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0062b710  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x0062b540  // __thiscall

@@ -18,6 +18,7 @@ class DynamicVectorClass_SuperWeaponTypeClass : public VectorClass_SuperWeaponTy
 {
 public:
     // ---- vtable 0x0069f75c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b20b0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004b0250  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004b03d0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004aa130  // __thiscall

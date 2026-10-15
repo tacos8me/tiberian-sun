@@ -18,6 +18,7 @@ class DynamicVectorClass_articleSystemTypeClass : public VectorClass_articleSyst
 {
 public:
     // ---- vtable 0x006a5b58 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0061e560  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0061e2b0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0061e430  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x0061e260  // __thiscall

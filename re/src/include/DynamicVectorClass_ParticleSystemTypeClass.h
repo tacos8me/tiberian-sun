@@ -18,6 +18,7 @@ class DynamicVectorClass_ParticleSystemTypeClass : public VectorClass_ParticleSy
 {
 public:
     // ---- vtable 0x0069f724 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b2010  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004afff0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004b0170  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004aa0e0  // __thiscall

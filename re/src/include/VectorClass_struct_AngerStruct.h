@@ -17,6 +17,7 @@ class VectorClass_struct_AngerStruct
 {
 public:
     // ---- vtable 0x0069fab4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004c6720  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004c5770  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004c57d0  // __thiscall
     virtual void vfunc_3();  // [3] 0x004c58c0  // __thiscall

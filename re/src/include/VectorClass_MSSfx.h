@@ -17,6 +17,7 @@ class VectorClass_MSSfx
 {
 public:
     // ---- vtable 0x006a26ec (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0055d4d0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055d180  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055d1c0  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055d270  // __thiscall

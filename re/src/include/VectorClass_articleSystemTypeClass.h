@@ -17,6 +17,7 @@ class VectorClass_articleSystemTypeClass
 {
 public:
     // ---- vtable 0x006a5b3c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0061e510  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0061e2b0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0061e2f0  // __thiscall
     virtual void vfunc_3();  // [3] 0x0061e3a0  // __thiscall

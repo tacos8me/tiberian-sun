@@ -18,6 +18,7 @@ class UDPInterfaceClass : public WinsockInterfaceClass
 {
 public:
     // ---- vtable 0x006a7a94 (21 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0066ff30  // __thiscall
     virtual void vfunc_1();  // [1] 0x0066eb20  // __thiscall
     virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x0066ed50  // __thiscall, returns int
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x0066ede0  // __thiscall

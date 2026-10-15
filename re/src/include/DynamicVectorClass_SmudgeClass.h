@@ -18,6 +18,7 @@ class DynamicVectorClass_SmudgeClass : public VectorClass_SmudgeClass
 {
 public:
     // ---- vtable 0x0069f13c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b0fd0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004ac230  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004ac3b0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a98c0  // __thiscall

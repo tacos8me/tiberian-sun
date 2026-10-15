@@ -18,6 +18,7 @@ class DynamicVectorClass_struct_HashObject_II : public VectorClass_struct_HashOb
 {
 public:
     // ---- vtable 0x006a1b48 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00522260  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00521c50  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x00521c90  // __thiscall
     virtual void vfunc_3();  // [3] 0x005207c0  // __thiscall

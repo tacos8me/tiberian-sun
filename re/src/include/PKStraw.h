@@ -18,6 +18,7 @@ class PKStraw : public Straw
 {
 public:
     // ---- vtable 0x006a3270 (4 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005933d0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00593120  // __thiscall
     virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x00593190  // __thiscall
     virtual void vfunc_3(int a0);  // [3] 0x005933c0  // __stdcall

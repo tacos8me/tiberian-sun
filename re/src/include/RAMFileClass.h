@@ -18,6 +18,7 @@ class RAMFileClass : public FileClass
 {
 public:
     // ---- vtable 0x006a3958 (17 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005a5ce0  // __thiscall
     virtual void vfunc_1();  // [1] 0x005a5c90  // __cdecl, returns int
     virtual void vfunc_2(int a0);  // [2] 0x005a5ca0  // __stdcall
     virtual void vfunc_3();  // [3] 0x005a5a20  // __thiscall, returns int

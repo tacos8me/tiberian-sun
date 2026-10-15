@@ -18,6 +18,7 @@ class DynamicVectorClass_struct_AcceleratorTracker : public VectorClass_struct_A
 {
 public:
     // ---- vtable 0x006a2764 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005601c0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055fda0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055ff90  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055faf0  // __thiscall

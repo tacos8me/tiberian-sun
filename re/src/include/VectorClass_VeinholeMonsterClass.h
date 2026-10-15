@@ -17,6 +17,7 @@ class VectorClass_VeinholeMonsterClass
 {
 public:
     // ---- vtable 0x006a6e50 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00645f60  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00645cd0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00645d10  // __thiscall
     virtual void vfunc_3();  // [3] 0x00645dc0  // __thiscall

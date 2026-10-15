@@ -17,6 +17,7 @@ class VectorClass_W4PassabilityType
 {
 public:
     // ---- vtable 0x006a1b64 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005226c0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005219f0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00521a30  // __thiscall
     virtual void vfunc_3();  // [3] 0x00521ae0  // __thiscall

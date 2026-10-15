@@ -18,6 +18,7 @@ class DynamicVectorClass_struct_ZoneConnectionClass : public VectorClass_struct_
 {
 public:
     // ---- vtable 0x006a1abc (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00521fb0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00520ac0  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x00520d10  // __thiscall
     virtual void vfunc_3();  // [3] 0x00520620  // __thiscall

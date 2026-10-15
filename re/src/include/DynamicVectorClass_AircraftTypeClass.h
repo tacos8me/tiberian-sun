@@ -18,6 +18,7 @@ class DynamicVectorClass_AircraftTypeClass : public VectorClass_AircraftTypeClas
 {
 public:
     // ---- vtable 0x0069f564 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b1b10  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004aecf0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004aee70  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a9e60  // __thiscall

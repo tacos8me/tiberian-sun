@@ -18,6 +18,7 @@ class RawFileClass : public FileClass
 {
 public:
     // ---- vtable 0x006a39e8 (17 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005a6aa0  // __thiscall
     virtual void vfunc_1();  // [1] 0x00419090  // __cdecl
     virtual void vfunc_2(int a0);  // [2] 0x005a61d0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x005a6850  // __thiscall, returns int

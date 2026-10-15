@@ -12,9 +12,9 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "Node_INISection_INIClass.h"
+#include "INIClass.h"
 
-class INIClass_INISection : public Node_INISection_INIClass
+class INIClass_INISection : public Node<INIClass::INISection, INIClass>
 {
 public:
     // ---- vtable 0x006a0410 (1 slots) ----

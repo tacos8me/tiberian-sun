@@ -18,6 +18,7 @@ class LZOPipe : public Pipe
 {
 public:
     // ---- vtable 0x006a1884 (5 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004fb900  // __thiscall
     virtual void vfunc_1();  // [1] 0x004fb810  // __thiscall
     virtual void vfunc_2();  // [2] 0x0044ab70
     virtual void vfunc_3(int a0);  // [3] 0x00591f40  // __thiscall

@@ -18,6 +18,7 @@ class RLEBlitTransDarken_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b3c0 (2 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0046a370  // __thiscall
     virtual void vfunc_1(int a0, int a1);  // [1] 0x00466a20  // __thiscall
 
     RLEBlitTransDarken_G();  // 0x00461b60

@@ -17,6 +17,7 @@ class VectorClass_struct_CrackedIceStruct_MapClass
 {
 public:
     // ---- vtable 0x006a1b10 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005221c0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005214f0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00521550  // __thiscall
     virtual void vfunc_3();  // [3] 0x00521650  // __thiscall

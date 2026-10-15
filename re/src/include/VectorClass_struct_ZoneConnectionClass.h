@@ -17,6 +17,7 @@ class VectorClass_struct_ZoneConnectionClass
 {
 public:
     // ---- vtable 0x006a1ad8 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00521f60  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00520ac0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00520b30  // __thiscall
     virtual void vfunc_3();  // [3] 0x00520c60  // __thiscall

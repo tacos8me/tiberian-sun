@@ -17,6 +17,7 @@ class VectorClass_VoxelAnimClass
 {
 public:
     // ---- vtable 0x00698998 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00404660  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00404400  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00404440  // __thiscall
     virtual void vfunc_3();  // [3] 0x004044f0  // __thiscall

@@ -17,6 +17,7 @@ class VectorClass_ColorScheme
 {
 public:
     // ---- vtable 0x006a3e88 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005c9630  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005c93d0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005c9410  // __thiscall
     virtual void vfunc_3();  // [3] 0x005c94c0  // __thiscall

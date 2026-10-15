@@ -18,6 +18,7 @@ class DynamicVectorClass_TriggerClass : public VectorClass_TriggerClass
 {
 public:
     // ---- vtable 0x0069ef7c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b0b70  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004ab190  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004ab310  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a9690  // __thiscall

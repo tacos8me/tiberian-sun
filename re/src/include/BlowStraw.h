@@ -18,6 +18,7 @@ class BlowStraw : public Straw
 {
 public:
     // ---- vtable 0x006a2308 (3 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00547b90  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005f1020  // __thiscall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00423620  // __thiscall
 

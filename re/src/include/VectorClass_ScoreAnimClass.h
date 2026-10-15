@@ -17,6 +17,7 @@ class VectorClass_ScoreAnimClass
 {
 public:
     // ---- vtable 0x006a3dfc (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005c8920  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005c83b0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005c83f0  // __thiscall
     virtual void vfunc_3();  // [3] 0x005c84a0  // __thiscall

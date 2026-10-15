@@ -13,6 +13,7 @@ Design:
 
 Output is deterministic and regenerable.
 """
+import glob
 import json
 import os
 import re
@@ -125,10 +126,24 @@ def main():
     # Classes already defined by hand-written headers must not be regenerated,
     # or the two definitions collide. Hand-written headers are richer (named
     # virtuals, member offsets), so they win.
+    # Derive ownership from src/handwritten/ directly, so the pipeline works
+    # from a clean checkout without depending on a stale out/ artifact.
     owned = set()
-    owned_path = os.path.join(outdir, "handwritten_types.json")
-    if os.path.exists(owned_path):
-        owned = set(json.load(open(owned_path)))
+    hw_dir = os.path.join(os.path.dirname(srcdir.rstrip("/")), "handwritten")
+    if not os.path.isdir(hw_dir):
+        hw_dir = "src/handwritten"
+    if os.path.isdir(hw_dir):
+        for hp in glob.glob(os.path.join(hw_dir, "*.h")):
+            hs = open(hp).read()
+            for hm in re.finditer(
+                    r"^(?:template\s*<[^>]*>\s*)?(?:class|struct)\s+(\w+)",
+                    hs, re.M):
+                owned.add(hm.group(1))
+    # Fall back to the recorded artifact if the directory is absent.
+    if not owned:
+        owned_path = os.path.join(outdir, "handwritten_types.json")
+        if os.path.exists(owned_path):
+            owned = set(json.load(open(owned_path)))
 
     os.makedirs(srcdir, exist_ok=True)
     written = 0
@@ -140,6 +155,15 @@ def main():
         if not ident:
             continue
         if ident in owned:
+            skipped += 1
+            continue
+        # Template instantiations of a hand-written type (e.g. Node<...>) are
+        # already defined by that header; skip the generated duplicate. Only
+        # skip when the hand-written set actually defines the base template.
+        if ident.startswith("Node_") and "Node" in owned:
+            skipped += 1
+            continue
+        if ident.startswith("GenericNode") and "GenericNode" in owned:
             skipped += 1
             continue
 
@@ -171,12 +195,34 @@ def main():
         L.append("")
         L.append('#include "ts_prelude.h"')
         for b in bases:
-            if b not in prelude_types:
+            if b in prelude_types:
+                continue
+            if os.path.exists(os.path.join(srcdir, b + ".h")):
                 L.append(f'#include "{b}.h"')
+            elif b.startswith("Node_") and "Node" in owned:
+                # Node<...> is defined by INIClass.h
+                L.append('#include "INIClass.h"')
+            elif b.startswith("GenericNode") and "GenericNode" in owned:
+                L.append('#include "INIClass.h"')
         L.append("")
 
         if bases:
-            spelled = [cpp_name.get(b, b) for b in bases]
+            spelled = []
+            for b in bases:
+                if b in cpp_name:
+                    spelled.append(cpp_name[b])
+                elif b.startswith("Node_") and "Node" in owned:
+                    # Node<INISection*, INIClass> -> Node<INISection*, INIClass>
+                    inner = b[len("Node_"):]
+                    parts = inner.split("_")
+                    if len(parts) == 2:
+                        spelled.append(f"Node<{parts[1]}::{parts[0]}, {parts[1]}>")
+                    else:
+                        spelled.append("Node<" + ", ".join(parts) + ">")
+                elif b.startswith("GenericNode") and "GenericNode" in owned:
+                    spelled.append("GenericNode")
+                else:
+                    spelled.append(b)
             L.append(f"class {ident} : public " + ", public ".join(spelled))
         else:
             L.append(f"class {ident}")

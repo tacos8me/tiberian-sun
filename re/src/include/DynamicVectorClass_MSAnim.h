@@ -18,6 +18,7 @@ class DynamicVectorClass_MSAnim : public VectorClass_MSAnim
 {
 public:
     // ---- vtable 0x006a2698 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0055d480  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055cf20  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055d0a0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x0055cc70  // __thiscall

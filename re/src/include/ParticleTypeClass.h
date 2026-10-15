@@ -18,22 +18,23 @@ class ParticleTypeClass : public ObjectTypeClass
 {
 public:
     // ---- vtable 0x006a3470 (40 slots) ----
-    virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x00405790  // __stdcall, returns int
-    virtual void Init(int a0);  // [1] 0x00405830  // __stdcall, returns int
-    virtual void Shutdown(int a0);  // [2] 0x00405840  // __stdcall, returns int
+    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x00405790  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x00405830  // __stdcall, returns int
+    virtual void vfunc_2(int a0);  // [2] 0x00405840  // __stdcall, returns int
     virtual void vfunc_3(int a0, int a1);  // [3] 0x005983c0  // __stdcall, returns int
-    virtual void Release(int a0);  // [4] 0x00405990  // __stdcall
+    virtual void vfunc_4(int a0);  // [4] 0x00405990  // __stdcall
     virtual void vfunc_5(int a0, int a1);  // [5] 0x00598400  // __stdcall
     virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x00598530  // __stdcall
     virtual void vfunc_7(int a0, int a1);  // [7] 0x00572ba0  // __stdcall, returns int
-    virtual void Set_ID();  // [9] 0x004059b0  // __cdecl
+    virtual void vfunc_8(int a0);  // [8] 0x005986e0  // __thiscall
+    virtual void vfunc_9();  // [9] 0x004059b0  // __cdecl
     virtual void vfunc_10(int a0, int a1);  // [10] 0x00598640  // __stdcall
     virtual void vfunc_11();  // [11] 0x005986b0  // __cdecl, returns int
     virtual void vfunc_12();  // [12] 0x005986a0  // __cdecl, returns int
     virtual void vfunc_13(int a0);  // [13] 0x00598280  // __thiscall
-    virtual void Save();  // [14] 0x004059d0  // __cdecl
-    virtual void GetSizeMax();  // [15] 0x004059e0  // __cdecl, returns int
-    virtual void Compute_CRC();  // [16] 0x004059f0  // __cdecl, returns int
+    virtual void vfunc_14();  // [14] 0x004059d0  // __cdecl
+    virtual void vfunc_15();  // [15] 0x004059e0  // __cdecl, returns int
+    virtual void vfunc_16();  // [16] 0x004059f0  // __cdecl, returns int
     virtual void vfunc_17();  // [17] 0x00405970  // __cdecl
     virtual void vfunc_18(int a0);  // [18] 0x00405a00  // __stdcall
     virtual void vfunc_19(int a0);  // [19] 0x00405a30  // __stdcall
@@ -42,8 +43,8 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
     virtual void vfunc_24(int a0);  // [24] 0x00406010  // __stdcall
-    virtual void Read_INI(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [25] 0x00597d00  // __thiscall  // refs "ColorList"
-    virtual void Set_ID(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
+    virtual void vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [25] 0x00597d00  // __thiscall  // refs "ColorList"
+    virtual void vfunc_26(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
     virtual void vfunc_27(int a0, int a1);  // [27] 0x0040f600  // __stdcall
     virtual void vfunc_28();  // [28] 0x00418f40  // __cdecl
     virtual void vfunc_29();  // [29] 0x005715e0  // __cdecl, returns int

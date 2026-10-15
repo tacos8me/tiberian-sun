@@ -18,6 +18,7 @@ class DynamicVectorClass_class_WaypointClass : public VectorClass_class_Waypoint
 {
 public:
     // ---- vtable 0x006a7554 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00656020  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x006560e0  // __stdcall
     virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x00656310  // __thiscall
     virtual void vfunc_3();  // [3] 0x00655f60  // __thiscall

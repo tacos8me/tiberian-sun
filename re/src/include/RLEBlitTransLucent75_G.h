@@ -18,6 +18,7 @@ class RLEBlitTransLucent75_G : public RLEBlitter
 {
 public:
     // ---- vtable 0x0069b3b4 (2 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0046a390  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2);  // [1] 0x00466aa0  // __thiscall
 
     RLEBlitTransLucent75_G();  // 0x00461b92

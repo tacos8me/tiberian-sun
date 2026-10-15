@@ -18,6 +18,7 @@ class DynamicVectorClass_AlphaLightingRemapClass : public VectorClass_AlphaLight
 {
 public:
     // ---- vtable 0x006992cc (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004116d0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00411420  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004115a0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004113d0  // __thiscall

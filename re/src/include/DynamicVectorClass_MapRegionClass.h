@@ -18,6 +18,7 @@ class DynamicVectorClass_MapRegionClass : public VectorClass_MapRegionClass
 {
 public:
     // ---- vtable 0x006a1da8 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00540a50  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005403f0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00540570  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x00540350  // __thiscall

@@ -18,6 +18,7 @@ class DynamicVectorClass_MSSfxEntry : public VectorClass_MSSfxEntry
 {
 public:
     // ---- vtable 0x006a251c (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0055c0c0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055baf0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055bc70  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x0055ae30  // __thiscall

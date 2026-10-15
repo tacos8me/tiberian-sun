@@ -18,6 +18,7 @@ class DynamicVectorClass_TeamClass : public VectorClass_TeamClass
 {
 public:
     // ---- vtable 0x0069f2c4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b0a80  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004aadb0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004aaf30  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a9640  // __thiscall

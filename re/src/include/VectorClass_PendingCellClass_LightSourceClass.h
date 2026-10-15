@@ -17,6 +17,7 @@ class VectorClass_PendingCellClass_LightSourceClass
 {
 public:
     // ---- vtable 0x006a1590 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004f5c80  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004f5980  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004f59c0  // __thiscall
     virtual void vfunc_3();  // [3] 0x004f5a70  // __thiscall

@@ -18,6 +18,7 @@ class DynamicVectorClass_EgoClass : public VectorClass_EgoClass
 {
 public:
     // ---- vtable 0x0069de64 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0048e780  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0048e4d0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0048e650  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x0048e480  // __thiscall

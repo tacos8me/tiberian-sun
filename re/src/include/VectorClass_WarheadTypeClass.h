@@ -17,6 +17,7 @@ class VectorClass_WarheadTypeClass
 {
 public:
     // ---- vtable 0x006989e0 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00404db0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00404b50  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x00404b90  // __thiscall
     virtual void vfunc_3();  // [3] 0x00404c40  // __thiscall

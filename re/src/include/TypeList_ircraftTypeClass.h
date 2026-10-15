@@ -18,6 +18,7 @@ class TypeList_ircraftTypeClass : public DynamicVectorClass_ircraftTypeClass
 {
 public:
     // ---- vtable 0x006a3bf4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x005b9d30  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005badc0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x005bafa0  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x005b9b50  // __thiscall

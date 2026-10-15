@@ -17,6 +17,7 @@ class VectorClass_AlphaShapeClass
 {
 public:
     // ---- vtable 0x006997b4 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x00412b10  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004128b0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004128f0  // __thiscall
     virtual void vfunc_3();  // [3] 0x004129a0  // __thiscall

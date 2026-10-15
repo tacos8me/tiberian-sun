@@ -17,6 +17,7 @@ class VectorClass_MSAnim
 {
 public:
     // ---- vtable 0x006a26d0 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x0055d430  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0055cf20  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0055cf60  // __thiscall
     virtual void vfunc_3();  // [3] 0x0055d010  // __thiscall

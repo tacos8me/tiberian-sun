@@ -17,6 +17,7 @@ class VectorClass_class_DistributionObject_BuildingTypeClass_DiscreteDistributio
 {
 public:
     // ---- vtable 0x0069fb64 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004c6950  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004c6290  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004c62f0  // __thiscall
     virtual void vfunc_3();  // [3] 0x004c6400  // __thiscall

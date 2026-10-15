@@ -18,6 +18,7 @@ class DynamicVectorClass_TagClass : public VectorClass_TagClass
 {
 public:
     // ---- vtable 0x0069f840 (6 slots) ----
+    virtual void vfunc_0(int a0);  // [0] 0x004b0760  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004aa1d0  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x004aa350  // __thiscall, returns int
     virtual void vfunc_3();  // [3] 0x004a94b0  // __thiscall
