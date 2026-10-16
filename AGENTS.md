@@ -33,6 +33,10 @@ re/
   build/ts_link_test.cpp          links the whole tree and runs the entry point
   REPORT.md                       results and verification status
   PROGRESS.md                     current state and remaining work
+  ROADMAP.md                      the remaining trajectory: what "done" means,
+                                  how big each remaining problem really is, and
+                                  the order the phases go in. READ THIS FIRST
+                                  when deciding what to work on.
   CONTEXT.md                      briefing for reconstruction agents
 ```
 
@@ -247,23 +251,36 @@ Last updated after the transcription, whole-tree-link and gap-closing work.
 Every figure here is from `python3 tools/harness.py metrics`; re-run it rather
 than trusting this list.
 
-**How far off "complete" is this project.** Three layers, and they are far
-apart. Read this before quoting any single number.
+**How far off "complete" is this project.** The layers are far apart. Read this
+before quoting any single number. `ROADMAP.md` states each of these as a
+measurable exit criterion rather than a percentage.
 
 | Layer | State | Note |
 |---|---|---|
-| Binary recovery | **~96%** | 41,822 functions, 96.06% of `.text` attributed; 104 KB left |
-| Structural reconstruction | **~95%** | 749/749 classes, 9,810 vtable slots, 0 unseeded, every constructor a real entry point |
-| **Code transcription** | **~100%** | 43,668 functions, 897,027 of 897,193 instructions (99.98%) |
+| **ABI / layout** | **not reproduced** | host build is LP64 and the reconstructed classes model the vptr as a data member, so the compiled structs do not have the game's offsets. `-m32` fixes the width problem and is already proven to compile, link and run; the vptr problem is the real one |
+| Binary recovery | **effectively closed** | 41,822 functions, 96.06% of `.text`; the remaining 104 KB is verified jump tables and padding, not unknown code |
+| Structural reconstruction | **strong** | 749/749 classes, 9,780 vtable slots, 0 unseeded, every constructor a real entry point |
+| Code transcription | **complete** | 43,668 functions, 897,027 of 897,193 instructions (99.98%) |
 | Verification | **strong but bounded** | 8 checks, fail-closed, 2 anchored to the binary, whole-tree link, determinism over 497 artifacts |
-| **Semantics** | **~20%** | 22.4% of virtuals named, ~3% of members named |
-| **Behaviour** | **partial** | the tree links and the original entry point runs against the model; it stops at import thunks |
+| **Semantics** | **~5%** | 497 of 9,780 slots have a genuinely semantic virtual name (1,500 total minus 600 destructors and 403 COM boilerplate); 135 of 3,273 real members named |
+| **Modifiability** | **minimal** | there is no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is 47 headers |
+| Behaviour | **partial** | the tree links and the original entry point runs against the model; it stops at import thunks |
 
-So: *the binary is nearly explained, its instructions are transcribed, and the
-tree links and runs — but the source is still only a fifth named.* If "complete
-decompilation" means compilable, documented, change-ready source that reproduces
-the game, the honest figure is **~55%**. The binding constraint has moved from
-"is the code there" to "is it named and is it source-shaped".
+So: *the binary is explained, its instructions are transcribed, and the tree
+links and runs — but the source is barely named and not editable as source.* The
+binding constraint is no longer recovery (finished) or transcription (finished).
+It is **semantics and source-shaping**, and the honest headline is that the
+largest single piece of remaining work has not been started.
+
+Two corrections that matter when sizing the rest:
+
+- **The virtual-naming problem is 3,409 distinct slots, not 9,780.** 65.1% of
+  (class, slot) pairs are inherited from a base. The top 18 bases cover 13,011
+  slot-instances, so naming effort on `ObjectClass`/`AbstractClass`/`TechnoClass`
+  and their peers is worth roughly 20 slots per name.
+- **`-m32` works here today** (`g++-multilib` installed): 262/262 headers
+  compile, the tree links in 1m37s and the entry point runs. The gate just never
+  asked. Putting it in the gate is the highest-value small change available.
 
 **The whole recovered instruction stream is transcribed.** `tools/gen_code.py`
 renders each recovered function into C++ against the `ts::` machine model in
@@ -340,9 +357,13 @@ prints the real state and appends to `out/metrics.jsonl`;
 `python3 tools/harness.py determinism --run` proves two clean runs are
 byte-identical. Use these before and after any change.
 
-**Read `todo.md` before starting work.** It is the prioritized, evidence-backed
-work list, and it records defects found by the last review that are *not* yet
-fixed. Do not read the status above as "everything is fine".
+**Read `ROADMAP.md` to decide what to work on, and `todo.md` before touching
+anything.** The roadmap states what "done" means for *documented*, *modifiable*
+and *compilable* as measurable exit criteria, corrects the raw counts for what
+they actually mean (the virtual-naming problem is 3,409 distinct slots, not
+9,810, because 65% are inherited), and gives the phase order. todo.md is the
+defect ledger and records what is broken and how it was verified. Do not read the
+status above as "everything is fine".
 
 **What `VERIFICATION PASSED` does and does not mean.** The gate is now
 fail-closed: a missing artifact makes it exit non-zero naming what is missing,

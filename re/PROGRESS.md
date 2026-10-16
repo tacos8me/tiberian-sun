@@ -3,6 +3,13 @@
 All figures below are measured; re-run `python3 tools/harness.py metrics
 --no-append` rather than trusting this file.
 
+**This file records state. `ROADMAP.md` records the plan** — what "done" means
+for documented/modifiable/compilable as measurable exit criteria, the corrected
+size of each remaining problem, and the phase order. Read the roadmap to decide
+what to work on. The one thing this file does not say clearly enough is that
+"VERIFICATION PASSED" is not a statement about layout: see the ABI row in
+`AGENTS.md`, and the `-m32` item in `todo.md`.
+
 ## Status summary
 
 **`tools/verify.py` prints VERIFICATION PASSED across eight checks**, the whole

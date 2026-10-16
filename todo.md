@@ -5,6 +5,13 @@ verified, and what "done" means. Ordered by (value × certainty) ÷ risk.
 
 Status legend: `[ ]` open · `[~]` in progress · `[x]` done.
 
+**This file is the defect ledger. `re/ROADMAP.md` is the plan.** todo.md records
+what is broken and how it was verified; ROADMAP.md states what "done" means, how
+big each remaining problem actually is once the raw counts are corrected for
+inheritance and for what is not code, and in what order the phases go. Read the
+roadmap first if you are deciding what to work on; read this file before
+touching anything.
+
 **Measure before you trust any number here.** Run
 `python3 tools/harness.py metrics --no-append`. The figures below were measured
 at the commit that last touched this file; prose goes stale, measurements do
@@ -173,11 +180,21 @@ rather than reporting garbage. The published Westwood RSA/Blowfish scheme was
 implemented and the search space explored without a self-consistent table.
 Deferred: every INI-based verification works without it.
 
-### [ ] Recover the remaining 104 KB of `.text`
-Roughly 95% of it is real code, not padding. Jump tables, SEH handlers and
-`.data`-resident code are the identified untouched sources.
-*Done when:* unattributed bytes approach padding-only and the residual is
-reported with its padding fraction.
+### [~] Recover the remaining 104 KB of `.text`
+**Measured, and the earlier guess was wrong.** This item said "roughly 95% of it
+is real code". I read the bytes in the largest gaps instead of assuming:
+
+```
+gap 0x663820 224B: c62a6600 4c376600 db2c6600 8e2a6600 ...   <- jump table
+gap 0x45fef0  64B: c7fe4500 e3fe4500 d0fe4500 dafe4500 ...   <- jump table
+```
+
+They are **switch tables and alignment padding**. The largest gap anywhere in the
+binary is 224 bytes and there are **zero gaps over 512 bytes**. So the residual is
+not unknown code. What is left is to *emit* those tables as data and classify the
+padding, which is mechanical.
+*Done when:* coverage is >=99.5% with every remaining byte classified as a named
+jump table or padding.
 
 ### [ ] Load the image's data sections into the machine model
 `tools/link_test.py` runs the original PE entry point against the model and it
@@ -197,12 +214,27 @@ largest group and would need 64-bit register state in the model.
 in the generated README.
 
 ### [ ] Name more virtuals
-5,420 of 6,987 remain `vfunc_N` (22.4% named). Existing rules cover a fifth of
-manifest slots; further progress needs new evidence rules, not better plumbing.
-Candidate rules: unique string-literal reference, callee-set match against a
-named base virtual, slot index against a known MSVC base layout.
-*Done when:* the named ratio rises with every new name citing its rule and the
-concrete signal it keyed on. Do not loosen a rule to raise the ratio.
+**The denominator in this item was wrong and the real problem is 3x smaller.**
+Measured: 9,780 manifest slots, 1,500 named (15.3%) — but 600 of those are
+destructors and 403 are COM boilerplate, so only **497 are genuinely semantic
+(5.1%)**. And **65.1% of all (class, slot) pairs are inherited from a base**, so
+the slots needing an original name are **3,409, not 9,810**.
+
+Leverage is the whole game here — naming a base names its subtree:
+
+| Class | slots | subclasses | slot-instances covered |
+|---|---|---|---|
+| `ObjectClass` | 105 | 20 | 2,205 |
+| `AbstractClass` | 24 | 68 | 1,656 |
+| `TechnoClass` | 214 | 5 | 1,284 |
+| `MissionClass` | 133 | 7 | 1,064 |
+| `RadioClass` | 135 | 6 | 945 |
+
+The top 18 bases cover 13,011 slot-instances. An inheritance-propagation engine
+is the prerequisite: today only 2.8% of unnamed slots propagate, because there
+are only 497 names to propagate.
+*Done when:* >=60% of the 3,409 distinct virtuals are named, each citing its rule
+and the concrete signal it keyed on. Do not loosen a rule to raise the ratio.
 
 ### [ ] Mine the unused `rules.ini` keys
 1,876 strings recovered; only 135 members named across 20 classes. The
@@ -229,12 +261,33 @@ is reintroduced (mutating `gen_bodies.DECL`, swapping the `in` operands,
 removing the `loop` tail handling, removing the immediate mask each produce
 failures naming the right check). Wired into the pipeline as stage 0b.
 
-### [ ] Compile the gate with `-m32`
+### [~] Compile the gate with `-m32`
 The shim is host-sized: on this LP64 host `sizeof(DWORD)` is 8 and `sizeof(GUID)`
 is 24, against 4 and 16 in the PE32 target, and `__stdcall` is defined away
 entirely. So the calling-convention data recovered for 22,328 functions is not
-exercised by the build. `-m32 -fsyntax-only` works here and needs no multilib.
-*Done when:* a deliberately mis-sized shim type fails the gate.
+exercised by the build.
+
+**Measured, and better than expected.** After installing `g++-multilib`:
+
+```
+sizeof(void*)=4  sizeof(DWORD)=4  sizeof(ULONG)=4  sizeof(long)=4
+standalone headers -m32 : 262/262 OK
+generated code -m32     : compiles
+whole tree -m32         : links (482 TUs, 1m37s) and the entry point RUNS
+```
+
+The tree is *already* ABI-correct at 32-bit; the gate simply never asked. What
+remains is to put `-m32` in the gate, fail closed when multilib is absent, and
+document the requirement.
+
+**And it exposes something worse.** At `-m32` the compiler reports
+`offsetof(AbstractClass, m_000) == 20` where the recovered table says `0`. 1,053
+of the 4,326 recovered member entries are **vtable-pointer stores** (622 at
+offset 0) emitted as ordinary data members, so the reconstructed class counts the
+vptr twice and every member after it is displaced. The tree compiles, links and
+runs and still does not have the game's memory layout.
+*Done when:* the gate compiles everything `-m32` and fails unless the compiler
+confirms every recovered member offset via `offsetof`.
 
 ### [x] Run against real game data
 `realdata/` holds the shipped control files extracted from the retail archive
