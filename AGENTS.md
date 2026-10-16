@@ -68,6 +68,7 @@ re/
 | `tools/verify.py` | full verification gate (7 checks, fail-closed) |
 | `tools/harness.py` | measure real state (`metrics`) and prove reproducibility (`determinism`) |
 | `tools/gen_bodies.py` | emit `.cpp` function bodies from recovered evidence |
+| `tools/verify_members_binary.py` | re-derive member offsets from the binary's own code (the only check not trusting `out/`) |
 
 Run order is encoded in `tools/pipeline.sh`. Do not run stages by hand out of
 order; `out/` artifacts feed forward. The stages are: 0 clean tree, 1 RTTI,
@@ -166,7 +167,8 @@ bodies and further coverage work. All figures below are from
 `vtable_slots_unseeded` 0), full class manifest (749 classes, 9,810 virtual
 slots, every class has a located constructor that is a **real function entry
 point** — `ctors_are_function_starts` 100.0%), direct-base reduction, 4,634
-recovered member offsets (2,743 member declarations now emitted), 6,668
+recovered member offsets (2,743 member declarations now emitted,
+1,442 of them verified against the recovered table), 6,668
 function bodies across 303 generated translation units, member names from INI
 keys (135 across 20 classes), signatures (22,328), and headers for all 749
 classes with 1,285 named virtuals.
@@ -174,7 +176,7 @@ classes with 1,285 named virtuals.
 The pipeline reproduces all of it from `bin/GAME.EXE` alone and
 `tools/verify.py` passes **seven** checks: 259/259 standalone, combined TU PASS,
 749/749 coverage, 749/749 vtable bindings, 219/219 header content, 218/222
-inheritance, 1351/1351 member offsets across 235 classes.
+inheritance, 1442/1442 member offsets across 156 classes.
 
 **How to measure instead of guessing.** `python3 tools/harness.py metrics`
 prints the real state and appends to `out/metrics.jsonl`;
@@ -196,11 +198,18 @@ agree with the recovered tables.
 It still does **not** prove the disassembly is correct. Two specific gaps to
 keep in mind:
 
-- Only check 4 is anchored to the binary. Checks 5–7 compare the tree against
-  other tools' output (`out/class_manifest.json`, `out/direct_bases.json`,
-  `out/members.json`), so a bug in `gen_manifest.py` would make the manifest and
-  the headers wrong *together* and the checks would still pass.
-- Check 7 now covers **235 classes and 1,351 offsets** (it previously skipped
+- Check 4 and `tools/verify_members_binary.py` are the only checks anchored to
+  the binary. Checks 5–7 compare the tree against other tools' output
+  (`out/class_manifest.json`, `out/direct_bases.json`, `out/members.json`), so a
+  bug in `gen_manifest.py` would make the manifest and the headers wrong
+  *together* and those checks would still pass.
+- `tools/verify_members_binary.py` disassembles each constructor in the binary
+  and confirms claimed offsets against real stores. It currently confirms
+  **77.8%** (3,677 of 4,729 claims); the remaining 22.2% are refuted, not
+  unverified — a constructor also initialises base subobjects and temporaries,
+  and those stores are currently attributed to the class's own members. Treat
+  a member offset as **likely but not proven**.
+- Check 7 covers **156 classes and 1,442 offsets** (it previously skipped
   hand-written headers and reported only 6 classes). It verifies the
   machine-generated `m_<hex>`/`vptr_<hex>` declarations against the recovered
   table. It deliberately does **not** gate *curated* hand-written names
