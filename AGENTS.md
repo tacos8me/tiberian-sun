@@ -23,11 +23,23 @@ re/
   out/                            recovered data (JSON, text)
   src/include/                    generated headers (do not hand-edit)
   src/handwritten/                hand-written, evidence-backed headers
+  src/handwritten/Machine.h       the x86 machine model the transcribed code runs on
+  src/generated/code/             the transcription: one ts::sub_XXXXXXXX(void)
+                                  per recovered function VA, plus the dispatch
+                                  registration unit and recovered.h
+  src/generated/                  declaration-shaped forwarders, one .cpp per class
+  src/generated/README.md         generated coverage figures (regenerated, not prose)
   build/                          compile harness + platform shim
+  build/ts_link_test.cpp          links the whole tree and runs the entry point
   REPORT.md                       results and verification status
   PROGRESS.md                     current state and remaining work
   CONTEXT.md                      briefing for reconstruction agents
 ```
+
+`src/generated/` is 80 MB of generated C++. It is committed on purpose: it is
+the artifact a reader comes for, and regenerating it takes four minutes. Never
+hand-edit it — `src/generated/code/recovered.h` declares every transcription and
+is generated too.
 
 ## Ground rules
 
@@ -39,7 +51,11 @@ re/
    Honest gaps are worth more than confident guesses.
 3. **Verify against the binary, not against the previous agent's output.**
    Re-resolve vtable→class bindings through the COL chain. Re-read the bytes.
-4. **Keep the build green.** `build/tu_all.cpp` must compile after every change.
+4. **Keep the build green.** `build/tu_all.cpp` must compile and the whole
+   generated tree must **link** after every change. A per-file syntax check
+   cannot see a forwarder naming a symbol nothing defines; the tree did not link
+   for months because every check compiled one file at a time. Run
+   `./tools/pipeline.sh` — it links and runs the result.
 5. **Regenerate, don't hand-patch, generated files.** If a header is produced by
    a tool in `tools/`, fix the tool and re-run it. Anything you want to keep must
    live in `src/handwritten/`; the pipeline wipes `src/include/` and restores
@@ -62,6 +78,7 @@ re/
 | `tools/gen_members.py` | data-member offset recovery from ctors |
 | `tools/name_members.py` | member naming from INI-key store sites |
 | `tools/gen_signatures.py` | calling convention / arity recovery |
+| `tools/name_virtuals.py` | virtual naming from call-site and string evidence; a pipeline stage |
 | `tools/gen_headers.py` | header emission from the manifest |
 | `tools/reconcile_prelude.py` | prelude/header base reconciliation |
 | `tools/make_selfcontained.py` | add missing includes per header |
@@ -78,11 +95,32 @@ re/
 | `tools/e2e_rules.py` | drive the reconstructed model with real shipped data and check recovered field names against it |
 | `tools/mix.py` | MIX archive reader (reads the headerless TD/RA1 variant; the encrypted TS header is not yet decrypted and fails explicitly) |
 
+### Tools that are not pipeline stages
+
+These are run by hand. They are not broken, but nothing regenerates their output
+and no check covers it:
+
+| Tool | What it is for |
+|---|---|
+| `tools/ctor.py` | member-init offsets + string refs for a chosen class; the exploratory form of `gen_members.py` |
+| `tools/mapdump.py` | vtable entries + ctor offsets for the map/display classes |
+| `tools/vtdump.py` | full evidence dump for the map/display/UI layer |
+| `tools/gen_ini_headers.py` | INI/config + weapon/warhead/anim/bullet type headers |
+| `tools/gen_schema.py` | emits `src/include/SCHEMA.md` from `tools/ini_map.json` |
+
+**Sharp edge:** `gen_schema.py` writes `src/include/SCHEMA.md`, and
+`pipeline.sh` then copies `src/handwritten/SCHEMA.md` over it. The hand-written
+file wins, so running `gen_schema.py` and then the pipeline silently discards
+its output. If you change `ini_map.json`, run `gen_schema.py` *after* the
+pipeline, or move the result into `src/handwritten/`.
+
 Run order is encoded in `tools/pipeline.sh`. Do not run stages by hand out of
-order; `out/` artifacts feed forward. The stages are: 0 clean tree, 1 RTTI,
-2 disassembly, 3 strings, 4 class manifest, 5 direct bases, 6 members,
-7 member naming, 8 signatures, 8b virtual naming, 9 header generation,
-10 prelude reconciliation, then function bodies, verification and metrics.
+order; `out/` artifacts feed forward. The stages are: 0 clean tree, 0b tool unit
+tests, 1 RTTI, 2 disassembly, 2b machine-code transcription, 3 strings,
+4 class manifest, 5 direct bases, 6 members, 7 member naming, 8 signatures,
+8b virtual naming, 9 header generation, 10 prelude reconciliation, then the
+forwarders, the per-TU compile sweep, the whole-tree link, verification and
+metrics.
 
 `verify.py`'s coverage check credits a template instantiation to the header that
 defines its template: 487 of the 749 manifest entries are instantiations
@@ -205,7 +243,7 @@ done
 
 ## Current status
 
-Last updated after the coverage, naming, archive and body-de-duplication work.
+Last updated after the transcription, whole-tree-link and gap-closing work.
 Every figure here is from `python3 tools/harness.py metrics`; re-run it rather
 than trusting this list.
 
@@ -266,19 +304,20 @@ they pass are only meaningful when the caller is itself a transcription.
 `vtable_slots_unseeded` 0), class manifest (749 classes, 9,810 slots, every
 constructor a **real function entry point**), direct-base reduction, 4,326 member
 offsets recovered (99.9% confirmed against the binary by disassembling the
-constructors), 6,670 member definitions across 303 generated translation units
-(2,845 distinct functions; the rest are explicit aliases), 1,522 named virtuals
-with a per-name evidence file, 135 member names from INI keys, and headers for
-all 749 classes.
+constructors), 1,567 named virtuals with a per-name evidence file, 135 member
+names from INI keys, headers for all 749 classes, and the whole recovered
+instruction stream transcribed (43,668 functions including 1,846 tail entries,
+6,996 forwarders across 309 translation units).
 
 The pipeline reproduces all of it from `bin/GAME.EXE` alone and
-`tools/verify.py` passes **eight** checks: 260/260 standalone, combined TU PASS,
+`tools/verify.py` passes **eight** checks: 261/261 standalone, combined TU PASS,
 749/749 coverage, 749/749 vtable bindings, 219/219 header content, 220/220
 inheritance, 2186/2186 member offsets across 248 classes, and check 8 reporting
-declared-vs-recovered virtual arity (reported, not gated). The gen_bodies
-faithfulness gate verifies 2,845 distinct functions instruction-for-instruction.
-`tools/harness.py determinism --run` reports 13 artifacts byte-identical across
-two clean runs.
+declared-vs-recovered virtual arity (reported, not gated). The transcription
+faithfulness gate verifies all 43,668 functions instruction-for-instruction, and
+`tools/test_tools.py` runs 36 checks with four mutation-proven.
+`tools/harness.py determinism --run` reports **497** artifacts byte-identical
+across two clean runs — the recovered data *and* the generated C++.
 
 **Real shipped game data is committed** under `realdata/` (rules.ini, ai.ini,
 art.ini, sound.ini, theme.ini, BATTLE.INI, MISSION.INI, ~1 MB), extracted from
@@ -288,6 +327,13 @@ and checks the recovered field names against shipped keys: 110 of 112 resolve
 validation that compares the reconstruction against something outside the
 project's own artifacts. It is committed deliberately so a fresh clone can run
 it without the 2.7 GB of CD images.
+
+**Closing a coverage gap is a test, not just more output.** Widening the
+transcription from 2,845 functions to all 41,822 — and then linking the result —
+exposed six defects that every existing check had passed over, including one that
+had prevented a single destructor from ever being emitted in the life of the
+project. Both of those moves are the same move: make the check reach code it did
+not reach before. Prefer it to adding a new assertion about code already covered.
 
 **How to measure instead of guessing.** `python3 tools/harness.py metrics`
 prints the real state and appends to `out/metrics.jsonl`;
@@ -315,13 +361,14 @@ keep in mind:
   bug in `gen_manifest.py` would make the manifest and the headers wrong
   *together* and those checks would still pass.
 - `tools/verify_members_binary.py` disassembles each constructor in the binary
-  and confirms claimed offsets against real stores. It confirms **99.9%**
-  (3,571 of 3,575 claims, 4 refuted, 0 uncheckable) and runs as a **gate** with
-  a 95% floor. It caught a real defect: a store site buried inside a large
-  general-purpose function was being accepted as the constructor, which
-  misattributed member claims for 180 of 585 classes. A plausibility gate now
-  requires the vtable write to occur early in the function through a non-stack
-  register, which cut false claims from 1,052 to 4.
+  and confirms claimed offsets against real stores. It examines 637 classes and
+  4,326 claims, confirms **99.9%** (4,322 confirmed, 4 refuted, 0 uncheckable)
+  and runs as a **gate** with a 95% floor. The 4 refuted are two offsets in each
+  of `ScoreTimeClass` and `ScorePrintClass`. It caught a real defect earlier: a
+  store site buried inside a large general-purpose function was being accepted
+  as the constructor, which misattributed member claims for 180 of 585 classes.
+  A plausibility gate now requires the vtable write to occur early in the
+  function through a non-stack register, which cut false claims from 1,052 to 4.
 - Check 7 covers **248 classes and 2,186 offsets** (it previously skipped
   hand-written headers and reported only 6 classes). It verifies the
   machine-generated `m_<hex>`/`vptr_<hex>` declarations against the recovered
@@ -375,18 +422,20 @@ keep in mind:
 
 Member **offsets** are the one piece of layout that IS verified against the
 binary: `tools/verify_members_binary.py` disassembles each constructor and
-confirms the claimed displacement appears in a real store, at 99.9% (3,571 of
-3,575, 4 refuted). What is **not** verified is member *type* and *ordering* —
-whether a 4-byte slot is really an `int` rather than a pointer, or whether two
-members are the right way round. Hand-written inheritance is reported separately
-in check 6, not gated, because those headers are the authoritative richer source
-and legitimately omit transitively-implied bases.
+confirms the claimed displacement appears in a real store, at 99.9% (4,322 of
+4,326, 4 refuted, 0 uncheckable). What is **not** verified is member *type* and
+*ordering* — whether a 4-byte slot is really an `int` rather than a pointer, or
+whether two members are the right way round. Hand-written inheritance is reported
+separately in check 6, not gated, because those headers are the authoritative
+richer source and legitimately omit transitively-implied bases.
 
-**Known open defects** are listed in `todo.md` with evidence; the two most
-substantial are the slot-0 mislabel (a shared `E_POINTER` stub is labelled
-`virtual ~X(); // [0]` in ~66 generated and hand-written headers, of which only
-`AbstractClass` has been fixed) and the fact that every function body is still
-empty.
+**Known open defects** are listed in `todo.md` with evidence. The two largest
+now are: **5,420 virtuals and ~4,190 members are unnamed** — the source compiles,
+links and runs, but a reader still meets `vfunc_247` more often than a name; and
+**the transcription is not source-shaped**, so a function reads as one machine
+instruction per line rather than as the C++ the original author wrote. The
+slot-0 mislabel is fixed (the generator now detects shared slot-0 stubs and
+declares the destructor without claiming a vtable position).
 
 **Do not quote `VERIFICATION PASSED` as evidence of correctness beyond that.**
 
@@ -420,7 +469,10 @@ let it rewrite `src/include/` rather than patching a header in place — a
 hand-patch is lost on the next run.
 
 **Known remaining gaps.** `Node<>` is still declared inside `INIClass.h` rather
-than its own header. The MS* multimedia classes, the WOL/ATL COM layer, and
-`.cpp` stub bodies are not yet reconstructed.
+than its own header, and two classes still show unresolved bases for it
+(`INIClass::INIEntry`, `MixFileClass`). The MS* multimedia classes and the
+WOL/ATL COM layer are not reconstructed. The template headers' members are
+defined as forwarders through `ts::ts_invoke` rather than as hand-written C++,
+because several of them tail-jump and the recorded span is not the whole method.
 
-See `PROGRESS.md` for the live work list.
+See `PROGRESS.md` and `todo.md` for the live work list.
