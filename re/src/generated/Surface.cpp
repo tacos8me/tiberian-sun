@@ -5,412 +5,163 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "Surface.h"
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_1 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_1 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_1()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_2 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_2 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_3 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_3 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_3()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_4 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_4 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_4()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_5 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_5 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_5()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_6 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_6 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_7 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_7 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_7()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_8 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_8 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_9 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_9 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_9()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_10 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_10 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_10()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_11 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_11 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_11()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_12 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_12 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_12()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_13 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_13 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_13()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_14 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_14 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_14()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_15 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_15 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_15()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_16 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_16 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_16()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_17 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_17 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_18 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_18 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_19 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_19 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_20 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_20 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_21 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_21 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_22 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_22 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_22()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_23 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_23 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_24 -- body derived from 2 instructions at 0x004068d0; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004068d0  mov      al, 1
-//   0x004068d2  ret      8
+// Surface::vfunc_24 -- ALIAS of BSurface::vfunc_24 (same machine code at 0x004068d0); transcribed once.
 void Surface::vfunc_24(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_25 -- body derived from 2 instructions at 0x004068e0; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004068e0  mov      al, 1
-//   0x004068e2  ret      8
+// Surface::vfunc_25 -- ALIAS of BSurface::vfunc_25 (same machine code at 0x004068e0); transcribed once.
 void Surface::vfunc_25(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_26 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_26 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_26()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_27 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_27 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_27()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_28 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Surface::vfunc_28 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Surface::vfunc_28()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_29 -- body derived from 17 instructions at 0x004068f0; semantics not reconstructed.
-// size 36 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x004068f0  mov      eax, dword ptr [esp + 4]
-//   0x004068f4  push     ebx
-//   0x004068f5  push     esi
-//   0x004068f6  push     edi
-//   0x004068f7  mov      edi, dword ptr [ecx + 4]
-//   0x004068fa  mov      ecx, dword ptr [ecx + 8]
-//   0x004068fd  mov      ebx, eax
-//   0x004068ff  xor      edx, edx
-//   0x00406901  xor      esi, esi
-//   0x00406903  mov      dword ptr [ebx], edx
-//   0x00406905  mov      dword ptr [ebx + 4], esi
-//   0x00406908  mov      dword ptr [ebx + 8], edi
-//   0x0040690b  pop      edi
-//   0x0040690c  pop      esi
-//   0x0040690d  mov      dword ptr [ebx + 0xc], ecx
-//   0x00406910  pop      ebx
-//   0x00406911  ret      4
+// Surface::vfunc_29 -- ALIAS of BSurface::vfunc_29 (same machine code at 0x004068f0); transcribed once.
 void Surface::vfunc_29(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_30 -- body derived from 2 instructions at 0x00406920; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x00406920  mov      eax, dword ptr [ecx + 4]
-//   0x00406923  ret      
+// Surface::vfunc_30 -- ALIAS of BSurface::vfunc_30 (same machine code at 0x00406920); transcribed once.
 void Surface::vfunc_30()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Surface::vfunc_31 -- body derived from 2 instructions at 0x00406930; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x00406930  mov      eax, dword ptr [ecx + 8]
-//   0x00406933  ret      
+// Surface::vfunc_31 -- ALIAS of BSurface::vfunc_31 (same machine code at 0x00406930); transcribed once.
 void Surface::vfunc_31()
 {
 }

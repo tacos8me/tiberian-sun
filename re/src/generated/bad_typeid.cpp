@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "bad_typeid.h"
 
 // ---------------------------------------------------------------------------
@@ -27,16 +31,7 @@ void bad_typeid::vfunc_0(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// bad_typeid::vfunc_1 -- body derived from 5 instructions at 0x006878ac; semantics not reconstructed.
-// size 13 bytes; signature __cdecl
-// callees: none
-//
-//   0x006878ac  mov      eax, dword ptr [ecx + 4]
-//   0x006878af  test     eax, eax
-//   0x006878b1  jne      0x6878b8
-//   0x006878b3  mov      eax, 0x6a7f5c
-//   0x006878b8  ret      
+// bad_typeid::vfunc_1 -- ALIAS of bad_cast::vfunc_1 (same machine code at 0x006878ac); transcribed once.
 void bad_typeid::vfunc_1()
 {
 }

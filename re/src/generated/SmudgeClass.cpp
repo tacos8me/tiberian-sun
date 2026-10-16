@@ -5,42 +5,23 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "SmudgeClass.h"
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::QueryInterface -- body derived from 7 instructions at 0x00405790; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x00405790  mov      eax, dword ptr [esp + 0xc]
-//   0x00405794  push     ebx
-//   0x00405795  test     eax, eax
-//   0x00405797  jne      0x4057a2
-//   0x00405799  mov      eax, 0x80004003
-//   0x0040579e  pop      ebx
-//   0x0040579f  ret      0xc
+// SmudgeClass::QueryInterface -- ALIAS of AbstractClass::vfunc_0 (same machine code at 0x00405790); transcribed once.
 void SmudgeClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// SmudgeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void SmudgeClass::Init(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// SmudgeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void SmudgeClass::Shutdown(int a0)
 {
 }
@@ -59,17 +40,7 @@ void SmudgeClass::vfunc_3(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::Release -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// SmudgeClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 void SmudgeClass::Release(int a0)
 {
 }
@@ -126,60 +97,17 @@ void SmudgeClass::vfunc_6(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::GetType -- body derived from 7 instructions at 0x00405910; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00405910  push     esi
-//   0x00405911  mov      esi, dword ptr [esp + 0xc]
-//   0x00405915  test     esi, esi
-//   0x00405917  jne      0x405922
-//   0x00405919  mov      eax, 0x80004003
-//   0x0040591e  pop      esi
-//   0x0040591f  ret      8
+// SmudgeClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
 void SmudgeClass::GetType(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::Set_ID -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// SmudgeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void SmudgeClass::Set_ID()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_10 -- body derived from 23 instructions at 0x0056fb00; semantics not reconstructed.
-// size 59 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x0056fb00  mov      eax, dword ptr [ecx + 0x24]
-//   0x0056fb03  mov      edx, dword ptr [esp + 4]
-//   0x0056fb07  cmp      eax, edx
-//   0x0056fb09  jne      0x56fb1f
-//   0x0056fb0b  test     eax, eax
-//   0x0056fb0d  je       0x56fb1f
-//   0x0056fb0f  push     esi
-//   0x0056fb10  mov      esi, dword ptr [eax + 0x1c]
-//   0x0056fb13  dec      esi
-//   0x0056fb14  mov      dword ptr [eax + 0x1c], esi
-//   0x0056fb17  mov      dword ptr [ecx + 0x24], 0
-//   0x0056fb1e  pop      esi
-//   0x0056fb1f  mov      al, byte ptr [esp + 8]
-//   0x0056fb23  test     al, al
-//   0x0056fb25  je       0x56fb38
-//   0x0056fb27  mov      eax, dword ptr [ecx + 0x20]
-//   0x0056fb2a  cmp      edx, eax
-//   0x0056fb2c  jne      0x56fb38
-//   0x0056fb2e  test     edx, edx
-//   0x0056fb30  je       0x56fb38
-//   0x0056fb32  mov      eax, dword ptr [eax + 0x20]
-//   0x0056fb35  mov      dword ptr [ecx + 0x20], eax
-//   0x0056fb38  ret      8
+// SmudgeClass::vfunc_10 -- ALIAS of IsometricTileClass::vfunc_10 (same machine code at 0x0056fb00); transcribed once.
 void SmudgeClass::vfunc_10(int a0, int a1)
 {
 }
@@ -206,412 +134,97 @@ void SmudgeClass::vfunc_12()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_13 -- body derived from 90 instructions at 0x00570630; semantics not reconstructed.
-// size 237 bytes; signature __thiscall nargs=1
-// callees: 0x00405940, 0x0046d5d0, 0x0046d680
-//
-//   0x00570630  push     esi
-//   0x00570631  push     edi
-//   0x00570632  mov      edi, dword ptr [esp + 0xc]
-//   0x00570636  mov      esi, ecx
-//   0x00570638  push     edi
-//   0x00570639  call     0x405940
-//   0x0057063e  mov      eax, dword ptr [esi + 0x20]
-//   0x00570641  test     eax, eax
-//   0x00570643  je       0x570657
-//   0x00570645  mov      ecx, dword ptr [eax + 4]
-//   0x00570648  add      eax, 4
-//   0x0057064b  push     eax
-//   0x0057064c  call     dword ptr [ecx + 0x10]
-//   0x0057064f  push     eax
-//   0x00570650  mov      ecx, edi
-//   0x00570652  call     0x46d680
-//   0x00570657  mov      eax, dword ptr [esi + 0x24]
-//   0x0057065a  test     eax, eax
-//   0x0057065c  je       0x570670
-//   0x0057065e  mov      edx, dword ptr [eax + 4]
-//   0x00570661  add      eax, 4
-//   0x00570664  push     eax
-//   0x00570665  call     dword ptr [edx + 0x10]
-//   0x00570668  push     eax
-//   0x00570669  mov      ecx, edi
-//   0x0057066b  call     0x46d680
-//   0x00570670  mov      eax, dword ptr [esi + 0x28]
-//   0x00570673  mov      ecx, edi
-//   0x00570675  push     eax
-//   0x00570676  call     0x46d680
-//   0x0057067b  mov      cl, byte ptr [esi + 0x2c]
-//   0x0057067e  push     ecx
-//   0x0057067f  mov      ecx, edi
-//   0x00570681  call     0x46d5d0
-//   0x00570686  mov      dl, byte ptr [esi + 0x2d]
-//   0x00570689  mov      ecx, edi
-//   0x0057068b  push     edx
-//   0x0057068c  call     0x46d5d0
-//   0x00570691  mov      eax, dword ptr [0x7b0d38]
-//   0x00570696  test     eax, eax
-//   0x00570698  je       0x57069f
-//   0x0057069a  cmp      eax, 5
-//   0x0057069d  jne      0x5706b5
-//   0x0057069f  mov      al, byte ptr [esi + 0x2e]
-//   0x005706a2  mov      ecx, edi
-//   0x005706a4  push     eax
-//   0x005706a5  call     0x46d5d0
-//   0x005706aa  mov      cl, byte ptr [esi + 0x30]
-//   0x005706ad  push     ecx
-//   0x005706ae  mov      ecx, edi
-//   0x005706b0  call     0x46d5d0
-//   0x005706b5  mov      dl, byte ptr [esi + 0x2f]
-//   0x005706b8  mov      ecx, edi
-//   0x005706ba  push     edx
-//   0x005706bb  call     0x46d5d0
-//   0x005706c0  mov      al, byte ptr [esi + 0x31]
-//   0x005706c3  mov      ecx, edi
-//   0x005706c5  push     eax
-//   0x005706c6  call     0x46d5d0
-//   0x005706cb  mov      cl, byte ptr [esi + 0x32]
-//   0x005706ce  push     ecx
-//   0x005706cf  mov      ecx, edi
-//   0x005706d1  call     0x46d5d0
-//   0x005706d6  mov      dl, byte ptr [esi + 0x33]
-//   0x005706d9  mov      ecx, edi
-//   0x005706db  push     edx
-//   0x005706dc  call     0x46d5d0
-//   0x005706e1  mov      al, byte ptr [esi + 0x34]
-//   0x005706e4  mov      ecx, edi
-//   0x005706e6  push     eax
-//   0x005706e7  call     0x46d5d0
-//   0x005706ec  mov      cl, byte ptr [esi + 0x35]
-//   0x005706ef  push     ecx
-//   0x005706f0  mov      ecx, edi
-//   0x005706f2  call     0x46d5d0
-//   0x005706f7  mov      edx, dword ptr [esi + 0x40]
-//   0x005706fa  mov      ecx, edi
-//   0x005706fc  push     edx
-//   0x005706fd  call     0x46d680
-//   0x00570702  mov      eax, dword ptr [esi + 0x44]
-//   0x00570705  mov      ecx, edi
-//   0x00570707  push     eax
-//   0x00570708  call     0x46d680
-//   0x0057070d  mov      ecx, dword ptr [esi + 0x48]
-//   0x00570710  push     ecx
-//   0x00570711  mov      ecx, edi
-//   0x00570713  call     0x46d680
-//   0x00570718  pop      edi
-//   0x00570719  pop      esi
-//   0x0057071a  ret      4
+// SmudgeClass::vfunc_13 -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); transcribed once.
 void SmudgeClass::vfunc_13(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::Save -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// SmudgeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 void SmudgeClass::Save()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::GetSizeMax -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// SmudgeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 void SmudgeClass::GetSizeMax()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::Compute_CRC -- body derived from 2 instructions at 0x004059f0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059f0  xor      eax, eax
-//   0x004059f2  ret      
+// SmudgeClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); transcribed once.
 void SmudgeClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_17 -- body derived from 5 instructions at 0x00570a20; semantics not reconstructed.
-// size 11 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570a20  mov      dl, byte ptr [ecx + 0x35]
-//   0x00570a23  xor      eax, eax
-//   0x00570a25  test     dl, dl
-//   0x00570a27  sete     al
-//   0x00570a2a  ret      
+// SmudgeClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); transcribed once.
 void SmudgeClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_18 -- body derived from 18 instructions at 0x00570960; semantics not reconstructed.
-// size 48 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00570960  mov      eax, dword ptr [ecx]
-//   0x00570962  sub      esp, 0xc
-//   0x00570965  lea      edx, [esp]
-//   0x00570969  push     esi
-//   0x0057096a  push     edx
-//   0x0057096b  call     dword ptr [eax + 0x180]
-//   0x00570971  mov      ecx, eax
-//   0x00570973  mov      eax, dword ptr [esp + 0x14]
-//   0x00570977  mov      edx, eax
-//   0x00570979  mov      esi, dword ptr [ecx]
-//   0x0057097b  mov      dword ptr [edx], esi
-//   0x0057097d  mov      esi, dword ptr [ecx + 4]
-//   0x00570980  mov      dword ptr [edx + 4], esi
-//   0x00570983  pop      esi
-//   0x00570984  mov      ecx, dword ptr [ecx + 8]
-//   0x00570987  mov      dword ptr [edx + 8], ecx
-//   0x0057098a  add      esp, 0xc
-//   0x0057098d  ret      4
+// SmudgeClass::vfunc_18 -- ALIAS of AircraftClass::vfunc_18 (same machine code at 0x00570960); transcribed once.
 void SmudgeClass::vfunc_18(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// SmudgeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void SmudgeClass::vfunc_19(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_20 -- body derived from 9 instructions at 0x00570e80; semantics not reconstructed.
-// size 26 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570e80  mov      al, byte ptr [ecx + 0x2c]
-//   0x00570e83  test     al, al
-//   0x00570e85  je       0x570e9a
-//   0x00570e87  mov      eax, dword ptr [ecx]
-//   0x00570e89  call     dword ptr [eax + 0x198]
-//   0x00570e8f  cmp      eax, dword ptr [0x7d6a20]
-//   0x00570e95  jge      0x570e9a
-//   0x00570e97  mov      al, 1
-//   0x00570e99  ret      
+// SmudgeClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); transcribed once.
 void SmudgeClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_21 -- body derived from 9 instructions at 0x00570ea0; semantics not reconstructed.
-// size 26 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570ea0  mov      al, byte ptr [ecx + 0x2c]
-//   0x00570ea3  test     al, al
-//   0x00570ea5  je       0x570eba
-//   0x00570ea7  mov      eax, dword ptr [ecx]
-//   0x00570ea9  call     dword ptr [eax + 0x198]
-//   0x00570eaf  cmp      eax, dword ptr [0x7d6a20]
-//   0x00570eb5  jl       0x570eba
-//   0x00570eb7  mov      al, 1
-//   0x00570eb9  ret      
+// SmudgeClass::vfunc_21 -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); transcribed once.
 void SmudgeClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// SmudgeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void SmudgeClass::vfunc_22(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_23 -- body derived from 30 instructions at 0x0056e860; semantics not reconstructed.
-// size 79 bytes; signature __thiscall
-// callees: 0x0056e8b2
-//
-//   0x0056e860  sub      esp, 0x1c
-//   0x0056e863  push     ebp
-//   0x0056e864  push     esi
-//   0x0056e865  mov      esi, ecx
-//   0x0056e867  push     edi
-//   0x0056e868  mov      al, byte ptr [esi + 0x33]
-//   0x0056e86b  test     al, al
-//   0x0056e86d  je       0x56ea67
-//   0x0056e873  mov      eax, dword ptr [esi]
-//   0x0056e875  call     dword ptr [eax + 0x74]
-//   0x0056e878  mov      edx, dword ptr [esi]
-//   0x0056e87a  mov      ecx, esi
-//   0x0056e87c  mov      ebp, eax
-//   0x0056e87e  call     dword ptr [edx + 0x1a0]
-//   0x0056e884  mov      ecx, dword ptr [esi + 0x1c]
-//   0x0056e887  mov      edi, eax
-//   0x0056e889  mov      al, byte ptr [esi + 0x2c]
-//   0x0056e88c  add      edi, ecx
-//   0x0056e88e  test     al, al
-//   0x0056e890  je       0x56e8af
-//   0x0056e892  mov      eax, dword ptr [esi]
-//   0x0056e894  push     0
-//   0x0056e896  mov      ecx, esi
-//   0x0056e898  call     dword ptr [eax + 0x10c]
-//   0x0056e89e  mov      edx, dword ptr [esi]
-//   0x0056e8a0  push     1
-//   0x0056e8a2  mov      ecx, esi
-//   0x0056e8a4  mov      dword ptr [esi + 0x48], edi
-//   0x0056e8a7  call     dword ptr [edx + 0x10c]
-//   0x0056e8ad  jmp      0x56e8b2
+// SmudgeClass::vfunc_23 -- ALIAS of IsometricTileClass::vfunc_23 (same machine code at 0x0056e860); transcribed once.
 void SmudgeClass::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_24 -- body derived from 2 instructions at 0x004167b0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004167b0  xor      al, al
-//   0x004167b2  ret      
+// SmudgeClass::vfunc_24 -- ALIAS of AnimClass::vfunc_24 (same machine code at 0x004167b0); transcribed once.
 void SmudgeClass::vfunc_24()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_25 -- body derived from 2 instructions at 0x004167c0; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004167c0  xor      eax, eax
-//   0x004167c2  ret      8
+// SmudgeClass::vfunc_25 -- ALIAS of AnimClass::vfunc_25 (same machine code at 0x004167c0); transcribed once.
 void SmudgeClass::vfunc_25(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_27 -- body derived from 2 instructions at 0x0056eb50; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x0056eb50  xor      eax, eax
-//   0x0056eb52  ret      0xc
+// SmudgeClass::vfunc_27 -- ALIAS of AnimClass::vfunc_27 (same machine code at 0x0056eb50); transcribed once.
 void SmudgeClass::vfunc_27(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_28 -- body derived from 2 instructions at 0x0056eb40; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x0056eb40  xor      eax, eax
-//   0x0056eb42  ret      8
+// SmudgeClass::vfunc_28 -- ALIAS of AnimClass::vfunc_28 (same machine code at 0x0056eb40); transcribed once.
 void SmudgeClass::vfunc_28(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_29 -- body derived from 17 instructions at 0x0056eb60; semantics not reconstructed.
-// size 52 bytes; signature __cdecl
-// callees: 0x0067faf0
-//
-//   0x0056eb60  mov      eax, dword ptr [ecx]
-//   0x0056eb62  push     esi
-//   0x0056eb63  call     dword ptr [eax + 0x198]
-//   0x0056eb69  mov      ecx, dword ptr [0x714e20]
-//   0x0056eb6f  mov      esi, eax
-//   0x0056eb71  fild     dword ptr [ecx + 0x4cc]
-//   0x0056eb77  fmul     qword ptr [0x699a50]
-//   0x0056eb7d  call     0x67faf0
-//   0x0056eb82  xor      edx, edx
-//   0x0056eb84  cmp      esi, eax
-//   0x0056eb86  setge    dl
-//   0x0056eb89  dec      edx
-//   0x0056eb8a  pop      esi
-//   0x0056eb8b  and      edx, 0xfffffffe
-//   0x0056eb8e  add      edx, 4
-//   0x0056eb91  mov      eax, edx
-//   0x0056eb93  ret      
+// SmudgeClass::vfunc_29 -- ALIAS of BuildingClass::vfunc_29 (same machine code at 0x0056eb60); transcribed once.
 void SmudgeClass::vfunc_29()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_30 -- body derived from 7 instructions at 0x00570ef0; semantics not reconstructed.
-// size 19 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570ef0  mov      eax, dword ptr [ecx]
-//   0x00570ef2  call     dword ptr [eax + 0x198]
-//   0x00570ef8  xor      ecx, ecx
-//   0x00570efa  cmp      eax, -0x14
-//   0x00570efd  setg     cl
-//   0x00570f00  mov      al, cl
-//   0x00570f02  ret      
+// SmudgeClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); transcribed once.
 void SmudgeClass::vfunc_30()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_31 -- body derived from 2 instructions at 0x004167d0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004167d0  xor      al, al
-//   0x004167d2  ret      
+// SmudgeClass::vfunc_31 -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); transcribed once.
 void SmudgeClass::vfunc_31()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_32 -- body derived from 2 instructions at 0x00570ec0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570ec0  xor      eax, eax
-//   0x00570ec2  ret      
+// SmudgeClass::vfunc_32 -- ALIAS of AnimClass::vfunc_32 (same machine code at 0x00570ec0); transcribed once.
 void SmudgeClass::vfunc_32()
 {
 }
@@ -627,1068 +240,147 @@ void SmudgeClass::vfunc_33()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_34 -- body derived from 2 instructions at 0x0056eba0; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056eba0  mov      eax, 0x7fffffff
-//   0x0056eba5  ret      
+// SmudgeClass::vfunc_34 -- ALIAS of AnimClass::vfunc_34 (same machine code at 0x0056eba0); transcribed once.
 void SmudgeClass::vfunc_34()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_35 -- body derived from 2 instructions at 0x004167e0; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x004167e0  mov      eax, 0x715524
-//   0x004167e5  ret      
+// SmudgeClass::vfunc_35 -- ALIAS of AnimClass::vfunc_35 (same machine code at 0x004167e0); transcribed once.
 void SmudgeClass::vfunc_35()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_36 -- body derived from 2 instructions at 0x0056ebb0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ebb0  xor      al, al
-//   0x0056ebb2  ret      
+// SmudgeClass::vfunc_36 -- ALIAS of AnimClass::vfunc_36 (same machine code at 0x0056ebb0); transcribed once.
 void SmudgeClass::vfunc_36()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_37 -- body derived from 2 instructions at 0x0056ebc0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ebc0  xor      al, al
-//   0x0056ebc2  ret      
+// SmudgeClass::vfunc_37 -- ALIAS of AnimClass::vfunc_37 (same machine code at 0x0056ebc0); transcribed once.
 void SmudgeClass::vfunc_37()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_38 -- body derived from 2 instructions at 0x0056ebd0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ebd0  xor      al, al
-//   0x0056ebd2  ret      
+// SmudgeClass::vfunc_38 -- ALIAS of AnimClass::vfunc_38 (same machine code at 0x0056ebd0); transcribed once.
 void SmudgeClass::vfunc_38()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_39 -- body derived from 2 instructions at 0x0056ebe0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ebe0  xor      al, al
-//   0x0056ebe2  ret      
+// SmudgeClass::vfunc_39 -- ALIAS of AnimClass::vfunc_39 (same machine code at 0x0056ebe0); transcribed once.
 void SmudgeClass::vfunc_39()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_40 -- body derived from 18 instructions at 0x0040e5d0; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e5d0  mov      eax, dword ptr [ecx]
-//   0x0040e5d2  sub      esp, 0xc
-//   0x0040e5d5  lea      edx, [esp]
-//   0x0040e5d9  push     esi
-//   0x0040e5da  push     edx
-//   0x0040e5db  call     dword ptr [eax + 0x48]
-//   0x0040e5de  mov      ecx, eax
-//   0x0040e5e0  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e5e4  mov      edx, eax
-//   0x0040e5e6  mov      esi, dword ptr [ecx]
-//   0x0040e5e8  mov      dword ptr [edx], esi
-//   0x0040e5ea  mov      esi, dword ptr [ecx + 4]
-//   0x0040e5ed  mov      dword ptr [edx + 4], esi
-//   0x0040e5f0  pop      esi
-//   0x0040e5f1  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e5f4  mov      dword ptr [edx + 8], ecx
-//   0x0040e5f7  add      esp, 0xc
-//   0x0040e5fa  ret      4
+// SmudgeClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); transcribed once.
 void SmudgeClass::vfunc_40(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_41 -- body derived from 18 instructions at 0x0040e600; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e600  mov      eax, dword ptr [ecx]
-//   0x0040e602  sub      esp, 0xc
-//   0x0040e605  lea      edx, [esp]
-//   0x0040e609  push     esi
-//   0x0040e60a  push     edx
-//   0x0040e60b  call     dword ptr [eax + 0x48]
-//   0x0040e60e  mov      ecx, eax
-//   0x0040e610  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e614  mov      edx, eax
-//   0x0040e616  mov      esi, dword ptr [ecx]
-//   0x0040e618  mov      dword ptr [edx], esi
-//   0x0040e61a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e61d  mov      dword ptr [edx + 4], esi
-//   0x0040e620  pop      esi
-//   0x0040e621  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e624  mov      dword ptr [edx + 8], ecx
-//   0x0040e627  add      esp, 0xc
-//   0x0040e62a  ret      4
+// SmudgeClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); transcribed once.
 void SmudgeClass::vfunc_41(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_42 -- body derived from 18 instructions at 0x0040e630; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e630  mov      eax, dword ptr [ecx]
-//   0x0040e632  sub      esp, 0xc
-//   0x0040e635  lea      edx, [esp]
-//   0x0040e639  push     esi
-//   0x0040e63a  push     edx
-//   0x0040e63b  call     dword ptr [eax + 0x48]
-//   0x0040e63e  mov      ecx, eax
-//   0x0040e640  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e644  mov      edx, eax
-//   0x0040e646  mov      esi, dword ptr [ecx]
-//   0x0040e648  mov      dword ptr [edx], esi
-//   0x0040e64a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e64d  mov      dword ptr [edx + 4], esi
-//   0x0040e650  pop      esi
-//   0x0040e651  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e654  mov      dword ptr [edx + 8], ecx
-//   0x0040e657  add      esp, 0xc
-//   0x0040e65a  ret      4
+// SmudgeClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); transcribed once.
 void SmudgeClass::vfunc_42(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_43 -- body derived from 21 instructions at 0x004167f0; semantics not reconstructed.
-// size 50 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004167f0  mov      eax, dword ptr [ecx]
-//   0x004167f2  sub      esp, 0xc
-//   0x004167f5  lea      edx, [esp]
-//   0x004167f9  push     esi
-//   0x004167fa  push     edi
-//   0x004167fb  push     edx
-//   0x004167fc  call     dword ptr [eax + 0x48]
-//   0x004167ff  mov      esi, dword ptr [esp + 0x18]
-//   0x00416803  mov      ecx, dword ptr [eax]
-//   0x00416805  mov      edx, dword ptr [eax + 4]
-//   0x00416808  mov      eax, dword ptr [eax + 8]
-//   0x0041680b  mov      edi, esi
-//   0x0041680d  add      eax, 0x32
-//   0x00416810  mov      dword ptr [edi], ecx
-//   0x00416812  mov      dword ptr [edi + 4], edx
-//   0x00416815  mov      dword ptr [edi + 8], eax
-//   0x00416818  mov      eax, esi
-//   0x0041681a  pop      edi
-//   0x0041681b  pop      esi
-//   0x0041681c  add      esp, 0xc
-//   0x0041681f  ret      8
+// SmudgeClass::vfunc_43 -- ALIAS of AnimClass::vfunc_43 (same machine code at 0x004167f0); transcribed once.
 void SmudgeClass::vfunc_43(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_44 -- body derived from 18 instructions at 0x0040e660; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e660  mov      eax, dword ptr [ecx]
-//   0x0040e662  sub      esp, 0xc
-//   0x0040e665  lea      edx, [esp]
-//   0x0040e669  push     esi
-//   0x0040e66a  push     edx
-//   0x0040e66b  call     dword ptr [eax + 0x48]
-//   0x0040e66e  mov      ecx, eax
-//   0x0040e670  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e674  mov      edx, eax
-//   0x0040e676  mov      esi, dword ptr [ecx]
-//   0x0040e678  mov      dword ptr [edx], esi
-//   0x0040e67a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e67d  mov      dword ptr [edx + 4], esi
-//   0x0040e680  pop      esi
-//   0x0040e681  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e684  mov      dword ptr [edx + 8], ecx
-//   0x0040e687  add      esp, 0xc
-//   0x0040e68a  ret      4
+// SmudgeClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); transcribed once.
 void SmudgeClass::vfunc_44(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_45 -- body derived from 8 instructions at 0x00570ed0; semantics not reconstructed.
-// size 23 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570ed0  mov      eax, dword ptr [ecx]
-//   0x00570ed2  sub      esp, 0xc
-//   0x00570ed5  lea      edx, [esp]
-//   0x00570ed9  push     edx
-//   0x00570eda  call     dword ptr [eax + 0xa8]
-//   0x00570ee0  mov      eax, dword ptr [eax + 4]
-//   0x00570ee3  add      esp, 0xc
-//   0x00570ee6  ret      
+// SmudgeClass::vfunc_45 -- ALIAS of AircraftClass::vfunc_45 (same machine code at 0x00570ed0); transcribed once.
 void SmudgeClass::vfunc_45()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_46 -- body derived from 55 instructions at 0x00570db0; semantics not reconstructed.
-// size 148 bytes; signature __thiscall nargs=4
-// callees: 0x00502060, 0x00510f70
-//
-//   0x00570db0  sub      esp, 0x18
-//   0x00570db3  push     ebx
-//   0x00570db4  push     ebp
-//   0x00570db5  push     esi
-//   0x00570db6  mov      esi, ecx
-//   0x00570db8  lea      ecx, [esp + 0x18]
-//   0x00570dbc  push     edi
-//   0x00570dbd  mov      eax, dword ptr [esi]
-//   0x00570dbf  mov      bl, byte ptr [esi + 0x32]
-//   0x00570dc2  push     ecx
-//   0x00570dc3  mov      ecx, esi
-//   0x00570dc5  call     dword ptr [eax + 0x4c]
-//   0x00570dc8  mov      edx, dword ptr [eax]
-//   0x00570dca  mov      dword ptr [esp + 0x10], edx
-//   0x00570dce  mov      ecx, dword ptr [eax + 4]
-//   0x00570dd1  mov      dword ptr [esp + 0x14], ecx
-//   0x00570dd5  mov      ecx, 0x710d28
-//   0x00570dda  mov      edx, dword ptr [eax + 8]
-//   0x00570ddd  lea      eax, [esp + 0x10]
-//   0x00570de1  push     eax
-//   0x00570de2  mov      dword ptr [esp + 0x1c], edx
-//   0x00570de6  call     0x510f70
-//   0x00570deb  mov      edx, dword ptr [esi]
-//   0x00570ded  mov      edi, eax
-//   0x00570def  lea      eax, [esp + 0x1c]
-//   0x00570df3  mov      ecx, esi
-//   0x00570df5  push     eax
-//   0x00570df6  call     dword ptr [edx + 0x180]
-//   0x00570dfc  push     eax
-//   0x00570dfd  mov      ecx, 0x710d28
-//   0x00570e02  call     0x510f70
-//   0x00570e07  mov      ebp, eax
-//   0x00570e09  mov      al, byte ptr [esi + 0x32]
-//   0x00570e0c  test     al, al
-//   0x00570e0e  jne      0x570e44
-//   0x00570e10  mov      eax, dword ptr [0x7d6a20]
-//   0x00570e15  mov      ecx, ebp
-//   0x00570e17  sub      ecx, edi
-//   0x00570e19  lea      edx, [eax + eax*2]
-//   0x00570e1c  cmp      ecx, edx
-//   0x00570e1e  jle      0x570e49
-//   0x00570e20  lea      eax, [esp + 0x10]
-//   0x00570e24  mov      ecx, 0x710d28
-//   0x00570e29  push     eax
-//   0x00570e2a  call     0x502060
-//   0x00570e2f  mov      ecx, dword ptr [eax + 0xa4]
-//   0x00570e35  test     ch, 0x10
-//   0x00570e38  je       0x570e44
-//   0x00570e3a  pop      edi
-//   0x00570e3b  pop      esi
-//   0x00570e3c  pop      ebp
-//   0x00570e3d  mov      al, 1
-//   0x00570e3f  pop      ebx
-//   0x00570e40  add      esp, 0x18
-//   0x00570e43  ret      
+// SmudgeClass::vfunc_46 -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); transcribed once.
 void SmudgeClass::vfunc_46(int a0, int a1, int a2, int a3)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_47 -- body derived from 2 instructions at 0x00416830; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00416830  mov      al, 1
-//   0x00416832  ret      
+// SmudgeClass::vfunc_47 -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); transcribed once.
 void SmudgeClass::vfunc_47()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_48 -- body derived from 116 instructions at 0x0056f6a0; semantics not reconstructed.
-// size 357 bytes; signature __thiscall nargs=5
-// callees: 0x004731a0, 0x004fad70, 0x005f5120, 0x005f5820
-//
-//   0x0056f6a0  mov      al, byte ptr [0x7b2ab8]
-//   0x0056f6a5  sub      esp, 0x20
-//   0x0056f6a8  test     al, al
-//   0x0056f6aa  push     ebx
-//   0x0056f6ab  push     esi
-//   0x0056f6ac  push     edi
-//   0x0056f6ad  mov      esi, ecx
-//   0x0056f6af  je       0x56f805
-//   0x0056f6b5  mov      al, byte ptr [esi + 0x2f]
-//   0x0056f6b8  test     al, al
-//   0x0056f6ba  jne      0x56f805
-//   0x0056f6c0  mov      eax, dword ptr [esi]
-//   0x0056f6c2  call     dword ptr [eax + 0x130]
-//   0x0056f6c8  mov      edx, dword ptr [esi]
-//   0x0056f6ca  push     1
-//   0x0056f6cc  mov      ecx, esi
-//   0x0056f6ce  call     dword ptr [edx + 0xc8]
-//   0x0056f6d4  mov      eax, dword ptr [esi]
-//   0x0056f6d6  mov      ecx, esi
-//   0x0056f6d8  call     dword ptr [eax + 0x2c]
-//   0x0056f6db  cmp      eax, 6
-//   0x0056f6de  jne      0x56f6f0
-//   0x0056f6e0  mov      ecx, dword ptr [esi + 0x218]
-//   0x0056f6e6  mov      eax, dword ptr [ecx + 0x4c8]
-//   0x0056f6ec  test     eax, eax
-//   0x0056f6ee  jne      0x56f6fc
-//   0x0056f6f0  mov      edx, dword ptr [esi]
-//   0x0056f6f2  push     0
-//   0x0056f6f4  mov      ecx, esi
-//   0x0056f6f6  call     dword ptr [edx + 0x10c]
-//   0x0056f6fc  push     esi
-//   0x0056f6fd  mov      ecx, 0x710d28
-//   0x0056f702  call     0x4731a0
-//   0x0056f707  mov      eax, dword ptr [esi]
-//   0x0056f709  mov      ecx, esi
-//   0x0056f70b  call     dword ptr [eax + 0x84]
-//   0x0056f711  test     eax, eax
-//   0x0056f713  je       0x56f734
-//   0x0056f715  mov      edx, dword ptr [esi]
-//   0x0056f717  mov      ecx, esi
-//   0x0056f719  call     dword ptr [edx + 0x84]
-//   0x0056f71f  mov      cl, byte ptr [eax + 0xcd]
-//   0x0056f725  test     cl, cl
-//   0x0056f727  je       0x56f734
-//   0x0056f729  push     esi
-//   0x0056f72a  mov      ecx, 0x710ca8
-//   0x0056f72f  call     0x4fad70
-//   0x0056f734  mov      eax, dword ptr [esi]
-//   0x0056f736  mov      ecx, esi
-//   0x0056f738  call     dword ptr [eax + 0x84]
-//   0x0056f73e  test     eax, eax
-//   0x0056f740  je       0x56f7ea
-//   0x0056f746  mov      edx, dword ptr [esi]
-//   0x0056f748  mov      ecx, esi
-//   0x0056f74a  call     dword ptr [edx + 0x84]
-//   0x0056f750  mov      ecx, dword ptr [eax + 0x70]
-//   0x0056f753  test     ecx, ecx
-//   0x0056f755  je       0x56f7ea
-//   0x0056f75b  mov      eax, dword ptr [esi]
-//   0x0056f75d  lea      ecx, [esp + 0x20]
-//   0x0056f761  push     ecx
-//   0x0056f762  mov      ecx, esi
-//   0x0056f764  call     dword ptr [eax + 0x48]
-//   0x0056f767  mov      edx, dword ptr [eax]
-//   0x0056f769  mov      dword ptr [esp + 0x14], edx
-//   0x0056f76d  mov      ecx, dword ptr [eax + 4]
-//   0x0056f770  mov      dword ptr [esp + 0x18], ecx
-//   0x0056f774  lea      ecx, [esp + 0x14]
-//   0x0056f778  mov      edx, dword ptr [eax + 8]
-//   0x0056f77b  lea      eax, [esp + 0xc]
-//   0x0056f77f  push     eax
-//   0x0056f780  push     ecx
-//   0x0056f781  mov      ecx, dword ptr [0x714eec]
-//   0x0056f787  mov      dword ptr [esp + 0x24], edx
-//   0x0056f78b  call     0x5f5120
-//   0x0056f790  mov      edx, dword ptr [esi]
-//   0x0056f792  mov      ecx, esi
-//   0x0056f794  call     dword ptr [edx + 0x84]
-//   0x0056f79a  mov      ecx, dword ptr [eax + 0x70]
-//   0x0056f79d  push     1
-//   0x0056f79f  sub      esp, 0x10
-//   0x0056f7a2  movsx    eax, word ptr [ecx + 2]
-//   0x0056f7a6  cdq      
-//   0x0056f7a7  sub      eax, edx
-//   0x0056f7a9  mov      ebx, esp
-//   0x0056f7ab  mov      edi, eax
-//   0x0056f7ad  movsx    eax, word ptr [ecx + 4]
-//   0x0056f7b1  cdq      
-//   0x0056f7b2  sub      eax, edx
-//   0x0056f7b4  mov      edx, dword ptr [esp + 0x20]
-//   0x0056f7b8  sar      edi, 1
-//   0x0056f7ba  sub      edx, edi
-//   0x0056f7bc  mov      edi, dword ptr [esp + 0x24]
-//   0x0056f7c0  sar      eax, 1
-//   0x0056f7c2  sub      edi, eax
-//   0x0056f7c4  mov      dword ptr [ebx], edx
-//   0x0056f7c6  mov      dword ptr [esp + 0x20], edx
-//   0x0056f7ca  mov      dword ptr [esp + 0x24], edi
-//   0x0056f7ce  movsx    eax, word ptr [ecx + 2]
-//   0x0056f7d2  movsx    ecx, word ptr [ecx + 4]
-//   0x0056f7d6  mov      dword ptr [ebx + 4], edi
-//   0x0056f7d9  mov      dword ptr [ebx + 8], eax
-//   0x0056f7dc  mov      dword ptr [ebx + 0xc], ecx
-//   0x0056f7df  mov      ecx, dword ptr [0x714eec]
-//   0x0056f7e5  call     0x5f5820
-//   0x0056f7ea  mov      eax, dword ptr [esi]
-//   0x0056f7ec  mov      ecx, esi
-//   0x0056f7ee  call     dword ptr [eax + 0x104]
-//   0x0056f7f4  mov      byte ptr [esi + 0x2f], 1
-//   0x0056f7f8  mov      byte ptr [esi + 0x2e], 0
-//   0x0056f7fc  mov      al, 1
-//   0x0056f7fe  pop      edi
-//   0x0056f7ff  pop      esi
-//   0x0056f800  pop      ebx
-//   0x0056f801  add      esp, 0x20
-//   0x0056f804  ret      
+// SmudgeClass::vfunc_48 -- ALIAS of BulletClass::vfunc_48 (same machine code at 0x0056f6a0); transcribed once.
 void SmudgeClass::vfunc_48(int a0, int a1, int a2, int a3, int a4)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_49 -- body derived from 229 instructions at 0x0056f810; semantics not reconstructed.
-// size 718 bytes; signature __thiscall nargs=2
-// callees: 0x004119f0, 0x00459610, 0x00473150, 0x004fad40, 0x00502060, 0x005020d0, 0x0056fa6e, 0x005f5120, 0x005f5820, 0x00682997, 0x0068309c
-//
-//   0x0056f810  mov      al, byte ptr [0x7b2ab8]
-//   0x0056f815  sub      esp, 0x34
-//   0x0056f818  test     al, al
-//   0x0056f81a  push     ebx
-//   0x0056f81b  push     ebp
-//   0x0056f81c  push     esi
-//   0x0056f81d  push     edi
-//   0x0056f81e  mov      esi, ecx
-//   0x0056f820  je       0x56faee
-//   0x0056f826  mov      al, byte ptr [esi + 0x2f]
-//   0x0056f829  test     al, al
-//   0x0056f82b  je       0x56faee
-//   0x0056f831  mov      al, byte ptr [esi + 0x2c]
-//   0x0056f834  test     al, al
-//   0x0056f836  jne      0x56faee
-//   0x0056f83c  mov      eax, dword ptr [0x7b28cc]
-//   0x0056f841  mov      ebp, dword ptr [esp + 0x48]
-//   0x0056f845  test     eax, eax
-//   0x0056f847  jne      0x56f86f
-//   0x0056f849  mov      edi, dword ptr [esi]
-//   0x0056f84b  push     0
-//   0x0056f84d  push     0
-//   0x0056f84f  push     -1
-//   0x0056f851  push     -1
-//   0x0056f853  push     ebp
-//   0x0056f854  mov      ecx, 0x710d28
-//   0x0056f859  call     0x502060
-//   0x0056f85e  push     eax
-//   0x0056f85f  mov      ecx, esi
-//   0x0056f861  call     dword ptr [edi + 0x178]
-//   0x0056f867  test     eax, eax
-//   0x0056f869  jne      0x56faee
-//   0x0056f86f  mov      eax, dword ptr [esi]
-//   0x0056f871  mov      ecx, esi
-//   0x0056f873  mov      byte ptr [esi + 0x2f], 0
-//   0x0056f877  mov      byte ptr [esi + 0x2e], 0
-//   0x0056f87b  call     dword ptr [eax + 0x84]
-//   0x0056f881  mov      ecx, ebp
-//   0x0056f883  mov      ebx, eax
-//   0x0056f885  test     ebx, ebx
-//   0x0056f887  mov      edx, dword ptr [ecx]
-//   0x0056f889  mov      dword ptr [esp + 0x48], ebx
-//   0x0056f88d  mov      dword ptr [esp + 0x1c], edx
-//   0x0056f891  mov      eax, dword ptr [ecx + 4]
-//   0x0056f894  mov      dword ptr [esp + 0x20], eax
-//   0x0056f898  mov      ecx, dword ptr [ecx + 8]
-//   0x0056f89b  mov      dword ptr [esp + 0x24], ecx
-//   0x0056f89f  je       0x56f8c2
-//   0x0056f8a1  mov      edx, dword ptr [ebx]
-//   0x0056f8a3  lea      eax, [esp + 0x28]
-//   0x0056f8a7  push     ebp
-//   0x0056f8a8  push     eax
-//   0x0056f8a9  mov      ecx, ebx
-//   0x0056f8ab  call     dword ptr [edx + 0x6c]
-//   0x0056f8ae  mov      ecx, dword ptr [eax]
-//   0x0056f8b0  mov      dword ptr [esp + 0x1c], ecx
-//   0x0056f8b4  mov      edx, dword ptr [eax + 4]
-//   0x0056f8b7  mov      dword ptr [esp + 0x20], edx
-//   0x0056f8bb  mov      eax, dword ptr [eax + 8]
-//   0x0056f8be  mov      dword ptr [esp + 0x24], eax
-//   0x0056f8c2  mov      edx, dword ptr [esi]
-//   0x0056f8c4  lea      eax, [esp + 0x1c]
-//   0x0056f8c8  push     eax
-//   0x0056f8c9  mov      ecx, esi
-//   0x0056f8cb  call     dword ptr [edx + 0x184]
-//   0x0056f8d1  mov      edx, dword ptr [esi]
-//   0x0056f8d3  push     1
-//   0x0056f8d5  mov      ecx, esi
-//   0x0056f8d7  call     dword ptr [edx + 0x10c]
-//   0x0056f8dd  test     al, al
-//   0x0056f8df  je       0x56faea
-//   0x0056f8e5  mov      al, byte ptr [esi + 0x35]
-//   0x0056f8e8  test     al, al
-//   0x0056f8ea  je       0x56fade
-//   0x0056f8f0  mov      eax, dword ptr [esi]
-//   0x0056f8f2  mov      ecx, esi
-//   0x0056f8f4  call     dword ptr [eax + 0x74]
-//   0x0056f8f7  cmp      eax, -1
-//   0x0056f8fa  je       0x56f907
-//   0x0056f8fc  push     esi
-//   0x0056f8fd  mov      ecx, 0x710d28
-//   0x0056f902  call     0x473150
-//   0x0056f907  test     ebx, ebx
-//   0x0056f909  je       0x56fa26
-//   0x0056f90f  mov      al, byte ptr [ebx + 0xcd]
-//   0x0056f915  test     al, al
-//   0x0056f917  je       0x56f926
-//   0x0056f919  push     0
-//   0x0056f91b  push     esi
-//   0x0056f91c  mov      ecx, 0x710ca8
-//   0x0056f921  call     0x4fad40
-//   0x0056f926  mov      eax, dword ptr [ebx + 0x70]
-//   0x0056f929  test     eax, eax
-//   0x0056f92b  je       0x56fa26
-//   0x0056f931  mov      edx, dword ptr [esi]
-//   0x0056f933  lea      eax, [esp + 0x34]
-//   0x0056f937  push     eax
-//   0x0056f938  mov      ecx, esi
-//   0x0056f93a  call     dword ptr [edx + 0x48]
-//   0x0056f93d  mov      ecx, dword ptr [eax]
-//   0x0056f93f  mov      dword ptr [esp + 0x28], ecx
-//   0x0056f943  lea      ecx, [esp + 0x14]
-//   0x0056f947  mov      edx, dword ptr [eax + 4]
-//   0x0056f94a  push     ecx
-//   0x0056f94b  mov      ecx, dword ptr [0x714eec]
-//   0x0056f951  mov      dword ptr [esp + 0x30], edx
-//   0x0056f955  mov      eax, dword ptr [eax + 8]
-//   0x0056f958  lea      edx, [esp + 0x2c]
-//   0x0056f95c  push     edx
-//   0x0056f95d  mov      dword ptr [esp + 0x38], eax
-//   0x0056f961  call     0x5f5120
-//   0x0056f966  mov      eax, dword ptr [0x714eec]
-//   0x0056f96b  mov      edx, dword ptr [esp + 0x18]
-//   0x0056f96f  mov      edi, dword ptr [esp + 0x14]
-//   0x0056f973  mov      ecx, dword ptr [eax + 0x5c]
-//   0x0056f976  mov      eax, dword ptr [eax + 0x60]
-//   0x0056f979  add      edx, eax
-//   0x0056f97b  mov      eax, dword ptr [esi]
-//   0x0056f97d  add      edi, ecx
-//   0x0056f97f  mov      ecx, esi
-//   0x0056f981  mov      dword ptr [esp + 0x14], edi
-//   0x0056f985  mov      dword ptr [esp + 0x18], edx
-//   0x0056f989  call     dword ptr [eax + 0x84]
-//   0x0056f98f  mov      edi, dword ptr [eax + 0x70]
-//   0x0056f992  push     0x30
-//   0x0056f994  movsx    eax, word ptr [edi + 2]
-//   0x0056f998  cdq      
-//   0x0056f999  sub      eax, edx
-//   0x0056f99b  mov      ecx, eax
-//   0x0056f99d  movsx    eax, word ptr [edi + 4]
-//   0x0056f9a1  cdq      
-//   0x0056f9a2  sub      eax, edx
-//   0x0056f9a4  mov      edx, dword ptr [esp + 0x18]
-//   0x0056f9a8  sar      ecx, 1
-//   0x0056f9aa  sub      edx, ecx
-//   0x0056f9ac  mov      ecx, dword ptr [esp + 0x1c]
-//   0x0056f9b0  sar      eax, 1
-//   0x0056f9b2  sub      ecx, eax
-//   0x0056f9b4  mov      dword ptr [esp + 0x18], edx
-//   0x0056f9b8  mov      dword ptr [esp + 0x1c], ecx
-//   0x0056f9bc  call     0x682997
-//   0x0056f9c1  add      esp, 4
-//   0x0056f9c4  test     eax, eax
-//   0x0056f9c6  je       0x56f9da
-//   0x0056f9c8  mov      ecx, dword ptr [esp + 0x18]
-//   0x0056f9cc  mov      edx, dword ptr [esp + 0x14]
-//   0x0056f9d0  push     ecx
-//   0x0056f9d1  push     edx
-//   0x0056f9d2  push     esi
-//   0x0056f9d3  mov      ecx, eax
-//   0x0056f9d5  call     0x4119f0
-//   0x0056f9da  mov      eax, dword ptr [0x7b28cc]
-//   0x0056f9df  test     eax, eax
-//   0x0056f9e1  jne      0x56fa26
-//   0x0056f9e3  mov      ecx, dword ptr [0x714eec]
-//   0x0056f9e9  mov      eax, dword ptr [esp + 0x14]
-//   0x0056f9ed  push     1
-//   0x0056f9ef  mov      edx, dword ptr [ecx + 0x5c]
-//   0x0056f9f2  mov      ebx, dword ptr [ecx + 0x60]
-//   0x0056f9f5  sub      eax, edx
-//   0x0056f9f7  mov      edx, dword ptr [esp + 0x1c]
-//   0x0056f9fb  sub      edx, ebx
-//   0x0056f9fd  sub      esp, 0x10
-//   0x0056fa00  movsx    ebx, word ptr [edi + 2]
-//   0x0056fa04  movsx    edi, word ptr [edi + 4]
-//   0x0056fa08  mov      dword ptr [esp + 0x54], edi
-//   0x0056fa0c  mov      edi, esp
-//   0x0056fa0e  mov      dword ptr [edi], eax
-//   0x0056fa10  mov      eax, dword ptr [esp + 0x54]
-//   0x0056fa14  mov      dword ptr [edi + 4], edx
-//   0x0056fa17  mov      dword ptr [edi + 8], ebx
-//   0x0056fa1a  mov      dword ptr [edi + 0xc], eax
-//   0x0056fa1d  call     0x5f5820
-//   0x0056fa22  mov      ebx, dword ptr [esp + 0x48]
-//   0x0056fa26  push     0
-//   0x0056fa28  push     0x6bf590
-//   0x0056fa2d  push     0x6bf530
-//   0x0056fa32  push     0
-//   0x0056fa34  push     esi
-//   0x0056fa35  call     0x68309c
-//   0x0056fa3a  add      esp, 0x14
-//   0x0056fa3d  test     eax, eax
-//   0x0056fa3f  je       0x56fade
-//   0x0056fa45  test     ebx, ebx
-//   0x0056fa47  je       0x56fade
-//   0x0056fa4d  mov      edx, dword ptr [esi]
-//   0x0056fa4f  mov      ecx, esi
-//   0x0056fa51  call     dword ptr [edx + 0x84]
-//   0x0056fa57  mov      edx, dword ptr [eax]
-//   0x0056fa59  push     0
-//   0x0056fa5b  mov      ecx, eax
-//   0x0056fa5d  call     dword ptr [edx + 0x90]
-//   0x0056fa63  mov      esi, eax
-//   0x0056fa65  test     esi, esi
-//   0x0056fa67  je       0x56fade
-//   0x0056fa69  mov      edi, 0x7fff
-//   0x0056fa6e  mov      cx, word ptr [esi]
-//   0x0056fa71  cmp      cx, di
-//   0x0056fa74  jne      0x56fa7c
-//   0x0056fa76  cmp      word ptr [esi + 2], di
-//   0x0056fa7a  je       0x56fade
-//   0x0056fa7c  mov      eax, dword ptr [ebp]
-//   0x0056fa7f  cdq      
-//   0x0056fa80  and      edx, 0xff
-//   0x0056fa86  add      eax, edx
-//   0x0056fa88  sar      eax, 8
-//   0x0056fa8b  mov      word ptr [esp + 0x48], ax
-//   0x0056fa90  mov      eax, dword ptr [ebp + 4]
-//   0x0056fa93  cdq      
-//   0x0056fa94  and      edx, 0xff
-//   0x0056fa9a  add      eax, edx
-//   0x0056fa9c  sar      eax, 8
-//   0x0056fa9f  mov      word ptr [esp + 0x4a], ax
-//   0x0056faa4  mov      edx, dword ptr [esp + 0x48]
-//   0x0056faa8  add      ecx, edx
-//   0x0056faaa  mov      word ptr [esp + 0x10], cx
-//   0x0056faaf  mov      cx, word ptr [esi + 2]
-//   0x0056fab3  add      cx, ax
-//   0x0056fab6  lea      eax, [esp + 0x14]
-//   0x0056faba  mov      word ptr [esp + 0x12], cx
-//   0x0056fabf  mov      edx, dword ptr [esp + 0x10]
-//   0x0056fac3  push     eax
-//   0x0056fac4  mov      ecx, 0x710d28
-//   0x0056fac9  mov      dword ptr [esp + 0x18], edx
-//   0x0056facd  call     0x5020d0
-//   0x0056fad2  mov      ecx, eax
-//   0x0056fad4  call     0x459610
-//   0x0056fad9  add      esi, 4
-//   0x0056fadc  jmp      0x56fa6e
+// SmudgeClass::vfunc_49 -- ALIAS of AnimClass::vfunc_49 (same machine code at 0x0056f810); transcribed once.
 void SmudgeClass::vfunc_49(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_50 -- body derived from 46 instructions at 0x0056fb40; semantics not reconstructed.
-// size 121 bytes; signature __thiscall nargs=1
-// callees: 0x00405980, 0x00478840, 0x00478860, 0x004c4fb0, 0x0062c210
-//
-//   0x0056fb40  push     ebx
-//   0x0056fb41  push     esi
-//   0x0056fb42  mov      esi, ecx
-//   0x0056fb44  push     edi
-//   0x0056fb45  mov      eax, dword ptr [esi]
-//   0x0056fb47  call     dword ptr [eax + 0x3c]
-//   0x0056fb4a  mov      edi, eax
-//   0x0056fb4c  mov      al, byte ptr [esp + 0x10]
-//   0x0056fb50  xor      bl, bl
-//   0x0056fb52  test     al, al
-//   0x0056fb54  jne      0x56fb84
-//   0x0056fb56  mov      ecx, esi
-//   0x0056fb58  call     0x405980
-//   0x0056fb5d  test     al, al
-//   0x0056fb5f  je       0x56fb71
-//   0x0056fb61  mov      edx, dword ptr [esi]
-//   0x0056fb63  mov      ecx, esi
-//   0x0056fb65  call     dword ptr [edx + 0x2b0]
-//   0x0056fb6b  test     al, al
-//   0x0056fb6d  je       0x56fb71
-//   0x0056fb6f  mov      bl, 1
-//   0x0056fb71  test     edi, edi
-//   0x0056fb73  je       0x56fb84
-//   0x0056fb75  mov      ecx, edi
-//   0x0056fb77  call     0x4c4fb0
-//   0x0056fb7c  test     al, al
-//   0x0056fb7e  jne      0x56fb8e
-//   0x0056fb80  test     bl, bl
-//   0x0056fb82  jne      0x56fb8e
-//   0x0056fb84  mov      eax, dword ptr [esi]
-//   0x0056fb86  mov      ecx, esi
-//   0x0056fb88  call     dword ptr [eax + 0x130]
-//   0x0056fb8e  mov      ecx, 0x710d28
-//   0x0056fb93  call     0x478840
-//   0x0056fb98  cmp      eax, esi
-//   0x0056fb9a  jne      0x56fba8
-//   0x0056fb9c  push     0
-//   0x0056fb9e  mov      ecx, 0x710d28
-//   0x0056fba3  call     0x478860
-//   0x0056fba8  mov      dl, byte ptr [esp + 0x10]
-//   0x0056fbac  mov      ecx, esi
-//   0x0056fbae  call     0x62c210
-//   0x0056fbb3  pop      edi
-//   0x0056fbb4  pop      esi
-//   0x0056fbb5  pop      ebx
-//   0x0056fbb6  ret      4
+// SmudgeClass::vfunc_50 -- ALIAS of AnimClass::vfunc_50 (same machine code at 0x0056fb40); transcribed once.
 void SmudgeClass::vfunc_50(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_51 -- body derived from 1 instructions at 0x0056ebf0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0056ebf0  ret      4
+// SmudgeClass::vfunc_51 -- ALIAS of AnimClass::vfunc_51 (same machine code at 0x0056ebf0); transcribed once.
 void SmudgeClass::vfunc_51(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_52 -- body derived from 33 instructions at 0x005700c0; semantics not reconstructed.
-// size 100 bytes; signature __thiscall nargs=1
-// callees: 0x00570148, 0x00682997
-//
-//   0x005700c0  push     esi
-//   0x005700c1  mov      esi, ecx
-//   0x005700c3  push     edi
-//   0x005700c4  mov      edi, dword ptr [esp + 0xc]
-//   0x005700c8  mov      eax, dword ptr [esi]
-//   0x005700ca  push     0x80
-//   0x005700cf  push     edi
-//   0x005700d0  mov      byte ptr [esi + 0x33], 1
-//   0x005700d4  call     dword ptr [eax + 0xc4]
-//   0x005700da  test     al, al
-//   0x005700dc  je       0x570163
-//   0x005700e2  mov      edx, dword ptr [esi]
-//   0x005700e4  push     edi
-//   0x005700e5  mov      ecx, esi
-//   0x005700e7  call     dword ptr [edx + 0x184]
-//   0x005700ed  mov      eax, dword ptr [esi]
-//   0x005700ef  mov      ecx, esi
-//   0x005700f1  call     dword ptr [eax + 0x2c]
-//   0x005700f4  cmp      eax, 8
-//   0x005700f7  push     0x108
-//   0x005700fc  jne      0x570124
-//   0x005700fe  call     0x682997
-//   0x00570103  add      esp, 4
-//   0x00570106  test     eax, eax
-//   0x00570108  je       0x57015c
-//   0x0057010a  mov      ecx, dword ptr [0x714e20]
-//   0x00570110  push     0
-//   0x00570112  push     0x600
-//   0x00570117  push     1
-//   0x00570119  mov      edx, dword ptr [ecx + 0x7f0]
-//   0x0057011f  push     0
-//   0x00570121  push     edi
-//   0x00570122  jmp      0x570148
+// SmudgeClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); transcribed once.
 void SmudgeClass::vfunc_52(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_53 -- body derived from 52 instructions at 0x0056ea70; semantics not reconstructed.
-// size 156 bytes; signature __thiscall nargs=1
-// callees: 0x00473150, 0x004731a0, 0x0068309c, 0x006939b0
-//
-//   0x0056ea70  sub      esp, 0xc
-//   0x0056ea73  push     esi
-//   0x0056ea74  mov      esi, ecx
-//   0x0056ea76  push     0
-//   0x0056ea78  mov      eax, dword ptr [esi]
-//   0x0056ea7a  mov      byte ptr [esi + 0x33], 1
-//   0x0056ea7e  mov      byte ptr [esi + 0x34], 1
-//   0x0056ea82  call     dword ptr [eax + 0x10c]
-//   0x0056ea88  push     esi
-//   0x0056ea89  mov      ecx, 0x710d28
-//   0x0056ea8e  call     0x4731a0
-//   0x0056ea93  push     esi
-//   0x0056ea94  mov      ecx, 0x710d28
-//   0x0056ea99  mov      byte ptr [esi + 0x32], 0
-//   0x0056ea9d  call     0x473150
-//   0x0056eaa2  mov      edx, dword ptr [esi]
-//   0x0056eaa4  push     1
-//   0x0056eaa6  mov      ecx, esi
-//   0x0056eaa8  call     dword ptr [edx + 0x10c]
-//   0x0056eaae  push     0
-//   0x0056eab0  push     0x6bf5b0
-//   0x0056eab5  push     0x6bf530
-//   0x0056eaba  push     0
-//   0x0056eabc  push     esi
-//   0x0056eabd  call     0x68309c
-//   0x0056eac2  add      esp, 0x14
-//   0x0056eac5  test     eax, eax
-//   0x0056eac7  je       0x56eb31
-//   0x0056eac9  mov      eax, dword ptr [esi + 0x324]
-//   0x0056eacf  test     eax, eax
-//   0x0056ead1  jne      0x56eadd
-//   0x0056ead3  push     0x80004003
-//   0x0056ead8  call     0x6939b0
-//   0x0056eadd  mov      eax, dword ptr [esi + 0x324]
-//   0x0056eae3  push     eax
-//   0x0056eae4  mov      ecx, dword ptr [eax]
-//   0x0056eae6  call     dword ptr [ecx + 0x10]
-//   0x0056eae9  test     al, al
-//   0x0056eaeb  jne      0x56eb0c
-//   0x0056eaed  push     edi
-//   0x0056eaee  mov      edi, dword ptr [esi]
-//   0x0056eaf0  lea      edx, [esp + 8]
-//   0x0056eaf4  mov      ecx, esi
-//   0x0056eaf6  push     edx
-//   0x0056eaf7  call     dword ptr [edi + 0x180]
-//   0x0056eafd  push     eax
-//   0x0056eafe  mov      ecx, esi
-//   0x0056eb00  call     dword ptr [edi + 0xdc]
-//   0x0056eb06  pop      edi
-//   0x0056eb07  pop      esi
-//   0x0056eb08  add      esp, 0xc
-//   0x0056eb0b  ret      
+// SmudgeClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); transcribed once.
 void SmudgeClass::vfunc_53(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_54 -- body derived from 25 instructions at 0x00570480; semantics not reconstructed.
-// size 84 bytes; signature __stdcall nargs=1
-// callees: 0x00502060, 0x00510f70
-//
-//   0x00570480  push     esi
-//   0x00570481  mov      esi, dword ptr [esp + 8]
-//   0x00570485  push     esi
-//   0x00570486  mov      ecx, 0x710d28
-//   0x0057048b  call     0x510f70
-//   0x00570490  mov      edx, dword ptr [0x7d6a1c]
-//   0x00570496  mov      ecx, dword ptr [esi + 8]
-//   0x00570499  add      eax, edx
-//   0x0057049b  cmp      eax, ecx
-//   0x0057049d  jg       0x5704d4
-//   0x0057049f  push     esi
-//   0x005704a0  mov      ecx, 0x710d28
-//   0x005704a5  call     0x502060
-//   0x005704aa  mov      ecx, dword ptr [eax + 0xa4]
-//   0x005704b0  test     ch, 0x10
-//   0x005704b3  je       0x5704d4
-//   0x005704b5  push     esi
-//   0x005704b6  mov      ecx, 0x710d28
-//   0x005704bb  call     0x502060
-//   0x005704c0  mov      ecx, dword ptr [eax + 0xa0]
-//   0x005704c6  add      eax, 0xa0
-//   0x005704cb  or       ecx, 0x40
-//   0x005704ce  pop      esi
-//   0x005704cf  mov      dword ptr [eax], ecx
-//   0x005704d1  ret      4
+// SmudgeClass::vfunc_54 -- ALIAS of AircraftClass::vfunc_54 (same machine code at 0x00570480); transcribed once.
 void SmudgeClass::vfunc_54(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_55 -- body derived from 25 instructions at 0x00570500; semantics not reconstructed.
-// size 84 bytes; signature __stdcall nargs=1
-// callees: 0x00502060, 0x00510f70
-//
-//   0x00570500  push     esi
-//   0x00570501  mov      esi, dword ptr [esp + 8]
-//   0x00570505  push     esi
-//   0x00570506  mov      ecx, 0x710d28
-//   0x0057050b  call     0x510f70
-//   0x00570510  mov      edx, dword ptr [0x7d6a1c]
-//   0x00570516  mov      ecx, dword ptr [esi + 8]
-//   0x00570519  add      eax, edx
-//   0x0057051b  cmp      eax, ecx
-//   0x0057051d  jg       0x570554
-//   0x0057051f  push     esi
-//   0x00570520  mov      ecx, 0x710d28
-//   0x00570525  call     0x502060
-//   0x0057052a  mov      ecx, dword ptr [eax + 0xa4]
-//   0x00570530  test     ch, 0x10
-//   0x00570533  je       0x570554
-//   0x00570535  push     esi
-//   0x00570536  mov      ecx, 0x710d28
-//   0x0057053b  call     0x502060
-//   0x00570540  mov      ecx, dword ptr [eax + 0xa0]
-//   0x00570546  add      eax, 0xa0
-//   0x0057054b  and      ecx, 0xffffffbf
-//   0x0057054e  pop      esi
-//   0x0057054f  mov      dword ptr [eax], ecx
-//   0x00570551  ret      4
+// SmudgeClass::vfunc_55 -- ALIAS of AircraftClass::vfunc_55 (same machine code at 0x00570500); transcribed once.
 void SmudgeClass::vfunc_55(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_56 -- body derived from 35 instructions at 0x005709b0; semantics not reconstructed.
-// size 110 bytes; signature __thiscall
-// callees: 0x0062c210
-//
-//   0x005709b0  push     esi
-//   0x005709b1  mov      esi, ecx
-//   0x005709b3  mov      dl, 1
-//   0x005709b5  call     0x62c210
-//   0x005709ba  mov      eax, dword ptr [esi]
-//   0x005709bc  mov      ecx, esi
-//   0x005709be  call     dword ptr [eax + 0xc0]
-//   0x005709c4  mov      byte ptr [esi + 0x35], 0
-//   0x005709c8  mov      eax, dword ptr [0x7dd4f8]
-//   0x005709cd  cmp      dword ptr [0x7dd500], eax
-//   0x005709d3  jl       0x570a04
-//   0x005709d5  mov      cl, byte ptr [0x7dd4fd]
-//   0x005709db  test     cl, cl
-//   0x005709dd  jne      0x5709e3
-//   0x005709df  test     eax, eax
-//   0x005709e1  jne      0x570a1c
-//   0x005709e3  mov      ecx, dword ptr [0x7dd504]
-//   0x005709e9  test     ecx, ecx
-//   0x005709eb  jle      0x570a1c
-//   0x005709ed  mov      edx, dword ptr [0x7dd4f0]
-//   0x005709f3  add      ecx, eax
-//   0x005709f5  push     0
-//   0x005709f7  push     ecx
-//   0x005709f8  mov      ecx, 0x7dd4f0
-//   0x005709fd  call     dword ptr [edx + 8]
-//   0x00570a00  test     al, al
-//   0x00570a02  je       0x570a1c
-//   0x00570a04  mov      ecx, dword ptr [0x7dd500]
-//   0x00570a0a  mov      eax, ecx
-//   0x00570a0c  inc      ecx
-//   0x00570a0d  mov      dword ptr [0x7dd500], ecx
-//   0x00570a13  mov      ecx, dword ptr [0x7dd4f4]
-//   0x00570a19  mov      dword ptr [ecx + eax*4], esi
-//   0x00570a1c  pop      esi
-//   0x00570a1d  ret      
+// SmudgeClass::vfunc_56 -- ALIAS of BuildingClass::vfunc_56 (same machine code at 0x005709b0); transcribed once.
 void SmudgeClass::vfunc_56()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_57 -- body derived from 1 instructions at 0x0056ec00; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ec00  ret      
+// SmudgeClass::vfunc_57 -- ALIAS of AnimClass::vfunc_57 (same machine code at 0x0056ec00); transcribed once.
 void SmudgeClass::vfunc_57()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_58 -- body derived from 2 instructions at 0x0056ec10; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0056ec10  xor      eax, eax
-//   0x0056ec12  ret      4
+// SmudgeClass::vfunc_58 -- ALIAS of AnimClass::vfunc_58 (same machine code at 0x0056ec10); transcribed once.
 void SmudgeClass::vfunc_58(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_59 -- body derived from 41 instructions at 0x0056f480; semantics not reconstructed.
-// size 111 bytes; signature __thiscall nargs=3
-// callees: 0x005f5120
-//
-//   0x0056f480  sub      esp, 0x20
-//   0x0056f483  mov      al, byte ptr [0x7b2e3a]
-//   0x0056f488  push     esi
-//   0x0056f489  mov      esi, ecx
-//   0x0056f48b  test     al, al
-//   0x0056f48d  mov      dword ptr [esp + 8], esi
-//   0x0056f491  jne      0x56f4b2
-//   0x0056f493  mov      al, byte ptr [0x7b2e3c]
-//   0x0056f498  test     al, al
-//   0x0056f49a  jne      0x56f4b2
-//   0x0056f49c  mov      al, byte ptr [esp + 0x2c]
-//   0x0056f4a0  test     al, al
-//   0x0056f4a2  jne      0x56f4ab
-//   0x0056f4a4  mov      al, byte ptr [esi + 0x2e]
-//   0x0056f4a7  test     al, al
-//   0x0056f4a9  je       0x56f4e6
-//   0x0056f4ab  mov      al, byte ptr [esi + 0x2f]
-//   0x0056f4ae  test     al, al
-//   0x0056f4b0  jne      0x56f4e6
-//   0x0056f4b2  mov      edx, dword ptr [esi]
-//   0x0056f4b4  lea      eax, [esp + 0xc]
-//   0x0056f4b8  push     eax
-//   0x0056f4b9  lea      eax, [esp + 0x18]
-//   0x0056f4bd  push     eax
-//   0x0056f4be  mov      ecx, esi
-//   0x0056f4c0  mov      byte ptr [esi + 0x2e], 0
-//   0x0056f4c4  call     dword ptr [edx + 0xa8]
-//   0x0056f4ca  mov      ecx, dword ptr [0x714eec]
-//   0x0056f4d0  push     eax
-//   0x0056f4d1  call     0x5f5120
-//   0x0056f4d6  test     al, al
-//   0x0056f4d8  jne      0x56f4ef
-//   0x0056f4da  mov      edx, dword ptr [esi]
-//   0x0056f4dc  mov      ecx, esi
-//   0x0056f4de  call     dword ptr [edx + 0x2c]
-//   0x0056f4e1  cmp      eax, 0x18
-//   0x0056f4e4  je       0x56f4ef
-//   0x0056f4e6  xor      al, al
-//   0x0056f4e8  pop      esi
-//   0x0056f4e9  add      esp, 0x20
-//   0x0056f4ec  ret      0xc
+// SmudgeClass::vfunc_59 -- ALIAS of AircraftClass::vfunc_59 (same machine code at 0x0056f480); transcribed once.
 void SmudgeClass::vfunc_59(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_60 -- body derived from 27 instructions at 0x005701b0; semantics not reconstructed.
-// size 87 bytes; signature __thiscall nargs=1
-// callees: 0x00682610
-//
-//   0x005701b0  push     ecx
-//   0x005701b1  push     esi
-//   0x005701b2  mov      esi, ecx
-//   0x005701b4  mov      cl, byte ptr [0x7d69d8]
-//   0x005701ba  mov      al, 1
-//   0x005701bc  test     al, cl
-//   0x005701be  jne      0x5701ef
-//   0x005701c0  mov      dl, cl
-//   0x005701c2  push     0x570230
-//   0x005701c7  or       dl, al
-//   0x005701c9  mov      eax, 0x7fff
-//   0x005701ce  mov      word ptr [esp + 8], ax
-//   0x005701d3  mov      word ptr [esp + 0xa], ax
-//   0x005701d8  mov      eax, dword ptr [esp + 8]
-//   0x005701dc  mov      byte ptr [0x7d69d8], dl
-//   0x005701e2  mov      dword ptr [0x7d6a08], eax
-//   0x005701e7  call     0x682610
-//   0x005701ec  add      esp, 4
-//   0x005701ef  mov      edx, dword ptr [esi]
-//   0x005701f1  mov      ecx, esi
-//   0x005701f3  call     dword ptr [edx + 0x84]
-//   0x005701f9  test     eax, eax
-//   0x005701fb  jne      0x570207
-//   0x005701fd  mov      eax, 0x7d6a08
-//   0x00570202  pop      esi
-//   0x00570203  pop      ecx
-//   0x00570204  ret      4
+// SmudgeClass::vfunc_60 -- ALIAS of AircraftClass::vfunc_60 (same machine code at 0x005701b0); transcribed once.
 void SmudgeClass::vfunc_60(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_61 -- body derived from 1 instructions at 0x00416840; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00416840  ret      8
+// SmudgeClass::vfunc_61 -- ALIAS of AnimClass::vfunc_61 (same machine code at 0x00416840); transcribed once.
 void SmudgeClass::vfunc_61(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_62 -- body derived from 1 instructions at 0x00416850; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00416850  ret      8
+// SmudgeClass::vfunc_62 -- ALIAS of AnimClass::vfunc_62 (same machine code at 0x00416850); transcribed once.
 void SmudgeClass::vfunc_62(int a0, int a1)
 {
 }
@@ -1703,38 +395,17 @@ void SmudgeClass::vfunc_63(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_64 -- body derived from 7 instructions at 0x00570990; semantics not reconstructed.
-// size 21 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00570990  mov      edx, dword ptr [esp + 8]
-//   0x00570994  mov      eax, dword ptr [ecx]
-//   0x00570996  push     edx
-//   0x00570997  mov      edx, dword ptr [esp + 8]
-//   0x0057099b  push     edx
-//   0x0057099c  call     dword ptr [eax + 0xfc]
-//   0x005709a2  ret      8
+// SmudgeClass::vfunc_64 -- ALIAS of AircraftClass::vfunc_64 (same machine code at 0x00570990); transcribed once.
 void SmudgeClass::vfunc_64(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_65 -- body derived from 1 instructions at 0x0056ec20; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ec20  ret      
+// SmudgeClass::vfunc_65 -- ALIAS of AnimClass::vfunc_65 (same machine code at 0x0056ec20); transcribed once.
 void SmudgeClass::vfunc_65()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_66 -- body derived from 1 instructions at 0x0056ec30; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x0056ec30  ret      8
+// SmudgeClass::vfunc_66 -- ALIAS of AnimClass::vfunc_66 (same machine code at 0x0056ec30); transcribed once.
 void SmudgeClass::vfunc_66(int a0, int a1)
 {
 }
@@ -1794,799 +465,187 @@ void SmudgeClass::vfunc_67(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_68 -- body derived from 37 instructions at 0x0056f000; semantics not reconstructed.
-// size 103 bytes; signature __thiscall nargs=1
-// callees: 0x005f5120
-//
-//   0x0056f000  sub      esp, 0x18
-//   0x0056f003  lea      eax, [esp]
-//   0x0056f007  push     ebx
-//   0x0056f008  push     ebp
-//   0x0056f009  push     esi
-//   0x0056f00a  push     edi
-//   0x0056f00b  mov      esi, ecx
-//   0x0056f00d  push     eax
-//   0x0056f00e  lea      eax, [esp + 0x1c]
-//   0x0056f012  mov      edx, dword ptr [esi]
-//   0x0056f014  push     eax
-//   0x0056f015  call     dword ptr [edx + 0xa8]
-//   0x0056f01b  mov      ecx, dword ptr [0x714eec]
-//   0x0056f021  push     eax
-//   0x0056f022  call     0x5f5120
-//   0x0056f027  mov      edx, dword ptr [esi]
-//   0x0056f029  mov      ecx, esi
-//   0x0056f02b  call     dword ptr [edx + 0x68]
-//   0x0056f02e  mov      edi, eax
-//   0x0056f030  test     edi, edi
-//   0x0056f032  jne      0x56f067
-//   0x0056f034  mov      eax, dword ptr [esp + 0x2c]
-//   0x0056f038  mov      edx, dword ptr [0x7d69a8]
-//   0x0056f03e  mov      ecx, eax
-//   0x0056f040  pop      edi
-//   0x0056f041  pop      esi
-//   0x0056f042  pop      ebp
-//   0x0056f043  mov      dword ptr [ecx], edx
-//   0x0056f045  mov      edx, dword ptr [0x7d69ac]
-//   0x0056f04b  pop      ebx
-//   0x0056f04c  mov      dword ptr [ecx + 4], edx
-//   0x0056f04f  mov      edx, dword ptr [0x7d69b0]
-//   0x0056f055  mov      dword ptr [ecx + 8], edx
-//   0x0056f058  mov      edx, dword ptr [0x7d69b4]
-//   0x0056f05e  mov      dword ptr [ecx + 0xc], edx
-//   0x0056f061  add      esp, 0x18
-//   0x0056f064  ret      4
+// SmudgeClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); transcribed once.
 void SmudgeClass::vfunc_68(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_69 -- body derived from 38 instructions at 0x0056f160; semantics not reconstructed.
-// size 120 bytes; signature __thiscall nargs=1
-// callees: 0x005f5120
-//
-//   0x0056f160  sub      esp, 0x54
-//   0x0056f163  push     ebx
-//   0x0056f164  push     esi
-//   0x0056f165  lea      eax, [esp + 0x14]
-//   0x0056f169  mov      esi, ecx
-//   0x0056f16b  push     eax
-//   0x0056f16c  lea      eax, [esp + 0x20]
-//   0x0056f170  mov      edx, dword ptr [esi]
-//   0x0056f172  push     eax
-//   0x0056f173  mov      dword ptr [esp + 0x18], esi
-//   0x0056f177  call     dword ptr [edx + 0xa8]
-//   0x0056f17d  mov      ecx, dword ptr [0x714eec]
-//   0x0056f183  push     eax
-//   0x0056f184  call     0x5f5120
-//   0x0056f189  mov      edx, dword ptr [esi]
-//   0x0056f18b  mov      ecx, esi
-//   0x0056f18d  call     dword ptr [edx + 0x84]
-//   0x0056f193  mov      edx, dword ptr [eax]
-//   0x0056f195  mov      ecx, eax
-//   0x0056f197  call     dword ptr [edx + 0x9c]
-//   0x0056f19d  mov      ebx, eax
-//   0x0056f19f  test     ebx, ebx
-//   0x0056f1a1  mov      dword ptr [esp + 0xc], ebx
-//   0x0056f1a5  jne      0x56f1d8
-//   0x0056f1a7  mov      eax, dword ptr [esp + 0x60]
-//   0x0056f1ab  mov      edx, dword ptr [0x7d69a8]
-//   0x0056f1b1  mov      ecx, eax
-//   0x0056f1b3  pop      esi
-//   0x0056f1b4  pop      ebx
-//   0x0056f1b5  mov      dword ptr [ecx], edx
-//   0x0056f1b7  mov      edx, dword ptr [0x7d69ac]
-//   0x0056f1bd  mov      dword ptr [ecx + 4], edx
-//   0x0056f1c0  mov      edx, dword ptr [0x7d69b0]
-//   0x0056f1c6  mov      dword ptr [ecx + 8], edx
-//   0x0056f1c9  mov      edx, dword ptr [0x7d69b4]
-//   0x0056f1cf  mov      dword ptr [ecx + 0xc], edx
-//   0x0056f1d2  add      esp, 0x54
-//   0x0056f1d5  ret      4
+// SmudgeClass::vfunc_69 -- ALIAS of AircraftClass::vfunc_69 (same machine code at 0x0056f160); transcribed once.
 void SmudgeClass::vfunc_69(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_70 -- body derived from 1 instructions at 0x0040e690; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e690  ret      
+// SmudgeClass::vfunc_70 -- ALIAS of AircraftClass::vfunc_70 (same machine code at 0x0040e690); transcribed once.
 void SmudgeClass::vfunc_70()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_71 -- body derived from 8 instructions at 0x0056f680; semantics not reconstructed.
-// size 24 bytes; signature __cdecl
-// callees: 0x004b2e90
-//
-//   0x0056f680  mov      al, byte ptr [ecx + 0x2e]
-//   0x0056f683  test     al, al
-//   0x0056f685  jne      0x56f697
-//   0x0056f687  mov      byte ptr [ecx + 0x2e], 1
-//   0x0056f68b  push     0
-//   0x0056f68d  mov      ecx, 0x710d28
-//   0x0056f692  call     0x4b2e90
-//   0x0056f697  ret      
+// SmudgeClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); transcribed once.
 void SmudgeClass::vfunc_71()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_72 -- body derived from 2 instructions at 0x0056ec50; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x0056ec50  xor      al, al
-//   0x0056ec52  ret      0xc
+// SmudgeClass::vfunc_72 -- ALIAS of AnimClass::vfunc_72 (same machine code at 0x0056ec50); transcribed once.
 void SmudgeClass::vfunc_72(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_73 -- body derived from 2 instructions at 0x0056ec40; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x0056ec40  xor      al, al
-//   0x0056ec42  ret      0xc
+// SmudgeClass::vfunc_73 -- ALIAS of AnimClass::vfunc_73 (same machine code at 0x0056ec40); transcribed once.
 void SmudgeClass::vfunc_73(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_74 -- body derived from 1 instructions at 0x0056ec60; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0056ec60  ret      4
+// SmudgeClass::vfunc_74 -- ALIAS of AnimClass::vfunc_74 (same machine code at 0x0056ec60); transcribed once.
 void SmudgeClass::vfunc_74(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_75 -- body derived from 23 instructions at 0x0056ee20; semantics not reconstructed.
-// size 52 bytes; signature __thiscall
-// callees: none
-//
-//   0x0056ee20  push     ecx
-//   0x0056ee21  mov      al, byte ptr [0x7b2e3a]
-//   0x0056ee26  push     esi
-//   0x0056ee27  test     al, al
-//   0x0056ee29  push     edi
-//   0x0056ee2a  mov      esi, ecx
-//   0x0056ee2c  jne      0x56ee54
-//   0x0056ee2e  mov      al, byte ptr [esi + 0x2f]
-//   0x0056ee31  test     al, al
-//   0x0056ee33  jne      0x56ee4e
-//   0x0056ee35  mov      al, byte ptr [esi + 0x30]
-//   0x0056ee38  test     al, al
-//   0x0056ee3a  jne      0x56ee4e
-//   0x0056ee3c  mov      eax, dword ptr [esi]
-//   0x0056ee3e  call     dword ptr [eax + 0x84]
-//   0x0056ee44  mov      cl, byte ptr [eax + 0xc9]
-//   0x0056ee4a  test     cl, cl
-//   0x0056ee4c  jne      0x56ee54
-//   0x0056ee4e  pop      edi
-//   0x0056ee4f  xor      al, al
-//   0x0056ee51  pop      esi
-//   0x0056ee52  pop      ecx
-//   0x0056ee53  ret      
+// SmudgeClass::vfunc_75 -- ALIAS of AnimClass::vfunc_75 (same machine code at 0x0056ee20); transcribed once.
 void SmudgeClass::vfunc_75()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_76 -- body derived from 39 instructions at 0x0056eda0; semantics not reconstructed.
-// size 117 bytes; signature __thiscall nargs=1
-// callees: 0x00478840, 0x00478860
-//
-//   0x0056eda0  push     ecx
-//   0x0056eda1  push     esi
-//   0x0056eda2  mov      esi, ecx
-//   0x0056eda4  mov      al, byte ptr [esi + 0x30]
-//   0x0056eda7  test     al, al
-//   0x0056eda9  je       0x56ee12
-//   0x0056edab  mov      edx, dword ptr [0x7b2d88]
-//   0x0056edb1  lea      eax, [esp + 4]
-//   0x0056edb5  push     eax
-//   0x0056edb6  mov      ecx, 0x7b2d88
-//   0x0056edbb  mov      dword ptr [esp + 8], esi
-//   0x0056edbf  call     dword ptr [edx + 0x10]
-//   0x0056edc2  cmp      eax, -1
-//   0x0056edc5  je       0x56edf4
-//   0x0056edc7  mov      ecx, dword ptr [0x7b2d98]
-//   0x0056edcd  cmp      eax, ecx
-//   0x0056edcf  jge      0x56edf4
-//   0x0056edd1  dec      ecx
-//   0x0056edd2  cmp      eax, ecx
-//   0x0056edd4  mov      dword ptr [0x7b2d98], ecx
-//   0x0056edda  jge      0x56edf4
-//   0x0056eddc  mov      ecx, dword ptr [0x7b2d8c]
-//   0x0056ede2  inc      eax
-//   0x0056ede3  mov      edx, dword ptr [ecx + eax*4]
-//   0x0056ede6  mov      dword ptr [ecx + eax*4 - 4], edx
-//   0x0056edea  mov      ecx, dword ptr [0x7b2d98]
-//   0x0056edf0  cmp      eax, ecx
-//   0x0056edf2  jl       0x56eddc
-//   0x0056edf4  mov      ecx, 0x710d28
-//   0x0056edf9  mov      byte ptr [esi + 0x30], 0
-//   0x0056edfd  call     0x478840
-//   0x0056ee02  cmp      eax, esi
-//   0x0056ee04  jne      0x56ee12
-//   0x0056ee06  push     0
-//   0x0056ee08  mov      ecx, 0x710d28
-//   0x0056ee0d  call     0x478860
-//   0x0056ee12  pop      esi
-//   0x0056ee13  pop      ecx
-//   0x0056ee14  ret      
+// SmudgeClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); transcribed once.
 void SmudgeClass::vfunc_76(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_77 -- body derived from 2 instructions at 0x0056ec70; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x0056ec70  xor      al, al
-//   0x0056ec72  ret      8
+// SmudgeClass::vfunc_77 -- ALIAS of AnimClass::vfunc_77 (same machine code at 0x0056ec70); transcribed once.
 void SmudgeClass::vfunc_77(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_78 -- body derived from 2 instructions at 0x0056ec80; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0056ec80  xor      eax, eax
-//   0x0056ec82  ret      4
+// SmudgeClass::vfunc_78 -- ALIAS of AnimClass::vfunc_78 (same machine code at 0x0056ec80); transcribed once.
 void SmudgeClass::vfunc_78(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_79 -- body derived from 50 instructions at 0x0056fbe0; semantics not reconstructed.
-// size 150 bytes; signature __thiscall nargs=6
-// callees: 0x0045bbf0
-//
-//   0x0056fbe0  sub      esp, 0x14
-//   0x0056fbe3  push     ebx
-//   0x0056fbe4  push     ebp
-//   0x0056fbe5  push     esi
-//   0x0056fbe6  mov      esi, ecx
-//   0x0056fbe8  push     edi
-//   0x0056fbe9  mov      dword ptr [esp + 0x10], 0
-//   0x0056fbf1  mov      eax, dword ptr [esi + 0x28]
-//   0x0056fbf4  test     eax, eax
-//   0x0056fbf6  mov      dword ptr [esp + 0x14], eax
-//   0x0056fbfa  jle      0x56ffe3
-//   0x0056fc00  mov      ebp, dword ptr [esp + 0x28]
-//   0x0056fc04  cmp      dword ptr [ebp], 0
-//   0x0056fc08  je       0x56ffe3
-//   0x0056fc0e  mov      bl, byte ptr [esp + 0x38]
-//   0x0056fc12  test     bl, bl
-//   0x0056fc14  jne      0x56fc2c
-//   0x0056fc16  mov      eax, dword ptr [esi]
-//   0x0056fc18  call     dword ptr [eax + 0x84]
-//   0x0056fc1e  mov      cl, byte ptr [eax + 0xcc]
-//   0x0056fc24  test     cl, cl
-//   0x0056fc26  jne      0x56ffe3
-//   0x0056fc2c  mov      edx, dword ptr [esi]
-//   0x0056fc2e  mov      ecx, esi
-//   0x0056fc30  call     dword ptr [edx + 0x84]
-//   0x0056fc36  mov      edi, dword ptr [eax + 0x68]
-//   0x0056fc39  test     bl, bl
-//   0x0056fc3b  mov      dword ptr [esp + 0x38], edi
-//   0x0056fc3f  jne      0x56fc63
-//   0x0056fc41  mov      eax, dword ptr [esp + 0x2c]
-//   0x0056fc45  mov      edx, dword ptr [esi]
-//   0x0056fc47  push     eax
-//   0x0056fc48  mov      ecx, esi
-//   0x0056fc4a  call     dword ptr [edx + 0x84]
-//   0x0056fc50  mov      eax, dword ptr [eax + 0x64]
-//   0x0056fc53  mov      edx, dword ptr [esp + 0x34]
-//   0x0056fc57  mov      ecx, dword ptr [ebp]
-//   0x0056fc5a  push     eax
-//   0x0056fc5b  call     0x45bbf0
-//   0x0056fc60  mov      dword ptr [ebp], eax
-//   0x0056fc63  mov      ecx, dword ptr [ebp]
-//   0x0056fc66  test     ecx, ecx
-//   0x0056fc68  jne      0x56fc76
-//   0x0056fc6a  pop      edi
-//   0x0056fc6b  pop      esi
-//   0x0056fc6c  pop      ebp
-//   0x0056fc6d  xor      eax, eax
-//   0x0056fc6f  pop      ebx
-//   0x0056fc70  add      esp, 0x14
-//   0x0056fc73  ret      0x18
+// SmudgeClass::vfunc_79 -- ALIAS of AnimClass::vfunc_79 (same machine code at 0x0056fbe0); transcribed once.
 void SmudgeClass::vfunc_79(int a0, int a1, int a2, int a3, int a4, int a5)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_80 -- body derived from 1 instructions at 0x0056ec90; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x0056ec90  ret      0xc
+// SmudgeClass::vfunc_80 -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); transcribed once.
 void SmudgeClass::vfunc_80(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_81 -- body derived from 2 instructions at 0x0056eca0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056eca0  xor      al, al
-//   0x0056eca2  ret      
+// SmudgeClass::vfunc_81 -- ALIAS of AircraftClass::vfunc_81 (same machine code at 0x0056eca0); transcribed once.
 void SmudgeClass::vfunc_81()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_82 -- body derived from 1 instructions at 0x0056ecb0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ecb0  ret      
+// SmudgeClass::vfunc_82 -- ALIAS of AircraftClass::vfunc_82 (same machine code at 0x0056ecb0); transcribed once.
 void SmudgeClass::vfunc_82()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_83 -- body derived from 2 instructions at 0x0056ecc0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ecc0  xor      eax, eax
-//   0x0056ecc2  ret      
+// SmudgeClass::vfunc_83 -- ALIAS of AnimClass::vfunc_83 (same machine code at 0x0056ecc0); transcribed once.
 void SmudgeClass::vfunc_83()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_84 -- body derived from 2 instructions at 0x0056ecd0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ecd0  or       eax, 0xffffffff
-//   0x0056ecd3  ret      
+// SmudgeClass::vfunc_84 -- ALIAS of AnimClass::vfunc_84 (same machine code at 0x0056ecd0); transcribed once.
 void SmudgeClass::vfunc_84()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_85 -- body derived from 1 instructions at 0x00416860; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00416860  ret      4
+// SmudgeClass::vfunc_85 -- ALIAS of AnimClass::vfunc_85 (same machine code at 0x00416860); transcribed once.
 void SmudgeClass::vfunc_85(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_86 -- body derived from 1 instructions at 0x00416870; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00416870  ret      4
+// SmudgeClass::vfunc_86 -- ALIAS of AnimClass::vfunc_86 (same machine code at 0x00416870); transcribed once.
 void SmudgeClass::vfunc_86(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_87 -- body derived from 23 instructions at 0x00570240; semantics not reconstructed.
-// size 51 bytes; signature __thiscall nargs=2
-// callees: none
-//
-//   0x00570240  push     ebx
-//   0x00570241  push     esi
-//   0x00570242  mov      esi, ecx
-//   0x00570244  push     edi
-//   0x00570245  mov      eax, dword ptr [esi]
-//   0x00570247  call     dword ptr [eax + 0x84]
-//   0x0057024d  mov      edx, dword ptr [esi]
-//   0x0057024f  mov      edi, eax
-//   0x00570251  mov      ecx, esi
-//   0x00570253  mov      ebx, dword ptr [edi]
-//   0x00570255  call     dword ptr [edx + 0x3c]
-//   0x00570258  mov      ecx, dword ptr [esp + 0x10]
-//   0x0057025c  push     eax
-//   0x0057025d  mov      eax, dword ptr [esp + 0x18]
-//   0x00570261  push     0
-//   0x00570263  push     eax
-//   0x00570264  push     ecx
-//   0x00570265  mov      ecx, edi
-//   0x00570267  call     dword ptr [ebx + 0x94]
-//   0x0057026d  pop      edi
-//   0x0057026e  pop      esi
-//   0x0057026f  pop      ebx
-//   0x00570270  ret      8
+// SmudgeClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); transcribed once.
 void SmudgeClass::vfunc_87(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_88 -- body derived from 4 instructions at 0x0056fbc0; semantics not reconstructed.
-// size 12 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x0056fbc0  cmp      dword ptr [esp + 8], 0xd
-//   0x0056fbc5  je       0x56fbcc
-//   0x0056fbc7  xor      eax, eax
-//   0x0056fbc9  ret      0xc
+// SmudgeClass::vfunc_88 -- ALIAS of AnimClass::vfunc_88 (same machine code at 0x0056fbc0); transcribed once.
 void SmudgeClass::vfunc_88(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_89 -- body derived from 5 instructions at 0x005700b0; semantics not reconstructed.
-// size 14 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x005700b0  mov      ecx, dword ptr [esp + 4]
-//   0x005700b4  xor      eax, eax
-//   0x005700b6  test     ecx, ecx
-//   0x005700b8  setne    al
-//   0x005700bb  ret      4
+// SmudgeClass::vfunc_89 -- ALIAS of AnimClass::vfunc_89 (same machine code at 0x005700b0); transcribed once.
 void SmudgeClass::vfunc_89(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_90 -- body derived from 1 instructions at 0x0056ece0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0056ece0  ret      4
+// SmudgeClass::vfunc_90 -- ALIAS of AircraftClass::vfunc_90 (same machine code at 0x0056ece0); transcribed once.
 void SmudgeClass::vfunc_90(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_91 -- body derived from 1 instructions at 0x0056ecf0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0056ecf0  ret      4
+// SmudgeClass::vfunc_91 -- ALIAS of AnimClass::vfunc_91 (same machine code at 0x0056ecf0); transcribed once.
 void SmudgeClass::vfunc_91(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_92 -- body derived from 1 instructions at 0x00570e70; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00570e70  ret      8
+// SmudgeClass::vfunc_92 -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); transcribed once.
 void SmudgeClass::vfunc_92(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_93 -- body derived from 55 instructions at 0x0056ed00; semantics not reconstructed.
-// size 156 bytes; signature __thiscall nargs=1
-// callees: 0x00502060
-//
-//   0x0056ed00  sub      esp, 0x18
-//   0x0056ed03  push     ebx
-//   0x0056ed04  push     esi
-//   0x0056ed05  mov      esi, ecx
-//   0x0056ed07  push     edi
-//   0x0056ed08  push     0
-//   0x0056ed0a  mov      eax, dword ptr [esi]
-//   0x0056ed0c  call     dword ptr [eax + 0x10c]
-//   0x0056ed12  mov      edx, dword ptr [esi]
-//   0x0056ed14  lea      eax, [esp + 0x18]
-//   0x0056ed18  push     eax
-//   0x0056ed19  mov      ecx, esi
-//   0x0056ed1b  call     dword ptr [edx + 0x180]
-//   0x0056ed21  mov      edi, dword ptr [esp + 0x28]
-//   0x0056ed25  push     1
-//   0x0056ed27  mov      ecx, edi
-//   0x0056ed29  push     0
-//   0x0056ed2b  and      ecx, 7
-//   0x0056ed2e  push     -1
-//   0x0056ed30  push     edi
-//   0x0056ed31  mov      ebx, dword ptr [ecx*8 + 0x729a48]
-//   0x0056ed38  lea      edx, [ecx*8 + 0x729a48]
-//   0x0056ed3f  mov      ecx, dword ptr [eax]
-//   0x0056ed41  mov      edx, dword ptr [edx + 4]
-//   0x0056ed44  add      ecx, ebx
-//   0x0056ed46  mov      ebx, dword ptr [eax + 4]
-//   0x0056ed49  mov      eax, dword ptr [eax + 8]
-//   0x0056ed4c  add      edx, ebx
-//   0x0056ed4e  mov      ebx, dword ptr [esi]
-//   0x0056ed50  mov      dword ptr [esp + 0x20], edx
-//   0x0056ed54  lea      edx, [esp + 0x1c]
-//   0x0056ed58  mov      dword ptr [esp + 0x1c], ecx
-//   0x0056ed5c  push     edx
-//   0x0056ed5d  mov      ecx, 0x710d28
-//   0x0056ed62  mov      dword ptr [esp + 0x28], eax
-//   0x0056ed66  call     0x502060
-//   0x0056ed6b  push     eax
-//   0x0056ed6c  mov      ecx, esi
-//   0x0056ed6e  call     dword ptr [ebx + 0x178]
-//   0x0056ed74  test     eax, eax
-//   0x0056ed76  jne      0x56ed87
-//   0x0056ed78  mov      eax, dword ptr [esi]
-//   0x0056ed7a  lea      ecx, [esp + 0xc]
-//   0x0056ed7e  push     ecx
-//   0x0056ed7f  mov      ecx, esi
-//   0x0056ed81  call     dword ptr [eax + 0x184]
-//   0x0056ed87  mov      edx, dword ptr [esi]
-//   0x0056ed89  push     1
-//   0x0056ed8b  mov      ecx, esi
-//   0x0056ed8d  call     dword ptr [edx + 0x10c]
-//   0x0056ed93  pop      edi
-//   0x0056ed94  pop      esi
-//   0x0056ed95  pop      ebx
-//   0x0056ed96  add      esp, 0x18
-//   0x0056ed99  ret      4
+// SmudgeClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); transcribed once.
 void SmudgeClass::vfunc_93(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_94 -- body derived from 2 instructions at 0x00416880; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=5
-// callees: none
-//
-//   0x00416880  xor      eax, eax
-//   0x00416882  ret      0x14
+// SmudgeClass::vfunc_94 -- ALIAS of AnimClass::vfunc_94 (same machine code at 0x00416880); transcribed once.
 void SmudgeClass::vfunc_94(int a0, int a1, int a2, int a3, int a4)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_95 -- body derived from 2 instructions at 0x00416890; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=5
-// callees: none
-//
-//   0x00416890  xor      eax, eax
-//   0x00416892  ret      0x14
+// SmudgeClass::vfunc_95 -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); transcribed once.
 void SmudgeClass::vfunc_95(int a0, int a1, int a2, int a3, int a4)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_96 -- body derived from 12 instructions at 0x0040e6a0; semantics not reconstructed.
-// size 30 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e6a0  mov      eax, dword ptr [esp + 4]
-//   0x0040e6a4  add      ecx, 0x40
-//   0x0040e6a7  push     esi
-//   0x0040e6a8  mov      edx, eax
-//   0x0040e6aa  mov      esi, dword ptr [ecx]
-//   0x0040e6ac  mov      dword ptr [edx], esi
-//   0x0040e6ae  mov      esi, dword ptr [ecx + 4]
-//   0x0040e6b1  mov      dword ptr [edx + 4], esi
-//   0x0040e6b4  pop      esi
-//   0x0040e6b5  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e6b8  mov      dword ptr [edx + 8], ecx
-//   0x0040e6bb  ret      4
+// SmudgeClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); transcribed once.
 void SmudgeClass::vfunc_96(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_97 -- body derived from 9 instructions at 0x00570cc0; semantics not reconstructed.
-// size 26 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00570cc0  mov      eax, dword ptr [esp + 4]
-//   0x00570cc4  add      ecx, 0x40
-//   0x00570cc7  mov      edx, dword ptr [eax]
-//   0x00570cc9  mov      dword ptr [ecx], edx
-//   0x00570ccb  mov      edx, dword ptr [eax + 4]
-//   0x00570cce  mov      dword ptr [ecx + 4], edx
-//   0x00570cd1  mov      eax, dword ptr [eax + 8]
-//   0x00570cd4  mov      dword ptr [ecx + 8], eax
-//   0x00570cd7  ret      4
+// SmudgeClass::vfunc_97 -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); transcribed once.
 void SmudgeClass::vfunc_97(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_98 -- body derived from 18 instructions at 0x0040e6c0; semantics not reconstructed.
-// size 55 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e6c0  push     ecx
-//   0x0040e6c1  mov      eax, dword ptr [ecx + 0x40]
-//   0x0040e6c4  cdq      
-//   0x0040e6c5  and      edx, 0xff
-//   0x0040e6cb  add      eax, edx
-//   0x0040e6cd  sar      eax, 8
-//   0x0040e6d0  mov      word ptr [esp], ax
-//   0x0040e6d5  mov      eax, dword ptr [ecx + 0x44]
-//   0x0040e6d8  cdq      
-//   0x0040e6d9  and      edx, 0xff
-//   0x0040e6df  add      eax, edx
-//   0x0040e6e1  sar      eax, 8
-//   0x0040e6e4  mov      word ptr [esp + 2], ax
-//   0x0040e6e9  mov      eax, dword ptr [esp + 8]
-//   0x0040e6ed  mov      ecx, dword ptr [esp]
-//   0x0040e6f1  mov      dword ptr [eax], ecx
-//   0x0040e6f3  pop      ecx
-//   0x0040e6f4  ret      4
+// SmudgeClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); transcribed once.
 void SmudgeClass::vfunc_98(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_99 -- body derived from 10 instructions at 0x00570ce0; semantics not reconstructed.
-// size 31 bytes; signature __cdecl
-// callees: 0x00502060
-//
-//   0x00570ce0  mov      eax, dword ptr [ecx]
-//   0x00570ce2  sub      esp, 0xc
-//   0x00570ce5  lea      edx, [esp]
-//   0x00570ce9  push     edx
-//   0x00570cea  call     dword ptr [eax + 0x180]
-//   0x00570cf0  push     eax
-//   0x00570cf1  mov      ecx, 0x710d28
-//   0x00570cf6  call     0x502060
-//   0x00570cfb  add      esp, 0xc
-//   0x00570cfe  ret      
+// SmudgeClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); transcribed once.
 void SmudgeClass::vfunc_99()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_100 -- body derived from 23 instructions at 0x00570d00; semantics not reconstructed.
-// size 70 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00570d00  sub      esp, 0x10
-//   0x00570d03  mov      eax, dword ptr [ecx]
-//   0x00570d05  lea      edx, [esp + 4]
-//   0x00570d09  push     edx
-//   0x00570d0a  call     dword ptr [eax + 0x4c]
-//   0x00570d0d  mov      ecx, eax
-//   0x00570d0f  mov      eax, dword ptr [ecx]
-//   0x00570d11  cdq      
-//   0x00570d12  and      edx, 0xff
-//   0x00570d18  add      eax, edx
-//   0x00570d1a  sar      eax, 8
-//   0x00570d1d  mov      word ptr [esp], ax
-//   0x00570d22  mov      eax, dword ptr [ecx + 4]
-//   0x00570d25  cdq      
-//   0x00570d26  and      edx, 0xff
-//   0x00570d2c  add      eax, edx
-//   0x00570d2e  sar      eax, 8
-//   0x00570d31  mov      word ptr [esp + 2], ax
-//   0x00570d36  mov      eax, dword ptr [esp + 0x14]
-//   0x00570d3a  mov      ecx, dword ptr [esp]
-//   0x00570d3e  mov      dword ptr [eax], ecx
-//   0x00570d40  add      esp, 0x10
-//   0x00570d43  ret      4
+// SmudgeClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); transcribed once.
 void SmudgeClass::vfunc_100(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_101 -- body derived from 26 instructions at 0x00570d50; semantics not reconstructed.
-// size 81 bytes; signature __cdecl nargs=1
-// callees: 0x005020d0
-//
-//   0x00570d50  sub      esp, 0x14
-//   0x00570d53  mov      eax, dword ptr [ecx]
-//   0x00570d55  lea      edx, [esp + 8]
-//   0x00570d59  push     edx
-//   0x00570d5a  call     dword ptr [eax + 0x4c]
-//   0x00570d5d  mov      ecx, eax
-//   0x00570d5f  mov      eax, dword ptr [ecx]
-//   0x00570d61  cdq      
-//   0x00570d62  and      edx, 0xff
-//   0x00570d68  add      eax, edx
-//   0x00570d6a  sar      eax, 8
-//   0x00570d6d  mov      word ptr [esp], ax
-//   0x00570d72  mov      eax, dword ptr [ecx + 4]
-//   0x00570d75  cdq      
-//   0x00570d76  and      edx, 0xff
-//   0x00570d7c  lea      ecx, [esp + 4]
-//   0x00570d80  add      eax, edx
-//   0x00570d82  push     ecx
-//   0x00570d83  sar      eax, 8
-//   0x00570d86  mov      word ptr [esp + 6], ax
-//   0x00570d8b  mov      eax, dword ptr [esp + 4]
-//   0x00570d8f  mov      ecx, 0x710d28
-//   0x00570d94  mov      dword ptr [esp + 8], eax
-//   0x00570d98  call     0x5020d0
-//   0x00570d9d  add      esp, 0x14
-//   0x00570da0  ret      
+// SmudgeClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); transcribed once.
 void SmudgeClass::vfunc_101(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_102 -- body derived from 21 instructions at 0x00570370; semantics not reconstructed.
-// size 57 bytes; signature __thiscall
-// callees: 0x00510f70
-//
-//   0x00570370  sub      esp, 0xc
-//   0x00570373  push     esi
-//   0x00570374  mov      esi, ecx
-//   0x00570376  lea      ecx, [esp + 4]
-//   0x0057037a  mov      eax, dword ptr [esi]
-//   0x0057037c  push     ecx
-//   0x0057037d  mov      ecx, esi
-//   0x0057037f  call     dword ptr [eax + 0x180]
-//   0x00570385  push     eax
-//   0x00570386  mov      ecx, 0x710d28
-//   0x0057038b  call     0x510f70
-//   0x00570390  mov      ecx, dword ptr [esi + 0x48]
-//   0x00570393  sub      ecx, eax
-//   0x00570395  mov      al, byte ptr [esi + 0x32]
-//   0x00570398  test     al, al
-//   0x0057039a  pop      esi
-//   0x0057039b  je       0x5703a3
-//   0x0057039d  sub      ecx, dword ptr [0x7d6a1c]
-//   0x005703a3  mov      eax, ecx
-//   0x005703a5  add      esp, 0xc
-//   0x005703a8  ret      
+// SmudgeClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); transcribed once.
 void SmudgeClass::vfunc_102()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_103 -- body derived from 34 instructions at 0x005703b0; semantics not reconstructed.
-// size 94 bytes; signature __thiscall nargs=1
-// callees: 0x00510f70
-//
-//   0x005703b0  sub      esp, 0xc
-//   0x005703b3  push     esi
-//   0x005703b4  mov      esi, ecx
-//   0x005703b6  push     edi
-//   0x005703b7  mov      edi, dword ptr [esp + 0x18]
-//   0x005703bb  mov      al, byte ptr [esi + 0x32]
-//   0x005703be  test     al, al
-//   0x005703c0  je       0x5703c8
-//   0x005703c2  add      edi, dword ptr [0x7d6a1c]
-//   0x005703c8  mov      al, byte ptr [esi + 0x2c]
-//   0x005703cb  test     al, al
-//   0x005703cd  mov      eax, dword ptr [esi]
-//   0x005703cf  je       0x57040e
-//   0x005703d1  push     0
-//   0x005703d3  mov      ecx, esi
-//   0x005703d5  call     dword ptr [eax + 0x10c]
-//   0x005703db  mov      edx, dword ptr [esi]
-//   0x005703dd  lea      eax, [esp + 8]
-//   0x005703e1  push     eax
-//   0x005703e2  mov      ecx, esi
-//   0x005703e4  call     dword ptr [edx + 0x180]
-//   0x005703ea  push     eax
-//   0x005703eb  mov      ecx, 0x710d28
-//   0x005703f0  call     0x510f70
-//   0x005703f5  mov      edx, dword ptr [esi]
-//   0x005703f7  add      eax, edi
-//   0x005703f9  push     1
-//   0x005703fb  mov      ecx, esi
-//   0x005703fd  mov      dword ptr [esi + 0x48], eax
-//   0x00570400  call     dword ptr [edx + 0x10c]
-//   0x00570406  pop      edi
-//   0x00570407  pop      esi
-//   0x00570408  add      esp, 0xc
-//   0x0057040b  ret      4
+// SmudgeClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); transcribed once.
 void SmudgeClass::vfunc_103(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// SmudgeClass::vfunc_104 -- body derived from 2 instructions at 0x00570360; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570360  mov      eax, dword ptr [ecx + 0x48]
-//   0x00570363  ret      
+// SmudgeClass::vfunc_104 -- ALIAS of AircraftClass::vfunc_104 (same machine code at 0x00570360); transcribed once.
 void SmudgeClass::vfunc_104()
 {
 }

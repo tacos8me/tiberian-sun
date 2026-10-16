@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "HouseClass.h"
 
 // ---------------------------------------------------------------------------
@@ -43,17 +47,7 @@ long HouseClass::QueryInterface(const void*, void**)
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::AddRef -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// HouseClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 unsigned long HouseClass::AddRef()
 {
 }
@@ -878,18 +872,7 @@ void HouseClass::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::GetType -- body derived from 7 instructions at 0x00405910; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00405910  push     esi
-//   0x00405911  mov      esi, dword ptr [esp + 0xc]
-//   0x00405915  test     esi, esi
-//   0x00405917  jne      0x405922
-//   0x00405919  mov      eax, 0x80004003
-//   0x0040591e  pop      esi
-//   0x0040591f  ret      8
+// HouseClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
 int HouseClass::GetType()
 {
 }
@@ -914,12 +897,7 @@ void HouseClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::Set_ID -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// HouseClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void HouseClass::Set_ID(int id)
 {
 }
@@ -1172,24 +1150,12 @@ long HouseClass::Load(IStream* pStm)
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::Save -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// HouseClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 long HouseClass::Save(IStream* pStm, int fClearDirty)
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::GetSizeMax -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// HouseClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 long HouseClass::GetSizeMax(unsigned long* pcbSize)
 {
 }
@@ -1205,107 +1171,32 @@ void HouseClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::vfunc_17 -- body derived from 2 instructions at 0x00405970; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405970  mov      al, 1
-//   0x00405972  ret      
+// HouseClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); transcribed once.
 void HouseClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::vfunc_18 -- body derived from 9 instructions at 0x00405a00; semantics not reconstructed.
-// size 35 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a00  mov      eax, dword ptr [esp + 4]
-//   0x00405a04  mov      edx, dword ptr [0x715228]
-//   0x00405a0a  mov      ecx, eax
-//   0x00405a0c  mov      dword ptr [ecx], edx
-//   0x00405a0e  mov      edx, dword ptr [0x71522c]
-//   0x00405a14  mov      dword ptr [ecx + 4], edx
-//   0x00405a17  mov      edx, dword ptr [0x715230]
-//   0x00405a1d  mov      dword ptr [ecx + 8], edx
-//   0x00405a20  ret      4
+// HouseClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); transcribed once.
 void HouseClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// HouseClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void HouseClass::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::vfunc_20 -- body derived from 2 instructions at 0x00405a60; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a60  xor      al, al
-//   0x00405a62  ret      
+// HouseClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); transcribed once.
 void HouseClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::vfunc_21 -- body derived from 2 instructions at 0x00405a70; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a70  xor      al, al
-//   0x00405a72  ret      
+// HouseClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); transcribed once.
 void HouseClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// HouseClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void HouseClass::vfunc_22()
 {
 }
@@ -1796,46 +1687,7 @@ void HouseClass::vfunc_36()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::vfunc_37 -- body derived from 35 instructions at 0x004c5770; semantics not reconstructed.
-// size 73 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x004c5770  mov      eax, dword ptr [esp + 4]
-//   0x004c5774  push     ebx
-//   0x004c5775  push     ebp
-//   0x004c5776  push     esi
-//   0x004c5777  mov      edx, dword ptr [eax + 8]
-//   0x004c577a  push     edi
-//   0x004c577b  mov      edi, dword ptr [ecx + 8]
-//   0x004c577e  cmp      edi, edx
-//   0x004c5780  jne      0x4c57b9
-//   0x004c5782  xor      esi, esi
-//   0x004c5784  test     edi, edi
-//   0x004c5786  jle      0x4c57b0
-//   0x004c5788  mov      edx, dword ptr [eax + 4]
-//   0x004c578b  mov      eax, dword ptr [ecx + 4]
-//   0x004c578e  lea      ecx, [edx + 4]
-//   0x004c5791  sub      edx, eax
-//   0x004c5793  mov      ebx, dword ptr [eax]
-//   0x004c5795  mov      ebp, dword ptr [edx + eax]
-//   0x004c5798  cmp      ebx, ebp
-//   0x004c579a  jne      0x4c57b9
-//   0x004c579c  mov      ebx, dword ptr [eax + 4]
-//   0x004c579f  mov      ebp, dword ptr [ecx]
-//   0x004c57a1  cmp      ebx, ebp
-//   0x004c57a3  jne      0x4c57b9
-//   0x004c57a5  inc      esi
-//   0x004c57a6  add      ecx, 8
-//   0x004c57a9  add      eax, 8
-//   0x004c57ac  cmp      esi, edi
-//   0x004c57ae  jl       0x4c5793
-//   0x004c57b0  pop      edi
-//   0x004c57b1  pop      esi
-//   0x004c57b2  pop      ebp
-//   0x004c57b3  mov      al, 1
-//   0x004c57b5  pop      ebx
-//   0x004c57b6  ret      4
+// HouseClass::vfunc_37 -- ALIAS of HouseClass::vfunc_31 (same machine code at 0x004c5770); transcribed once.
 void HouseClass::vfunc_37()
 {
 }
@@ -1976,47 +1828,7 @@ void HouseClass::vfunc_42()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::vfunc_43 -- body derived from 36 instructions at 0x004c5aa0; semantics not reconstructed.
-// size 75 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x004c5aa0  mov      eax, dword ptr [esp + 4]
-//   0x004c5aa4  push     ebx
-//   0x004c5aa5  push     ebp
-//   0x004c5aa6  push     esi
-//   0x004c5aa7  mov      edx, dword ptr [eax + 8]
-//   0x004c5aaa  push     edi
-//   0x004c5aab  mov      edi, dword ptr [ecx + 8]
-//   0x004c5aae  cmp      edi, edx
-//   0x004c5ab0  jne      0x4c5aeb
-//   0x004c5ab2  xor      esi, esi
-//   0x004c5ab4  test     edi, edi
-//   0x004c5ab6  jle      0x4c5ae2
-//   0x004c5ab8  mov      edx, dword ptr [eax + 4]
-//   0x004c5abb  mov      eax, dword ptr [ecx + 4]
-//   0x004c5abe  mov      ebp, edx
-//   0x004c5ac0  lea      ecx, [edx + 4]
-//   0x004c5ac3  sub      ebp, eax
-//   0x004c5ac5  mov      edx, dword ptr [eax]
-//   0x004c5ac7  mov      ebx, dword ptr [eax + ebp]
-//   0x004c5aca  cmp      edx, ebx
-//   0x004c5acc  jne      0x4c5aeb
-//   0x004c5ace  mov      dl, byte ptr [eax + 4]
-//   0x004c5ad1  mov      bl, byte ptr [ecx]
-//   0x004c5ad3  cmp      dl, bl
-//   0x004c5ad5  jne      0x4c5aeb
-//   0x004c5ad7  inc      esi
-//   0x004c5ad8  add      ecx, 8
-//   0x004c5adb  add      eax, 8
-//   0x004c5ade  cmp      esi, edi
-//   0x004c5ae0  jl       0x4c5ac5
-//   0x004c5ae2  pop      edi
-//   0x004c5ae3  pop      esi
-//   0x004c5ae4  pop      ebp
-//   0x004c5ae5  mov      al, 1
-//   0x004c5ae7  pop      ebx
-//   0x004c5ae8  ret      4
+// HouseClass::vfunc_43 -- ALIAS of HouseClass::vfunc_25 (same machine code at 0x004c5aa0); transcribed once.
 void HouseClass::vfunc_43()
 {
 }
@@ -2320,37 +2132,7 @@ void HouseClass::vfunc_54()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::vfunc_55 -- body derived from 26 instructions at 0x004c6030; semantics not reconstructed.
-// size 54 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x004c6030  push     ebx
-//   0x004c6031  push     esi
-//   0x004c6032  mov      esi, dword ptr [ecx + 8]
-//   0x004c6035  push     edi
-//   0x004c6036  mov      edi, dword ptr [esp + 0x10]
-//   0x004c603a  cmp      esi, dword ptr [edi + 8]
-//   0x004c603d  jne      0x4c6066
-//   0x004c603f  xor      edx, edx
-//   0x004c6041  test     esi, esi
-//   0x004c6043  jle      0x4c605e
-//   0x004c6045  mov      eax, dword ptr [ecx + 4]
-//   0x004c6048  mov      ecx, dword ptr [edi + 4]
-//   0x004c604b  sub      ecx, eax
-//   0x004c604d  mov      edi, dword ptr [eax]
-//   0x004c604f  mov      ebx, dword ptr [ecx + eax]
-//   0x004c6052  cmp      edi, ebx
-//   0x004c6054  jne      0x4c6066
-//   0x004c6056  inc      edx
-//   0x004c6057  add      eax, 4
-//   0x004c605a  cmp      edx, esi
-//   0x004c605c  jl       0x4c604d
-//   0x004c605e  pop      edi
-//   0x004c605f  pop      esi
-//   0x004c6060  mov      al, 1
-//   0x004c6062  pop      ebx
-//   0x004c6063  ret      4
+// HouseClass::vfunc_55 -- ALIAS of HouseClass::vfunc_49 (same machine code at 0x004c6030); transcribed once.
 void HouseClass::vfunc_55()
 {
 }
@@ -2624,37 +2406,7 @@ void HouseClass::vfunc_66()
 {
 }
 
-// ---------------------------------------------------------------------------
-// HouseClass::vfunc_67 -- body derived from 26 instructions at 0x004c5510; semantics not reconstructed.
-// size 54 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x004c5510  push     ebx
-//   0x004c5511  push     esi
-//   0x004c5512  mov      esi, dword ptr [ecx + 8]
-//   0x004c5515  push     edi
-//   0x004c5516  mov      edi, dword ptr [esp + 0x10]
-//   0x004c551a  cmp      esi, dword ptr [edi + 8]
-//   0x004c551d  jne      0x4c5546
-//   0x004c551f  xor      edx, edx
-//   0x004c5521  test     esi, esi
-//   0x004c5523  jle      0x4c553e
-//   0x004c5525  mov      eax, dword ptr [ecx + 4]
-//   0x004c5528  mov      ecx, dword ptr [edi + 4]
-//   0x004c552b  sub      ecx, eax
-//   0x004c552d  mov      edi, dword ptr [eax]
-//   0x004c552f  mov      ebx, dword ptr [ecx + eax]
-//   0x004c5532  cmp      edi, ebx
-//   0x004c5534  jne      0x4c5546
-//   0x004c5536  inc      edx
-//   0x004c5537  add      eax, 4
-//   0x004c553a  cmp      edx, esi
-//   0x004c553c  jl       0x4c552d
-//   0x004c553e  pop      edi
-//   0x004c553f  pop      esi
-//   0x004c5540  mov      al, 1
-//   0x004c5542  pop      ebx
-//   0x004c5543  ret      4
+// HouseClass::vfunc_67 -- ALIAS of HouseClass::vfunc_61 (same machine code at 0x004c5510); transcribed once.
 void HouseClass::vfunc_67()
 {
 }

@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "AircraftClass.h"
 
 // ---------------------------------------------------------------------------
@@ -88,17 +92,7 @@ void AircraftClass::vfunc_3(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AircraftClass::Release -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// AircraftClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 void AircraftClass::Release(int a0)
 {
 }
@@ -219,18 +213,7 @@ void AircraftClass::vfunc_6(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AircraftClass::GetType -- body derived from 7 instructions at 0x00405910; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00405910  push     esi
-//   0x00405911  mov      esi, dword ptr [esp + 0xc]
-//   0x00405915  test     esi, esi
-//   0x00405917  jne      0x405922
-//   0x00405919  mov      eax, 0x80004003
-//   0x0040591e  pop      esi
-//   0x0040591f  ret      8
+// AircraftClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
 void AircraftClass::GetType(int a0, int a1)
 {
 }
@@ -418,13 +401,7 @@ void AircraftClass::vfunc_15()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AircraftClass::Compute_CRC -- body derived from 2 instructions at 0x004059f0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059f0  xor      eax, eax
-//   0x004059f2  ret      
+// AircraftClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); transcribed once.
 void AircraftClass::Compute_CRC()
 {
 }
@@ -556,29 +533,7 @@ void AircraftClass::vfunc_21(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AircraftClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// AircraftClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void AircraftClass::vfunc_22(int a0)
 {
 }

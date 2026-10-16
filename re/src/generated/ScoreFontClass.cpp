@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "ScoreFontClass.h"
 
 // ---------------------------------------------------------------------------
@@ -27,116 +31,22 @@ void ScoreFontClass::vfunc_0(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScoreFontClass::vfunc_1 -- body derived from 10 instructions at 0x005cd4d0; semantics not reconstructed.
-// size 26 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x005cd4d0  mov      al, byte ptr [esp + 4]
-//   0x005cd4d4  sub      esp, 0x14
-//   0x005cd4d7  cmp      al, 0x20
-//   0x005cd4d9  push     esi
-//   0x005cd4da  mov      esi, ecx
-//   0x005cd4dc  jne      0x5cd4ea
-//   0x005cd4de  mov      eax, 8
-//   0x005cd4e3  pop      esi
-//   0x005cd4e4  add      esp, 0x14
-//   0x005cd4e7  ret      4
+// ScoreFontClass::vfunc_1 -- ALIAS of ScoreBigFontClass::vfunc_1 (same machine code at 0x005cd4d0); transcribed once.
 void ScoreFontClass::vfunc_1(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScoreFontClass::vfunc_2 -- body derived from 23 instructions at 0x005cd4a0; semantics not reconstructed.
-// size 44 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x005cd4a0  push     ebx
-//   0x005cd4a1  push     esi
-//   0x005cd4a2  push     edi
-//   0x005cd4a3  mov      edi, dword ptr [esp + 0x10]
-//   0x005cd4a7  xor      esi, esi
-//   0x005cd4a9  mov      ebx, ecx
-//   0x005cd4ab  mov      al, byte ptr [edi]
-//   0x005cd4ad  test     al, al
-//   0x005cd4af  je       0x5cd4c4
-//   0x005cd4b1  mov      edx, dword ptr [ebx]
-//   0x005cd4b3  push     eax
-//   0x005cd4b4  mov      ecx, ebx
-//   0x005cd4b6  inc      edi
-//   0x005cd4b7  call     dword ptr [edx + 4]
-//   0x005cd4ba  lea      esi, [esi + eax + 1]
-//   0x005cd4be  mov      al, byte ptr [edi]
-//   0x005cd4c0  test     al, al
-//   0x005cd4c2  jne      0x5cd4b1
-//   0x005cd4c4  mov      eax, esi
-//   0x005cd4c6  pop      edi
-//   0x005cd4c7  pop      esi
-//   0x005cd4c8  pop      ebx
-//   0x005cd4c9  ret      4
+// ScoreFontClass::vfunc_2 -- ALIAS of ScoreBigFontClass::vfunc_2 (same machine code at 0x005cd4a0); transcribed once.
 void ScoreFontClass::vfunc_2(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScoreFontClass::vfunc_3 -- body derived from 26 instructions at 0x005cd6e0; semantics not reconstructed.
-// size 74 bytes; signature __thiscall nargs=3
-// callees: 0x005cd736
-//
-//   0x005cd6e0  sub      esp, 0x38
-//   0x005cd6e3  push     esi
-//   0x005cd6e4  push     edi
-//   0x005cd6e5  mov      edi, dword ptr [esp + 0x48]
-//   0x005cd6e9  mov      esi, ecx
-//   0x005cd6eb  mov      al, byte ptr [edi]
-//   0x005cd6ed  test     al, al
-//   0x005cd6ef  je       0x5cd81a
-//   0x005cd6f5  push     ebx
-//   0x005cd6f6  mov      ebx, dword ptr [esp + 0x48]
-//   0x005cd6fa  push     ebp
-//   0x005cd6fb  mov      ebp, dword ptr [esp + 0x54]
-//   0x005cd6ff  cmp      al, 0x20
-//   0x005cd701  je       0x5cd7f7
-//   0x005cd707  lea      eax, [esp + 0x4c]
-//   0x005cd70b  push     1
-//   0x005cd70d  push     eax
-//   0x005cd70e  push     edi
-//   0x005cd70f  call     dword ptr [0x6983d4]
-//   0x005cd715  mov      ecx, dword ptr [esp + 0x4c]
-//   0x005cd719  and      ecx, 0xff
-//   0x005cd71f  lea      eax, [ecx - 0x21]
-//   0x005cd722  test     eax, eax
-//   0x005cd724  jg       0x5cd72a
-//   0x005cd726  xor      eax, eax
-//   0x005cd728  jmp      0x5cd736
+// ScoreFontClass::vfunc_3 -- ALIAS of ScoreBigFontClass::vfunc_3 (same machine code at 0x005cd6e0); transcribed once.
 void ScoreFontClass::vfunc_3(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScoreFontClass::vfunc_4 -- body derived from 19 instructions at 0x005cd590; semantics not reconstructed.
-// size 56 bytes; signature __thiscall nargs=5
-// callees: 0x005cd5d4
-//
-//   0x005cd590  sub      esp, 0x18
-//   0x005cd593  push     edi
-//   0x005cd594  mov      edi, ecx
-//   0x005cd596  lea      eax, [esp + 0x24]
-//   0x005cd59a  push     1
-//   0x005cd59c  lea      ecx, [esp + 0x28]
-//   0x005cd5a0  push     eax
-//   0x005cd5a1  push     ecx
-//   0x005cd5a2  mov      dword ptr [esp + 0x10], edi
-//   0x005cd5a6  call     dword ptr [0x6983d4]
-//   0x005cd5ac  mov      eax, dword ptr [esp + 0x24]
-//   0x005cd5b0  cmp      al, 0x20
-//   0x005cd5b2  je       0x5cd6d8
-//   0x005cd5b8  and      eax, 0xff
-//   0x005cd5bd  add      eax, -0x21
-//   0x005cd5c0  test     eax, eax
-//   0x005cd5c2  jg       0x5cd5c8
-//   0x005cd5c4  xor      eax, eax
-//   0x005cd5c6  jmp      0x5cd5d4
+// ScoreFontClass::vfunc_4 -- ALIAS of ScoreBigFontClass::vfunc_4 (same machine code at 0x005cd590); transcribed once.
 void ScoreFontClass::vfunc_4(int a0, int a1, int a2, int a3, int a4)
 {
 }

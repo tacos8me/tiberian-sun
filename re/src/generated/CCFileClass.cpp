@@ -5,15 +5,13 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "CCFileClass.h"
 
-// ---------------------------------------------------------------------------
-// CCFileClass::vfunc_1 -- body derived from 2 instructions at 0x00419090; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x00419090  mov      eax, dword ptr [ecx + 0x14]
-//   0x00419093  ret      
+// CCFileClass::vfunc_1 -- ALIAS of BufferIOFileClass::vfunc_1 (same machine code at 0x00419090); transcribed once.
 void CCFileClass::vfunc_1()
 {
 }
@@ -109,59 +107,12 @@ void CCFileClass::vfunc_2(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// CCFileClass::vfunc_3 -- body derived from 23 instructions at 0x005a6850; semantics not reconstructed.
-// size 52 bytes; signature __thiscall
-// callees: none
-//
-//   0x005a6850  push     esi
-//   0x005a6851  mov      esi, ecx
-//   0x005a6853  mov      eax, dword ptr [esi]
-//   0x005a6855  call     dword ptr [eax + 0x34]
-//   0x005a6858  mov      edx, dword ptr [esi]
-//   0x005a685a  push     2
-//   0x005a685c  mov      ecx, esi
-//   0x005a685e  call     dword ptr [edx + 0x1c]
-//   0x005a6861  test     eax, eax
-//   0x005a6863  je       0x5a6884
-//   0x005a6865  cmp      dword ptr [esi + 0xc], -1
-//   0x005a6869  je       0x5a6876
-//   0x005a686b  mov      eax, dword ptr [esi]
-//   0x005a686d  push     0
-//   0x005a686f  push     0
-//   0x005a6871  mov      ecx, esi
-//   0x005a6873  call     dword ptr [eax + 0x28]
-//   0x005a6876  mov      edx, dword ptr [esi]
-//   0x005a6878  mov      ecx, esi
-//   0x005a687a  call     dword ptr [edx + 0x34]
-//   0x005a687d  mov      eax, 1
-//   0x005a6882  pop      esi
-//   0x005a6883  ret      
+// CCFileClass::vfunc_3 -- ALIAS of BufferIOFileClass::vfunc_3 (same machine code at 0x005a6850); transcribed once.
 void CCFileClass::vfunc_3()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CCFileClass::vfunc_4 -- body derived from 16 instructions at 0x005a6890; semantics not reconstructed.
-// size 32 bytes; signature __thiscall
-// callees: none
-//
-//   0x005a6890  push     esi
-//   0x005a6891  mov      esi, ecx
-//   0x005a6893  mov      eax, dword ptr [esi]
-//   0x005a6895  call     dword ptr [eax + 0x34]
-//   0x005a6898  mov      eax, dword ptr [esi + 0x14]
-//   0x005a689b  test     eax, eax
-//   0x005a689d  jne      0x5a68b0
-//   0x005a689f  mov      edx, dword ptr [esi]
-//   0x005a68a1  push     0
-//   0x005a68a3  push     0
-//   0x005a68a5  push     2
-//   0x005a68a7  mov      ecx, esi
-//   0x005a68a9  call     dword ptr [edx + 0x40]
-//   0x005a68ac  xor      eax, eax
-//   0x005a68ae  pop      esi
-//   0x005a68af  ret      
+// CCFileClass::vfunc_4 -- ALIAS of BufferIOFileClass::vfunc_4 (same machine code at 0x005a6890); transcribed once.
 void CCFileClass::vfunc_4()
 {
 }

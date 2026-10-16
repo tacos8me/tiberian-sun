@@ -5,54 +5,28 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "ObjectTypeClass.h"
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// AbstractTypeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void AbstractTypeClass::Init()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// AbstractTypeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void AbstractTypeClass::Shutdown()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::QueryInterface -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// AbstractTypeClass::QueryInterface -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 long AbstractTypeClass::QueryInterface(const void*, void**)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::AddRef -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// AbstractTypeClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 unsigned long AbstractTypeClass::AddRef()
 {
 }
@@ -104,48 +78,22 @@ long AbstractTypeClass::Read_INI(void* ini, const char* section)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::Set_ID -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// AbstractTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void AbstractTypeClass::Set_ID(int id)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::Get_RTTI -- body derived from 1 instructions at 0x004059c0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004059c0  ret      8
+// AbstractTypeClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); transcribed once.
 int AbstractTypeClass::Get_RTTI()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::GetClassID -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// AbstractTypeClass::GetClassID -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 long AbstractTypeClass::GetClassID(void* pClassID)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::IsDirty -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// AbstractTypeClass::IsDirty -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 long AbstractTypeClass::IsDirty()
 {
 }
@@ -176,249 +124,72 @@ long AbstractTypeClass::Load(IStream* pStm)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::Save -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// AbstractTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 long AbstractTypeClass::Save(IStream* pStm, int fClearDirty)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::GetSizeMax -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// AbstractTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 long AbstractTypeClass::GetSizeMax(unsigned long* pcbSize)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::Compute_CRC -- body derived from 2 instructions at 0x004059f0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059f0  xor      eax, eax
-//   0x004059f2  ret      
+// AbstractTypeClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); transcribed once.
 void AbstractTypeClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::vfunc_17 -- body derived from 2 instructions at 0x00405970; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405970  mov      al, 1
-//   0x00405972  ret      
+// AbstractTypeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); transcribed once.
 void AbstractTypeClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::vfunc_18 -- body derived from 9 instructions at 0x00405a00; semantics not reconstructed.
-// size 35 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a00  mov      eax, dword ptr [esp + 4]
-//   0x00405a04  mov      edx, dword ptr [0x715228]
-//   0x00405a0a  mov      ecx, eax
-//   0x00405a0c  mov      dword ptr [ecx], edx
-//   0x00405a0e  mov      edx, dword ptr [0x71522c]
-//   0x00405a14  mov      dword ptr [ecx + 4], edx
-//   0x00405a17  mov      edx, dword ptr [0x715230]
-//   0x00405a1d  mov      dword ptr [ecx + 8], edx
-//   0x00405a20  ret      4
+// AbstractTypeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); transcribed once.
 void AbstractTypeClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// AbstractTypeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void AbstractTypeClass::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::vfunc_20 -- body derived from 2 instructions at 0x00405a60; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a60  xor      al, al
-//   0x00405a62  ret      
+// AbstractTypeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); transcribed once.
 void AbstractTypeClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::vfunc_21 -- body derived from 2 instructions at 0x00405a70; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a70  xor      al, al
-//   0x00405a72  ret      
+// AbstractTypeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); transcribed once.
 void AbstractTypeClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// AbstractTypeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void AbstractTypeClass::vfunc_22()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::vfunc_23 -- body derived from 1 instructions at 0x00405ab0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405ab0  ret      
+// AbstractTypeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); transcribed once.
 void AbstractTypeClass::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::GetType_2 -- body derived from 1 instructions at 0x00406010; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00406010  ret      4
+// AbstractTypeClass::GetType_2 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); transcribed once.
 int AbstractTypeClass::GetType_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::Read_INI_2 -- body derived from 27 instructions at 0x00405f20; semantics not reconstructed.
-// size 69 bytes; signature __thiscall nargs=5
-// callees: 0x00405f7e, 0x004d54c0, 0x004d6ed0
-//
-//   0x00405f20  sub      esp, 0x74
-//   0x00405f23  push     ebx
-//   0x00405f24  push     ebp
-//   0x00405f25  mov      ebp, dword ptr [esp + 0x80]
-//   0x00405f2c  push     esi
-//   0x00405f2d  mov      esi, ecx
-//   0x00405f2f  mov      ecx, ebp
-//   0x00405f31  lea      ebx, [esi + 0x14]
-//   0x00405f34  push     ebx
-//   0x00405f35  call     0x4d54c0
-//   0x00405f3a  test     eax, eax
-//   0x00405f3c  je       0x405f9e
-//   0x00405f3e  push     edi
-//   0x00405f3f  lea      eax, [esp + 0x44]
-//   0x00405f43  lea      edi, [esi + 0x2d]
-//   0x00405f46  push     0x31
-//   0x00405f48  push     eax
-//   0x00405f49  push     edi
-//   0x00405f4a  push     0x6bf138
-//   0x00405f4f  push     ebx
-//   0x00405f50  mov      ecx, ebp
-//   0x00405f52  call     0x4d6ed0
-//   0x00405f57  lea      ecx, [esp + 0x44]
-//   0x00405f5b  test     ecx, ecx
-//   0x00405f5d  jne      0x405f65
-//   0x00405f5f  mov      byte ptr [esp + 0x10], cl
-//   0x00405f63  jmp      0x405f7e
+// AbstractTypeClass::Read_INI_2 -- ALIAS of AbstractClass::Fetch_ID_2 (same machine code at 0x00405f20); transcribed once.
 long AbstractTypeClass::Read_INI_2(void* ini, const char* section)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::Fetch_ID_2 -- body derived from 21 instructions at 0x00405fb0; semantics not reconstructed.
-// size 47 bytes; signature __thiscall nargs=1
-// callees: 0x004d44c0, 0x004d6b50
-//
-//   0x00405fb0  push     ebx
-//   0x00405fb1  mov      ebx, dword ptr [esp + 8]
-//   0x00405fb5  push     esi
-//   0x00405fb6  mov      esi, ecx
-//   0x00405fb8  push     edi
-//   0x00405fb9  push     0
-//   0x00405fbb  lea      edi, [esi + 0x14]
-//   0x00405fbe  mov      ecx, ebx
-//   0x00405fc0  push     edi
-//   0x00405fc1  call     0x4d44c0
-//   0x00405fc6  add      esi, 0x2d
-//   0x00405fc9  mov      ecx, ebx
-//   0x00405fcb  push     esi
-//   0x00405fcc  push     0x6bf138
-//   0x00405fd1  push     edi
-//   0x00405fd2  call     0x4d6b50
-//   0x00405fd7  pop      edi
-//   0x00405fd8  pop      esi
-//   0x00405fd9  mov      al, 1
-//   0x00405fdb  pop      ebx
-//   0x00405fdc  ret      4
+// AbstractTypeClass::Fetch_ID_2 -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); transcribed once.
 int AbstractTypeClass::Fetch_ID_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AbstractTypeClass::Get_RTTI_2 -- body derived from 14 instructions at 0x00406a30; semantics not reconstructed.
-// size 40 bytes; signature __thiscall nargs=1
-// callees: 0x00425170, 0x0068298c
-//
-//   0x00406a30  push     esi
-//   0x00406a31  mov      esi, ecx
-//   0x00406a33  lea      ecx, [esi + 0x14]
-//   0x00406a36  call     0x425170
-//   0x00406a3b  mov      al, byte ptr [esp + 8]
-//   0x00406a3f  mov      dword ptr [esi], 0x698c78
-//   0x00406a45  test     al, 1
-//   0x00406a47  je       0x406a52
-//   0x00406a49  push     esi
-//   0x00406a4a  call     0x68298c
-//   0x00406a4f  add      esp, 4
-//   0x00406a52  mov      eax, esi
-//   0x00406a54  pop      esi
-//   0x00406a55  ret      4
+// AbstractTypeClass::Get_RTTI_2 -- ALIAS of AbstractClass::Get_RTTI_2 (same machine code at 0x00406a30); transcribed once.
 int AbstractTypeClass::Get_RTTI_2()
 {
 }

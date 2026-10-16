@@ -11,7 +11,9 @@ A body is an EMPTY definition. The recovered evidence — target VA, byte size, 
 | item | count |
 |---|---|
 | class translation units | 302 |
-| function bodies emitted | 6670 |
+| member definitions (every declaring name) | 6670 |
+| DISTINCT functions transcribed | 2845 |
+| alias definitions (same machine code) | 3825 |
 | skipped: duplicate | 0 |
 | skipped: nested_class_covered | 6 |
 | skipped: no_function_record | 0 |

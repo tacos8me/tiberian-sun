@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "DSurface.h"
 
 // ---------------------------------------------------------------------------
@@ -292,35 +296,7 @@ void DSurface::vfunc_5(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_6 -- body derived from 24 instructions at 0x00675830; semantics not reconstructed.
-// size 51 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x00675830  mov      eax, dword ptr [esp + 4]
-//   0x00675834  sub      esp, 0x20
-//   0x00675837  push     esi
-//   0x00675838  mov      esi, ecx
-//   0x0067583a  push     edi
-//   0x0067583b  lea      ecx, [esp + 8]
-//   0x0067583f  mov      edi, dword ptr [esi]
-//   0x00675841  push     eax
-//   0x00675842  push     ecx
-//   0x00675843  mov      ecx, esi
-//   0x00675845  call     dword ptr [edi + 0x74]
-//   0x00675848  mov      edx, dword ptr [esi]
-//   0x0067584a  push     eax
-//   0x0067584b  lea      eax, [esp + 0x20]
-//   0x0067584f  mov      ecx, esi
-//   0x00675851  push     eax
-//   0x00675852  call     dword ptr [edx + 0x74]
-//   0x00675855  push     eax
-//   0x00675856  mov      ecx, esi
-//   0x00675858  call     dword ptr [edi + 0x10]
-//   0x0067585b  pop      edi
-//   0x0067585c  pop      esi
-//   0x0067585d  add      esp, 0x20
-//   0x00675860  ret      4
+// DSurface::vfunc_6 -- ALIAS of BSurface::vfunc_6 (same machine code at 0x00675830); transcribed once.
 void DSurface::vfunc_6(int a0)
 {
 }
@@ -352,367 +328,27 @@ void DSurface::vfunc_7(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_8 -- body derived from 139 instructions at 0x006750d0; semantics not reconstructed.
-// size 402 bytes; signature __thiscall nargs=22
-// callees: 0x00675266
-//
-//   0x006750d0  sub      esp, 0x38
-//   0x006750d3  push     ebx
-//   0x006750d4  mov      ebx, ecx
-//   0x006750d6  push     ebp
-//   0x006750d7  push     esi
-//   0x006750d8  mov      eax, dword ptr [ebx]
-//   0x006750da  push     edi
-//   0x006750db  mov      dword ptr [esp + 0x30], ebx
-//   0x006750df  call     dword ptr [eax + 0x70]
-//   0x006750e2  mov      edi, dword ptr [esp + 0x58]
-//   0x006750e6  mov      ecx, dword ptr [esp + 0x50]
-//   0x006750ea  mov      esi, dword ptr [esp + 0x4c]
-//   0x006750ee  mov      ebp, dword ptr [esp + 0x5c]
-//   0x006750f2  sar      eax, 1
-//   0x006750f4  mov      dword ptr [esp + 0x2c], eax
-//   0x006750f8  lea      eax, [ecx + edi]
-//   0x006750fb  cmp      esi, ebp
-//   0x006750fd  mov      dword ptr [esp + 0x58], eax
-//   0x00675101  jl       0x675138
-//   0x00675103  mov      edx, dword ptr [esp + 0x64]
-//   0x00675107  add      edx, ebp
-//   0x00675109  cmp      esi, edx
-//   0x0067510b  jge      0x675138
-//   0x0067510d  mov      ecx, dword ptr [esp + 0x60]
-//   0x00675111  cmp      eax, ecx
-//   0x00675113  jl       0x675138
-//   0x00675115  mov      edx, dword ptr [esp + 0x68]
-//   0x00675119  add      ecx, edx
-//   0x0067511b  cmp      eax, ecx
-//   0x0067511d  jge      0x675138
-//   0x0067511f  mov      ecx, dword ptr [esp + 0x6c]
-//   0x00675123  mov      dword ptr [esp + 0x3c], eax
-//   0x00675127  mov      eax, dword ptr [ebx]
-//   0x00675129  lea      edx, [esp + 0x38]
-//   0x0067512d  push     ecx
-//   0x0067512e  push     edx
-//   0x0067512f  mov      ecx, ebx
-//   0x00675131  mov      dword ptr [esp + 0x40], esi
-//   0x00675135  call     dword ptr [eax + 0x24]
-//   0x00675138  mov      eax, dword ptr [esp + 0x50]
-//   0x0067513c  sub      eax, edi
-//   0x0067513e  cmp      esi, ebp
-//   0x00675140  mov      dword ptr [esp + 0x24], eax
-//   0x00675144  jl       0x67517b
-//   0x00675146  mov      ecx, dword ptr [esp + 0x64]
-//   0x0067514a  add      ecx, ebp
-//   0x0067514c  cmp      esi, ecx
-//   0x0067514e  jge      0x67517b
-//   0x00675150  mov      ecx, dword ptr [esp + 0x60]
-//   0x00675154  cmp      eax, ecx
-//   0x00675156  jl       0x67517b
-//   0x00675158  mov      edx, dword ptr [esp + 0x68]
-//   0x0067515c  add      ecx, edx
-//   0x0067515e  cmp      eax, ecx
-//   0x00675160  jge      0x67517b
-//   0x00675162  mov      ecx, dword ptr [esp + 0x6c]
-//   0x00675166  mov      dword ptr [esp + 0x3c], eax
-//   0x0067516a  mov      eax, dword ptr [ebx]
-//   0x0067516c  lea      edx, [esp + 0x38]
-//   0x00675170  push     ecx
-//   0x00675171  push     edx
-//   0x00675172  mov      ecx, ebx
-//   0x00675174  mov      dword ptr [esp + 0x40], esi
-//   0x00675178  call     dword ptr [eax + 0x24]
-//   0x0067517b  mov      ebx, dword ptr [esp + 0x54]
-//   0x0067517f  mov      ecx, edi
-//   0x00675181  mov      eax, ebx
-//   0x00675183  imul     ecx, edi
-//   0x00675186  imul     eax, ebx
-//   0x00675189  mov      dword ptr [esp + 0x28], ecx
-//   0x0067518d  mov      ecx, eax
-//   0x0067518f  imul     ecx, edi
-//   0x00675192  mov      dword ptr [esp + 0x34], eax
-//   0x00675196  mov      dword ptr [esp + 0x3c], edi
-//   0x0067519a  lea      edx, [ecx + ecx]
-//   0x0067519d  mov      dword ptr [esp + 0x1c], 0
-//   0x006751a5  mov      dword ptr [esp + 0x18], edx
-//   0x006751a9  cdq      
-//   0x006751aa  and      edx, 3
-//   0x006751ad  add      eax, edx
-//   0x006751af  xor      edx, edx
-//   0x006751b1  mov      ebp, eax
-//   0x006751b3  xor      eax, eax
-//   0x006751b5  sar      ebp, 2
-//   0x006751b8  sub      ebp, ecx
-//   0x006751ba  mov      ecx, dword ptr [esp + 0x30]
-//   0x006751be  push     edx
-//   0x006751bf  push     eax
-//   0x006751c0  mov      edi, dword ptr [ecx]
-//   0x006751c2  call     dword ptr [edi + 0x58]
-//   0x006751c5  mov      edx, dword ptr [esp + 0x2c]
-//   0x006751c9  mov      edi, eax
-//   0x006751cb  mov      eax, dword ptr [esp + 0x58]
-//   0x006751cf  mov      dword ptr [esp + 0x20], esi
-//   0x006751d3  imul     eax, edx
-//   0x006751d6  lea      ecx, [eax + esi]
-//   0x006751d9  lea      ecx, [edi + ecx*2]
-//   0x006751dc  mov      dword ptr [esp + 0x58], ecx
-//   0x006751e0  mov      ecx, dword ptr [esp + 0x24]
-//   0x006751e4  imul     ecx, edx
-//   0x006751e7  mov      dword ptr [esp + 0x24], esi
-//   0x006751eb  lea      edx, [ecx + esi]
-//   0x006751ee  add      ecx, esi
-//   0x006751f0  add      eax, esi
-//   0x006751f2  lea      edx, [edi + edx*2]
-//   0x006751f5  lea      ecx, [edi + ecx*2]
-//   0x006751f8  mov      dword ptr [esp + 0x54], edx
-//   0x006751fc  lea      edx, [edi + eax*2]
-//   0x006751ff  mov      dword ptr [esp + 0x10], ecx
-//   0x00675203  mov      dword ptr [esp + 0x14], edx
-//   0x00675207  mov      eax, dword ptr [esp + 0x28]
-//   0x0067520b  mov      ecx, dword ptr [esp + 0x1c]
-//   0x0067520f  add      ecx, eax
-//   0x00675211  add      ebp, ecx
-//   0x00675213  js       0x675262
-//   0x00675215  mov      edx, dword ptr [esp + 0x34]
-//   0x00675219  mov      eax, dword ptr [esp + 0x18]
-//   0x0067521d  neg      edx
-//   0x0067521f  lea      ecx, [eax + edx*2]
-//   0x00675222  mov      eax, dword ptr [esp + 0x3c]
-//   0x00675226  mov      edx, dword ptr [esp + 0x2c]
-//   0x0067522a  sub      ebp, ecx
-//   0x0067522c  dec      eax
-//   0x0067522d  mov      dword ptr [esp + 0x18], ecx
-//   0x00675231  mov      dword ptr [esp + 0x3c], eax
-//   0x00675235  lea      eax, [edx + edx]
-//   0x00675238  mov      edx, dword ptr [esp + 0x58]
-//   0x0067523c  sub      edx, eax
-//   0x0067523e  mov      dword ptr [esp + 0x58], edx
-//   0x00675242  mov      edx, dword ptr [esp + 0x54]
-//   0x00675246  add      edx, eax
-//   0x00675248  mov      dword ptr [esp + 0x54], edx
-//   0x0067524c  mov      edx, dword ptr [esp + 0x10]
-//   0x00675250  add      edx, eax
-//   0x00675252  mov      dword ptr [esp + 0x10], edx
-//   0x00675256  mov      edx, dword ptr [esp + 0x14]
-//   0x0067525a  sub      edx, eax
-//   0x0067525c  mov      dword ptr [esp + 0x14], edx
-//   0x00675260  jmp      0x675266
+// DSurface::vfunc_8 -- ALIAS of BSurface::vfunc_8 (same machine code at 0x006750d0); transcribed once.
 void DSurface::vfunc_8(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_9 -- body derived from 28 instructions at 0x00674c30; semantics not reconstructed.
-// size 62 bytes; signature __thiscall nargs=2
-// callees: none
-//
-//   0x00674c30  mov      eax, dword ptr [esp + 4]
-//   0x00674c34  push     esi
-//   0x00674c35  mov      esi, ecx
-//   0x00674c37  push     edi
-//   0x00674c38  mov      ecx, dword ptr [eax + 4]
-//   0x00674c3b  mov      eax, dword ptr [eax]
-//   0x00674c3d  mov      edx, dword ptr [esi]
-//   0x00674c3f  push     ecx
-//   0x00674c40  push     eax
-//   0x00674c41  mov      ecx, esi
-//   0x00674c43  call     dword ptr [edx + 0x58]
-//   0x00674c46  mov      edi, eax
-//   0x00674c48  test     edi, edi
-//   0x00674c4a  je       0x674c82
-//   0x00674c4c  mov      edx, dword ptr [esi]
-//   0x00674c4e  mov      ecx, esi
-//   0x00674c50  call     dword ptr [edx + 0x6c]
-//   0x00674c53  cmp      eax, 2
-//   0x00674c56  jne      0x674c6e
-//   0x00674c58  mov      ax, word ptr [esp + 0x10]
-//   0x00674c5d  mov      ecx, esi
-//   0x00674c5f  mov      word ptr [edi], ax
-//   0x00674c62  mov      edx, dword ptr [esi]
-//   0x00674c64  call     dword ptr [edx + 0x5c]
-//   0x00674c67  pop      edi
-//   0x00674c68  mov      al, 1
-//   0x00674c6a  pop      esi
-//   0x00674c6b  ret      8
+// DSurface::vfunc_9 -- ALIAS of BSurface::vfunc_9 (same machine code at 0x00674c30); transcribed once.
 void DSurface::vfunc_9(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_10 -- body derived from 30 instructions at 0x00674be0; semantics not reconstructed.
-// size 61 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x00674be0  mov      eax, dword ptr [esp + 4]
-//   0x00674be4  push     ebx
-//   0x00674be5  push     esi
-//   0x00674be6  mov      esi, ecx
-//   0x00674be8  mov      ecx, dword ptr [eax + 4]
-//   0x00674beb  mov      eax, dword ptr [eax]
-//   0x00674bed  mov      edx, dword ptr [esi]
-//   0x00674bef  push     edi
-//   0x00674bf0  push     ecx
-//   0x00674bf1  push     eax
-//   0x00674bf2  mov      ecx, esi
-//   0x00674bf4  xor      ebx, ebx
-//   0x00674bf6  call     dword ptr [edx + 0x58]
-//   0x00674bf9  mov      edi, eax
-//   0x00674bfb  test     edi, edi
-//   0x00674bfd  je       0x674c28
-//   0x00674bff  mov      edx, dword ptr [esi]
-//   0x00674c01  mov      ecx, esi
-//   0x00674c03  call     dword ptr [edx + 0x6c]
-//   0x00674c06  cmp      eax, 2
-//   0x00674c09  jne      0x674c1d
-//   0x00674c0b  mov      eax, dword ptr [esi]
-//   0x00674c0d  mov      bx, word ptr [edi]
-//   0x00674c10  mov      ecx, esi
-//   0x00674c12  call     dword ptr [eax + 0x5c]
-//   0x00674c15  pop      edi
-//   0x00674c16  mov      eax, ebx
-//   0x00674c18  pop      esi
-//   0x00674c19  pop      ebx
-//   0x00674c1a  ret      4
+// DSurface::vfunc_10 -- ALIAS of BSurface::vfunc_10 (same machine code at 0x00674be0); transcribed once.
 void DSurface::vfunc_10(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_11 -- body derived from 103 instructions at 0x006743a0; semantics not reconstructed.
-// size 287 bytes; signature __thiscall nargs=4
-// callees: 0x00412bb0, 0x00676030
-//
-//   0x006743a0  sub      esp, 0x44
-//   0x006743a3  push     ebx
-//   0x006743a4  mov      ebx, ecx
-//   0x006743a6  push     ebp
-//   0x006743a7  push     esi
-//   0x006743a8  mov      eax, dword ptr [ebx]
-//   0x006743aa  lea      ecx, [esp + 0x30]
-//   0x006743ae  push     edi
-//   0x006743af  push     ecx
-//   0x006743b0  mov      ecx, ebx
-//   0x006743b2  call     dword ptr [eax + 0x74]
-//   0x006743b5  mov      edx, dword ptr [esp + 0x58]
-//   0x006743b9  push     0
-//   0x006743bb  push     0
-//   0x006743bd  push     eax
-//   0x006743be  lea      ecx, [esp + 0x50]
-//   0x006743c2  call     0x412bb0
-//   0x006743c7  mov      edx, dword ptr [eax]
-//   0x006743c9  mov      dword ptr [esp + 0x24], edx
-//   0x006743cd  mov      esi, dword ptr [eax + 4]
-//   0x006743d0  mov      dword ptr [esp + 0x28], esi
-//   0x006743d4  mov      ecx, dword ptr [eax + 8]
-//   0x006743d7  mov      dword ptr [esp + 0x2c], ecx
-//   0x006743db  mov      ecx, dword ptr [esp + 0x5c]
-//   0x006743df  mov      eax, dword ptr [eax + 0xc]
-//   0x006743e2  mov      dword ptr [esp + 0x30], eax
-//   0x006743e6  mov      eax, dword ptr [ecx]
-//   0x006743e8  mov      ecx, dword ptr [ecx + 4]
-//   0x006743eb  add      eax, edx
-//   0x006743ed  add      ecx, esi
-//   0x006743ef  mov      dword ptr [esp + 0x14], eax
-//   0x006743f3  mov      dword ptr [esp + 0x18], ecx
-//   0x006743f7  mov      ecx, dword ptr [esp + 0x60]
-//   0x006743fb  mov      eax, dword ptr [ecx]
-//   0x006743fd  mov      ecx, dword ptr [ecx + 4]
-//   0x00674400  add      ecx, esi
-//   0x00674402  add      eax, edx
-//   0x00674404  mov      dword ptr [esp + 0x20], ecx
-//   0x00674408  lea      ecx, [esp + 0x24]
-//   0x0067440c  push     ecx
-//   0x0067440d  lea      edx, [esp + 0x20]
-//   0x00674411  lea      ecx, [esp + 0x18]
-//   0x00674415  mov      dword ptr [esp + 0x20], eax
-//   0x00674419  call     0x676030
-//   0x0067441e  test     al, al
-//   0x00674420  je       0x674641
-//   0x00674426  mov      eax, dword ptr [esp + 0x14]
-//   0x0067442a  mov      edx, dword ptr [esp + 0x1c]
-//   0x0067442e  cmp      eax, edx
-//   0x00674430  jle      0x67444a
-//   0x00674432  mov      ecx, dword ptr [esp + 0x18]
-//   0x00674436  mov      dword ptr [esp + 0x14], edx
-//   0x0067443a  mov      edx, dword ptr [esp + 0x20]
-//   0x0067443e  mov      dword ptr [esp + 0x1c], eax
-//   0x00674442  mov      dword ptr [esp + 0x18], edx
-//   0x00674446  mov      dword ptr [esp + 0x20], ecx
-//   0x0067444a  mov      eax, dword ptr [ebx]
-//   0x0067444c  mov      ecx, ebx
-//   0x0067444e  call     dword ptr [eax + 0x6c]
-//   0x00674451  mov      ecx, dword ptr [esp + 0x14]
-//   0x00674455  mov      edx, dword ptr [ebx]
-//   0x00674457  mov      ebp, eax
-//   0x00674459  mov      eax, dword ptr [esp + 0x18]
-//   0x0067445d  push     eax
-//   0x0067445e  push     ecx
-//   0x0067445f  mov      ecx, ebx
-//   0x00674461  mov      dword ptr [esp + 0x64], ebp
-//   0x00674465  call     dword ptr [edx + 0x58]
-//   0x00674468  mov      edi, eax
-//   0x0067446a  test     edi, edi
-//   0x0067446c  je       0x674641
-//   0x00674472  mov      edx, dword ptr [esp + 0x18]
-//   0x00674476  mov      eax, dword ptr [esp + 0x20]
-//   0x0067447a  cmp      edx, eax
-//   0x0067447c  jne      0x6744fd
-//   0x0067447e  cmp      ebp, 1
-//   0x00674481  jne      0x6744bf
-//   0x00674483  mov      ecx, dword ptr [esp + 0x1c]
-//   0x00674487  mov      edx, dword ptr [esp + 0x14]
-//   0x0067448b  mov      al, byte ptr [esp + 0x64]
-//   0x0067448f  sub      ecx, edx
-//   0x00674491  mov      dl, al
-//   0x00674493  inc      ecx
-//   0x00674494  mov      dh, dl
-//   0x00674496  mov      esi, ecx
-//   0x00674498  mov      eax, edx
-//   0x0067449a  shl      eax, 0x10
-//   0x0067449d  mov      ax, dx
-//   0x006744a0  shr      ecx, 2
-//   0x006744a3  rep stosd dword ptr es:[edi], eax
-//   0x006744a5  mov      ecx, esi
-//   0x006744a7  and      ecx, 3
-//   0x006744aa  rep stosb byte ptr es:[edi], al
-//   0x006744ac  mov      edx, dword ptr [ebx]
-//   0x006744ae  mov      ecx, ebx
-//   0x006744b0  call     dword ptr [edx + 0x5c]
-//   0x006744b3  pop      edi
-//   0x006744b4  pop      esi
-//   0x006744b5  pop      ebp
-//   0x006744b6  mov      al, 1
-//   0x006744b8  pop      ebx
-//   0x006744b9  add      esp, 0x44
-//   0x006744bc  ret      0x10
+// DSurface::vfunc_11 -- ALIAS of BSurface::vfunc_11 (same machine code at 0x006743a0); transcribed once.
 void DSurface::vfunc_11(int a0, int a1, int a2, int a3)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_12 -- body derived from 20 instructions at 0x00674370; semantics not reconstructed.
-// size 48 bytes; signature __thiscall nargs=3
-// callees: 0x006743a0
-//
-//   0x00674370  mov      eax, dword ptr [esp + 0xc]
-//   0x00674374  sub      esp, 0x10
-//   0x00674377  mov      edx, dword ptr [esp + 0x14]
-//   0x0067437b  push     esi
-//   0x0067437c  mov      esi, ecx
-//   0x0067437e  mov      ecx, dword ptr [esp + 0x1c]
-//   0x00674382  push     eax
-//   0x00674383  mov      eax, dword ptr [esi]
-//   0x00674385  push     ecx
-//   0x00674386  lea      ecx, [esp + 0xc]
-//   0x0067438a  push     edx
-//   0x0067438b  push     ecx
-//   0x0067438c  mov      ecx, esi
-//   0x0067438e  call     dword ptr [eax + 0x74]
-//   0x00674391  push     eax
-//   0x00674392  mov      ecx, esi
-//   0x00674394  call     0x6743a0
-//   0x00674399  pop      esi
-//   0x0067439a  add      esp, 0x10
-//   0x0067439d  ret      0xc
+// DSurface::vfunc_12 -- ALIAS of BSurface::vfunc_12 (same machine code at 0x00674370); transcribed once.
 void DSurface::vfunc_12(int a0, int a1, int a2)
 {
 }
@@ -1159,111 +795,12 @@ void DSurface::vfunc_15(int a0, int a1, int a2, int a3, int a4, int a5, int a6, 
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_16 -- body derived from 45 instructions at 0x00674910; semantics not reconstructed.
-// size 134 bytes; signature __stdcall nargs=4
-// callees: 0x00412bb0, 0x00676030
-//
-//   0x00674910  sub      esp, 0x44
-//   0x00674913  mov      eax, dword ptr [ecx]
-//   0x00674915  lea      edx, [esp + 0x24]
-//   0x00674919  push     esi
-//   0x0067491a  push     edx
-//   0x0067491b  mov      dword ptr [esp + 0x18], ecx
-//   0x0067491f  call     dword ptr [eax + 0x74]
-//   0x00674922  mov      edx, dword ptr [esp + 0x4c]
-//   0x00674926  push     0
-//   0x00674928  push     0
-//   0x0067492a  push     eax
-//   0x0067492b  lea      ecx, [esp + 0x10]
-//   0x0067492f  call     0x412bb0
-//   0x00674934  mov      edx, dword ptr [eax]
-//   0x00674936  mov      dword ptr [esp + 0x38], edx
-//   0x0067493a  mov      esi, dword ptr [eax + 4]
-//   0x0067493d  mov      dword ptr [esp + 0x3c], esi
-//   0x00674941  mov      ecx, dword ptr [eax + 8]
-//   0x00674944  mov      dword ptr [esp + 0x40], ecx
-//   0x00674948  mov      ecx, dword ptr [esp + 0x50]
-//   0x0067494c  mov      eax, dword ptr [eax + 0xc]
-//   0x0067494f  mov      dword ptr [esp + 0x44], eax
-//   0x00674953  mov      eax, dword ptr [ecx]
-//   0x00674955  mov      ecx, dword ptr [ecx + 4]
-//   0x00674958  add      eax, edx
-//   0x0067495a  add      ecx, esi
-//   0x0067495c  mov      dword ptr [esp + 0x18], eax
-//   0x00674960  mov      dword ptr [esp + 0x1c], ecx
-//   0x00674964  mov      ecx, dword ptr [esp + 0x54]
-//   0x00674968  mov      eax, dword ptr [ecx]
-//   0x0067496a  mov      ecx, dword ptr [ecx + 4]
-//   0x0067496d  add      ecx, esi
-//   0x0067496f  add      eax, edx
-//   0x00674971  mov      dword ptr [esp + 0x24], ecx
-//   0x00674975  lea      ecx, [esp + 0x38]
-//   0x00674979  push     ecx
-//   0x0067497a  lea      edx, [esp + 0x24]
-//   0x0067497e  lea      ecx, [esp + 0x1c]
-//   0x00674982  mov      dword ptr [esp + 0x24], eax
-//   0x00674986  call     0x676030
-//   0x0067498b  test     al, al
-//   0x0067498d  jne      0x674996
-//   0x0067498f  pop      esi
-//   0x00674990  add      esp, 0x44
-//   0x00674993  ret      0x10
+// DSurface::vfunc_16 -- ALIAS of BSurface::vfunc_16 (same machine code at 0x00674910); transcribed once.
 void DSurface::vfunc_16(int a0, int a1, int a2, int a3)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_17 -- body derived from 46 instructions at 0x00674650; semantics not reconstructed.
-// size 118 bytes; signature ? nargs=7
-// callees: 0x006746ca
-//
-//   0x00674650  sub      esp, 0x10
-//   0x00674653  mov      eax, dword ptr [esp + 0x14]
-//   0x00674657  push     ebx
-//   0x00674658  push     ebp
-//   0x00674659  push     esi
-//   0x0067465a  mov      edx, dword ptr [eax + 4]
-//   0x0067465d  mov      ebx, dword ptr [eax]
-//   0x0067465f  mov      dword ptr [esp + 0x18], edx
-//   0x00674663  mov      edx, dword ptr [esp + 0x24]
-//   0x00674667  push     edi
-//   0x00674668  mov      dword ptr [esp + 0x10], ecx
-//   0x0067466c  mov      edi, dword ptr [edx]
-//   0x0067466e  mov      ebp, dword ptr [edx + 4]
-//   0x00674671  cmp      ebx, edi
-//   0x00674673  mov      dword ptr [esp + 0x24], 1
-//   0x0067467b  jle      0x6746c6
-//   0x0067467d  mov      ebx, edi
-//   0x0067467f  mov      edi, dword ptr [eax]
-//   0x00674681  mov      ecx, ebp
-//   0x00674683  mov      ebp, dword ptr [eax + 4]
-//   0x00674686  mov      eax, ebx
-//   0x00674688  mov      dword ptr [esp + 0x1c], ecx
-//   0x0067468c  sub      eax, edi
-//   0x0067468e  cdq      
-//   0x0067468f  mov      esi, eax
-//   0x00674691  mov      eax, ecx
-//   0x00674693  xor      esi, edx
-//   0x00674695  sub      eax, ebp
-//   0x00674697  sub      esi, edx
-//   0x00674699  cdq      
-//   0x0067469a  xor      eax, edx
-//   0x0067469c  sub      eax, edx
-//   0x0067469e  inc      eax
-//   0x0067469f  cmp      esi, eax
-//   0x006746a1  jge      0x6746a5
-//   0x006746a3  mov      esi, eax
-//   0x006746a5  mov      eax, dword ptr [esp + 0x34]
-//   0x006746a9  add      esi, eax
-//   0x006746ab  and      esi, 0x8000000f
-//   0x006746b1  jns      0x6746b8
-//   0x006746b3  dec      esi
-//   0x006746b4  or       esi, 0xfffffff0
-//   0x006746b7  inc      esi
-//   0x006746b8  mov      ecx, dword ptr [esp + 0x10]
-//   0x006746bc  mov      dword ptr [esp + 0x24], 0xffffffff
-//   0x006746c4  jmp      0x6746ca
+// DSurface::vfunc_17 -- ALIAS of BSurface::vfunc_17 (same machine code at 0x00674650); transcribed once.
 void DSurface::vfunc_17(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
 }
@@ -1367,102 +904,12 @@ void DSurface::vfunc_19(int a0, int a1, int a2, int a3, int a4, int a5, int a6, 
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_20 -- body derived from 64 instructions at 0x00674b40; semantics not reconstructed.
-// size 158 bytes; signature __thiscall nargs=3
-// callees: none
-//
-//   0x00674b40  sub      esp, 0x20
-//   0x00674b43  mov      eax, dword ptr [esp + 0x28]
-//   0x00674b47  push     ebx
-//   0x00674b48  push     esi
-//   0x00674b49  mov      esi, ecx
-//   0x00674b4b  mov      ecx, dword ptr [eax]
-//   0x00674b4d  mov      edx, dword ptr [eax + 4]
-//   0x00674b50  push     edi
-//   0x00674b51  mov      edi, dword ptr [eax + 8]
-//   0x00674b54  mov      eax, dword ptr [eax + 0xc]
-//   0x00674b57  mov      ebx, dword ptr [esp + 0x30]
-//   0x00674b5b  lea      edi, [edi + ecx - 1]
-//   0x00674b5f  mov      dword ptr [esp + 0xc], ecx
-//   0x00674b63  lea      eax, [eax + edx - 1]
-//   0x00674b67  mov      dword ptr [esp + 0x14], edi
-//   0x00674b6b  mov      dword ptr [esp + 0x1c], edi
-//   0x00674b6f  mov      edi, dword ptr [esp + 0x38]
-//   0x00674b73  mov      dword ptr [esp + 0x28], eax
-//   0x00674b77  mov      dword ptr [esp + 0x20], eax
-//   0x00674b7b  mov      dword ptr [esp + 0x24], ecx
-//   0x00674b7f  lea      eax, [esp + 0x14]
-//   0x00674b83  push     edi
-//   0x00674b84  lea      ecx, [esp + 0x10]
-//   0x00674b88  mov      dword ptr [esp + 0x14], edx
-//   0x00674b8c  mov      dword ptr [esp + 0x1c], edx
-//   0x00674b90  mov      edx, dword ptr [esi]
-//   0x00674b92  push     eax
-//   0x00674b93  push     ecx
-//   0x00674b94  push     ebx
-//   0x00674b95  mov      ecx, esi
-//   0x00674b97  call     dword ptr [edx + 0x2c]
-//   0x00674b9a  mov      edx, dword ptr [esi]
-//   0x00674b9c  lea      eax, [esp + 0x24]
-//   0x00674ba0  push     edi
-//   0x00674ba1  lea      ecx, [esp + 0x10]
-//   0x00674ba5  push     eax
-//   0x00674ba6  push     ecx
-//   0x00674ba7  push     ebx
-//   0x00674ba8  mov      ecx, esi
-//   0x00674baa  call     dword ptr [edx + 0x2c]
-//   0x00674bad  mov      edx, dword ptr [esi]
-//   0x00674baf  lea      eax, [esp + 0x1c]
-//   0x00674bb3  push     edi
-//   0x00674bb4  lea      ecx, [esp + 0x18]
-//   0x00674bb8  push     eax
-//   0x00674bb9  push     ecx
-//   0x00674bba  push     ebx
-//   0x00674bbb  mov      ecx, esi
-//   0x00674bbd  call     dword ptr [edx + 0x2c]
-//   0x00674bc0  mov      edx, dword ptr [esi]
-//   0x00674bc2  lea      eax, [esp + 0x1c]
-//   0x00674bc6  push     edi
-//   0x00674bc7  lea      ecx, [esp + 0x28]
-//   0x00674bcb  push     eax
-//   0x00674bcc  push     ecx
-//   0x00674bcd  push     ebx
-//   0x00674bce  mov      ecx, esi
-//   0x00674bd0  call     dword ptr [edx + 0x2c]
-//   0x00674bd3  pop      edi
-//   0x00674bd4  pop      esi
-//   0x00674bd5  mov      al, 1
-//   0x00674bd7  pop      ebx
-//   0x00674bd8  add      esp, 0x20
-//   0x00674bdb  ret      0xc
+// DSurface::vfunc_20 -- ALIAS of BSurface::vfunc_20 (same machine code at 0x00674b40); transcribed once.
 void DSurface::vfunc_20(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_21 -- body derived from 18 instructions at 0x00674b10; semantics not reconstructed.
-// size 43 bytes; signature __thiscall nargs=2
-// callees: 0x00674b40
-//
-//   0x00674b10  mov      eax, dword ptr [esp + 8]
-//   0x00674b14  sub      esp, 0x10
-//   0x00674b17  push     esi
-//   0x00674b18  mov      esi, ecx
-//   0x00674b1a  mov      ecx, dword ptr [esp + 0x18]
-//   0x00674b1e  push     eax
-//   0x00674b1f  mov      edx, dword ptr [esi]
-//   0x00674b21  lea      eax, [esp + 8]
-//   0x00674b25  push     ecx
-//   0x00674b26  push     eax
-//   0x00674b27  mov      ecx, esi
-//   0x00674b29  call     dword ptr [edx + 0x74]
-//   0x00674b2c  push     eax
-//   0x00674b2d  mov      ecx, esi
-//   0x00674b2f  call     0x674b40
-//   0x00674b34  pop      esi
-//   0x00674b35  add      esp, 0x10
-//   0x00674b38  ret      8
+// DSurface::vfunc_21 -- ALIAS of BSurface::vfunc_21 (same machine code at 0x00674b10); transcribed once.
 void DSurface::vfunc_21(int a0, int a1)
 {
 }
@@ -1612,27 +1059,12 @@ void DSurface::vfunc_24(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_25 -- body derived from 2 instructions at 0x004068e0; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004068e0  mov      al, 1
-//   0x004068e2  ret      8
+// DSurface::vfunc_25 -- ALIAS of BSurface::vfunc_25 (same machine code at 0x004068e0); transcribed once.
 void DSurface::vfunc_25(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_26 -- body derived from 5 instructions at 0x00406960; semantics not reconstructed.
-// size 11 bytes; signature __cdecl
-// callees: none
-//
-//   0x00406960  mov      edx, dword ptr [ecx + 0xc]
-//   0x00406963  xor      eax, eax
-//   0x00406965  test     edx, edx
-//   0x00406967  setne    al
-//   0x0040696a  ret      
+// DSurface::vfunc_26 -- ALIAS of BSurface::vfunc_26 (same machine code at 0x00406960); transcribed once.
 void DSurface::vfunc_26()
 {
 }
@@ -1660,50 +1092,17 @@ void DSurface::vfunc_28()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_29 -- body derived from 17 instructions at 0x004068f0; semantics not reconstructed.
-// size 36 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x004068f0  mov      eax, dword ptr [esp + 4]
-//   0x004068f4  push     ebx
-//   0x004068f5  push     esi
-//   0x004068f6  push     edi
-//   0x004068f7  mov      edi, dword ptr [ecx + 4]
-//   0x004068fa  mov      ecx, dword ptr [ecx + 8]
-//   0x004068fd  mov      ebx, eax
-//   0x004068ff  xor      edx, edx
-//   0x00406901  xor      esi, esi
-//   0x00406903  mov      dword ptr [ebx], edx
-//   0x00406905  mov      dword ptr [ebx + 4], esi
-//   0x00406908  mov      dword ptr [ebx + 8], edi
-//   0x0040690b  pop      edi
-//   0x0040690c  pop      esi
-//   0x0040690d  mov      dword ptr [ebx + 0xc], ecx
-//   0x00406910  pop      ebx
-//   0x00406911  ret      4
+// DSurface::vfunc_29 -- ALIAS of BSurface::vfunc_29 (same machine code at 0x004068f0); transcribed once.
 void DSurface::vfunc_29(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_30 -- body derived from 2 instructions at 0x00406920; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x00406920  mov      eax, dword ptr [ecx + 4]
-//   0x00406923  ret      
+// DSurface::vfunc_30 -- ALIAS of BSurface::vfunc_30 (same machine code at 0x00406920); transcribed once.
 void DSurface::vfunc_30()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_31 -- body derived from 2 instructions at 0x00406930; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x00406930  mov      eax, dword ptr [ecx + 8]
-//   0x00406933  ret      
+// DSurface::vfunc_31 -- ALIAS of BSurface::vfunc_31 (same machine code at 0x00406930); transcribed once.
 void DSurface::vfunc_31()
 {
 }
@@ -1719,115 +1118,12 @@ void DSurface::vfunc_32()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_33 -- body derived from 47 instructions at 0x00674d10; semantics not reconstructed.
-// size 103 bytes; signature __thiscall nargs=3
-// callees: none
-//
-//   0x00674d10  mov      eax, dword ptr [esp + 0xc]
-//   0x00674d14  push     esi
-//   0x00674d15  mov      esi, dword ptr [esp + 8]
-//   0x00674d19  push     edi
-//   0x00674d1a  mov      edx, dword ptr [eax]
-//   0x00674d1c  mov      edi, ecx
-//   0x00674d1e  mov      ecx, dword ptr [esi]
-//   0x00674d20  cmp      ecx, edx
-//   0x00674d22  jl       0x674d8b
-//   0x00674d24  push     ebx
-//   0x00674d25  mov      ebx, dword ptr [eax + 8]
-//   0x00674d28  add      ebx, edx
-//   0x00674d2a  cmp      ecx, ebx
-//   0x00674d2c  pop      ebx
-//   0x00674d2d  jge      0x674d8b
-//   0x00674d2f  mov      ecx, dword ptr [esi + 4]
-//   0x00674d32  mov      edx, dword ptr [eax + 4]
-//   0x00674d35  cmp      ecx, edx
-//   0x00674d37  jl       0x674d8b
-//   0x00674d39  mov      eax, dword ptr [eax + 0xc]
-//   0x00674d3c  add      eax, edx
-//   0x00674d3e  cmp      ecx, eax
-//   0x00674d40  jge      0x674d8b
-//   0x00674d42  mov      edx, dword ptr [edi]
-//   0x00674d44  mov      eax, ecx
-//   0x00674d46  mov      ecx, dword ptr [esi]
-//   0x00674d48  push     eax
-//   0x00674d49  push     ecx
-//   0x00674d4a  mov      ecx, edi
-//   0x00674d4c  call     dword ptr [edx + 0x58]
-//   0x00674d4f  mov      esi, eax
-//   0x00674d51  test     esi, esi
-//   0x00674d53  je       0x674d8b
-//   0x00674d55  mov      edx, dword ptr [edi]
-//   0x00674d57  mov      ecx, edi
-//   0x00674d59  call     dword ptr [edx + 0x6c]
-//   0x00674d5c  cmp      eax, 2
-//   0x00674d5f  jne      0x674d77
-//   0x00674d61  mov      ax, word ptr [esp + 0x10]
-//   0x00674d66  mov      ecx, edi
-//   0x00674d68  mov      word ptr [esi], ax
-//   0x00674d6b  mov      edx, dword ptr [edi]
-//   0x00674d6d  call     dword ptr [edx + 0x5c]
-//   0x00674d70  pop      edi
-//   0x00674d71  mov      al, 1
-//   0x00674d73  pop      esi
-//   0x00674d74  ret      0xc
+// DSurface::vfunc_33 -- ALIAS of BSurface::vfunc_33 (same machine code at 0x00674d10); transcribed once.
 void DSurface::vfunc_33(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// DSurface::vfunc_34 -- body derived from 48 instructions at 0x00674c90; semantics not reconstructed.
-// size 100 bytes; signature __thiscall nargs=2
-// callees: none
-//
-//   0x00674c90  push     ebx
-//   0x00674c91  push     esi
-//   0x00674c92  mov      esi, dword ptr [esp + 0xc]
-//   0x00674c96  push     edi
-//   0x00674c97  mov      edi, ecx
-//   0x00674c99  xor      ebx, ebx
-//   0x00674c9b  mov      ecx, dword ptr [esp + 0x14]
-//   0x00674c9f  mov      eax, dword ptr [esi]
-//   0x00674ca1  mov      edx, dword ptr [ecx]
-//   0x00674ca3  cmp      eax, edx
-//   0x00674ca5  jl       0x674cff
-//   0x00674ca7  push     ebp
-//   0x00674ca8  mov      ebp, dword ptr [ecx + 8]
-//   0x00674cab  add      ebp, edx
-//   0x00674cad  cmp      eax, ebp
-//   0x00674caf  pop      ebp
-//   0x00674cb0  jge      0x674cff
-//   0x00674cb2  mov      eax, dword ptr [esi + 4]
-//   0x00674cb5  mov      edx, dword ptr [ecx + 4]
-//   0x00674cb8  cmp      eax, edx
-//   0x00674cba  jl       0x674cff
-//   0x00674cbc  mov      ecx, dword ptr [ecx + 0xc]
-//   0x00674cbf  add      ecx, edx
-//   0x00674cc1  cmp      eax, ecx
-//   0x00674cc3  jge      0x674cff
-//   0x00674cc5  mov      ecx, dword ptr [esi]
-//   0x00674cc7  mov      edx, dword ptr [edi]
-//   0x00674cc9  push     eax
-//   0x00674cca  push     ecx
-//   0x00674ccb  mov      ecx, edi
-//   0x00674ccd  call     dword ptr [edx + 0x58]
-//   0x00674cd0  mov      esi, eax
-//   0x00674cd2  test     esi, esi
-//   0x00674cd4  je       0x674cff
-//   0x00674cd6  mov      edx, dword ptr [edi]
-//   0x00674cd8  mov      ecx, edi
-//   0x00674cda  call     dword ptr [edx + 0x6c]
-//   0x00674cdd  cmp      eax, 2
-//   0x00674ce0  jne      0x674cf4
-//   0x00674ce2  mov      eax, dword ptr [edi]
-//   0x00674ce4  mov      bx, word ptr [esi]
-//   0x00674ce7  mov      ecx, edi
-//   0x00674ce9  call     dword ptr [eax + 0x5c]
-//   0x00674cec  pop      edi
-//   0x00674ced  mov      eax, ebx
-//   0x00674cef  pop      esi
-//   0x00674cf0  pop      ebx
-//   0x00674cf1  ret      8
+// DSurface::vfunc_34 -- ALIAS of BSurface::vfunc_34 (same machine code at 0x00674c90); transcribed once.
 void DSurface::vfunc_34(int a0, int a1)
 {
 }

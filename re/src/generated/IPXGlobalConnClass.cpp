@@ -5,14 +5,13 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "IPXGlobalConnClass.h"
 
-// ---------------------------------------------------------------------------
-// IPXGlobalConnClass::vfunc_1 -- body derived from 1 instructions at 0x004e6f10; semantics not reconstructed.
-// size 5 bytes; signature ? nargs=1
-// callees: 0x0045eb50
-//
-//   0x004e6f10  jmp      0x45eb50
+// IPXGlobalConnClass::vfunc_1 -- ALIAS of IPXConnClass::vfunc_1 (same machine code at 0x004e6f10); transcribed once.
 void IPXGlobalConnClass::vfunc_1(int a0)
 {
 }
@@ -64,25 +63,7 @@ void IPXGlobalConnClass::vfunc_4(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// IPXGlobalConnClass::vfunc_5 -- body derived from 14 instructions at 0x0045ee80; semantics not reconstructed.
-// size 30 bytes; signature __thiscall
-// callees: none
-//
-//   0x0045ee80  push     esi
-//   0x0045ee81  mov      esi, ecx
-//   0x0045ee83  mov      eax, dword ptr [esi]
-//   0x0045ee85  call     dword ptr [eax + 0x1c]
-//   0x0045ee88  test     eax, eax
-//   0x0045ee8a  je       0x45ee9e
-//   0x0045ee8c  mov      edx, dword ptr [esi]
-//   0x0045ee8e  mov      ecx, esi
-//   0x0045ee90  call     dword ptr [edx + 0x20]
-//   0x0045ee93  test     eax, eax
-//   0x0045ee95  je       0x45ee9e
-//   0x0045ee97  mov      eax, 1
-//   0x0045ee9c  pop      esi
-//   0x0045ee9d  ret      
+// IPXGlobalConnClass::vfunc_5 -- ALIAS of ConnectionClass::vfunc_5 (same machine code at 0x0045ee80); transcribed once.
 void IPXGlobalConnClass::vfunc_5()
 {
 }
@@ -140,138 +121,7 @@ void IPXGlobalConnClass::vfunc_6(int a0, int a1, int a2, int a3, int a4)
 {
 }
 
-// ---------------------------------------------------------------------------
-// IPXGlobalConnClass::vfunc_7 -- body derived from 127 instructions at 0x0045eeb0; semantics not reconstructed.
-// size 353 bytes; signature __thiscall nargs=2
-// callees: 0x0045dde0, 0x0045df60, 0x0045e200, 0x005f0b30
-//
-//   0x0045eeb0  sub      esp, 8
-//   0x0045eeb3  push     ebx
-//   0x0045eeb4  push     ebp
-//   0x0045eeb5  push     esi
-//   0x0045eeb6  push     edi
-//   0x0045eeb7  mov      edi, ecx
-//   0x0045eeb9  xor      esi, esi
-//   0x0045eebb  mov      dword ptr [esp + 0x10], 0
-//   0x0045eec3  mov      ecx, dword ptr [edi + 4]
-//   0x0045eec6  mov      eax, dword ptr [ecx + 0x28]
-//   0x0045eec9  test     eax, eax
-//   0x0045eecb  jle      0x45ef2f
-//   0x0045eecd  push     esi
-//   0x0045eece  call     0x45df60
-//   0x0045eed3  mov      ebx, eax
-//   0x0045eed5  test     byte ptr [ebx], 2
-//   0x0045eed8  je       0x45ef26
-//   0x0045eeda  mov      eax, dword ptr [ebx + 0x14]
-//   0x0045eedd  mov      cl, byte ptr [eax + 2]
-//   0x0045eee0  test     cl, cl
-//   0x0045eee2  jne      0x45ef14
-//   0x0045eee4  mov      eax, dword ptr [0x714ef0]
-//   0x0045eee9  mov      ebp, dword ptr [0x714ef8]
-//   0x0045eeef  cmp      eax, -1
-//   0x0045eef2  je       0x45ef06
-//   0x0045eef4  mov      ecx, 0x714ef4
-//   0x0045eef9  call     0x5f0b30
-//   0x0045eefe  sub      eax, dword ptr [0x714ef0]
-//   0x0045ef04  add      ebp, eax
-//   0x0045ef06  mov      ecx, dword ptr [ebx + 4]
-//   0x0045ef09  sub      ebp, ecx
-//   0x0045ef0b  mov      ecx, dword ptr [edi + 4]
-//   0x0045ef0e  push     ebp
-//   0x0045ef0f  call     0x45e200
-//   0x0045ef14  mov      ecx, dword ptr [edi + 4]
-//   0x0045ef17  push     0
-//   0x0045ef19  push     0
-//   0x0045ef1b  push     esi
-//   0x0045ef1c  push     0
-//   0x0045ef1e  push     0
-//   0x0045ef20  call     0x45dde0
-//   0x0045ef25  dec      esi
-//   0x0045ef26  mov      ecx, dword ptr [edi + 4]
-//   0x0045ef29  inc      esi
-//   0x0045ef2a  cmp      esi, dword ptr [ecx + 0x28]
-//   0x0045ef2d  jl       0x45eecd
-//   0x0045ef2f  mov      ecx, dword ptr [edi + 4]
-//   0x0045ef32  xor      ebx, ebx
-//   0x0045ef34  mov      eax, dword ptr [ecx + 0x28]
-//   0x0045ef37  test     eax, eax
-//   0x0045ef39  mov      dword ptr [esp + 0x14], eax
-//   0x0045ef3d  jle      0x45f011
-//   0x0045ef43  mov      ecx, dword ptr [edi + 4]
-//   0x0045ef46  push     ebx
-//   0x0045ef47  call     0x45df60
-//   0x0045ef4c  mov      esi, eax
-//   0x0045ef4e  test     byte ptr [esi], 2
-//   0x0045ef51  jne      0x45eff2
-//   0x0045ef57  mov      eax, dword ptr [0x714ef0]
-//   0x0045ef5c  mov      ebp, dword ptr [0x714ef8]
-//   0x0045ef62  cmp      eax, -1
-//   0x0045ef65  je       0x45ef79
-//   0x0045ef67  mov      ecx, 0x714ef4
-//   0x0045ef6c  call     0x5f0b30
-//   0x0045ef71  sub      eax, dword ptr [0x714ef0]
-//   0x0045ef77  add      ebp, eax
-//   0x0045ef79  mov      ecx, dword ptr [esi + 8]
-//   0x0045ef7c  mov      eax, dword ptr [edi + 0x14]
-//   0x0045ef7f  mov      edx, ebp
-//   0x0045ef81  sub      edx, ecx
-//   0x0045ef83  cmp      edx, eax
-//   0x0045ef85  jbe      0x45eff2
-//   0x0045ef87  mov      ecx, dword ptr [esi + 0x18]
-//   0x0045ef8a  mov      edx, dword ptr [esi + 0x1c]
-//   0x0045ef8d  mov      eax, dword ptr [edi]
-//   0x0045ef8f  push     ecx
-//   0x0045ef90  mov      ecx, dword ptr [esi + 0x10]
-//   0x0045ef93  push     edx
-//   0x0045ef94  mov      edx, dword ptr [esi + 0x14]
-//   0x0045ef97  push     ecx
-//   0x0045ef98  push     edx
-//   0x0045ef99  mov      ecx, edi
-//   0x0045ef9b  call     dword ptr [eax + 0x24]
-//   0x0045ef9e  mov      eax, dword ptr [esi + 0xc]
-//   0x0045efa1  mov      dword ptr [esi + 8], ebp
-//   0x0045efa4  test     eax, eax
-//   0x0045efa6  jne      0x45efb7
-//   0x0045efa8  mov      ecx, dword ptr [esi + 0x14]
-//   0x0045efab  mov      dword ptr [esi + 4], ebp
-//   0x0045efae  cmp      byte ptr [ecx + 2], 1
-//   0x0045efb2  jne      0x45efb7
-//   0x0045efb4  or       dword ptr [esi], 2
-//   0x0045efb7  inc      eax
-//   0x0045efb8  mov      dword ptr [esi + 0xc], eax
-//   0x0045efbb  mov      ecx, dword ptr [edi + 0x18]
-//   0x0045efbe  cmp      ecx, -1
-//   0x0045efc1  je       0x45efd5
-//   0x0045efc3  cmp      eax, ecx
-//   0x0045efc5  jbe      0x45efd5
-//   0x0045efc7  mov      eax, dword ptr [esi]
-//   0x0045efc9  mov      dword ptr [esp + 0x10], 1
-//   0x0045efd1  or       al, 4
-//   0x0045efd3  mov      dword ptr [esi], eax
-//   0x0045efd5  mov      eax, dword ptr [edi + 0x1c]
-//   0x0045efd8  cmp      eax, -1
-//   0x0045efdb  je       0x45eff2
-//   0x0045efdd  sub      ebp, dword ptr [esi + 4]
-//   0x0045efe0  cmp      ebp, eax
-//   0x0045efe2  jbe      0x45eff2
-//   0x0045efe4  mov      eax, dword ptr [esi]
-//   0x0045efe6  mov      dword ptr [esp + 0x10], 1
-//   0x0045efee  or       al, 4
-//   0x0045eff0  mov      dword ptr [esi], eax
-//   0x0045eff2  mov      eax, dword ptr [esp + 0x14]
-//   0x0045eff6  inc      ebx
-//   0x0045eff7  cmp      ebx, eax
-//   0x0045eff9  jl       0x45ef43
-//   0x0045efff  mov      eax, dword ptr [esp + 0x10]
-//   0x0045f003  test     eax, eax
-//   0x0045f005  je       0x45f011
-//   0x0045f007  pop      edi
-//   0x0045f008  pop      esi
-//   0x0045f009  pop      ebp
-//   0x0045f00a  xor      eax, eax
-//   0x0045f00c  pop      ebx
-//   0x0045f00d  add      esp, 8
-//   0x0045f010  ret      
+// IPXGlobalConnClass::vfunc_7 -- ALIAS of ConnectionClass::vfunc_7 (same machine code at 0x0045eeb0); transcribed once.
 void IPXGlobalConnClass::vfunc_7(int a0, int a1)
 {
 }

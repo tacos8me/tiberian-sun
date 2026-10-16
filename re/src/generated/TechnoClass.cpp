@@ -5,54 +5,28 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "TechnoClass.h"
 
-// ---------------------------------------------------------------------------
-// TechnoClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// TechnoClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void TechnoClass::Init()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// TechnoClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void TechnoClass::Shutdown()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::QueryInterface -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// TechnoClass::QueryInterface -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 long TechnoClass::QueryInterface(const void*, void**)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::AddRef -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// TechnoClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 unsigned long TechnoClass::AddRef()
 {
 }
@@ -117,31 +91,12 @@ void TechnoClass::vfunc_5()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_6 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// TechnoClass::vfunc_6 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void TechnoClass::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::GetType -- body derived from 7 instructions at 0x00405910; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00405910  push     esi
-//   0x00405911  mov      esi, dword ptr [esp + 0xc]
-//   0x00405915  test     esi, esi
-//   0x00405917  jne      0x405922
-//   0x00405919  mov      eax, 0x80004003
-//   0x0040591e  pop      esi
-//   0x0040591f  ret      8
+// TechnoClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
 int TechnoClass::GetType()
 {
 }
@@ -166,18 +121,7 @@ void TechnoClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_9 -- body derived from 7 instructions at 0x0060f180; semantics not reconstructed.
-// size 26 bytes; signature __cdecl
-// callees: none
-//
-//   0x0060f180  mov      eax, dword ptr [ecx + 0xec]
-//   0x0060f186  test     eax, eax
-//   0x0060f188  je       0x60f1a1
-//   0x0060f18a  cmp      dword ptr [0x7b0b7c], eax
-//   0x0060f190  jne      0x60f19a
-//   0x0060f192  mov      byte ptr [ecx + 0x1fe], 1
-//   0x0060f199  ret      
+// TechnoClass::vfunc_9 -- ALIAS of FootClass::vfunc_9 (same machine code at 0x0060f180); transcribed once.
 void TechnoClass::vfunc_9()
 {
 }
@@ -263,28 +207,12 @@ void TechnoClass::vfunc_10()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::GetClassID -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// TechnoClass::GetClassID -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 long TechnoClass::GetClassID(void* pClassID)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::IsDirty -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// TechnoClass::IsDirty -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 long TechnoClass::IsDirty()
 {
 }
@@ -334,167 +262,47 @@ long TechnoClass::Load(IStream* pStm)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::Save -- body derived from 3 instructions at 0x00612db0; semantics not reconstructed.
-// size 10 bytes; signature __cdecl
-// callees: none
-//
-//   0x00612db0  mov      eax, dword ptr [ecx + 0xec]
-//   0x00612db6  mov      eax, dword ptr [eax + 0x20]
-//   0x00612db9  ret      
+// TechnoClass::Save -- ALIAS of AircraftClass::vfunc_14 (same machine code at 0x00612db0); transcribed once.
 long TechnoClass::Save(IStream* pStm, int fClearDirty)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::GetSizeMax -- body derived from 2 instructions at 0x00612dc0; semantics not reconstructed.
-// size 7 bytes; signature __cdecl
-// callees: none
-//
-//   0x00612dc0  mov      eax, dword ptr [ecx + 0xec]
-//   0x00612dc6  ret      
+// TechnoClass::GetSizeMax -- ALIAS of AircraftClass::vfunc_15 (same machine code at 0x00612dc0); transcribed once.
 long TechnoClass::GetSizeMax(unsigned long* pcbSize)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::Compute_CRC -- body derived from 2 instructions at 0x004059f0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059f0  xor      eax, eax
-//   0x004059f2  ret      
+// TechnoClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); transcribed once.
 void TechnoClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_17 -- body derived from 5 instructions at 0x00570a20; semantics not reconstructed.
-// size 11 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570a20  mov      dl, byte ptr [ecx + 0x35]
-//   0x00570a23  xor      eax, eax
-//   0x00570a25  test     dl, dl
-//   0x00570a27  sete     al
-//   0x00570a2a  ret      
+// TechnoClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); transcribed once.
 void TechnoClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_18 -- body derived from 18 instructions at 0x00570960; semantics not reconstructed.
-// size 48 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00570960  mov      eax, dword ptr [ecx]
-//   0x00570962  sub      esp, 0xc
-//   0x00570965  lea      edx, [esp]
-//   0x00570969  push     esi
-//   0x0057096a  push     edx
-//   0x0057096b  call     dword ptr [eax + 0x180]
-//   0x00570971  mov      ecx, eax
-//   0x00570973  mov      eax, dword ptr [esp + 0x14]
-//   0x00570977  mov      edx, eax
-//   0x00570979  mov      esi, dword ptr [ecx]
-//   0x0057097b  mov      dword ptr [edx], esi
-//   0x0057097d  mov      esi, dword ptr [ecx + 4]
-//   0x00570980  mov      dword ptr [edx + 4], esi
-//   0x00570983  pop      esi
-//   0x00570984  mov      ecx, dword ptr [ecx + 8]
-//   0x00570987  mov      dword ptr [edx + 8], ecx
-//   0x0057098a  add      esp, 0xc
-//   0x0057098d  ret      4
+// TechnoClass::vfunc_18 -- ALIAS of AircraftClass::vfunc_18 (same machine code at 0x00570960); transcribed once.
 void TechnoClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// TechnoClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void TechnoClass::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_20 -- body derived from 9 instructions at 0x00570e80; semantics not reconstructed.
-// size 26 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570e80  mov      al, byte ptr [ecx + 0x2c]
-//   0x00570e83  test     al, al
-//   0x00570e85  je       0x570e9a
-//   0x00570e87  mov      eax, dword ptr [ecx]
-//   0x00570e89  call     dword ptr [eax + 0x198]
-//   0x00570e8f  cmp      eax, dword ptr [0x7d6a20]
-//   0x00570e95  jge      0x570e9a
-//   0x00570e97  mov      al, 1
-//   0x00570e99  ret      
+// TechnoClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); transcribed once.
 void TechnoClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_21 -- body derived from 9 instructions at 0x00570ea0; semantics not reconstructed.
-// size 26 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570ea0  mov      al, byte ptr [ecx + 0x2c]
-//   0x00570ea3  test     al, al
-//   0x00570ea5  je       0x570eba
-//   0x00570ea7  mov      eax, dword ptr [ecx]
-//   0x00570ea9  call     dword ptr [eax + 0x198]
-//   0x00570eaf  cmp      eax, dword ptr [0x7d6a20]
-//   0x00570eb5  jl       0x570eba
-//   0x00570eb7  mov      al, 1
-//   0x00570eb9  ret      
+// TechnoClass::vfunc_21 -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); transcribed once.
 void TechnoClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// TechnoClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void TechnoClass::vfunc_22()
 {
 }
@@ -663,41 +471,7 @@ void TechnoClass::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_24 -- body derived from 30 instructions at 0x0060eb70; semantics not reconstructed.
-// size 85 bytes; signature __thiscall
-// callees: 0x004c4fb0
-//
-//   0x0060eb70  push     esi
-//   0x0060eb71  mov      esi, ecx
-//   0x0060eb73  mov      eax, dword ptr [esi + 0x28]
-//   0x0060eb76  test     eax, eax
-//   0x0060eb78  jle      0x60ebc5
-//   0x0060eb7a  mov      al, byte ptr [esi + 0x2f]
-//   0x0060eb7d  test     al, al
-//   0x0060eb7f  jne      0x60ebc5
-//   0x0060eb81  mov      al, byte ptr [esi + 0x1fb]
-//   0x0060eb87  test     al, al
-//   0x0060eb89  je       0x60ebc5
-//   0x0060eb8b  mov      eax, dword ptr [esi]
-//   0x0060eb8d  call     dword ptr [eax + 0x2c]
-//   0x0060eb90  cmp      eax, 6
-//   0x0060eb93  je       0x60ebc5
-//   0x0060eb95  mov      al, byte ptr [esi + 0x1ff]
-//   0x0060eb9b  test     al, al
-//   0x0060eb9d  je       0x60ebc5
-//   0x0060eb9f  mov      edx, dword ptr [esi]
-//   0x0060eba1  mov      ecx, esi
-//   0x0060eba3  call     dword ptr [edx + 0x80]
-//   0x0060eba9  mov      cl, byte ptr [eax + 0xc9]
-//   0x0060ebaf  test     cl, cl
-//   0x0060ebb1  je       0x60ebc5
-//   0x0060ebb3  mov      ecx, dword ptr [esi + 0xec]
-//   0x0060ebb9  call     0x4c4fb0
-//   0x0060ebbe  test     al, al
-//   0x0060ebc0  setne    al
-//   0x0060ebc3  pop      esi
-//   0x0060ebc4  ret      
+// TechnoClass::vfunc_24 -- ALIAS of AircraftClass::vfunc_24 (same machine code at 0x0060eb70); transcribed once.
 void TechnoClass::vfunc_24()
 {
 }
@@ -812,530 +586,97 @@ void TechnoClass::vfunc_28()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_29 -- body derived from 17 instructions at 0x0056eb60; semantics not reconstructed.
-// size 52 bytes; signature __cdecl
-// callees: 0x0067faf0
-//
-//   0x0056eb60  mov      eax, dword ptr [ecx]
-//   0x0056eb62  push     esi
-//   0x0056eb63  call     dword ptr [eax + 0x198]
-//   0x0056eb69  mov      ecx, dword ptr [0x714e20]
-//   0x0056eb6f  mov      esi, eax
-//   0x0056eb71  fild     dword ptr [ecx + 0x4cc]
-//   0x0056eb77  fmul     qword ptr [0x699a50]
-//   0x0056eb7d  call     0x67faf0
-//   0x0056eb82  xor      edx, edx
-//   0x0056eb84  cmp      esi, eax
-//   0x0056eb86  setge    dl
-//   0x0056eb89  dec      edx
-//   0x0056eb8a  pop      esi
-//   0x0056eb8b  and      edx, 0xfffffffe
-//   0x0056eb8e  add      edx, 4
-//   0x0056eb91  mov      eax, edx
-//   0x0056eb93  ret      
+// TechnoClass::vfunc_29 -- ALIAS of BuildingClass::vfunc_29 (same machine code at 0x0056eb60); transcribed once.
 void TechnoClass::vfunc_29()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_30 -- body derived from 7 instructions at 0x00570ef0; semantics not reconstructed.
-// size 19 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570ef0  mov      eax, dword ptr [ecx]
-//   0x00570ef2  call     dword ptr [eax + 0x198]
-//   0x00570ef8  xor      ecx, ecx
-//   0x00570efa  cmp      eax, -0x14
-//   0x00570efd  setg     cl
-//   0x00570f00  mov      al, cl
-//   0x00570f02  ret      
+// TechnoClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); transcribed once.
 void TechnoClass::vfunc_30()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_31 -- body derived from 2 instructions at 0x004167d0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004167d0  xor      al, al
-//   0x004167d2  ret      
+// TechnoClass::vfunc_31 -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); transcribed once.
 void TechnoClass::vfunc_31()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_32 -- body derived from 2 instructions at 0x0060eb10; semantics not reconstructed.
-// size 8 bytes; signature __thiscall
-// callees: none
-//
-//   0x0060eb10  mov      eax, dword ptr [ecx]
-//   0x0060eb12  jmp      dword ptr [eax + 0x84]
+// TechnoClass::vfunc_32 -- ALIAS of AircraftClass::vfunc_32 (same machine code at 0x0060eb10); transcribed once.
 void TechnoClass::vfunc_32()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_33 -- body derived from 2 instructions at 0x004a4b00; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004a4b00  xor      eax, eax
-//   0x004a4b02  ret      
+// TechnoClass::vfunc_33 -- ALIAS of FootClass::vfunc_33 (same machine code at 0x004a4b00); transcribed once.
 void TechnoClass::vfunc_33()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_34 -- body derived from 5 instructions at 0x0061b1b0; semantics not reconstructed.
-// size 15 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061b1b0  mov      eax, dword ptr [ecx]
-//   0x0061b1b2  call     dword ptr [eax + 0x80]
-//   0x0061b1b8  mov      edx, dword ptr [eax]
-//   0x0061b1ba  mov      ecx, eax
-//   0x0061b1bc  jmp      dword ptr [edx + 0x70]
+// TechnoClass::vfunc_34 -- ALIAS of AircraftClass::vfunc_34 (same machine code at 0x0061b1b0); transcribed once.
 void TechnoClass::vfunc_34()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_35 -- body derived from 2 instructions at 0x004167e0; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x004167e0  mov      eax, 0x715524
-//   0x004167e5  ret      
+// TechnoClass::vfunc_35 -- ALIAS of AnimClass::vfunc_35 (same machine code at 0x004167e0); transcribed once.
 void TechnoClass::vfunc_35()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_36 -- body derived from 9 instructions at 0x00616470; semantics not reconstructed.
-// size 17 bytes; signature __thiscall
-// callees: none
-//
-//   0x00616470  push     esi
-//   0x00616471  mov      esi, ecx
-//   0x00616473  mov      eax, dword ptr [esi]
-//   0x00616475  call     dword ptr [eax + 0x2c]
-//   0x00616478  cmp      eax, 6
-//   0x0061647b  je       0x616481
-//   0x0061647d  xor      al, al
-//   0x0061647f  pop      esi
-//   0x00616480  ret      
+// TechnoClass::vfunc_36 -- ALIAS of AircraftClass::vfunc_36 (same machine code at 0x00616470); transcribed once.
 void TechnoClass::vfunc_36()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_37 -- body derived from 2 instructions at 0x0056ebc0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ebc0  xor      al, al
-//   0x0056ebc2  ret      
+// TechnoClass::vfunc_37 -- ALIAS of AnimClass::vfunc_37 (same machine code at 0x0056ebc0); transcribed once.
 void TechnoClass::vfunc_37()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_38 -- body derived from 18 instructions at 0x00616410; semantics not reconstructed.
-// size 49 bytes; signature __thiscall
-// callees: 0x004c4fb0
-//
-//   0x00616410  push     esi
-//   0x00616411  mov      esi, ecx
-//   0x00616413  mov      ecx, dword ptr [esi + 0xec]
-//   0x00616419  call     0x4c4fb0
-//   0x0061641e  test     al, al
-//   0x00616420  je       0x616441
-//   0x00616422  mov      eax, dword ptr [esi]
-//   0x00616424  push     0
-//   0x00616426  mov      ecx, esi
-//   0x00616428  call     dword ptr [eax + 0x2fc]
-//   0x0061642e  cmp      dword ptr [eax], 0
-//   0x00616431  je       0x616441
-//   0x00616433  mov      eax, dword ptr [esi + 0x210]
-//   0x00616439  test     eax, eax
-//   0x0061643b  jne      0x616441
-//   0x0061643d  mov      al, 1
-//   0x0061643f  pop      esi
-//   0x00616440  ret      
+// TechnoClass::vfunc_38 -- ALIAS of AircraftClass::vfunc_38 (same machine code at 0x00616410); transcribed once.
 void TechnoClass::vfunc_38()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_39 -- body derived from 12 instructions at 0x00616130; semantics not reconstructed.
-// size 32 bytes; signature __thiscall
-// callees: 0x004c4fb0
-//
-//   0x00616130  push     esi
-//   0x00616131  mov      esi, ecx
-//   0x00616133  mov      ecx, dword ptr [esi + 0xec]
-//   0x00616139  call     0x4c4fb0
-//   0x0061613e  test     al, al
-//   0x00616140  je       0x616150
-//   0x00616142  mov      eax, dword ptr [esi + 0x210]
-//   0x00616148  test     eax, eax
-//   0x0061614a  jne      0x616150
-//   0x0061614c  mov      al, 1
-//   0x0061614e  pop      esi
-//   0x0061614f  ret      
+// TechnoClass::vfunc_39 -- ALIAS of AircraftClass::vfunc_39 (same machine code at 0x00616130); transcribed once.
 void TechnoClass::vfunc_39()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_40 -- body derived from 18 instructions at 0x0040e5d0; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e5d0  mov      eax, dword ptr [ecx]
-//   0x0040e5d2  sub      esp, 0xc
-//   0x0040e5d5  lea      edx, [esp]
-//   0x0040e5d9  push     esi
-//   0x0040e5da  push     edx
-//   0x0040e5db  call     dword ptr [eax + 0x48]
-//   0x0040e5de  mov      ecx, eax
-//   0x0040e5e0  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e5e4  mov      edx, eax
-//   0x0040e5e6  mov      esi, dword ptr [ecx]
-//   0x0040e5e8  mov      dword ptr [edx], esi
-//   0x0040e5ea  mov      esi, dword ptr [ecx + 4]
-//   0x0040e5ed  mov      dword ptr [edx + 4], esi
-//   0x0040e5f0  pop      esi
-//   0x0040e5f1  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e5f4  mov      dword ptr [edx + 8], ecx
-//   0x0040e5f7  add      esp, 0xc
-//   0x0040e5fa  ret      4
+// TechnoClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); transcribed once.
 void TechnoClass::vfunc_40()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_41 -- body derived from 18 instructions at 0x0040e600; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e600  mov      eax, dword ptr [ecx]
-//   0x0040e602  sub      esp, 0xc
-//   0x0040e605  lea      edx, [esp]
-//   0x0040e609  push     esi
-//   0x0040e60a  push     edx
-//   0x0040e60b  call     dword ptr [eax + 0x48]
-//   0x0040e60e  mov      ecx, eax
-//   0x0040e610  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e614  mov      edx, eax
-//   0x0040e616  mov      esi, dword ptr [ecx]
-//   0x0040e618  mov      dword ptr [edx], esi
-//   0x0040e61a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e61d  mov      dword ptr [edx + 4], esi
-//   0x0040e620  pop      esi
-//   0x0040e621  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e624  mov      dword ptr [edx + 8], ecx
-//   0x0040e627  add      esp, 0xc
-//   0x0040e62a  ret      4
+// TechnoClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); transcribed once.
 void TechnoClass::vfunc_41()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_42 -- body derived from 18 instructions at 0x0040e630; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e630  mov      eax, dword ptr [ecx]
-//   0x0040e632  sub      esp, 0xc
-//   0x0040e635  lea      edx, [esp]
-//   0x0040e639  push     esi
-//   0x0040e63a  push     edx
-//   0x0040e63b  call     dword ptr [eax + 0x48]
-//   0x0040e63e  mov      ecx, eax
-//   0x0040e640  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e644  mov      edx, eax
-//   0x0040e646  mov      esi, dword ptr [ecx]
-//   0x0040e648  mov      dword ptr [edx], esi
-//   0x0040e64a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e64d  mov      dword ptr [edx + 4], esi
-//   0x0040e650  pop      esi
-//   0x0040e651  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e654  mov      dword ptr [edx + 8], ecx
-//   0x0040e657  add      esp, 0xc
-//   0x0040e65a  ret      4
+// TechnoClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); transcribed once.
 void TechnoClass::vfunc_42()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_43 -- body derived from 142 instructions at 0x0060edd0; semantics not reconstructed.
-// size 452 bytes; signature __thiscall nargs=2
-// callees: 0x00492960, 0x00542300, 0x00542330, 0x00542b20, 0x00542c40, 0x00543620, 0x0067faf0
-//
-//   0x0060edd0  sub      esp, 0x60
-//   0x0060edd3  push     ebx
-//   0x0060edd4  push     ebp
-//   0x0060edd5  push     esi
-//   0x0060edd6  mov      esi, ecx
-//   0x0060edd8  push     edi
-//   0x0060edd9  mov      eax, dword ptr [esi]
-//   0x0060eddb  call     dword ptr [eax + 0x80]
-//   0x0060ede1  mov      edx, dword ptr [esi]
-//   0x0060ede3  mov      ebx, eax
-//   0x0060ede5  mov      eax, dword ptr [esp + 0x78]
-//   0x0060ede9  mov      ecx, esi
-//   0x0060edeb  push     eax
-//   0x0060edec  call     dword ptr [edx + 0x2fc]
-//   0x0060edf2  mov      edi, eax
-//   0x0060edf4  mov      ecx, dword ptr [edi + 8]
-//   0x0060edf7  mov      edx, dword ptr [edi + 0xc]
-//   0x0060edfa  mov      ebp, dword ptr [edi + 4]
-//   0x0060edfd  mov      dword ptr [esp + 0x14], ecx
-//   0x0060ee01  lea      ecx, [esp + 0x40]
-//   0x0060ee05  mov      dword ptr [esp + 0x10], edx
-//   0x0060ee09  call     0x542300
-//   0x0060ee0e  mov      eax, dword ptr [esi]
-//   0x0060ee10  lea      ecx, [esp + 0x18]
-//   0x0060ee14  push     ecx
-//   0x0060ee15  mov      ecx, esi
-//   0x0060ee17  call     dword ptr [eax + 0x240]
-//   0x0060ee1d  mov      edx, dword ptr [eax]
-//   0x0060ee1f  push     ecx
-//   0x0060ee20  shr      edx, 0xa
-//   0x0060ee23  inc      edx
-//   0x0060ee24  lea      ecx, [esp + 0x44]
-//   0x0060ee28  shr      edx, 1
-//   0x0060ee2a  and      edx, 0x1f
-//   0x0060ee2d  sub      edx, 8
-//   0x0060ee30  mov      dword ptr [esp + 0x7c], edx
-//   0x0060ee34  fild     dword ptr [esp + 0x7c]
-//   0x0060ee38  fmul     qword ptr [0x69a648]
-//   0x0060ee3e  fstp     dword ptr [esp]
-//   0x0060ee41  call     0x542c40
-//   0x0060ee46  mov      eax, dword ptr [edi + 0x14]
-//   0x0060ee49  mov      ecx, dword ptr [esp + 0x10]
-//   0x0060ee4d  add      eax, ecx
-//   0x0060ee4f  push     ecx
-//   0x0060ee50  mov      ecx, dword ptr [esi + 0x1e0]
-//   0x0060ee56  mov      dword ptr [esp + 0x7c], eax
-//   0x0060ee5a  fild     dword ptr [esp + 0x7c]
-//   0x0060ee5e  and      ecx, 0x80000001
-//   0x0060ee64  fstp     dword ptr [esp]
-//   0x0060ee67  jns      0x60ee6e
-//   0x0060ee69  dec      ecx
-//   0x0060ee6a  or       ecx, 0xfffffffe
-//   0x0060ee6d  inc      ecx
-//   0x0060ee6e  neg      ecx
-//   0x0060ee70  sbb      ecx, ecx
-//   0x0060ee72  mov      edx, dword ptr [ebx + 0x384]
-//   0x0060ee78  and      ecx, 0xfffffffe
-//   0x0060ee7b  add      edx, ebp
-//   0x0060ee7d  inc      ecx
-//   0x0060ee7e  imul     ecx, dword ptr [esp + 0x18]
-//   0x0060ee83  mov      dword ptr [esp + 0x7c], ecx
-//   0x0060ee87  push     ecx
-//   0x0060ee88  fild     dword ptr [esp + 0x80]
-//   0x0060ee8f  mov      dword ptr [esp + 0x80], edx
-//   0x0060ee96  fstp     dword ptr [esp]
-//   0x0060ee99  fild     dword ptr [esp + 0x80]
-//   0x0060eea0  push     ecx
-//   0x0060eea1  lea      ecx, [esp + 0x4c]
-//   0x0060eea5  fstp     dword ptr [esp]
-//   0x0060eea8  call     0x542330
-//   0x0060eead  lea      eax, [esp + 0x18]
-//   0x0060eeb1  lea      ecx, [esi + 0x198]
-//   0x0060eeb7  push     eax
-//   0x0060eeb8  call     0x492960
-//   0x0060eebd  mov      ecx, dword ptr [eax]
-//   0x0060eebf  shr      ecx, 0xa
-//   0x0060eec2  inc      ecx
-//   0x0060eec3  shr      ecx, 1
-//   0x0060eec5  and      ecx, 0x1f
-//   0x0060eec8  sub      ecx, 8
-//   0x0060eecb  mov      dword ptr [esp + 0x78], ecx
-//   0x0060eecf  push     ecx
-//   0x0060eed0  fild     dword ptr [esp + 0x7c]
-//   0x0060eed4  lea      ecx, [esp + 0x44]
-//   0x0060eed8  fmul     qword ptr [0x69a648]
-//   0x0060eede  fchs     
-//   0x0060eee0  fstp     dword ptr [esp]
-//   0x0060eee3  call     0x542b20
-//   0x0060eee8  fild     dword ptr [edi + 0x10]
-//   0x0060eeeb  push     0
-//   0x0060eeed  push     0
-//   0x0060eeef  push     ecx
-//   0x0060eef0  lea      ecx, [esp + 0x4c]
-//   0x0060eef4  fstp     dword ptr [esp]
-//   0x0060eef7  call     0x542330
-//   0x0060eefc  lea      edx, [esp + 0x28]
-//   0x0060ef00  lea      ecx, [esp + 0x34]
-//   0x0060ef04  push     edx
-//   0x0060ef05  lea      edx, [esp + 0x44]
-//   0x0060ef09  mov      dword ptr [esp + 0x2c], 0
-//   0x0060ef11  mov      dword ptr [esp + 0x30], 0
-//   0x0060ef19  mov      dword ptr [esp + 0x34], 0
-//   0x0060ef21  call     0x543620
-//   0x0060ef26  mov      ecx, dword ptr [eax]
-//   0x0060ef28  mov      dword ptr [esp + 0x1c], ecx
-//   0x0060ef2c  mov      edx, dword ptr [eax + 4]
-//   0x0060ef2f  fld      dword ptr [esp + 0x1c]
-//   0x0060ef33  mov      eax, dword ptr [eax + 8]
-//   0x0060ef36  mov      dword ptr [esp + 0x20], edx
-//   0x0060ef3a  mov      dword ptr [esp + 0x24], eax
-//   0x0060ef3e  call     0x67faf0
-//   0x0060ef43  fld      dword ptr [esp + 0x20]
-//   0x0060ef47  fchs     
-//   0x0060ef49  mov      edi, eax
-//   0x0060ef4b  call     0x67faf0
-//   0x0060ef50  fld      dword ptr [esp + 0x24]
-//   0x0060ef54  mov      ebx, eax
-//   0x0060ef56  call     0x67faf0
-//   0x0060ef5b  mov      edx, dword ptr [esi]
-//   0x0060ef5d  mov      ebp, eax
-//   0x0060ef5f  lea      eax, [esp + 0x34]
-//   0x0060ef63  mov      ecx, esi
-//   0x0060ef65  push     eax
-//   0x0060ef66  call     dword ptr [edx + 0xa8]
-//   0x0060ef6c  mov      ecx, dword ptr [eax]
-//   0x0060ef6e  mov      esi, dword ptr [esp + 0x74]
-//   0x0060ef72  mov      edx, dword ptr [eax + 4]
-//   0x0060ef75  mov      eax, dword ptr [eax + 8]
-//   0x0060ef78  add      ecx, edi
-//   0x0060ef7a  mov      edi, esi
-//   0x0060ef7c  add      edx, ebx
-//   0x0060ef7e  add      eax, ebp
-//   0x0060ef80  mov      dword ptr [edi], ecx
-//   0x0060ef82  mov      dword ptr [edi + 4], edx
-//   0x0060ef85  mov      dword ptr [edi + 8], eax
-//   0x0060ef88  mov      eax, esi
-//   0x0060ef8a  pop      edi
-//   0x0060ef8b  pop      esi
-//   0x0060ef8c  pop      ebp
-//   0x0060ef8d  pop      ebx
-//   0x0060ef8e  add      esp, 0x60
-//   0x0060ef91  ret      8
+// TechnoClass::vfunc_43 -- ALIAS of AircraftClass::vfunc_43 (same machine code at 0x0060edd0); transcribed once.
 void TechnoClass::vfunc_43()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_44 -- body derived from 18 instructions at 0x0040e660; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e660  mov      eax, dword ptr [ecx]
-//   0x0040e662  sub      esp, 0xc
-//   0x0040e665  lea      edx, [esp]
-//   0x0040e669  push     esi
-//   0x0040e66a  push     edx
-//   0x0040e66b  call     dword ptr [eax + 0x48]
-//   0x0040e66e  mov      ecx, eax
-//   0x0040e670  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e674  mov      edx, eax
-//   0x0040e676  mov      esi, dword ptr [ecx]
-//   0x0040e678  mov      dword ptr [edx], esi
-//   0x0040e67a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e67d  mov      dword ptr [edx + 4], esi
-//   0x0040e680  pop      esi
-//   0x0040e681  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e684  mov      dword ptr [edx + 8], ecx
-//   0x0040e687  add      esp, 0xc
-//   0x0040e68a  ret      4
+// TechnoClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); transcribed once.
 void TechnoClass::vfunc_44()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_45 -- body derived from 8 instructions at 0x00570ed0; semantics not reconstructed.
-// size 23 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570ed0  mov      eax, dword ptr [ecx]
-//   0x00570ed2  sub      esp, 0xc
-//   0x00570ed5  lea      edx, [esp]
-//   0x00570ed9  push     edx
-//   0x00570eda  call     dword ptr [eax + 0xa8]
-//   0x00570ee0  mov      eax, dword ptr [eax + 4]
-//   0x00570ee3  add      esp, 0xc
-//   0x00570ee6  ret      
+// TechnoClass::vfunc_45 -- ALIAS of AircraftClass::vfunc_45 (same machine code at 0x00570ed0); transcribed once.
 void TechnoClass::vfunc_45()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_46 -- body derived from 55 instructions at 0x00570db0; semantics not reconstructed.
-// size 148 bytes; signature __thiscall nargs=4
-// callees: 0x00502060, 0x00510f70
-//
-//   0x00570db0  sub      esp, 0x18
-//   0x00570db3  push     ebx
-//   0x00570db4  push     ebp
-//   0x00570db5  push     esi
-//   0x00570db6  mov      esi, ecx
-//   0x00570db8  lea      ecx, [esp + 0x18]
-//   0x00570dbc  push     edi
-//   0x00570dbd  mov      eax, dword ptr [esi]
-//   0x00570dbf  mov      bl, byte ptr [esi + 0x32]
-//   0x00570dc2  push     ecx
-//   0x00570dc3  mov      ecx, esi
-//   0x00570dc5  call     dword ptr [eax + 0x4c]
-//   0x00570dc8  mov      edx, dword ptr [eax]
-//   0x00570dca  mov      dword ptr [esp + 0x10], edx
-//   0x00570dce  mov      ecx, dword ptr [eax + 4]
-//   0x00570dd1  mov      dword ptr [esp + 0x14], ecx
-//   0x00570dd5  mov      ecx, 0x710d28
-//   0x00570dda  mov      edx, dword ptr [eax + 8]
-//   0x00570ddd  lea      eax, [esp + 0x10]
-//   0x00570de1  push     eax
-//   0x00570de2  mov      dword ptr [esp + 0x1c], edx
-//   0x00570de6  call     0x510f70
-//   0x00570deb  mov      edx, dword ptr [esi]
-//   0x00570ded  mov      edi, eax
-//   0x00570def  lea      eax, [esp + 0x1c]
-//   0x00570df3  mov      ecx, esi
-//   0x00570df5  push     eax
-//   0x00570df6  call     dword ptr [edx + 0x180]
-//   0x00570dfc  push     eax
-//   0x00570dfd  mov      ecx, 0x710d28
-//   0x00570e02  call     0x510f70
-//   0x00570e07  mov      ebp, eax
-//   0x00570e09  mov      al, byte ptr [esi + 0x32]
-//   0x00570e0c  test     al, al
-//   0x00570e0e  jne      0x570e44
-//   0x00570e10  mov      eax, dword ptr [0x7d6a20]
-//   0x00570e15  mov      ecx, ebp
-//   0x00570e17  sub      ecx, edi
-//   0x00570e19  lea      edx, [eax + eax*2]
-//   0x00570e1c  cmp      ecx, edx
-//   0x00570e1e  jle      0x570e49
-//   0x00570e20  lea      eax, [esp + 0x10]
-//   0x00570e24  mov      ecx, 0x710d28
-//   0x00570e29  push     eax
-//   0x00570e2a  call     0x502060
-//   0x00570e2f  mov      ecx, dword ptr [eax + 0xa4]
-//   0x00570e35  test     ch, 0x10
-//   0x00570e38  je       0x570e44
-//   0x00570e3a  pop      edi
-//   0x00570e3b  pop      esi
-//   0x00570e3c  pop      ebp
-//   0x00570e3d  mov      al, 1
-//   0x00570e3f  pop      ebx
-//   0x00570e40  add      esp, 0x18
-//   0x00570e43  ret      
+// TechnoClass::vfunc_46 -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); transcribed once.
 void TechnoClass::vfunc_46()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_47 -- body derived from 2 instructions at 0x00416830; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00416830  mov      al, 1
-//   0x00416832  ret      
+// TechnoClass::vfunc_47 -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); transcribed once.
 void TechnoClass::vfunc_47()
 {
 }
@@ -1438,683 +779,72 @@ void TechnoClass::vfunc_49()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_50 -- body derived from 46 instructions at 0x0056fb40; semantics not reconstructed.
-// size 121 bytes; signature __thiscall nargs=1
-// callees: 0x00405980, 0x00478840, 0x00478860, 0x004c4fb0, 0x0062c210
-//
-//   0x0056fb40  push     ebx
-//   0x0056fb41  push     esi
-//   0x0056fb42  mov      esi, ecx
-//   0x0056fb44  push     edi
-//   0x0056fb45  mov      eax, dword ptr [esi]
-//   0x0056fb47  call     dword ptr [eax + 0x3c]
-//   0x0056fb4a  mov      edi, eax
-//   0x0056fb4c  mov      al, byte ptr [esp + 0x10]
-//   0x0056fb50  xor      bl, bl
-//   0x0056fb52  test     al, al
-//   0x0056fb54  jne      0x56fb84
-//   0x0056fb56  mov      ecx, esi
-//   0x0056fb58  call     0x405980
-//   0x0056fb5d  test     al, al
-//   0x0056fb5f  je       0x56fb71
-//   0x0056fb61  mov      edx, dword ptr [esi]
-//   0x0056fb63  mov      ecx, esi
-//   0x0056fb65  call     dword ptr [edx + 0x2b0]
-//   0x0056fb6b  test     al, al
-//   0x0056fb6d  je       0x56fb71
-//   0x0056fb6f  mov      bl, 1
-//   0x0056fb71  test     edi, edi
-//   0x0056fb73  je       0x56fb84
-//   0x0056fb75  mov      ecx, edi
-//   0x0056fb77  call     0x4c4fb0
-//   0x0056fb7c  test     al, al
-//   0x0056fb7e  jne      0x56fb8e
-//   0x0056fb80  test     bl, bl
-//   0x0056fb82  jne      0x56fb8e
-//   0x0056fb84  mov      eax, dword ptr [esi]
-//   0x0056fb86  mov      ecx, esi
-//   0x0056fb88  call     dword ptr [eax + 0x130]
-//   0x0056fb8e  mov      ecx, 0x710d28
-//   0x0056fb93  call     0x478840
-//   0x0056fb98  cmp      eax, esi
-//   0x0056fb9a  jne      0x56fba8
-//   0x0056fb9c  push     0
-//   0x0056fb9e  mov      ecx, 0x710d28
-//   0x0056fba3  call     0x478860
-//   0x0056fba8  mov      dl, byte ptr [esp + 0x10]
-//   0x0056fbac  mov      ecx, esi
-//   0x0056fbae  call     0x62c210
-//   0x0056fbb3  pop      edi
-//   0x0056fbb4  pop      esi
-//   0x0056fbb5  pop      ebx
-//   0x0056fbb6  ret      4
+// TechnoClass::vfunc_50 -- ALIAS of AnimClass::vfunc_50 (same machine code at 0x0056fb40); transcribed once.
 void TechnoClass::vfunc_50()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_51 -- body derived from 130 instructions at 0x00617760; semantics not reconstructed.
-// size 361 bytes; signature __thiscall nargs=1
-// callees: 0x00603730, 0x00646870
-//
-//   0x00617760  push     ebx
-//   0x00617761  push     ebp
-//   0x00617762  push     esi
-//   0x00617763  mov      esi, ecx
-//   0x00617765  push     edi
-//   0x00617766  xor      ebp, ebp
-//   0x00617768  mov      eax, dword ptr [esi]
-//   0x0061776a  call     dword ptr [eax + 0x80]
-//   0x00617770  mov      ecx, dword ptr [esi + 0xec]
-//   0x00617776  mov      edx, dword ptr [eax]
-//   0x00617778  push     ecx
-//   0x00617779  mov      ecx, eax
-//   0x0061777b  call     dword ptr [edx + 0x84]
-//   0x00617781  mov      edi, dword ptr [esp + 0x14]
-//   0x00617785  mov      ebx, eax
-//   0x00617787  mov      al, byte ptr [esi + 0x35]
-//   0x0061778a  test     al, al
-//   0x0061778c  je       0x6177aa
-//   0x0061778e  mov      ecx, dword ptr [esi + 0x24]
-//   0x00617791  test     ecx, ecx
-//   0x00617793  je       0x6177aa
-//   0x00617795  test     edi, edi
-//   0x00617797  je       0x6177aa
-//   0x00617799  mov      edx, dword ptr [0x7dca08]
-//   0x0061779f  push     ebp
-//   0x006177a0  push     ebp
-//   0x006177a1  push     edx
-//   0x006177a2  push     esi
-//   0x006177a3  push     6
-//   0x006177a5  call     0x603730
-//   0x006177aa  mov      al, byte ptr [esi + 0x35]
-//   0x006177ad  test     al, al
-//   0x006177af  je       0x61784a
-//   0x006177b5  mov      ecx, dword ptr [esi + 0x24]
-//   0x006177b8  test     ecx, ecx
-//   0x006177ba  je       0x6177d2
-//   0x006177bc  test     edi, edi
-//   0x006177be  je       0x6177d2
-//   0x006177c0  mov      eax, dword ptr [0x7dca08]
-//   0x006177c5  push     0
-//   0x006177c7  push     0
-//   0x006177c9  push     eax
-//   0x006177ca  push     esi
-//   0x006177cb  push     4
-//   0x006177cd  call     0x603730
-//   0x006177d2  mov      al, byte ptr [esi + 0x35]
-//   0x006177d5  test     al, al
-//   0x006177d7  je       0x61784a
-//   0x006177d9  mov      edx, dword ptr [esi]
-//   0x006177db  mov      ecx, esi
-//   0x006177dd  call     dword ptr [edx + 0x2c]
-//   0x006177e0  cmp      eax, 1
-//   0x006177e3  je       0x61784a
-//   0x006177e5  mov      al, byte ptr [esi + 0x35]
-//   0x006177e8  test     al, al
-//   0x006177ea  je       0x61784a
-//   0x006177ec  mov      ecx, dword ptr [esi + 0x24]
-//   0x006177ef  test     ecx, ecx
-//   0x006177f1  je       0x617809
-//   0x006177f3  test     edi, edi
-//   0x006177f5  je       0x617809
-//   0x006177f7  mov      eax, dword ptr [0x7dca08]
-//   0x006177fc  push     0
-//   0x006177fe  push     0
-//   0x00617800  push     eax
-//   0x00617801  push     esi
-//   0x00617802  push     7
-//   0x00617804  call     0x603730
-//   0x00617809  mov      al, byte ptr [esi + 0x35]
-//   0x0061780c  test     al, al
-//   0x0061780e  je       0x61784a
-//   0x00617810  mov      ecx, dword ptr [esi + 0x24]
-//   0x00617813  test     ecx, ecx
-//   0x00617815  je       0x61782a
-//   0x00617817  mov      edx, dword ptr [0x7dca08]
-//   0x0061781d  push     0
-//   0x0061781f  push     0
-//   0x00617821  push     edx
-//   0x00617822  push     esi
-//   0x00617823  push     0x30
-//   0x00617825  call     0x603730
-//   0x0061782a  mov      al, byte ptr [esi + 0x35]
-//   0x0061782d  test     al, al
-//   0x0061782f  je       0x61784a
-//   0x00617831  mov      ecx, dword ptr [esi + 0x24]
-//   0x00617834  test     ecx, ecx
-//   0x00617836  je       0x61784a
-//   0x00617838  mov      eax, dword ptr [0x7dca08]
-//   0x0061783d  push     0
-//   0x0061783f  push     0
-//   0x00617841  push     eax
-//   0x00617842  push     esi
-//   0x00617843  push     0x1d
-//   0x00617845  call     0x603730
-//   0x0061784a  test     edi, edi
-//   0x0061784c  je       0x6178a9
-//   0x0061784e  mov      edx, dword ptr [edi]
-//   0x00617850  mov      ecx, edi
-//   0x00617852  call     dword ptr [edx + 0x80]
-//   0x00617858  mov      cl, byte ptr [eax + 0x436]
-//   0x0061785e  test     cl, cl
-//   0x00617860  je       0x61788a
-//   0x00617862  mov      eax, dword ptr [edi]
-//   0x00617864  mov      ecx, edi
-//   0x00617866  call     dword ptr [eax + 0x80]
-//   0x0061786c  mov      ecx, dword ptr [esi + 0xec]
-//   0x00617872  mov      edx, dword ptr [eax]
-//   0x00617874  push     ebx
-//   0x00617875  push     ecx
-//   0x00617876  mov      ecx, eax
-//   0x00617878  call     dword ptr [edx + 0x84]
-//   0x0061787e  push     eax
-//   0x0061787f  lea      ecx, [edi + 0xa8]
-//   0x00617885  call     0x646870
-//   0x0061788a  mov      edx, dword ptr [edi]
-//   0x0061788c  mov      ecx, edi
-//   0x0061788e  call     dword ptr [edx + 0x38]
-//   0x00617891  mov      ecx, dword ptr [esi + 0xec]
-//   0x00617897  mov      dword ptr [ecx + 0x2c0], eax
-//   0x0061789d  mov      eax, dword ptr [edi + 0xec]
-//   0x006178a3  add      dword ptr [eax + 0x320], ebx
-//   0x006178a9  mov      edx, dword ptr [esi]
-//   0x006178ab  mov      ecx, esi
-//   0x006178ad  call     dword ptr [edx + 0x2c]
-//   0x006178b0  dec      eax
-//   0x006178b1  cmp      eax, 0xe
-//   0x006178b4  ja       0x617a3a
-//   0x006178ba  xor      ecx, ecx
-//   0x006178bc  mov      cl, byte ptr [eax + 0x617a58]
-//   0x006178c2  jmp      dword ptr [ecx*4 + 0x617a44]
+// TechnoClass::vfunc_51 -- ALIAS of AircraftClass::vfunc_51 (same machine code at 0x00617760); transcribed once.
 void TechnoClass::vfunc_51()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_52 -- body derived from 33 instructions at 0x005700c0; semantics not reconstructed.
-// size 100 bytes; signature __thiscall nargs=1
-// callees: 0x00570148, 0x00682997
-//
-//   0x005700c0  push     esi
-//   0x005700c1  mov      esi, ecx
-//   0x005700c3  push     edi
-//   0x005700c4  mov      edi, dword ptr [esp + 0xc]
-//   0x005700c8  mov      eax, dword ptr [esi]
-//   0x005700ca  push     0x80
-//   0x005700cf  push     edi
-//   0x005700d0  mov      byte ptr [esi + 0x33], 1
-//   0x005700d4  call     dword ptr [eax + 0xc4]
-//   0x005700da  test     al, al
-//   0x005700dc  je       0x570163
-//   0x005700e2  mov      edx, dword ptr [esi]
-//   0x005700e4  push     edi
-//   0x005700e5  mov      ecx, esi
-//   0x005700e7  call     dword ptr [edx + 0x184]
-//   0x005700ed  mov      eax, dword ptr [esi]
-//   0x005700ef  mov      ecx, esi
-//   0x005700f1  call     dword ptr [eax + 0x2c]
-//   0x005700f4  cmp      eax, 8
-//   0x005700f7  push     0x108
-//   0x005700fc  jne      0x570124
-//   0x005700fe  call     0x682997
-//   0x00570103  add      esp, 4
-//   0x00570106  test     eax, eax
-//   0x00570108  je       0x57015c
-//   0x0057010a  mov      ecx, dword ptr [0x714e20]
-//   0x00570110  push     0
-//   0x00570112  push     0x600
-//   0x00570117  push     1
-//   0x00570119  mov      edx, dword ptr [ecx + 0x7f0]
-//   0x0057011f  push     0
-//   0x00570121  push     edi
-//   0x00570122  jmp      0x570148
+// TechnoClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); transcribed once.
 void TechnoClass::vfunc_52()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_53 -- body derived from 52 instructions at 0x0056ea70; semantics not reconstructed.
-// size 156 bytes; signature __thiscall nargs=1
-// callees: 0x00473150, 0x004731a0, 0x0068309c, 0x006939b0
-//
-//   0x0056ea70  sub      esp, 0xc
-//   0x0056ea73  push     esi
-//   0x0056ea74  mov      esi, ecx
-//   0x0056ea76  push     0
-//   0x0056ea78  mov      eax, dword ptr [esi]
-//   0x0056ea7a  mov      byte ptr [esi + 0x33], 1
-//   0x0056ea7e  mov      byte ptr [esi + 0x34], 1
-//   0x0056ea82  call     dword ptr [eax + 0x10c]
-//   0x0056ea88  push     esi
-//   0x0056ea89  mov      ecx, 0x710d28
-//   0x0056ea8e  call     0x4731a0
-//   0x0056ea93  push     esi
-//   0x0056ea94  mov      ecx, 0x710d28
-//   0x0056ea99  mov      byte ptr [esi + 0x32], 0
-//   0x0056ea9d  call     0x473150
-//   0x0056eaa2  mov      edx, dword ptr [esi]
-//   0x0056eaa4  push     1
-//   0x0056eaa6  mov      ecx, esi
-//   0x0056eaa8  call     dword ptr [edx + 0x10c]
-//   0x0056eaae  push     0
-//   0x0056eab0  push     0x6bf5b0
-//   0x0056eab5  push     0x6bf530
-//   0x0056eaba  push     0
-//   0x0056eabc  push     esi
-//   0x0056eabd  call     0x68309c
-//   0x0056eac2  add      esp, 0x14
-//   0x0056eac5  test     eax, eax
-//   0x0056eac7  je       0x56eb31
-//   0x0056eac9  mov      eax, dword ptr [esi + 0x324]
-//   0x0056eacf  test     eax, eax
-//   0x0056ead1  jne      0x56eadd
-//   0x0056ead3  push     0x80004003
-//   0x0056ead8  call     0x6939b0
-//   0x0056eadd  mov      eax, dword ptr [esi + 0x324]
-//   0x0056eae3  push     eax
-//   0x0056eae4  mov      ecx, dword ptr [eax]
-//   0x0056eae6  call     dword ptr [ecx + 0x10]
-//   0x0056eae9  test     al, al
-//   0x0056eaeb  jne      0x56eb0c
-//   0x0056eaed  push     edi
-//   0x0056eaee  mov      edi, dword ptr [esi]
-//   0x0056eaf0  lea      edx, [esp + 8]
-//   0x0056eaf4  mov      ecx, esi
-//   0x0056eaf6  push     edx
-//   0x0056eaf7  call     dword ptr [edi + 0x180]
-//   0x0056eafd  push     eax
-//   0x0056eafe  mov      ecx, esi
-//   0x0056eb00  call     dword ptr [edi + 0xdc]
-//   0x0056eb06  pop      edi
-//   0x0056eb07  pop      esi
-//   0x0056eb08  add      esp, 0xc
-//   0x0056eb0b  ret      
+// TechnoClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); transcribed once.
 void TechnoClass::vfunc_53()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_54 -- body derived from 25 instructions at 0x00570480; semantics not reconstructed.
-// size 84 bytes; signature __stdcall nargs=1
-// callees: 0x00502060, 0x00510f70
-//
-//   0x00570480  push     esi
-//   0x00570481  mov      esi, dword ptr [esp + 8]
-//   0x00570485  push     esi
-//   0x00570486  mov      ecx, 0x710d28
-//   0x0057048b  call     0x510f70
-//   0x00570490  mov      edx, dword ptr [0x7d6a1c]
-//   0x00570496  mov      ecx, dword ptr [esi + 8]
-//   0x00570499  add      eax, edx
-//   0x0057049b  cmp      eax, ecx
-//   0x0057049d  jg       0x5704d4
-//   0x0057049f  push     esi
-//   0x005704a0  mov      ecx, 0x710d28
-//   0x005704a5  call     0x502060
-//   0x005704aa  mov      ecx, dword ptr [eax + 0xa4]
-//   0x005704b0  test     ch, 0x10
-//   0x005704b3  je       0x5704d4
-//   0x005704b5  push     esi
-//   0x005704b6  mov      ecx, 0x710d28
-//   0x005704bb  call     0x502060
-//   0x005704c0  mov      ecx, dword ptr [eax + 0xa0]
-//   0x005704c6  add      eax, 0xa0
-//   0x005704cb  or       ecx, 0x40
-//   0x005704ce  pop      esi
-//   0x005704cf  mov      dword ptr [eax], ecx
-//   0x005704d1  ret      4
+// TechnoClass::vfunc_54 -- ALIAS of AircraftClass::vfunc_54 (same machine code at 0x00570480); transcribed once.
 void TechnoClass::vfunc_54()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_55 -- body derived from 25 instructions at 0x00570500; semantics not reconstructed.
-// size 84 bytes; signature __stdcall nargs=1
-// callees: 0x00502060, 0x00510f70
-//
-//   0x00570500  push     esi
-//   0x00570501  mov      esi, dword ptr [esp + 8]
-//   0x00570505  push     esi
-//   0x00570506  mov      ecx, 0x710d28
-//   0x0057050b  call     0x510f70
-//   0x00570510  mov      edx, dword ptr [0x7d6a1c]
-//   0x00570516  mov      ecx, dword ptr [esi + 8]
-//   0x00570519  add      eax, edx
-//   0x0057051b  cmp      eax, ecx
-//   0x0057051d  jg       0x570554
-//   0x0057051f  push     esi
-//   0x00570520  mov      ecx, 0x710d28
-//   0x00570525  call     0x502060
-//   0x0057052a  mov      ecx, dword ptr [eax + 0xa4]
-//   0x00570530  test     ch, 0x10
-//   0x00570533  je       0x570554
-//   0x00570535  push     esi
-//   0x00570536  mov      ecx, 0x710d28
-//   0x0057053b  call     0x502060
-//   0x00570540  mov      ecx, dword ptr [eax + 0xa0]
-//   0x00570546  add      eax, 0xa0
-//   0x0057054b  and      ecx, 0xffffffbf
-//   0x0057054e  pop      esi
-//   0x0057054f  mov      dword ptr [eax], ecx
-//   0x00570551  ret      4
+// TechnoClass::vfunc_55 -- ALIAS of AircraftClass::vfunc_55 (same machine code at 0x00570500); transcribed once.
 void TechnoClass::vfunc_55()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_56 -- body derived from 35 instructions at 0x005709b0; semantics not reconstructed.
-// size 110 bytes; signature __thiscall
-// callees: 0x0062c210
-//
-//   0x005709b0  push     esi
-//   0x005709b1  mov      esi, ecx
-//   0x005709b3  mov      dl, 1
-//   0x005709b5  call     0x62c210
-//   0x005709ba  mov      eax, dword ptr [esi]
-//   0x005709bc  mov      ecx, esi
-//   0x005709be  call     dword ptr [eax + 0xc0]
-//   0x005709c4  mov      byte ptr [esi + 0x35], 0
-//   0x005709c8  mov      eax, dword ptr [0x7dd4f8]
-//   0x005709cd  cmp      dword ptr [0x7dd500], eax
-//   0x005709d3  jl       0x570a04
-//   0x005709d5  mov      cl, byte ptr [0x7dd4fd]
-//   0x005709db  test     cl, cl
-//   0x005709dd  jne      0x5709e3
-//   0x005709df  test     eax, eax
-//   0x005709e1  jne      0x570a1c
-//   0x005709e3  mov      ecx, dword ptr [0x7dd504]
-//   0x005709e9  test     ecx, ecx
-//   0x005709eb  jle      0x570a1c
-//   0x005709ed  mov      edx, dword ptr [0x7dd4f0]
-//   0x005709f3  add      ecx, eax
-//   0x005709f5  push     0
-//   0x005709f7  push     ecx
-//   0x005709f8  mov      ecx, 0x7dd4f0
-//   0x005709fd  call     dword ptr [edx + 8]
-//   0x00570a00  test     al, al
-//   0x00570a02  je       0x570a1c
-//   0x00570a04  mov      ecx, dword ptr [0x7dd500]
-//   0x00570a0a  mov      eax, ecx
-//   0x00570a0c  inc      ecx
-//   0x00570a0d  mov      dword ptr [0x7dd500], ecx
-//   0x00570a13  mov      ecx, dword ptr [0x7dd4f4]
-//   0x00570a19  mov      dword ptr [ecx + eax*4], esi
-//   0x00570a1c  pop      esi
-//   0x00570a1d  ret      
+// TechnoClass::vfunc_56 -- ALIAS of BuildingClass::vfunc_56 (same machine code at 0x005709b0); transcribed once.
 void TechnoClass::vfunc_56()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_57 -- body derived from 4 instructions at 0x00617ce0; semantics not reconstructed.
-// size 11 bytes; signature __cdecl
-// callees: none
-//
-//   0x00617ce0  mov      eax, dword ptr [ecx]
-//   0x00617ce2  push     0
-//   0x00617ce4  call     dword ptr [eax + 0x32c]
-//   0x00617cea  ret      
+// TechnoClass::vfunc_57 -- ALIAS of AircraftClass::vfunc_57 (same machine code at 0x00617ce0); transcribed once.
 void TechnoClass::vfunc_57()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_58 -- body derived from 2 instructions at 0x0061b480; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0061b480  xor      eax, eax
-//   0x0061b482  ret      4
+// TechnoClass::vfunc_58 -- ALIAS of FootClass::vfunc_58 (same machine code at 0x0061b480); transcribed once.
 void TechnoClass::vfunc_58()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_59 -- body derived from 41 instructions at 0x0056f480; semantics not reconstructed.
-// size 111 bytes; signature __thiscall nargs=3
-// callees: 0x005f5120
-//
-//   0x0056f480  sub      esp, 0x20
-//   0x0056f483  mov      al, byte ptr [0x7b2e3a]
-//   0x0056f488  push     esi
-//   0x0056f489  mov      esi, ecx
-//   0x0056f48b  test     al, al
-//   0x0056f48d  mov      dword ptr [esp + 8], esi
-//   0x0056f491  jne      0x56f4b2
-//   0x0056f493  mov      al, byte ptr [0x7b2e3c]
-//   0x0056f498  test     al, al
-//   0x0056f49a  jne      0x56f4b2
-//   0x0056f49c  mov      al, byte ptr [esp + 0x2c]
-//   0x0056f4a0  test     al, al
-//   0x0056f4a2  jne      0x56f4ab
-//   0x0056f4a4  mov      al, byte ptr [esi + 0x2e]
-//   0x0056f4a7  test     al, al
-//   0x0056f4a9  je       0x56f4e6
-//   0x0056f4ab  mov      al, byte ptr [esi + 0x2f]
-//   0x0056f4ae  test     al, al
-//   0x0056f4b0  jne      0x56f4e6
-//   0x0056f4b2  mov      edx, dword ptr [esi]
-//   0x0056f4b4  lea      eax, [esp + 0xc]
-//   0x0056f4b8  push     eax
-//   0x0056f4b9  lea      eax, [esp + 0x18]
-//   0x0056f4bd  push     eax
-//   0x0056f4be  mov      ecx, esi
-//   0x0056f4c0  mov      byte ptr [esi + 0x2e], 0
-//   0x0056f4c4  call     dword ptr [edx + 0xa8]
-//   0x0056f4ca  mov      ecx, dword ptr [0x714eec]
-//   0x0056f4d0  push     eax
-//   0x0056f4d1  call     0x5f5120
-//   0x0056f4d6  test     al, al
-//   0x0056f4d8  jne      0x56f4ef
-//   0x0056f4da  mov      edx, dword ptr [esi]
-//   0x0056f4dc  mov      ecx, esi
-//   0x0056f4de  call     dword ptr [edx + 0x2c]
-//   0x0056f4e1  cmp      eax, 0x18
-//   0x0056f4e4  je       0x56f4ef
-//   0x0056f4e6  xor      al, al
-//   0x0056f4e8  pop      esi
-//   0x0056f4e9  add      esp, 0x20
-//   0x0056f4ec  ret      0xc
+// TechnoClass::vfunc_59 -- ALIAS of AircraftClass::vfunc_59 (same machine code at 0x0056f480); transcribed once.
 void TechnoClass::vfunc_59()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_60 -- body derived from 27 instructions at 0x005701b0; semantics not reconstructed.
-// size 87 bytes; signature __thiscall nargs=1
-// callees: 0x00682610
-//
-//   0x005701b0  push     ecx
-//   0x005701b1  push     esi
-//   0x005701b2  mov      esi, ecx
-//   0x005701b4  mov      cl, byte ptr [0x7d69d8]
-//   0x005701ba  mov      al, 1
-//   0x005701bc  test     al, cl
-//   0x005701be  jne      0x5701ef
-//   0x005701c0  mov      dl, cl
-//   0x005701c2  push     0x570230
-//   0x005701c7  or       dl, al
-//   0x005701c9  mov      eax, 0x7fff
-//   0x005701ce  mov      word ptr [esp + 8], ax
-//   0x005701d3  mov      word ptr [esp + 0xa], ax
-//   0x005701d8  mov      eax, dword ptr [esp + 8]
-//   0x005701dc  mov      byte ptr [0x7d69d8], dl
-//   0x005701e2  mov      dword ptr [0x7d6a08], eax
-//   0x005701e7  call     0x682610
-//   0x005701ec  add      esp, 4
-//   0x005701ef  mov      edx, dword ptr [esi]
-//   0x005701f1  mov      ecx, esi
-//   0x005701f3  call     dword ptr [edx + 0x84]
-//   0x005701f9  test     eax, eax
-//   0x005701fb  jne      0x570207
-//   0x005701fd  mov      eax, 0x7d6a08
-//   0x00570202  pop      esi
-//   0x00570203  pop      ecx
-//   0x00570204  ret      4
+// TechnoClass::vfunc_60 -- ALIAS of AircraftClass::vfunc_60 (same machine code at 0x005701b0); transcribed once.
 void TechnoClass::vfunc_60()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_61 -- body derived from 57 instructions at 0x00610880; semantics not reconstructed.
-// size 163 bytes; signature __thiscall nargs=5
-// callees: 0x00610933
-//
-//   0x00610880  sub      esp, 0x50
-//   0x00610883  push     esi
-//   0x00610884  mov      esi, ecx
-//   0x00610886  mov      eax, dword ptr [esi]
-//   0x00610888  call     dword ptr [eax + 0x2c]
-//   0x0061088b  cmp      eax, 6
-//   0x0061088e  jne      0x610c44
-//   0x00610894  mov      al, byte ptr [esi + 0x30]
-//   0x00610897  test     al, al
-//   0x00610899  je       0x610c44
-//   0x0061089f  mov      edx, dword ptr [esi]
-//   0x006108a1  mov      ecx, esi
-//   0x006108a3  call     dword ptr [edx + 0x2c]
-//   0x006108a6  cmp      eax, 0xf
-//   0x006108a9  je       0x610c44
-//   0x006108af  mov      eax, dword ptr [esi]
-//   0x006108b1  push     ebx
-//   0x006108b2  push     ebp
-//   0x006108b3  push     edi
-//   0x006108b4  mov      ecx, esi
-//   0x006108b6  mov      edi, 0xf
-//   0x006108bb  call     dword ptr [eax + 0x198]
-//   0x006108c1  cmp      eax, -4
-//   0x006108c4  jge      0x6108cb
-//   0x006108c6  mov      edi, 0xc
-//   0x006108cb  mov      edx, dword ptr [esi]
-//   0x006108cd  mov      ecx, esi
-//   0x006108cf  call     dword ptr [edx + 0x80]
-//   0x006108d5  mov      edx, dword ptr [eax]
-//   0x006108d7  lea      ecx, [esp + 0x48]
-//   0x006108db  push     ecx
-//   0x006108dc  mov      ecx, eax
-//   0x006108de  call     dword ptr [edx + 0x7c]
-//   0x006108e1  mov      edx, eax
-//   0x006108e3  mov      eax, dword ptr [edx]
-//   0x006108e5  mov      ecx, dword ptr [edx + 4]
-//   0x006108e8  mov      edx, dword ptr [edx + 8]
-//   0x006108eb  mov      dword ptr [esp + 0x20], edx
-//   0x006108ef  cdq      
-//   0x006108f0  sub      eax, edx
-//   0x006108f2  sar      eax, 1
-//   0x006108f4  mov      dword ptr [esp + 0x18], eax
-//   0x006108f8  mov      eax, ecx
-//   0x006108fa  cdq      
-//   0x006108fb  sub      eax, edx
-//   0x006108fd  mov      ebp, eax
-//   0x006108ff  mov      eax, dword ptr [0x710be4]
-//   0x00610904  sar      ebp, 1
-//   0x00610906  mov      ecx, dword ptr [eax + 4]
-//   0x00610909  mov      dword ptr [esp + 0x1c], ebp
-//   0x0061090d  cmp      ecx, 1
-//   0x00610910  jne      0x610923
-//   0x00610912  mov      eax, dword ptr [eax + 0x174]
-//   0x00610918  xor      ecx, ecx
-//   0x0061091a  mov      cl, byte ptr [eax + edi]
-//   0x0061091d  mov      dword ptr [esp + 0x14], ecx
-//   0x00610921  jmp      0x610933
+// TechnoClass::vfunc_61 -- ALIAS of AircraftClass::vfunc_61 (same machine code at 0x00610880); transcribed once.
 void TechnoClass::vfunc_61()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_62 -- body derived from 77 instructions at 0x0060fb90; semantics not reconstructed.
-// size 230 bytes; signature __thiscall nargs=6
-// callees: 0x00459da0, 0x0060fc8a
-//
-//   0x0060fb90  sub      esp, 0x84
-//   0x0060fb96  push     ebx
-//   0x0060fb97  mov      ebx, ecx
-//   0x0060fb99  push     esi
-//   0x0060fb9a  mov      dword ptr [esp + 0x70], ebx
-//   0x0060fb9e  mov      al, byte ptr [ebx + 0x30]
-//   0x0060fba1  mov      byte ptr [esp + 0x6c], 0
-//   0x0060fba6  test     al, al
-//   0x0060fba8  jne      0x60fbef
-//   0x0060fbaa  mov      eax, dword ptr [ebx]
-//   0x0060fbac  call     dword ptr [eax + 0x18c]
-//   0x0060fbb2  mov      edx, dword ptr [ebx]
-//   0x0060fbb4  mov      ecx, ebx
-//   0x0060fbb6  mov      esi, eax
-//   0x0060fbb8  call     dword ptr [edx + 0x198]
-//   0x0060fbbe  cmp      eax, -0x14
-//   0x0060fbc1  jge      0x60fbdc
-//   0x0060fbc3  mov      eax, dword ptr [0x7b0b7c]
-//   0x0060fbc8  mov      ecx, dword ptr [eax + 0x20]
-//   0x0060fbcb  push     ecx
-//   0x0060fbcc  mov      ecx, esi
-//   0x0060fbce  call     0x459da0
-//   0x0060fbd3  test     al, al
-//   0x0060fbd5  je       0x60fbdc
-//   0x0060fbd7  mov      byte ptr [esp + 0x6c], 1
-//   0x0060fbdc  mov      al, byte ptr [ebx + 0x30]
-//   0x0060fbdf  test     al, al
-//   0x0060fbe1  jne      0x60fbef
-//   0x0060fbe3  mov      al, byte ptr [esp + 0x6c]
-//   0x0060fbe7  test     al, al
-//   0x0060fbe9  je       0x610693
-//   0x0060fbef  mov      edx, dword ptr [ebx]
-//   0x0060fbf1  push     ebp
-//   0x0060fbf2  push     edi
-//   0x0060fbf3  mov      ecx, ebx
-//   0x0060fbf5  call     dword ptr [edx + 0x2c]
-//   0x0060fbf8  cmp      eax, 6
-//   0x0060fbfb  jne      0x610672
-//   0x0060fc01  mov      eax, dword ptr [ebx]
-//   0x0060fc03  mov      ecx, ebx
-//   0x0060fc05  mov      dword ptr [esp + 0x10], 0xf
-//   0x0060fc0d  call     dword ptr [eax + 0x198]
-//   0x0060fc13  cmp      eax, -4
-//   0x0060fc16  jge      0x60fc20
-//   0x0060fc18  mov      dword ptr [esp + 0x10], 0xc
-//   0x0060fc20  mov      edx, dword ptr [ebx]
-//   0x0060fc22  mov      ecx, ebx
-//   0x0060fc24  call     dword ptr [edx + 0x80]
-//   0x0060fc2a  mov      edx, dword ptr [eax]
-//   0x0060fc2c  lea      ecx, [esp + 0x50]
-//   0x0060fc30  push     ecx
-//   0x0060fc31  mov      ecx, eax
-//   0x0060fc33  call     dword ptr [edx + 0x7c]
-//   0x0060fc36  mov      edx, eax
-//   0x0060fc38  mov      eax, dword ptr [edx]
-//   0x0060fc3a  mov      ecx, dword ptr [edx + 4]
-//   0x0060fc3d  mov      ebp, dword ptr [edx + 8]
-//   0x0060fc40  cdq      
-//   0x0060fc41  sub      eax, edx
-//   0x0060fc43  mov      dword ptr [esp + 0x58], ebp
-//   0x0060fc47  mov      esi, eax
-//   0x0060fc49  mov      eax, ecx
-//   0x0060fc4b  cdq      
-//   0x0060fc4c  sub      eax, edx
-//   0x0060fc4e  mov      edi, eax
-//   0x0060fc50  mov      eax, dword ptr [0x710be4]
-//   0x0060fc55  sar      esi, 1
-//   0x0060fc57  mov      ecx, dword ptr [eax + 4]
-//   0x0060fc5a  sar      edi, 1
-//   0x0060fc5c  cmp      ecx, 1
-//   0x0060fc5f  jne      0x60fc76
-//   0x0060fc61  mov      eax, dword ptr [eax + 0x174]
-//   0x0060fc67  mov      edx, dword ptr [esp + 0x10]
-//   0x0060fc6b  xor      ecx, ecx
-//   0x0060fc6d  mov      cl, byte ptr [eax + edx]
-//   0x0060fc70  mov      dword ptr [esp + 0x10], ecx
-//   0x0060fc74  jmp      0x60fc8a
+// TechnoClass::vfunc_62 -- ALIAS of AircraftClass::vfunc_62 (same machine code at 0x0060fb90); transcribed once.
 void TechnoClass::vfunc_62()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TechnoClass::vfunc_63 -- body derived from 1 instructions at 0x00547120; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00547120  ret      8
+// TechnoClass::vfunc_63 -- ALIAS of ObjectClass::vfunc_63 (same machine code at 0x00547120); transcribed once.
 void TechnoClass::vfunc_63()
 {
 }

@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "MapSelect.h"
 
 // ---------------------------------------------------------------------------
@@ -30,12 +34,7 @@ void MapSelect::vfunc_0(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapSelect::vfunc_1 -- body derived from 1 instructions at 0x00542040; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00542040  ret      4
+// MapSelect::vfunc_1 -- ALIAS of MSEngine::vfunc_1 (same machine code at 0x00542040); transcribed once.
 void MapSelect::vfunc_1(int a0)
 {
 }

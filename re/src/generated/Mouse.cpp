@@ -5,212 +5,88 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "Mouse.h"
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_1 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_1 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_1()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_2 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_2 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_3 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_3 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_3()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_4 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_4 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_4()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_5 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_5 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_5()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_6 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_6 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_7 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_7 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_7()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_8 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_8 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_9 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_9 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_9()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_10 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_10 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_10()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_11 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_11 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_11()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_12 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_12 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_12()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_13 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_13 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_13()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_14 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_14 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_14()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_15 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_15 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_15()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Mouse::vfunc_16 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Mouse::vfunc_16 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Mouse::vfunc_16()
 {
 }

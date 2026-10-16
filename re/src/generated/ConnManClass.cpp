@@ -5,199 +5,83 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "ConnManClass.h"
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_1 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_1 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_1()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_2 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_2 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_3 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_3 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_3()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_4 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_4 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_4()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_5 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_5 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_5()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_6 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_6 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_7 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_7 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_7()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_8 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_8 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_9 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_9 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_9()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_10 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_10 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_10()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_11 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_11 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_11()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_12 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_12 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_12()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_13 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_13 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_13()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_14 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_14 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_14()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnManClass::vfunc_15 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnManClass::vfunc_15 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnManClass::vfunc_15()
 {
 }

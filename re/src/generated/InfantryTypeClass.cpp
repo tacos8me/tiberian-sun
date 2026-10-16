@@ -5,26 +5,18 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "InfantryTypeClass.h"
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// InfantryTypeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void InfantryTypeClass::Init()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// InfantryTypeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void InfantryTypeClass::Shutdown()
 {
 }
@@ -43,17 +35,7 @@ long InfantryTypeClass::QueryInterface(const void*, void**)
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::AddRef -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// InfantryTypeClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 unsigned long InfantryTypeClass::AddRef()
 {
 }
@@ -230,56 +212,7 @@ void InfantryTypeClass::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_7 -- body derived from 45 instructions at 0x00621bf0; semantics not reconstructed.
-// size 159 bytes; signature __stdcall nargs=2
-// callees: 0x00572ba0
-//
-//   0x00621bf0  push     esi
-//   0x00621bf1  mov      esi, dword ptr [esp + 0xc]
-//   0x00621bf5  push     edi
-//   0x00621bf6  mov      edi, dword ptr [esp + 0xc]
-//   0x00621bfa  push     esi
-//   0x00621bfb  push     edi
-//   0x00621bfc  call     0x572ba0
-//   0x00621c01  test     eax, eax
-//   0x00621c03  jl       0x621c8a
-//   0x00621c09  mov      eax, dword ptr [edi + 0x284]
-//   0x00621c0f  lea      ecx, [eax*4 + 4]
-//   0x00621c16  mov      eax, dword ptr [esi]
-//   0x00621c18  add      eax, ecx
-//   0x00621c1a  mov      dword ptr [esi], eax
-//   0x00621c1c  mov      edx, dword ptr [edi + 0x2a0]
-//   0x00621c22  lea      eax, [eax + edx*4 + 4]
-//   0x00621c26  mov      dword ptr [esi], eax
-//   0x00621c28  mov      ecx, dword ptr [edi + 0x2bc]
-//   0x00621c2e  lea      eax, [eax + ecx*4 + 4]
-//   0x00621c32  mov      dword ptr [esi], eax
-//   0x00621c34  mov      edx, dword ptr [edi + 0x2d8]
-//   0x00621c3a  lea      eax, [eax + edx*4 + 4]
-//   0x00621c3e  mov      dword ptr [esi], eax
-//   0x00621c40  mov      ecx, dword ptr [edi + 0x2f4]
-//   0x00621c46  lea      eax, [eax + ecx*4 + 4]
-//   0x00621c4a  mov      dword ptr [esi], eax
-//   0x00621c4c  mov      edx, dword ptr [edi + 0x39c]
-//   0x00621c52  lea      eax, [eax + edx*4 + 4]
-//   0x00621c56  mov      dword ptr [esi], eax
-//   0x00621c58  mov      ecx, dword ptr [edi + 0x1b4]
-//   0x00621c5e  lea      eax, [eax + ecx*4 + 4]
-//   0x00621c62  mov      dword ptr [esi], eax
-//   0x00621c64  mov      edx, dword ptr [edi + 0x260]
-//   0x00621c6a  lea      eax, [eax + edx*4 + 4]
-//   0x00621c6e  mov      dword ptr [esi], eax
-//   0x00621c70  mov      ecx, dword ptr [edi + 0x1d0]
-//   0x00621c76  lea      eax, [eax + ecx*4 + 4]
-//   0x00621c7a  mov      dword ptr [esi], eax
-//   0x00621c7c  mov      edx, dword ptr [edi + 0x3c8]
-//   0x00621c82  lea      eax, [eax + edx*4 + 4]
-//   0x00621c86  mov      dword ptr [esi], eax
-//   0x00621c88  xor      eax, eax
-//   0x00621c8a  pop      edi
-//   0x00621c8b  pop      esi
-//   0x00621c8c  ret      8
+// InfantryTypeClass::vfunc_7 -- ALIAS of AircraftTypeClass::vfunc_7 (same machine code at 0x00621bf0); transcribed once.
 void InfantryTypeClass::vfunc_7()
 {
 }
@@ -354,22 +287,12 @@ void InfantryTypeClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::Set_ID -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// InfantryTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void InfantryTypeClass::Set_ID(int id)
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::Get_RTTI -- body derived from 1 instructions at 0x004059c0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004059c0  ret      8
+// InfantryTypeClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); transcribed once.
 int InfantryTypeClass::Get_RTTI()
 {
 }
@@ -483,24 +406,12 @@ long InfantryTypeClass::Load(IStream* pStm)
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::Save -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// InfantryTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 long InfantryTypeClass::Save(IStream* pStm, int fClearDirty)
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::GetSizeMax -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// InfantryTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 long InfantryTypeClass::GetSizeMax(unsigned long* pcbSize)
 {
 }
@@ -516,127 +427,42 @@ void InfantryTypeClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_17 -- body derived from 2 instructions at 0x00405970; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405970  mov      al, 1
-//   0x00405972  ret      
+// InfantryTypeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); transcribed once.
 void InfantryTypeClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_18 -- body derived from 9 instructions at 0x00405a00; semantics not reconstructed.
-// size 35 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a00  mov      eax, dword ptr [esp + 4]
-//   0x00405a04  mov      edx, dword ptr [0x715228]
-//   0x00405a0a  mov      ecx, eax
-//   0x00405a0c  mov      dword ptr [ecx], edx
-//   0x00405a0e  mov      edx, dword ptr [0x71522c]
-//   0x00405a14  mov      dword ptr [ecx + 4], edx
-//   0x00405a17  mov      edx, dword ptr [0x715230]
-//   0x00405a1d  mov      dword ptr [ecx + 8], edx
-//   0x00405a20  ret      4
+// InfantryTypeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); transcribed once.
 void InfantryTypeClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// InfantryTypeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void InfantryTypeClass::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_20 -- body derived from 2 instructions at 0x00405a60; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a60  xor      al, al
-//   0x00405a62  ret      
+// InfantryTypeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); transcribed once.
 void InfantryTypeClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_21 -- body derived from 2 instructions at 0x00405a70; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a70  xor      al, al
-//   0x00405a72  ret      
+// InfantryTypeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); transcribed once.
 void InfantryTypeClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// InfantryTypeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void InfantryTypeClass::vfunc_22()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_23 -- body derived from 1 instructions at 0x00405ab0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405ab0  ret      
+// InfantryTypeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); transcribed once.
 void InfantryTypeClass::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::GetType_2 -- body derived from 1 instructions at 0x00406010; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00406010  ret      4
+// InfantryTypeClass::GetType_2 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); transcribed once.
 int InfantryTypeClass::GetType_2()
 {
 }
@@ -847,32 +673,7 @@ long InfantryTypeClass::Read_INI_2(void* ini, const char* section)
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::Fetch_ID_2 -- body derived from 21 instructions at 0x00405fb0; semantics not reconstructed.
-// size 47 bytes; signature __thiscall nargs=1
-// callees: 0x004d44c0, 0x004d6b50
-//
-//   0x00405fb0  push     ebx
-//   0x00405fb1  mov      ebx, dword ptr [esp + 8]
-//   0x00405fb5  push     esi
-//   0x00405fb6  mov      esi, ecx
-//   0x00405fb8  push     edi
-//   0x00405fb9  push     0
-//   0x00405fbb  lea      edi, [esi + 0x14]
-//   0x00405fbe  mov      ecx, ebx
-//   0x00405fc0  push     edi
-//   0x00405fc1  call     0x4d44c0
-//   0x00405fc6  add      esi, 0x2d
-//   0x00405fc9  mov      ecx, ebx
-//   0x00405fcb  push     esi
-//   0x00405fcc  push     0x6bf138
-//   0x00405fd1  push     edi
-//   0x00405fd2  call     0x4d6b50
-//   0x00405fd7  pop      edi
-//   0x00405fd8  pop      esi
-//   0x00405fd9  mov      al, 1
-//   0x00405fdb  pop      ebx
-//   0x00405fdc  ret      4
+// InfantryTypeClass::Fetch_ID_2 -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); transcribed once.
 int InfantryTypeClass::Fetch_ID_2()
 {
 }
@@ -917,56 +718,17 @@ int InfantryTypeClass::Get_RTTI_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_29 -- body derived from 9 instructions at 0x0061f470; semantics not reconstructed.
-// size 31 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061f470  mov      al, byte ptr [ecx + 0x441]
-//   0x0061f476  test     al, al
-//   0x0061f478  je       0x61f488
-//   0x0061f47a  mov      eax, dword ptr [0x7b0d38]
-//   0x0061f47f  test     eax, eax
-//   0x0061f481  mov      eax, 0x7fffffff
-//   0x0061f486  jne      0x61f48e
-//   0x0061f488  mov      eax, dword ptr [ecx + 0x358]
-//   0x0061f48e  ret      
+// InfantryTypeClass::vfunc_29 -- ALIAS of AircraftTypeClass::vfunc_29 (same machine code at 0x0061f470); transcribed once.
 void InfantryTypeClass::vfunc_29()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_30 -- body derived from 5 instructions at 0x00620f30; semantics not reconstructed.
-// size 19 bytes; signature __cdecl
-// callees: none
-//
-//   0x00620f30  mov      eax, dword ptr [ecx + 0x24c]
-//   0x00620f36  dec      eax
-//   0x00620f37  cmp      eax, 3
-//   0x00620f3a  ja       0x620f64
-//   0x00620f3c  jmp      dword ptr [eax*4 + 0x620f68]
+// InfantryTypeClass::vfunc_30 -- ALIAS of AircraftTypeClass::vfunc_30 (same machine code at 0x00620f30); transcribed once.
 void InfantryTypeClass::vfunc_30()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_31 -- body derived from 13 instructions at 0x005715f0; semantics not reconstructed.
-// size 30 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x005715f0  mov      eax, dword ptr [esp + 4]
-//   0x005715f4  push     esi
-//   0x005715f5  push     edi
-//   0x005715f6  mov      edi, eax
-//   0x005715f8  mov      ecx, 0xa
-//   0x005715fd  mov      dword ptr [edi], ecx
-//   0x005715ff  mov      edx, ecx
-//   0x00571601  mov      esi, ecx
-//   0x00571603  mov      dword ptr [edi + 4], edx
-//   0x00571606  mov      dword ptr [edi + 8], esi
-//   0x00571609  pop      edi
-//   0x0057160a  pop      esi
-//   0x0057160b  ret      4
+// InfantryTypeClass::vfunc_31 -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); transcribed once.
 void InfantryTypeClass::vfunc_31()
 {
 }
@@ -1065,37 +827,12 @@ void InfantryTypeClass::vfunc_33()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_34 -- body derived from 12 instructions at 0x0061f4b0; semantics not reconstructed.
-// size 40 bytes; signature __stdcall nargs=1
-// callees: 0x0067faf0
-//
-//   0x0061f4b0  push     esi
-//   0x0061f4b1  mov      esi, dword ptr [esp + 8]
-//   0x0061f4b5  test     esi, esi
-//   0x0061f4b7  je       0x61f4d8
-//   0x0061f4b9  mov      eax, dword ptr [ecx]
-//   0x0061f4bb  call     dword ptr [eax + 0xa4]
-//   0x0061f4c1  mov      dword ptr [esp + 8], eax
-//   0x0061f4c5  fild     dword ptr [esp + 8]
-//   0x0061f4c9  fmul     qword ptr [esi + 0x88]
-//   0x0061f4cf  call     0x67faf0
-//   0x0061f4d4  pop      esi
-//   0x0061f4d5  ret      4
+// InfantryTypeClass::vfunc_34 -- ALIAS of AircraftTypeClass::vfunc_34 (same machine code at 0x0061f4b0); transcribed once.
 void InfantryTypeClass::vfunc_34()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_35 -- body derived from 5 instructions at 0x0061f490; semantics not reconstructed.
-// size 28 bytes; signature ? nargs=1
-// callees: 0x0067faf0
-//
-//   0x0061f490  fild     dword ptr [ecx + 0x31c]
-//   0x0061f496  mov      eax, dword ptr [0x714e20]
-//   0x0061f49b  fmul     qword ptr [eax + 0xee8]
-//   0x0061f4a1  fmul     qword ptr [0x6a14b0]
-//   0x0061f4a7  jmp      0x67faf0
+// InfantryTypeClass::vfunc_35 -- ALIAS of AircraftTypeClass::vfunc_35 (same machine code at 0x0061f490); transcribed once.
 void InfantryTypeClass::vfunc_35()
 {
 }
@@ -1156,155 +893,27 @@ void InfantryTypeClass::vfunc_37()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_38 -- body derived from 86 instructions at 0x00571710; semantics not reconstructed.
-// size 280 bytes; signature __thiscall nargs=6
-// callees: 0x004b5670, 0x00571836
-//
-//   0x00571710  sub      esp, 8
-//   0x00571713  push     ebx
-//   0x00571714  push     ebp
-//   0x00571715  push     esi
-//   0x00571716  push     edi
-//   0x00571717  mov      edi, ecx
-//   0x00571719  xor      ebp, ebp
-//   0x0057171b  mov      dword ptr [esp + 0x10], ebp
-//   0x0057171f  mov      dword ptr [esp + 0x14], ebp
-//   0x00571723  mov      eax, dword ptr [edi]
-//   0x00571725  call     dword ptr [eax + 0x70]
-//   0x00571728  mov      ebx, eax
-//   0x0057172a  mov      eax, dword ptr [0x7b2c48]
-//   0x0057172f  cmp      eax, ebp
-//   0x00571731  jle      0x57184c
-//   0x00571737  mov      ecx, dword ptr [0x7b2c3c]
-//   0x0057173d  mov      esi, dword ptr [ecx + ebp*4]
-//   0x00571740  mov      al, byte ptr [esi + 0x2f]
-//   0x00571743  test     al, al
-//   0x00571745  jne      0x571836
-//   0x0057174b  mov      edx, dword ptr [esp + 0x28]
-//   0x0057174f  mov      eax, dword ptr [esi + 0xec]
-//   0x00571755  cmp      eax, edx
-//   0x00571757  jne      0x571836
-//   0x0057175d  mov      eax, dword ptr [edi]
-//   0x0057175f  mov      ecx, edi
-//   0x00571761  call     dword ptr [eax + 0x2c]
-//   0x00571764  mov      ecx, dword ptr [esi + 0x218]
-//   0x0057176a  cmp      dword ptr [ecx + 0x500], eax
-//   0x00571770  jne      0x571836
-//   0x00571776  mov      al, byte ptr [esp + 0x20]
-//   0x0057177a  test     al, al
-//   0x0057177c  je       0x57178c
-//   0x0057177e  mov      al, byte ptr [esi + 0x2f4]
-//   0x00571784  test     al, al
-//   0x00571786  je       0x571836
-//   0x0057178c  mov      edx, dword ptr [esi]
-//   0x0057178e  mov      ecx, esi
-//   0x00571790  call     dword ptr [edx + 0x150]
-//   0x00571796  cmp      eax, 0x12
-//   0x00571799  je       0x571836
-//   0x0057179f  cmp      dword ptr [esi + 0x54], 0x12
-//   0x005717a3  je       0x571836
-//   0x005717a9  mov      al, byte ptr [esp + 0x24]
-//   0x005717ad  test     al, al
-//   0x005717af  je       0x5717c5
-//   0x005717b1  mov      ecx, dword ptr [esi + 0xec]
-//   0x005717b7  push     1
-//   0x005717b9  push     1
-//   0x005717bb  push     edi
-//   0x005717bc  call     0x4b5670
-//   0x005717c1  test     eax, eax
-//   0x005717c3  jle      0x571836
-//   0x005717c5  mov      ecx, dword ptr [esi + 0x218]
-//   0x005717cb  mov      eax, dword ptr [ecx]
-//   0x005717cd  call     dword ptr [eax + 0x70]
-//   0x005717d0  test     ebx, eax
-//   0x005717d2  je       0x571836
-//   0x005717d4  mov      ecx, dword ptr [0x714e20]
-//   0x005717da  mov      eax, dword ptr [esi + 0x218]
-//   0x005717e0  mov      edx, dword ptr [ecx + 0x5b4]
-//   0x005717e6  cmp      eax, dword ptr [edx]
-//   0x005717e8  jne      0x5717fb
-//   0x005717ea  mov      ecx, dword ptr [esi + 0x9c]
-//   0x005717f0  mov      edx, 1
-//   0x005717f5  shl      edx, cl
-//   0x005717f7  test     ebx, edx
-//   0x005717f9  je       0x571836
-//   0x005717fb  mov      al, byte ptr [esp + 0x1c]
-//   0x005717ff  test     al, al
-//   0x00571801  jne      0x571828
-//   0x00571803  mov      eax, dword ptr [esi + 0x78]
-//   0x00571806  test     eax, eax
-//   0x00571808  je       0x571828
-//   0x0057180a  mov      eax, dword ptr [edi]
-//   0x0057180c  mov      ecx, edi
-//   0x0057180e  call     dword ptr [eax + 0x2c]
-//   0x00571811  cmp      eax, 3
-//   0x00571814  jne      0x571828
-//   0x00571816  mov      edx, dword ptr [edi]
-//   0x00571818  mov      ecx, edi
-//   0x0057181a  call     dword ptr [edx + 0x2c]
-//   0x0057181d  cmp      eax, 3
-//   0x00571820  jne      0x571836
-//   0x00571822  mov      dword ptr [esp + 0x14], esi
-//   0x00571826  jmp      0x571836
+// InfantryTypeClass::vfunc_38 -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); transcribed once.
 void InfantryTypeClass::vfunc_38()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_39 -- body derived from 2 instructions at 0x0061f4f0; semantics not reconstructed.
-// size 7 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061f4f0  mov      eax, dword ptr [ecx + 0x378]
-//   0x0061f4f6  ret      
+// InfantryTypeClass::vfunc_39 -- ALIAS of AircraftTypeClass::vfunc_39 (same machine code at 0x0061f4f0); transcribed once.
 void InfantryTypeClass::vfunc_39()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_40 -- body derived from 2 instructions at 0x0040f620; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040f620  mov      eax, dword ptr [ecx + 0x6c]
-//   0x0040f623  ret      
+// InfantryTypeClass::vfunc_40 -- ALIAS of AircraftTypeClass::vfunc_40 (same machine code at 0x0040f620); transcribed once.
 void InfantryTypeClass::vfunc_40()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_41 -- body derived from 16 instructions at 0x00620df0; semantics not reconstructed.
-// size 47 bytes; signature __thiscall nargs=2
-// callees: none
-//
-//   0x00620df0  sub      esp, 0xc
-//   0x00620df3  push     ebp
-//   0x00620df4  mov      ebp, dword ptr [esp + 0x14]
-//   0x00620df8  push     edi
-//   0x00620df9  mov      edi, ecx
-//   0x00620dfb  mov      ax, word ptr [ebp]
-//   0x00620dff  cmp      ax, word ptr [0x7dca90]
-//   0x00620e06  jne      0x620e1f
-//   0x00620e08  mov      cx, word ptr [ebp + 2]
-//   0x00620e0c  cmp      cx, word ptr [0x7dca92]
-//   0x00620e13  jne      0x620e1f
-//   0x00620e15  pop      edi
-//   0x00620e16  xor      al, al
-//   0x00620e18  pop      ebp
-//   0x00620e19  add      esp, 0xc
-//   0x00620e1c  ret      8
+// InfantryTypeClass::vfunc_41 -- ALIAS of AircraftTypeClass::vfunc_41 (same machine code at 0x00620df0); transcribed once.
 void InfantryTypeClass::vfunc_41()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_42 -- body derived from 2 instructions at 0x0061f460; semantics not reconstructed.
-// size 7 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061f460  mov      eax, dword ptr [ecx + 0x31c]
-//   0x0061f466  ret      
+// InfantryTypeClass::vfunc_42 -- ALIAS of AircraftTypeClass::vfunc_42 (same machine code at 0x0061f460); transcribed once.
 void InfantryTypeClass::vfunc_42()
 {
 }
@@ -1332,17 +941,7 @@ void InfantryTypeClass::vfunc_44()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_45 -- body derived from 6 instructions at 0x00622180; semantics not reconstructed.
-// size 23 bytes; signature __cdecl
-// callees: none
-//
-//   0x00622180  mov      eax, dword ptr [ecx + 0x320]
-//   0x00622186  cmp      eax, -1
-//   0x00622189  jne      0x622196
-//   0x0062218b  mov      eax, dword ptr [0x714e20]
-//   0x00622190  mov      eax, dword ptr [eax + 0x4cc]
-//   0x00622196  ret      
+// InfantryTypeClass::vfunc_45 -- ALIAS of AircraftTypeClass::vfunc_44 (same machine code at 0x00622180); transcribed once.
 void InfantryTypeClass::vfunc_45()
 {
 }
@@ -1486,22 +1085,7 @@ void InfantryTypeClass::vfunc_47()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_48 -- body derived from 11 instructions at 0x004d7f80; semantics not reconstructed.
-// size 30 bytes; signature __thiscall nargs=1
-// callees: 0x004d7c90, 0x0068298c
-//
-//   0x004d7f80  push     esi
-//   0x004d7f81  mov      esi, ecx
-//   0x004d7f83  call     0x4d7c90
-//   0x004d7f88  test     byte ptr [esp + 8], 1
-//   0x004d7f8d  je       0x4d7f98
-//   0x004d7f8f  push     esi
-//   0x004d7f90  call     0x68298c
-//   0x004d7f95  add      esp, 4
-//   0x004d7f98  mov      eax, esi
-//   0x004d7f9a  pop      esi
-//   0x004d7f9b  ret      4
+// InfantryTypeClass::vfunc_48 -- ALIAS of INIClass_INISection::vfunc_0 (same machine code at 0x004d7f80); transcribed once.
 void InfantryTypeClass::vfunc_48()
 {
 }
@@ -1564,37 +1148,7 @@ void InfantryTypeClass::vfunc_50()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_51 -- body derived from 26 instructions at 0x005f1020; semantics not reconstructed.
-// size 67 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x005f1020  push     esi
-//   0x005f1021  mov      esi, dword ptr [esp + 8]
-//   0x005f1025  push     edi
-//   0x005f1026  mov      edi, ecx
-//   0x005f1028  cmp      dword ptr [edi + 4], esi
-//   0x005f102b  je       0x5f105e
-//   0x005f102d  test     esi, esi
-//   0x005f102f  je       0x5f1046
-//   0x005f1031  mov      ecx, dword ptr [esi + 8]
-//   0x005f1034  test     ecx, ecx
-//   0x005f1036  je       0x5f1046
-//   0x005f1038  mov      eax, dword ptr [ecx]
-//   0x005f103a  push     0
-//   0x005f103c  call     dword ptr [eax + 4]
-//   0x005f103f  mov      dword ptr [esi + 8], 0
-//   0x005f1046  mov      eax, dword ptr [edi + 4]
-//   0x005f1049  test     eax, eax
-//   0x005f104b  je       0x5f1054
-//   0x005f104d  mov      dword ptr [eax + 8], 0
-//   0x005f1054  test     esi, esi
-//   0x005f1056  mov      dword ptr [edi + 4], esi
-//   0x005f1059  je       0x5f105e
-//   0x005f105b  mov      dword ptr [esi + 8], edi
-//   0x005f105e  pop      edi
-//   0x005f105f  pop      esi
-//   0x005f1060  ret      4
+// InfantryTypeClass::vfunc_51 -- ALIAS of DisplayClass::vfunc_50 (same machine code at 0x005f1020); transcribed once.
 void InfantryTypeClass::vfunc_51()
 {
 }
@@ -1691,37 +1245,7 @@ void InfantryTypeClass::vfunc_53()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_54 -- body derived from 26 instructions at 0x005f1020; semantics not reconstructed.
-// size 67 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x005f1020  push     esi
-//   0x005f1021  mov      esi, dword ptr [esp + 8]
-//   0x005f1025  push     edi
-//   0x005f1026  mov      edi, ecx
-//   0x005f1028  cmp      dword ptr [edi + 4], esi
-//   0x005f102b  je       0x5f105e
-//   0x005f102d  test     esi, esi
-//   0x005f102f  je       0x5f1046
-//   0x005f1031  mov      ecx, dword ptr [esi + 8]
-//   0x005f1034  test     ecx, ecx
-//   0x005f1036  je       0x5f1046
-//   0x005f1038  mov      eax, dword ptr [ecx]
-//   0x005f103a  push     0
-//   0x005f103c  call     dword ptr [eax + 4]
-//   0x005f103f  mov      dword ptr [esi + 8], 0
-//   0x005f1046  mov      eax, dword ptr [edi + 4]
-//   0x005f1049  test     eax, eax
-//   0x005f104b  je       0x5f1054
-//   0x005f104d  mov      dword ptr [eax + 8], 0
-//   0x005f1054  test     esi, esi
-//   0x005f1056  mov      dword ptr [edi + 4], esi
-//   0x005f1059  je       0x5f105e
-//   0x005f105b  mov      dword ptr [esi + 8], edi
-//   0x005f105e  pop      edi
-//   0x005f105f  pop      esi
-//   0x005f1060  ret      4
+// InfantryTypeClass::vfunc_54 -- ALIAS of DisplayClass::vfunc_50 (same machine code at 0x005f1020); transcribed once.
 void InfantryTypeClass::vfunc_54()
 {
 }
@@ -1797,40 +1321,7 @@ void InfantryTypeClass::vfunc_57()
 {
 }
 
-// ---------------------------------------------------------------------------
-// InfantryTypeClass::vfunc_59 -- body derived from 29 instructions at 0x00591f40; semantics not reconstructed.
-// size 75 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x00591f40  push     esi
-//   0x00591f41  mov      esi, dword ptr [esp + 8]
-//   0x00591f45  push     edi
-//   0x00591f46  mov      edi, ecx
-//   0x00591f48  cmp      dword ptr [edi + 4], esi
-//   0x00591f4b  je       0x591f86
-//   0x00591f4d  test     esi, esi
-//   0x00591f4f  je       0x591f66
-//   0x00591f51  mov      ecx, dword ptr [esi + 8]
-//   0x00591f54  test     ecx, ecx
-//   0x00591f56  je       0x591f66
-//   0x00591f58  mov      eax, dword ptr [ecx]
-//   0x00591f5a  push     0
-//   0x00591f5c  call     dword ptr [eax + 0xc]
-//   0x00591f5f  mov      dword ptr [esi + 8], 0
-//   0x00591f66  mov      eax, dword ptr [edi + 4]
-//   0x00591f69  test     eax, eax
-//   0x00591f6b  je       0x591f7c
-//   0x00591f6d  mov      dword ptr [eax + 8], 0
-//   0x00591f74  mov      ecx, dword ptr [edi + 4]
-//   0x00591f77  mov      edx, dword ptr [ecx]
-//   0x00591f79  call     dword ptr [edx + 4]
-//   0x00591f7c  test     esi, esi
-//   0x00591f7e  mov      dword ptr [edi + 4], esi
-//   0x00591f81  je       0x591f86
-//   0x00591f83  mov      dword ptr [esi + 8], edi
-//   0x00591f86  pop      edi
-//   0x00591f87  pop      esi
-//   0x00591f88  ret      4
+// InfantryTypeClass::vfunc_59 -- ALIAS of DisplayClass::vfunc_60 (same machine code at 0x00591f40); transcribed once.
 void InfantryTypeClass::vfunc_59()
 {
 }

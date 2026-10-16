@@ -5,42 +5,23 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "ScriptClass.h"
 
-// ---------------------------------------------------------------------------
-// ScriptClass::QueryInterface -- body derived from 7 instructions at 0x00405790; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x00405790  mov      eax, dword ptr [esp + 0xc]
-//   0x00405794  push     ebx
-//   0x00405795  test     eax, eax
-//   0x00405797  jne      0x4057a2
-//   0x00405799  mov      eax, 0x80004003
-//   0x0040579e  pop      ebx
-//   0x0040579f  ret      0xc
+// ScriptClass::QueryInterface -- ALIAS of AbstractClass::vfunc_0 (same machine code at 0x00405790); transcribed once.
 void ScriptClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// ScriptClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void ScriptClass::Init(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// ScriptClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void ScriptClass::Shutdown(int a0)
 {
 }
@@ -59,17 +40,7 @@ void ScriptClass::vfunc_3(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::Release -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// ScriptClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 void ScriptClass::Release(int a0)
 {
 }
@@ -126,38 +97,17 @@ void ScriptClass::vfunc_6(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::GetType -- body derived from 7 instructions at 0x00405910; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00405910  push     esi
-//   0x00405911  mov      esi, dword ptr [esp + 0xc]
-//   0x00405915  test     esi, esi
-//   0x00405917  jne      0x405922
-//   0x00405919  mov      eax, 0x80004003
-//   0x0040591e  pop      esi
-//   0x0040591f  ret      8
+// ScriptClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
 void ScriptClass::GetType(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::Set_ID -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// ScriptClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void ScriptClass::Set_ID()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::Get_RTTI -- body derived from 1 instructions at 0x004059c0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004059c0  ret      8
+// ScriptClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); transcribed once.
 void ScriptClass::Get_RTTI(int a0, int a1)
 {
 }
@@ -206,150 +156,52 @@ void ScriptClass::vfunc_13(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::Save -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// ScriptClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 void ScriptClass::Save()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::GetSizeMax -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// ScriptClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 void ScriptClass::GetSizeMax()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::Compute_CRC -- body derived from 2 instructions at 0x004059f0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059f0  xor      eax, eax
-//   0x004059f2  ret      
+// ScriptClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); transcribed once.
 void ScriptClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::vfunc_17 -- body derived from 2 instructions at 0x00405970; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405970  mov      al, 1
-//   0x00405972  ret      
+// ScriptClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); transcribed once.
 void ScriptClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::vfunc_18 -- body derived from 9 instructions at 0x00405a00; semantics not reconstructed.
-// size 35 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a00  mov      eax, dword ptr [esp + 4]
-//   0x00405a04  mov      edx, dword ptr [0x715228]
-//   0x00405a0a  mov      ecx, eax
-//   0x00405a0c  mov      dword ptr [ecx], edx
-//   0x00405a0e  mov      edx, dword ptr [0x71522c]
-//   0x00405a14  mov      dword ptr [ecx + 4], edx
-//   0x00405a17  mov      edx, dword ptr [0x715230]
-//   0x00405a1d  mov      dword ptr [ecx + 8], edx
-//   0x00405a20  ret      4
+// ScriptClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); transcribed once.
 void ScriptClass::vfunc_18(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// ScriptClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void ScriptClass::vfunc_19(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::vfunc_20 -- body derived from 2 instructions at 0x00405a60; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a60  xor      al, al
-//   0x00405a62  ret      
+// ScriptClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); transcribed once.
 void ScriptClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::vfunc_21 -- body derived from 2 instructions at 0x00405a70; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a70  xor      al, al
-//   0x00405a72  ret      
+// ScriptClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); transcribed once.
 void ScriptClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// ScriptClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void ScriptClass::vfunc_22(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScriptClass::vfunc_23 -- body derived from 1 instructions at 0x00405ab0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405ab0  ret      
+// ScriptClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); transcribed once.
 void ScriptClass::vfunc_23()
 {
 }

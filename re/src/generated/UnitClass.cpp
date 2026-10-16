@@ -5,42 +5,23 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "UnitClass.h"
 
-// ---------------------------------------------------------------------------
-// UnitClass::QueryInterface -- body derived from 7 instructions at 0x00405790; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x00405790  mov      eax, dword ptr [esp + 0xc]
-//   0x00405794  push     ebx
-//   0x00405795  test     eax, eax
-//   0x00405797  jne      0x4057a2
-//   0x00405799  mov      eax, 0x80004003
-//   0x0040579e  pop      ebx
-//   0x0040579f  ret      0xc
+// UnitClass::QueryInterface -- ALIAS of AbstractClass::vfunc_0 (same machine code at 0x00405790); transcribed once.
 void UnitClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// UnitClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void UnitClass::Init(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// UnitClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void UnitClass::Shutdown(int a0)
 {
 }
@@ -59,17 +40,7 @@ void UnitClass::vfunc_3(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::Release -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// UnitClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 void UnitClass::Release(int a0)
 {
 }
@@ -217,18 +188,7 @@ void UnitClass::vfunc_6(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::GetType -- body derived from 7 instructions at 0x00405910; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00405910  push     esi
-//   0x00405911  mov      esi, dword ptr [esp + 0xc]
-//   0x00405915  test     esi, esi
-//   0x00405917  jne      0x405922
-//   0x00405919  mov      eax, 0x80004003
-//   0x0040591e  pop      esi
-//   0x0040591f  ret      8
+// UnitClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
 void UnitClass::GetType(int a0, int a1)
 {
 }
@@ -253,18 +213,7 @@ void UnitClass::vfunc_8(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_9 -- body derived from 7 instructions at 0x0060f180; semantics not reconstructed.
-// size 26 bytes; signature __cdecl
-// callees: none
-//
-//   0x0060f180  mov      eax, dword ptr [ecx + 0xec]
-//   0x0060f186  test     eax, eax
-//   0x0060f188  je       0x60f1a1
-//   0x0060f18a  cmp      dword ptr [0x7b0b7c], eax
-//   0x0060f190  jne      0x60f19a
-//   0x0060f192  mov      byte ptr [ecx + 0x1fe], 1
-//   0x0060f199  ret      
+// UnitClass::vfunc_9 -- ALIAS of FootClass::vfunc_9 (same machine code at 0x0060f180); transcribed once.
 void UnitClass::vfunc_9()
 {
 }
@@ -344,190 +293,47 @@ void UnitClass::vfunc_13(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_14 -- body derived from 3 instructions at 0x00612db0; semantics not reconstructed.
-// size 10 bytes; signature __cdecl
-// callees: none
-//
-//   0x00612db0  mov      eax, dword ptr [ecx + 0xec]
-//   0x00612db6  mov      eax, dword ptr [eax + 0x20]
-//   0x00612db9  ret      
+// UnitClass::vfunc_14 -- ALIAS of AircraftClass::vfunc_14 (same machine code at 0x00612db0); transcribed once.
 void UnitClass::vfunc_14()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_15 -- body derived from 2 instructions at 0x00612dc0; semantics not reconstructed.
-// size 7 bytes; signature __cdecl
-// callees: none
-//
-//   0x00612dc0  mov      eax, dword ptr [ecx + 0xec]
-//   0x00612dc6  ret      
+// UnitClass::vfunc_15 -- ALIAS of AircraftClass::vfunc_15 (same machine code at 0x00612dc0); transcribed once.
 void UnitClass::vfunc_15()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::Compute_CRC -- body derived from 2 instructions at 0x004059f0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059f0  xor      eax, eax
-//   0x004059f2  ret      
+// UnitClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); transcribed once.
 void UnitClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_17 -- body derived from 5 instructions at 0x00570a20; semantics not reconstructed.
-// size 11 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570a20  mov      dl, byte ptr [ecx + 0x35]
-//   0x00570a23  xor      eax, eax
-//   0x00570a25  test     dl, dl
-//   0x00570a27  sete     al
-//   0x00570a2a  ret      
+// UnitClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); transcribed once.
 void UnitClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_18 -- body derived from 18 instructions at 0x00570960; semantics not reconstructed.
-// size 48 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00570960  mov      eax, dword ptr [ecx]
-//   0x00570962  sub      esp, 0xc
-//   0x00570965  lea      edx, [esp]
-//   0x00570969  push     esi
-//   0x0057096a  push     edx
-//   0x0057096b  call     dword ptr [eax + 0x180]
-//   0x00570971  mov      ecx, eax
-//   0x00570973  mov      eax, dword ptr [esp + 0x14]
-//   0x00570977  mov      edx, eax
-//   0x00570979  mov      esi, dword ptr [ecx]
-//   0x0057097b  mov      dword ptr [edx], esi
-//   0x0057097d  mov      esi, dword ptr [ecx + 4]
-//   0x00570980  mov      dword ptr [edx + 4], esi
-//   0x00570983  pop      esi
-//   0x00570984  mov      ecx, dword ptr [ecx + 8]
-//   0x00570987  mov      dword ptr [edx + 8], ecx
-//   0x0057098a  add      esp, 0xc
-//   0x0057098d  ret      4
+// UnitClass::vfunc_18 -- ALIAS of AircraftClass::vfunc_18 (same machine code at 0x00570960); transcribed once.
 void UnitClass::vfunc_18(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_19 -- body derived from 28 instructions at 0x004a26e0; semantics not reconstructed.
-// size 86 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x004a26e0  sub      esp, 0x10
-//   0x004a26e3  push     esi
-//   0x004a26e4  mov      esi, ecx
-//   0x004a26e6  push     edi
-//   0x004a26e7  mov      al, byte ptr [esi + 0x334]
-//   0x004a26ed  test     al, al
-//   0x004a26ef  jl       0x4a2736
-//   0x004a26f1  mov      ecx, dword ptr [0x77bc04]
-//   0x004a26f7  movsx    eax, al
-//   0x004a26fa  mov      edx, dword ptr [ecx + eax*4]
-//   0x004a26fd  mov      eax, dword ptr [edx + 0x18]
-//   0x004a2700  movsx    ecx, ax
-//   0x004a2703  mov      dword ptr [esp + 8], eax
-//   0x004a2707  mov      eax, dword ptr [esp + 0x1c]
-//   0x004a270b  movsx    edx, word ptr [esp + 0xa]
-//   0x004a2710  shl      ecx, 8
-//   0x004a2713  mov      edi, eax
-//   0x004a2715  add      ecx, 0x80
-//   0x004a271b  shl      edx, 8
-//   0x004a271e  mov      dword ptr [edi], ecx
-//   0x004a2720  add      edx, 0x80
-//   0x004a2726  xor      esi, esi
-//   0x004a2728  mov      dword ptr [edi + 4], edx
-//   0x004a272b  mov      dword ptr [edi + 8], esi
-//   0x004a272e  pop      edi
-//   0x004a272f  pop      esi
-//   0x004a2730  add      esp, 0x10
-//   0x004a2733  ret      4
+// UnitClass::vfunc_19 -- ALIAS of AircraftClass::vfunc_19 (same machine code at 0x004a26e0); transcribed once.
 void UnitClass::vfunc_19(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_20 -- body derived from 9 instructions at 0x00570e80; semantics not reconstructed.
-// size 26 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570e80  mov      al, byte ptr [ecx + 0x2c]
-//   0x00570e83  test     al, al
-//   0x00570e85  je       0x570e9a
-//   0x00570e87  mov      eax, dword ptr [ecx]
-//   0x00570e89  call     dword ptr [eax + 0x198]
-//   0x00570e8f  cmp      eax, dword ptr [0x7d6a20]
-//   0x00570e95  jge      0x570e9a
-//   0x00570e97  mov      al, 1
-//   0x00570e99  ret      
+// UnitClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); transcribed once.
 void UnitClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_21 -- body derived from 22 instructions at 0x004a4a30; semantics not reconstructed.
-// size 60 bytes; signature __thiscall nargs=2
-// callees: 0x0047eb00, 0x004a4a7b
-//
-//   0x004a4a30  sub      esp, 0x18
-//   0x004a4a33  push     ebx
-//   0x004a4a34  mov      ebx, ecx
-//   0x004a4a36  push     esi
-//   0x004a4a37  push     edi
-//   0x004a4a38  mov      eax, dword ptr [ebx + 0x324]
-//   0x004a4a3e  mov      dword ptr [esp + 0xc], 0
-//   0x004a4a46  test     eax, eax
-//   0x004a4a48  je       0x4a4a99
-//   0x004a4a4a  mov      ecx, dword ptr [eax]
-//   0x004a4a4c  lea      edx, [esp + 0x10]
-//   0x004a4a50  push     edx
-//   0x004a4a51  push     0x6c0210
-//   0x004a4a56  push     eax
-//   0x004a4a57  call     dword ptr [ecx]
-//   0x004a4a59  mov      esi, eax
-//   0x004a4a5b  test     esi, esi
-//   0x004a4a5d  jge      0x4a4a6c
-//   0x004a4a5f  lea      ecx, [esp + 0xc]
-//   0x004a4a63  call     0x47eb00
-//   0x004a4a68  xor      eax, eax
-//   0x004a4a6a  jmp      0x4a4a7b
+// UnitClass::vfunc_21 -- ALIAS of AircraftClass::vfunc_21 (same machine code at 0x004a4a30); transcribed once.
 void UnitClass::vfunc_21(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// UnitClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void UnitClass::vfunc_22(int a0)
 {
 }
@@ -557,76 +363,12 @@ void UnitClass::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_24 -- body derived from 30 instructions at 0x0060eb70; semantics not reconstructed.
-// size 85 bytes; signature __thiscall
-// callees: 0x004c4fb0
-//
-//   0x0060eb70  push     esi
-//   0x0060eb71  mov      esi, ecx
-//   0x0060eb73  mov      eax, dword ptr [esi + 0x28]
-//   0x0060eb76  test     eax, eax
-//   0x0060eb78  jle      0x60ebc5
-//   0x0060eb7a  mov      al, byte ptr [esi + 0x2f]
-//   0x0060eb7d  test     al, al
-//   0x0060eb7f  jne      0x60ebc5
-//   0x0060eb81  mov      al, byte ptr [esi + 0x1fb]
-//   0x0060eb87  test     al, al
-//   0x0060eb89  je       0x60ebc5
-//   0x0060eb8b  mov      eax, dword ptr [esi]
-//   0x0060eb8d  call     dword ptr [eax + 0x2c]
-//   0x0060eb90  cmp      eax, 6
-//   0x0060eb93  je       0x60ebc5
-//   0x0060eb95  mov      al, byte ptr [esi + 0x1ff]
-//   0x0060eb9b  test     al, al
-//   0x0060eb9d  je       0x60ebc5
-//   0x0060eb9f  mov      edx, dword ptr [esi]
-//   0x0060eba1  mov      ecx, esi
-//   0x0060eba3  call     dword ptr [edx + 0x80]
-//   0x0060eba9  mov      cl, byte ptr [eax + 0xc9]
-//   0x0060ebaf  test     cl, cl
-//   0x0060ebb1  je       0x60ebc5
-//   0x0060ebb3  mov      ecx, dword ptr [esi + 0xec]
-//   0x0060ebb9  call     0x4c4fb0
-//   0x0060ebbe  test     al, al
-//   0x0060ebc0  setne    al
-//   0x0060ebc3  pop      esi
-//   0x0060ebc4  ret      
+// UnitClass::vfunc_24 -- ALIAS of AircraftClass::vfunc_24 (same machine code at 0x0060eb70); transcribed once.
 void UnitClass::vfunc_24()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_25 -- body derived from 26 instructions at 0x004a1690; semantics not reconstructed.
-// size 67 bytes; signature __thiscall nargs=2
-// callees: 0x00617cf0, 0x006939b0
-//
-//   0x004a1690  push     esi
-//   0x004a1691  mov      esi, ecx
-//   0x004a1693  push     edi
-//   0x004a1694  mov      edi, dword ptr [esp + 0xc]
-//   0x004a1698  mov      eax, dword ptr [esi + 0x324]
-//   0x004a169e  test     eax, eax
-//   0x004a16a0  je       0x4a16c1
-//   0x004a16a2  test     eax, eax
-//   0x004a16a4  jne      0x4a16b0
-//   0x004a16a6  push     0x80004003
-//   0x004a16ab  call     0x6939b0
-//   0x004a16b0  mov      eax, dword ptr [esi + 0x324]
-//   0x004a16b6  push     edi
-//   0x004a16b7  push     eax
-//   0x004a16b8  mov      ecx, dword ptr [eax]
-//   0x004a16ba  call     dword ptr [ecx + 0x34]
-//   0x004a16bd  test     eax, eax
-//   0x004a16bf  jne      0x4a16ce
-//   0x004a16c1  mov      edx, dword ptr [esp + 0x10]
-//   0x004a16c5  mov      ecx, esi
-//   0x004a16c7  push     edx
-//   0x004a16c8  push     edi
-//   0x004a16c9  call     0x617cf0
-//   0x004a16ce  pop      edi
-//   0x004a16cf  pop      esi
-//   0x004a16d0  ret      8
+// UnitClass::vfunc_25 -- ALIAS of AircraftClass::vfunc_25 (same machine code at 0x004a1690); transcribed once.
 void UnitClass::vfunc_25(int a0, int a1)
 {
 }
@@ -702,40 +444,12 @@ void UnitClass::vfunc_28(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_29 -- body derived from 13 instructions at 0x004a2140; semantics not reconstructed.
-// size 37 bytes; signature __thiscall
-// callees: 0x006939b0
-//
-//   0x004a2140  push     esi
-//   0x004a2141  mov      esi, ecx
-//   0x004a2143  mov      eax, dword ptr [esi + 0x324]
-//   0x004a2149  test     eax, eax
-//   0x004a214b  jne      0x4a2157
-//   0x004a214d  push     0x80004003
-//   0x004a2152  call     0x6939b0
-//   0x004a2157  mov      eax, dword ptr [esi + 0x324]
-//   0x004a215d  push     eax
-//   0x004a215e  mov      ecx, dword ptr [eax]
-//   0x004a2160  call     dword ptr [ecx + 0x74]
-//   0x004a2163  pop      esi
-//   0x004a2164  ret      
+// UnitClass::vfunc_29 -- ALIAS of FootClass::vfunc_29 (same machine code at 0x004a2140); transcribed once.
 void UnitClass::vfunc_29()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_30 -- body derived from 7 instructions at 0x00570ef0; semantics not reconstructed.
-// size 19 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570ef0  mov      eax, dword ptr [ecx]
-//   0x00570ef2  call     dword ptr [eax + 0x198]
-//   0x00570ef8  xor      ecx, ecx
-//   0x00570efa  cmp      eax, -0x14
-//   0x00570efd  setg     cl
-//   0x00570f00  mov      al, cl
-//   0x00570f02  ret      
+// UnitClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); transcribed once.
 void UnitClass::vfunc_30()
 {
 }
@@ -758,13 +472,7 @@ void UnitClass::vfunc_31()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_32 -- body derived from 2 instructions at 0x0060eb10; semantics not reconstructed.
-// size 8 bytes; signature __thiscall
-// callees: none
-//
-//   0x0060eb10  mov      eax, dword ptr [ecx]
-//   0x0060eb12  jmp      dword ptr [eax + 0x84]
+// UnitClass::vfunc_32 -- ALIAS of AircraftClass::vfunc_32 (same machine code at 0x0060eb10); transcribed once.
 void UnitClass::vfunc_32()
 {
 }
@@ -780,16 +488,7 @@ void UnitClass::vfunc_33()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_34 -- body derived from 5 instructions at 0x0061b1b0; semantics not reconstructed.
-// size 15 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061b1b0  mov      eax, dword ptr [ecx]
-//   0x0061b1b2  call     dword ptr [eax + 0x80]
-//   0x0061b1b8  mov      edx, dword ptr [eax]
-//   0x0061b1ba  mov      ecx, eax
-//   0x0061b1bc  jmp      dword ptr [edx + 0x70]
+// UnitClass::vfunc_34 -- ALIAS of AircraftClass::vfunc_34 (same machine code at 0x0061b1b0); transcribed once.
 void UnitClass::vfunc_34()
 {
 }
@@ -806,448 +505,62 @@ void UnitClass::vfunc_35()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_36 -- body derived from 9 instructions at 0x00616470; semantics not reconstructed.
-// size 17 bytes; signature __thiscall
-// callees: none
-//
-//   0x00616470  push     esi
-//   0x00616471  mov      esi, ecx
-//   0x00616473  mov      eax, dword ptr [esi]
-//   0x00616475  call     dword ptr [eax + 0x2c]
-//   0x00616478  cmp      eax, 6
-//   0x0061647b  je       0x616481
-//   0x0061647d  xor      al, al
-//   0x0061647f  pop      esi
-//   0x00616480  ret      
+// UnitClass::vfunc_36 -- ALIAS of AircraftClass::vfunc_36 (same machine code at 0x00616470); transcribed once.
 void UnitClass::vfunc_36()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_37 -- body derived from 70 instructions at 0x004a1080; semantics not reconstructed.
-// size 199 bytes; signature __thiscall nargs=5
-// callees: 0x00494170, 0x0067faf0
-//
-//   0x004a1080  sub      esp, 0x24
-//   0x004a1083  push     esi
-//   0x004a1084  mov      esi, ecx
-//   0x004a1086  mov      eax, dword ptr [esi]
-//   0x004a1088  call     dword ptr [eax + 0x2c]
-//   0x004a108b  test     eax, eax
-//   0x004a108d  jle      0x4a1147
-//   0x004a1093  cmp      eax, 2
-//   0x004a1096  jg       0x4a1147
-//   0x004a109c  mov      ecx, dword ptr [esi + 0x78]
-//   0x004a109f  test     ecx, ecx
-//   0x004a10a1  je       0x4a1147
-//   0x004a10a7  mov      edx, dword ptr [ecx]
-//   0x004a10a9  call     dword ptr [edx + 0x2c]
-//   0x004a10ac  cmp      eax, 6
-//   0x004a10af  jne      0x4a1147
-//   0x004a10b5  mov      ecx, dword ptr [esi + 0x78]
-//   0x004a10b8  mov      eax, dword ptr [ecx + 0x218]
-//   0x004a10be  mov      dl, byte ptr [eax + 0x808]
-//   0x004a10c4  test     dl, dl
-//   0x004a10c6  je       0x4a1147
-//   0x004a10c8  mov      edx, dword ptr [ecx]
-//   0x004a10ca  lea      eax, [esp + 0x10]
-//   0x004a10ce  push     edi
-//   0x004a10cf  push     eax
-//   0x004a10d0  call     dword ptr [edx + 0x48]
-//   0x004a10d3  mov      edx, dword ptr [esi]
-//   0x004a10d5  mov      edi, eax
-//   0x004a10d7  lea      eax, [esp + 0x20]
-//   0x004a10db  mov      ecx, esi
-//   0x004a10dd  push     eax
-//   0x004a10de  call     dword ptr [edx + 0x48]
-//   0x004a10e1  mov      ecx, dword ptr [eax]
-//   0x004a10e3  mov      edx, dword ptr [edi]
-//   0x004a10e5  sub      ecx, edx
-//   0x004a10e7  mov      edx, dword ptr [eax + 4]
-//   0x004a10ea  mov      eax, dword ptr [eax + 8]
-//   0x004a10ed  mov      dword ptr [esp + 8], ecx
-//   0x004a10f1  mov      ecx, dword ptr [edi + 4]
-//   0x004a10f4  sub      esp, 8
-//   0x004a10f7  sub      edx, ecx
-//   0x004a10f9  mov      ecx, dword ptr [edi + 8]
-//   0x004a10fc  mov      dword ptr [esp + 0x14], edx
-//   0x004a1100  sub      eax, ecx
-//   0x004a1102  fild     dword ptr [esp + 0x14]
-//   0x004a1106  mov      dword ptr [esp + 0x18], eax
-//   0x004a110a  fild     dword ptr [esp + 0x18]
-//   0x004a110e  fild     dword ptr [esp + 0x10]
-//   0x004a1112  fld      st(0)
-//   0x004a1114  fmul     st(1)
-//   0x004a1116  fld      st(2)
-//   0x004a1118  fmul     st(3)
-//   0x004a111a  faddp    st(1)
-//   0x004a111c  fld      st(3)
-//   0x004a111e  fmul     st(4)
-//   0x004a1120  faddp    st(1)
-//   0x004a1122  fstp     qword ptr [esp]
-//   0x004a1125  fstp     st(0)
-//   0x004a1127  fstp     st(0)
-//   0x004a1129  fstp     st(0)
-//   0x004a112b  call     0x494170
-//   0x004a1130  add      esp, 8
-//   0x004a1133  call     0x67faf0
-//   0x004a1138  cmp      eax, 0x80
-//   0x004a113d  pop      edi
-//   0x004a113e  jge      0x4a1147
-//   0x004a1140  mov      al, 1
-//   0x004a1142  pop      esi
-//   0x004a1143  add      esp, 0x24
-//   0x004a1146  ret      
+// UnitClass::vfunc_37 -- ALIAS of AircraftClass::vfunc_37 (same machine code at 0x004a1080); transcribed once.
 void UnitClass::vfunc_37(int a0, int a1, int a2, int a3, int a4)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_38 -- body derived from 18 instructions at 0x00616410; semantics not reconstructed.
-// size 49 bytes; signature __thiscall
-// callees: 0x004c4fb0
-//
-//   0x00616410  push     esi
-//   0x00616411  mov      esi, ecx
-//   0x00616413  mov      ecx, dword ptr [esi + 0xec]
-//   0x00616419  call     0x4c4fb0
-//   0x0061641e  test     al, al
-//   0x00616420  je       0x616441
-//   0x00616422  mov      eax, dword ptr [esi]
-//   0x00616424  push     0
-//   0x00616426  mov      ecx, esi
-//   0x00616428  call     dword ptr [eax + 0x2fc]
-//   0x0061642e  cmp      dword ptr [eax], 0
-//   0x00616431  je       0x616441
-//   0x00616433  mov      eax, dword ptr [esi + 0x210]
-//   0x00616439  test     eax, eax
-//   0x0061643b  jne      0x616441
-//   0x0061643d  mov      al, 1
-//   0x0061643f  pop      esi
-//   0x00616440  ret      
+// UnitClass::vfunc_38 -- ALIAS of AircraftClass::vfunc_38 (same machine code at 0x00616410); transcribed once.
 void UnitClass::vfunc_38()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_39 -- body derived from 12 instructions at 0x00616130; semantics not reconstructed.
-// size 32 bytes; signature __thiscall
-// callees: 0x004c4fb0
-//
-//   0x00616130  push     esi
-//   0x00616131  mov      esi, ecx
-//   0x00616133  mov      ecx, dword ptr [esi + 0xec]
-//   0x00616139  call     0x4c4fb0
-//   0x0061613e  test     al, al
-//   0x00616140  je       0x616150
-//   0x00616142  mov      eax, dword ptr [esi + 0x210]
-//   0x00616148  test     eax, eax
-//   0x0061614a  jne      0x616150
-//   0x0061614c  mov      al, 1
-//   0x0061614e  pop      esi
-//   0x0061614f  ret      
+// UnitClass::vfunc_39 -- ALIAS of AircraftClass::vfunc_39 (same machine code at 0x00616130); transcribed once.
 void UnitClass::vfunc_39()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_40 -- body derived from 18 instructions at 0x0040e5d0; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e5d0  mov      eax, dword ptr [ecx]
-//   0x0040e5d2  sub      esp, 0xc
-//   0x0040e5d5  lea      edx, [esp]
-//   0x0040e5d9  push     esi
-//   0x0040e5da  push     edx
-//   0x0040e5db  call     dword ptr [eax + 0x48]
-//   0x0040e5de  mov      ecx, eax
-//   0x0040e5e0  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e5e4  mov      edx, eax
-//   0x0040e5e6  mov      esi, dword ptr [ecx]
-//   0x0040e5e8  mov      dword ptr [edx], esi
-//   0x0040e5ea  mov      esi, dword ptr [ecx + 4]
-//   0x0040e5ed  mov      dword ptr [edx + 4], esi
-//   0x0040e5f0  pop      esi
-//   0x0040e5f1  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e5f4  mov      dword ptr [edx + 8], ecx
-//   0x0040e5f7  add      esp, 0xc
-//   0x0040e5fa  ret      4
+// UnitClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); transcribed once.
 void UnitClass::vfunc_40(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_41 -- body derived from 18 instructions at 0x0040e600; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e600  mov      eax, dword ptr [ecx]
-//   0x0040e602  sub      esp, 0xc
-//   0x0040e605  lea      edx, [esp]
-//   0x0040e609  push     esi
-//   0x0040e60a  push     edx
-//   0x0040e60b  call     dword ptr [eax + 0x48]
-//   0x0040e60e  mov      ecx, eax
-//   0x0040e610  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e614  mov      edx, eax
-//   0x0040e616  mov      esi, dword ptr [ecx]
-//   0x0040e618  mov      dword ptr [edx], esi
-//   0x0040e61a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e61d  mov      dword ptr [edx + 4], esi
-//   0x0040e620  pop      esi
-//   0x0040e621  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e624  mov      dword ptr [edx + 8], ecx
-//   0x0040e627  add      esp, 0xc
-//   0x0040e62a  ret      4
+// UnitClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); transcribed once.
 void UnitClass::vfunc_41(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_42 -- body derived from 18 instructions at 0x0040e630; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e630  mov      eax, dword ptr [ecx]
-//   0x0040e632  sub      esp, 0xc
-//   0x0040e635  lea      edx, [esp]
-//   0x0040e639  push     esi
-//   0x0040e63a  push     edx
-//   0x0040e63b  call     dword ptr [eax + 0x48]
-//   0x0040e63e  mov      ecx, eax
-//   0x0040e640  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e644  mov      edx, eax
-//   0x0040e646  mov      esi, dword ptr [ecx]
-//   0x0040e648  mov      dword ptr [edx], esi
-//   0x0040e64a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e64d  mov      dword ptr [edx + 4], esi
-//   0x0040e650  pop      esi
-//   0x0040e651  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e654  mov      dword ptr [edx + 8], ecx
-//   0x0040e657  add      esp, 0xc
-//   0x0040e65a  ret      4
+// UnitClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); transcribed once.
 void UnitClass::vfunc_42(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_43 -- body derived from 142 instructions at 0x0060edd0; semantics not reconstructed.
-// size 452 bytes; signature __thiscall nargs=2
-// callees: 0x00492960, 0x00542300, 0x00542330, 0x00542b20, 0x00542c40, 0x00543620, 0x0067faf0
-//
-//   0x0060edd0  sub      esp, 0x60
-//   0x0060edd3  push     ebx
-//   0x0060edd4  push     ebp
-//   0x0060edd5  push     esi
-//   0x0060edd6  mov      esi, ecx
-//   0x0060edd8  push     edi
-//   0x0060edd9  mov      eax, dword ptr [esi]
-//   0x0060eddb  call     dword ptr [eax + 0x80]
-//   0x0060ede1  mov      edx, dword ptr [esi]
-//   0x0060ede3  mov      ebx, eax
-//   0x0060ede5  mov      eax, dword ptr [esp + 0x78]
-//   0x0060ede9  mov      ecx, esi
-//   0x0060edeb  push     eax
-//   0x0060edec  call     dword ptr [edx + 0x2fc]
-//   0x0060edf2  mov      edi, eax
-//   0x0060edf4  mov      ecx, dword ptr [edi + 8]
-//   0x0060edf7  mov      edx, dword ptr [edi + 0xc]
-//   0x0060edfa  mov      ebp, dword ptr [edi + 4]
-//   0x0060edfd  mov      dword ptr [esp + 0x14], ecx
-//   0x0060ee01  lea      ecx, [esp + 0x40]
-//   0x0060ee05  mov      dword ptr [esp + 0x10], edx
-//   0x0060ee09  call     0x542300
-//   0x0060ee0e  mov      eax, dword ptr [esi]
-//   0x0060ee10  lea      ecx, [esp + 0x18]
-//   0x0060ee14  push     ecx
-//   0x0060ee15  mov      ecx, esi
-//   0x0060ee17  call     dword ptr [eax + 0x240]
-//   0x0060ee1d  mov      edx, dword ptr [eax]
-//   0x0060ee1f  push     ecx
-//   0x0060ee20  shr      edx, 0xa
-//   0x0060ee23  inc      edx
-//   0x0060ee24  lea      ecx, [esp + 0x44]
-//   0x0060ee28  shr      edx, 1
-//   0x0060ee2a  and      edx, 0x1f
-//   0x0060ee2d  sub      edx, 8
-//   0x0060ee30  mov      dword ptr [esp + 0x7c], edx
-//   0x0060ee34  fild     dword ptr [esp + 0x7c]
-//   0x0060ee38  fmul     qword ptr [0x69a648]
-//   0x0060ee3e  fstp     dword ptr [esp]
-//   0x0060ee41  call     0x542c40
-//   0x0060ee46  mov      eax, dword ptr [edi + 0x14]
-//   0x0060ee49  mov      ecx, dword ptr [esp + 0x10]
-//   0x0060ee4d  add      eax, ecx
-//   0x0060ee4f  push     ecx
-//   0x0060ee50  mov      ecx, dword ptr [esi + 0x1e0]
-//   0x0060ee56  mov      dword ptr [esp + 0x7c], eax
-//   0x0060ee5a  fild     dword ptr [esp + 0x7c]
-//   0x0060ee5e  and      ecx, 0x80000001
-//   0x0060ee64  fstp     dword ptr [esp]
-//   0x0060ee67  jns      0x60ee6e
-//   0x0060ee69  dec      ecx
-//   0x0060ee6a  or       ecx, 0xfffffffe
-//   0x0060ee6d  inc      ecx
-//   0x0060ee6e  neg      ecx
-//   0x0060ee70  sbb      ecx, ecx
-//   0x0060ee72  mov      edx, dword ptr [ebx + 0x384]
-//   0x0060ee78  and      ecx, 0xfffffffe
-//   0x0060ee7b  add      edx, ebp
-//   0x0060ee7d  inc      ecx
-//   0x0060ee7e  imul     ecx, dword ptr [esp + 0x18]
-//   0x0060ee83  mov      dword ptr [esp + 0x7c], ecx
-//   0x0060ee87  push     ecx
-//   0x0060ee88  fild     dword ptr [esp + 0x80]
-//   0x0060ee8f  mov      dword ptr [esp + 0x80], edx
-//   0x0060ee96  fstp     dword ptr [esp]
-//   0x0060ee99  fild     dword ptr [esp + 0x80]
-//   0x0060eea0  push     ecx
-//   0x0060eea1  lea      ecx, [esp + 0x4c]
-//   0x0060eea5  fstp     dword ptr [esp]
-//   0x0060eea8  call     0x542330
-//   0x0060eead  lea      eax, [esp + 0x18]
-//   0x0060eeb1  lea      ecx, [esi + 0x198]
-//   0x0060eeb7  push     eax
-//   0x0060eeb8  call     0x492960
-//   0x0060eebd  mov      ecx, dword ptr [eax]
-//   0x0060eebf  shr      ecx, 0xa
-//   0x0060eec2  inc      ecx
-//   0x0060eec3  shr      ecx, 1
-//   0x0060eec5  and      ecx, 0x1f
-//   0x0060eec8  sub      ecx, 8
-//   0x0060eecb  mov      dword ptr [esp + 0x78], ecx
-//   0x0060eecf  push     ecx
-//   0x0060eed0  fild     dword ptr [esp + 0x7c]
-//   0x0060eed4  lea      ecx, [esp + 0x44]
-//   0x0060eed8  fmul     qword ptr [0x69a648]
-//   0x0060eede  fchs     
-//   0x0060eee0  fstp     dword ptr [esp]
-//   0x0060eee3  call     0x542b20
-//   0x0060eee8  fild     dword ptr [edi + 0x10]
-//   0x0060eeeb  push     0
-//   0x0060eeed  push     0
-//   0x0060eeef  push     ecx
-//   0x0060eef0  lea      ecx, [esp + 0x4c]
-//   0x0060eef4  fstp     dword ptr [esp]
-//   0x0060eef7  call     0x542330
-//   0x0060eefc  lea      edx, [esp + 0x28]
-//   0x0060ef00  lea      ecx, [esp + 0x34]
-//   0x0060ef04  push     edx
-//   0x0060ef05  lea      edx, [esp + 0x44]
-//   0x0060ef09  mov      dword ptr [esp + 0x2c], 0
-//   0x0060ef11  mov      dword ptr [esp + 0x30], 0
-//   0x0060ef19  mov      dword ptr [esp + 0x34], 0
-//   0x0060ef21  call     0x543620
-//   0x0060ef26  mov      ecx, dword ptr [eax]
-//   0x0060ef28  mov      dword ptr [esp + 0x1c], ecx
-//   0x0060ef2c  mov      edx, dword ptr [eax + 4]
-//   0x0060ef2f  fld      dword ptr [esp + 0x1c]
-//   0x0060ef33  mov      eax, dword ptr [eax + 8]
-//   0x0060ef36  mov      dword ptr [esp + 0x20], edx
-//   0x0060ef3a  mov      dword ptr [esp + 0x24], eax
-//   0x0060ef3e  call     0x67faf0
-//   0x0060ef43  fld      dword ptr [esp + 0x20]
-//   0x0060ef47  fchs     
-//   0x0060ef49  mov      edi, eax
-//   0x0060ef4b  call     0x67faf0
-//   0x0060ef50  fld      dword ptr [esp + 0x24]
-//   0x0060ef54  mov      ebx, eax
-//   0x0060ef56  call     0x67faf0
-//   0x0060ef5b  mov      edx, dword ptr [esi]
-//   0x0060ef5d  mov      ebp, eax
-//   0x0060ef5f  lea      eax, [esp + 0x34]
-//   0x0060ef63  mov      ecx, esi
-//   0x0060ef65  push     eax
-//   0x0060ef66  call     dword ptr [edx + 0xa8]
-//   0x0060ef6c  mov      ecx, dword ptr [eax]
-//   0x0060ef6e  mov      esi, dword ptr [esp + 0x74]
-//   0x0060ef72  mov      edx, dword ptr [eax + 4]
-//   0x0060ef75  mov      eax, dword ptr [eax + 8]
-//   0x0060ef78  add      ecx, edi
-//   0x0060ef7a  mov      edi, esi
-//   0x0060ef7c  add      edx, ebx
-//   0x0060ef7e  add      eax, ebp
-//   0x0060ef80  mov      dword ptr [edi], ecx
-//   0x0060ef82  mov      dword ptr [edi + 4], edx
-//   0x0060ef85  mov      dword ptr [edi + 8], eax
-//   0x0060ef88  mov      eax, esi
-//   0x0060ef8a  pop      edi
-//   0x0060ef8b  pop      esi
-//   0x0060ef8c  pop      ebp
-//   0x0060ef8d  pop      ebx
-//   0x0060ef8e  add      esp, 0x60
-//   0x0060ef91  ret      8
+// UnitClass::vfunc_43 -- ALIAS of AircraftClass::vfunc_43 (same machine code at 0x0060edd0); transcribed once.
 void UnitClass::vfunc_43(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_44 -- body derived from 18 instructions at 0x0040e660; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e660  mov      eax, dword ptr [ecx]
-//   0x0040e662  sub      esp, 0xc
-//   0x0040e665  lea      edx, [esp]
-//   0x0040e669  push     esi
-//   0x0040e66a  push     edx
-//   0x0040e66b  call     dword ptr [eax + 0x48]
-//   0x0040e66e  mov      ecx, eax
-//   0x0040e670  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e674  mov      edx, eax
-//   0x0040e676  mov      esi, dword ptr [ecx]
-//   0x0040e678  mov      dword ptr [edx], esi
-//   0x0040e67a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e67d  mov      dword ptr [edx + 4], esi
-//   0x0040e680  pop      esi
-//   0x0040e681  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e684  mov      dword ptr [edx + 8], ecx
-//   0x0040e687  add      esp, 0xc
-//   0x0040e68a  ret      4
+// UnitClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); transcribed once.
 void UnitClass::vfunc_44(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_45 -- body derived from 8 instructions at 0x00570ed0; semantics not reconstructed.
-// size 23 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570ed0  mov      eax, dword ptr [ecx]
-//   0x00570ed2  sub      esp, 0xc
-//   0x00570ed5  lea      edx, [esp]
-//   0x00570ed9  push     edx
-//   0x00570eda  call     dword ptr [eax + 0xa8]
-//   0x00570ee0  mov      eax, dword ptr [eax + 4]
-//   0x00570ee3  add      esp, 0xc
-//   0x00570ee6  ret      
+// UnitClass::vfunc_45 -- ALIAS of AircraftClass::vfunc_45 (same machine code at 0x00570ed0); transcribed once.
 void UnitClass::vfunc_45()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_46 -- body derived from 5 instructions at 0x004a4120; semantics not reconstructed.
-// size 13 bytes; signature __cdecl
-// callees: none
-//
-//   0x004a4120  mov      al, byte ptr [ecx + 0x334]
-//   0x004a4126  test     al, al
-//   0x004a4128  jl       0x4a412d
-//   0x004a412a  xor      al, al
-//   0x004a412c  ret      
+// UnitClass::vfunc_46 -- ALIAS of AircraftClass::vfunc_46 (same machine code at 0x004a4120); transcribed once.
 void UnitClass::vfunc_46()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_47 -- body derived from 2 instructions at 0x0040e7c0; semantics not reconstructed.
-// size 7 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e7c0  mov      al, byte ptr [ecx + 0x345]
-//   0x0040e7c6  ret      
+// UnitClass::vfunc_47 -- ALIAS of AircraftClass::vfunc_47 (same machine code at 0x0040e7c0); transcribed once.
 void UnitClass::vfunc_47()
 {
 }
@@ -1340,38 +653,7 @@ void UnitClass::vfunc_49(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_50 -- body derived from 27 instructions at 0x004a0a00; semantics not reconstructed.
-// size 71 bytes; signature __thiscall nargs=1
-// callees: 0x0056fb40, 0x00608820
-//
-//   0x004a0a00  push     ebx
-//   0x004a0a01  mov      ebx, dword ptr [esp + 8]
-//   0x004a0a05  push     esi
-//   0x004a0a06  mov      esi, ecx
-//   0x004a0a08  test     bl, bl
-//   0x004a0a0a  je       0x4a0a47
-//   0x004a0a0c  mov      ecx, dword ptr [esi + 0x290]
-//   0x004a0a12  test     ecx, ecx
-//   0x004a0a14  je       0x4a0a27
-//   0x004a0a16  mov      eax, dword ptr [0x7b28cc]
-//   0x004a0a1b  test     eax, eax
-//   0x004a0a1d  jne      0x4a0a27
-//   0x004a0a1f  push     -1
-//   0x004a0a21  push     esi
-//   0x004a0a22  call     0x608820
-//   0x004a0a27  mov      edx, dword ptr [esi]
-//   0x004a0a29  push     0
-//   0x004a0a2b  push     0x7b2d08
-//   0x004a0a30  push     3
-//   0x004a0a32  mov      ecx, esi
-//   0x004a0a34  call     dword ptr [edx + 0x218]
-//   0x004a0a3a  push     ebx
-//   0x004a0a3b  mov      ecx, esi
-//   0x004a0a3d  call     0x56fb40
-//   0x004a0a42  pop      esi
-//   0x004a0a43  pop      ebx
-//   0x004a0a44  ret      4
+// UnitClass::vfunc_50 -- ALIAS of AircraftClass::vfunc_50 (same machine code at 0x004a0a00); transcribed once.
 void UnitClass::vfunc_50(int a0)
 {
 }
@@ -1433,105 +715,12 @@ void UnitClass::vfunc_51(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_52 -- body derived from 33 instructions at 0x005700c0; semantics not reconstructed.
-// size 100 bytes; signature __thiscall nargs=1
-// callees: 0x00570148, 0x00682997
-//
-//   0x005700c0  push     esi
-//   0x005700c1  mov      esi, ecx
-//   0x005700c3  push     edi
-//   0x005700c4  mov      edi, dword ptr [esp + 0xc]
-//   0x005700c8  mov      eax, dword ptr [esi]
-//   0x005700ca  push     0x80
-//   0x005700cf  push     edi
-//   0x005700d0  mov      byte ptr [esi + 0x33], 1
-//   0x005700d4  call     dword ptr [eax + 0xc4]
-//   0x005700da  test     al, al
-//   0x005700dc  je       0x570163
-//   0x005700e2  mov      edx, dword ptr [esi]
-//   0x005700e4  push     edi
-//   0x005700e5  mov      ecx, esi
-//   0x005700e7  call     dword ptr [edx + 0x184]
-//   0x005700ed  mov      eax, dword ptr [esi]
-//   0x005700ef  mov      ecx, esi
-//   0x005700f1  call     dword ptr [eax + 0x2c]
-//   0x005700f4  cmp      eax, 8
-//   0x005700f7  push     0x108
-//   0x005700fc  jne      0x570124
-//   0x005700fe  call     0x682997
-//   0x00570103  add      esp, 4
-//   0x00570106  test     eax, eax
-//   0x00570108  je       0x57015c
-//   0x0057010a  mov      ecx, dword ptr [0x714e20]
-//   0x00570110  push     0
-//   0x00570112  push     0x600
-//   0x00570117  push     1
-//   0x00570119  mov      edx, dword ptr [ecx + 0x7f0]
-//   0x0057011f  push     0
-//   0x00570121  push     edi
-//   0x00570122  jmp      0x570148
+// UnitClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); transcribed once.
 void UnitClass::vfunc_52(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_53 -- body derived from 52 instructions at 0x0056ea70; semantics not reconstructed.
-// size 156 bytes; signature __thiscall nargs=1
-// callees: 0x00473150, 0x004731a0, 0x0068309c, 0x006939b0
-//
-//   0x0056ea70  sub      esp, 0xc
-//   0x0056ea73  push     esi
-//   0x0056ea74  mov      esi, ecx
-//   0x0056ea76  push     0
-//   0x0056ea78  mov      eax, dword ptr [esi]
-//   0x0056ea7a  mov      byte ptr [esi + 0x33], 1
-//   0x0056ea7e  mov      byte ptr [esi + 0x34], 1
-//   0x0056ea82  call     dword ptr [eax + 0x10c]
-//   0x0056ea88  push     esi
-//   0x0056ea89  mov      ecx, 0x710d28
-//   0x0056ea8e  call     0x4731a0
-//   0x0056ea93  push     esi
-//   0x0056ea94  mov      ecx, 0x710d28
-//   0x0056ea99  mov      byte ptr [esi + 0x32], 0
-//   0x0056ea9d  call     0x473150
-//   0x0056eaa2  mov      edx, dword ptr [esi]
-//   0x0056eaa4  push     1
-//   0x0056eaa6  mov      ecx, esi
-//   0x0056eaa8  call     dword ptr [edx + 0x10c]
-//   0x0056eaae  push     0
-//   0x0056eab0  push     0x6bf5b0
-//   0x0056eab5  push     0x6bf530
-//   0x0056eaba  push     0
-//   0x0056eabc  push     esi
-//   0x0056eabd  call     0x68309c
-//   0x0056eac2  add      esp, 0x14
-//   0x0056eac5  test     eax, eax
-//   0x0056eac7  je       0x56eb31
-//   0x0056eac9  mov      eax, dword ptr [esi + 0x324]
-//   0x0056eacf  test     eax, eax
-//   0x0056ead1  jne      0x56eadd
-//   0x0056ead3  push     0x80004003
-//   0x0056ead8  call     0x6939b0
-//   0x0056eadd  mov      eax, dword ptr [esi + 0x324]
-//   0x0056eae3  push     eax
-//   0x0056eae4  mov      ecx, dword ptr [eax]
-//   0x0056eae6  call     dword ptr [ecx + 0x10]
-//   0x0056eae9  test     al, al
-//   0x0056eaeb  jne      0x56eb0c
-//   0x0056eaed  push     edi
-//   0x0056eaee  mov      edi, dword ptr [esi]
-//   0x0056eaf0  lea      edx, [esp + 8]
-//   0x0056eaf4  mov      ecx, esi
-//   0x0056eaf6  push     edx
-//   0x0056eaf7  call     dword ptr [edi + 0x180]
-//   0x0056eafd  push     eax
-//   0x0056eafe  mov      ecx, esi
-//   0x0056eb00  call     dword ptr [edi + 0xdc]
-//   0x0056eb06  pop      edi
-//   0x0056eb07  pop      esi
-//   0x0056eb08  add      esp, 0xc
-//   0x0056eb0b  ret      
+// UnitClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); transcribed once.
 void UnitClass::vfunc_53(int a0)
 {
 }
@@ -1599,47 +788,17 @@ void UnitClass::vfunc_55(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_56 -- body derived from 12 instructions at 0x004a4a10; semantics not reconstructed.
-// size 30 bytes; signature __thiscall
-// callees: 0x005709b0, 0x00608820
-//
-//   0x004a4a10  push     esi
-//   0x004a4a11  mov      esi, ecx
-//   0x004a4a13  mov      ecx, dword ptr [esi + 0x290]
-//   0x004a4a19  test     ecx, ecx
-//   0x004a4a1b  je       0x4a4a25
-//   0x004a4a1d  push     -1
-//   0x004a4a1f  push     esi
-//   0x004a4a20  call     0x608820
-//   0x004a4a25  mov      ecx, esi
-//   0x004a4a27  call     0x5709b0
-//   0x004a4a2c  pop      esi
-//   0x004a4a2d  ret      
+// UnitClass::vfunc_56 -- ALIAS of AircraftClass::vfunc_56 (same machine code at 0x004a4a10); transcribed once.
 void UnitClass::vfunc_56()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_57 -- body derived from 4 instructions at 0x00617ce0; semantics not reconstructed.
-// size 11 bytes; signature __cdecl
-// callees: none
-//
-//   0x00617ce0  mov      eax, dword ptr [ecx]
-//   0x00617ce2  push     0
-//   0x00617ce4  call     dword ptr [eax + 0x32c]
-//   0x00617cea  ret      
+// UnitClass::vfunc_57 -- ALIAS of AircraftClass::vfunc_57 (same machine code at 0x00617ce0); transcribed once.
 void UnitClass::vfunc_57()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_58 -- body derived from 2 instructions at 0x0061b480; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0061b480  xor      eax, eax
-//   0x0061b482  ret      4
+// UnitClass::vfunc_58 -- ALIAS of FootClass::vfunc_58 (same machine code at 0x0061b480); transcribed once.
 void UnitClass::vfunc_58(int a0)
 {
 }
@@ -1693,190 +852,17 @@ void UnitClass::vfunc_59(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_60 -- body derived from 27 instructions at 0x005701b0; semantics not reconstructed.
-// size 87 bytes; signature __thiscall nargs=1
-// callees: 0x00682610
-//
-//   0x005701b0  push     ecx
-//   0x005701b1  push     esi
-//   0x005701b2  mov      esi, ecx
-//   0x005701b4  mov      cl, byte ptr [0x7d69d8]
-//   0x005701ba  mov      al, 1
-//   0x005701bc  test     al, cl
-//   0x005701be  jne      0x5701ef
-//   0x005701c0  mov      dl, cl
-//   0x005701c2  push     0x570230
-//   0x005701c7  or       dl, al
-//   0x005701c9  mov      eax, 0x7fff
-//   0x005701ce  mov      word ptr [esp + 8], ax
-//   0x005701d3  mov      word ptr [esp + 0xa], ax
-//   0x005701d8  mov      eax, dword ptr [esp + 8]
-//   0x005701dc  mov      byte ptr [0x7d69d8], dl
-//   0x005701e2  mov      dword ptr [0x7d6a08], eax
-//   0x005701e7  call     0x682610
-//   0x005701ec  add      esp, 4
-//   0x005701ef  mov      edx, dword ptr [esi]
-//   0x005701f1  mov      ecx, esi
-//   0x005701f3  call     dword ptr [edx + 0x84]
-//   0x005701f9  test     eax, eax
-//   0x005701fb  jne      0x570207
-//   0x005701fd  mov      eax, 0x7d6a08
-//   0x00570202  pop      esi
-//   0x00570203  pop      ecx
-//   0x00570204  ret      4
+// UnitClass::vfunc_60 -- ALIAS of AircraftClass::vfunc_60 (same machine code at 0x005701b0); transcribed once.
 void UnitClass::vfunc_60(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_61 -- body derived from 57 instructions at 0x00610880; semantics not reconstructed.
-// size 163 bytes; signature __thiscall nargs=5
-// callees: 0x00610933
-//
-//   0x00610880  sub      esp, 0x50
-//   0x00610883  push     esi
-//   0x00610884  mov      esi, ecx
-//   0x00610886  mov      eax, dword ptr [esi]
-//   0x00610888  call     dword ptr [eax + 0x2c]
-//   0x0061088b  cmp      eax, 6
-//   0x0061088e  jne      0x610c44
-//   0x00610894  mov      al, byte ptr [esi + 0x30]
-//   0x00610897  test     al, al
-//   0x00610899  je       0x610c44
-//   0x0061089f  mov      edx, dword ptr [esi]
-//   0x006108a1  mov      ecx, esi
-//   0x006108a3  call     dword ptr [edx + 0x2c]
-//   0x006108a6  cmp      eax, 0xf
-//   0x006108a9  je       0x610c44
-//   0x006108af  mov      eax, dword ptr [esi]
-//   0x006108b1  push     ebx
-//   0x006108b2  push     ebp
-//   0x006108b3  push     edi
-//   0x006108b4  mov      ecx, esi
-//   0x006108b6  mov      edi, 0xf
-//   0x006108bb  call     dword ptr [eax + 0x198]
-//   0x006108c1  cmp      eax, -4
-//   0x006108c4  jge      0x6108cb
-//   0x006108c6  mov      edi, 0xc
-//   0x006108cb  mov      edx, dword ptr [esi]
-//   0x006108cd  mov      ecx, esi
-//   0x006108cf  call     dword ptr [edx + 0x80]
-//   0x006108d5  mov      edx, dword ptr [eax]
-//   0x006108d7  lea      ecx, [esp + 0x48]
-//   0x006108db  push     ecx
-//   0x006108dc  mov      ecx, eax
-//   0x006108de  call     dword ptr [edx + 0x7c]
-//   0x006108e1  mov      edx, eax
-//   0x006108e3  mov      eax, dword ptr [edx]
-//   0x006108e5  mov      ecx, dword ptr [edx + 4]
-//   0x006108e8  mov      edx, dword ptr [edx + 8]
-//   0x006108eb  mov      dword ptr [esp + 0x20], edx
-//   0x006108ef  cdq      
-//   0x006108f0  sub      eax, edx
-//   0x006108f2  sar      eax, 1
-//   0x006108f4  mov      dword ptr [esp + 0x18], eax
-//   0x006108f8  mov      eax, ecx
-//   0x006108fa  cdq      
-//   0x006108fb  sub      eax, edx
-//   0x006108fd  mov      ebp, eax
-//   0x006108ff  mov      eax, dword ptr [0x710be4]
-//   0x00610904  sar      ebp, 1
-//   0x00610906  mov      ecx, dword ptr [eax + 4]
-//   0x00610909  mov      dword ptr [esp + 0x1c], ebp
-//   0x0061090d  cmp      ecx, 1
-//   0x00610910  jne      0x610923
-//   0x00610912  mov      eax, dword ptr [eax + 0x174]
-//   0x00610918  xor      ecx, ecx
-//   0x0061091a  mov      cl, byte ptr [eax + edi]
-//   0x0061091d  mov      dword ptr [esp + 0x14], ecx
-//   0x00610921  jmp      0x610933
+// UnitClass::vfunc_61 -- ALIAS of AircraftClass::vfunc_61 (same machine code at 0x00610880); transcribed once.
 void UnitClass::vfunc_61(int a0, int a1, int a2, int a3, int a4)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_62 -- body derived from 77 instructions at 0x0060fb90; semantics not reconstructed.
-// size 230 bytes; signature __thiscall nargs=6
-// callees: 0x00459da0, 0x0060fc8a
-//
-//   0x0060fb90  sub      esp, 0x84
-//   0x0060fb96  push     ebx
-//   0x0060fb97  mov      ebx, ecx
-//   0x0060fb99  push     esi
-//   0x0060fb9a  mov      dword ptr [esp + 0x70], ebx
-//   0x0060fb9e  mov      al, byte ptr [ebx + 0x30]
-//   0x0060fba1  mov      byte ptr [esp + 0x6c], 0
-//   0x0060fba6  test     al, al
-//   0x0060fba8  jne      0x60fbef
-//   0x0060fbaa  mov      eax, dword ptr [ebx]
-//   0x0060fbac  call     dword ptr [eax + 0x18c]
-//   0x0060fbb2  mov      edx, dword ptr [ebx]
-//   0x0060fbb4  mov      ecx, ebx
-//   0x0060fbb6  mov      esi, eax
-//   0x0060fbb8  call     dword ptr [edx + 0x198]
-//   0x0060fbbe  cmp      eax, -0x14
-//   0x0060fbc1  jge      0x60fbdc
-//   0x0060fbc3  mov      eax, dword ptr [0x7b0b7c]
-//   0x0060fbc8  mov      ecx, dword ptr [eax + 0x20]
-//   0x0060fbcb  push     ecx
-//   0x0060fbcc  mov      ecx, esi
-//   0x0060fbce  call     0x459da0
-//   0x0060fbd3  test     al, al
-//   0x0060fbd5  je       0x60fbdc
-//   0x0060fbd7  mov      byte ptr [esp + 0x6c], 1
-//   0x0060fbdc  mov      al, byte ptr [ebx + 0x30]
-//   0x0060fbdf  test     al, al
-//   0x0060fbe1  jne      0x60fbef
-//   0x0060fbe3  mov      al, byte ptr [esp + 0x6c]
-//   0x0060fbe7  test     al, al
-//   0x0060fbe9  je       0x610693
-//   0x0060fbef  mov      edx, dword ptr [ebx]
-//   0x0060fbf1  push     ebp
-//   0x0060fbf2  push     edi
-//   0x0060fbf3  mov      ecx, ebx
-//   0x0060fbf5  call     dword ptr [edx + 0x2c]
-//   0x0060fbf8  cmp      eax, 6
-//   0x0060fbfb  jne      0x610672
-//   0x0060fc01  mov      eax, dword ptr [ebx]
-//   0x0060fc03  mov      ecx, ebx
-//   0x0060fc05  mov      dword ptr [esp + 0x10], 0xf
-//   0x0060fc0d  call     dword ptr [eax + 0x198]
-//   0x0060fc13  cmp      eax, -4
-//   0x0060fc16  jge      0x60fc20
-//   0x0060fc18  mov      dword ptr [esp + 0x10], 0xc
-//   0x0060fc20  mov      edx, dword ptr [ebx]
-//   0x0060fc22  mov      ecx, ebx
-//   0x0060fc24  call     dword ptr [edx + 0x80]
-//   0x0060fc2a  mov      edx, dword ptr [eax]
-//   0x0060fc2c  lea      ecx, [esp + 0x50]
-//   0x0060fc30  push     ecx
-//   0x0060fc31  mov      ecx, eax
-//   0x0060fc33  call     dword ptr [edx + 0x7c]
-//   0x0060fc36  mov      edx, eax
-//   0x0060fc38  mov      eax, dword ptr [edx]
-//   0x0060fc3a  mov      ecx, dword ptr [edx + 4]
-//   0x0060fc3d  mov      ebp, dword ptr [edx + 8]
-//   0x0060fc40  cdq      
-//   0x0060fc41  sub      eax, edx
-//   0x0060fc43  mov      dword ptr [esp + 0x58], ebp
-//   0x0060fc47  mov      esi, eax
-//   0x0060fc49  mov      eax, ecx
-//   0x0060fc4b  cdq      
-//   0x0060fc4c  sub      eax, edx
-//   0x0060fc4e  mov      edi, eax
-//   0x0060fc50  mov      eax, dword ptr [0x710be4]
-//   0x0060fc55  sar      esi, 1
-//   0x0060fc57  mov      ecx, dword ptr [eax + 4]
-//   0x0060fc5a  sar      edi, 1
-//   0x0060fc5c  cmp      ecx, 1
-//   0x0060fc5f  jne      0x60fc76
-//   0x0060fc61  mov      eax, dword ptr [eax + 0x174]
-//   0x0060fc67  mov      edx, dword ptr [esp + 0x10]
-//   0x0060fc6b  xor      ecx, ecx
-//   0x0060fc6d  mov      cl, byte ptr [eax + edx]
-//   0x0060fc70  mov      dword ptr [esp + 0x10], ecx
-//   0x0060fc74  jmp      0x60fc8a
+// UnitClass::vfunc_62 -- ALIAS of AircraftClass::vfunc_62 (same machine code at 0x0060fb90); transcribed once.
 void UnitClass::vfunc_62(int a0, int a1, int a2, int a3, int a4, int a5)
 {
 }
@@ -1985,301 +971,42 @@ void UnitClass::vfunc_63(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_64 -- body derived from 7 instructions at 0x00570990; semantics not reconstructed.
-// size 21 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00570990  mov      edx, dword ptr [esp + 8]
-//   0x00570994  mov      eax, dword ptr [ecx]
-//   0x00570996  push     edx
-//   0x00570997  mov      edx, dword ptr [esp + 8]
-//   0x0057099b  push     edx
-//   0x0057099c  call     dword ptr [eax + 0xfc]
-//   0x005709a2  ret      8
+// UnitClass::vfunc_64 -- ALIAS of AircraftClass::vfunc_64 (same machine code at 0x00570990); transcribed once.
 void UnitClass::vfunc_64(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_65 -- body derived from 12 instructions at 0x0060f590; semantics not reconstructed.
-// size 36 bytes; signature __thiscall
-// callees: 0x004c4ff0
-//
-//   0x0060f590  push     esi
-//   0x0060f591  mov      esi, ecx
-//   0x0060f593  mov      al, byte ptr [esi + 0x1ff]
-//   0x0060f599  test     al, al
-//   0x0060f59b  je       0x60f5b2
-//   0x0060f59d  mov      ecx, dword ptr [esi + 0xec]
-//   0x0060f5a3  call     0x4c4ff0
-//   0x0060f5a8  test     al, al
-//   0x0060f5aa  jne      0x60f5b2
-//   0x0060f5ac  mov      byte ptr [esi + 0x1ff], al
-//   0x0060f5b2  pop      esi
-//   0x0060f5b3  ret      
+// UnitClass::vfunc_65 -- ALIAS of AircraftClass::vfunc_65 (same machine code at 0x0060f590); transcribed once.
 void UnitClass::vfunc_65()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_66 -- body derived from 112 instructions at 0x0061c1e0; semantics not reconstructed.
-// size 371 bytes; signature __thiscall nargs=2
-// callees: 0x005039b0, 0x006468b0, 0x00646930, 0x0067faf0
-//
-//   0x0061c1e0  sub      esp, 0x10
-//   0x0061c1e3  push     ebp
-//   0x0061c1e4  push     esi
-//   0x0061c1e5  mov      esi, ecx
-//   0x0061c1e7  mov      al, byte ptr [esi + 0x1fb]
-//   0x0061c1ed  test     al, al
-//   0x0061c1ef  je       0x61c34b
-//   0x0061c1f5  mov      eax, dword ptr [esi + 0xec]
-//   0x0061c1fb  mov      ecx, dword ptr [eax + 0x24]
-//   0x0061c1fe  mov      al, byte ptr [ecx + 0xae]
-//   0x0061c204  test     al, al
-//   0x0061c206  je       0x61c215
-//   0x0061c208  mov      eax, dword ptr [0x7b0d38]
-//   0x0061c20d  test     eax, eax
-//   0x0061c20f  jne      0x61c34b
-//   0x0061c215  mov      edx, dword ptr [esi]
-//   0x0061c217  lea      eax, [esp + 0xc]
-//   0x0061c21b  push     eax
-//   0x0061c21c  mov      ecx, esi
-//   0x0061c21e  call     dword ptr [edx + 0x180]
-//   0x0061c224  mov      eax, dword ptr [eax + 8]
-//   0x0061c227  mov      ecx, dword ptr [0x714e20]
-//   0x0061c22d  cdq      
-//   0x0061c22e  idiv     dword ptr [ecx + 0xe64]
-//   0x0061c234  movsx    edx, byte ptr [esi + 0x204]
-//   0x0061c23b  lea      eax, [eax + eax*4]
-//   0x0061c23e  shl      eax, 1
-//   0x0061c240  cmp      eax, edx
-//   0x0061c242  jle      0x61c249
-//   0x0061c244  mov      byte ptr [esp + 0x1c], 0
-//   0x0061c249  mov      byte ptr [esi + 0x204], al
-//   0x0061c24f  mov      eax, dword ptr [esi]
-//   0x0061c251  push     ebx
-//   0x0061c252  push     edi
-//   0x0061c253  mov      ecx, esi
-//   0x0061c255  call     dword ptr [eax + 0x80]
-//   0x0061c25b  movsx    ecx, byte ptr [esi + 0x204]
-//   0x0061c262  fild     dword ptr [eax + 0x318]
-//   0x0061c268  mov      dword ptr [esp + 0x10], ecx
-//   0x0061c26c  fild     dword ptr [esp + 0x10]
-//   0x0061c270  fmul     qword ptr [0x699d50]
-//   0x0061c276  fadd     qword ptr [0x699868]
-//   0x0061c27c  fmulp    st(1)
-//   0x0061c27e  call     0x67faf0
-//   0x0061c283  lea      edi, [esi + 0xa8]
-//   0x0061c289  mov      ebp, eax
-//   0x0061c28b  mov      ecx, edi
-//   0x0061c28d  mov      dword ptr [esp + 0x10], ebp
-//   0x0061c291  call     0x6468b0
-//   0x0061c296  test     al, al
-//   0x0061c298  jne      0x61c2a5
-//   0x0061c29a  mov      ecx, edi
-//   0x0061c29c  call     0x646930
-//   0x0061c2a1  test     al, al
-//   0x0061c2a3  je       0x61c315
-//   0x0061c2a5  mov      edx, dword ptr [esi]
-//   0x0061c2a7  mov      ecx, esi
-//   0x0061c2a9  call     dword ptr [edx + 0x80]
-//   0x0061c2af  mov      ecx, edi
-//   0x0061c2b1  mov      ebx, eax
-//   0x0061c2b3  call     0x6468b0
-//   0x0061c2b8  test     al, al
-//   0x0061c2ba  je       0x61c2c6
-//   0x0061c2bc  mov      al, byte ptr [ebx + 0x12d]
-//   0x0061c2c2  test     al, al
-//   0x0061c2c4  jne      0x61c2e5
-//   0x0061c2c6  mov      ecx, edi
-//   0x0061c2c8  call     0x646930
-//   0x0061c2cd  test     al, al
-//   0x0061c2cf  je       0x61c315
-//   0x0061c2d1  mov      al, byte ptr [ebx + 0x12d]
-//   0x0061c2d7  test     al, al
-//   0x0061c2d9  jne      0x61c2e5
-//   0x0061c2db  mov      al, byte ptr [ebx + 0x13f]
-//   0x0061c2e1  test     al, al
-//   0x0061c2e3  je       0x61c315
-//   0x0061c2e5  mov      ecx, dword ptr [0x714e20]
-//   0x0061c2eb  fld      qword ptr [ecx + 0x3b0]
-//   0x0061c2f1  fcomp    qword ptr [0x699108]
-//   0x0061c2f7  fnstsw   ax
-//   0x0061c2f9  test     ah, 0x40
-//   0x0061c2fc  jne      0x61c315
-//   0x0061c2fe  fld      qword ptr [ecx + 0x3b0]
-//   0x0061c304  fadd     qword ptr [0x699868]
-//   0x0061c30a  fimul    dword ptr [esp + 0x10]
-//   0x0061c30e  call     0x67faf0
-//   0x0061c313  mov      ebp, eax
-//   0x0061c315  pop      edi
-//   0x0061c316  pop      ebx
-//   0x0061c317  test     ebp, ebp
-//   0x0061c319  je       0x61c34b
-//   0x0061c31b  mov      eax, dword ptr [esp + 0x20]
-//   0x0061c31f  mov      ecx, dword ptr [esp + 0x1c]
-//   0x0061c323  mov      edx, dword ptr [esi + 0xec]
-//   0x0061c329  push     1
-//   0x0061c32b  push     0
-//   0x0061c32d  push     eax
-//   0x0061c32e  mov      eax, dword ptr [esi]
-//   0x0061c330  push     ecx
-//   0x0061c331  push     edx
-//   0x0061c332  lea      ecx, [esp + 0x20]
-//   0x0061c336  push     ebp
-//   0x0061c337  push     ecx
-//   0x0061c338  mov      ecx, esi
-//   0x0061c33a  call     dword ptr [eax + 0x180]
-//   0x0061c340  push     eax
-//   0x0061c341  mov      ecx, 0x710d28
-//   0x0061c346  call     0x5039b0
-//   0x0061c34b  pop      esi
-//   0x0061c34c  pop      ebp
-//   0x0061c34d  add      esp, 0x10
-//   0x0061c350  ret      8
+// UnitClass::vfunc_66 -- ALIAS of BuildingClass::vfunc_66 (same machine code at 0x0061c1e0); transcribed once.
 void UnitClass::vfunc_66(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_67 -- body derived from 12 instructions at 0x0049c590; semantics not reconstructed.
-// size 22 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x0049c590  push     ecx
-//   0x0049c591  push     esi
-//   0x0049c592  push     edi
-//   0x0049c593  mov      edi, dword ptr [esp + 0x10]
-//   0x0049c597  mov      esi, ecx
-//   0x0049c599  cmp      edi, 2
-//   0x0049c59c  jne      0x49c5a6
-//   0x0049c59e  pop      edi
-//   0x0049c59f  mov      al, 1
-//   0x0049c5a1  pop      esi
-//   0x0049c5a2  pop      ecx
-//   0x0049c5a3  ret      4
+// UnitClass::vfunc_67 -- ALIAS of AircraftClass::vfunc_67 (same machine code at 0x0049c590); transcribed once.
 void UnitClass::vfunc_67(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_68 -- body derived from 37 instructions at 0x0056f000; semantics not reconstructed.
-// size 103 bytes; signature __thiscall nargs=1
-// callees: 0x005f5120
-//
-//   0x0056f000  sub      esp, 0x18
-//   0x0056f003  lea      eax, [esp]
-//   0x0056f007  push     ebx
-//   0x0056f008  push     ebp
-//   0x0056f009  push     esi
-//   0x0056f00a  push     edi
-//   0x0056f00b  mov      esi, ecx
-//   0x0056f00d  push     eax
-//   0x0056f00e  lea      eax, [esp + 0x1c]
-//   0x0056f012  mov      edx, dword ptr [esi]
-//   0x0056f014  push     eax
-//   0x0056f015  call     dword ptr [edx + 0xa8]
-//   0x0056f01b  mov      ecx, dword ptr [0x714eec]
-//   0x0056f021  push     eax
-//   0x0056f022  call     0x5f5120
-//   0x0056f027  mov      edx, dword ptr [esi]
-//   0x0056f029  mov      ecx, esi
-//   0x0056f02b  call     dword ptr [edx + 0x68]
-//   0x0056f02e  mov      edi, eax
-//   0x0056f030  test     edi, edi
-//   0x0056f032  jne      0x56f067
-//   0x0056f034  mov      eax, dword ptr [esp + 0x2c]
-//   0x0056f038  mov      edx, dword ptr [0x7d69a8]
-//   0x0056f03e  mov      ecx, eax
-//   0x0056f040  pop      edi
-//   0x0056f041  pop      esi
-//   0x0056f042  pop      ebp
-//   0x0056f043  mov      dword ptr [ecx], edx
-//   0x0056f045  mov      edx, dword ptr [0x7d69ac]
-//   0x0056f04b  pop      ebx
-//   0x0056f04c  mov      dword ptr [ecx + 4], edx
-//   0x0056f04f  mov      edx, dword ptr [0x7d69b0]
-//   0x0056f055  mov      dword ptr [ecx + 8], edx
-//   0x0056f058  mov      edx, dword ptr [0x7d69b4]
-//   0x0056f05e  mov      dword ptr [ecx + 0xc], edx
-//   0x0056f061  add      esp, 0x18
-//   0x0056f064  ret      4
+// UnitClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); transcribed once.
 void UnitClass::vfunc_68(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_69 -- body derived from 38 instructions at 0x0056f160; semantics not reconstructed.
-// size 120 bytes; signature __thiscall nargs=1
-// callees: 0x005f5120
-//
-//   0x0056f160  sub      esp, 0x54
-//   0x0056f163  push     ebx
-//   0x0056f164  push     esi
-//   0x0056f165  lea      eax, [esp + 0x14]
-//   0x0056f169  mov      esi, ecx
-//   0x0056f16b  push     eax
-//   0x0056f16c  lea      eax, [esp + 0x20]
-//   0x0056f170  mov      edx, dword ptr [esi]
-//   0x0056f172  push     eax
-//   0x0056f173  mov      dword ptr [esp + 0x18], esi
-//   0x0056f177  call     dword ptr [edx + 0xa8]
-//   0x0056f17d  mov      ecx, dword ptr [0x714eec]
-//   0x0056f183  push     eax
-//   0x0056f184  call     0x5f5120
-//   0x0056f189  mov      edx, dword ptr [esi]
-//   0x0056f18b  mov      ecx, esi
-//   0x0056f18d  call     dword ptr [edx + 0x84]
-//   0x0056f193  mov      edx, dword ptr [eax]
-//   0x0056f195  mov      ecx, eax
-//   0x0056f197  call     dword ptr [edx + 0x9c]
-//   0x0056f19d  mov      ebx, eax
-//   0x0056f19f  test     ebx, ebx
-//   0x0056f1a1  mov      dword ptr [esp + 0xc], ebx
-//   0x0056f1a5  jne      0x56f1d8
-//   0x0056f1a7  mov      eax, dword ptr [esp + 0x60]
-//   0x0056f1ab  mov      edx, dword ptr [0x7d69a8]
-//   0x0056f1b1  mov      ecx, eax
-//   0x0056f1b3  pop      esi
-//   0x0056f1b4  pop      ebx
-//   0x0056f1b5  mov      dword ptr [ecx], edx
-//   0x0056f1b7  mov      edx, dword ptr [0x7d69ac]
-//   0x0056f1bd  mov      dword ptr [ecx + 4], edx
-//   0x0056f1c0  mov      edx, dword ptr [0x7d69b0]
-//   0x0056f1c6  mov      dword ptr [ecx + 8], edx
-//   0x0056f1c9  mov      edx, dword ptr [0x7d69b4]
-//   0x0056f1cf  mov      dword ptr [ecx + 0xc], edx
-//   0x0056f1d2  add      esp, 0x54
-//   0x0056f1d5  ret      4
+// UnitClass::vfunc_69 -- ALIAS of AircraftClass::vfunc_69 (same machine code at 0x0056f160); transcribed once.
 void UnitClass::vfunc_69(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_70 -- body derived from 1 instructions at 0x0040e690; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e690  ret      
+// UnitClass::vfunc_70 -- ALIAS of AircraftClass::vfunc_70 (same machine code at 0x0040e690); transcribed once.
 void UnitClass::vfunc_70()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_71 -- body derived from 8 instructions at 0x0056f680; semantics not reconstructed.
-// size 24 bytes; signature __cdecl
-// callees: 0x004b2e90
-//
-//   0x0056f680  mov      al, byte ptr [ecx + 0x2e]
-//   0x0056f683  test     al, al
-//   0x0056f685  jne      0x56f697
-//   0x0056f687  mov      byte ptr [ecx + 0x2e], 1
-//   0x0056f68b  push     0
-//   0x0056f68d  mov      ecx, 0x710d28
-//   0x0056f692  call     0x4b2e90
-//   0x0056f697  ret      
+// UnitClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); transcribed once.
 void UnitClass::vfunc_71()
 {
 }
@@ -2336,153 +1063,27 @@ void UnitClass::vfunc_73(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_74 -- body derived from 3 instructions at 0x00612dd0; semantics not reconstructed.
-// size 10 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00612dd0  mov      eax, dword ptr [esp + 4]
-//   0x00612dd4  mov      dword ptr [ecx + 0x7c], eax
-//   0x00612dd7  ret      4
+// UnitClass::vfunc_74 -- ALIAS of AircraftClass::vfunc_74 (same machine code at 0x00612dd0); transcribed once.
 void UnitClass::vfunc_74(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_75 -- body derived from 39 instructions at 0x00613f10; semantics not reconstructed.
-// size 111 bytes; signature __thiscall
-// callees: 0x004c4fb0, 0x0056ee20, 0x00603730
-//
-//   0x00613f10  push     esi
-//   0x00613f11  mov      esi, ecx
-//   0x00613f13  mov      al, byte ptr [esi + 0x1ff]
-//   0x00613f19  test     al, al
-//   0x00613f1b  jne      0x613f35
-//   0x00613f1d  mov      ecx, dword ptr [esi + 0xec]
-//   0x00613f23  call     0x4c4fb0
-//   0x00613f28  test     al, al
-//   0x00613f2a  jne      0x613f35
-//   0x00613f2c  mov      al, byte ptr [0x7b2e3c]
-//   0x00613f31  test     al, al
-//   0x00613f33  je       0x613f7f
-//   0x00613f35  mov      ecx, esi
-//   0x00613f37  call     0x56ee20
-//   0x00613f3c  test     al, al
-//   0x00613f3e  je       0x613f7f
-//   0x00613f40  mov      ecx, dword ptr [esi + 0xec]
-//   0x00613f46  call     0x4c4fb0
-//   0x00613f4b  test     al, al
-//   0x00613f4d  je       0x613f7b
-//   0x00613f4f  mov      al, byte ptr [0x6c7cc6]
-//   0x00613f54  test     al, al
-//   0x00613f56  je       0x613f7b
-//   0x00613f58  mov      ecx, dword ptr [esi + 0x24]
-//   0x00613f5b  test     ecx, ecx
-//   0x00613f5d  je       0x613f71
-//   0x00613f5f  mov      eax, dword ptr [0x7dca08]
-//   0x00613f64  push     0
-//   0x00613f66  push     0
-//   0x00613f68  push     eax
-//   0x00613f69  push     esi
-//   0x00613f6a  push     0x21
-//   0x00613f6c  call     0x603730
-//   0x00613f71  mov      edx, dword ptr [esi]
-//   0x00613f73  mov      ecx, esi
-//   0x00613f75  call     dword ptr [edx + 0x2bc]
-//   0x00613f7b  mov      al, 1
-//   0x00613f7d  pop      esi
-//   0x00613f7e  ret      
+// UnitClass::vfunc_75 -- ALIAS of AircraftClass::vfunc_75 (same machine code at 0x00613f10); transcribed once.
 void UnitClass::vfunc_75()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_76 -- body derived from 39 instructions at 0x0056eda0; semantics not reconstructed.
-// size 117 bytes; signature __thiscall nargs=1
-// callees: 0x00478840, 0x00478860
-//
-//   0x0056eda0  push     ecx
-//   0x0056eda1  push     esi
-//   0x0056eda2  mov      esi, ecx
-//   0x0056eda4  mov      al, byte ptr [esi + 0x30]
-//   0x0056eda7  test     al, al
-//   0x0056eda9  je       0x56ee12
-//   0x0056edab  mov      edx, dword ptr [0x7b2d88]
-//   0x0056edb1  lea      eax, [esp + 4]
-//   0x0056edb5  push     eax
-//   0x0056edb6  mov      ecx, 0x7b2d88
-//   0x0056edbb  mov      dword ptr [esp + 8], esi
-//   0x0056edbf  call     dword ptr [edx + 0x10]
-//   0x0056edc2  cmp      eax, -1
-//   0x0056edc5  je       0x56edf4
-//   0x0056edc7  mov      ecx, dword ptr [0x7b2d98]
-//   0x0056edcd  cmp      eax, ecx
-//   0x0056edcf  jge      0x56edf4
-//   0x0056edd1  dec      ecx
-//   0x0056edd2  cmp      eax, ecx
-//   0x0056edd4  mov      dword ptr [0x7b2d98], ecx
-//   0x0056edda  jge      0x56edf4
-//   0x0056eddc  mov      ecx, dword ptr [0x7b2d8c]
-//   0x0056ede2  inc      eax
-//   0x0056ede3  mov      edx, dword ptr [ecx + eax*4]
-//   0x0056ede6  mov      dword ptr [ecx + eax*4 - 4], edx
-//   0x0056edea  mov      ecx, dword ptr [0x7b2d98]
-//   0x0056edf0  cmp      eax, ecx
-//   0x0056edf2  jl       0x56eddc
-//   0x0056edf4  mov      ecx, 0x710d28
-//   0x0056edf9  mov      byte ptr [esi + 0x30], 0
-//   0x0056edfd  call     0x478840
-//   0x0056ee02  cmp      eax, esi
-//   0x0056ee04  jne      0x56ee12
-//   0x0056ee06  push     0
-//   0x0056ee08  mov      ecx, 0x710d28
-//   0x0056ee0d  call     0x478860
-//   0x0056ee12  pop      esi
-//   0x0056ee13  pop      ecx
-//   0x0056ee14  ret      
+// UnitClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); transcribed once.
 void UnitClass::vfunc_76(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_77 -- body derived from 16 instructions at 0x00611540; semantics not reconstructed.
-// size 40 bytes; signature __thiscall nargs=2
-// callees: 0x00502060
-//
-//   0x00611540  mov      eax, dword ptr [esp + 8]
-//   0x00611544  push     esi
-//   0x00611545  mov      esi, ecx
-//   0x00611547  push     edi
-//   0x00611548  mov      ecx, dword ptr [esp + 0xc]
-//   0x0061154c  push     eax
-//   0x0061154d  mov      edi, dword ptr [esi]
-//   0x0061154f  push     ecx
-//   0x00611550  mov      ecx, 0x710d28
-//   0x00611555  call     0x502060
-//   0x0061155a  push     eax
-//   0x0061155b  mov      ecx, esi
-//   0x0061155d  call     dword ptr [edi + 0x2d8]
-//   0x00611563  pop      edi
-//   0x00611564  pop      esi
-//   0x00611565  ret      8
+// UnitClass::vfunc_77 -- ALIAS of AircraftClass::vfunc_77 (same machine code at 0x00611540); transcribed once.
 void UnitClass::vfunc_77(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_78 -- body derived from 9 instructions at 0x006164c0; semantics not reconstructed.
-// size 25 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x006164c0  mov      edx, dword ptr [esp + 4]
-//   0x006164c4  mov      eax, dword ptr [ecx]
-//   0x006164c6  push     edx
-//   0x006164c7  call     dword ptr [eax + 0x2fc]
-//   0x006164cd  mov      eax, dword ptr [eax]
-//   0x006164cf  test     eax, eax
-//   0x006164d1  je       0x6164d9
-//   0x006164d3  mov      eax, dword ptr [eax + 0x7c]
-//   0x006164d6  ret      4
+// UnitClass::vfunc_78 -- ALIAS of AircraftClass::vfunc_78 (same machine code at 0x006164c0); transcribed once.
 void UnitClass::vfunc_78(int a0)
 {
 }
@@ -2641,109 +1242,27 @@ void UnitClass::vfunc_80(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_81 -- body derived from 2 instructions at 0x0056eca0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056eca0  xor      al, al
-//   0x0056eca2  ret      
+// UnitClass::vfunc_81 -- ALIAS of AircraftClass::vfunc_81 (same machine code at 0x0056eca0); transcribed once.
 void UnitClass::vfunc_81()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_82 -- body derived from 1 instructions at 0x0056ecb0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ecb0  ret      
+// UnitClass::vfunc_82 -- ALIAS of AircraftClass::vfunc_82 (same machine code at 0x0056ecb0); transcribed once.
 void UnitClass::vfunc_82()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_83 -- body derived from 46 instructions at 0x0061a4d0; semantics not reconstructed.
-// size 136 bytes; signature __thiscall
-// callees: 0x00446e70
-//
-//   0x0061a4d0  push     ebx
-//   0x0061a4d1  push     esi
-//   0x0061a4d2  push     edi
-//   0x0061a4d3  mov      edi, ecx
-//   0x0061a4d5  xor      ebx, ebx
-//   0x0061a4d7  mov      ecx, dword ptr [edi + 0xec]
-//   0x0061a4dd  mov      eax, dword ptr [ecx + 0x58]
-//   0x0061a4e0  lea      edx, [eax + eax*4]
-//   0x0061a4e3  mov      eax, dword ptr [0x714e20]
-//   0x0061a4e8  shl      edx, 4
-//   0x0061a4eb  cmp      byte ptr [edx + eax + 0xd22], bl
-//   0x0061a4f2  jne      0x61a504
-//   0x0061a4f4  mov      ecx, dword ptr [ecx + 0x120]
-//   0x0061a4fa  mov      edx, dword ptr [eax + 0xc28]
-//   0x0061a500  cmp      ecx, edx
-//   0x0061a502  jl       0x61a532
-//   0x0061a504  mov      eax, dword ptr [edi + 0xa4]
-//   0x0061a50a  test     eax, eax
-//   0x0061a50c  je       0x61a532
-//   0x0061a50e  lea      ecx, [edi + 0xa0]
-//   0x0061a514  call     0x446e70
-//   0x0061a519  mov      esi, eax
-//   0x0061a51b  test     esi, esi
-//   0x0061a51d  je       0x61a532
-//   0x0061a51f  mov      edx, dword ptr [esi]
-//   0x0061a521  mov      ecx, esi
-//   0x0061a523  call     dword ptr [edx + 0x14c]
-//   0x0061a529  mov      esi, dword ptr [esi + 0x20]
-//   0x0061a52c  add      ebx, eax
-//   0x0061a52e  test     esi, esi
-//   0x0061a530  jne      0x61a51f
-//   0x0061a532  mov      eax, dword ptr [edi]
-//   0x0061a534  mov      ecx, edi
-//   0x0061a536  call     dword ptr [eax + 0x80]
-//   0x0061a53c  mov      edx, dword ptr [edi]
-//   0x0061a53e  mov      ecx, edi
-//   0x0061a540  mov      esi, eax
-//   0x0061a542  call     dword ptr [edx + 0x25c]
-//   0x0061a548  mov      ecx, eax
-//   0x0061a54a  mov      eax, dword ptr [esi + 0x348]
-//   0x0061a550  add      eax, ecx
-//   0x0061a552  pop      edi
-//   0x0061a553  add      eax, ebx
-//   0x0061a555  pop      esi
-//   0x0061a556  pop      ebx
-//   0x0061a557  ret      
+// UnitClass::vfunc_83 -- ALIAS of AircraftClass::vfunc_83 (same machine code at 0x0061a4d0); transcribed once.
 void UnitClass::vfunc_83()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_84 -- body derived from 5 instructions at 0x005468d0; semantics not reconstructed.
-// size 12 bytes; signature __cdecl
-// callees: none
-//
-//   0x005468d0  mov      eax, dword ptr [ecx + 0x4c]
-//   0x005468d3  cmp      eax, -1
-//   0x005468d6  jne      0x5468db
-//   0x005468d8  mov      eax, dword ptr [ecx + 0x54]
-//   0x005468db  ret      
+// UnitClass::vfunc_84 -- ALIAS of AircraftClass::vfunc_84 (same machine code at 0x005468d0); transcribed once.
 void UnitClass::vfunc_84()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_85 -- body derived from 8 instructions at 0x00546d60; semantics not reconstructed.
-// size 24 bytes; signature __stdcall nargs=1
-// callees: 0x00546d7d
-//
-//   0x00546d60  mov      edx, dword ptr [ecx + 0x4c]
-//   0x00546d63  cmp      edx, 0x12
-//   0x00546d66  je       0x546d94
-//   0x00546d68  mov      eax, dword ptr [esp + 4]
-//   0x00546d6c  cmp      eax, 3
-//   0x00546d6f  jne      0x546d78
-//   0x00546d71  mov      eax, 2
-//   0x00546d76  jmp      0x546d7d
+// UnitClass::vfunc_85 -- ALIAS of AircraftClass::vfunc_85 (same machine code at 0x00546d60); transcribed once.
 void UnitClass::vfunc_85(int a0)
 {
 }
@@ -2869,34 +1388,7 @@ void UnitClass::vfunc_86(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_87 -- body derived from 23 instructions at 0x00570240; semantics not reconstructed.
-// size 51 bytes; signature __thiscall nargs=2
-// callees: none
-//
-//   0x00570240  push     ebx
-//   0x00570241  push     esi
-//   0x00570242  mov      esi, ecx
-//   0x00570244  push     edi
-//   0x00570245  mov      eax, dword ptr [esi]
-//   0x00570247  call     dword ptr [eax + 0x84]
-//   0x0057024d  mov      edx, dword ptr [esi]
-//   0x0057024f  mov      edi, eax
-//   0x00570251  mov      ecx, esi
-//   0x00570253  mov      ebx, dword ptr [edi]
-//   0x00570255  call     dword ptr [edx + 0x3c]
-//   0x00570258  mov      ecx, dword ptr [esp + 0x10]
-//   0x0057025c  push     eax
-//   0x0057025d  mov      eax, dword ptr [esp + 0x18]
-//   0x00570261  push     0
-//   0x00570263  push     eax
-//   0x00570264  push     ecx
-//   0x00570265  mov      ecx, edi
-//   0x00570267  call     dword ptr [ebx + 0x94]
-//   0x0057026d  pop      edi
-//   0x0057026e  pop      esi
-//   0x0057026f  pop      ebx
-//   0x00570270  ret      8
+// UnitClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); transcribed once.
 void UnitClass::vfunc_87(int a0, int a1)
 {
 }
@@ -2924,185 +1416,27 @@ void UnitClass::vfunc_88(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_89 -- body derived from 17 instructions at 0x0060f490; semantics not reconstructed.
-// size 38 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x0060f490  mov      eax, dword ptr [0x7b0b7c]
-//   0x0060f495  push     ebx
-//   0x0060f496  push     esi
-//   0x0060f497  push     edi
-//   0x0060f498  mov      edi, dword ptr [esp + 0x10]
-//   0x0060f49c  mov      esi, ecx
-//   0x0060f49e  cmp      edi, eax
-//   0x0060f4a0  mov      bl, 1
-//   0x0060f4a2  jne      0x60f4b6
-//   0x0060f4a4  mov      al, byte ptr [esi + 0x1ff]
-//   0x0060f4aa  test     al, al
-//   0x0060f4ac  je       0x60f4c6
-//   0x0060f4ae  pop      edi
-//   0x0060f4af  pop      esi
-//   0x0060f4b0  xor      al, al
-//   0x0060f4b2  pop      ebx
-//   0x0060f4b3  ret      4
+// UnitClass::vfunc_89 -- ALIAS of AircraftClass::vfunc_89 (same machine code at 0x0060f490); transcribed once.
 void UnitClass::vfunc_89(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_90 -- body derived from 1 instructions at 0x0056ece0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0056ece0  ret      4
+// UnitClass::vfunc_90 -- ALIAS of AircraftClass::vfunc_90 (same machine code at 0x0056ece0); transcribed once.
 void UnitClass::vfunc_90(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_91 -- body derived from 34 instructions at 0x004a1160; semantics not reconstructed.
-// size 117 bytes; signature __thiscall nargs=1
-// callees: 0x004b71b0, 0x004c4fb0, 0x006470b0, 0x00647f00
-//
-//   0x004a1160  mov      eax, dword ptr [esp + 4]
-//   0x004a1164  push     esi
-//   0x004a1165  test     eax, eax
-//   0x004a1167  mov      esi, ecx
-//   0x004a1169  je       0x4a11d1
-//   0x004a116b  mov      ecx, dword ptr [esi + 0xec]
-//   0x004a1171  call     0x4c4fb0
-//   0x004a1176  test     al, al
-//   0x004a1178  je       0x4a119d
-//   0x004a117a  xor      dl, dl
-//   0x004a117c  mov      ecx, 0x25
-//   0x004a1181  call     0x647f00
-//   0x004a1186  mov      eax, dword ptr [0x714e20]
-//   0x004a118b  xor      edx, edx
-//   0x004a118d  push     0x3f800000
-//   0x004a1192  mov      ecx, dword ptr [eax + 0x3d4]
-//   0x004a1198  call     0x6470b0
-//   0x004a119d  mov      edx, dword ptr [esi]
-//   0x004a119f  mov      ecx, esi
-//   0x004a11a1  call     dword ptr [edx + 0x258]
-//   0x004a11a7  mov      ecx, dword ptr [esi + 0xec]
-//   0x004a11ad  push     eax
-//   0x004a11ae  call     0x4b71b0
-//   0x004a11b3  mov      eax, dword ptr [esi]
-//   0x004a11b5  mov      ecx, esi
-//   0x004a11b7  call     dword ptr [eax + 0x2d4]
-//   0x004a11bd  mov      edx, dword ptr [esi]
-//   0x004a11bf  mov      ecx, esi
-//   0x004a11c1  call     dword ptr [edx + 0xc0]
-//   0x004a11c7  mov      eax, dword ptr [esi]
-//   0x004a11c9  mov      ecx, esi
-//   0x004a11cb  call     dword ptr [eax + 0xe0]
-//   0x004a11d1  pop      esi
-//   0x004a11d2  ret      4
+// UnitClass::vfunc_91 -- ALIAS of AircraftClass::vfunc_91 (same machine code at 0x004a1160); transcribed once.
 void UnitClass::vfunc_91(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_92 -- body derived from 31 instructions at 0x004a2cd0; semantics not reconstructed.
-// size 106 bytes; signature __thiscall nargs=1
-// callees: 0x004a2d5e, 0x00655a10
-//
-//   0x004a2cd0  mov      eax, dword ptr [esp + 4]
-//   0x004a2cd4  push     ebx
-//   0x004a2cd5  xor      ebx, ebx
-//   0x004a2cd7  push     esi
-//   0x004a2cd8  cmp      eax, -1
-//   0x004a2cdb  mov      esi, ecx
-//   0x004a2cdd  je       0x4a2d3a
-//   0x004a2cdf  mov      cl, byte ptr [esp + 0x10]
-//   0x004a2ce3  mov      dword ptr [esi + 0x218], eax
-//   0x004a2ce9  mov      byte ptr [esi + 0x336], cl
-//   0x004a2cef  mov      edx, dword ptr [0x7b0b7c]
-//   0x004a2cf5  movsx    ecx, cl
-//   0x004a2cf8  push     ecx
-//   0x004a2cf9  mov      ecx, dword ptr [edx + eax*4 + 0xe4]
-//   0x004a2d00  call     0x655a10
-//   0x004a2d05  mov      ecx, eax
-//   0x004a2d07  mov      eax, dword ptr [ecx]
-//   0x004a2d09  cdq      
-//   0x004a2d0a  and      edx, 0xff
-//   0x004a2d10  add      eax, edx
-//   0x004a2d12  sar      eax, 8
-//   0x004a2d15  mov      word ptr [esp + 0x10], ax
-//   0x004a2d1a  mov      eax, dword ptr [ecx + 4]
-//   0x004a2d1d  cdq      
-//   0x004a2d1e  and      edx, 0xff
-//   0x004a2d24  add      eax, edx
-//   0x004a2d26  sar      eax, 8
-//   0x004a2d29  mov      word ptr [esp + 0x12], ax
-//   0x004a2d2e  mov      eax, dword ptr [esp + 0x10]
-//   0x004a2d32  mov      dword ptr [esi + 0x220], eax
-//   0x004a2d38  jmp      0x4a2d5e
+// UnitClass::vfunc_92 -- ALIAS of AircraftClass::vfunc_92 (same machine code at 0x004a2cd0); transcribed once.
 void UnitClass::vfunc_92(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_93 -- body derived from 55 instructions at 0x0056ed00; semantics not reconstructed.
-// size 156 bytes; signature __thiscall nargs=1
-// callees: 0x00502060
-//
-//   0x0056ed00  sub      esp, 0x18
-//   0x0056ed03  push     ebx
-//   0x0056ed04  push     esi
-//   0x0056ed05  mov      esi, ecx
-//   0x0056ed07  push     edi
-//   0x0056ed08  push     0
-//   0x0056ed0a  mov      eax, dword ptr [esi]
-//   0x0056ed0c  call     dword ptr [eax + 0x10c]
-//   0x0056ed12  mov      edx, dword ptr [esi]
-//   0x0056ed14  lea      eax, [esp + 0x18]
-//   0x0056ed18  push     eax
-//   0x0056ed19  mov      ecx, esi
-//   0x0056ed1b  call     dword ptr [edx + 0x180]
-//   0x0056ed21  mov      edi, dword ptr [esp + 0x28]
-//   0x0056ed25  push     1
-//   0x0056ed27  mov      ecx, edi
-//   0x0056ed29  push     0
-//   0x0056ed2b  and      ecx, 7
-//   0x0056ed2e  push     -1
-//   0x0056ed30  push     edi
-//   0x0056ed31  mov      ebx, dword ptr [ecx*8 + 0x729a48]
-//   0x0056ed38  lea      edx, [ecx*8 + 0x729a48]
-//   0x0056ed3f  mov      ecx, dword ptr [eax]
-//   0x0056ed41  mov      edx, dword ptr [edx + 4]
-//   0x0056ed44  add      ecx, ebx
-//   0x0056ed46  mov      ebx, dword ptr [eax + 4]
-//   0x0056ed49  mov      eax, dword ptr [eax + 8]
-//   0x0056ed4c  add      edx, ebx
-//   0x0056ed4e  mov      ebx, dword ptr [esi]
-//   0x0056ed50  mov      dword ptr [esp + 0x20], edx
-//   0x0056ed54  lea      edx, [esp + 0x1c]
-//   0x0056ed58  mov      dword ptr [esp + 0x1c], ecx
-//   0x0056ed5c  push     edx
-//   0x0056ed5d  mov      ecx, 0x710d28
-//   0x0056ed62  mov      dword ptr [esp + 0x28], eax
-//   0x0056ed66  call     0x502060
-//   0x0056ed6b  push     eax
-//   0x0056ed6c  mov      ecx, esi
-//   0x0056ed6e  call     dword ptr [ebx + 0x178]
-//   0x0056ed74  test     eax, eax
-//   0x0056ed76  jne      0x56ed87
-//   0x0056ed78  mov      eax, dword ptr [esi]
-//   0x0056ed7a  lea      ecx, [esp + 0xc]
-//   0x0056ed7e  push     ecx
-//   0x0056ed7f  mov      ecx, esi
-//   0x0056ed81  call     dword ptr [eax + 0x184]
-//   0x0056ed87  mov      edx, dword ptr [esi]
-//   0x0056ed89  push     1
-//   0x0056ed8b  mov      ecx, esi
-//   0x0056ed8d  call     dword ptr [edx + 0x10c]
-//   0x0056ed93  pop      edi
-//   0x0056ed94  pop      esi
-//   0x0056ed95  pop      ebx
-//   0x0056ed96  add      esp, 0x18
-//   0x0056ed99  ret      4
+// UnitClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); transcribed once.
 void UnitClass::vfunc_93(int a0)
 {
 }
@@ -3139,334 +1473,57 @@ void UnitClass::vfunc_94(int a0, int a1, int a2, int a3, int a4)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_95 -- body derived from 49 instructions at 0x004a0e70; semantics not reconstructed.
-// size 174 bytes; signature __stdcall nargs=5
-// callees: 0x005020d0
-//
-//   0x004a0e70  push     ebx
-//   0x004a0e71  mov      ebx, dword ptr [esp + 0xc]
-//   0x004a0e75  push     ebp
-//   0x004a0e76  push     esi
-//   0x004a0e77  mov      esi, dword ptr [esp + 0x20]
-//   0x004a0e7b  push     edi
-//   0x004a0e7c  mov      edi, dword ptr [esp + 0x14]
-//   0x004a0e80  test     esi, esi
-//   0x004a0e82  jne      0x4a0ecc
-//   0x004a0e84  lea      eax, [ebx - 4]
-//   0x004a0e87  and      eax, 7
-//   0x004a0e8a  mov      cx, word ptr [eax*4 + 0x7299e8]
-//   0x004a0e92  mov      dx, word ptr [eax*4 + 0x7299ea]
-//   0x004a0e9a  add      cx, word ptr [edi + 0x14]
-//   0x004a0e9e  add      dx, word ptr [edi + 0x16]
-//   0x004a0ea2  lea      eax, [eax*4 + 0x7299e8]
-//   0x004a0ea9  mov      word ptr [esp + 0x24], cx
-//   0x004a0eae  lea      ecx, [esp + 0x24]
-//   0x004a0eb2  mov      word ptr [esp + 0x26], dx
-//   0x004a0eb7  mov      eax, dword ptr [esp + 0x24]
-//   0x004a0ebb  push     ecx
-//   0x004a0ebc  mov      ecx, 0x710d28
-//   0x004a0ec1  mov      dword ptr [esp + 0x28], eax
-//   0x004a0ec5  call     0x5020d0
-//   0x004a0eca  mov      esi, eax
-//   0x004a0ecc  cmp      ebx, -1
-//   0x004a0ecf  je       0x4a104e
-//   0x004a0ed5  test     esi, esi
-//   0x004a0ed7  je       0x4a106e
-//   0x004a0edd  test     edi, edi
-//   0x004a0edf  je       0x4a106e
-//   0x004a0ee5  mov      ebp, dword ptr [esp + 0x1c]
-//   0x004a0ee9  cmp      dword ptr [ebp], -1
-//   0x004a0eed  jne      0x4a0f1e
-//   0x004a0eef  mov      eax, dword ptr [esi + 0xa4]
-//   0x004a0ef5  test     ah, 0x10
-//   0x004a0ef8  je       0x4a0f1e
-//   0x004a0efa  movsx    edx, byte ptr [esi + 0x93]
-//   0x004a0f01  add      edx, 4
-//   0x004a0f04  mov      dword ptr [ebp], edx
-//   0x004a0f07  mov      eax, dword ptr [edi + 0xa4]
-//   0x004a0f0d  test     ah, 0x20
-//   0x004a0f10  jne      0x4a0f1e
-//   0x004a0f12  pop      edi
-//   0x004a0f13  pop      esi
-//   0x004a0f14  pop      ebp
-//   0x004a0f15  mov      eax, 7
-//   0x004a0f1a  pop      ebx
-//   0x004a0f1b  ret      0x14
+// UnitClass::vfunc_95 -- ALIAS of AircraftClass::vfunc_95 (same machine code at 0x004a0e70); transcribed once.
 void UnitClass::vfunc_95(int a0, int a1, int a2, int a3, int a4)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_96 -- body derived from 12 instructions at 0x0040e6a0; semantics not reconstructed.
-// size 30 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e6a0  mov      eax, dword ptr [esp + 4]
-//   0x0040e6a4  add      ecx, 0x40
-//   0x0040e6a7  push     esi
-//   0x0040e6a8  mov      edx, eax
-//   0x0040e6aa  mov      esi, dword ptr [ecx]
-//   0x0040e6ac  mov      dword ptr [edx], esi
-//   0x0040e6ae  mov      esi, dword ptr [ecx + 4]
-//   0x0040e6b1  mov      dword ptr [edx + 4], esi
-//   0x0040e6b4  pop      esi
-//   0x0040e6b5  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e6b8  mov      dword ptr [edx + 8], ecx
-//   0x0040e6bb  ret      4
+// UnitClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); transcribed once.
 void UnitClass::vfunc_96(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_97 -- body derived from 18 instructions at 0x004a2170; semantics not reconstructed.
-// size 48 bytes; signature __thiscall nargs=1
-// callees: 0x00570cc0
-//
-//   0x004a2170  push     esi
-//   0x004a2171  mov      esi, ecx
-//   0x004a2173  mov      al, byte ptr [esi + 0x2c]
-//   0x004a2176  test     al, al
-//   0x004a2178  je       0x4a21a0
-//   0x004a217a  mov      eax, dword ptr [esi]
-//   0x004a217c  push     0
-//   0x004a217e  call     dword ptr [eax + 0x10c]
-//   0x004a2184  mov      ecx, dword ptr [esp + 8]
-//   0x004a2188  push     ecx
-//   0x004a2189  mov      ecx, esi
-//   0x004a218b  call     0x570cc0
-//   0x004a2190  mov      edx, dword ptr [esi]
-//   0x004a2192  push     1
-//   0x004a2194  mov      ecx, esi
-//   0x004a2196  call     dword ptr [edx + 0x10c]
-//   0x004a219c  pop      esi
-//   0x004a219d  ret      4
+// UnitClass::vfunc_97 -- ALIAS of AircraftClass::vfunc_97 (same machine code at 0x004a2170); transcribed once.
 void UnitClass::vfunc_97(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_98 -- body derived from 18 instructions at 0x0040e6c0; semantics not reconstructed.
-// size 55 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e6c0  push     ecx
-//   0x0040e6c1  mov      eax, dword ptr [ecx + 0x40]
-//   0x0040e6c4  cdq      
-//   0x0040e6c5  and      edx, 0xff
-//   0x0040e6cb  add      eax, edx
-//   0x0040e6cd  sar      eax, 8
-//   0x0040e6d0  mov      word ptr [esp], ax
-//   0x0040e6d5  mov      eax, dword ptr [ecx + 0x44]
-//   0x0040e6d8  cdq      
-//   0x0040e6d9  and      edx, 0xff
-//   0x0040e6df  add      eax, edx
-//   0x0040e6e1  sar      eax, 8
-//   0x0040e6e4  mov      word ptr [esp + 2], ax
-//   0x0040e6e9  mov      eax, dword ptr [esp + 8]
-//   0x0040e6ed  mov      ecx, dword ptr [esp]
-//   0x0040e6f1  mov      dword ptr [eax], ecx
-//   0x0040e6f3  pop      ecx
-//   0x0040e6f4  ret      4
+// UnitClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); transcribed once.
 void UnitClass::vfunc_98(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_99 -- body derived from 10 instructions at 0x00570ce0; semantics not reconstructed.
-// size 31 bytes; signature __cdecl
-// callees: 0x00502060
-//
-//   0x00570ce0  mov      eax, dword ptr [ecx]
-//   0x00570ce2  sub      esp, 0xc
-//   0x00570ce5  lea      edx, [esp]
-//   0x00570ce9  push     edx
-//   0x00570cea  call     dword ptr [eax + 0x180]
-//   0x00570cf0  push     eax
-//   0x00570cf1  mov      ecx, 0x710d28
-//   0x00570cf6  call     0x502060
-//   0x00570cfb  add      esp, 0xc
-//   0x00570cfe  ret      
+// UnitClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); transcribed once.
 void UnitClass::vfunc_99()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_100 -- body derived from 23 instructions at 0x00570d00; semantics not reconstructed.
-// size 70 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00570d00  sub      esp, 0x10
-//   0x00570d03  mov      eax, dword ptr [ecx]
-//   0x00570d05  lea      edx, [esp + 4]
-//   0x00570d09  push     edx
-//   0x00570d0a  call     dword ptr [eax + 0x4c]
-//   0x00570d0d  mov      ecx, eax
-//   0x00570d0f  mov      eax, dword ptr [ecx]
-//   0x00570d11  cdq      
-//   0x00570d12  and      edx, 0xff
-//   0x00570d18  add      eax, edx
-//   0x00570d1a  sar      eax, 8
-//   0x00570d1d  mov      word ptr [esp], ax
-//   0x00570d22  mov      eax, dword ptr [ecx + 4]
-//   0x00570d25  cdq      
-//   0x00570d26  and      edx, 0xff
-//   0x00570d2c  add      eax, edx
-//   0x00570d2e  sar      eax, 8
-//   0x00570d31  mov      word ptr [esp + 2], ax
-//   0x00570d36  mov      eax, dword ptr [esp + 0x14]
-//   0x00570d3a  mov      ecx, dword ptr [esp]
-//   0x00570d3e  mov      dword ptr [eax], ecx
-//   0x00570d40  add      esp, 0x10
-//   0x00570d43  ret      4
+// UnitClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); transcribed once.
 void UnitClass::vfunc_100(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_101 -- body derived from 26 instructions at 0x00570d50; semantics not reconstructed.
-// size 81 bytes; signature __cdecl nargs=1
-// callees: 0x005020d0
-//
-//   0x00570d50  sub      esp, 0x14
-//   0x00570d53  mov      eax, dword ptr [ecx]
-//   0x00570d55  lea      edx, [esp + 8]
-//   0x00570d59  push     edx
-//   0x00570d5a  call     dword ptr [eax + 0x4c]
-//   0x00570d5d  mov      ecx, eax
-//   0x00570d5f  mov      eax, dword ptr [ecx]
-//   0x00570d61  cdq      
-//   0x00570d62  and      edx, 0xff
-//   0x00570d68  add      eax, edx
-//   0x00570d6a  sar      eax, 8
-//   0x00570d6d  mov      word ptr [esp], ax
-//   0x00570d72  mov      eax, dword ptr [ecx + 4]
-//   0x00570d75  cdq      
-//   0x00570d76  and      edx, 0xff
-//   0x00570d7c  lea      ecx, [esp + 4]
-//   0x00570d80  add      eax, edx
-//   0x00570d82  push     ecx
-//   0x00570d83  sar      eax, 8
-//   0x00570d86  mov      word ptr [esp + 6], ax
-//   0x00570d8b  mov      eax, dword ptr [esp + 4]
-//   0x00570d8f  mov      ecx, 0x710d28
-//   0x00570d94  mov      dword ptr [esp + 8], eax
-//   0x00570d98  call     0x5020d0
-//   0x00570d9d  add      esp, 0x14
-//   0x00570da0  ret      
+// UnitClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); transcribed once.
 void UnitClass::vfunc_101(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_102 -- body derived from 21 instructions at 0x00570370; semantics not reconstructed.
-// size 57 bytes; signature __thiscall
-// callees: 0x00510f70
-//
-//   0x00570370  sub      esp, 0xc
-//   0x00570373  push     esi
-//   0x00570374  mov      esi, ecx
-//   0x00570376  lea      ecx, [esp + 4]
-//   0x0057037a  mov      eax, dword ptr [esi]
-//   0x0057037c  push     ecx
-//   0x0057037d  mov      ecx, esi
-//   0x0057037f  call     dword ptr [eax + 0x180]
-//   0x00570385  push     eax
-//   0x00570386  mov      ecx, 0x710d28
-//   0x0057038b  call     0x510f70
-//   0x00570390  mov      ecx, dword ptr [esi + 0x48]
-//   0x00570393  sub      ecx, eax
-//   0x00570395  mov      al, byte ptr [esi + 0x32]
-//   0x00570398  test     al, al
-//   0x0057039a  pop      esi
-//   0x0057039b  je       0x5703a3
-//   0x0057039d  sub      ecx, dword ptr [0x7d6a1c]
-//   0x005703a3  mov      eax, ecx
-//   0x005703a5  add      esp, 0xc
-//   0x005703a8  ret      
+// UnitClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); transcribed once.
 void UnitClass::vfunc_102()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_103 -- body derived from 34 instructions at 0x005703b0; semantics not reconstructed.
-// size 94 bytes; signature __thiscall nargs=1
-// callees: 0x00510f70
-//
-//   0x005703b0  sub      esp, 0xc
-//   0x005703b3  push     esi
-//   0x005703b4  mov      esi, ecx
-//   0x005703b6  push     edi
-//   0x005703b7  mov      edi, dword ptr [esp + 0x18]
-//   0x005703bb  mov      al, byte ptr [esi + 0x32]
-//   0x005703be  test     al, al
-//   0x005703c0  je       0x5703c8
-//   0x005703c2  add      edi, dword ptr [0x7d6a1c]
-//   0x005703c8  mov      al, byte ptr [esi + 0x2c]
-//   0x005703cb  test     al, al
-//   0x005703cd  mov      eax, dword ptr [esi]
-//   0x005703cf  je       0x57040e
-//   0x005703d1  push     0
-//   0x005703d3  mov      ecx, esi
-//   0x005703d5  call     dword ptr [eax + 0x10c]
-//   0x005703db  mov      edx, dword ptr [esi]
-//   0x005703dd  lea      eax, [esp + 8]
-//   0x005703e1  push     eax
-//   0x005703e2  mov      ecx, esi
-//   0x005703e4  call     dword ptr [edx + 0x180]
-//   0x005703ea  push     eax
-//   0x005703eb  mov      ecx, 0x710d28
-//   0x005703f0  call     0x510f70
-//   0x005703f5  mov      edx, dword ptr [esi]
-//   0x005703f7  add      eax, edi
-//   0x005703f9  push     1
-//   0x005703fb  mov      ecx, esi
-//   0x005703fd  mov      dword ptr [esi + 0x48], eax
-//   0x00570400  call     dword ptr [edx + 0x10c]
-//   0x00570406  pop      edi
-//   0x00570407  pop      esi
-//   0x00570408  add      esp, 0xc
-//   0x0057040b  ret      4
+// UnitClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); transcribed once.
 void UnitClass::vfunc_103(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_104 -- body derived from 2 instructions at 0x00570360; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570360  mov      eax, dword ptr [ecx + 0x48]
-//   0x00570363  ret      
+// UnitClass::vfunc_104 -- ALIAS of AircraftClass::vfunc_104 (same machine code at 0x00570360); transcribed once.
 void UnitClass::vfunc_104()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_105 -- body derived from 20 instructions at 0x00546d20; semantics not reconstructed.
-// size 57 bytes; signature __cdecl nargs=1
-// callees: none
-//
-//   0x00546d20  mov      eax, dword ptr [ecx + 0x54]
-//   0x00546d23  sub      esp, 0xc
-//   0x00546d26  cmp      eax, -1
-//   0x00546d29  je       0x546d59
-//   0x00546d2b  push     esi
-//   0x00546d2c  mov      dword ptr [ecx + 0x4c], eax
-//   0x00546d2f  mov      dword ptr [ecx + 0x54], 0xffffffff
-//   0x00546d36  mov      eax, dword ptr [0x7b2e54]
-//   0x00546d3b  lea      esi, [ecx + 0x60]
-//   0x00546d3e  xor      edx, edx
-//   0x00546d40  mov      dword ptr [ecx + 0x58], edx
-//   0x00546d43  mov      byte ptr [ecx + 0x5c], dl
-//   0x00546d46  mov      dword ptr [esi], eax
-//   0x00546d48  mov      eax, dword ptr [esp + 8]
-//   0x00546d4c  mov      dword ptr [esi + 4], eax
-//   0x00546d4f  mov      al, 1
-//   0x00546d51  mov      dword ptr [esi + 8], edx
-//   0x00546d54  pop      esi
-//   0x00546d55  add      esp, 0xc
-//   0x00546d58  ret      
+// UnitClass::vfunc_105 -- ALIAS of BuildingClass::vfunc_105 (same machine code at 0x00546d20); transcribed once.
 void UnitClass::vfunc_105(int a0)
 {
 }
@@ -3549,149 +1606,22 @@ void UnitClass::vfunc_106()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_107 -- body derived from 2 instructions at 0x00546750; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x00546750  mov      eax, 0x1c2
-//   0x00546755  ret      
+// UnitClass::vfunc_107 -- ALIAS of AircraftClass::vfunc_107 (same machine code at 0x00546750); transcribed once.
 void UnitClass::vfunc_107()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_108 -- body derived from 2 instructions at 0x00546760; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x00546760  mov      eax, 0x1c2
-//   0x00546765  ret      
+// UnitClass::vfunc_108 -- ALIAS of AircraftClass::vfunc_108 (same machine code at 0x00546760); transcribed once.
 void UnitClass::vfunc_108()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_109 -- body derived from 2 instructions at 0x00546770; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x00546770  mov      eax, 0x1c2
-//   0x00546775  ret      
+// UnitClass::vfunc_109 -- ALIAS of AircraftClass::vfunc_109 (same machine code at 0x00546770); transcribed once.
 void UnitClass::vfunc_109()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_111 -- body derived from 105 instructions at 0x0049d8e0; semantics not reconstructed.
-// size 326 bytes; signature __thiscall nargs=1
-// callees: 0x0044fa70, 0x004c4ff0, 0x00502060, 0x00547100, 0x005a5f10, 0x0061d8e0, 0x0067faf0, 0x0068309c
-//
-//   0x0049d8e0  sub      esp, 0xc
-//   0x0049d8e3  push     esi
-//   0x0049d8e4  push     edi
-//   0x0049d8e5  push     0
-//   0x0049d8e7  push     0x6c1408
-//   0x0049d8ec  mov      esi, ecx
-//   0x0049d8ee  push     0x6bf5b0
-//   0x0049d8f3  push     0
-//   0x0049d8f5  push     esi
-//   0x0049d8f6  call     0x68309c
-//   0x0049d8fb  mov      ecx, dword ptr [esi + 0x11c]
-//   0x0049d901  add      esp, 0x14
-//   0x0049d904  test     ecx, ecx
-//   0x0049d906  mov      edi, eax
-//   0x0049d908  je       0x49d966
-//   0x0049d90a  mov      eax, dword ptr [ecx]
-//   0x0049d90c  call     dword ptr [eax + 0x2c]
-//   0x0049d90f  cmp      eax, 6
-//   0x0049d912  jne      0x49d966
-//   0x0049d914  mov      eax, dword ptr [esi + 0x270]
-//   0x0049d91a  test     eax, eax
-//   0x0049d91c  jne      0x49d9b3
-//   0x0049d922  test     edi, edi
-//   0x0049d924  je       0x49d966
-//   0x0049d926  mov      ecx, dword ptr [edi + 0x348]
-//   0x0049d92c  mov      al, byte ptr [ecx + 0x4a7]
-//   0x0049d932  test     al, al
-//   0x0049d934  jne      0x49d953
-//   0x0049d936  push     0xe
-//   0x0049d938  mov      ecx, edi
-//   0x0049d93a  call     0x61d8e0
-//   0x0049d93f  test     al, al
-//   0x0049d941  jne      0x49d953
-//   0x0049d943  mov      edx, dword ptr [edi + 0x348]
-//   0x0049d949  mov      al, byte ptr [edx + 0x4a8]
-//   0x0049d94f  test     al, al
-//   0x0049d951  je       0x49d966
-//   0x0049d953  mov      ecx, dword ptr [esi + 0x11c]
-//   0x0049d959  mov      eax, dword ptr [esi]
-//   0x0049d95b  push     1
-//   0x0049d95d  push     ecx
-//   0x0049d95e  mov      ecx, esi
-//   0x0049d960  call     dword ptr [eax + 0x340]
-//   0x0049d966  mov      eax, dword ptr [esi + 0x270]
-//   0x0049d96c  test     eax, eax
-//   0x0049d96e  jne      0x49d9b3
-//   0x0049d970  mov      edx, dword ptr [esi]
-//   0x0049d972  push     1
-//   0x0049d974  push     0
-//   0x0049d976  mov      ecx, esi
-//   0x0049d978  call     dword ptr [edx + 0x344]
-//   0x0049d97e  mov      eax, dword ptr [esi]
-//   0x0049d980  lea      ecx, [esp + 8]
-//   0x0049d984  push     ecx
-//   0x0049d985  mov      ecx, esi
-//   0x0049d987  call     dword ptr [eax + 0x48]
-//   0x0049d98a  push     eax
-//   0x0049d98b  mov      ecx, 0x710d28
-//   0x0049d990  call     0x502060
-//   0x0049d995  mov      ecx, eax
-//   0x0049d997  call     0x44fa70
-//   0x0049d99c  test     eax, eax
-//   0x0049d99e  je       0x49d9b3
-//   0x0049d9a0  mov      edx, dword ptr [esi]
-//   0x0049d9a2  push     0
-//   0x0049d9a4  push     1
-//   0x0049d9a6  push     0x77ba40
-//   0x0049d9ab  mov      ecx, esi
-//   0x0049d9ad  call     dword ptr [edx + 0x140]
-//   0x0049d9b3  mov      eax, dword ptr [esi + 0x11c]
-//   0x0049d9b9  test     eax, eax
-//   0x0049d9bb  jne      0x49d9f2
-//   0x0049d9bd  mov      ecx, dword ptr [esi + 0xec]
-//   0x0049d9c3  call     0x4c4ff0
-//   0x0049d9c8  test     al, al
-//   0x0049d9ca  jne      0x49d9f2
-//   0x0049d9cc  mov      eax, dword ptr [esi]
-//   0x0049d9ce  push     0
-//   0x0049d9d0  mov      ecx, esi
-//   0x0049d9d2  call     dword ptr [eax + 0x2e8]
-//   0x0049d9d8  mov      edx, dword ptr [esi]
-//   0x0049d9da  push     1
-//   0x0049d9dc  push     0
-//   0x0049d9de  mov      ecx, esi
-//   0x0049d9e0  call     dword ptr [edx + 0x340]
-//   0x0049d9e6  mov      eax, dword ptr [esi]
-//   0x0049d9e8  push     0xe
-//   0x0049d9ea  mov      ecx, esi
-//   0x0049d9ec  call     dword ptr [eax + 0x154]
-//   0x0049d9f2  mov      ecx, esi
-//   0x0049d9f4  call     0x547100
-//   0x0049d9f9  fld      qword ptr [eax + 0x10]
-//   0x0049d9fc  fmul     qword ptr [0x699100]
-//   0x0049da02  call     0x67faf0
-//   0x0049da07  mov      ecx, dword ptr [0x7b0d18]
-//   0x0049da0d  push     2
-//   0x0049da0f  push     0
-//   0x0049da11  add      ecx, 0x218
-//   0x0049da17  mov      esi, eax
-//   0x0049da19  call     0x5a5f10
-//   0x0049da1e  add      eax, esi
-//   0x0049da20  pop      edi
-//   0x0049da21  pop      esi
-//   0x0049da22  add      esp, 0xc
-//   0x0049da25  ret      
+// UnitClass::vfunc_111 -- ALIAS of AircraftClass::vfunc_111 (same machine code at 0x0049d8e0); transcribed once.
 void UnitClass::vfunc_111(int a0)
 {
 }
@@ -3863,46 +1793,17 @@ void UnitClass::vfunc_116()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_117 -- body derived from 13 instructions at 0x004a1480; semantics not reconstructed.
-// size 47 bytes; signature __thiscall
-// callees: 0x004a165a
-//
-//   0x004a1480  sub      esp, 0x38
-//   0x004a1483  push     esi
-//   0x004a1484  mov      esi, ecx
-//   0x004a1486  mov      eax, dword ptr [esi + 0x58]
-//   0x004a1489  sub      eax, 0
-//   0x004a148c  je       0x4a14af
-//   0x004a148e  dec      eax
-//   0x004a148f  jne      0x4a165a
-//   0x004a1495  mov      eax, dword ptr [esi + 0x270]
-//   0x004a149b  test     eax, eax
-//   0x004a149d  jne      0x4a165a
-//   0x004a14a3  mov      dword ptr [esi + 0x58], 0
-//   0x004a14aa  jmp      0x4a165a
+// UnitClass::vfunc_117 -- ALIAS of FootClass::vfunc_117 (same machine code at 0x004a1480); transcribed once.
 void UnitClass::vfunc_117()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_118 -- body derived from 2 instructions at 0x00546800; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x00546800  mov      eax, 0x1c2
-//   0x00546805  ret      
+// UnitClass::vfunc_118 -- ALIAS of AircraftClass::vfunc_118 (same machine code at 0x00546800); transcribed once.
 void UnitClass::vfunc_118()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_119 -- body derived from 2 instructions at 0x00546810; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x00546810  mov      eax, 0x1c2
-//   0x00546815  ret      
+// UnitClass::vfunc_119 -- ALIAS of AircraftClass::vfunc_119 (same machine code at 0x00546810); transcribed once.
 void UnitClass::vfunc_119()
 {
 }
@@ -3930,65 +1831,17 @@ void UnitClass::vfunc_120()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_121 -- body derived from 32 instructions at 0x004a0660; semantics not reconstructed.
-// size 96 bytes; signature __thiscall
-// callees: 0x004034a0, 0x004a07fb
-//
-//   0x004a0660  push     ecx
-//   0x004a0661  push     esi
-//   0x004a0662  mov      esi, ecx
-//   0x004a0664  mov      eax, dword ptr [esi + 0x78]
-//   0x004a0667  test     eax, eax
-//   0x004a0669  jne      0x4a067e
-//   0x004a066b  mov      ecx, dword ptr [esi + 0xe8]
-//   0x004a0671  call     0x4034a0
-//   0x004a0676  test     eax, eax
-//   0x004a0678  je       0x4a07b4
-//   0x004a067e  mov      edx, dword ptr [esi]
-//   0x004a0680  push     eax
-//   0x004a0681  push     0xe
-//   0x004a0683  mov      ecx, esi
-//   0x004a0685  call     dword ptr [edx + 0x214]
-//   0x004a068b  cmp      eax, 1
-//   0x004a068e  je       0x4a06c0
-//   0x004a0690  mov      al, byte ptr [esi + 0x1fd]
-//   0x004a0696  test     al, al
-//   0x004a0698  jne      0x4a06c0
-//   0x004a069a  mov      eax, dword ptr [esi]
-//   0x004a069c  push     0
-//   0x004a069e  push     0x7b2d08
-//   0x004a06a3  push     3
-//   0x004a06a5  mov      ecx, esi
-//   0x004a06a7  call     dword ptr [eax + 0x218]
-//   0x004a06ad  mov      edx, dword ptr [esi]
-//   0x004a06af  push     1
-//   0x004a06b1  push     0
-//   0x004a06b3  mov      ecx, esi
-//   0x004a06b5  call     dword ptr [edx + 0x344]
-//   0x004a06bb  jmp      0x4a07fb
+// UnitClass::vfunc_121 -- ALIAS of FootClass::vfunc_121 (same machine code at 0x004a0660); transcribed once.
 void UnitClass::vfunc_121()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_122 -- body derived from 2 instructions at 0x00546840; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x00546840  mov      eax, 0x1c2
-//   0x00546845  ret      
+// UnitClass::vfunc_122 -- ALIAS of AircraftClass::vfunc_122 (same machine code at 0x00546840); transcribed once.
 void UnitClass::vfunc_122()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_123 -- body derived from 2 instructions at 0x00546850; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x00546850  mov      eax, 0x1c2
-//   0x00546855  ret      
+// UnitClass::vfunc_123 -- ALIAS of AircraftClass::vfunc_123 (same machine code at 0x00546850); transcribed once.
 void UnitClass::vfunc_123()
 {
 }
@@ -4036,55 +1889,17 @@ void UnitClass::vfunc_124()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_125 -- body derived from 2 instructions at 0x00546870; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x00546870  mov      eax, 0x1c2
-//   0x00546875  ret      
+// UnitClass::vfunc_125 -- ALIAS of AircraftClass::vfunc_125 (same machine code at 0x00546870); transcribed once.
 void UnitClass::vfunc_125()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_126 -- body derived from 2 instructions at 0x00546880; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
-//
-//   0x00546880  mov      eax, 0x1c2
-//   0x00546885  ret      
+// UnitClass::vfunc_126 -- ALIAS of AircraftClass::vfunc_126 (same machine code at 0x00546880); transcribed once.
 void UnitClass::vfunc_126()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_127 -- body derived from 22 instructions at 0x004a4420; semantics not reconstructed.
-// size 70 bytes; signature __thiscall
-// callees: 0x004a460d, 0x0061cf90
-//
-//   0x004a4420  sub      esp, 0x44
-//   0x004a4423  push     esi
-//   0x004a4424  mov      esi, ecx
-//   0x004a4426  push     edi
-//   0x004a4427  mov      eax, dword ptr [esi + 0x58]
-//   0x004a442a  sub      eax, 0
-//   0x004a442d  je       0x4a4466
-//   0x004a442f  dec      eax
-//   0x004a4430  jne      0x4a460d
-//   0x004a4436  mov      eax, dword ptr [esi + 0x270]
-//   0x004a443c  test     eax, eax
-//   0x004a443e  jne      0x4a460d
-//   0x004a4444  push     0
-//   0x004a4446  call     0x61cf90
-//   0x004a444b  mov      eax, dword ptr [esi]
-//   0x004a444d  push     0xa
-//   0x004a444f  mov      ecx, esi
-//   0x004a4451  call     dword ptr [eax + 0x154]
-//   0x004a4457  mov      edx, dword ptr [esi]
-//   0x004a4459  mov      ecx, esi
-//   0x004a445b  call     dword ptr [edx + 0x1a4]
-//   0x004a4461  jmp      0x4a460d
+// UnitClass::vfunc_127 -- ALIAS of AircraftClass::vfunc_127 (same machine code at 0x004a4420); transcribed once.
 void UnitClass::vfunc_127()
 {
 }
@@ -4119,289 +1934,62 @@ void UnitClass::vfunc_128()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_129 -- body derived from 5 instructions at 0x005468b0; semantics not reconstructed.
-// size 21 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x005468b0  mov      eax, dword ptr [esp + 4]
-//   0x005468b4  mov      dword ptr [ecx + 0x54], 0xffffffff
-//   0x005468bb  mov      dword ptr [ecx + 0x4c], eax
-//   0x005468be  mov      byte ptr [ecx + 0x5c], 0
-//   0x005468c2  ret      4
+// UnitClass::vfunc_129 -- ALIAS of AircraftClass::vfunc_129 (same machine code at 0x005468b0); transcribed once.
 void UnitClass::vfunc_129(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_130 -- body derived from 21 instructions at 0x004a0330; semantics not reconstructed.
-// size 56 bytes; signature __thiscall nargs=3
-// callees: 0x006164e0
-//
-//   0x004a0330  mov      edx, dword ptr [esp + 4]
-//   0x004a0334  push     esi
-//   0x004a0335  push     edi
-//   0x004a0336  mov      edi, dword ptr [esp + 0x14]
-//   0x004a033a  mov      esi, ecx
-//   0x004a033c  push     edi
-//   0x004a033d  mov      ecx, dword ptr [esp + 0x14]
-//   0x004a0341  mov      eax, dword ptr [esi + 0x270]
-//   0x004a0347  push     ecx
-//   0x004a0348  push     edx
-//   0x004a0349  mov      ecx, esi
-//   0x004a034b  mov      dword ptr [esi + 0x274], eax
-//   0x004a0351  call     0x6164e0
-//   0x004a0356  mov      eax, dword ptr [esi]
-//   0x004a0358  push     1
-//   0x004a035a  push     edi
-//   0x004a035b  mov      ecx, esi
-//   0x004a035d  call     dword ptr [eax + 0x340]
-//   0x004a0363  pop      edi
-//   0x004a0364  pop      esi
-//   0x004a0365  ret      0xc
+// UnitClass::vfunc_130 -- ALIAS of AircraftClass::vfunc_130 (same machine code at 0x004a0330); transcribed once.
 void UnitClass::vfunc_130(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_131 -- body derived from 14 instructions at 0x004a0370; semantics not reconstructed.
-// size 35 bytes; signature __thiscall
-// callees: 0x00616520
-//
-//   0x004a0370  push     esi
-//   0x004a0371  mov      esi, ecx
-//   0x004a0373  call     0x616520
-//   0x004a0378  test     al, al
-//   0x004a037a  je       0x4a0393
-//   0x004a037c  mov      ecx, dword ptr [esi + 0x274]
-//   0x004a0382  mov      eax, dword ptr [esi]
-//   0x004a0384  push     1
-//   0x004a0386  push     ecx
-//   0x004a0387  mov      ecx, esi
-//   0x004a0389  call     dword ptr [eax + 0x340]
-//   0x004a038f  mov      al, 1
-//   0x004a0391  pop      esi
-//   0x004a0392  ret      
+// UnitClass::vfunc_131 -- ALIAS of AircraftClass::vfunc_131 (same machine code at 0x004a0370); transcribed once.
 void UnitClass::vfunc_131()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_132 -- body derived from 5 instructions at 0x00547110; semantics not reconstructed.
-// size 12 bytes; signature __cdecl
-// callees: none
-//
-//   0x00547110  mov      edx, dword ptr [ecx + 0x50]
-//   0x00547113  xor      eax, eax
-//   0x00547115  cmp      edx, -1
-//   0x00547118  setne    al
-//   0x0054711b  ret      
+// UnitClass::vfunc_132 -- ALIAS of AircraftClass::vfunc_132 (same machine code at 0x00547110); transcribed once.
 void UnitClass::vfunc_132()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_133 -- body derived from 8 instructions at 0x005a58a0; semantics not reconstructed.
-// size 26 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x005a58a0  mov      edx, dword ptr [esp + 8]
-//   0x005a58a4  mov      eax, dword ptr [ecx]
-//   0x005a58a6  push     edx
-//   0x005a58a7  mov      edx, dword ptr [esp + 8]
-//   0x005a58ab  push     0x7b2d08
-//   0x005a58b0  push     edx
-//   0x005a58b1  call     dword ptr [eax + 0x218]
-//   0x005a58b7  ret      8
+// UnitClass::vfunc_133 -- ALIAS of AircraftClass::vfunc_133 (same machine code at 0x005a58a0); transcribed once.
 void UnitClass::vfunc_133(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_134 -- body derived from 15 instructions at 0x005a57d0; semantics not reconstructed.
-// size 28 bytes; signature __thiscall nargs=3
-// callees: none
-//
-//   0x005a57d0  push     ebx
-//   0x005a57d1  push     esi
-//   0x005a57d2  push     edi
-//   0x005a57d3  mov      edi, dword ptr [esp + 0x18]
-//   0x005a57d7  test     edi, edi
-//   0x005a57d9  mov      esi, ecx
-//   0x005a57db  jne      0x5a57ec
-//   0x005a57dd  mov      edi, dword ptr [esi + 0x78]
-//   0x005a57e0  test     edi, edi
-//   0x005a57e2  jne      0x5a57ec
-//   0x005a57e4  pop      edi
-//   0x005a57e5  pop      esi
-//   0x005a57e6  xor      eax, eax
-//   0x005a57e8  pop      ebx
-//   0x005a57e9  ret      0xc
+// UnitClass::vfunc_134 -- ALIAS of AircraftClass::vfunc_134 (same machine code at 0x005a57d0); transcribed once.
 void UnitClass::vfunc_134(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_135 -- body derived from 2 instructions at 0x0040e700; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e700  xor      al, al
-//   0x0040e702  ret      
+// UnitClass::vfunc_135 -- ALIAS of AircraftClass::vfunc_135 (same machine code at 0x0040e700); transcribed once.
 void UnitClass::vfunc_135()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_136 -- body derived from 25 instructions at 0x004a2690; semantics not reconstructed.
-// size 75 bytes; signature __thiscall
-// callees: 0x0061cf80, 0x006939b0
-//
-//   0x004a2690  push     esi
-//   0x004a2691  mov      esi, ecx
-//   0x004a2693  call     0x61cf80
-//   0x004a2698  test     al, al
-//   0x004a269a  je       0x4a26db
-//   0x004a269c  mov      eax, dword ptr [esi]
-//   0x004a269e  mov      ecx, esi
-//   0x004a26a0  call     dword ptr [eax + 0x80]
-//   0x004a26a6  mov      cl, byte ptr [eax + 0x43b]
-//   0x004a26ac  test     cl, cl
-//   0x004a26ae  je       0x4a26d7
-//   0x004a26b0  mov      eax, dword ptr [esi + 0x324]
-//   0x004a26b6  test     eax, eax
-//   0x004a26b8  jne      0x4a26c4
-//   0x004a26ba  push     0x80004003
-//   0x004a26bf  call     0x6939b0
-//   0x004a26c4  mov      esi, dword ptr [esi + 0x324]
-//   0x004a26ca  push     esi
-//   0x004a26cb  mov      ecx, dword ptr [esi]
-//   0x004a26cd  call     dword ptr [ecx + 0x80]
-//   0x004a26d3  test     al, al
-//   0x004a26d5  jne      0x4a26db
-//   0x004a26d7  mov      al, 1
-//   0x004a26d9  pop      esi
-//   0x004a26da  ret      
+// UnitClass::vfunc_136 -- ALIAS of AircraftClass::vfunc_136 (same machine code at 0x004a2690); transcribed once.
 void UnitClass::vfunc_136()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_137 -- body derived from 25 instructions at 0x0060eb20; semantics not reconstructed.
-// size 69 bytes; signature __thiscall
-// callees: none
-//
-//   0x0060eb20  push     esi
-//   0x0060eb21  mov      esi, ecx
-//   0x0060eb23  mov      eax, dword ptr [esi]
-//   0x0060eb25  call     dword ptr [eax + 0x150]
-//   0x0060eb2b  test     eax, eax
-//   0x0060eb2d  je       0x60eb65
-//   0x0060eb2f  mov      edx, dword ptr [esi]
-//   0x0060eb31  mov      ecx, esi
-//   0x0060eb33  call     dword ptr [edx + 0x150]
-//   0x0060eb39  cmp      eax, 6
-//   0x0060eb3c  je       0x60eb65
-//   0x0060eb3e  mov      eax, dword ptr [esi]
-//   0x0060eb40  mov      ecx, esi
-//   0x0060eb42  call     dword ptr [eax + 0x150]
-//   0x0060eb48  cmp      eax, 0xf
-//   0x0060eb4b  je       0x60eb65
-//   0x0060eb4d  mov      edx, dword ptr [esi]
-//   0x0060eb4f  mov      ecx, esi
-//   0x0060eb51  call     dword ptr [edx + 0x80]
-//   0x0060eb57  mov      cl, byte ptr [eax + 0x43c]
-//   0x0060eb5d  test     cl, cl
-//   0x0060eb5f  jne      0x60eb65
-//   0x0060eb61  mov      al, 1
-//   0x0060eb63  pop      esi
-//   0x0060eb64  ret      
+// UnitClass::vfunc_137 -- ALIAS of AircraftClass::vfunc_137 (same machine code at 0x0060eb20); transcribed once.
 void UnitClass::vfunc_137()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_138 -- body derived from 5 instructions at 0x0040e7a0; semantics not reconstructed.
-// size 14 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e7a0  mov      edx, dword ptr [ecx + 0x290]
-//   0x0040e7a6  xor      eax, eax
-//   0x0040e7a8  test     edx, edx
-//   0x0040e7aa  setne    al
-//   0x0040e7ad  ret      
+// UnitClass::vfunc_138 -- ALIAS of AircraftClass::vfunc_138 (same machine code at 0x0040e7a0); transcribed once.
 void UnitClass::vfunc_138()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_139 -- body derived from 44 instructions at 0x0061cb60; semantics not reconstructed.
-// size 121 bytes; signature __thiscall
-// callees: 0x006468b0, 0x00646930
-//
-//   0x0061cb60  push     ebx
-//   0x0061cb61  push     esi
-//   0x0061cb62  mov      esi, ecx
-//   0x0061cb64  push     edi
-//   0x0061cb65  mov      eax, dword ptr [esi]
-//   0x0061cb67  call     dword ptr [eax + 0x80]
-//   0x0061cb6d  mov      cl, byte ptr [eax + 0x44c]
-//   0x0061cb73  test     cl, cl
-//   0x0061cb75  jne      0x61cbd9
-//   0x0061cb77  lea      ebx, [esi + 0xa8]
-//   0x0061cb7d  mov      ecx, ebx
-//   0x0061cb7f  call     0x6468b0
-//   0x0061cb84  test     al, al
-//   0x0061cb86  jne      0x61cb93
-//   0x0061cb88  mov      ecx, ebx
-//   0x0061cb8a  call     0x646930
-//   0x0061cb8f  test     al, al
-//   0x0061cb91  je       0x61cbd3
-//   0x0061cb93  mov      edx, dword ptr [esi]
-//   0x0061cb95  mov      ecx, esi
-//   0x0061cb97  call     dword ptr [edx + 0x80]
-//   0x0061cb9d  mov      ecx, ebx
-//   0x0061cb9f  mov      edi, eax
-//   0x0061cba1  call     0x6468b0
-//   0x0061cba6  test     al, al
-//   0x0061cba8  je       0x61cbb4
-//   0x0061cbaa  mov      al, byte ptr [edi + 0x131]
-//   0x0061cbb0  test     al, al
-//   0x0061cbb2  jne      0x61cbd9
-//   0x0061cbb4  mov      ecx, ebx
-//   0x0061cbb6  call     0x646930
-//   0x0061cbbb  test     al, al
-//   0x0061cbbd  je       0x61cbd3
-//   0x0061cbbf  mov      al, byte ptr [edi + 0x131]
-//   0x0061cbc5  test     al, al
-//   0x0061cbc7  jne      0x61cbd9
-//   0x0061cbc9  mov      al, byte ptr [edi + 0x143]
-//   0x0061cbcf  test     al, al
-//   0x0061cbd1  jne      0x61cbd9
-//   0x0061cbd3  pop      edi
-//   0x0061cbd4  pop      esi
-//   0x0061cbd5  xor      al, al
-//   0x0061cbd7  pop      ebx
-//   0x0061cbd8  ret      
+// UnitClass::vfunc_139 -- ALIAS of AircraftClass::vfunc_139 (same machine code at 0x0061cb60); transcribed once.
 void UnitClass::vfunc_139()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_140 -- body derived from 10 instructions at 0x00612de0; semantics not reconstructed.
-// size 22 bytes; signature __thiscall
-// callees: none
-//
-//   0x00612de0  push     esi
-//   0x00612de1  mov      esi, ecx
-//   0x00612de3  mov      eax, dword ptr [esi]
-//   0x00612de5  call     dword ptr [eax + 0x80]
-//   0x00612deb  mov      ecx, dword ptr [eax + 0x74]
-//   0x00612dee  test     ecx, ecx
-//   0x00612df0  jne      0x612df6
-//   0x00612df2  xor      al, al
-//   0x00612df4  pop      esi
-//   0x00612df5  ret      
+// UnitClass::vfunc_140 -- ALIAS of AircraftClass::vfunc_140 (same machine code at 0x00612de0); transcribed once.
 void UnitClass::vfunc_140()
 {
 }
@@ -4432,181 +2020,12 @@ void UnitClass::vfunc_141()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_142 -- body derived from 79 instructions at 0x00613d60; semantics not reconstructed.
-// size 236 bytes; signature __thiscall nargs=3
-// callees: 0x00459d80, 0x005020d0, 0x006468b0, 0x00646930
-//
-//   0x00613d60  sub      esp, 0x14
-//   0x00613d63  push     ebx
-//   0x00613d64  push     esi
-//   0x00613d65  mov      esi, ecx
-//   0x00613d67  push     edi
-//   0x00613d68  mov      eax, dword ptr [esi]
-//   0x00613d6a  call     dword ptr [eax + 0x220]
-//   0x00613d70  test     al, al
-//   0x00613d72  jne      0x613e4c
-//   0x00613d78  lea      ebx, [esi + 0xa8]
-//   0x00613d7e  mov      ecx, ebx
-//   0x00613d80  call     0x6468b0
-//   0x00613d85  test     al, al
-//   0x00613d87  jne      0x613d94
-//   0x00613d89  mov      ecx, ebx
-//   0x00613d8b  call     0x646930
-//   0x00613d90  test     al, al
-//   0x00613d92  je       0x613dd8
-//   0x00613d94  mov      edx, dword ptr [esi]
-//   0x00613d96  mov      ecx, esi
-//   0x00613d98  call     dword ptr [edx + 0x80]
-//   0x00613d9e  mov      ecx, ebx
-//   0x00613da0  mov      edi, eax
-//   0x00613da2  call     0x6468b0
-//   0x00613da7  test     al, al
-//   0x00613da9  je       0x613db9
-//   0x00613dab  mov      al, byte ptr [edi + 0x12e]
-//   0x00613db1  test     al, al
-//   0x00613db3  jne      0x613e4c
-//   0x00613db9  mov      ecx, ebx
-//   0x00613dbb  call     0x646930
-//   0x00613dc0  test     al, al
-//   0x00613dc2  je       0x613dd8
-//   0x00613dc4  mov      al, byte ptr [edi + 0x12e]
-//   0x00613dca  test     al, al
-//   0x00613dcc  jne      0x613e4c
-//   0x00613dce  mov      al, byte ptr [edi + 0x140]
-//   0x00613dd4  test     al, al
-//   0x00613dd6  jne      0x613e4c
-//   0x00613dd8  mov      eax, dword ptr [esi]
-//   0x00613dda  lea      ecx, [esp + 0x14]
-//   0x00613dde  push     ecx
-//   0x00613ddf  mov      ecx, esi
-//   0x00613de1  call     dword ptr [eax + 0x48]
-//   0x00613de4  mov      ecx, eax
-//   0x00613de6  mov      eax, dword ptr [ecx]
-//   0x00613de8  cdq      
-//   0x00613de9  and      edx, 0xff
-//   0x00613def  add      eax, edx
-//   0x00613df1  sar      eax, 8
-//   0x00613df4  mov      word ptr [esp + 0xc], ax
-//   0x00613df9  mov      eax, dword ptr [ecx + 4]
-//   0x00613dfc  cdq      
-//   0x00613dfd  and      edx, 0xff
-//   0x00613e03  add      eax, edx
-//   0x00613e05  sar      eax, 8
-//   0x00613e08  mov      word ptr [esp + 0xe], ax
-//   0x00613e0d  mov      edx, dword ptr [esp + 0xc]
-//   0x00613e11  mov      eax, dword ptr [esi + 0xec]
-//   0x00613e17  mov      dword ptr [esp + 0x10], edx
-//   0x00613e1b  lea      edx, [esp + 0x10]
-//   0x00613e1f  mov      ecx, dword ptr [eax + 0x20]
-//   0x00613e22  push     ecx
-//   0x00613e23  push     edx
-//   0x00613e24  mov      ecx, 0x710d28
-//   0x00613e29  call     0x5020d0
-//   0x00613e2e  mov      ecx, eax
-//   0x00613e30  call     0x459d80
-//   0x00613e35  test     al, al
-//   0x00613e37  jne      0x613e4c
-//   0x00613e39  mov      al, byte ptr [esi + 0x1f8]
-//   0x00613e3f  test     al, al
-//   0x00613e41  jne      0x613e4c
-//   0x00613e43  pop      edi
-//   0x00613e44  pop      esi
-//   0x00613e45  xor      al, al
-//   0x00613e47  pop      ebx
-//   0x00613e48  add      esp, 0x14
-//   0x00613e4b  ret      
+// UnitClass::vfunc_142 -- ALIAS of AircraftClass::vfunc_142 (same machine code at 0x00613d60); transcribed once.
 void UnitClass::vfunc_142(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_143 -- body derived from 82 instructions at 0x00613c60; semantics not reconstructed.
-// size 246 bytes; signature __thiscall nargs=3
-// callees: 0x00459d80, 0x005020d0, 0x006468b0, 0x00646930
-//
-//   0x00613c60  sub      esp, 0x14
-//   0x00613c63  push     ebx
-//   0x00613c64  push     esi
-//   0x00613c65  mov      esi, ecx
-//   0x00613c67  push     edi
-//   0x00613c68  mov      eax, dword ptr [esi]
-//   0x00613c6a  call     dword ptr [eax + 0x220]
-//   0x00613c70  test     al, al
-//   0x00613c72  jne      0x613c7e
-//   0x00613c74  mov      al, byte ptr [esi + 0x1f8]
-//   0x00613c7a  test     al, al
-//   0x00613c7c  je       0x613c8c
-//   0x00613c7e  mov      eax, dword ptr [esi + 0x210]
-//   0x00613c84  test     eax, eax
-//   0x00613c86  je       0x613d56
-//   0x00613c8c  lea      ebx, [esi + 0xa8]
-//   0x00613c92  mov      ecx, ebx
-//   0x00613c94  call     0x6468b0
-//   0x00613c99  test     al, al
-//   0x00613c9b  jne      0x613ca8
-//   0x00613c9d  mov      ecx, ebx
-//   0x00613c9f  call     0x646930
-//   0x00613ca4  test     al, al
-//   0x00613ca6  je       0x613cec
-//   0x00613ca8  mov      edx, dword ptr [esi]
-//   0x00613caa  mov      ecx, esi
-//   0x00613cac  call     dword ptr [edx + 0x80]
-//   0x00613cb2  mov      ecx, ebx
-//   0x00613cb4  mov      edi, eax
-//   0x00613cb6  call     0x6468b0
-//   0x00613cbb  test     al, al
-//   0x00613cbd  je       0x613ccd
-//   0x00613cbf  mov      al, byte ptr [edi + 0x12e]
-//   0x00613cc5  test     al, al
-//   0x00613cc7  jne      0x613d56
-//   0x00613ccd  mov      ecx, ebx
-//   0x00613ccf  call     0x646930
-//   0x00613cd4  test     al, al
-//   0x00613cd6  je       0x613cec
-//   0x00613cd8  mov      al, byte ptr [edi + 0x12e]
-//   0x00613cde  test     al, al
-//   0x00613ce0  jne      0x613d56
-//   0x00613ce2  mov      al, byte ptr [edi + 0x140]
-//   0x00613ce8  test     al, al
-//   0x00613cea  jne      0x613d56
-//   0x00613cec  mov      eax, dword ptr [esi]
-//   0x00613cee  lea      ecx, [esp + 0x14]
-//   0x00613cf2  push     ecx
-//   0x00613cf3  mov      ecx, esi
-//   0x00613cf5  call     dword ptr [eax + 0x48]
-//   0x00613cf8  mov      ecx, eax
-//   0x00613cfa  mov      eax, dword ptr [ecx]
-//   0x00613cfc  cdq      
-//   0x00613cfd  and      edx, 0xff
-//   0x00613d03  add      eax, edx
-//   0x00613d05  sar      eax, 8
-//   0x00613d08  mov      word ptr [esp + 0xc], ax
-//   0x00613d0d  mov      eax, dword ptr [ecx + 4]
-//   0x00613d10  cdq      
-//   0x00613d11  and      edx, 0xff
-//   0x00613d17  add      eax, edx
-//   0x00613d19  sar      eax, 8
-//   0x00613d1c  mov      word ptr [esp + 0xe], ax
-//   0x00613d21  mov      edx, dword ptr [esp + 0xc]
-//   0x00613d25  mov      eax, dword ptr [esi + 0xec]
-//   0x00613d2b  mov      dword ptr [esp + 0x10], edx
-//   0x00613d2f  lea      edx, [esp + 0x10]
-//   0x00613d33  mov      ecx, dword ptr [eax + 0x20]
-//   0x00613d36  push     ecx
-//   0x00613d37  push     edx
-//   0x00613d38  mov      ecx, 0x710d28
-//   0x00613d3d  call     0x5020d0
-//   0x00613d42  mov      ecx, eax
-//   0x00613d44  call     0x459d80
-//   0x00613d49  test     al, al
-//   0x00613d4b  jne      0x613d56
-//   0x00613d4d  pop      edi
-//   0x00613d4e  pop      esi
-//   0x00613d4f  mov      al, 1
-//   0x00613d51  pop      ebx
-//   0x00613d52  add      esp, 0x14
-//   0x00613d55  ret      
+// UnitClass::vfunc_143 -- ALIAS of AircraftClass::vfunc_143 (same machine code at 0x00613c60); transcribed once.
 void UnitClass::vfunc_143(int a0, int a1, int a2)
 {
 }
@@ -4634,60 +2053,12 @@ void UnitClass::vfunc_144(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_145 -- body derived from 9 instructions at 0x00616450; semantics not reconstructed.
-// size 22 bytes; signature __cdecl
-// callees: none
-//
-//   0x00616450  mov      eax, dword ptr [ecx]
-//   0x00616452  push     0
-//   0x00616454  call     dword ptr [eax + 0x2fc]
-//   0x0061645a  mov      edx, dword ptr [eax]
-//   0x0061645c  xor      ecx, ecx
-//   0x0061645e  test     edx, edx
-//   0x00616460  setne    cl
-//   0x00616463  mov      al, cl
-//   0x00616465  ret      
+// UnitClass::vfunc_145 -- ALIAS of AircraftClass::vfunc_145 (same machine code at 0x00616450); transcribed once.
 void UnitClass::vfunc_145()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_146 -- body derived from 31 instructions at 0x0061cfa0; semantics not reconstructed.
-// size 84 bytes; signature __thiscall nargs=2
-// callees: 0x005f82d0
-//
-//   0x0061cfa0  sub      esp, 0x14
-//   0x0061cfa3  push     esi
-//   0x0061cfa4  mov      esi, ecx
-//   0x0061cfa6  lea      ecx, [esp + 0xc]
-//   0x0061cfaa  push     edi
-//   0x0061cfab  mov      eax, dword ptr [esi]
-//   0x0061cfad  push     ecx
-//   0x0061cfae  mov      ecx, esi
-//   0x0061cfb0  call     dword ptr [eax + 0x180]
-//   0x0061cfb6  mov      ecx, dword ptr [0x714eec]
-//   0x0061cfbc  lea      edx, [esp + 8]
-//   0x0061cfc0  push     eax
-//   0x0061cfc1  push     edx
-//   0x0061cfc2  call     0x5f82d0
-//   0x0061cfc7  mov      edi, dword ptr [eax]
-//   0x0061cfc9  mov      eax, dword ptr [esi]
-//   0x0061cfcb  lea      ecx, [esp + 0xc]
-//   0x0061cfcf  mov      dword ptr [esp + 8], edi
-//   0x0061cfd3  push     ecx
-//   0x0061cfd4  mov      ecx, esi
-//   0x0061cfd6  call     dword ptr [eax + 0x188]
-//   0x0061cfdc  cmp      di, word ptr [eax]
-//   0x0061cfdf  pop      edi
-//   0x0061cfe0  pop      esi
-//   0x0061cfe1  jne      0x61cff4
-//   0x0061cfe3  mov      dx, word ptr [esp + 2]
-//   0x0061cfe8  cmp      dx, word ptr [eax + 2]
-//   0x0061cfec  jne      0x61cff4
-//   0x0061cfee  xor      eax, eax
-//   0x0061cff0  add      esp, 0x14
-//   0x0061cff3  ret      
+// UnitClass::vfunc_146 -- ALIAS of AircraftClass::vfunc_146 (same machine code at 0x0061cfa0); transcribed once.
 void UnitClass::vfunc_146(int a0, int a1)
 {
 }
@@ -4759,480 +2130,67 @@ void UnitClass::vfunc_149()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_150 -- body derived from 25 instructions at 0x0061bf60; semantics not reconstructed.
-// size 76 bytes; signature __thiscall nargs=1
-// callees: 0x004c4ff0, 0x0067faf0
-//
-//   0x0061bf60  push     ecx
-//   0x0061bf61  push     esi
-//   0x0061bf62  mov      esi, ecx
-//   0x0061bf64  push     edi
-//   0x0061bf65  mov      eax, dword ptr [esi]
-//   0x0061bf67  call     dword ptr [eax + 0x80]
-//   0x0061bf6d  mov      ecx, dword ptr [esi + 0xec]
-//   0x0061bf73  mov      edx, dword ptr [eax]
-//   0x0061bf75  push     ecx
-//   0x0061bf76  mov      ecx, eax
-//   0x0061bf78  call     dword ptr [edx + 0x84]
-//   0x0061bf7e  mov      ecx, dword ptr [esi + 0xec]
-//   0x0061bf84  mov      edi, eax
-//   0x0061bf86  mov      dword ptr [esp + 8], edi
-//   0x0061bf8a  call     0x4c4ff0
-//   0x0061bf8f  test     al, al
-//   0x0061bf91  je       0x61bfac
-//   0x0061bf93  fild     dword ptr [esp + 8]
-//   0x0061bf97  mov      edx, dword ptr [0x714e20]
-//   0x0061bf9d  fmul     qword ptr [edx + 0xed8]
-//   0x0061bfa3  call     0x67faf0
-//   0x0061bfa8  pop      edi
-//   0x0061bfa9  pop      esi
-//   0x0061bfaa  pop      ecx
-//   0x0061bfab  ret      
+// UnitClass::vfunc_150 -- ALIAS of AircraftClass::vfunc_150 (same machine code at 0x0061bf60); transcribed once.
 void UnitClass::vfunc_150(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_151 -- body derived from 6 instructions at 0x0061b1c0; semantics not reconstructed.
-// size 19 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061b1c0  mov      eax, dword ptr [ecx]
-//   0x0061b1c2  call     dword ptr [eax + 0x80]
-//   0x0061b1c8  test     eax, eax
-//   0x0061b1ca  je       0x61b1d3
-//   0x0061b1cc  mov      eax, dword ptr [eax + 0x344]
-//   0x0061b1d2  ret      
+// UnitClass::vfunc_151 -- ALIAS of AircraftClass::vfunc_151 (same machine code at 0x0061b1c0); transcribed once.
 void UnitClass::vfunc_151()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_152 -- body derived from 39 instructions at 0x004a2340; semantics not reconstructed.
-// size 117 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x004a2340  sub      esp, 0x18
-//   0x004a2343  push     esi
-//   0x004a2344  mov      esi, ecx
-//   0x004a2346  mov      ecx, dword ptr [esp + 0x20]
-//   0x004a234a  lea      edx, [esp + 0x10]
-//   0x004a234e  push     edi
-//   0x004a234f  push     edx
-//   0x004a2350  mov      eax, dword ptr [ecx]
-//   0x004a2352  call     dword ptr [eax + 0x4c]
-//   0x004a2355  mov      edi, eax
-//   0x004a2357  mov      eax, dword ptr [edi]
-//   0x004a2359  cdq      
-//   0x004a235a  and      edx, 0xff
-//   0x004a2360  add      eax, edx
-//   0x004a2362  mov      ecx, eax
-//   0x004a2364  mov      eax, dword ptr [edi + 4]
-//   0x004a2367  cdq      
-//   0x004a2368  sar      ecx, 8
-//   0x004a236b  and      edx, 0xff
-//   0x004a2371  mov      dword ptr [esp + 0x10], 0
-//   0x004a2379  movsx    ecx, cx
-//   0x004a237c  add      eax, edx
-//   0x004a237e  sar      eax, 8
-//   0x004a2381  shl      ecx, 8
-//   0x004a2384  movsx    edx, ax
-//   0x004a2387  mov      eax, dword ptr [esi]
-//   0x004a2389  add      ecx, 0x80
-//   0x004a238f  mov      dword ptr [esp + 8], ecx
-//   0x004a2393  lea      ecx, [esp + 8]
-//   0x004a2397  shl      edx, 8
-//   0x004a239a  add      edx, 0x80
-//   0x004a23a0  push     ecx
-//   0x004a23a1  mov      ecx, esi
-//   0x004a23a3  mov      dword ptr [esp + 0x10], edx
-//   0x004a23a7  call     dword ptr [eax + 0x268]
-//   0x004a23ad  pop      edi
-//   0x004a23ae  pop      esi
-//   0x004a23af  add      esp, 0x18
-//   0x004a23b2  ret      4
+// UnitClass::vfunc_152 -- ALIAS of AircraftClass::vfunc_152 (same machine code at 0x004a2340); transcribed once.
 void UnitClass::vfunc_152(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_153 -- body derived from 90 instructions at 0x00614770; semantics not reconstructed.
-// size 276 bytes; signature __thiscall nargs=2
-// callees: 0x0045d580, 0x0045d910, 0x00494170, 0x0061c9b0, 0x0061dc60, 0x0067faf0, 0x006826c0
-//
-//   0x00614770  sub      esp, 0x1c
-//   0x00614773  push     esi
-//   0x00614774  mov      esi, ecx
-//   0x00614776  mov      eax, dword ptr [esi]
-//   0x00614778  call     dword ptr [eax + 0x80]
-//   0x0061477e  xor      ecx, ecx
-//   0x00614780  mov      ch, byte ptr [eax + 0x248]
-//   0x00614786  mov      eax, dword ptr [esp + 0x28]
-//   0x0061478a  test     eax, eax
-//   0x0061478c  mov      word ptr [esp + 4], cx
-//   0x00614791  je       0x614895
-//   0x00614797  push     ebx
-//   0x00614798  push     ebp
-//   0x00614799  lea      edx, [esp + 0x1c]
-//   0x0061479d  push     edi
-//   0x0061479e  push     edx
-//   0x0061479f  mov      ecx, esi
-//   0x006147a1  call     0x61c9b0
-//   0x006147a6  mov      edi, dword ptr [eax]
-//   0x006147a8  lea      ecx, [esp + 0x14]
-//   0x006147ac  push     0
-//   0x006147ae  push     ecx
-//   0x006147af  mov      ebx, dword ptr [eax + 4]
-//   0x006147b2  mov      ecx, esi
-//   0x006147b4  mov      ebp, dword ptr [eax + 8]
-//   0x006147b7  mov      eax, dword ptr [esi]
-//   0x006147b9  call     dword ptr [eax + 0x288]
-//   0x006147bf  mov      ecx, dword ptr [eax + 4]
-//   0x006147c2  mov      edx, dword ptr [eax]
-//   0x006147c4  sub      ebx, ecx
-//   0x006147c6  sub      edi, edx
-//   0x006147c8  mov      edx, dword ptr [esi]
-//   0x006147ca  mov      dword ptr [esp + 0x24], ebx
-//   0x006147ce  mov      ebx, dword ptr [eax + 8]
-//   0x006147d1  push     0
-//   0x006147d3  mov      ecx, esi
-//   0x006147d5  mov      dword ptr [esp + 0x24], edi
-//   0x006147d9  sub      ebp, ebx
-//   0x006147db  call     dword ptr [edx + 0x2fc]
-//   0x006147e1  mov      edi, dword ptr [eax]
-//   0x006147e3  mov      eax, dword ptr [0x714e20]
-//   0x006147e8  fild     dword ptr [eax + 0xe60]
-//   0x006147ee  mov      eax, dword ptr [edi + 0x68]
-//   0x006147f1  test     eax, eax
-//   0x006147f3  fstp     qword ptr [esp + 0x14]
-//   0x006147f7  je       0x61480c
-//   0x006147f9  mov      cl, byte ptr [eax + 0x125]
-//   0x006147ff  test     cl, cl
-//   0x00614801  je       0x61480c
-//   0x00614803  call     0x45d910
-//   0x00614808  fstp     qword ptr [esp + 0x14]
-//   0x0061480c  mov      edx, dword ptr [esp + 0x18]
-//   0x00614810  mov      eax, dword ptr [esp + 0x14]
-//   0x00614814  fild     dword ptr [esp + 0x20]
-//   0x00614818  fld      qword ptr [0x698608]
-//   0x0061481e  lea      ecx, [esp + 0x10]
-//   0x00614822  push     ecx
-//   0x00614823  push     edx
-//   0x00614824  push     eax
-//   0x00614825  push     ebp
-//   0x00614826  call     0x6826c0
-//   0x0061482b  fild     dword ptr [esp + 0x34]
-//   0x0061482f  fld      qword ptr [0x698608]
-//   0x00614835  call     0x6826c0
-//   0x0061483a  faddp    st(1)
-//   0x0061483c  sub      esp, 8
-//   0x0061483f  fstp     qword ptr [esp]
-//   0x00614842  call     0x494170
-//   0x00614847  add      esp, 8
-//   0x0061484a  call     0x67faf0
-//   0x0061484f  mov      edi, dword ptr [edi + 0x70]
-//   0x00614852  push     eax
-//   0x00614853  push     0
-//   0x00614855  mov      ecx, esi
-//   0x00614857  call     0x61dc60
-//   0x0061485c  mov      cl, al
-//   0x0061485e  mov      edx, edi
-//   0x00614860  call     0x45d580
-//   0x00614865  pop      edi
-//   0x00614866  pop      ebp
-//   0x00614867  test     al, al
-//   0x00614869  pop      ebx
-//   0x0061486a  jne      0x614884
-//   0x0061486c  mov      eax, dword ptr [esp + 0x24]
-//   0x00614870  mov      word ptr [esp + 0x28], 0xe000
-//   0x00614877  mov      ecx, dword ptr [esp + 0x28]
-//   0x0061487b  pop      esi
-//   0x0061487c  mov      dword ptr [eax], ecx
-//   0x0061487e  add      esp, 0x1c
-//   0x00614881  ret      8
+// UnitClass::vfunc_153 -- ALIAS of AircraftClass::vfunc_153 (same machine code at 0x00614770); transcribed once.
 void UnitClass::vfunc_153(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_154 -- body derived from 14 instructions at 0x0049c620; semantics not reconstructed.
-// size 36 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x0049c620  sub      esp, 0x14
-//   0x0049c623  push     ebx
-//   0x0049c624  push     esi
-//   0x0049c625  mov      esi, ecx
-//   0x0049c627  mov      eax, dword ptr [esi]
-//   0x0049c629  call     dword ptr [eax + 0x80]
-//   0x0049c62f  mov      ebx, dword ptr [eax + 0x308]
-//   0x0049c635  cmp      ebx, -1
-//   0x0049c638  jne      0x49c644
-//   0x0049c63a  pop      esi
-//   0x0049c63b  mov      al, 1
-//   0x0049c63d  pop      ebx
-//   0x0049c63e  add      esp, 0x14
-//   0x0049c641  ret      4
+// UnitClass::vfunc_154 -- ALIAS of AircraftClass::vfunc_154 (same machine code at 0x0049c620); transcribed once.
 void UnitClass::vfunc_154(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_155 -- body derived from 8 instructions at 0x0060ed00; semantics not reconstructed.
-// size 24 bytes; signature __thiscall
-// callees: none
-//
-//   0x0060ed00  mov      eax, dword ptr [ecx]
-//   0x0060ed02  call     dword ptr [eax + 0x80]
-//   0x0060ed08  mov      dl, byte ptr [eax + 0x449]
-//   0x0060ed0e  xor      ecx, ecx
-//   0x0060ed10  test     dl, dl
-//   0x0060ed12  setne    cl
-//   0x0060ed15  mov      eax, ecx
-//   0x0060ed17  ret      
+// UnitClass::vfunc_155 -- ALIAS of AircraftClass::vfunc_155 (same machine code at 0x0060ed00); transcribed once.
 void UnitClass::vfunc_155()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_156 -- body derived from 1 instructions at 0x0061df10; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061df10  ret      
+// UnitClass::vfunc_156 -- ALIAS of AircraftClass::vfunc_156 (same machine code at 0x0061df10); transcribed once.
 void UnitClass::vfunc_156()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_157 -- body derived from 4 instructions at 0x0061dd70; semantics not reconstructed.
-// size 12 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061dd70  mov      eax, dword ptr [ecx]
-//   0x0061dd72  call     dword ptr [eax + 0x80]
-//   0x0061dd78  mov      eax, dword ptr [eax + 0x68]
-//   0x0061dd7b  ret      
+// UnitClass::vfunc_157 -- ALIAS of AircraftClass::vfunc_157 (same machine code at 0x0061dd70); transcribed once.
 void UnitClass::vfunc_157()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_158 -- body derived from 53 instructions at 0x004a1a50; semantics not reconstructed.
-// size 178 bytes; signature __thiscall nargs=3
-// callees: 0x004a1b06, 0x00617f30, 0x00618290, 0x00618420, 0x00618660, 0x006939b0
-//
-//   0x004a1a50  sub      esp, 8
-//   0x004a1a53  push     esi
-//   0x004a1a54  mov      esi, ecx
-//   0x004a1a56  push     edi
-//   0x004a1a57  mov      dword ptr [esp + 8], 0
-//   0x004a1a5f  mov      eax, dword ptr [esi + 0x324]
-//   0x004a1a65  test     eax, eax
-//   0x004a1a67  je       0x4a1a87
-//   0x004a1a69  test     eax, eax
-//   0x004a1a6b  jne      0x4a1a77
-//   0x004a1a6d  push     0x80004003
-//   0x004a1a72  call     0x6939b0
-//   0x004a1a77  mov      eax, dword ptr [esi + 0x324]
-//   0x004a1a7d  push     eax
-//   0x004a1a7e  mov      ecx, dword ptr [eax]
-//   0x004a1a80  call     dword ptr [ecx + 0x38]
-//   0x004a1a83  mov      dword ptr [esp + 8], eax
-//   0x004a1a87  mov      edx, dword ptr [esi]
-//   0x004a1a89  push     ebx
-//   0x004a1a8a  push     ebp
-//   0x004a1a8b  mov      ecx, esi
-//   0x004a1a8d  call     dword ptr [edx + 0x80]
-//   0x004a1a93  mov      ecx, esi
-//   0x004a1a95  mov      edi, eax
-//   0x004a1a97  call     0x618290
-//   0x004a1a9c  mov      edi, dword ptr [edi + 0x460]
-//   0x004a1aa2  mov      ecx, esi
-//   0x004a1aa4  imul     edi, eax
-//   0x004a1aa7  mov      eax, dword ptr [esi]
-//   0x004a1aa9  call     dword ptr [eax + 0x80]
-//   0x004a1aaf  mov      ecx, esi
-//   0x004a1ab1  mov      ebx, eax
-//   0x004a1ab3  call     0x618420
-//   0x004a1ab8  mov      ebx, dword ptr [ebx + 0x464]
-//   0x004a1abe  mov      edx, dword ptr [esi]
-//   0x004a1ac0  mov      ecx, esi
-//   0x004a1ac2  imul     ebx, eax
-//   0x004a1ac5  call     dword ptr [edx + 0x80]
-//   0x004a1acb  mov      ecx, esi
-//   0x004a1acd  mov      ebp, eax
-//   0x004a1acf  call     0x618660
-//   0x004a1ad4  mov      ebp, dword ptr [ebp + 0x45c]
-//   0x004a1ada  mov      ecx, esi
-//   0x004a1adc  imul     ebp, eax
-//   0x004a1adf  mov      dword ptr [esp + 0x14], 0
-//   0x004a1ae7  call     0x617f30
-//   0x004a1aec  test     al, al
-//   0x004a1aee  je       0x4a1b02
-//   0x004a1af0  mov      eax, dword ptr [esi]
-//   0x004a1af2  mov      ecx, esi
-//   0x004a1af4  call     dword ptr [eax + 0x80]
-//   0x004a1afa  mov      eax, dword ptr [eax + 0x468]
-//   0x004a1b00  jmp      0x4a1b06
+// UnitClass::vfunc_158 -- ALIAS of AircraftClass::vfunc_158 (same machine code at 0x004a1a50); transcribed once.
 void UnitClass::vfunc_158(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_159 -- body derived from 15 instructions at 0x004a1b30; semantics not reconstructed.
-// size 41 bytes; signature __thiscall
-// callees: 0x006939b0
-//
-//   0x004a1b30  push     esi
-//   0x004a1b31  mov      esi, ecx
-//   0x004a1b33  mov      eax, dword ptr [esi + 0x324]
-//   0x004a1b39  test     eax, eax
-//   0x004a1b3b  je       0x4a1b59
-//   0x004a1b3d  test     eax, eax
-//   0x004a1b3f  jne      0x4a1b4b
-//   0x004a1b41  push     0x80004003
-//   0x004a1b46  call     0x6939b0
-//   0x004a1b4b  mov      esi, dword ptr [esi + 0x324]
-//   0x004a1b51  push     esi
-//   0x004a1b52  mov      eax, dword ptr [esi]
-//   0x004a1b54  call     dword ptr [eax + 0x3c]
-//   0x004a1b57  pop      esi
-//   0x004a1b58  ret      
+// UnitClass::vfunc_159 -- ALIAS of AircraftClass::vfunc_159 (same machine code at 0x004a1b30); transcribed once.
 void UnitClass::vfunc_159()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_160 -- body derived from 33 instructions at 0x0061bd30; semantics not reconstructed.
-// size 113 bytes; signature __thiscall nargs=3
-// callees: 0x0046b380, 0x004b7310, 0x0061bdb6
-//
-//   0x0061bd30  sub      esp, 0x2c
-//   0x0061bd33  mov      eax, dword ptr [esp + 0x30]
-//   0x0061bd37  push     ebx
-//   0x0061bd38  push     ebp
-//   0x0061bd39  push     esi
-//   0x0061bd3a  mov      esi, ecx
-//   0x0061bd3c  push     edi
-//   0x0061bd3d  mov      ecx, dword ptr [eax + 0x470]
-//   0x0061bd43  xor      edi, edi
-//   0x0061bd45  push     ecx
-//   0x0061bd46  mov      ecx, dword ptr [esi + 0xec]
-//   0x0061bd4c  add      ecx, 0x328
-//   0x0061bd52  mov      dword ptr [esp + 0x1c], edi
-//   0x0061bd56  call     0x46b380
-//   0x0061bd5b  test     eax, eax
-//   0x0061bd5d  je       0x61beff
-//   0x0061bd63  mov      eax, dword ptr [0x7b2c48]
-//   0x0061bd68  or       ebp, 0xffffffff
-//   0x0061bd6b  xor      ebx, ebx
-//   0x0061bd6d  test     eax, eax
-//   0x0061bd6f  jle      0x61beff
-//   0x0061bd75  mov      edx, dword ptr [0x7b2c3c]
-//   0x0061bd7b  mov      edi, dword ptr [edx + ebx*4]
-//   0x0061bd7e  test     edi, edi
-//   0x0061bd80  je       0x61bee3
-//   0x0061bd86  mov      al, byte ptr [esp + 0x44]
-//   0x0061bd8a  test     al, al
-//   0x0061bd8c  je       0x61bda1
-//   0x0061bd8e  mov      ecx, dword ptr [edi + 0xec]
-//   0x0061bd94  push     esi
-//   0x0061bd95  call     0x4b7310
-//   0x0061bd9a  and      eax, 0xff
-//   0x0061bd9f  jmp      0x61bdb6
+// UnitClass::vfunc_160 -- ALIAS of AircraftClass::vfunc_160 (same machine code at 0x0061bd30); transcribed once.
 void UnitClass::vfunc_160(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_161 -- body derived from 23 instructions at 0x0061bf10; semantics not reconstructed.
-// size 73 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x0061bf10  sub      esp, 0x10
-//   0x0061bf13  mov      eax, dword ptr [ecx]
-//   0x0061bf15  lea      edx, [esp + 4]
-//   0x0061bf19  push     edx
-//   0x0061bf1a  call     dword ptr [eax + 0xa4]
-//   0x0061bf20  mov      ecx, eax
-//   0x0061bf22  mov      eax, dword ptr [ecx]
-//   0x0061bf24  cdq      
-//   0x0061bf25  and      edx, 0xff
-//   0x0061bf2b  add      eax, edx
-//   0x0061bf2d  sar      eax, 8
-//   0x0061bf30  mov      word ptr [esp], ax
-//   0x0061bf35  mov      eax, dword ptr [ecx + 4]
-//   0x0061bf38  cdq      
-//   0x0061bf39  and      edx, 0xff
-//   0x0061bf3f  add      eax, edx
-//   0x0061bf41  sar      eax, 8
-//   0x0061bf44  mov      word ptr [esp + 2], ax
-//   0x0061bf49  mov      eax, dword ptr [esp + 0x14]
-//   0x0061bf4d  mov      ecx, dword ptr [esp]
-//   0x0061bf51  mov      dword ptr [eax], ecx
-//   0x0061bf53  add      esp, 0x10
-//   0x0061bf56  ret      8
+// UnitClass::vfunc_161 -- ALIAS of AircraftClass::vfunc_161 (same machine code at 0x0061bf10); transcribed once.
 void UnitClass::vfunc_161(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_162 -- body derived from 50 instructions at 0x0060efa0; semantics not reconstructed.
-// size 159 bytes; signature __thiscall nargs=8
-// callees: 0x005420b0, 0x0060f048, 0x0068309c, 0x006939b0
-//
-//   0x0060efa0  sub      esp, 0xc8
-//   0x0060efa6  push     ebx
-//   0x0060efa7  mov      ebx, ecx
-//   0x0060efa9  push     ebp
-//   0x0060efaa  push     esi
-//   0x0060efab  mov      eax, dword ptr [ebx]
-//   0x0060efad  push     edi
-//   0x0060efae  call     dword ptr [eax + 0x80]
-//   0x0060efb4  mov      edx, dword ptr [ebx]
-//   0x0060efb6  mov      ebp, eax
-//   0x0060efb8  mov      eax, dword ptr [esp + 0xe0]
-//   0x0060efbf  mov      ecx, ebx
-//   0x0060efc1  push     eax
-//   0x0060efc2  call     dword ptr [edx + 0x2fc]
-//   0x0060efc8  mov      ecx, dword ptr [eax + 4]
-//   0x0060efcb  mov      edx, dword ptr [eax + 8]
-//   0x0060efce  mov      eax, dword ptr [eax + 0xc]
-//   0x0060efd1  push     0
-//   0x0060efd3  push     0x6bf5b0
-//   0x0060efd8  push     0x6bf590
-//   0x0060efdd  push     0
-//   0x0060efdf  push     ebx
-//   0x0060efe0  mov      dword ptr [esp + 0x24], ecx
-//   0x0060efe4  mov      dword ptr [esp + 0x28], edx
-//   0x0060efe8  mov      dword ptr [esp + 0x38], eax
-//   0x0060efec  call     0x68309c
-//   0x0060eff1  mov      esi, eax
-//   0x0060eff3  add      esp, 0x14
-//   0x0060eff6  test     esi, esi
-//   0x0060eff8  je       0x60f03f
-//   0x0060effa  mov      eax, dword ptr [esi + 0x324]
-//   0x0060f000  test     eax, eax
-//   0x0060f002  jne      0x60f00e
-//   0x0060f004  push     0x80004003
-//   0x0060f009  call     0x6939b0
-//   0x0060f00e  mov      esi, dword ptr [esi + 0x324]
-//   0x0060f014  lea      edx, [esp + 0xa8]
-//   0x0060f01b  push     0
-//   0x0060f01d  push     edx
-//   0x0060f01e  mov      ecx, dword ptr [esi]
-//   0x0060f020  push     esi
-//   0x0060f021  call     dword ptr [ecx + 0x24]
-//   0x0060f024  push     eax
-//   0x0060f025  lea      ecx, [esp + 0x7c]
-//   0x0060f029  call     0x5420b0
-//   0x0060f02e  mov      ecx, 0xc
-//   0x0060f033  lea      esi, [esp + 0x78]
-//   0x0060f037  lea      edi, [esp + 0x48]
-//   0x0060f03b  rep movsd dword ptr es:[edi], dword ptr [esi]
-//   0x0060f03d  jmp      0x60f048
+// UnitClass::vfunc_162 -- ALIAS of AircraftClass::vfunc_162 (same machine code at 0x0060efa0); transcribed once.
 void UnitClass::vfunc_162(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
 {
 }
@@ -5295,641 +2253,92 @@ void UnitClass::vfunc_164(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_166 -- body derived from 25 instructions at 0x00616160; semantics not reconstructed.
-// size 68 bytes; signature __cdecl
-// callees: 0x0068309c
-//
-//   0x00616160  push     esi
-//   0x00616161  push     0
-//   0x00616163  push     0x6c56e0
-//   0x00616168  push     0x6bf590
-//   0x0061616d  push     0
-//   0x0061616f  push     ecx
-//   0x00616170  call     0x68309c
-//   0x00616175  mov      esi, eax
-//   0x00616177  add      esp, 0x14
-//   0x0061617a  test     esi, esi
-//   0x0061617c  je       0x6161a4
-//   0x0061617e  mov      al, byte ptr [esi + 0x334]
-//   0x00616184  test     al, al
-//   0x00616186  jl       0x616196
-//   0x00616188  mov      eax, dword ptr [esi]
-//   0x0061618a  mov      ecx, esi
-//   0x0061618c  call     dword ptr [eax + 0x360]
-//   0x00616192  test     al, al
-//   0x00616194  jne      0x6161a0
-//   0x00616196  mov      eax, dword ptr [esi + 0x210]
-//   0x0061619c  test     eax, eax
-//   0x0061619e  jle      0x6161a4
-//   0x006161a0  xor      al, al
-//   0x006161a2  pop      esi
-//   0x006161a3  ret      
+// UnitClass::vfunc_166 -- ALIAS of AircraftClass::vfunc_166 (same machine code at 0x00616160); transcribed once.
 void UnitClass::vfunc_166()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_167 -- body derived from 159 instructions at 0x006161b0; semantics not reconstructed.
-// size 557 bytes; signature __thiscall nargs=8
-// callees: 0x004577f0, 0x005020d0, 0x0068309c
-//
-//   0x006161b0  sub      esp, 0x20
-//   0x006161b3  push     ebx
-//   0x006161b4  push     ebp
-//   0x006161b5  push     esi
-//   0x006161b6  push     edi
-//   0x006161b7  push     0
-//   0x006161b9  push     0x6c56e0
-//   0x006161be  mov      edi, ecx
-//   0x006161c0  push     0x6bf590
-//   0x006161c5  push     0
-//   0x006161c7  push     edi
-//   0x006161c8  mov      dword ptr [esp + 0x30], edi
-//   0x006161cc  call     0x68309c
-//   0x006161d1  add      esp, 0x14
-//   0x006161d4  test     eax, eax
-//   0x006161d6  je       0x6163dd
-//   0x006161dc  mov      ecx, dword ptr [eax + 0x210]
-//   0x006161e2  test     ecx, ecx
-//   0x006161e4  jg       0x6161f5
-//   0x006161e6  mov      cl, byte ptr [eax + 0x334]
-//   0x006161ec  mov      byte ptr [esp + 0x13], 0
-//   0x006161f1  test     cl, cl
-//   0x006161f3  jl       0x6161fa
-//   0x006161f5  mov      byte ptr [esp + 0x13], 1
-//   0x006161fa  mov      ecx, dword ptr [eax + 0x358]
-//   0x00616200  mov      edx, dword ptr [ecx + 0x26c]
-//   0x00616206  test     edx, edx
-//   0x00616208  jne      0x616219
-//   0x0061620a  mov      edx, dword ptr [ecx + 0x314]
-//   0x00616210  test     edx, edx
-//   0x00616212  jne      0x616219
-//   0x00616214  mov      byte ptr [esp + 0x13], 1
-//   0x00616219  mov      ecx, dword ptr [ecx + 0x314]
-//   0x0061621f  test     ecx, ecx
-//   0x00616221  jle      0x616398
-//   0x00616227  mov      dl, byte ptr [eax + 0x32]
-//   0x0061622a  test     dl, dl
-//   0x0061622c  je       0x616233
-//   0x0061622e  mov      byte ptr [esp + 0x13], 1
-//   0x00616233  test     ecx, ecx
-//   0x00616235  jle      0x616398
-//   0x0061623b  mov      eax, dword ptr [edi]
-//   0x0061623d  lea      ecx, [esp + 0x28]
-//   0x00616241  push     ecx
-//   0x00616242  mov      ecx, edi
-//   0x00616244  call     dword ptr [eax + 0x188]
-//   0x0061624a  mov      edx, dword ptr [eax]
-//   0x0061624c  lea      eax, [esp + 0x14]
-//   0x00616250  push     eax
-//   0x00616251  mov      ecx, 0x710d28
-//   0x00616256  mov      dword ptr [esp + 0x18], edx
-//   0x0061625a  call     0x5020d0
-//   0x0061625f  mov      esi, eax
-//   0x00616261  test     esi, esi
-//   0x00616263  je       0x616398
-//   0x00616269  mov      ax, word ptr [0x7299fa]
-//   0x0061626f  mov      ecx, dword ptr [esp + 0x14]
-//   0x00616273  mov      edx, dword ptr [0x7299f8]
-//   0x00616279  add      ax, word ptr [esp + 0x16]
-//   0x0061627e  add      edx, ecx
-//   0x00616280  mov      word ptr [esp + 0x18], dx
-//   0x00616285  mov      word ptr [esp + 0x1a], ax
-//   0x0061628a  mov      ecx, dword ptr [esp + 0x18]
-//   0x0061628e  lea      edx, [esp + 0x20]
-//   0x00616292  mov      dword ptr [esp + 0x20], ecx
-//   0x00616296  push     edx
-//   0x00616297  mov      ecx, 0x710d28
-//   0x0061629c  call     0x5020d0
-//   0x006162a1  mov      ecx, dword ptr [0x7299e8]
-//   0x006162a7  mov      dx, word ptr [0x7299ea]
-//   0x006162ae  add      dx, word ptr [esp + 0x16]
-//   0x006162b3  mov      edi, eax
-//   0x006162b5  mov      eax, dword ptr [esp + 0x14]
-//   0x006162b9  add      ecx, eax
-//   0x006162bb  mov      word ptr [esp + 0x1a], dx
-//   0x006162c0  mov      word ptr [esp + 0x18], cx
-//   0x006162c5  mov      eax, dword ptr [esp + 0x18]
-//   0x006162c9  lea      ecx, [esp + 0x24]
-//   0x006162cd  mov      dword ptr [esp + 0x24], eax
-//   0x006162d1  push     ecx
-//   0x006162d2  mov      ecx, 0x710d28
-//   0x006162d7  call     0x5020d0
-//   0x006162dc  mov      edx, dword ptr [esp + 0x14]
-//   0x006162e0  mov      cx, word ptr [0x7299f2]
-//   0x006162e7  add      cx, word ptr [esp + 0x16]
-//   0x006162ec  mov      ebx, eax
-//   0x006162ee  mov      eax, dword ptr [0x7299f0]
-//   0x006162f3  add      eax, edx
-//   0x006162f5  mov      word ptr [esp + 0x1a], cx
-//   0x006162fa  mov      word ptr [esp + 0x18], ax
-//   0x006162ff  mov      edx, dword ptr [esp + 0x18]
-//   0x00616303  lea      eax, [esp + 0x28]
-//   0x00616307  mov      ecx, 0x710d28
-//   0x0061630c  push     eax
-//   0x0061630d  mov      dword ptr [esp + 0x2c], edx
-//   0x00616311  call     0x5020d0
-//   0x00616316  mov      ecx, dword ptr [esp + 0x14]
-//   0x0061631a  mov      edx, dword ptr [0x729a00]
-//   0x00616320  mov      ebp, eax
-//   0x00616322  mov      ax, word ptr [0x729a02]
-//   0x00616328  add      ax, word ptr [esp + 0x16]
-//   0x0061632d  add      edx, ecx
-//   0x0061632f  mov      word ptr [esp + 0x18], dx
-//   0x00616334  lea      edx, [esp + 0x18]
-//   0x00616338  mov      word ptr [esp + 0x1a], ax
-//   0x0061633d  mov      ecx, dword ptr [esp + 0x18]
-//   0x00616341  mov      dword ptr [esp + 0x18], ecx
-//   0x00616345  push     edx
-//   0x00616346  mov      ecx, 0x710d28
-//   0x0061634b  call     0x5020d0
-//   0x00616350  mov      edx, dword ptr [esi + 0xa4]
-//   0x00616356  mov      ecx, 0x1000
-//   0x0061635b  test     ecx, edx
-//   0x0061635d  jne      0x61638f
-//   0x0061635f  test     edi, edi
-//   0x00616361  je       0x61636b
-//   0x00616363  test     dword ptr [edi + 0xa4], ecx
-//   0x00616369  jne      0x61638f
-//   0x0061636b  test     eax, eax
-//   0x0061636d  je       0x616377
-//   0x0061636f  test     dword ptr [eax + 0xa4], ecx
-//   0x00616375  jne      0x61638f
-//   0x00616377  test     ebp, ebp
-//   0x00616379  je       0x616383
-//   0x0061637b  test     dword ptr [ebp + 0xa4], ecx
-//   0x00616381  jne      0x61638f
-//   0x00616383  test     ebx, ebx
-//   0x00616385  je       0x616394
-//   0x00616387  test     dword ptr [ebx + 0xa4], ecx
-//   0x0061638d  je       0x616394
-//   0x0061638f  mov      byte ptr [esp + 0x13], 1
-//   0x00616394  mov      edi, dword ptr [esp + 0x1c]
-//   0x00616398  mov      edx, dword ptr [edi]
-//   0x0061639a  lea      eax, [esp + 0x28]
-//   0x0061639e  push     eax
-//   0x0061639f  mov      ecx, edi
-//   0x006163a1  call     dword ptr [edx + 0x188]
-//   0x006163a7  mov      ecx, dword ptr [eax]
-//   0x006163a9  lea      edx, [esp + 0x2c]
-//   0x006163ad  mov      dword ptr [esp + 0x2c], ecx
-//   0x006163b1  push     edx
-//   0x006163b2  mov      ecx, 0x710d28
-//   0x006163b7  call     0x5020d0
-//   0x006163bc  pop      edi
-//   0x006163bd  pop      esi
-//   0x006163be  pop      ebp
-//   0x006163bf  pop      ebx
-//   0x006163c0  test     eax, eax
-//   0x006163c2  je       0x6163cf
-//   0x006163c4  mov      ecx, eax
-//   0x006163c6  call     0x4577f0
-//   0x006163cb  test     al, al
-//   0x006163cd  jne      0x6163d7
-//   0x006163cf  mov      al, byte ptr [esp + 3]
-//   0x006163d3  test     al, al
-//   0x006163d5  je       0x616405
-//   0x006163d7  xor      al, al
-//   0x006163d9  add      esp, 0x20
-//   0x006163dc  ret      
+// UnitClass::vfunc_167 -- ALIAS of AircraftClass::vfunc_167 (same machine code at 0x006161b0); transcribed once.
 void UnitClass::vfunc_167(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_168 -- body derived from 13 instructions at 0x006143a0; semantics not reconstructed.
-// size 33 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x006143a0  push     esi
-//   0x006143a1  mov      esi, ecx
-//   0x006143a3  push     edi
-//   0x006143a4  mov      eax, dword ptr [esi]
-//   0x006143a6  call     dword ptr [eax + 0x2c]
-//   0x006143a9  cmp      eax, 6
-//   0x006143ac  jne      0x6143c1
-//   0x006143ae  cmp      dword ptr [esi + 0x134], 1
-//   0x006143b5  jle      0x6143c1
-//   0x006143b7  pop      edi
-//   0x006143b8  mov      eax, 1
-//   0x006143bd  pop      esi
-//   0x006143be  ret      4
+// UnitClass::vfunc_168 -- ALIAS of AircraftClass::vfunc_168 (same machine code at 0x006143a0); transcribed once.
 void UnitClass::vfunc_168(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_169 -- body derived from 12 instructions at 0x0061a560; semantics not reconstructed.
-// size 22 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x0061a560  push     ebx
-//   0x0061a561  push     esi
-//   0x0061a562  push     edi
-//   0x0061a563  mov      edi, dword ptr [esp + 0x10]
-//   0x0061a567  cmp      edi, -1
-//   0x0061a56a  mov      esi, ecx
-//   0x0061a56c  jne      0x61a576
-//   0x0061a56e  or       eax, edi
-//   0x0061a570  pop      edi
-//   0x0061a571  pop      esi
-//   0x0061a572  pop      ebx
-//   0x0061a573  ret      4
+// UnitClass::vfunc_169 -- ALIAS of AircraftClass::vfunc_169 (same machine code at 0x0061a560); transcribed once.
 void UnitClass::vfunc_169(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_170 -- body derived from 8 instructions at 0x004a13b0; semantics not reconstructed.
-// size 17 bytes; signature __thiscall
-// callees: none
-//
-//   0x004a13b0  push     esi
-//   0x004a13b1  mov      esi, ecx
-//   0x004a13b3  mov      al, byte ptr [esi + 0x1fb]
-//   0x004a13b9  test     al, al
-//   0x004a13bb  jne      0x4a13c1
-//   0x004a13bd  xor      al, al
-//   0x004a13bf  pop      esi
-//   0x004a13c0  ret      
+// UnitClass::vfunc_170 -- ALIAS of AircraftClass::vfunc_170 (same machine code at 0x004a13b0); transcribed once.
 void UnitClass::vfunc_170()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_171 -- body derived from 19 instructions at 0x0061d9d0; semantics not reconstructed.
-// size 51 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x0061d9d0  sub      esp, 0x10
-//   0x0061d9d3  push     ebx
-//   0x0061d9d4  push     ebp
-//   0x0061d9d5  push     esi
-//   0x0061d9d6  mov      esi, ecx
-//   0x0061d9d8  mov      eax, dword ptr [esi]
-//   0x0061d9da  call     dword ptr [eax + 0x80]
-//   0x0061d9e0  mov      cl, byte ptr [eax + 0x442]
-//   0x0061d9e6  test     cl, cl
-//   0x0061d9e8  jne      0x61db80
-//   0x0061d9ee  mov      cl, byte ptr [eax + 0x443]
-//   0x0061d9f4  test     cl, cl
-//   0x0061d9f6  je       0x61da03
-//   0x0061d9f8  pop      esi
-//   0x0061d9f9  pop      ebp
-//   0x0061d9fa  mov      al, 1
-//   0x0061d9fc  pop      ebx
-//   0x0061d9fd  add      esp, 0x10
-//   0x0061da00  ret      4
+// UnitClass::vfunc_171 -- ALIAS of AircraftClass::vfunc_171 (same machine code at 0x0061d9d0); transcribed once.
 void UnitClass::vfunc_171(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_172 -- body derived from 18 instructions at 0x0061db90; semantics not reconstructed.
-// size 54 bytes; signature __cdecl
-// callees: 0x00459da0, 0x00502060
-//
-//   0x0061db90  mov      eax, dword ptr [0x7b0b7c]
-//   0x0061db95  sub      esp, 0xc
-//   0x0061db98  test     eax, eax
-//   0x0061db9a  je       0x61dbc6
-//   0x0061db9c  mov      eax, dword ptr [ecx]
-//   0x0061db9e  lea      edx, [esp]
-//   0x0061dba2  push     edx
-//   0x0061dba3  call     dword ptr [eax + 0x48]
-//   0x0061dba6  push     eax
-//   0x0061dba7  mov      ecx, 0x710d28
-//   0x0061dbac  call     0x502060
-//   0x0061dbb1  mov      ecx, dword ptr [0x7b0b7c]
-//   0x0061dbb7  mov      edx, dword ptr [ecx + 0x20]
-//   0x0061dbba  mov      ecx, eax
-//   0x0061dbbc  push     edx
-//   0x0061dbbd  call     0x459da0
-//   0x0061dbc2  add      esp, 0xc
-//   0x0061dbc5  ret      
+// UnitClass::vfunc_172 -- ALIAS of AircraftClass::vfunc_172 (same machine code at 0x0061db90); transcribed once.
 void UnitClass::vfunc_172()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_173 -- body derived from 2 instructions at 0x0040e720; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e720  xor      al, al
-//   0x0040e722  ret      
+// UnitClass::vfunc_173 -- ALIAS of AircraftClass::vfunc_173 (same machine code at 0x0040e720); transcribed once.
 void UnitClass::vfunc_173()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_174 -- body derived from 20 instructions at 0x004a49c0; semantics not reconstructed.
-// size 75 bytes; signature __thiscall
-// callees: 0x004a2d80, 0x00655a10, 0x00655c30
-//
-//   0x004a49c0  push     esi
-//   0x004a49c1  mov      esi, ecx
-//   0x004a49c3  mov      eax, dword ptr [esi + 0x218]
-//   0x004a49c9  cmp      eax, -1
-//   0x004a49cc  je       0x4a4a09
-//   0x004a49ce  movsx    ecx, byte ptr [esi + 0x336]
-//   0x004a49d5  mov      edx, dword ptr [0x7b0b7c]
-//   0x004a49db  push     ecx
-//   0x004a49dc  mov      ecx, dword ptr [edx + eax*4 + 0xe4]
-//   0x004a49e3  call     0x655a10
-//   0x004a49e8  mov      ecx, dword ptr [0x7b0b7c]
-//   0x004a49ee  push     eax
-//   0x004a49ef  mov      eax, dword ptr [esi + 0x218]
-//   0x004a49f5  mov      ecx, dword ptr [ecx + eax*4 + 0xe4]
-//   0x004a49fc  call     0x655c30
-//   0x004a4a01  push     eax
-//   0x004a4a02  mov      ecx, esi
-//   0x004a4a04  call     0x4a2d80
-//   0x004a4a09  pop      esi
-//   0x004a4a0a  ret      
+// UnitClass::vfunc_174 -- ALIAS of AircraftClass::vfunc_174 (same machine code at 0x004a49c0); transcribed once.
 void UnitClass::vfunc_174()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_175 -- body derived from 27 instructions at 0x0061b2e0; semantics not reconstructed.
-// size 88 bytes; signature __thiscall
-// callees: 0x005a5ec0, 0x006470b0
-//
-//   0x0061b2e0  mov      al, byte ptr [0x6c7cc6]
-//   0x0061b2e5  push     esi
-//   0x0061b2e6  test     al, al
-//   0x0061b2e8  mov      esi, ecx
-//   0x0061b2ea  je       0x61b336
-//   0x0061b2ec  mov      eax, dword ptr [esi]
-//   0x0061b2ee  call     dword ptr [eax + 0x80]
-//   0x0061b2f4  mov      ecx, dword ptr [eax + 0x284]
-//   0x0061b2fa  add      eax, 0x274
-//   0x0061b2ff  test     ecx, ecx
-//   0x0061b301  je       0x61b336
-//   0x0061b303  mov      edx, dword ptr [esi]
-//   0x0061b305  mov      ecx, esi
-//   0x0061b307  call     dword ptr [edx + 0x80]
-//   0x0061b30d  mov      esi, eax
-//   0x0061b30f  mov      ecx, 0x7147e0
-//   0x0061b314  add      esi, 0x274
-//   0x0061b31a  call     0x5a5ec0
-//   0x0061b31f  xor      edx, edx
-//   0x0061b321  push     0x3f800000
-//   0x0061b326  div      dword ptr [esi + 0x10]
-//   0x0061b329  mov      eax, dword ptr [esi + 4]
-//   0x0061b32c  mov      ecx, dword ptr [eax + edx*4]
-//   0x0061b32f  xor      edx, edx
-//   0x0061b331  call     0x6470b0
-//   0x0061b336  pop      esi
-//   0x0061b337  ret      
+// UnitClass::vfunc_175 -- ALIAS of AircraftClass::vfunc_175 (same machine code at 0x0061b2e0); transcribed once.
 void UnitClass::vfunc_175()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_176 -- body derived from 27 instructions at 0x0061b340; semantics not reconstructed.
-// size 88 bytes; signature __thiscall
-// callees: 0x005a5ec0, 0x006470b0
-//
-//   0x0061b340  mov      al, byte ptr [0x6c7cc6]
-//   0x0061b345  push     esi
-//   0x0061b346  test     al, al
-//   0x0061b348  mov      esi, ecx
-//   0x0061b34a  je       0x61b396
-//   0x0061b34c  mov      eax, dword ptr [esi]
-//   0x0061b34e  call     dword ptr [eax + 0x80]
-//   0x0061b354  mov      ecx, dword ptr [eax + 0x2a0]
-//   0x0061b35a  add      eax, 0x290
-//   0x0061b35f  test     ecx, ecx
-//   0x0061b361  je       0x61b396
-//   0x0061b363  mov      edx, dword ptr [esi]
-//   0x0061b365  mov      ecx, esi
-//   0x0061b367  call     dword ptr [edx + 0x80]
-//   0x0061b36d  mov      esi, eax
-//   0x0061b36f  mov      ecx, 0x7147e0
-//   0x0061b374  add      esi, 0x290
-//   0x0061b37a  call     0x5a5ec0
-//   0x0061b37f  xor      edx, edx
-//   0x0061b381  push     0x3f800000
-//   0x0061b386  div      dword ptr [esi + 0x10]
-//   0x0061b389  mov      eax, dword ptr [esi + 4]
-//   0x0061b38c  mov      ecx, dword ptr [eax + edx*4]
-//   0x0061b38f  xor      edx, edx
-//   0x0061b391  call     0x6470b0
-//   0x0061b396  pop      esi
-//   0x0061b397  ret      
+// UnitClass::vfunc_176 -- ALIAS of AircraftClass::vfunc_176 (same machine code at 0x0061b340); transcribed once.
 void UnitClass::vfunc_176()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_177 -- body derived from 27 instructions at 0x0061b3a0; semantics not reconstructed.
-// size 88 bytes; signature __thiscall
-// callees: 0x005a5ec0, 0x006470b0
-//
-//   0x0061b3a0  mov      al, byte ptr [0x6c7cc6]
-//   0x0061b3a5  push     esi
-//   0x0061b3a6  test     al, al
-//   0x0061b3a8  mov      esi, ecx
-//   0x0061b3aa  je       0x61b3f6
-//   0x0061b3ac  mov      eax, dword ptr [esi]
-//   0x0061b3ae  call     dword ptr [eax + 0x80]
-//   0x0061b3b4  mov      ecx, dword ptr [eax + 0x2bc]
-//   0x0061b3ba  add      eax, 0x2ac
-//   0x0061b3bf  test     ecx, ecx
-//   0x0061b3c1  je       0x61b3f6
-//   0x0061b3c3  mov      edx, dword ptr [esi]
-//   0x0061b3c5  mov      ecx, esi
-//   0x0061b3c7  call     dword ptr [edx + 0x80]
-//   0x0061b3cd  mov      esi, eax
-//   0x0061b3cf  mov      ecx, 0x7147e0
-//   0x0061b3d4  add      esi, 0x2ac
-//   0x0061b3da  call     0x5a5ec0
-//   0x0061b3df  xor      edx, edx
-//   0x0061b3e1  push     0x3f800000
-//   0x0061b3e6  div      dword ptr [esi + 0x10]
-//   0x0061b3e9  mov      eax, dword ptr [esi + 4]
-//   0x0061b3ec  mov      ecx, dword ptr [eax + edx*4]
-//   0x0061b3ef  xor      edx, edx
-//   0x0061b3f1  call     0x6470b0
-//   0x0061b3f6  pop      esi
-//   0x0061b3f7  ret      
+// UnitClass::vfunc_177 -- ALIAS of AircraftClass::vfunc_177 (same machine code at 0x0061b3a0); transcribed once.
 void UnitClass::vfunc_177()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_178 -- body derived from 14 instructions at 0x00615820; semantics not reconstructed.
-// size 36 bytes; signature __thiscall nargs=1
-// callees: 0x00615882
-//
-//   0x00615820  mov      al, byte ptr [0x6c7cc6]
-//   0x00615825  sub      esp, 0x18
-//   0x00615828  test     al, al
-//   0x0061582a  push     ebx
-//   0x0061582b  push     esi
-//   0x0061582c  push     edi
-//   0x0061582d  mov      edi, dword ptr [esp + 0x28]
-//   0x00615831  mov      esi, ecx
-//   0x00615833  je       0x61584e
-//   0x00615835  cmp      edi, 1
-//   0x00615838  jne      0x615844
-//   0x0061583a  mov      eax, dword ptr [esi]
-//   0x0061583c  call     dword ptr [eax + 0x2c4]
-//   0x00615842  jmp      0x615882
+// UnitClass::vfunc_178 -- ALIAS of BuildingClass::vfunc_178 (same machine code at 0x00615820); transcribed once.
 void UnitClass::vfunc_178(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_179 -- body derived from 6 instructions at 0x0061dd50; semantics not reconstructed.
-// size 18 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061dd50  mov      eax, dword ptr [ecx + 0x134]
-//   0x0061dd56  test     eax, eax
-//   0x0061dd58  jle      0x61dd61
-//   0x0061dd5a  dec      eax
-//   0x0061dd5b  mov      dword ptr [ecx + 0x134], eax
-//   0x0061dd61  ret      
+// UnitClass::vfunc_179 -- ALIAS of BuildingClass::vfunc_179 (same machine code at 0x0061dd50); transcribed once.
 void UnitClass::vfunc_179()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_180 -- body derived from 46 instructions at 0x0061b400; semantics not reconstructed.
-// size 123 bytes; signature __thiscall nargs=2
-// callees: 0x0060ebd0
-//
-//   0x0061b400  push     ebx
-//   0x0061b401  mov      ebx, dword ptr [esp + 0xc]
-//   0x0061b405  push     esi
-//   0x0061b406  mov      esi, ecx
-//   0x0061b408  and      ebx, 3
-//   0x0061b40b  mov      eax, dword ptr [esi + 0x11c]
-//   0x0061b411  test     eax, eax
-//   0x0061b413  je       0x61b442
-//   0x0061b415  test     bl, 1
-//   0x0061b418  je       0x61b442
-//   0x0061b41a  push     eax
-//   0x0061b41b  call     0x60ebd0
-//   0x0061b420  mov      edx, dword ptr [esi]
-//   0x0061b422  push     eax
-//   0x0061b423  mov      eax, dword ptr [esi + 0x11c]
-//   0x0061b429  mov      ecx, esi
-//   0x0061b42b  push     eax
-//   0x0061b42c  call     dword ptr [edx + 0x2d8]
-//   0x0061b432  test     al, al
-//   0x0061b434  jne      0x61b442
-//   0x0061b436  mov      edx, dword ptr [esi]
-//   0x0061b438  push     0
-//   0x0061b43a  mov      ecx, esi
-//   0x0061b43c  call     dword ptr [edx + 0x2e8]
-//   0x0061b442  mov      eax, dword ptr [esi + 0x11c]
-//   0x0061b448  test     eax, eax
-//   0x0061b44a  jne      0x61b469
-//   0x0061b44c  mov      eax, dword ptr [esp + 0xc]
-//   0x0061b450  push     edi
-//   0x0061b451  mov      edi, dword ptr [esi]
-//   0x0061b453  push     0
-//   0x0061b455  push     eax
-//   0x0061b456  push     ebx
-//   0x0061b457  mov      ecx, esi
-//   0x0061b459  call     dword ptr [edi + 0x2e4]
-//   0x0061b45f  push     eax
-//   0x0061b460  mov      ecx, esi
-//   0x0061b462  call     dword ptr [edi + 0x2e8]
-//   0x0061b468  pop      edi
-//   0x0061b469  mov      ecx, dword ptr [esi + 0x11c]
-//   0x0061b46f  xor      eax, eax
-//   0x0061b471  test     ecx, ecx
-//   0x0061b473  pop      esi
-//   0x0061b474  pop      ebx
-//   0x0061b475  setne    al
-//   0x0061b478  ret      8
+// UnitClass::vfunc_180 -- ALIAS of AircraftClass::vfunc_180 (same machine code at 0x0061b400); transcribed once.
 void UnitClass::vfunc_180(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_181 -- body derived from 14 instructions at 0x0049de00; semantics not reconstructed.
-// size 44 bytes; signature __thiscall
-// callees: 0x00614290
-//
-//   0x0049de00  push     esi
-//   0x0049de01  mov      esi, ecx
-//   0x0049de03  push     1
-//   0x0049de05  push     0
-//   0x0049de07  mov      eax, dword ptr [esi]
-//   0x0049de09  call     dword ptr [eax + 0x340]
-//   0x0049de0f  mov      edx, dword ptr [esi]
-//   0x0049de11  mov      ecx, esi
-//   0x0049de13  mov      dword ptr [esi + 0x29c], 0xffffffff
-//   0x0049de1d  call     dword ptr [edx + 0x374]
-//   0x0049de23  mov      ecx, esi
-//   0x0049de25  call     0x614290
-//   0x0049de2a  pop      esi
-//   0x0049de2b  ret      
+// UnitClass::vfunc_181 -- ALIAS of AircraftClass::vfunc_181 (same machine code at 0x0049de00); transcribed once.
 void UnitClass::vfunc_181()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_182 -- body derived from 12 instructions at 0x006114b0; semantics not reconstructed.
-// size 25 bytes; signature __thiscall nargs=2
-// callees: none
-//
-//   0x006114b0  sub      esp, 0x18
-//   0x006114b3  push     esi
-//   0x006114b4  push     edi
-//   0x006114b5  mov      edi, dword ptr [esp + 0x24]
-//   0x006114b9  mov      esi, ecx
-//   0x006114bb  test     edi, edi
-//   0x006114bd  jne      0x6114c9
-//   0x006114bf  pop      edi
-//   0x006114c0  mov      al, 1
-//   0x006114c2  pop      esi
-//   0x006114c3  add      esp, 0x18
-//   0x006114c6  ret      8
+// UnitClass::vfunc_182 -- ALIAS of AircraftClass::vfunc_182 (same machine code at 0x006114b0); transcribed once.
 void UnitClass::vfunc_182(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_183 -- body derived from 28 instructions at 0x004a0bb0; semantics not reconstructed.
-// size 91 bytes; signature __stdcall nargs=1
-// callees: 0x00647f00
-//
-//   0x004a0bb0  mov      al, byte ptr [ecx + 0x1fe]
-//   0x004a0bb6  sub      esp, 0x10
-//   0x004a0bb9  test     al, al
-//   0x004a0bbb  je       0x4a0c05
-//   0x004a0bbd  mov      eax, dword ptr [ecx]
-//   0x004a0bbf  lea      edx, [esp + 4]
-//   0x004a0bc3  push     edx
-//   0x004a0bc4  call     dword ptr [eax + 0x4c]
-//   0x004a0bc7  mov      ecx, eax
-//   0x004a0bc9  mov      eax, dword ptr [ecx]
-//   0x004a0bcb  cdq      
-//   0x004a0bcc  and      edx, 0xff
-//   0x004a0bd2  add      eax, edx
-//   0x004a0bd4  sar      eax, 8
-//   0x004a0bd7  mov      word ptr [esp], ax
-//   0x004a0bdc  mov      eax, dword ptr [ecx + 4]
-//   0x004a0bdf  cdq      
-//   0x004a0be0  and      edx, 0xff
-//   0x004a0be6  mov      ecx, 0x10
-//   0x004a0beb  add      eax, edx
-//   0x004a0bed  xor      dl, dl
-//   0x004a0bef  sar      eax, 8
-//   0x004a0bf2  mov      word ptr [esp + 2], ax
-//   0x004a0bf7  mov      eax, dword ptr [esp]
-//   0x004a0bfb  mov      dword ptr [0x7d8030], eax
-//   0x004a0c00  call     0x647f00
-//   0x004a0c05  add      esp, 0x10
-//   0x004a0c08  ret      4
+// UnitClass::vfunc_183 -- ALIAS of AircraftClass::vfunc_183 (same machine code at 0x004a0bb0); transcribed once.
 void UnitClass::vfunc_183(int a0)
 {
 }
@@ -6010,32 +2419,7 @@ void UnitClass::vfunc_185(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_186 -- body derived from 21 instructions at 0x006142e0; semantics not reconstructed.
-// size 61 bytes; signature __thiscall nargs=2
-// callees: 0x00502060, 0x00614348
-//
-//   0x006142e0  sub      esp, 0xc
-//   0x006142e3  push     esi
-//   0x006142e4  mov      esi, ecx
-//   0x006142e6  push     edi
-//   0x006142e7  mov      edi, dword ptr [esp + 0x18]
-//   0x006142eb  cmp      edi, dword ptr [esi + 0x11c]
-//   0x006142f1  je       0x61438b
-//   0x006142f7  test     edi, edi
-//   0x006142f9  je       0x614346
-//   0x006142fb  cmp      edi, esi
-//   0x006142fd  jne      0x61431d
-//   0x006142ff  mov      eax, dword ptr [esi]
-//   0x00614301  lea      ecx, [esp + 8]
-//   0x00614305  push     ecx
-//   0x00614306  mov      ecx, esi
-//   0x00614308  call     dword ptr [eax + 0x180]
-//   0x0061430e  push     eax
-//   0x0061430f  mov      ecx, 0x710d28
-//   0x00614314  call     0x502060
-//   0x00614319  mov      edi, eax
-//   0x0061431b  jmp      0x614348
+// UnitClass::vfunc_186 -- ALIAS of AircraftClass::vfunc_186 (same machine code at 0x006142e0); transcribed once.
 void UnitClass::vfunc_186(int a0, int a1)
 {
 }
@@ -6100,1264 +2484,97 @@ void UnitClass::vfunc_188(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_189 -- body derived from 29 instructions at 0x00614530; semantics not reconstructed.
-// size 89 bytes; signature __thiscall nargs=6
-// callees: 0x00614612
-//
-//   0x00614530  mov      eax, dword ptr [esp + 0x10]
-//   0x00614534  sub      esp, 0x38
-//   0x00614537  mov      edx, dword ptr [0x7dca38]
-//   0x0061453d  push     ebx
-//   0x0061453e  push     ebp
-//   0x0061453f  push     esi
-//   0x00614540  mov      esi, dword ptr [esp + 0x50]
-//   0x00614544  push     edi
-//   0x00614545  mov      edi, ecx
-//   0x00614547  mov      ecx, dword ptr [eax]
-//   0x00614549  xor      ebx, ebx
-//   0x0061454b  movsx    ebp, byte ptr [esi + 0xce]
-//   0x00614552  cmp      ecx, edx
-//   0x00614554  jne      0x614570
-//   0x00614556  mov      edx, dword ptr [eax + 4]
-//   0x00614559  mov      ecx, dword ptr [0x7dca3c]
-//   0x0061455f  cmp      edx, ecx
-//   0x00614561  jne      0x614570
-//   0x00614563  mov      ecx, dword ptr [eax + 8]
-//   0x00614566  mov      edx, dword ptr [0x7dca40]
-//   0x0061456c  cmp      ecx, edx
-//   0x0061456e  je       0x614589
-//   0x00614570  mov      edx, dword ptr [eax]
-//   0x00614572  mov      ecx, dword ptr [eax + 4]
-//   0x00614575  mov      dword ptr [esp + 0x24], edx
-//   0x00614579  mov      edx, dword ptr [eax + 8]
-//   0x0061457c  mov      dword ptr [esp + 0x28], ecx
-//   0x00614580  mov      dword ptr [esp + 0x2c], edx
-//   0x00614584  jmp      0x614612
+// UnitClass::vfunc_189 -- ALIAS of AircraftClass::vfunc_189 (same machine code at 0x00614530); transcribed once.
 void UnitClass::vfunc_189(int a0, int a1, int a2, int a3, int a4, int a5)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_190 -- body derived from 143 instructions at 0x0061c360; semantics not reconstructed.
-// size 497 bytes; signature __thiscall nargs=12
-// callees: 0x00492960, 0x00494170, 0x004941e0, 0x00494230, 0x0061c567
-//
-//   0x0061c360  push     ebp
-//   0x0061c361  mov      ebp, esp
-//   0x0061c363  and      esp, 0xfffffff8
-//   0x0061c366  sub      esp, 0x44
-//   0x0061c369  push     ebx
-//   0x0061c36a  push     esi
-//   0x0061c36b  mov      esi, ecx
-//   0x0061c36d  push     edi
-//   0x0061c36e  mov      eax, dword ptr [esi]
-//   0x0061c370  call     dword ptr [eax + 0x80]
-//   0x0061c376  mov      ecx, dword ptr [eax + 0x74]
-//   0x0061c379  test     ecx, ecx
-//   0x0061c37b  je       0x61c641
-//   0x0061c381  mov      edx, dword ptr [esi]
-//   0x0061c383  mov      ecx, esi
-//   0x0061c385  call     dword ptr [edx + 0x80]
-//   0x0061c38b  mov      eax, dword ptr [eax + 0x74]
-//   0x0061c38e  cmp      byte ptr [eax], 0
-//   0x0061c391  jne      0x61c641
-//   0x0061c397  mov      eax, dword ptr [esi]
-//   0x0061c399  lea      ecx, [esp + 0x44]
-//   0x0061c39d  push     ecx
-//   0x0061c39e  mov      ecx, esi
-//   0x0061c3a0  call     dword ptr [eax + 0x180]
-//   0x0061c3a6  mov      edx, eax
-//   0x0061c3a8  mov      eax, dword ptr [edx]
-//   0x0061c3aa  mov      edi, dword ptr [edx + 4]
-//   0x0061c3ad  mov      ecx, dword ptr [edx + 8]
-//   0x0061c3b0  mov      edx, dword ptr [ebp + 8]
-//   0x0061c3b3  sub      eax, dword ptr [edx]
-//   0x0061c3b5  mov      dword ptr [esp + 0x18], eax
-//   0x0061c3b9  mov      eax, dword ptr [edx + 4]
-//   0x0061c3bc  fild     dword ptr [esp + 0x18]
-//   0x0061c3c0  sub      eax, edi
-//   0x0061c3c2  mov      edi, dword ptr [edx + 8]
-//   0x0061c3c5  mov      dword ptr [esp + 0x18], eax
-//   0x0061c3c9  sub      ecx, edi
-//   0x0061c3cb  fstp     dword ptr [esp + 0x2c]
-//   0x0061c3cf  fild     dword ptr [esp + 0x18]
-//   0x0061c3d3  mov      dword ptr [esp + 0x18], ecx
-//   0x0061c3d7  mov      ecx, dword ptr [esp + 0x2c]
-//   0x0061c3db  mov      dword ptr [esp + 0x38], ecx
-//   0x0061c3df  lea      ecx, [esp + 0x18]
-//   0x0061c3e3  fstp     dword ptr [esp + 0x30]
-//   0x0061c3e7  fild     dword ptr [esp + 0x18]
-//   0x0061c3eb  mov      edx, dword ptr [esp + 0x30]
-//   0x0061c3ef  push     ecx
-//   0x0061c3f0  lea      ecx, [esi + 0x1b0]
-//   0x0061c3f6  mov      dword ptr [esp + 0x40], edx
-//   0x0061c3fa  fstp     dword ptr [esp + 0x38]
-//   0x0061c3fe  mov      eax, dword ptr [esp + 0x38]
-//   0x0061c402  mov      dword ptr [esp + 0x44], eax
-//   0x0061c406  call     0x492960
-//   0x0061c40b  movsx    edx, word ptr [eax]
-//   0x0061c40e  sub      edx, 0x3fff
-//   0x0061c414  mov      dword ptr [esp + 0x18], edx
-//   0x0061c418  fild     dword ptr [esp + 0x18]
-//   0x0061c41c  fmul     qword ptr [0x699120]
-//   0x0061c422  fstp     qword ptr [esp + 0x18]
-//   0x0061c426  mov      edi, dword ptr [esp + 0x1c]
-//   0x0061c42a  mov      ebx, dword ptr [esp + 0x18]
-//   0x0061c42e  push     edi
-//   0x0061c42f  push     ebx
-//   0x0061c430  call     0x4941e0
-//   0x0061c435  fstp     dword ptr [esp + 0x14]
-//   0x0061c439  push     edi
-//   0x0061c43a  push     ebx
-//   0x0061c43b  call     0x494230
-//   0x0061c440  fstp     dword ptr [esp + 0x54]
-//   0x0061c444  fld      dword ptr [esp + 0x44]
-//   0x0061c448  fld      dword ptr [esp + 0x40]
-//   0x0061c44c  fld      dword ptr [esp + 0x3c]
-//   0x0061c450  fld      st(0)
-//   0x0061c452  fmul     st(1)
-//   0x0061c454  fld      st(2)
-//   0x0061c456  fmul     st(3)
-//   0x0061c458  add      esp, 8
-//   0x0061c45b  faddp    st(1)
-//   0x0061c45d  fld      st(3)
-//   0x0061c45f  fmul     st(4)
-//   0x0061c461  faddp    st(1)
-//   0x0061c463  fstp     qword ptr [esp]
-//   0x0061c466  fstp     st(0)
-//   0x0061c468  fstp     st(0)
-//   0x0061c46a  fstp     st(0)
-//   0x0061c46c  call     0x494170
-//   0x0061c471  fst      dword ptr [esp + 0x20]
-//   0x0061c475  fmul     dword ptr [0x6a5b84]
-//   0x0061c47b  add      esp, 8
-//   0x0061c47e  fsubr    dword ptr [0x6a5b80]
-//   0x0061c484  fmul     dword ptr [ebp + 0xc]
-//   0x0061c487  fstp     qword ptr [esp + 0x10]
-//   0x0061c48b  mov      eax, dword ptr [esi]
-//   0x0061c48d  mov      ecx, esi
-//   0x0061c48f  call     dword ptr [eax + 0x80]
-//   0x0061c495  fld      qword ptr [esp + 0x10]
-//   0x0061c499  fdiv     qword ptr [eax + 0x200]
-//   0x0061c49f  fstp     dword ptr [esp + 0x10]
-//   0x0061c4a3  fld      dword ptr [esp + 0x18]
-//   0x0061c4a7  fabs     
-//   0x0061c4a9  fcomp    qword ptr [0x6a0ab0]
-//   0x0061c4af  fnstsw   ax
-//   0x0061c4b1  test     ah, 1
-//   0x0061c4b4  jne      0x61c641
-//   0x0061c4ba  fld      dword ptr [esp + 0x10]
-//   0x0061c4be  fcomp    dword ptr [0x6a5b7c]
-//   0x0061c4c4  fnstsw   ax
-//   0x0061c4c6  test     ah, 1
-//   0x0061c4c9  jne      0x61c641
-//   0x0061c4cf  fld      dword ptr [esp + 0x10]
-//   0x0061c4d3  fcomp    dword ptr [0x6a5b78]
-//   0x0061c4d9  fnstsw   ax
-//   0x0061c4db  test     ah, 0x41
-//   0x0061c4de  jne      0x61c4e8
-//   0x0061c4e0  mov      dword ptr [esp + 0x10], 0x3d4ccccd
-//   0x0061c4e8  fld      dword ptr [esp + 0x3c]
-//   0x0061c4ec  fmul     dword ptr [esp + 0x3c]
-//   0x0061c4f0  fld      dword ptr [esp + 0x38]
-//   0x0061c4f4  fmul     dword ptr [esp + 0x38]
-//   0x0061c4f8  sub      esp, 8
-//   0x0061c4fb  mov      dword ptr [esp + 0x48], 0
-//   0x0061c503  faddp    st(1)
-//   0x0061c505  fstp     qword ptr [esp]
-//   0x0061c508  call     0x494170
-//   0x0061c50d  fcom     qword ptr [0x699108]
-//   0x0061c513  add      esp, 8
-//   0x0061c516  fnstsw   ax
-//   0x0061c518  test     ah, 0x40
-//   0x0061c51b  jne      0x61c551
-//   0x0061c51d  fld      dword ptr [esp + 0x38]
-//   0x0061c521  fdiv     st(1)
-//   0x0061c523  fstp     dword ptr [esp + 0x18]
-//   0x0061c527  fld      dword ptr [esp + 0x3c]
-//   0x0061c52b  fdiv     st(1)
-//   0x0061c52d  mov      ecx, dword ptr [esp + 0x18]
-//   0x0061c531  mov      dword ptr [esp + 0x2c], ecx
-//   0x0061c535  fstp     dword ptr [esp + 0x1c]
-//   0x0061c539  mov      edx, dword ptr [esp + 0x1c]
-//   0x0061c53d  fdivr    qword ptr [0x699108]
-//   0x0061c543  mov      dword ptr [esp + 0x30], edx
-//   0x0061c547  fstp     dword ptr [esp + 0x20]
-//   0x0061c54b  mov      eax, dword ptr [esp + 0x20]
-//   0x0061c54f  jmp      0x61c567
+// UnitClass::vfunc_190 -- ALIAS of AircraftClass::vfunc_190 (same machine code at 0x0061c360); transcribed once.
 void UnitClass::vfunc_190(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_191 -- body derived from 17 instructions at 0x0040e730; semantics not reconstructed.
-// size 49 bytes; signature __thiscall nargs=1
-// callees: 0x00622130, 0x00646930
-//
-//   0x0040e730  push     esi
-//   0x0040e731  mov      esi, ecx
-//   0x0040e733  lea      ecx, [esi + 0xa8]
-//   0x0040e739  call     0x646930
-//   0x0040e73e  test     al, al
-//   0x0040e740  mov      eax, dword ptr [esp + 8]
-//   0x0040e744  je       0x40e761
-//   0x0040e746  test     eax, eax
-//   0x0040e748  jne      0x40e761
-//   0x0040e74a  mov      eax, dword ptr [esi]
-//   0x0040e74c  push     2
-//   0x0040e74e  mov      ecx, esi
-//   0x0040e750  call     dword ptr [eax + 0x80]
-//   0x0040e756  mov      ecx, eax
-//   0x0040e758  call     0x622130
-//   0x0040e75d  pop      esi
-//   0x0040e75e  ret      4
+// UnitClass::vfunc_191 -- ALIAS of AircraftClass::vfunc_191 (same machine code at 0x0040e730); transcribed once.
 void UnitClass::vfunc_191(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_192 -- body derived from 4 instructions at 0x0040e780; semantics not reconstructed.
-// size 15 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e780  mov      eax, dword ptr [ecx]
-//   0x0040e782  call     dword ptr [eax + 0x80]
-//   0x0040e788  mov      al, byte ptr [eax + 0x447]
-//   0x0040e78e  ret      
+// UnitClass::vfunc_192 -- ALIAS of AircraftClass::vfunc_192 (same machine code at 0x0040e780); transcribed once.
 void UnitClass::vfunc_192()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_193 -- body derived from 32 instructions at 0x00616550; semantics not reconstructed.
-// size 94 bytes; signature __thiscall
-// callees: 0x00435360, 0x00570280
-//
-//   0x00616550  push     esi
-//   0x00616551  mov      esi, ecx
-//   0x00616553  push     2
-//   0x00616555  mov      eax, dword ptr [esi]
-//   0x00616557  call     dword ptr [eax + 0x10c]
-//   0x0061655d  mov      edx, dword ptr [esi]
-//   0x0061655f  mov      ecx, esi
-//   0x00616561  call     dword ptr [edx + 0x80]
-//   0x00616567  mov      eax, dword ptr [eax + 0x68]
-//   0x0061656a  mov      edx, dword ptr [esi]
-//   0x0061656c  mov      ecx, esi
-//   0x0061656e  mov      dword ptr [esi + 0x28], eax
-//   0x00616571  call     dword ptr [edx + 0x2c]
-//   0x00616574  cmp      eax, 6
-//   0x00616577  jne      0x6165b8
-//   0x00616579  mov      eax, dword ptr [esi]
-//   0x0061657b  push     0
-//   0x0061657d  mov      ecx, esi
-//   0x0061657f  call     dword ptr [eax + 0x168]
-//   0x00616585  mov      ecx, esi
-//   0x00616587  call     0x570280
-//   0x0061658c  mov      ecx, dword ptr [0x714e20]
-//   0x00616592  fcomp    qword ptr [ecx + 0xea8]
-//   0x00616598  fnstsw   ax
-//   0x0061659a  test     ah, 0x41
-//   0x0061659d  je       0x6165ae
-//   0x0061659f  mov      eax, 1
-//   0x006165a4  mov      ecx, esi
-//   0x006165a6  push     eax
-//   0x006165a7  call     0x435360
-//   0x006165ac  pop      esi
-//   0x006165ad  ret      
+// UnitClass::vfunc_193 -- ALIAS of AircraftClass::vfunc_193 (same machine code at 0x00616550); transcribed once.
 void UnitClass::vfunc_193()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_194 -- body derived from 92 instructions at 0x00613760; semantics not reconstructed.
-// size 307 bytes; signature __thiscall nargs=1
-// callees: 0x0043a3a0, 0x00570280, 0x006468b0, 0x00646930
-//
-//   0x00613760  sub      esp, 0x24
-//   0x00613763  push     ebx
-//   0x00613764  push     ebp
-//   0x00613765  push     esi
-//   0x00613766  mov      esi, ecx
-//   0x00613768  xor      ebx, ebx
-//   0x0061376a  push     edi
-//   0x0061376b  cmp      dword ptr [esi + 0xf0], ebx
-//   0x00613771  jne      0x6138c4
-//   0x00613777  mov      eax, dword ptr [esi]
-//   0x00613779  call     dword ptr [eax + 0x220]
-//   0x0061377f  test     al, al
-//   0x00613781  je       0x61378b
-//   0x00613783  cmp      dword ptr [esi + 0x210], ebx
-//   0x00613789  je       0x6137ed
-//   0x0061378b  lea      ebp, [esi + 0xa8]
-//   0x00613791  mov      ecx, ebp
-//   0x00613793  call     0x6468b0
-//   0x00613798  test     al, al
-//   0x0061379a  jne      0x6137ab
-//   0x0061379c  mov      ecx, ebp
-//   0x0061379e  call     0x646930
-//   0x006137a3  test     al, al
-//   0x006137a5  je       0x613c4b
-//   0x006137ab  mov      edx, dword ptr [esi]
-//   0x006137ad  mov      ecx, esi
-//   0x006137af  call     dword ptr [edx + 0x80]
-//   0x006137b5  mov      ecx, ebp
-//   0x006137b7  mov      edi, eax
-//   0x006137b9  call     0x6468b0
-//   0x006137be  test     al, al
-//   0x006137c0  je       0x6137ca
-//   0x006137c2  cmp      byte ptr [edi + 0x12e], bl
-//   0x006137c8  jne      0x6137ed
-//   0x006137ca  mov      ecx, ebp
-//   0x006137cc  call     0x646930
-//   0x006137d1  test     al, al
-//   0x006137d3  je       0x613c4b
-//   0x006137d9  cmp      byte ptr [edi + 0x12e], bl
-//   0x006137df  jne      0x6137ed
-//   0x006137e1  cmp      byte ptr [edi + 0x140], bl
-//   0x006137e7  je       0x613c4b
-//   0x006137ed  mov      edi, dword ptr [esi + 0x78]
-//   0x006137f0  cmp      edi, ebx
-//   0x006137f2  je       0x613812
-//   0x006137f4  mov      eax, dword ptr [edi]
-//   0x006137f6  mov      ecx, edi
-//   0x006137f8  call     dword ptr [eax + 0x2c]
-//   0x006137fb  cmp      eax, 6
-//   0x006137fe  jne      0x613812
-//   0x00613800  mov      ecx, dword ptr [edi + 0x218]
-//   0x00613806  cmp      byte ptr [ecx + 0x815], bl
-//   0x0061380c  jne      0x613c4b
-//   0x00613812  lea      edi, [esi + 0xf8]
-//   0x00613818  mov      ecx, edi
-//   0x0061381a  call     0x43a3a0
-//   0x0061381f  test     eax, eax
-//   0x00613821  jne      0x613853
-//   0x00613823  mov      eax, dword ptr [esi + 0x104]
-//   0x00613829  cmp      eax, ebx
-//   0x0061382b  je       0x613853
-//   0x0061382d  mov      edx, dword ptr [esi + 0x108]
-//   0x00613833  mov      ecx, dword ptr [esi + 0xf4]
-//   0x00613839  add      ecx, edx
-//   0x0061383b  mov      dword ptr [esi + 0xf4], ecx
-//   0x00613841  mov      ecx, dword ptr [0x7b2e54]
-//   0x00613847  mov      dword ptr [edi], ecx
-//   0x00613849  mov      ecx, dword ptr [esp + 0x14]
-//   0x0061384d  mov      dword ptr [edi + 4], ecx
-//   0x00613850  mov      dword ptr [edi + 8], eax
-//   0x00613853  mov      edx, dword ptr [esi]
-//   0x00613855  mov      ecx, esi
-//   0x00613857  call     dword ptr [edx + 0x238]
-//   0x0061385d  test     al, al
-//   0x0061385f  je       0x613c4b
-//   0x00613865  mov      ecx, esi
-//   0x00613867  call     0x570280
-//   0x0061386c  mov      eax, dword ptr [0x714e20]
-//   0x00613871  fcomp    qword ptr [eax + 0xeb0]
-//   0x00613877  fnstsw   ax
-//   0x00613879  test     ah, 0x41
-//   0x0061387c  jne      0x613893
-//   0x0061387e  mov      edx, dword ptr [esi]
-//   0x00613880  push     ebx
-//   0x00613881  mov      ecx, esi
-//   0x00613883  call     dword ptr [edx + 0x330]
-//   0x00613889  pop      edi
-//   0x0061388a  pop      esi
-//   0x0061388b  pop      ebp
-//   0x0061388c  pop      ebx
-//   0x0061388d  add      esp, 0x24
-//   0x00613890  ret      4
+// UnitClass::vfunc_194 -- ALIAS of AircraftClass::vfunc_194 (same machine code at 0x00613760); transcribed once.
 void UnitClass::vfunc_194(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_195 -- body derived from 12 instructions at 0x0061c650; semantics not reconstructed.
-// size 31 bytes; signature __thiscall
-// callees: 0x0061c671
-//
-//   0x0061c650  sub      esp, 8
-//   0x0061c653  push     ebx
-//   0x0061c654  push     esi
-//   0x0061c655  mov      esi, ecx
-//   0x0061c657  push     edi
-//   0x0061c658  fld      dword ptr [esi + 0x154]
-//   0x0061c65e  fcomp    qword ptr [0x6a0ab0]
-//   0x0061c664  fnstsw   ax
-//   0x0061c666  test     ah, 0x41
-//   0x0061c669  jne      0x61c66f
-//   0x0061c66b  mov      cl, 1
-//   0x0061c66d  jmp      0x61c671
+// UnitClass::vfunc_195 -- ALIAS of AircraftClass::vfunc_195 (same machine code at 0x0061c650); transcribed once.
 void UnitClass::vfunc_195()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_196 -- body derived from 133 instructions at 0x0060f8f0; semantics not reconstructed.
-// size 421 bytes; signature __thiscall nargs=9
-// callees: 0x00459d80, 0x00459da0, 0x004e53f0, 0x00502060, 0x005020d0, 0x0068298c
-//
-//   0x0060f8f0  sub      esp, 0x2c
-//   0x0060f8f3  push     esi
-//   0x0060f8f4  mov      esi, ecx
-//   0x0060f8f6  lea      ecx, [esp + 0xc]
-//   0x0060f8fa  mov      eax, dword ptr [esi]
-//   0x0060f8fc  push     ecx
-//   0x0060f8fd  mov      ecx, esi
-//   0x0060f8ff  call     dword ptr [eax + 0x48]
-//   0x0060f902  mov      ecx, eax
-//   0x0060f904  mov      eax, dword ptr [ecx]
-//   0x0060f906  cdq      
-//   0x0060f907  and      edx, 0xff
-//   0x0060f90d  add      eax, edx
-//   0x0060f90f  sar      eax, 8
-//   0x0060f912  mov      word ptr [esp + 4], ax
-//   0x0060f917  mov      eax, dword ptr [ecx + 4]
-//   0x0060f91a  cdq      
-//   0x0060f91b  and      edx, 0xff
-//   0x0060f921  mov      ecx, 0x710d28
-//   0x0060f926  add      eax, edx
-//   0x0060f928  sar      eax, 8
-//   0x0060f92b  mov      word ptr [esp + 6], ax
-//   0x0060f930  mov      edx, dword ptr [esp + 4]
-//   0x0060f934  lea      eax, [esp + 8]
-//   0x0060f938  mov      dword ptr [esp + 8], edx
-//   0x0060f93c  push     eax
-//   0x0060f93d  call     0x5020d0
-//   0x0060f942  mov      ecx, dword ptr [esi + 0xec]
-//   0x0060f948  mov      edx, dword ptr [ecx + 0x20]
-//   0x0060f94b  mov      ecx, eax
-//   0x0060f94d  push     edx
-//   0x0060f94e  call     0x459d80
-//   0x0060f953  test     al, al
-//   0x0060f955  je       0x60fa90
-//   0x0060f95b  mov      eax, dword ptr [esi]
-//   0x0060f95d  mov      ecx, esi
-//   0x0060f95f  call     dword ptr [eax + 0x238]
-//   0x0060f965  test     al, al
-//   0x0060f967  je       0x60fa90
-//   0x0060f96d  push     ebx
-//   0x0060f96e  push     edi
-//   0x0060f96f  push     0
-//   0x0060f971  push     0
-//   0x0060f973  lea      ecx, [esp + 0x28]
-//   0x0060f977  call     0x4e53f0
-//   0x0060f97c  mov      ecx, dword ptr [0x7b2d60]
-//   0x0060f982  mov      dword ptr [esp + 0x20], 0x69a684
-//   0x0060f98a  mov      dword ptr [esp + 0x34], 0xa
-//   0x0060f992  mov      dword ptr [esp + 0x30], 0
-//   0x0060f99a  lea      ebx, [ecx - 1]
-//   0x0060f99d  test     ebx, ebx
-//   0x0060f99f  jl       0x60fa43
-//   0x0060f9a5  mov      edx, dword ptr [0x7b2d54]
-//   0x0060f9ab  mov      edi, dword ptr [edx + ebx*4]
-//   0x0060f9ae  cmp      dword ptr [edi + 0x11c], esi
-//   0x0060f9b4  jne      0x60fa3c
-//   0x0060f9ba  mov      eax, dword ptr [edi + 0xec]
-//   0x0060f9c0  mov      edx, dword ptr [esi]
-//   0x0060f9c2  mov      ecx, dword ptr [eax + 0x20]
-//   0x0060f9c5  lea      eax, [esp + 0x14]
-//   0x0060f9c9  push     ecx
-//   0x0060f9ca  push     eax
-//   0x0060f9cb  mov      ecx, esi
-//   0x0060f9cd  call     dword ptr [edx + 0x48]
-//   0x0060f9d0  push     eax
-//   0x0060f9d1  mov      ecx, 0x710d28
-//   0x0060f9d6  call     0x502060
-//   0x0060f9db  mov      ecx, eax
-//   0x0060f9dd  call     0x459da0
-//   0x0060f9e2  test     al, al
-//   0x0060f9e4  jne      0x60f9f6
-//   0x0060f9e6  mov      ecx, dword ptr [edi + 0xec]
-//   0x0060f9ec  mov      eax, dword ptr [esi + 0xec]
-//   0x0060f9f2  cmp      ecx, eax
-//   0x0060f9f4  jne      0x60fa3c
-//   0x0060f9f6  mov      eax, dword ptr [esp + 0x28]
-//   0x0060f9fa  mov      ecx, dword ptr [esp + 0x30]
-//   0x0060f9fe  cmp      ecx, eax
-//   0x0060fa00  jl       0x60fa2a
-//   0x0060fa02  mov      cl, byte ptr [esp + 0x2d]
-//   0x0060fa06  test     cl, cl
-//   0x0060fa08  jne      0x60fa0e
-//   0x0060fa0a  test     eax, eax
-//   0x0060fa0c  jne      0x60fa3c
-//   0x0060fa0e  mov      ecx, dword ptr [esp + 0x34]
-//   0x0060fa12  test     ecx, ecx
-//   0x0060fa14  jle      0x60fa3c
-//   0x0060fa16  mov      edx, dword ptr [esp + 0x20]
-//   0x0060fa1a  add      eax, ecx
-//   0x0060fa1c  push     0
-//   0x0060fa1e  push     eax
-//   0x0060fa1f  lea      ecx, [esp + 0x28]
-//   0x0060fa23  call     dword ptr [edx + 8]
-//   0x0060fa26  test     al, al
-//   0x0060fa28  je       0x60fa3c
-//   0x0060fa2a  mov      ecx, dword ptr [esp + 0x30]
-//   0x0060fa2e  mov      eax, ecx
-//   0x0060fa30  inc      ecx
-//   0x0060fa31  mov      dword ptr [esp + 0x30], ecx
-//   0x0060fa35  mov      ecx, dword ptr [esp + 0x24]
-//   0x0060fa39  mov      dword ptr [ecx + eax*4], edi
-//   0x0060fa3c  dec      ebx
-//   0x0060fa3d  jns      0x60f9a5
-//   0x0060fa43  mov      edx, dword ptr [esi]
-//   0x0060fa45  push     0
-//   0x0060fa47  mov      ecx, esi
-//   0x0060fa49  call     dword ptr [edx + 0x330]
-//   0x0060fa4f  mov      eax, dword ptr [esp + 0x30]
-//   0x0060fa53  lea      edi, [eax - 1]
-//   0x0060fa56  test     edi, edi
-//   0x0060fa58  jl       0x60fa6d
-//   0x0060fa5a  mov      ecx, dword ptr [esp + 0x24]
-//   0x0060fa5e  push     esi
-//   0x0060fa5f  mov      ecx, dword ptr [ecx + edi*4]
-//   0x0060fa62  mov      edx, dword ptr [ecx]
-//   0x0060fa64  call     dword ptr [edx + 0x2e8]
-//   0x0060fa6a  dec      edi
-//   0x0060fa6b  jns      0x60fa5a
-//   0x0060fa6d  mov      eax, dword ptr [esp + 0x24]
-//   0x0060fa71  pop      edi
-//   0x0060fa72  test     eax, eax
-//   0x0060fa74  mov      dword ptr [esp + 0x1c], 0x69a668
-//   0x0060fa7c  pop      ebx
-//   0x0060fa7d  je       0x60fa90
-//   0x0060fa7f  mov      cl, byte ptr [esp + 0x25]
-//   0x0060fa83  test     cl, cl
-//   0x0060fa85  je       0x60fa90
-//   0x0060fa87  push     eax
-//   0x0060fa88  call     0x68298c
-//   0x0060fa8d  add      esp, 4
-//   0x0060fa90  pop      esi
-//   0x0060fa91  add      esp, 0x2c
-//   0x0060fa94  ret      
+// UnitClass::vfunc_196 -- ALIAS of AircraftClass::vfunc_196 (same machine code at 0x0060f8f0); transcribed once.
 void UnitClass::vfunc_196(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_197 -- body derived from 47 instructions at 0x004a2880; semantics not reconstructed.
-// size 159 bytes; signature __thiscall nargs=7
-// callees: 0x004a29fb, 0x0061c9b0
-//
-//   0x004a2880  sub      esp, 0x84
-//   0x004a2886  push     esi
-//   0x004a2887  mov      esi, ecx
-//   0x004a2889  push     edi
-//   0x004a288a  mov      edi, dword ptr [esi + 0x11c]
-//   0x004a2890  test     edi, edi
-//   0x004a2892  jne      0x4a28a2
-//   0x004a2894  mov      eax, dword ptr [esi + 0x270]
-//   0x004a289a  test     eax, eax
-//   0x004a289c  je       0x4a2c12
-//   0x004a28a2  mov      edx, dword ptr [0x7dca28]
-//   0x004a28a8  mov      eax, dword ptr [0x7dca30]
-//   0x004a28ad  cmp      edx, -1
-//   0x004a28b0  je       0x4a28c4
-//   0x004a28b2  mov      ecx, dword ptr [0x7b2e54]
-//   0x004a28b8  sub      ecx, edx
-//   0x004a28ba  cmp      ecx, eax
-//   0x004a28bc  jge      0x4a2c12
-//   0x004a28c2  sub      eax, ecx
-//   0x004a28c4  test     eax, eax
-//   0x004a28c6  jle      0x4a2c12
-//   0x004a28cc  test     edi, edi
-//   0x004a28ce  je       0x4a291f
-//   0x004a28d0  mov      eax, dword ptr [esi]
-//   0x004a28d2  lea      ecx, [esp + 8]
-//   0x004a28d6  push     0
-//   0x004a28d8  push     ecx
-//   0x004a28d9  mov      ecx, esi
-//   0x004a28db  call     dword ptr [eax + 0x288]
-//   0x004a28e1  mov      edx, dword ptr [eax]
-//   0x004a28e3  mov      dword ptr [esp + 0x50], edx
-//   0x004a28e7  mov      ecx, dword ptr [eax + 4]
-//   0x004a28ea  mov      dword ptr [esp + 0x54], ecx
-//   0x004a28ee  mov      ecx, esi
-//   0x004a28f0  mov      edx, dword ptr [eax + 8]
-//   0x004a28f3  lea      eax, [esp + 8]
-//   0x004a28f7  push     eax
-//   0x004a28f8  mov      dword ptr [esp + 0x5c], edx
-//   0x004a28fc  call     0x61c9b0
-//   0x004a2901  mov      ecx, dword ptr [eax]
-//   0x004a2903  mov      edi, 8
-//   0x004a2908  mov      dword ptr [esp + 0x14], ecx
-//   0x004a290c  mov      edx, dword ptr [eax + 4]
-//   0x004a290f  mov      dword ptr [esp + 0x18], edx
-//   0x004a2913  mov      eax, dword ptr [eax + 8]
-//   0x004a2916  mov      dword ptr [esp + 0x1c], eax
-//   0x004a291a  jmp      0x4a29fb
+// UnitClass::vfunc_197 -- ALIAS of AircraftClass::vfunc_197 (same machine code at 0x004a2880); transcribed once.
 void UnitClass::vfunc_197(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_198 -- body derived from 60 instructions at 0x004a19a0; semantics not reconstructed.
-// size 164 bytes; signature __thiscall nargs=9
-// callees: 0x00619490, 0x006939b0
-//
-//   0x004a19a0  sub      esp, 0x40
-//   0x004a19a3  push     ebx
-//   0x004a19a4  push     esi
-//   0x004a19a5  mov      esi, dword ptr [esp + 0x64]
-//   0x004a19a9  mov      ebx, ecx
-//   0x004a19ab  push     edi
-//   0x004a19ac  mov      ecx, 0xc
-//   0x004a19b1  lea      edi, [esp + 0x1c]
-//   0x004a19b5  rep movsd dword ptr es:[edi], dword ptr [esi]
-//   0x004a19b7  mov      esi, dword ptr [esp + 0x64]
-//   0x004a19bb  mov      eax, dword ptr [esi]
-//   0x004a19bd  mov      ecx, dword ptr [esi + 4]
-//   0x004a19c0  mov      dword ptr [esp + 0xc], eax
-//   0x004a19c4  mov      eax, dword ptr [ebx + 0x324]
-//   0x004a19ca  test     eax, eax
-//   0x004a19cc  mov      dword ptr [esp + 0x10], ecx
-//   0x004a19d0  je       0x4a1a07
-//   0x004a19d2  test     eax, eax
-//   0x004a19d4  jne      0x4a19e0
-//   0x004a19d6  push     0x80004003
-//   0x004a19db  call     0x6939b0
-//   0x004a19e0  mov      eax, dword ptr [ebx + 0x324]
-//   0x004a19e6  lea      ecx, [esp + 0x14]
-//   0x004a19ea  push     ecx
-//   0x004a19eb  push     eax
-//   0x004a19ec  mov      edx, dword ptr [eax]
-//   0x004a19ee  call     dword ptr [edx + 0x2c]
-//   0x004a19f1  mov      ecx, dword ptr [eax]
-//   0x004a19f3  mov      edx, dword ptr [eax + 4]
-//   0x004a19f6  mov      eax, dword ptr [esi]
-//   0x004a19f8  add      eax, ecx
-//   0x004a19fa  mov      ecx, dword ptr [esi + 4]
-//   0x004a19fd  add      ecx, edx
-//   0x004a19ff  mov      dword ptr [esp + 0xc], eax
-//   0x004a1a03  mov      dword ptr [esp + 0x10], ecx
-//   0x004a1a07  mov      edx, dword ptr [esp + 0x70]
-//   0x004a1a0b  mov      eax, dword ptr [esp + 0x6c]
-//   0x004a1a0f  push     edx
-//   0x004a1a10  lea      ecx, [esp + 0x20]
-//   0x004a1a14  push     eax
-//   0x004a1a15  mov      eax, dword ptr [esp + 0x68]
-//   0x004a1a19  lea      edx, [esp + 0x14]
-//   0x004a1a1d  push     ecx
-//   0x004a1a1e  mov      ecx, dword ptr [esp + 0x68]
-//   0x004a1a22  push     edx
-//   0x004a1a23  mov      edx, dword ptr [esp + 0x68]
-//   0x004a1a27  push     eax
-//   0x004a1a28  mov      eax, dword ptr [esp + 0x68]
-//   0x004a1a2c  push     ecx
-//   0x004a1a2d  mov      ecx, dword ptr [esp + 0x68]
-//   0x004a1a31  push     edx
-//   0x004a1a32  push     eax
-//   0x004a1a33  push     ecx
-//   0x004a1a34  mov      ecx, ebx
-//   0x004a1a36  call     0x619490
-//   0x004a1a3b  pop      edi
-//   0x004a1a3c  pop      esi
-//   0x004a1a3d  pop      ebx
-//   0x004a1a3e  add      esp, 0x40
-//   0x004a1a41  ret      0x24
+// UnitClass::vfunc_198 -- ALIAS of AircraftClass::vfunc_198 (same machine code at 0x004a19a0); transcribed once.
 void UnitClass::vfunc_198(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_199 -- body derived from 1 instructions at 0x00610870; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00610870  ret      8
+// UnitClass::vfunc_199 -- ALIAS of AircraftClass::vfunc_199 (same machine code at 0x00610870); transcribed once.
 void UnitClass::vfunc_199(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_200 -- body derived from 208 instructions at 0x00610c50; semantics not reconstructed.
-// size 636 bytes; signature __thiscall nargs=17
-// callees: 0x0040e980, 0x00478f00, 0x00570280, 0x005f4dc0, 0x00610ed0, 0x0067faf0
-//
-//   0x00610c50  sub      esp, 0x44
-//   0x00610c53  push     ebx
-//   0x00610c54  mov      ebx, ecx
-//   0x00610c56  push     ebp
-//   0x00610c57  push     esi
-//   0x00610c58  mov      eax, dword ptr [ebx]
-//   0x00610c5a  push     edi
-//   0x00610c5b  mov      dword ptr [esp + 0x1c], ebx
-//   0x00610c5f  call     dword ptr [eax + 0x2c]
-//   0x00610c62  cmp      eax, 6
-//   0x00610c65  jne      0x610fb6
-//   0x00610c6b  mov      edx, dword ptr [ebx]
-//   0x00610c6d  mov      ecx, ebx
-//   0x00610c6f  call     dword ptr [edx + 0x198]
-//   0x00610c75  mov      eax, dword ptr [ebx]
-//   0x00610c77  mov      ecx, ebx
-//   0x00610c79  call     dword ptr [eax + 0x80]
-//   0x00610c7f  mov      edx, dword ptr [eax]
-//   0x00610c81  lea      ecx, [esp + 0x3c]
-//   0x00610c85  push     ecx
-//   0x00610c86  mov      ecx, eax
-//   0x00610c88  call     dword ptr [edx + 0x7c]
-//   0x00610c8b  mov      esi, dword ptr [eax]
-//   0x00610c8d  lea      ecx, [esp + 0x3c]
-//   0x00610c91  mov      edi, dword ptr [eax + 4]
-//   0x00610c94  mov      ebp, dword ptr [eax + 8]
-//   0x00610c97  mov      eax, ebp
-//   0x00610c99  cdq      
-//   0x00610c9a  sub      eax, edx
-//   0x00610c9c  sar      eax, 1
-//   0x00610c9e  push     eax
-//   0x00610c9f  mov      eax, edi
-//   0x00610ca1  cdq      
-//   0x00610ca2  sub      eax, edx
-//   0x00610ca4  sar      eax, 1
-//   0x00610ca6  push     eax
-//   0x00610ca7  mov      eax, esi
-//   0x00610ca9  cdq      
-//   0x00610caa  sub      eax, edx
-//   0x00610cac  sar      eax, 1
-//   0x00610cae  push     eax
-//   0x00610caf  call     0x40e980
-//   0x00610cb4  mov      ecx, eax
-//   0x00610cb6  mov      eax, dword ptr [ecx]
-//   0x00610cb8  sub      esi, eax
-//   0x00610cba  mov      eax, ebp
-//   0x00610cbc  mov      edx, dword ptr [ecx + 4]
-//   0x00610cbf  sub      edi, edx
-//   0x00610cc1  lea      edx, [esp + 0x48]
-//   0x00610cc5  mov      ecx, dword ptr [ecx + 8]
-//   0x00610cc8  push     edx
-//   0x00610cc9  sub      eax, ecx
-//   0x00610ccb  mov      ecx, esi
-//   0x00610ccd  mov      dword ptr [esp + 0x54], eax
-//   0x00610cd1  lea      eax, [esp + 0x38]
-//   0x00610cd5  neg      ecx
-//   0x00610cd7  mov      dword ptr [esp + 0x4c], ecx
-//   0x00610cdb  mov      ecx, dword ptr [0x714eec]
-//   0x00610ce1  push     eax
-//   0x00610ce2  mov      dword ptr [esp + 0x54], edi
-//   0x00610ce6  mov      dword ptr [esp + 0x58], ebp
-//   0x00610cea  call     0x5f4dc0
-//   0x00610cef  mov      ecx, dword ptr [eax]
-//   0x00610cf1  mov      edx, dword ptr [esp + 0x4c]
-//   0x00610cf5  mov      dword ptr [esp + 0x3c], ecx
-//   0x00610cf9  lea      ecx, [esp + 0x34]
-//   0x00610cfd  mov      ebp, dword ptr [eax + 4]
-//   0x00610d00  mov      eax, dword ptr [esp + 0x48]
-//   0x00610d04  neg      eax
-//   0x00610d06  neg      eax
-//   0x00610d08  mov      dword ptr [esp + 0x48], eax
-//   0x00610d0c  lea      eax, [esp + 0x48]
-//   0x00610d10  push     eax
-//   0x00610d11  push     ecx
-//   0x00610d12  mov      ecx, dword ptr [0x714eec]
-//   0x00610d18  neg      edx
-//   0x00610d1a  mov      dword ptr [esp + 0x54], edx
-//   0x00610d1e  call     0x5f4dc0
-//   0x00610d23  mov      edx, dword ptr [eax]
-//   0x00610d25  lea      ecx, [esp + 0x48]
-//   0x00610d29  mov      dword ptr [esp + 0x2c], edx
-//   0x00610d2d  lea      edx, [esp + 0x34]
-//   0x00610d31  mov      esi, dword ptr [eax + 4]
-//   0x00610d34  mov      eax, dword ptr [esp + 0x4c]
-//   0x00610d38  neg      eax
-//   0x00610d3a  push     ecx
-//   0x00610d3b  mov      ecx, dword ptr [0x714eec]
-//   0x00610d41  push     edx
-//   0x00610d42  mov      dword ptr [esp + 0x58], 0
-//   0x00610d4a  mov      dword ptr [esp + 0x54], eax
-//   0x00610d4e  call     0x5f4dc0
-//   0x00610d53  mov      ecx, dword ptr [eax]
-//   0x00610d55  mov      edx, dword ptr [eax + 4]
-//   0x00610d58  mov      eax, dword ptr [esp + 0x48]
-//   0x00610d5c  neg      eax
-//   0x00610d5e  neg      eax
-//   0x00610d60  mov      dword ptr [esp + 0x48], eax
-//   0x00610d64  mov      eax, ebp
-//   0x00610d66  sub      eax, esi
-//   0x00610d68  mov      dword ptr [esp + 0x30], edx
-//   0x00610d6c  cdq      
-//   0x00610d6d  mov      dword ptr [esp + 0x2c], ecx
-//   0x00610d71  mov      ecx, dword ptr [esp + 0x4c]
-//   0x00610d75  sub      eax, edx
-//   0x00610d77  neg      ecx
-//   0x00610d79  mov      edi, eax
-//   0x00610d7b  mov      dword ptr [esp + 0x4c], ecx
-//   0x00610d7f  sar      edi, 1
-//   0x00610d81  mov      ecx, ebx
-//   0x00610d83  mov      dword ptr [esp + 0x60], edi
-//   0x00610d87  call     0x570280
-//   0x00610d8c  fimul    dword ptr [esp + 0x60]
-//   0x00610d90  call     0x67faf0
-//   0x00610d95  mov      esi, eax
-//   0x00610d97  mov      eax, 1
-//   0x00610d9c  cmp      esi, eax
-//   0x00610d9e  mov      dword ptr [esp + 0x60], esi
-//   0x00610da2  jg       0x610daa
-//   0x00610da4  mov      dword ptr [esp + 0x60], eax
-//   0x00610da8  mov      esi, eax
-//   0x00610daa  cmp      esi, edi
-//   0x00610dac  jl       0x610db4
-//   0x00610dae  mov      dword ptr [esp + 0x60], edi
-//   0x00610db2  mov      esi, edi
-//   0x00610db4  mov      ecx, ebx
-//   0x00610db6  mov      dword ptr [esp + 0x14], eax
-//   0x00610dba  call     0x570280
-//   0x00610dbf  mov      edx, dword ptr [0x714e20]
-//   0x00610dc5  fcomp    qword ptr [edx + 0xea8]
-//   0x00610dcb  fnstsw   ax
-//   0x00610dcd  test     ah, 0x41
-//   0x00610dd0  je       0x610dda
-//   0x00610dd2  mov      dword ptr [esp + 0x14], 2
-//   0x00610dda  mov      ecx, ebx
-//   0x00610ddc  call     0x570280
-//   0x00610de1  mov      eax, dword ptr [0x714e20]
-//   0x00610de6  fcomp    qword ptr [eax + 0xeb0]
-//   0x00610dec  fnstsw   ax
-//   0x00610dee  test     ah, 0x41
-//   0x00610df1  je       0x610dfb
-//   0x00610df3  mov      dword ptr [esp + 0x14], 4
-//   0x00610dfb  lea      ecx, [edi + edi]
-//   0x00610dfe  mov      edx, 2
-//   0x00610e03  sub      edx, ecx
-//   0x00610e05  test     esi, esi
-//   0x00610e07  mov      esi, dword ptr [esp + 0x58]
-//   0x00610e0b  mov      dword ptr [esp + 0x28], edx
-//   0x00610e0f  jle      0x610ea3
-//   0x00610e15  mov      eax, dword ptr [esp + 0x60]
-//   0x00610e19  xor      ebx, ebx
-//   0x00610e1b  mov      dword ptr [esp + 0x58], ebx
-//   0x00610e1f  mov      dword ptr [esp + 0x18], eax
-//   0x00610e23  mov      eax, dword ptr [esi]
-//   0x00610e25  mov      ecx, dword ptr [esp + 0x3c]
-//   0x00610e29  add      eax, ecx
-//   0x00610e2b  mov      ecx, ebp
-//   0x00610e2d  add      ecx, dword ptr [esi + 4]
-//   0x00610e30  lea      eax, [eax + edi*4 + 3]
-//   0x00610e34  sub      eax, ebx
-//   0x00610e36  mov      dword ptr [esp + 0x34], eax
-//   0x00610e3a  xor      eax, eax
-//   0x00610e3c  push     eax
-//   0x00610e3d  lea      ecx, [edx + ecx + 2]
-//   0x00610e41  mov      edx, dword ptr [esp + 0x5c]
-//   0x00610e45  push     eax
-//   0x00610e46  push     eax
-//   0x00610e47  push     eax
-//   0x00610e48  sub      ecx, edx
-//   0x00610e4a  push     0x3e8
-//   0x00610e4f  push     eax
-//   0x00610e50  mov      dword ptr [esp + 0x50], ecx
-//   0x00610e54  mov      ecx, dword ptr [esp + 0x74]
-//   0x00610e58  push     eax
-//   0x00610e59  push     eax
-//   0x00610e5a  mov      eax, dword ptr [esp + 0x34]
-//   0x00610e5e  push     0x600
-//   0x00610e63  lea      edx, [esp + 0x58]
-//   0x00610e67  push     ecx
-//   0x00610e68  mov      ecx, dword ptr [0x7d6a28]
-//   0x00610e6e  push     edx
-//   0x00610e6f  mov      edx, dword ptr [0x710be4]
-//   0x00610e75  push     eax
-//   0x00610e76  push     ecx
-//   0x00610e77  mov      ecx, dword ptr [0x714edc]
-//   0x00610e7d  call     0x478f00
-//   0x00610e82  mov      ecx, dword ptr [esp + 0x58]
-//   0x00610e86  mov      eax, dword ptr [esp + 0x18]
-//   0x00610e8a  mov      edx, dword ptr [esp + 0x28]
-//   0x00610e8e  add      ebx, 4
-//   0x00610e91  sub      ecx, 2
-//   0x00610e94  dec      eax
-//   0x00610e95  mov      dword ptr [esp + 0x58], ecx
-//   0x00610e99  mov      dword ptr [esp + 0x18], eax
-//   0x00610e9d  jne      0x610e23
-//   0x00610e9f  mov      ebx, dword ptr [esp + 0x1c]
-//   0x00610ea3  mov      eax, dword ptr [esp + 0x60]
-//   0x00610ea7  cmp      eax, edi
-//   0x00610ea9  jge      0x610f47
-//   0x00610eaf  mov      ecx, eax
-//   0x00610eb1  mov      ebx, eax
-//   0x00610eb3  neg      ebx
-//   0x00610eb5  lea      eax, [ecx*4]
-//   0x00610ebc  mov      dword ptr [esp + 0x60], eax
-//   0x00610ec0  mov      eax, edi
-//   0x00610ec2  shl      ebx, 1
-//   0x00610ec4  sub      eax, ecx
-//   0x00610ec6  mov      dword ptr [esp + 0x58], eax
-//   0x00610eca  jmp      0x610ed0
+// UnitClass::vfunc_200 -- ALIAS of AircraftClass::vfunc_200 (same machine code at 0x00610c50); transcribed once.
 void UnitClass::vfunc_200(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_201 -- body derived from 124 instructions at 0x0061b4f0; semantics not reconstructed.
-// size 426 bytes; signature __thiscall nargs=12
-// callees: 0x00446e70, 0x00478f00, 0x0061ba49
-//
-//   0x0061b4f0  sub      esp, 0x38
-//   0x0061b4f3  push     ebx
-//   0x0061b4f4  push     ebp
-//   0x0061b4f5  mov      ebp, dword ptr [esp + 0x44]
-//   0x0061b4f9  push     esi
-//   0x0061b4fa  mov      esi, ecx
-//   0x0061b4fc  push     edi
-//   0x0061b4fd  mov      eax, dword ptr [ebp]
-//   0x0061b500  mov      edi, dword ptr [ebp + 4]
-//   0x0061b503  add      eax, 6
-//   0x0061b506  mov      dword ptr [esp + 0x38], 4
-//   0x0061b50e  mov      dword ptr [esp + 0x2c], eax
-//   0x0061b512  mov      eax, dword ptr [esi]
-//   0x0061b514  mov      ebx, 2
-//   0x0061b519  dec      edi
-//   0x0061b51a  call     dword ptr [eax + 0x84]
-//   0x0061b520  mov      ecx, dword ptr [0x7d6a28]
-//   0x0061b526  mov      edx, dword ptr [esi]
-//   0x0061b528  mov      dword ptr [esp + 0x10], ecx
-//   0x0061b52c  mov      ecx, esi
-//   0x0061b52e  call     dword ptr [edx + 0x84]
-//   0x0061b534  mov      eax, dword ptr [0x7d6a28]
-//   0x0061b539  mov      edx, dword ptr [esi]
-//   0x0061b53b  mov      ecx, esi
-//   0x0061b53d  mov      dword ptr [esp + 0x28], eax
-//   0x0061b541  call     dword ptr [edx + 0x84]
-//   0x0061b547  mov      eax, dword ptr [0x7d6a2c]
-//   0x0061b54c  mov      edx, dword ptr [esi]
-//   0x0061b54e  mov      ecx, esi
-//   0x0061b550  mov      dword ptr [esp + 0x1c], eax
-//   0x0061b554  call     dword ptr [edx + 0x2c]
-//   0x0061b557  cmp      eax, 6
-//   0x0061b55a  je       0x61b57c
-//   0x0061b55c  mov      eax, dword ptr [ebp]
-//   0x0061b55f  mov      edi, dword ptr [ebp + 4]
-//   0x0061b562  sub      eax, 5
-//   0x0061b565  xor      ebx, ebx
-//   0x0061b567  mov      dword ptr [esp + 0x2c], eax
-//   0x0061b56b  mov      eax, 4
-//   0x0061b570  mov      dword ptr [esp + 0x38], eax
-//   0x0061b574  mov      eax, dword ptr [esp + 0x1c]
-//   0x0061b578  mov      dword ptr [esp + 0x10], eax
-//   0x0061b57c  mov      edx, dword ptr [esi]
-//   0x0061b57e  mov      ecx, esi
-//   0x0061b580  call     dword ptr [edx + 0x80]
-//   0x0061b586  mov      ecx, dword ptr [eax + 0x314]
-//   0x0061b58c  mov      ebp, dword ptr [esp + 0x54]
-//   0x0061b590  test     ecx, ecx
-//   0x0061b592  jle      0x61b69a
-//   0x0061b598  lea      ecx, [esi + 0xa0]
-//   0x0061b59e  call     0x446e70
-//   0x0061b5a3  mov      dword ptr [esp + 0x54], eax
-//   0x0061b5a7  mov      eax, dword ptr [esi]
-//   0x0061b5a9  mov      ecx, esi
-//   0x0061b5ab  mov      dword ptr [esp + 0x20], 0
-//   0x0061b5b3  call     dword ptr [eax + 0x84]
-//   0x0061b5b9  mov      edx, dword ptr [eax]
-//   0x0061b5bb  mov      ecx, eax
-//   0x0061b5bd  call     dword ptr [edx + 0x74]
-//   0x0061b5c0  test     eax, eax
-//   0x0061b5c2  jle      0x61ba49
-//   0x0061b5c8  mov      eax, dword ptr [esp + 0x2c]
-//   0x0061b5cc  mov      dword ptr [esp + 0x1c], 0
-//   0x0061b5d4  mov      dword ptr [esp + 0x14], eax
-//   0x0061b5d8  mov      ecx, dword ptr [esp + 0x54]
-//   0x0061b5dc  xor      edx, edx
-//   0x0061b5de  test     ecx, ecx
-//   0x0061b5e0  je       0x61b617
-//   0x0061b5e2  mov      edx, dword ptr [ecx]
-//   0x0061b5e4  mov      dword ptr [esp + 0x24], 1
-//   0x0061b5ec  call     dword ptr [edx + 0x2c]
-//   0x0061b5ef  cmp      eax, 0xf
-//   0x0061b5f2  jne      0x61b608
-//   0x0061b5f4  mov      eax, dword ptr [esp + 0x54]
-//   0x0061b5f8  mov      ecx, dword ptr [eax + 0x348]
-//   0x0061b5fe  mov      edx, dword ptr [ecx + 0x474]
-//   0x0061b604  mov      dword ptr [esp + 0x24], edx
-//   0x0061b608  mov      eax, dword ptr [esp + 0x54]
-//   0x0061b60c  mov      edx, dword ptr [esp + 0x24]
-//   0x0061b610  mov      ecx, dword ptr [eax + 0x20]
-//   0x0061b613  mov      dword ptr [esp + 0x54], ecx
-//   0x0061b617  mov      eax, dword ptr [esp + 0x1c]
-//   0x0061b61b  mov      ecx, dword ptr [esp + 0x14]
-//   0x0061b61f  add      eax, edi
-//   0x0061b621  mov      dword ptr [esp + 0x40], ecx
-//   0x0061b625  mov      dword ptr [esp + 0x44], eax
-//   0x0061b629  xor      eax, eax
-//   0x0061b62b  push     eax
-//   0x0061b62c  push     eax
-//   0x0061b62d  push     eax
-//   0x0061b62e  mov      ecx, dword ptr [esp + 0x1c]
-//   0x0061b632  push     eax
-//   0x0061b633  push     0x3e8
-//   0x0061b638  push     eax
-//   0x0061b639  push     eax
-//   0x0061b63a  push     eax
-//   0x0061b63b  push     0x600
-//   0x0061b640  lea      eax, [esp + 0x64]
-//   0x0061b644  push     ebp
-//   0x0061b645  push     eax
-//   0x0061b646  push     edx
-//   0x0061b647  mov      edx, dword ptr [0x710be4]
-//   0x0061b64d  push     ecx
-//   0x0061b64e  mov      ecx, dword ptr [0x714edc]
-//   0x0061b654  call     0x478f00
-//   0x0061b659  mov      edx, dword ptr [esp + 0x38]
-//   0x0061b65d  mov      eax, dword ptr [esp + 0x14]
-//   0x0061b661  mov      ecx, dword ptr [esp + 0x20]
-//   0x0061b665  add      eax, edx
-//   0x0061b667  mov      edx, dword ptr [esp + 0x1c]
-//   0x0061b66b  inc      ecx
-//   0x0061b66c  mov      dword ptr [esp + 0x14], eax
-//   0x0061b670  mov      eax, dword ptr [esi]
-//   0x0061b672  mov      dword ptr [esp + 0x20], ecx
-//   0x0061b676  add      edx, ebx
-//   0x0061b678  mov      ecx, esi
-//   0x0061b67a  mov      dword ptr [esp + 0x1c], edx
-//   0x0061b67e  call     dword ptr [eax + 0x84]
-//   0x0061b684  mov      edx, dword ptr [eax]
-//   0x0061b686  mov      ecx, eax
-//   0x0061b688  call     dword ptr [edx + 0x74]
-//   0x0061b68b  cmp      dword ptr [esp + 0x20], eax
-//   0x0061b68f  jl       0x61b5d8
-//   0x0061b695  jmp      0x61ba49
+// UnitClass::vfunc_201 -- ALIAS of AircraftClass::vfunc_201 (same machine code at 0x0061b4f0); transcribed once.
 void UnitClass::vfunc_201(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_202 -- body derived from 80 instructions at 0x0061bc30; semantics not reconstructed.
-// size 242 bytes; signature __thiscall nargs=3
-// callees: 0x0043e6f0, 0x0046ebd0, 0x004719a0, 0x00471a00, 0x00682aae
-//
-//   0x0061bc30  sub      esp, 0x88
-//   0x0061bc36  push     ebx
-//   0x0061bc37  push     ebp
-//   0x0061bc38  push     esi
-//   0x0061bc39  mov      esi, ecx
-//   0x0061bc3b  push     edi
-//   0x0061bc3c  mov      eax, dword ptr [esi]
-//   0x0061bc3e  call     dword ptr [eax + 0x2c]
-//   0x0061bc41  mov      ebx, dword ptr [esp + 0xa4]
-//   0x0061bc48  mov      ebp, dword ptr [esp + 0xa0]
-//   0x0061bc4f  cmp      eax, 6
-//   0x0061bc52  jne      0x61bcc4
-//   0x0061bc54  mov      ecx, dword ptr [esi + 0x218]
-//   0x0061bc5a  mov      eax, dword ptr [ecx + 0x518]
-//   0x0061bc60  test     eax, eax
-//   0x0061bc62  jle      0x61bcc4
-//   0x0061bc64  mov      eax, dword ptr [esi + 0xec]
-//   0x0061bc6a  add      eax, 0x14
-//   0x0061bc6d  mov      dword ptr [esp + 0x10], eax
-//   0x0061bc71  mov      eax, dword ptr [esi + 0xec]
-//   0x0061bc77  mov      edx, dword ptr [eax + 0x14]
-//   0x0061bc7a  lea      edi, [eax + 0x14]
-//   0x0061bc7d  push     edi
-//   0x0061bc7e  call     dword ptr [edx + 0x24]
-//   0x0061bc81  push     eax
-//   0x0061bc82  mov      eax, dword ptr [edi]
-//   0x0061bc84  push     edi
-//   0x0061bc85  call     dword ptr [eax + 0x20]
-//   0x0061bc88  push     eax
-//   0x0061bc89  mov      ecx, 0xf9
-//   0x0061bc8e  call     0x46ebd0
-//   0x0061bc93  lea      ecx, [esp + 0x20]
-//   0x0061bc97  push     eax
-//   0x0061bc98  push     ecx
-//   0x0061bc99  call     0x682aae
-//   0x0061bc9e  add      esp, 0x10
-//   0x0061bca1  mov      edx, dword ptr [0x714edc]
-//   0x0061bca7  lea      ecx, [esp + 0x10]
-//   0x0061bcab  push     1
-//   0x0061bcad  push     0
-//   0x0061bcaf  push     0x149
-//   0x0061bcb4  push     0
-//   0x0061bcb6  push     0xf
-//   0x0061bcb8  push     ebp
-//   0x0061bcb9  push     ebx
-//   0x0061bcba  push     edx
-//   0x0061bcbb  lea      edx, [esp + 0x38]
-//   0x0061bcbf  call     0x471a00
-//   0x0061bcc4  mov      al, byte ptr [esi + 0x1f9]
-//   0x0061bcca  test     al, al
-//   0x0061bccc  je       0x61bd15
-//   0x0061bcce  mov      eax, dword ptr [esi]
-//   0x0061bcd0  mov      ecx, esi
-//   0x0061bcd2  mov      edi, 8
-//   0x0061bcd7  call     dword ptr [eax + 0x2c]
-//   0x0061bcda  cmp      eax, 6
-//   0x0061bcdd  jne      0x61bcf4
-//   0x0061bcdf  mov      ecx, dword ptr [esi + 0x218]
-//   0x0061bce5  call     0x43e6f0
-//   0x0061bcea  cmp      eax, 1
-//   0x0061bced  jne      0x61bcf4
-//   0x0061bcef  mov      edi, 9
-//   0x0061bcf4  mov      ecx, dword ptr [0x714edc]
-//   0x0061bcfa  push     1
-//   0x0061bcfc  push     0
-//   0x0061bcfe  push     0x149
-//   0x0061bd03  push     0
-//   0x0061bd05  push     0xf
-//   0x0061bd07  push     ebp
-//   0x0061bd08  push     ebx
-//   0x0061bd09  push     ecx
-//   0x0061bd0a  mov      edx, edi
-//   0x0061bd0c  lea      ecx, [esp + 0x30]
-//   0x0061bd10  call     0x4719a0
-//   0x0061bd15  pop      edi
-//   0x0061bd16  pop      esi
-//   0x0061bd17  pop      ebp
-//   0x0061bd18  pop      ebx
-//   0x0061bd19  add      esp, 0x88
-//   0x0061bd1f  ret      0xc
+// UnitClass::vfunc_202 -- ALIAS of AircraftClass::vfunc_202 (same machine code at 0x0061bc30); transcribed once.
 void UnitClass::vfunc_202(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_203 -- body derived from 40 instructions at 0x00617b90; semantics not reconstructed.
-// size 155 bytes; signature __thiscall nargs=1
-// callees: 0x00647220
-//
-//   0x00617b90  sub      esp, 0xc
-//   0x00617b93  push     esi
-//   0x00617b94  mov      esi, ecx
-//   0x00617b96  mov      eax, dword ptr [esi + 0xf0]
-//   0x00617b9c  cmp      eax, 2
-//   0x00617b9f  je       0x617ba6
-//   0x00617ba1  cmp      eax, 1
-//   0x00617ba4  jne      0x617c24
-//   0x00617ba6  mov      dword ptr [esi + 0xf0], 3
-//   0x00617bb0  mov      eax, dword ptr [0x714e20]
-//   0x00617bb5  mov      edx, dword ptr [esi]
-//   0x00617bb7  mov      ecx, dword ptr [eax + 0x360]
-//   0x00617bbd  dec      ecx
-//   0x00617bbe  mov      dword ptr [esi + 0xf4], ecx
-//   0x00617bc4  mov      ecx, esi
-//   0x00617bc6  call     dword ptr [edx + 0x80]
-//   0x00617bcc  mov      ecx, dword ptr [0x7b2e54]
-//   0x00617bd2  mov      eax, dword ptr [eax + 0x1a0]
-//   0x00617bd8  lea      edx, [esi + 0xf8]
-//   0x00617bde  mov      dword ptr [esi + 0x104], eax
-//   0x00617be4  mov      dword ptr [edx], ecx
-//   0x00617be6  mov      ecx, dword ptr [esp + 8]
-//   0x00617bea  mov      dword ptr [edx + 4], ecx
-//   0x00617bed  mov      dword ptr [edx + 8], eax
-//   0x00617bf0  mov      al, byte ptr [esp + 0x14]
-//   0x00617bf4  test     al, al
-//   0x00617bf6  mov      dword ptr [esi + 0x108], 0xffffffff
-//   0x00617c00  jne      0x617c24
-//   0x00617c02  mov      edx, dword ptr [esi]
-//   0x00617c04  lea      eax, [esp + 4]
-//   0x00617c08  push     eax
-//   0x00617c09  mov      ecx, esi
-//   0x00617c0b  call     dword ptr [edx + 0x180]
-//   0x00617c11  mov      ecx, dword ptr [0x714e20]
-//   0x00617c17  mov      edx, eax
-//   0x00617c19  mov      ecx, dword ptr [ecx + 0x3d0]
-//   0x00617c1f  call     0x647220
-//   0x00617c24  pop      esi
-//   0x00617c25  add      esp, 0xc
-//   0x00617c28  ret      4
+// UnitClass::vfunc_203 -- ALIAS of AircraftClass::vfunc_203 (same machine code at 0x00617b90); transcribed once.
 void UnitClass::vfunc_203(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_204 -- body derived from 41 instructions at 0x00617c30; semantics not reconstructed.
-// size 162 bytes; signature __thiscall nargs=1
-// callees: 0x00647220
-//
-//   0x00617c30  sub      esp, 0xc
-//   0x00617c33  push     esi
-//   0x00617c34  mov      esi, ecx
-//   0x00617c36  mov      eax, dword ptr [esi + 0xf0]
-//   0x00617c3c  test     eax, eax
-//   0x00617c3e  je       0x617c49
-//   0x00617c40  cmp      eax, 3
-//   0x00617c43  jne      0x617ccb
-//   0x00617c49  mov      eax, dword ptr [esi]
-//   0x00617c4b  push     0
-//   0x00617c4d  mov      ecx, esi
-//   0x00617c4f  call     dword ptr [eax + 0xc8]
-//   0x00617c55  mov      edx, dword ptr [esi]
-//   0x00617c57  mov      ecx, esi
-//   0x00617c59  mov      dword ptr [esi + 0xf0], 1
-//   0x00617c63  mov      dword ptr [esi + 0xf4], 0
-//   0x00617c6d  call     dword ptr [edx + 0x80]
-//   0x00617c73  mov      ecx, dword ptr [0x7b2e54]
-//   0x00617c79  mov      eax, dword ptr [eax + 0x1a0]
-//   0x00617c7f  lea      edx, [esi + 0xf8]
-//   0x00617c85  mov      dword ptr [esi + 0x104], eax
-//   0x00617c8b  mov      dword ptr [edx], ecx
-//   0x00617c8d  mov      ecx, dword ptr [esp + 8]
-//   0x00617c91  mov      dword ptr [edx + 4], ecx
-//   0x00617c94  mov      dword ptr [edx + 8], eax
-//   0x00617c97  mov      al, byte ptr [esp + 0x14]
-//   0x00617c9b  test     al, al
-//   0x00617c9d  mov      dword ptr [esi + 0x108], 1
-//   0x00617ca7  jne      0x617ccb
-//   0x00617ca9  mov      edx, dword ptr [esi]
-//   0x00617cab  lea      eax, [esp + 4]
-//   0x00617caf  push     eax
-//   0x00617cb0  mov      ecx, esi
-//   0x00617cb2  call     dword ptr [edx + 0x180]
-//   0x00617cb8  mov      ecx, dword ptr [0x714e20]
-//   0x00617cbe  mov      edx, eax
-//   0x00617cc0  mov      ecx, dword ptr [ecx + 0x3d0]
-//   0x00617cc6  call     0x647220
-//   0x00617ccb  pop      esi
-//   0x00617ccc  add      esp, 0xc
-//   0x00617ccf  ret      4
+// UnitClass::vfunc_204 -- ALIAS of AircraftClass::vfunc_204 (same machine code at 0x00617c30); transcribed once.
 void UnitClass::vfunc_204(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_205 -- body derived from 12 instructions at 0x0061d9a0; semantics not reconstructed.
-// size 39 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0061d9a0  mov      eax, dword ptr [ecx + 0x7c]
-//   0x0061d9a3  and      eax, 2
-//   0x0061d9a6  cmp      al, 2
-//   0x0061d9a8  jne      0x61d9c7
-//   0x0061d9aa  mov      ecx, dword ptr [esp + 4]
-//   0x0061d9ae  xor      eax, eax
-//   0x0061d9b0  cmp      ecx, 0x5dc
-//   0x0061d9b6  setle    al
-//   0x0061d9b9  dec      eax
-//   0x0061d9ba  and      eax, 0xfffffa24
-//   0x0061d9bf  add      eax, 0x7d0
-//   0x0061d9c4  ret      4
+// UnitClass::vfunc_205 -- ALIAS of AircraftClass::vfunc_205 (same machine code at 0x0061d9a0); transcribed once.
 void UnitClass::vfunc_205(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_206 -- body derived from 14 instructions at 0x0061b490; semantics not reconstructed.
-// size 41 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061b490  mov      edx, dword ptr [ecx + 0xc0]
-//   0x0061b496  mov      eax, dword ptr [ecx + 0xc8]
-//   0x0061b49c  cmp      edx, -1
-//   0x0061b49f  je       0x61b4bb
-//   0x0061b4a1  mov      ecx, dword ptr [0x7b2e54]
-//   0x0061b4a7  sub      ecx, edx
-//   0x0061b4a9  cmp      ecx, eax
-//   0x0061b4ab  jge      0x61b4b9
-//   0x0061b4ad  sub      eax, ecx
-//   0x0061b4af  xor      ecx, ecx
-//   0x0061b4b1  test     eax, eax
-//   0x0061b4b3  sete     cl
-//   0x0061b4b6  mov      al, cl
-//   0x0061b4b8  ret      
+// UnitClass::vfunc_206 -- ALIAS of AircraftClass::vfunc_206 (same machine code at 0x0061b490); transcribed once.
 void UnitClass::vfunc_206()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_207 -- body derived from 2 instructions at 0x0040e790; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e790  xor      al, al
-//   0x0040e792  ret      
+// UnitClass::vfunc_207 -- ALIAS of AircraftClass::vfunc_207 (same machine code at 0x0040e790); transcribed once.
 void UnitClass::vfunc_207()
 {
 }
@@ -7537,138 +2754,32 @@ void UnitClass::vfunc_209(int a0, int a1, int a2, int a3)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_210 -- body derived from 12 instructions at 0x0061d4c0; semantics not reconstructed.
-// size 37 bytes; signature __thiscall
-// callees: 0x005a2960
-//
-//   0x0061d4c0  push     esi
-//   0x0061d4c1  mov      esi, ecx
-//   0x0061d4c3  mov      eax, dword ptr [esi + 0xdc]
-//   0x0061d4c9  mov      ecx, dword ptr [esi + 0xd8]
-//   0x0061d4cf  push     eax
-//   0x0061d4d0  push     ecx
-//   0x0061d4d1  push     esi
-//   0x0061d4d2  mov      ecx, 0x710d28
-//   0x0061d4d7  call     0x5a2960
-//   0x0061d4dc  mov      byte ptr [esi + 0x207], 1
-//   0x0061d4e3  pop      esi
-//   0x0061d4e4  ret      
+// UnitClass::vfunc_210 -- ALIAS of AircraftClass::vfunc_210 (same machine code at 0x0061d4c0); transcribed once.
 void UnitClass::vfunc_210()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_211 -- body derived from 12 instructions at 0x0061d4f0; semantics not reconstructed.
-// size 37 bytes; signature __thiscall
-// callees: 0x005a2b40
-//
-//   0x0061d4f0  push     esi
-//   0x0061d4f1  mov      esi, ecx
-//   0x0061d4f3  mov      eax, dword ptr [esi + 0xdc]
-//   0x0061d4f9  mov      ecx, dword ptr [esi + 0xd8]
-//   0x0061d4ff  push     eax
-//   0x0061d500  push     ecx
-//   0x0061d501  push     esi
-//   0x0061d502  mov      ecx, 0x710d28
-//   0x0061d507  call     0x5a2b40
-//   0x0061d50c  mov      byte ptr [esi + 0x207], 0
-//   0x0061d513  pop      esi
-//   0x0061d514  ret      
+// UnitClass::vfunc_211 -- ALIAS of AircraftClass::vfunc_211 (same machine code at 0x0061d4f0); transcribed once.
 void UnitClass::vfunc_211()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_212 -- body derived from 5 instructions at 0x0061d520; semantics not reconstructed.
-// size 18 bytes; signature __cdecl
-// callees: 0x005a34e0
-//
-//   0x0061d520  add      ecx, 0xd8
-//   0x0061d526  push     ecx
-//   0x0061d527  mov      ecx, 0x710d28
-//   0x0061d52c  call     0x5a34e0
-//   0x0061d531  ret      
+// UnitClass::vfunc_212 -- ALIAS of AircraftClass::vfunc_212 (same machine code at 0x0061d520); transcribed once.
 void UnitClass::vfunc_212()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_213 -- body derived from 33 instructions at 0x0061df20; semantics not reconstructed.
-// size 98 bytes; signature __thiscall nargs=5
-// callees: 0x0051e620, 0x0061dfac
-//
-//   0x0061df20  sub      esp, 0x2c
-//   0x0061df23  push     esi
-//   0x0061df24  mov      esi, ecx
-//   0x0061df26  push     edi
-//   0x0061df27  mov      al, byte ptr [esi + 0x1ff]
-//   0x0061df2d  test     al, al
-//   0x0061df2f  jne      0x61df5c
-//   0x0061df31  mov      eax, dword ptr [0x7b0d38]
-//   0x0061df36  test     eax, eax
-//   0x0061df38  jne      0x61df5c
-//   0x0061df3a  mov      eax, dword ptr [esi]
-//   0x0061df3c  lea      ecx, [esp + 0x14]
-//   0x0061df40  push     ecx
-//   0x0061df41  mov      ecx, esi
-//   0x0061df43  call     dword ptr [eax + 0x48]
-//   0x0061df46  push     eax
-//   0x0061df47  mov      ecx, 0x710d28
-//   0x0061df4c  call     0x51e620
-//   0x0061df51  test     al, al
-//   0x0061df53  sete     dl
-//   0x0061df56  mov      byte ptr [esi + 0x1ff], dl
-//   0x0061df5c  mov      eax, dword ptr [esi]
-//   0x0061df5e  mov      ecx, esi
-//   0x0061df60  call     dword ptr [eax + 0x2c]
-//   0x0061df63  cmp      eax, 6
-//   0x0061df66  jne      0x61df82
-//   0x0061df68  mov      al, byte ptr [esp + 0x38]
-//   0x0061df6c  test     al, al
-//   0x0061df6e  jne      0x61df82
-//   0x0061df70  mov      ecx, dword ptr [esi + 0xd8]
-//   0x0061df76  mov      edx, dword ptr [esi + 0xdc]
-//   0x0061df7c  mov      dword ptr [esp + 0xc], ecx
-//   0x0061df80  jmp      0x61dfac
+// UnitClass::vfunc_213 -- ALIAS of AircraftClass::vfunc_213 (same machine code at 0x0061df20); transcribed once.
 void UnitClass::vfunc_213(int a0, int a1, int a2, int a3, int a4)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_214 -- body derived from 10 instructions at 0x004a2c50; semantics not reconstructed.
-// size 23 bytes; signature __thiscall
-// callees: none
-//
-//   0x004a2c50  sub      esp, 0xc
-//   0x004a2c53  push     esi
-//   0x004a2c54  mov      esi, ecx
-//   0x004a2c56  mov      al, byte ptr [esi + 0x1fb]
-//   0x004a2c5c  test     al, al
-//   0x004a2c5e  jne      0x4a2c67
-//   0x004a2c60  xor      al, al
-//   0x004a2c62  pop      esi
-//   0x004a2c63  add      esp, 0xc
-//   0x004a2c66  ret      
+// UnitClass::vfunc_214 -- ALIAS of FootClass::vfunc_214 (same machine code at 0x004a2c50); transcribed once.
 void UnitClass::vfunc_214()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_215 -- body derived from 10 instructions at 0x004a2800; semantics not reconstructed.
-// size 21 bytes; signature __thiscall
-// callees: none
-//
-//   0x004a2800  push     esi
-//   0x004a2801  mov      esi, ecx
-//   0x004a2803  push     0
-//   0x004a2805  mov      eax, dword ptr [esi]
-//   0x004a2807  call     dword ptr [eax + 0x2fc]
-//   0x004a280d  test     eax, eax
-//   0x004a280f  jne      0x4a2815
-//   0x004a2811  mov      al, 1
-//   0x004a2813  pop      esi
-//   0x004a2814  ret      
+// UnitClass::vfunc_215 -- ALIAS of AircraftClass::vfunc_215 (same machine code at 0x004a2800); transcribed once.
 void UnitClass::vfunc_215()
 {
 }
@@ -7693,269 +2804,62 @@ void UnitClass::vfunc_216()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_217 -- body derived from 18 instructions at 0x004a11e0; semantics not reconstructed.
-// size 48 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x004a11e0  mov      eax, dword ptr [ecx]
-//   0x004a11e2  sub      esp, 0xc
-//   0x004a11e5  lea      edx, [esp]
-//   0x004a11e9  push     esi
-//   0x004a11ea  push     edx
-//   0x004a11eb  call     dword ptr [eax + 0xa0]
-//   0x004a11f1  mov      ecx, eax
-//   0x004a11f3  mov      eax, dword ptr [esp + 0x14]
-//   0x004a11f7  mov      edx, eax
-//   0x004a11f9  mov      esi, dword ptr [ecx]
-//   0x004a11fb  mov      dword ptr [edx], esi
-//   0x004a11fd  mov      esi, dword ptr [ecx + 4]
-//   0x004a1200  mov      dword ptr [edx + 4], esi
-//   0x004a1203  pop      esi
-//   0x004a1204  mov      ecx, dword ptr [ecx + 8]
-//   0x004a1207  mov      dword ptr [edx + 8], ecx
-//   0x004a120a  add      esp, 0xc
-//   0x004a120d  ret      4
+// UnitClass::vfunc_217 -- ALIAS of AircraftClass::vfunc_217 (same machine code at 0x004a11e0); transcribed once.
 void UnitClass::vfunc_217(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_218 -- body derived from 17 instructions at 0x004a2850; semantics not reconstructed.
-// size 44 bytes; signature __thiscall
-// callees: none
-//
-//   0x004a2850  push     esi
-//   0x004a2851  mov      esi, ecx
-//   0x004a2853  mov      eax, dword ptr [esi]
-//   0x004a2855  call     dword ptr [eax + 0x150]
-//   0x004a285b  cmp      eax, 0xe
-//   0x004a285e  jne      0x4a287a
-//   0x004a2860  mov      edx, dword ptr [esi]
-//   0x004a2862  push     0
-//   0x004a2864  mov      ecx, esi
-//   0x004a2866  call     dword ptr [edx + 0x2e8]
-//   0x004a286c  mov      eax, dword ptr [esi]
-//   0x004a286e  push     1
-//   0x004a2870  push     0
-//   0x004a2872  mov      ecx, esi
-//   0x004a2874  call     dword ptr [eax + 0x340]
-//   0x004a287a  pop      esi
-//   0x004a287b  ret      
+// UnitClass::vfunc_218 -- ALIAS of AircraftClass::vfunc_218 (same machine code at 0x004a2850); transcribed once.
 void UnitClass::vfunc_218()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_219 -- body derived from 2 instructions at 0x0040e7d0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e7d0  xor      al, al
-//   0x0040e7d2  ret      
+// UnitClass::vfunc_219 -- ALIAS of AircraftClass::vfunc_219 (same machine code at 0x0040e7d0); transcribed once.
 void UnitClass::vfunc_219()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_220 -- body derived from 40 instructions at 0x0049dd90; semantics not reconstructed.
-// size 108 bytes; signature __thiscall nargs=1
-// callees: 0x006939b0
-//
-//   0x0049dd90  mov      eax, dword ptr [esp + 4]
-//   0x0049dd94  push     ebx
-//   0x0049dd95  push     ebp
-//   0x0049dd96  push     esi
-//   0x0049dd97  mov      ebx, dword ptr [eax + 4]
-//   0x0049dd9a  mov      ebp, dword ptr [eax + 8]
-//   0x0049dd9d  mov      esi, ecx
-//   0x0049dd9f  push     edi
-//   0x0049dda0  mov      edi, dword ptr [eax]
-//   0x0049dda2  mov      eax, dword ptr [esi + 0x324]
-//   0x0049dda8  test     eax, eax
-//   0x0049ddaa  jne      0x49ddb6
-//   0x0049ddac  push     0x80004003
-//   0x0049ddb1  call     0x6939b0
-//   0x0049ddb6  mov      eax, dword ptr [esi + 0x324]
-//   0x0049ddbc  sub      esp, 0xc
-//   0x0049ddbf  mov      edx, esp
-//   0x0049ddc1  mov      ecx, dword ptr [eax]
-//   0x0049ddc3  push     eax
-//   0x0049ddc4  mov      dword ptr [edx], edi
-//   0x0049ddc6  mov      dword ptr [edx + 4], ebx
-//   0x0049ddc9  mov      dword ptr [edx + 8], ebp
-//   0x0049ddcc  call     dword ptr [ecx + 0x44]
-//   0x0049ddcf  mov      eax, dword ptr [esi + 0x324]
-//   0x0049ddd5  test     eax, eax
-//   0x0049ddd7  jne      0x49dde3
-//   0x0049ddd9  push     0x80004003
-//   0x0049ddde  call     0x6939b0
-//   0x0049dde3  mov      esi, dword ptr [esi + 0x324]
-//   0x0049dde9  push     esi
-//   0x0049ddea  mov      eax, dword ptr [esi]
-//   0x0049ddec  call     dword ptr [eax + 0x10]
-//   0x0049ddef  neg      al
-//   0x0049ddf1  pop      edi
-//   0x0049ddf2  pop      esi
-//   0x0049ddf3  sbb      eax, eax
-//   0x0049ddf5  pop      ebp
-//   0x0049ddf6  neg      eax
-//   0x0049ddf8  pop      ebx
-//   0x0049ddf9  ret      4
+// UnitClass::vfunc_220 -- ALIAS of AircraftClass::vfunc_220 (same machine code at 0x0049dd90); transcribed once.
 void UnitClass::vfunc_220(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_221 -- body derived from 14 instructions at 0x0049dd60; semantics not reconstructed.
-// size 39 bytes; signature __thiscall
-// callees: 0x006939b0
-//
-//   0x0049dd60  push     esi
-//   0x0049dd61  mov      esi, ecx
-//   0x0049dd63  mov      eax, dword ptr [esi + 0x324]
-//   0x0049dd69  test     eax, eax
-//   0x0049dd6b  jne      0x49dd77
-//   0x0049dd6d  push     0x80004003
-//   0x0049dd72  call     0x6939b0
-//   0x0049dd77  mov      eax, dword ptr [esi + 0x324]
-//   0x0049dd7d  push     eax
-//   0x0049dd7e  mov      ecx, dword ptr [eax]
-//   0x0049dd80  call     dword ptr [ecx + 0x48]
-//   0x0049dd83  xor      al, al
-//   0x0049dd85  pop      esi
-//   0x0049dd86  ret      
+// UnitClass::vfunc_221 -- ALIAS of AircraftClass::vfunc_221 (same machine code at 0x0049dd60); transcribed once.
 void UnitClass::vfunc_221()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_222 -- body derived from 30 instructions at 0x004a22c0; semantics not reconstructed.
-// size 78 bytes; signature __thiscall
-// callees: 0x004a2310
-//
-//   0x004a22c0  push     edi
-//   0x004a22c1  mov      edi, ecx
-//   0x004a22c3  mov      eax, dword ptr [edi + 0x270]
-//   0x004a22c9  test     eax, eax
-//   0x004a22cb  jne      0x4a2326
-//   0x004a22cd  mov      eax, dword ptr [edi + 0x11c]
-//   0x004a22d3  test     eax, eax
-//   0x004a22d5  jne      0x4a2326
-//   0x004a22d7  push     ebx
-//   0x004a22d8  push     esi
-//   0x004a22d9  mov      esi, dword ptr [edi + 0x78]
-//   0x004a22dc  xor      ebx, ebx
-//   0x004a22de  test     esi, esi
-//   0x004a22e0  je       0x4a22f0
-//   0x004a22e2  mov      eax, dword ptr [esi]
-//   0x004a22e4  mov      ecx, esi
-//   0x004a22e6  call     dword ptr [eax + 0x2c]
-//   0x004a22e9  cmp      eax, 6
-//   0x004a22ec  jne      0x4a22f0
-//   0x004a22ee  mov      ebx, esi
-//   0x004a22f0  cmp      dword ptr [edi + 0x4c], 7
-//   0x004a22f4  jne      0x4a230e
-//   0x004a22f6  test     ebx, ebx
-//   0x004a22f8  je       0x4a230e
-//   0x004a22fa  mov      ecx, dword ptr [ebx + 0x218]
-//   0x004a2300  mov      al, byte ptr [ecx + 0x808]
-//   0x004a2306  test     al, al
-//   0x004a2308  je       0x4a230e
-//   0x004a230a  mov      al, 1
-//   0x004a230c  jmp      0x4a2310
+// UnitClass::vfunc_222 -- ALIAS of AircraftClass::vfunc_222 (same machine code at 0x004a22c0); transcribed once.
 void UnitClass::vfunc_222()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_223 -- body derived from 32 instructions at 0x0040e7e0; semantics not reconstructed.
-// size 83 bytes; signature __stdcall nargs=15
-// callees: 0x00618dd0
-//
-//   0x0040e7e0  mov      eax, dword ptr [esp + 0x3c]
-//   0x0040e7e4  mov      edx, dword ptr [esp + 0x38]
-//   0x0040e7e8  push     eax
-//   0x0040e7e9  mov      eax, dword ptr [esp + 0x38]
-//   0x0040e7ed  push     edx
-//   0x0040e7ee  mov      edx, dword ptr [esp + 0x38]
-//   0x0040e7f2  push     eax
-//   0x0040e7f3  mov      eax, dword ptr [esp + 0x38]
-//   0x0040e7f7  push     edx
-//   0x0040e7f8  mov      edx, dword ptr [esp + 0x38]
-//   0x0040e7fc  push     eax
-//   0x0040e7fd  mov      eax, dword ptr [esp + 0x38]
-//   0x0040e801  push     edx
-//   0x0040e802  mov      edx, dword ptr [esp + 0x38]
-//   0x0040e806  push     eax
-//   0x0040e807  mov      eax, dword ptr [esp + 0x38]
-//   0x0040e80b  push     edx
-//   0x0040e80c  mov      edx, dword ptr [esp + 0x38]
-//   0x0040e810  push     eax
-//   0x0040e811  mov      eax, dword ptr [esp + 0x38]
-//   0x0040e815  push     edx
-//   0x0040e816  mov      edx, dword ptr [esp + 0x38]
-//   0x0040e81a  push     eax
-//   0x0040e81b  mov      eax, dword ptr [esp + 0x38]
-//   0x0040e81f  push     edx
-//   0x0040e820  mov      edx, dword ptr [esp + 0x38]
-//   0x0040e824  push     eax
-//   0x0040e825  mov      eax, dword ptr [esp + 0x38]
-//   0x0040e829  push     edx
-//   0x0040e82a  push     eax
-//   0x0040e82b  call     0x618dd0
-//   0x0040e830  ret      0x3c
+// UnitClass::vfunc_223 -- ALIAS of AircraftClass::vfunc_223 (same machine code at 0x0040e7e0); transcribed once.
 void UnitClass::vfunc_223(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_224 -- body derived from 1 instructions at 0x0040e840; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e840  ret      
+// UnitClass::vfunc_224 -- ALIAS of AircraftClass::vfunc_224 (same machine code at 0x0040e840); transcribed once.
 void UnitClass::vfunc_224()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_225 -- body derived from 1 instructions at 0x0040e850; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e850  ret      
+// UnitClass::vfunc_225 -- ALIAS of AircraftClass::vfunc_225 (same machine code at 0x0040e850); transcribed once.
 void UnitClass::vfunc_225()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_226 -- body derived from 1 instructions at 0x0040e860; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e860  ret      
+// UnitClass::vfunc_226 -- ALIAS of AircraftClass::vfunc_226 (same machine code at 0x0040e860); transcribed once.
 void UnitClass::vfunc_226()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_227 -- body derived from 1 instructions at 0x0040e870; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e870  ret      4
+// UnitClass::vfunc_227 -- ALIAS of AircraftClass::vfunc_227 (same machine code at 0x0040e870); transcribed once.
 void UnitClass::vfunc_227(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_228 -- body derived from 2 instructions at 0x004a0e10; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004a0e10  xor      eax, eax
-//   0x004a0e12  ret      
+// UnitClass::vfunc_228 -- ALIAS of AircraftClass::vfunc_228 (same machine code at 0x004a0e10); transcribed once.
 void UnitClass::vfunc_228()
 {
 }
@@ -8043,54 +2947,7 @@ void UnitClass::vfunc_229(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_230 -- body derived from 43 instructions at 0x004a1c20; semantics not reconstructed.
-// size 138 bytes; signature __thiscall nargs=2
-// callees: 0x0061d8e0, 0x0067faf0
-//
-//   0x004a1c20  push     ecx
-//   0x004a1c21  push     esi
-//   0x004a1c22  mov      esi, ecx
-//   0x004a1c24  push     edi
-//   0x004a1c25  mov      eax, dword ptr [esi]
-//   0x004a1c27  call     dword ptr [eax + 0x80]
-//   0x004a1c2d  fild     dword ptr [eax + 0x34c]
-//   0x004a1c33  mov      ecx, dword ptr [esi + 0xec]
-//   0x004a1c39  fmul     qword ptr [ecx + 0x68]
-//   0x004a1c3c  fmul     qword ptr [esi + 0x250]
-//   0x004a1c42  call     0x67faf0
-//   0x004a1c47  push     0
-//   0x004a1c49  mov      ecx, esi
-//   0x004a1c4b  mov      dword ptr [esp + 0xc], eax
-//   0x004a1c4f  call     0x61d8e0
-//   0x004a1c54  test     al, al
-//   0x004a1c56  je       0x4a1c77
-//   0x004a1c58  mov      edx, dword ptr [0x714e20]
-//   0x004a1c5e  fld      qword ptr [edx + 0x3a8]
-//   0x004a1c64  fadd     qword ptr [0x699868]
-//   0x004a1c6a  fimul    dword ptr [esp + 8]
-//   0x004a1c6e  call     0x67faf0
-//   0x004a1c73  mov      dword ptr [esp + 8], eax
-//   0x004a1c77  fild     dword ptr [esp + 8]
-//   0x004a1c7b  fmul     qword ptr [esi + 0x248]
-//   0x004a1c81  call     0x67faf0
-//   0x004a1c86  mov      edi, eax
-//   0x004a1c88  mov      eax, dword ptr [esi]
-//   0x004a1c8a  mov      ecx, esi
-//   0x004a1c8c  call     dword ptr [eax + 0x2c]
-//   0x004a1c8f  cmp      eax, 1
-//   0x004a1c92  jne      0x4a1caa
-//   0x004a1c94  mov      eax, dword ptr [esi + 0x360]
-//   0x004a1c9a  cmp      eax, -1
-//   0x004a1c9d  mov      eax, edi
-//   0x004a1c9f  je       0x4a1cac
-//   0x004a1ca1  cdq      
-//   0x004a1ca2  sub      eax, edx
-//   0x004a1ca4  pop      edi
-//   0x004a1ca5  sar      eax, 1
-//   0x004a1ca7  pop      esi
-//   0x004a1ca8  pop      ecx
-//   0x004a1ca9  ret      
+// UnitClass::vfunc_230 -- ALIAS of AircraftClass::vfunc_230 (same machine code at 0x004a1c20); transcribed once.
 void UnitClass::vfunc_230(int a0, int a1)
 {
 }
@@ -8160,62 +3017,22 @@ void UnitClass::vfunc_231()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_232 -- body derived from 1 instructions at 0x0040e890; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e890  ret      4
+// UnitClass::vfunc_232 -- ALIAS of AircraftClass::vfunc_232 (same machine code at 0x0040e890); transcribed once.
 void UnitClass::vfunc_232(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_233 -- body derived from 8 instructions at 0x0049c520; semantics not reconstructed.
-// size 40 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x0049c520  fld      qword ptr [esp + 4]
-//   0x0049c524  fcomp    qword ptr [0x699868]
-//   0x0049c52a  fnstsw   ax
-//   0x0049c52c  test     ah, 1
-//   0x0049c52f  jne      0x49c548
-//   0x0049c531  mov      dword ptr [ecx + 0x248], 0
-//   0x0049c53b  mov      dword ptr [ecx + 0x24c], 0x3ff00000
-//   0x0049c545  ret      8
+// UnitClass::vfunc_233 -- ALIAS of AircraftClass::vfunc_233 (same machine code at 0x0049c520); transcribed once.
 void UnitClass::vfunc_233(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_234 -- body derived from 1 instructions at 0x004a2330; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004a2330  ret      
+// UnitClass::vfunc_234 -- ALIAS of AircraftClass::vfunc_234 (same machine code at 0x004a2330); transcribed once.
 void UnitClass::vfunc_234()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UnitClass::vfunc_235 -- body derived from 14 instructions at 0x004a4140; semantics not reconstructed.
-// size 27 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x004a4140  sub      esp, 0x14
-//   0x004a4143  push     ebp
-//   0x004a4144  push     esi
-//   0x004a4145  push     edi
-//   0x004a4146  mov      edi, dword ptr [esp + 0x24]
-//   0x004a414a  test     edi, edi
-//   0x004a414c  mov      ebp, ecx
-//   0x004a414e  jne      0x4a415b
-//   0x004a4150  pop      edi
-//   0x004a4151  pop      esi
-//   0x004a4152  xor      al, al
-//   0x004a4154  pop      ebp
-//   0x004a4155  add      esp, 0x14
-//   0x004a4158  ret      4
+// UnitClass::vfunc_235 -- ALIAS of AircraftClass::vfunc_235 (same machine code at 0x004a4140); transcribed once.
 void UnitClass::vfunc_235(int a0)
 {
 }

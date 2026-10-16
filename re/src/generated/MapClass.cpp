@@ -5,60 +5,23 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "MapClass.h"
 
-// ---------------------------------------------------------------------------
-// MapClass::Init -- body derived from 2 instructions at 0x00402ad0; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00402ad0  mov      eax, 1
-//   0x00402ad5  ret      4
+// MapClass::Init -- ALIAS of DisplayClass::Init (same machine code at 0x00402ad0); transcribed once.
 void MapClass::Init()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::Shutdown -- body derived from 2 instructions at 0x00402ae0; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00402ae0  mov      eax, 1
-//   0x00402ae5  ret      4
+// MapClass::Shutdown -- ALIAS of DisplayClass::Shutdown (same machine code at 0x00402ae0); transcribed once.
 void MapClass::Shutdown()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::QueryInterface -- body derived from 25 instructions at 0x00502000; semantics not reconstructed.
-// size 88 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00502000  push     ecx
-//   0x00502001  mov      ax, word ptr [esp + 0xe]
-//   0x00502006  mov      ecx, dword ptr [esp + 0xc]
-//   0x0050200a  mov      word ptr [esp + 2], ax
-//   0x0050200f  mov      word ptr [esp], cx
-//   0x00502014  movsx    eax, ax
-//   0x00502017  movsx    ecx, cx
-//   0x0050201a  shl      eax, 9
-//   0x0050201d  add      eax, ecx
-//   0x0050201f  js       0x502039
-//   0x00502021  cmp      eax, 0x40000
-//   0x00502026  jge      0x502039
-//   0x00502028  mov      edx, dword ptr [esp + 8]
-//   0x0050202c  mov      ecx, dword ptr [edx + 0x168]
-//   0x00502032  mov      eax, dword ptr [ecx + eax*4]
-//   0x00502035  test     eax, eax
-//   0x00502037  jne      0x502048
-//   0x00502039  mov      edx, dword ptr [esp]
-//   0x0050203d  mov      eax, 0x7d3f28
-//   0x00502042  mov      dword ptr [0x7d3f3c], edx
-//   0x00502048  mov      eax, dword ptr [eax + 0xa4]
-//   0x0050204e  shr      eax, 2
-//   0x00502051  and      eax, 1
-//   0x00502054  pop      ecx
-//   0x00502055  ret      8
+// MapClass::QueryInterface -- ALIAS of DisplayClass::QueryInterface (same machine code at 0x00502000); transcribed once.
 long MapClass::QueryInterface(const void*, void**)
 {
 }
@@ -143,20 +106,7 @@ void MapClass::vfunc_5()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_6 -- body derived from 9 instructions at 0x004b2e50; semantics not reconstructed.
-// size 19 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x004b2e50  push     esi
-//   0x004b2e51  mov      esi, ecx
-//   0x004b2e53  mov      eax, dword ptr [esi]
-//   0x004b2e55  call     dword ptr [eax + 0x1c]
-//   0x004b2e58  mov      edx, dword ptr [esi]
-//   0x004b2e5a  mov      ecx, esi
-//   0x004b2e5c  call     dword ptr [edx + 0x20]
-//   0x004b2e5f  pop      esi
-//   0x004b2e60  ret      4
+// MapClass::vfunc_6 -- ALIAS of DisplayClass::vfunc_6 (same machine code at 0x004b2e50); transcribed once.
 void MapClass::vfunc_6()
 {
 }
@@ -218,49 +168,7 @@ void MapClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_9 -- body derived from 38 instructions at 0x004b2ec0; semantics not reconstructed.
-// size 116 bytes; signature __thiscall nargs=3
-// callees: 0x004b2f5e
-//
-//   0x004b2ec0  sub      esp, 8
-//   0x004b2ec3  push     ebp
-//   0x004b2ec4  push     esi
-//   0x004b2ec5  push     edi
-//   0x004b2ec6  mov      edi, ecx
-//   0x004b2ec8  mov      ecx, dword ptr [0x7151d8]
-//   0x004b2ece  mov      eax, dword ptr [ecx]
-//   0x004b2ed0  call     dword ptr [eax + 0x2c]
-//   0x004b2ed3  mov      ebp, dword ptr [esp + 0x1c]
-//   0x004b2ed7  mov      dword ptr [ebp], eax
-//   0x004b2eda  mov      ecx, dword ptr [0x7151d8]
-//   0x004b2ee0  mov      edx, dword ptr [ecx]
-//   0x004b2ee2  call     dword ptr [edx + 0x30]
-//   0x004b2ee5  mov      ecx, dword ptr [esp + 0x20]
-//   0x004b2ee9  mov      dword ptr [ecx], eax
-//   0x004b2eeb  mov      ecx, dword ptr [0x7b2f9c]
-//   0x004b2ef1  test     ecx, ecx
-//   0x004b2ef3  je       0x4b2f34
-//   0x004b2ef5  mov      edx, dword ptr [ecx]
-//   0x004b2ef7  call     dword ptr [edx + 0x5c]
-//   0x004b2efa  test     eax, eax
-//   0x004b2efc  je       0x4b2f07
-//   0x004b2efe  mov      eax, dword ptr [edi]
-//   0x004b2f00  push     0
-//   0x004b2f02  mov      ecx, edi
-//   0x004b2f04  call     dword ptr [eax + 0x34]
-//   0x004b2f07  mov      ecx, dword ptr [0x714ed4]
-//   0x004b2f0d  push     ebx
-//   0x004b2f0e  mov      ebx, dword ptr [0x714edc]
-//   0x004b2f14  mov      dword ptr [0x714edc], ecx
-//   0x004b2f1a  mov      ecx, dword ptr [0x7b2f9c]
-//   0x004b2f20  mov      edx, dword ptr [ecx]
-//   0x004b2f22  call     dword ptr [edx + 0x28]
-//   0x004b2f25  mov      esi, dword ptr [esp + 0x1c]
-//   0x004b2f29  mov      dword ptr [esi], eax
-//   0x004b2f2b  mov      dword ptr [0x714edc], ebx
-//   0x004b2f31  pop      ebx
-//   0x004b2f32  jmp      0x4b2f5e
+// MapClass::vfunc_9 -- ALIAS of DisplayClass::vfunc_9 (same machine code at 0x004b2ec0); transcribed once.
 void MapClass::vfunc_9()
 {
 }
@@ -279,1079 +187,92 @@ void MapClass::vfunc_10()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_11 -- body derived from 9 instructions at 0x004b2f90; semantics not reconstructed.
-// size 22 bytes; signature __stdcall nargs=1
-// callees: 0x004b2fad
-//
-//   0x004b2f90  mov      eax, dword ptr [0x7b2f9c]
-//   0x004b2f95  push     esi
-//   0x004b2f96  mov      esi, dword ptr [esp + 8]
-//   0x004b2f9a  cmp      eax, esi
-//   0x004b2f9c  jne      0x4b2fa6
-//   0x004b2f9e  mov      eax, dword ptr [ecx]
-//   0x004b2fa0  push     esi
-//   0x004b2fa1  call     dword ptr [eax + 0x30]
-//   0x004b2fa4  jmp      0x4b2fad
+// MapClass::vfunc_11 -- ALIAS of DisplayClass::vfunc_11 (same machine code at 0x004b2f90); transcribed once.
 void MapClass::vfunc_11()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_12 -- body derived from 5 instructions at 0x004b2fd0; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x004b2fd0  mov      ecx, dword ptr [esp + 4]
-//   0x004b2fd4  mov      eax, dword ptr [ecx]
-//   0x004b2fd6  call     dword ptr [eax + 0x24]
-//   0x004b2fd9  mov      dword ptr [0x7b2f9c], eax
-//   0x004b2fde  ret      4
+// MapClass::vfunc_12 -- ALIAS of DisplayClass::vfunc_12 (same machine code at 0x004b2fd0); transcribed once.
 void MapClass::vfunc_12()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_13 -- body derived from 13 instructions at 0x004b2e90; semantics not reconstructed.
-// size 46 bytes; signature __stdcall nargs=1
-// callees: 0x00511960
-//
-//   0x004b2e90  mov      eax, dword ptr [0x714eec]
-//   0x004b2e95  test     eax, eax
-//   0x004b2e97  je       0x4b2ea0
-//   0x004b2e99  mov      byte ptr [eax + 0xd31], 1
-//   0x004b2ea0  mov      eax, dword ptr [esp + 4]
-//   0x004b2ea4  test     eax, eax
-//   0x004b2ea6  je       0x4b2ebb
-//   0x004b2ea8  cmp      dword ptr [ecx + 0xc], 2
-//   0x004b2eac  je       0x4b2eb1
-//   0x004b2eae  mov      dword ptr [ecx + 0xc], eax
-//   0x004b2eb1  mov      ecx, 0x710d28
-//   0x004b2eb6  call     0x511960
-//   0x004b2ebb  ret      4
+// MapClass::vfunc_13 -- ALIAS of DisplayClass::vfunc_13 (same machine code at 0x004b2e90); transcribed once.
 void MapClass::vfunc_13()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_14 -- body derived from 87 instructions at 0x004b2ff0; semantics not reconstructed.
-// size 272 bytes; signature __thiscall nargs=2
-// callees: 0x0055f3f0, 0x005f6e50
-//
-//   0x004b2ff0  sub      esp, 8
-//   0x004b2ff3  mov      eax, dword ptr [0x714ee4]
-//   0x004b2ff8  push     ebp
-//   0x004b2ff9  mov      ebp, dword ptr [0x714edc]
-//   0x004b2fff  push     esi
-//   0x004b3000  mov      esi, ecx
-//   0x004b3002  push     edi
-//   0x004b3003  mov      ecx, dword ptr [0x7151d8]
-//   0x004b3009  mov      dword ptr [0x714edc], eax
-//   0x004b300e  push     0
-//   0x004b3010  push     eax
-//   0x004b3011  mov      edx, dword ptr [ecx]
-//   0x004b3013  call     dword ptr [edx + 0x3c]
-//   0x004b3016  mov      eax, dword ptr [esi + 0xc]
-//   0x004b3019  push     0
-//   0x004b301b  test     eax, eax
-//   0x004b301d  setne    cl
-//   0x004b3020  mov      byte ptr [esp + 0x10], cl
-//   0x004b3024  mov      ecx, dword ptr [0x714eec]
-//   0x004b302a  mov      edi, dword ptr [esp + 0x10]
-//   0x004b302e  cmp      eax, 2
-//   0x004b3031  mov      eax, dword ptr [0x714ee4]
-//   0x004b3036  push     edi
-//   0x004b3037  sete     dl
-//   0x004b303a  push     eax
-//   0x004b303b  mov      byte ptr [esp + 0x1c], dl
-//   0x004b303f  call     0x5f6e50
-//   0x004b3044  mov      ecx, dword ptr [0x714ee4]
-//   0x004b304a  push     1
-//   0x004b304c  push     edi
-//   0x004b304d  push     ecx
-//   0x004b304e  mov      ecx, dword ptr [0x714eec]
-//   0x004b3054  call     0x5f6e50
-//   0x004b3059  mov      eax, dword ptr [esp + 0x10]
-//   0x004b305d  mov      edx, dword ptr [esi]
-//   0x004b305f  push     eax
-//   0x004b3060  mov      ecx, esi
-//   0x004b3062  call     dword ptr [edx + 0x3c]
-//   0x004b3065  mov      ecx, dword ptr [0x714ee4]
-//   0x004b306b  push     2
-//   0x004b306d  push     edi
-//   0x004b306e  push     ecx
-//   0x004b306f  mov      ecx, dword ptr [0x714eec]
-//   0x004b3075  call     0x5f6e50
-//   0x004b307a  mov      al, byte ptr [0x7da30d]
-//   0x004b307f  test     al, al
-//   0x004b3081  je       0x4b30a6
-//   0x004b3083  mov      al, byte ptr [0x7b2e3a]
-//   0x004b3088  test     al, al
-//   0x004b308a  jne      0x4b30a6
-//   0x004b308c  mov      ecx, dword ptr [0x7151d8]
-//   0x004b3092  mov      eax, dword ptr [0x714ec8]
-//   0x004b3097  push     1
-//   0x004b3099  push     eax
-//   0x004b309a  mov      edx, dword ptr [ecx]
-//   0x004b309c  call     dword ptr [edx + 0x3c]
-//   0x004b309f  mov      byte ptr [0x7da30d], 0
-//   0x004b30a6  mov      ecx, dword ptr [0x7b2f9c]
-//   0x004b30ac  test     ecx, ecx
-//   0x004b30ae  je       0x4b30b7
-//   0x004b30b0  mov      edx, dword ptr [ecx]
-//   0x004b30b2  push     0
-//   0x004b30b4  call     dword ptr [edx + 0x2c]
-//   0x004b30b7  mov      ecx, 0x7b1184
-//   0x004b30bc  call     0x55f3f0
-//   0x004b30c1  mov      ecx, dword ptr [0x714f20]
-//   0x004b30c7  test     ecx, ecx
-//   0x004b30c9  je       0x4b30d2
-//   0x004b30cb  mov      eax, dword ptr [ecx]
-//   0x004b30cd  push     0
-//   0x004b30cf  call     dword ptr [eax + 0xc]
-//   0x004b30d2  mov      ecx, dword ptr [0x7151d8]
-//   0x004b30d8  mov      eax, dword ptr [0x714ee4]
-//   0x004b30dd  push     0
-//   0x004b30df  push     eax
-//   0x004b30e0  mov      edx, dword ptr [ecx]
-//   0x004b30e2  call     dword ptr [edx + 0x38]
-//   0x004b30e5  mov      edx, dword ptr [esi]
-//   0x004b30e7  mov      ecx, esi
-//   0x004b30e9  call     dword ptr [edx + 0x40]
-//   0x004b30ec  mov      dword ptr [esi + 0xc], 0
-//   0x004b30f3  pop      edi
-//   0x004b30f4  mov      dword ptr [0x714edc], ebp
-//   0x004b30fa  pop      esi
-//   0x004b30fb  pop      ebp
-//   0x004b30fc  add      esp, 8
-//   0x004b30ff  ret      
+// MapClass::vfunc_14 -- ALIAS of DisplayClass::vfunc_14 (same machine code at 0x004b2ff0); transcribed once.
 void MapClass::vfunc_14()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_15 -- body derived from 1 instructions at 0x00478900; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00478900  ret      4
+// MapClass::vfunc_15 -- ALIAS of DisplayClass::vfunc_15 (same machine code at 0x00478900); transcribed once.
 void MapClass::vfunc_15()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_16 -- body derived from 5 instructions at 0x004b3100; semantics not reconstructed.
-// size 16 bytes; signature __cdecl
-// callees: 0x004b3110
-//
-//   0x004b3100  mov      edx, dword ptr [0x714ee4]
-//   0x004b3106  push     0
-//   0x004b3108  xor      cl, cl
-//   0x004b310a  call     0x4b3110
-//   0x004b310f  ret      
+// MapClass::vfunc_16 -- ALIAS of DisplayClass::vfunc_16 (same machine code at 0x004b3100); transcribed once.
 void MapClass::vfunc_16()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_17 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// MapClass::vfunc_17 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void MapClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_18 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// MapClass::vfunc_18 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void MapClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_19 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// MapClass::vfunc_19 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void MapClass::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_20 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// MapClass::vfunc_20 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void MapClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_21 -- body derived from 27 instructions at 0x005023e0; semantics not reconstructed.
-// size 94 bytes; signature __thiscall
-// callees: none
-//
-//   0x005023e0  push     esi
-//   0x005023e1  mov      esi, ecx
-//   0x005023e3  lea      ecx, [esi + 0x164]
-//   0x005023e9  test     ecx, ecx
-//   0x005023eb  je       0x502409
-//   0x005023ed  mov      dword ptr [ecx + 4], 0
-//   0x005023f4  mov      dword ptr [ecx + 8], 0
-//   0x005023fb  mov      byte ptr [ecx + 0xc], 1
-//   0x005023ff  mov      byte ptr [ecx + 0xd], 0
-//   0x00502403  mov      dword ptr [ecx], 0x6a1a68
-//   0x00502409  mov      edx, dword ptr [esi + 0x17c]
-//   0x0050240f  mov      eax, dword ptr [ecx]
-//   0x00502411  push     0
-//   0x00502413  push     edx
-//   0x00502414  call     dword ptr [eax + 8]
-//   0x00502417  mov      ecx, dword ptr [esi + 0x17c]
-//   0x0050241d  xor      eax, eax
-//   0x0050241f  test     ecx, ecx
-//   0x00502421  jle      0x50243c
-//   0x00502423  mov      ecx, dword ptr [esi + 0x168]
-//   0x00502429  inc      eax
-//   0x0050242a  mov      dword ptr [ecx + eax*4 - 4], 0
-//   0x00502432  mov      ecx, dword ptr [esi + 0x17c]
-//   0x00502438  cmp      eax, ecx
-//   0x0050243a  jl       0x502423
-//   0x0050243c  pop      esi
-//   0x0050243d  ret      
+// MapClass::vfunc_21 -- ALIAS of DisplayClass::vfunc_21 (same machine code at 0x005023e0); transcribed once.
 void MapClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_22 -- body derived from 60 instructions at 0x00502440; semantics not reconstructed.
-// size 179 bytes; signature __thiscall
-// callees: 0x004ea8a0
-//
-//   0x00502440  push     ebx
-//   0x00502441  push     esi
-//   0x00502442  mov      esi, ecx
-//   0x00502444  xor      ebx, ebx
-//   0x00502446  xor      ecx, ecx
-//   0x00502448  cmp      dword ptr [esi + 0x16c], ebx
-//   0x0050244e  jle      0x50246e
-//   0x00502450  mov      eax, dword ptr [esi + 0x168]
-//   0x00502456  mov      eax, dword ptr [eax + ecx*4]
-//   0x00502459  cmp      eax, ebx
-//   0x0050245b  je       0x502463
-//   0x0050245d  mov      dword ptr [eax + 0x1c], ebx
-//   0x00502460  mov      dword ptr [eax + 0x20], ebx
-//   0x00502463  mov      eax, dword ptr [esi + 0x16c]
-//   0x00502469  inc      ecx
-//   0x0050246a  cmp      ecx, eax
-//   0x0050246c  jl       0x502450
-//   0x0050246e  mov      eax, dword ptr [esi + 0x16c]
-//   0x00502474  push     edi
-//   0x00502475  xor      edi, edi
-//   0x00502477  cmp      eax, ebx
-//   0x00502479  jle      0x5024a3
-//   0x0050247b  mov      ecx, dword ptr [esi + 0x168]
-//   0x00502481  mov      ecx, dword ptr [ecx + edi*4]
-//   0x00502484  cmp      ecx, ebx
-//   0x00502486  je       0x502498
-//   0x00502488  mov      edx, dword ptr [ecx]
-//   0x0050248a  push     1
-//   0x0050248c  call     dword ptr [edx + 0x20]
-//   0x0050248f  mov      eax, dword ptr [esi + 0x168]
-//   0x00502495  mov      dword ptr [eax + edi*4], ebx
-//   0x00502498  mov      eax, dword ptr [esi + 0x16c]
-//   0x0050249e  inc      edi
-//   0x0050249f  cmp      edi, eax
-//   0x005024a1  jl       0x50247b
-//   0x005024a3  mov      dl, 1
-//   0x005024a5  xor      ecx, ecx
-//   0x005024a7  call     0x4ea8a0
-//   0x005024ac  mov      eax, dword ptr [esi + 0x16c]
-//   0x005024b2  pop      edi
-//   0x005024b3  cmp      eax, 0x40000
-//   0x005024b8  jge      0x5024f0
-//   0x005024ba  mov      edx, dword ptr [esi + 0x164]
-//   0x005024c0  lea      ecx, [esi + 0x164]
-//   0x005024c6  push     ebx
-//   0x005024c7  push     0x40000
-//   0x005024cc  call     dword ptr [edx + 8]
-//   0x005024cf  mov      ecx, dword ptr [esi + 0x16c]
-//   0x005024d5  xor      eax, eax
-//   0x005024d7  cmp      ecx, ebx
-//   0x005024d9  jle      0x5024f0
-//   0x005024db  mov      ecx, dword ptr [esi + 0x168]
-//   0x005024e1  inc      eax
-//   0x005024e2  mov      dword ptr [ecx + eax*4 - 4], ebx
-//   0x005024e6  mov      ecx, dword ptr [esi + 0x16c]
-//   0x005024ec  cmp      eax, ecx
-//   0x005024ee  jl       0x5024db
-//   0x005024f0  pop      esi
-//   0x005024f1  pop      ebx
-//   0x005024f2  ret      
+// MapClass::vfunc_22 -- ALIAS of DisplayClass::vfunc_22 (same machine code at 0x00502440); transcribed once.
 void MapClass::vfunc_22()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_23 -- body derived from 27 instructions at 0x00502500; semantics not reconstructed.
-// size 67 bytes; signature __thiscall nargs=3
-// callees: 0x0044f110
-//
-//   0x00502500  push     ebx
-//   0x00502501  push     ebp
-//   0x00502502  push     esi
-//   0x00502503  push     edi
-//   0x00502504  mov      ebp, ecx
-//   0x00502506  xor      edi, edi
-//   0x00502508  xor      esi, esi
-//   0x0050250a  mov      dword ptr [ebp + 0x13c], edi
-//   0x00502510  mov      ebx, 0x200
-//   0x00502515  cmp      edi, dword ptr [ebp + 0x16c]
-//   0x0050251b  jge      0x50252f
-//   0x0050251d  mov      eax, dword ptr [ebp + 0x168]
-//   0x00502523  mov      ecx, dword ptr [eax + esi]
-//   0x00502526  test     ecx, ecx
-//   0x00502528  je       0x50252f
-//   0x0050252a  call     0x44f110
-//   0x0050252f  add      esi, 4
-//   0x00502532  inc      edi
-//   0x00502533  dec      ebx
-//   0x00502534  jne      0x502515
-//   0x00502536  cmp      edi, 0x40000
-//   0x0050253c  jl       0x502510
-//   0x0050253e  pop      edi
-//   0x0050253f  pop      esi
-//   0x00502540  pop      ebp
-//   0x00502541  pop      ebx
-//   0x00502542  ret      
+// MapClass::vfunc_23 -- ALIAS of DisplayClass::vfunc_23 (same machine code at 0x00502500); transcribed once.
 void MapClass::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_24 -- body derived from 30 instructions at 0x00510cc0; semantics not reconstructed.
-// size 91 bytes; signature __thiscall nargs=1
-// callees: 0x00510d27
-//
-//   0x00510cc0  push     ebx
-//   0x00510cc1  push     esi
-//   0x00510cc2  mov      esi, dword ptr [esp + 0xc]
-//   0x00510cc6  mov      ebx, ecx
-//   0x00510cc8  mov      ecx, esi
-//   0x00510cca  mov      eax, dword ptr [esi]
-//   0x00510ccc  call     dword ptr [eax + 0x2c]
-//   0x00510ccf  cmp      eax, 0x2c
-//   0x00510cd2  jne      0x510d95
-//   0x00510cd8  mov      eax, dword ptr [ebx + 0x1194]
-//   0x00510cde  push     ebp
-//   0x00510cdf  xor      ebp, ebp
-//   0x00510ce1  test     eax, eax
-//   0x00510ce3  jle      0x510d89
-//   0x00510ce9  push     edi
-//   0x00510cea  mov      ecx, dword ptr [ebx + 0x1188]
-//   0x00510cf0  movsx    eax, word ptr [ecx + ebp*4 + 2]
-//   0x00510cf5  movsx    edx, word ptr [ecx + ebp*4]
-//   0x00510cf9  lea      ecx, [ecx + ebp*4]
-//   0x00510cfc  shl      eax, 9
-//   0x00510cff  add      eax, edx
-//   0x00510d01  js       0x510d1b
-//   0x00510d03  cmp      eax, 0x40000
-//   0x00510d08  jge      0x510d1b
-//   0x00510d0a  mov      edx, dword ptr [ebx + 0x168]
-//   0x00510d10  mov      eax, dword ptr [edx + eax*4]
-//   0x00510d13  test     eax, eax
-//   0x00510d15  je       0x510d1b
-//   0x00510d17  mov      edi, eax
-//   0x00510d19  jmp      0x510d27
+// MapClass::vfunc_24 -- ALIAS of DisplayClass::vfunc_24 (same machine code at 0x00510cc0); transcribed once.
 void MapClass::vfunc_24()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_25 -- body derived from 2 instructions at 0x00478910; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00478910  xor      al, al
-//   0x00478912  ret      
+// MapClass::vfunc_25 -- ALIAS of DisplayClass::vfunc_25 (same machine code at 0x00478910); transcribed once.
 void MapClass::vfunc_25()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_26 -- body derived from 98 instructions at 0x00507150; semantics not reconstructed.
-// size 349 bytes; signature __thiscall nargs=7
-// callees: 0x0046d030, 0x0046d0a0, 0x005a5f10
-//
-//   0x00507150  sub      esp, 0x10
-//   0x00507153  mov      eax, dword ptr [0x7b0d38]
-//   0x00507158  push     ebx
-//   0x00507159  mov      ebx, ecx
-//   0x0050715b  test     eax, eax
-//   0x0050715d  mov      dword ptr [esp + 8], ebx
-//   0x00507161  je       0x5072a8
-//   0x00507167  mov      al, byte ptr [0x7b0d4d]
-//   0x0050716c  test     al, al
-//   0x0050716e  je       0x5072a8
-//   0x00507174  push     ebp
-//   0x00507175  push     esi
-//   0x00507176  mov      esi, dword ptr [0x7d3810]
-//   0x0050717c  push     edi
-//   0x0050717d  mov      di, word ptr [0x7d3812]
-//   0x00507184  lea      ebp, [ebx + 0x180]
-//   0x0050718a  mov      dword ptr [esp + 0x18], 0x100
-//   0x00507192  cmp      word ptr [ebp + 0xc], si
-//   0x00507196  jne      0x5071a2
-//   0x00507198  cmp      word ptr [ebp + 0xe], di
-//   0x0050719c  je       0x507293
-//   0x005071a2  mov      edx, dword ptr [ebp]
-//   0x005071a5  mov      ecx, dword ptr [ebp + 8]
-//   0x005071a8  cmp      edx, -1
-//   0x005071ab  je       0x5071ba
-//   0x005071ad  mov      eax, dword ptr [0x7b2e54]
-//   0x005071b2  sub      eax, edx
-//   0x005071b4  cmp      eax, ecx
-//   0x005071b6  jge      0x5071c2
-//   0x005071b8  sub      ecx, eax
-//   0x005071ba  test     ecx, ecx
-//   0x005071bc  jne      0x507293
-//   0x005071c2  mov      ecx, ebp
-//   0x005071c4  call     0x46d030
-//   0x005071c9  mov      esi, dword ptr [0x7d3810]
-//   0x005071cf  mov      di, word ptr [0x7d3812]
-//   0x005071d6  xor      eax, eax
-//   0x005071d8  lea      ecx, [ebx + 0x18c]
-//   0x005071de  cmp      word ptr [ecx], si
-//   0x005071e1  jne      0x5071e9
-//   0x005071e3  cmp      word ptr [ecx + 2], di
-//   0x005071e7  je       0x5071f4
-//   0x005071e9  inc      eax
-//   0x005071ea  add      ecx, 0x10
-//   0x005071ed  cmp      eax, 0x100
-//   0x005071f2  jl       0x5071de
-//   0x005071f4  cmp      eax, 0x100
-//   0x005071f9  je       0x507293
-//   0x005071ff  mov      ecx, dword ptr [esp + 0x14]
-//   0x00507203  add      eax, 0x18
-//   0x00507206  xor      ebx, ebx
-//   0x00507208  shl      eax, 4
-//   0x0050720b  lea      edi, [eax + ecx]
-//   0x0050720e  mov      edx, dword ptr [0x710e5c]
-//   0x00507214  lea      eax, [edx - 1]
-//   0x00507217  push     eax
-//   0x00507218  mov      eax, dword ptr [0x7b0d18]
-//   0x0050721d  push     0
-//   0x0050721f  lea      ecx, [eax + 0x218]
-//   0x00507225  call     0x5a5f10
-//   0x0050722a  mov      ecx, dword ptr [0x710e54]
-//   0x00507230  mov      edx, dword ptr [0x710e60]
-//   0x00507236  lea      esi, [ecx + eax]
-//   0x00507239  lea      eax, [edx - 1]
-//   0x0050723c  push     eax
-//   0x0050723d  mov      eax, dword ptr [0x7b0d18]
-//   0x00507242  push     0
-//   0x00507244  lea      ecx, [eax + 0x218]
-//   0x0050724a  call     0x5a5f10
-//   0x0050724f  mov      ecx, dword ptr [0x710e58]
-//   0x00507255  mov      word ptr [esp + 0x10], si
-//   0x0050725a  add      ecx, eax
-//   0x0050725c  lea      eax, [esp + 0x1c]
-//   0x00507260  mov      word ptr [esp + 0x12], cx
-//   0x00507265  mov      edx, dword ptr [esp + 0x10]
-//   0x00507269  push     eax
-//   0x0050726a  mov      ecx, edi
-//   0x0050726c  mov      dword ptr [esp + 0x20], edx
-//   0x00507270  call     0x46d0a0
-//   0x00507275  test     al, al
-//   0x00507277  jne      0x507282
-//   0x00507279  inc      ebx
-//   0x0050727a  cmp      ebx, 0x3e8
-//   0x00507280  jl       0x50720e
-//   0x00507282  mov      esi, dword ptr [0x7d3810]
-//   0x00507288  mov      di, word ptr [0x7d3812]
-//   0x0050728f  mov      ebx, dword ptr [esp + 0x14]
-//   0x00507293  mov      eax, dword ptr [esp + 0x18]
-//   0x00507297  add      ebp, 0x10
-//   0x0050729a  dec      eax
-//   0x0050729b  mov      dword ptr [esp + 0x18], eax
-//   0x0050729f  jne      0x507192
-//   0x005072a5  pop      edi
-//   0x005072a6  pop      esi
-//   0x005072a7  pop      ebp
-//   0x005072a8  pop      ebx
-//   0x005072a9  add      esp, 0x10
-//   0x005072ac  ret      
+// MapClass::vfunc_26 -- ALIAS of DisplayClass::vfunc_26 (same machine code at 0x00507150); transcribed once.
 void MapClass::vfunc_26()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_27 -- body derived from 432 instructions at 0x00502550; semantics not reconstructed.
-// size 1659 bytes; signature __thiscall nargs=27
-// callees: 0x0044f110, 0x00502bd3, 0x00510ff0, 0x00520560, 0x00682997
-//
-//   0x00502550  sub      esp, 0x48
-//   0x00502553  push     ebx
-//   0x00502554  push     ebp
-//   0x00502555  mov      ebp, ecx
-//   0x00502557  push     esi
-//   0x00502558  mov      ecx, dword ptr [0x710e28]
-//   0x0050255e  push     edi
-//   0x0050255f  mov      eax, dword ptr [ebp + 0xfc]
-//   0x00502565  xor      edi, edi
-//   0x00502567  mov      dword ptr [esp + 0x48], eax
-//   0x0050256b  mov      eax, dword ptr [0x7d3810]
-//   0x00502570  mov      dword ptr [esp + 0x4c], eax
-//   0x00502574  mov      eax, dword ptr [0x7b2570]
-//   0x00502579  lea      edx, [ecx + ecx + 8]
-//   0x0050257d  xor      esi, esi
-//   0x0050257f  cmp      eax, edi
-//   0x00502581  mov      dword ptr [esp + 0x3c], edi
-//   0x00502585  mov      dword ptr [esp + 0x40], edi
-//   0x00502589  mov      dword ptr [esp + 0x44], edx
-//   0x0050258d  jle      0x5025ab
-//   0x0050258f  mov      ecx, dword ptr [0x7b2564]
-//   0x00502595  push     edi
-//   0x00502596  mov      ecx, dword ptr [ecx + esi*4]
-//   0x00502599  mov      edx, dword ptr [ecx]
-//   0x0050259b  call     dword ptr [edx + 0x10c]
-//   0x005025a1  mov      eax, dword ptr [0x7b2570]
-//   0x005025a6  inc      esi
-//   0x005025a7  cmp      esi, eax
-//   0x005025a9  jl       0x50258f
-//   0x005025ab  cmp      dword ptr [ebp + 0x16c], edi
-//   0x005025b1  jle      0x502623
-//   0x005025b3  mov      ecx, edi
-//   0x005025b5  and      ecx, 0x800001ff
-//   0x005025bb  jns      0x5025c5
-//   0x005025bd  dec      ecx
-//   0x005025be  or       ecx, 0xfffffe00
-//   0x005025c4  inc      ecx
-//   0x005025c5  mov      eax, edi
-//   0x005025c7  cdq      
-//   0x005025c8  and      edx, 0x1ff
-//   0x005025ce  add      eax, edx
-//   0x005025d0  sar      eax, 9
-//   0x005025d3  movsx    edx, cx
-//   0x005025d6  mov      ecx, dword ptr [ebp + 0xfc]
-//   0x005025dc  movsx    eax, ax
-//   0x005025df  lea      ebx, [edx + eax]
-//   0x005025e2  cmp      ebx, ecx
-//   0x005025e4  jle      0x502601
-//   0x005025e6  mov      esi, edx
-//   0x005025e8  sub      esi, eax
-//   0x005025ea  cmp      esi, ecx
-//   0x005025ec  jge      0x502601
-//   0x005025ee  sub      eax, edx
-//   0x005025f0  cmp      eax, ecx
-//   0x005025f2  jge      0x502601
-//   0x005025f4  mov      eax, dword ptr [ebp + 0x100]
-//   0x005025fa  lea      ecx, [ecx + eax*2]
-//   0x005025fd  cmp      ebx, ecx
-//   0x005025ff  jle      0x502618
-//   0x00502601  mov      edx, dword ptr [ebp + 0x168]
-//   0x00502607  mov      eax, dword ptr [edx + edi*4]
-//   0x0050260a  test     eax, eax
-//   0x0050260c  je       0x502618
-//   0x0050260e  mov      cl, byte ptr [esp + 0x64]
-//   0x00502612  mov      byte ptr [eax + 0x93], cl
-//   0x00502618  mov      eax, dword ptr [ebp + 0x16c]
-//   0x0050261e  inc      edi
-//   0x0050261f  cmp      edi, eax
-//   0x00502621  jl       0x5025b3
-//   0x00502623  mov      al, byte ptr [esp + 0x60]
-//   0x00502627  xor      ebx, ebx
-//   0x00502629  test     al, al
-//   0x0050262b  jne      0x502a8e
-//   0x00502631  mov      eax, dword ptr [esp + 0x44]
-//   0x00502635  imul     eax, dword ptr [esp + 0x48]
-//   0x0050263a  lea      ecx, [eax*8]
-//   0x00502641  sub      ecx, eax
-//   0x00502643  lea      edx, [ecx + ecx*2]
-//   0x00502646  shl      edx, 3
-//   0x00502649  push     edx
-//   0x0050264a  call     0x682997
-//   0x0050264f  mov      dword ptr [esp + 0x40], eax
-//   0x00502653  mov      dword ptr [esp + 0x44], eax
-//   0x00502657  mov      eax, dword ptr [ebp + 0xfc]
-//   0x0050265d  mov      dword ptr [ebp + 0x114], 1
-//   0x00502667  mov      dword ptr [ebp + 0x118], eax
-//   0x0050266d  add      esp, 4
-//   0x00502670  lea      ecx, [eax - 1]
-//   0x00502673  mov      dword ptr [ebp + 0x11c], ecx
-//   0x00502679  mov      edx, dword ptr [ebp + 0x168]
-//   0x0050267f  shl      eax, 0xb
-//   0x00502682  mov      ecx, ebp
-//   0x00502684  lea      eax, [edx + eax + 4]
-//   0x00502688  mov      dword ptr [ebp + 0x120], eax
-//   0x0050268e  call     0x510ff0
-//   0x00502693  mov      edi, eax
-//   0x00502695  test     edi, edi
-//   0x00502697  mov      ecx, dword ptr [edi + 0x14]
-//   0x0050269a  mov      dword ptr [esp + 0x4c], ecx
-//   0x0050269e  je       0x502a8e
-//   0x005026a4  mov      edx, dword ptr [esp + 0x3c]
-//   0x005026a8  lea      esi, [edx + 0x18]
-//   0x005026ab  push     edi
-//   0x005026ac  lea      ecx, [esi - 0x18]
-//   0x005026af  call     0x520560
-//   0x005026b4  mov      eax, dword ptr [edi + 0x14]
-//   0x005026b7  mov      dword ptr [esi - 4], eax
-//   0x005026ba  mov      ecx, dword ptr [edi + 0x18]
-//   0x005026bd  mov      dword ptr [esi], ecx
-//   0x005026bf  mov      edx, dword ptr [edi + 0x1c]
-//   0x005026c2  mov      dword ptr [esi + 4], edx
-//   0x005026c5  mov      eax, dword ptr [edi + 0x20]
-//   0x005026c8  mov      dword ptr [esi + 8], eax
-//   0x005026cb  mov      ecx, dword ptr [edi + 0x24]
-//   0x005026ce  mov      dword ptr [esi + 0xc], ecx
-//   0x005026d1  mov      edx, dword ptr [edi + 0x28]
-//   0x005026d4  mov      dword ptr [esi + 0x10], edx
-//   0x005026d7  mov      eax, dword ptr [edi + 0x2c]
-//   0x005026da  mov      dword ptr [esi + 0x14], eax
-//   0x005026dd  mov      ecx, dword ptr [edi + 0x30]
-//   0x005026e0  mov      dword ptr [esi + 0x18], ecx
-//   0x005026e3  mov      edx, dword ptr [edi + 0x34]
-//   0x005026e6  mov      dword ptr [esi + 0x1c], edx
-//   0x005026e9  mov      eax, dword ptr [edi + 0x38]
-//   0x005026ec  mov      dword ptr [esi + 0x20], eax
-//   0x005026ef  mov      ecx, dword ptr [edi + 0x3c]
-//   0x005026f2  mov      dword ptr [esi + 0x24], ecx
-//   0x005026f5  mov      edx, dword ptr [edi + 0x40]
-//   0x005026f8  mov      dword ptr [esi + 0x28], edx
-//   0x005026fb  mov      eax, dword ptr [edi + 0x44]
-//   0x005026fe  mov      dword ptr [esi + 0x2c], eax
-//   0x00502701  mov      ecx, dword ptr [edi + 0x48]
-//   0x00502704  mov      dword ptr [esi + 0x30], ecx
-//   0x00502707  mov      edx, dword ptr [edi + 0x4c]
-//   0x0050270a  mov      dword ptr [esi + 0x34], edx
-//   0x0050270d  mov      eax, dword ptr [edi + 0x50]
-//   0x00502710  lea      ecx, [edi + 0x54]
-//   0x00502713  mov      dword ptr [esi + 0x38], eax
-//   0x00502716  lea      edx, [esi + 0x3c]
-//   0x00502719  mov      eax, dword ptr [ecx]
-//   0x0050271b  mov      dword ptr [edx], eax
-//   0x0050271d  mov      eax, dword ptr [ecx + 4]
-//   0x00502720  mov      dword ptr [edx + 4], eax
-//   0x00502723  mov      eax, dword ptr [ecx + 8]
-//   0x00502726  mov      dword ptr [edx + 8], eax
-//   0x00502729  mov      ecx, dword ptr [ecx + 0xc]
-//   0x0050272c  mov      dword ptr [edx + 0xc], ecx
-//   0x0050272f  mov      edx, dword ptr [edi + 0x64]
-//   0x00502732  mov      dword ptr [esi + 0x4c], edx
-//   0x00502735  mov      eax, dword ptr [edi + 0x68]
-//   0x00502738  mov      dword ptr [esi + 0x50], eax
-//   0x0050273b  mov      ecx, dword ptr [edi + 0x6c]
-//   0x0050273e  mov      dword ptr [esi + 0x54], ecx
-//   0x00502741  mov      edx, dword ptr [edi + 0x70]
-//   0x00502744  mov      dword ptr [esi + 0x58], edx
-//   0x00502747  mov      eax, dword ptr [edi + 0x74]
-//   0x0050274a  mov      dword ptr [esi + 0x5c], eax
-//   0x0050274d  mov      ecx, dword ptr [edi + 0x78]
-//   0x00502750  mov      dword ptr [esi + 0x60], ecx
-//   0x00502753  mov      edx, dword ptr [edi + 0x7c]
-//   0x00502756  mov      dword ptr [esi + 0x64], edx
-//   0x00502759  mov      ax, word ptr [edi + 0x80]
-//   0x00502760  mov      word ptr [esi + 0x68], ax
-//   0x00502764  mov      cx, word ptr [edi + 0x82]
-//   0x0050276b  mov      word ptr [esi + 0x6a], cx
-//   0x0050276f  mov      dx, word ptr [edi + 0x84]
-//   0x00502776  mov      word ptr [esi + 0x6c], dx
-//   0x0050277a  mov      ax, word ptr [edi + 0x86]
-//   0x00502781  mov      word ptr [esi + 0x6e], ax
-//   0x00502785  mov      cx, word ptr [edi + 0x88]
-//   0x0050278c  mov      word ptr [esi + 0x70], cx
-//   0x00502790  mov      dx, word ptr [edi + 0x8a]
-//   0x00502797  mov      word ptr [esi + 0x72], dx
-//   0x0050279b  mov      ax, word ptr [edi + 0x8c]
-//   0x005027a2  mov      word ptr [esi + 0x74], ax
-//   0x005027a6  mov      cx, word ptr [edi + 0x8e]
-//   0x005027ad  mov      word ptr [esi + 0x76], cx
-//   0x005027b1  mov      dl, byte ptr [edi + 0x90]
-//   0x005027b7  mov      byte ptr [esi + 0x78], dl
-//   0x005027ba  mov      al, byte ptr [edi + 0x91]
-//   0x005027c0  mov      byte ptr [esi + 0x79], al
-//   0x005027c3  mov      cl, byte ptr [edi + 0x92]
-//   0x005027c9  mov      byte ptr [esi + 0x7a], cl
-//   0x005027cc  mov      dl, byte ptr [edi + 0x93]
-//   0x005027d2  mov      byte ptr [esi + 0x7b], dl
-//   0x005027d5  mov      al, byte ptr [edi + 0x94]
-//   0x005027db  mov      byte ptr [esi + 0x7c], al
-//   0x005027de  mov      cl, byte ptr [edi + 0x95]
-//   0x005027e4  mov      byte ptr [esi + 0x7d], cl
-//   0x005027e7  mov      dl, byte ptr [edi + 0x96]
-//   0x005027ed  mov      byte ptr [esi + 0x7e], dl
-//   0x005027f0  mov      al, byte ptr [edi + 0x97]
-//   0x005027f6  mov      byte ptr [esi + 0x7f], al
-//   0x005027f9  mov      cl, byte ptr [edi + 0x98]
-//   0x005027ff  mov      byte ptr [esi + 0x80], cl
-//   0x00502805  mov      dl, byte ptr [edi + 0x99]
-//   0x0050280b  mov      byte ptr [esi + 0x81], dl
-//   0x00502811  mov      al, byte ptr [edi + 0x9a]
-//   0x00502817  mov      byte ptr [esi + 0x82], al
-//   0x0050281d  mov      ecx, dword ptr [edi + 0x9c]
-//   0x00502823  mov      dword ptr [esi + 0x84], ecx
-//   0x00502829  mov      edx, dword ptr [edi + 0xa0]
-//   0x0050282f  mov      ecx, dword ptr [esi + 0x8c]
-//   0x00502835  mov      dword ptr [esi + 0x88], edx
-//   0x0050283b  mov      eax, dword ptr [edi + 0xa4]
-//   0x00502841  xor      eax, ecx
-//   0x00502843  and      eax, 1
-//   0x00502846  xor      eax, ecx
-//   0x00502848  mov      dword ptr [esi + 0x8c], eax
-//   0x0050284e  mov      ecx, dword ptr [edi + 0xa4]
-//   0x00502854  xor      ecx, eax
-//   0x00502856  and      ecx, 2
-//   0x00502859  xor      ecx, eax
-//   0x0050285b  mov      dword ptr [esi + 0x8c], ecx
-//   0x00502861  mov      eax, dword ptr [edi + 0xa4]
-//   0x00502867  xor      eax, ecx
-//   0x00502869  and      eax, 4
-//   0x0050286c  xor      eax, ecx
-//   0x0050286e  mov      dword ptr [esi + 0x8c], eax
-//   0x00502874  mov      ecx, dword ptr [edi + 0xa4]
-//   0x0050287a  xor      ecx, eax
-//   0x0050287c  and      ecx, 8
-//   0x0050287f  xor      ecx, eax
-//   0x00502881  mov      dword ptr [esi + 0x8c], ecx
-//   0x00502887  mov      eax, dword ptr [edi + 0xa4]
-//   0x0050288d  xor      eax, ecx
-//   0x0050288f  and      eax, 0x10
-//   0x00502892  xor      eax, ecx
-//   0x00502894  mov      dword ptr [esi + 0x8c], eax
-//   0x0050289a  mov      ecx, dword ptr [edi + 0xa4]
-//   0x005028a0  xor      ecx, eax
-//   0x005028a2  and      ecx, 0x20
-//   0x005028a5  xor      ecx, eax
-//   0x005028a7  mov      dword ptr [esi + 0x8c], ecx
-//   0x005028ad  mov      eax, dword ptr [edi + 0xa4]
-//   0x005028b3  xor      eax, ecx
-//   0x005028b5  and      eax, 0x40
-//   0x005028b8  xor      eax, ecx
-//   0x005028ba  mov      dword ptr [esi + 0x8c], eax
-//   0x005028c0  mov      ecx, dword ptr [edi + 0xa4]
-//   0x005028c6  xor      ecx, eax
-//   0x005028c8  and      ecx, 0x80
-//   0x005028ce  xor      ecx, eax
-//   0x005028d0  mov      dword ptr [esi + 0x8c], ecx
-//   0x005028d6  mov      eax, dword ptr [edi + 0xa4]
-//   0x005028dc  xor      eax, ecx
-//   0x005028de  and      eax, 0x100
-//   0x005028e3  xor      eax, ecx
-//   0x005028e5  mov      dword ptr [esi + 0x8c], eax
-//   0x005028eb  mov      ecx, dword ptr [edi + 0xa4]
-//   0x005028f1  xor      ecx, eax
-//   0x005028f3  and      ecx, 0x200
-//   0x005028f9  xor      ecx, eax
-//   0x005028fb  mov      dword ptr [esi + 0x8c], ecx
-//   0x00502901  mov      eax, dword ptr [edi + 0xa4]
-//   0x00502907  xor      eax, ecx
-//   0x00502909  and      eax, 0x400
-//   0x0050290e  xor      eax, ecx
-//   0x00502910  mov      dword ptr [esi + 0x8c], eax
-//   0x00502916  mov      ecx, dword ptr [edi + 0xa4]
-//   0x0050291c  xor      ecx, eax
-//   0x0050291e  and      ecx, 0x800
-//   0x00502924  xor      ecx, eax
-//   0x00502926  mov      dword ptr [esi + 0x8c], ecx
-//   0x0050292c  mov      eax, dword ptr [edi + 0xa4]
-//   0x00502932  xor      eax, ecx
-//   0x00502934  and      eax, 0x1000
-//   0x00502939  xor      eax, ecx
-//   0x0050293b  mov      dword ptr [esi + 0x8c], eax
-//   0x00502941  mov      ecx, dword ptr [edi + 0xa4]
-//   0x00502947  xor      ecx, eax
-//   0x00502949  and      ecx, 0x2000
-//   0x0050294f  xor      ecx, eax
-//   0x00502951  mov      dword ptr [esi + 0x8c], ecx
-//   0x00502957  mov      eax, dword ptr [edi + 0xa4]
-//   0x0050295d  xor      eax, ecx
-//   0x0050295f  and      eax, 0x4000
-//   0x00502964  xor      eax, ecx
-//   0x00502966  mov      dword ptr [esi + 0x8c], eax
-//   0x0050296c  mov      ecx, dword ptr [edi + 0xa4]
-//   0x00502972  xor      ecx, eax
-//   0x00502974  and      ecx, 0x8000
-//   0x0050297a  xor      ecx, eax
-//   0x0050297c  mov      dword ptr [esi + 0x8c], ecx
-//   0x00502982  mov      eax, dword ptr [edi + 0xa4]
-//   0x00502988  xor      eax, ecx
-//   0x0050298a  and      eax, 0x10000
-//   0x0050298f  xor      eax, ecx
-//   0x00502991  mov      dword ptr [esi + 0x8c], eax
-//   0x00502997  mov      ecx, dword ptr [edi + 0xa4]
-//   0x0050299d  xor      ecx, eax
-//   0x0050299f  and      ecx, 0x20000
-//   0x005029a5  xor      ecx, eax
-//   0x005029a7  mov      dword ptr [esi + 0x8c], ecx
-//   0x005029ad  mov      eax, dword ptr [edi + 0xa4]
-//   0x005029b3  xor      eax, ecx
-//   0x005029b5  and      eax, 0x40000
-//   0x005029ba  xor      eax, ecx
-//   0x005029bc  mov      dword ptr [esi + 0x8c], eax
-//   0x005029c2  mov      ecx, dword ptr [edi + 0xa4]
-//   0x005029c8  xor      ecx, eax
-//   0x005029ca  and      ecx, 0x80000
-//   0x005029d0  xor      ecx, eax
-//   0x005029d2  mov      dword ptr [esi + 0x8c], ecx
-//   0x005029d8  mov      eax, dword ptr [edi + 0xa4]
-//   0x005029de  xor      eax, ecx
-//   0x005029e0  and      eax, 0x100000
-//   0x005029e5  xor      eax, ecx
-//   0x005029e7  mov      dword ptr [esi + 0x8c], eax
-//   0x005029ed  mov      ecx, dword ptr [edi + 0xa4]
-//   0x005029f3  xor      ecx, eax
-//   0x005029f5  and      ecx, 0x200000
-//   0x005029fb  xor      ecx, eax
-//   0x005029fd  mov      dword ptr [esi + 0x8c], ecx
-//   0x00502a03  mov      eax, dword ptr [edi + 0xa4]
-//   0x00502a09  xor      eax, ecx
-//   0x00502a0b  and      eax, 0x400000
-//   0x00502a10  xor      eax, ecx
-//   0x00502a12  mov      dword ptr [esi + 0x8c], eax
-//   0x00502a18  mov      ecx, dword ptr [edi + 0xa4]
-//   0x00502a1e  xor      ecx, eax
-//   0x00502a20  and      ecx, 0x800000
-//   0x00502a26  xor      ecx, eax
-//   0x00502a28  mov      dword ptr [esi + 0x8c], ecx
-//   0x00502a2e  mov      eax, dword ptr [edi + 0xa4]
-//   0x00502a34  xor      eax, ecx
-//   0x00502a36  and      eax, 0x1000000
-//   0x00502a3b  xor      eax, ecx
-//   0x00502a3d  mov      dword ptr [esi + 0x8c], eax
-//   0x00502a43  mov      ecx, dword ptr [edi + 0xa4]
-//   0x00502a49  xor      ecx, eax
-//   0x00502a4b  and      ecx, 0x2000000
-//   0x00502a51  xor      ecx, eax
-//   0x00502a53  mov      dword ptr [esi + 0x8c], ecx
-//   0x00502a59  mov      eax, dword ptr [edi + 0xa4]
-//   0x00502a5f  xor      eax, ecx
-//   0x00502a61  and      eax, 0x4000000
-//   0x00502a66  xor      eax, ecx
-//   0x00502a68  mov      ecx, ebp
-//   0x00502a6a  mov      dword ptr [esi + 0x8c], eax
-//   0x00502a70  xor      eax, eax
-//   0x00502a72  mov      dword ptr [esi + 4], eax
-//   0x00502a75  mov      dword ptr [esi + 8], eax
-//   0x00502a78  call     0x510ff0
-//   0x00502a7d  mov      edi, eax
-//   0x00502a7f  inc      ebx
-//   0x00502a80  add      esi, 0xa8
-//   0x00502a86  test     edi, edi
-//   0x00502a88  jne      0x5026ab
-//   0x00502a8e  mov      eax, dword ptr [esp + 0x5c]
-//   0x00502a92  lea      ecx, [ebp + 0xf4]
-//   0x00502a98  mov      edx, eax
-//   0x00502a9a  mov      esi, ecx
-//   0x00502a9c  mov      edi, dword ptr [edx]
-//   0x00502a9e  mov      dword ptr [esi], edi
-//   0x00502aa0  mov      edi, dword ptr [edx + 4]
-//   0x00502aa3  mov      dword ptr [esi + 4], edi
-//   0x00502aa6  mov      edi, dword ptr [edx + 8]
-//   0x00502aa9  mov      dword ptr [esi + 8], edi
-//   0x00502aac  mov      edx, dword ptr [edx + 0xc]
-//   0x00502aaf  mov      dword ptr [esi + 0xc], edx
-//   0x00502ab2  mov      esi, dword ptr [ebp + 0xfc]
-//   0x00502ab8  xor      edx, edx
-//   0x00502aba  mov      dword ptr [ecx], edx
-//   0x00502abc  mov      ecx, 0x3f
-//   0x00502ac1  cmp      esi, ecx
-//   0x00502ac3  mov      dword ptr [ebp + 0xf8], edx
-//   0x00502ac9  jg       0x502ad3
-//   0x00502acb  cmp      dword ptr [ebp + 0x100], ecx
-//   0x00502ad1  jle      0x502add
-//   0x00502ad3  mov      dword ptr [0x7121bc], 2
-//   0x00502add  mov      ecx, dword ptr [0x710e24]
-//   0x00502ae3  mov      esi, dword ptr [0x710e28]
-//   0x00502ae9  mov      dword ptr [0x7d4c94], ecx
-//   0x00502aef  lea      ecx, [ecx + esi*2]
-//   0x00502af2  mov      dword ptr [0x7d4c98], ecx
-//   0x00502af8  mov      ecx, 1
-//   0x00502afd  mov      dword ptr [ebp + 0x12c], ecx
-//   0x00502b03  mov      dword ptr [ebp + 0x130], ecx
-//   0x00502b09  mov      ecx, dword ptr [eax + 0xc]
-//   0x00502b0c  mov      eax, dword ptr [eax + 8]
-//   0x00502b0f  lea      eax, [ecx + eax - 1]
-//   0x00502b13  xor      ecx, ecx
-//   0x00502b15  mov      dword ptr [ebp + 0x134], eax
-//   0x00502b1b  mov      dword ptr [ebp + 0x138], eax
-//   0x00502b21  lea      eax, [eax + eax + 2]
-//   0x00502b25  mov      dword ptr [esp + 0x28], ecx
-//   0x00502b29  test     eax, eax
-//   0x00502b2b  jle      0x502c4f
-//   0x00502b31  mov      dword ptr [esp + 0x34], edx
-//   0x00502b35  mov      edx, dword ptr [ebp + 0x134]
-//   0x00502b3b  xor      esi, esi
-//   0x00502b3d  add      edx, 2
-//   0x00502b40  test     edx, edx
-//   0x00502b42  jle      0x502c2a
-//   0x00502b48  movsx    eax, cx
-//   0x00502b4b  mov      dword ptr [esp + 0x14], eax
-//   0x00502b4f  mov      edx, dword ptr [esp + 0x14]
-//   0x00502b53  mov      eax, dword ptr [ebp + 0xfc]
-//   0x00502b59  mov      word ptr [esp + 0x22], cx
-//   0x00502b5e  mov      word ptr [esp + 0x20], si
-//   0x00502b63  movsx    ecx, si
-//   0x00502b66  add      edx, ecx
-//   0x00502b68  cmp      edx, eax
-//   0x00502b6a  jle      0x502c14
-//   0x00502b70  mov      edi, ecx
-//   0x00502b72  sub      edi, dword ptr [esp + 0x14]
-//   0x00502b76  cmp      edi, eax
-//   0x00502b78  jge      0x502c14
-//   0x00502b7e  mov      edi, dword ptr [esp + 0x14]
-//   0x00502b82  sub      edi, ecx
-//   0x00502b84  cmp      edi, eax
-//   0x00502b86  jge      0x502c14
-//   0x00502b8c  mov      ecx, dword ptr [ebp + 0x100]
-//   0x00502b92  lea      eax, [eax + ecx*2]
-//   0x00502b95  cmp      edx, eax
-//   0x00502b97  jg       0x502c14
-//   0x00502b99  mov      ecx, dword ptr [esp + 0x34]
-//   0x00502b9d  mov      edx, dword ptr [ebp + 0x168]
-//   0x00502ba3  lea      edi, [ecx + esi]
-//   0x00502ba6  mov      ecx, dword ptr [edx + edi*4]
-//   0x00502ba9  test     ecx, ecx
-//   0x00502bab  jne      0x502bf0
-//   0x00502bad  push     0xa8
-//   0x00502bb2  call     0x682997
-//   0x00502bb7  add      esp, 4
-//   0x00502bba  test     eax, eax
-//   0x00502bbc  je       0x502bcb
-//   0x00502bbe  mov      ecx, eax
-//   0x00502bc0  call     0x44f110
-//   0x00502bc5  mov      dword ptr [esp + 0x18], eax
-//   0x00502bc9  jmp      0x502bd3
+// MapClass::vfunc_27 -- ALIAS of DisplayClass::vfunc_27 (same machine code at 0x00502550); transcribed once.
 void MapClass::vfunc_27()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_28 -- body derived from 103 instructions at 0x00503870; semantics not reconstructed.
-// size 309 bytes; signature __thiscall nargs=1
-// callees: 0x00412bb0, 0x004b2e90, 0x004c4fb0, 0x005111c0
-//
-//   0x00503870  sub      esp, 0x10
-//   0x00503873  mov      edx, dword ptr [esp + 0x14]
-//   0x00503877  push     ebp
-//   0x00503878  push     esi
-//   0x00503879  push     edi
-//   0x0050387a  mov      edi, ecx
-//   0x0050387c  push     0
-//   0x0050387e  push     0
-//   0x00503880  lea      eax, [edi + 0xf4]
-//   0x00503886  lea      ecx, [esp + 0x14]
-//   0x0050388a  push     eax
-//   0x0050388b  lea      esi, [edi + 0x104]
-//   0x00503891  call     0x412bb0
-//   0x00503896  mov      edx, dword ptr [eax]
-//   0x00503898  mov      ecx, esi
-//   0x0050389a  mov      dword ptr [ecx], edx
-//   0x0050389c  mov      edx, dword ptr [eax + 4]
-//   0x0050389f  mov      dword ptr [ecx + 4], edx
-//   0x005038a2  mov      edx, dword ptr [eax + 8]
-//   0x005038a5  mov      dword ptr [ecx + 8], edx
-//   0x005038a8  mov      eax, dword ptr [eax + 0xc]
-//   0x005038ab  mov      dword ptr [ecx + 0xc], eax
-//   0x005038ae  mov      eax, dword ptr [esi]
-//   0x005038b0  cmp      eax, 2
-//   0x005038b3  jg       0x5038ba
-//   0x005038b5  mov      eax, 2
-//   0x005038ba  mov      edx, dword ptr [edi + 0x108]
-//   0x005038c0  mov      dword ptr [esi], eax
-//   0x005038c2  cmp      edx, 2
-//   0x005038c5  jg       0x5038cc
-//   0x005038c7  mov      edx, 2
-//   0x005038cc  mov      ecx, dword ptr [edi + 0xfc]
-//   0x005038d2  mov      dword ptr [edi + 0x108], edx
-//   0x005038d8  sub      ecx, eax
-//   0x005038da  lea      eax, [ecx - 2]
-//   0x005038dd  mov      ecx, dword ptr [edi + 0x10c]
-//   0x005038e3  cmp      ecx, eax
-//   0x005038e5  jge      0x5038e9
-//   0x005038e7  mov      eax, ecx
-//   0x005038e9  mov      ecx, dword ptr [edi + 0x110]
-//   0x005038ef  mov      dword ptr [edi + 0x10c], eax
-//   0x005038f5  mov      eax, dword ptr [edi + 0x100]
-//   0x005038fb  sub      eax, edx
-//   0x005038fd  add      eax, -6
-//   0x00503900  cmp      ecx, eax
-//   0x00503902  jge      0x503906
-//   0x00503904  mov      eax, ecx
-//   0x00503906  push     2
-//   0x00503908  mov      ecx, 0x710d28
-//   0x0050390d  mov      dword ptr [edi + 0x110], eax
-//   0x00503913  call     0x4b2e90
-//   0x00503918  mov      eax, dword ptr [0x7b2d60]
-//   0x0050391d  xor      ebp, ebp
-//   0x0050391f  test     eax, eax
-//   0x00503921  jle      0x50399c
-//   0x00503923  push     ebx
-//   0x00503924  mov      ecx, dword ptr [0x7b2d54]
-//   0x0050392a  lea      eax, [esp + 0x24]
-//   0x0050392e  push     1
-//   0x00503930  push     eax
-//   0x00503931  mov      esi, dword ptr [ecx + ebp*4]
-//   0x00503934  mov      ecx, esi
-//   0x00503936  mov      edx, dword ptr [esi]
-//   0x00503938  mov      bl, byte ptr [esi + 0x1fb]
-//   0x0050393e  call     dword ptr [edx + 0x188]
-//   0x00503944  push     eax
-//   0x00503945  mov      ecx, edi
-//   0x00503947  call     0x5111c0
-//   0x0050394c  test     bl, bl
-//   0x0050394e  mov      byte ptr [esi + 0x1fb], al
-//   0x00503954  jne      0x503991
-//   0x00503956  test     al, al
-//   0x00503958  je       0x503991
-//   0x0050395a  mov      ecx, dword ptr [esi + 0xec]
-//   0x00503960  call     0x4c4fb0
-//   0x00503965  test     al, al
-//   0x00503967  je       0x503991
-//   0x00503969  mov      edx, dword ptr [esi]
-//   0x0050396b  mov      ecx, esi
-//   0x0050396d  call     dword ptr [edx + 0x2c]
-//   0x00503970  cmp      eax, 6
-//   0x00503973  je       0x503991
-//   0x00503975  mov      al, byte ptr [esi + 0x35]
-//   0x00503978  test     al, al
-//   0x0050397a  je       0x503991
-//   0x0050397c  mov      al, byte ptr [esi + 0x2f]
-//   0x0050397f  test     al, al
-//   0x00503981  jne      0x503991
-//   0x00503983  mov      eax, dword ptr [esi]
-//   0x00503985  push     0
-//   0x00503987  push     0
-//   0x00503989  mov      ecx, esi
-//   0x0050398b  call     dword ptr [eax + 0x108]
-//   0x00503991  mov      eax, dword ptr [0x7b2d60]
-//   0x00503996  inc      ebp
-//   0x00503997  cmp      ebp, eax
-//   0x00503999  jl       0x503924
-//   0x0050399b  pop      ebx
-//   0x0050399c  pop      edi
-//   0x0050399d  pop      esi
-//   0x0050399e  pop      ebp
-//   0x0050399f  add      esp, 0x10
-//   0x005039a2  ret      4
+// MapClass::vfunc_28 -- ALIAS of DisplayClass::vfunc_28 (same machine code at 0x00503870); transcribed once.
 void MapClass::vfunc_28()
 {
 }
@@ -2199,48 +1120,7 @@ void MapClass::vfunc_58()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_59 -- body derived from 37 instructions at 0x00520ac0; semantics not reconstructed.
-// size 91 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00520ac0  mov      eax, dword ptr [esp + 4]
-//   0x00520ac4  push     ebx
-//   0x00520ac5  push     esi
-//   0x00520ac6  push     edi
-//   0x00520ac7  mov      edi, dword ptr [ecx + 8]
-//   0x00520aca  mov      edx, dword ptr [eax + 8]
-//   0x00520acd  cmp      edi, edx
-//   0x00520acf  jne      0x520b1b
-//   0x00520ad1  xor      esi, esi
-//   0x00520ad3  test     edi, edi
-//   0x00520ad5  jle      0x520b13
-//   0x00520ad7  mov      edx, dword ptr [eax + 4]
-//   0x00520ada  mov      eax, dword ptr [ecx + 4]
-//   0x00520add  lea      ecx, [edx + 2]
-//   0x00520ae0  sub      edx, eax
-//   0x00520ae2  mov      bx, word ptr [eax]
-//   0x00520ae5  cmp      bx, word ptr [edx + eax]
-//   0x00520ae9  jne      0x520b1b
-//   0x00520aeb  mov      bx, word ptr [eax + 2]
-//   0x00520aef  cmp      bx, word ptr [ecx]
-//   0x00520af2  jne      0x520b1b
-//   0x00520af4  mov      bx, word ptr [eax + 4]
-//   0x00520af8  cmp      bx, word ptr [ecx + 2]
-//   0x00520afc  jne      0x520b1b
-//   0x00520afe  mov      bx, word ptr [eax + 6]
-//   0x00520b02  cmp      bx, word ptr [ecx + 4]
-//   0x00520b06  jne      0x520b1b
-//   0x00520b08  inc      esi
-//   0x00520b09  add      ecx, 0x10
-//   0x00520b0c  add      eax, 0x10
-//   0x00520b0f  cmp      esi, edi
-//   0x00520b11  jl       0x520ae2
-//   0x00520b13  pop      edi
-//   0x00520b14  pop      esi
-//   0x00520b15  mov      al, 1
-//   0x00520b17  pop      ebx
-//   0x00520b18  ret      4
+// MapClass::vfunc_59 -- ALIAS of MapClass::vfunc_52 (same machine code at 0x00520ac0); transcribed once.
 void MapClass::vfunc_59()
 {
 }
@@ -2419,43 +1299,7 @@ void MapClass::vfunc_65()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_66 -- body derived from 32 instructions at 0x00520eb0; semantics not reconstructed.
-// size 72 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00520eb0  mov      eax, dword ptr [esp + 4]
-//   0x00520eb4  push     ebx
-//   0x00520eb5  push     esi
-//   0x00520eb6  mov      esi, dword ptr [ecx + 8]
-//   0x00520eb9  mov      edx, dword ptr [eax + 8]
-//   0x00520ebc  push     edi
-//   0x00520ebd  cmp      esi, edx
-//   0x00520ebf  jne      0x520ef8
-//   0x00520ec1  xor      edx, edx
-//   0x00520ec3  test     esi, esi
-//   0x00520ec5  jle      0x520ef0
-//   0x00520ec7  mov      eax, dword ptr [eax + 4]
-//   0x00520eca  mov      ecx, dword ptr [ecx + 4]
-//   0x00520ecd  add      eax, 0x1c
-//   0x00520ed0  add      ecx, 0x1c
-//   0x00520ed3  mov      di, word ptr [ecx - 4]
-//   0x00520ed7  cmp      di, word ptr [eax - 4]
-//   0x00520edb  jne      0x520ef8
-//   0x00520edd  mov      edi, dword ptr [ecx]
-//   0x00520edf  mov      ebx, dword ptr [eax]
-//   0x00520ee1  cmp      edi, ebx
-//   0x00520ee3  jne      0x520ef8
-//   0x00520ee5  inc      edx
-//   0x00520ee6  add      eax, 0x24
-//   0x00520ee9  add      ecx, 0x24
-//   0x00520eec  cmp      edx, esi
-//   0x00520eee  jl       0x520ed3
-//   0x00520ef0  pop      edi
-//   0x00520ef1  pop      esi
-//   0x00520ef2  mov      al, 1
-//   0x00520ef4  pop      ebx
-//   0x00520ef5  ret      4
+// MapClass::vfunc_66 -- ALIAS of MapClass::vfunc_45 (same machine code at 0x00520eb0); transcribed once.
 void MapClass::vfunc_66()
 {
 }
@@ -2648,48 +1492,7 @@ void MapClass::vfunc_72()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_73 -- body derived from 37 instructions at 0x005214f0; semantics not reconstructed.
-// size 83 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x005214f0  mov      eax, dword ptr [esp + 4]
-//   0x005214f4  push     ebx
-//   0x005214f5  push     ebp
-//   0x005214f6  push     esi
-//   0x005214f7  mov      edx, dword ptr [eax + 8]
-//   0x005214fa  push     edi
-//   0x005214fb  mov      edi, dword ptr [ecx + 8]
-//   0x005214fe  cmp      edi, edx
-//   0x00521500  jne      0x521543
-//   0x00521502  xor      esi, esi
-//   0x00521504  test     edi, edi
-//   0x00521506  jle      0x52153a
-//   0x00521508  mov      edx, dword ptr [eax + 4]
-//   0x0052150b  mov      eax, dword ptr [ecx + 4]
-//   0x0052150e  lea      ecx, [edx + 4]
-//   0x00521511  sub      edx, eax
-//   0x00521513  mov      bx, word ptr [edx + eax]
-//   0x00521517  cmp      bx, word ptr [eax]
-//   0x0052151a  jne      0x521543
-//   0x0052151c  mov      bx, word ptr [ecx - 2]
-//   0x00521520  cmp      bx, word ptr [eax + 2]
-//   0x00521524  jne      0x521543
-//   0x00521526  mov      ebx, dword ptr [ecx]
-//   0x00521528  mov      ebp, dword ptr [eax + 4]
-//   0x0052152b  cmp      ebx, ebp
-//   0x0052152d  jne      0x521543
-//   0x0052152f  inc      esi
-//   0x00521530  add      ecx, 8
-//   0x00521533  add      eax, 8
-//   0x00521536  cmp      esi, edi
-//   0x00521538  jl       0x521513
-//   0x0052153a  pop      edi
-//   0x0052153b  pop      esi
-//   0x0052153c  pop      ebp
-//   0x0052153d  mov      al, 1
-//   0x0052153f  pop      ebx
-//   0x00521540  ret      4
+// MapClass::vfunc_73 -- ALIAS of MapClass::vfunc_38 (same machine code at 0x005214f0); transcribed once.
 void MapClass::vfunc_73()
 {
 }
@@ -3363,37 +2166,7 @@ void MapClass::vfunc_100()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_101 -- body derived from 26 instructions at 0x005219f0; semantics not reconstructed.
-// size 54 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x005219f0  push     ebx
-//   0x005219f1  push     esi
-//   0x005219f2  mov      esi, dword ptr [ecx + 8]
-//   0x005219f5  push     edi
-//   0x005219f6  mov      edi, dword ptr [esp + 0x10]
-//   0x005219fa  cmp      esi, dword ptr [edi + 8]
-//   0x005219fd  jne      0x521a26
-//   0x005219ff  xor      edx, edx
-//   0x00521a01  test     esi, esi
-//   0x00521a03  jle      0x521a1e
-//   0x00521a05  mov      eax, dword ptr [ecx + 4]
-//   0x00521a08  mov      ecx, dword ptr [edi + 4]
-//   0x00521a0b  sub      ecx, eax
-//   0x00521a0d  mov      edi, dword ptr [eax]
-//   0x00521a0f  mov      ebx, dword ptr [ecx + eax]
-//   0x00521a12  cmp      edi, ebx
-//   0x00521a14  jne      0x521a26
-//   0x00521a16  inc      edx
-//   0x00521a17  add      eax, 4
-//   0x00521a1a  cmp      edx, esi
-//   0x00521a1c  jl       0x521a0d
-//   0x00521a1e  pop      edi
-//   0x00521a1f  pop      esi
-//   0x00521a20  mov      al, 1
-//   0x00521a22  pop      ebx
-//   0x00521a23  ret      4
+// MapClass::vfunc_101 -- ALIAS of MapClass::vfunc_94 (same machine code at 0x005219f0); transcribed once.
 void MapClass::vfunc_101()
 {
 }
@@ -3702,37 +2475,7 @@ void MapClass::vfunc_114()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_115 -- body derived from 26 instructions at 0x00521c50; semantics not reconstructed.
-// size 54 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00521c50  push     ebx
-//   0x00521c51  push     esi
-//   0x00521c52  mov      esi, dword ptr [ecx + 8]
-//   0x00521c55  push     edi
-//   0x00521c56  mov      edi, dword ptr [esp + 0x10]
-//   0x00521c5a  cmp      esi, dword ptr [edi + 8]
-//   0x00521c5d  jne      0x521c86
-//   0x00521c5f  xor      edx, edx
-//   0x00521c61  test     esi, esi
-//   0x00521c63  jle      0x521c7e
-//   0x00521c65  mov      eax, dword ptr [ecx + 4]
-//   0x00521c68  mov      ecx, dword ptr [edi + 4]
-//   0x00521c6b  sub      ecx, eax
-//   0x00521c6d  mov      edi, dword ptr [eax]
-//   0x00521c6f  mov      ebx, dword ptr [ecx + eax]
-//   0x00521c72  cmp      edi, ebx
-//   0x00521c74  jne      0x521c86
-//   0x00521c76  inc      edx
-//   0x00521c77  add      eax, 8
-//   0x00521c7a  cmp      edx, esi
-//   0x00521c7c  jl       0x521c6d
-//   0x00521c7e  pop      edi
-//   0x00521c7f  pop      esi
-//   0x00521c80  mov      al, 1
-//   0x00521c82  pop      ebx
-//   0x00521c83  ret      4
+// MapClass::vfunc_115 -- ALIAS of MapClass::vfunc_87 (same machine code at 0x00521c50); transcribed once.
 void MapClass::vfunc_115()
 {
 }
@@ -3858,37 +2601,7 @@ void MapClass::vfunc_121()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MapClass::vfunc_122 -- body derived from 26 instructions at 0x00521da0; semantics not reconstructed.
-// size 54 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00521da0  push     ebx
-//   0x00521da1  push     esi
-//   0x00521da2  mov      esi, dword ptr [ecx + 8]
-//   0x00521da5  push     edi
-//   0x00521da6  mov      edi, dword ptr [esp + 0x10]
-//   0x00521daa  cmp      esi, dword ptr [edi + 8]
-//   0x00521dad  jne      0x521dd6
-//   0x00521daf  xor      edx, edx
-//   0x00521db1  test     esi, esi
-//   0x00521db3  jle      0x521dce
-//   0x00521db5  mov      eax, dword ptr [ecx + 4]
-//   0x00521db8  mov      ecx, dword ptr [edi + 4]
-//   0x00521dbb  sub      ecx, eax
-//   0x00521dbd  mov      edi, dword ptr [eax]
-//   0x00521dbf  mov      ebx, dword ptr [ecx + eax]
-//   0x00521dc2  cmp      edi, ebx
-//   0x00521dc4  jne      0x521dd6
-//   0x00521dc6  inc      edx
-//   0x00521dc7  add      eax, 0xc
-//   0x00521dca  cmp      edx, esi
-//   0x00521dcc  jl       0x521dbd
-//   0x00521dce  pop      edi
-//   0x00521dcf  pop      esi
-//   0x00521dd0  mov      al, 1
-//   0x00521dd2  pop      ebx
-//   0x00521dd3  ret      4
+// MapClass::vfunc_122 -- ALIAS of MapClass::vfunc_80 (same machine code at 0x00521da0); transcribed once.
 void MapClass::vfunc_122()
 {
 }

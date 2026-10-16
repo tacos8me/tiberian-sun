@@ -5,59 +5,23 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "CommandClass.h"
 
-// ---------------------------------------------------------------------------
-// SelectTeamCommandClass::Execute -- body derived from 8 instructions at 0x004e0a70; semantics not reconstructed.
-// size 28 bytes; signature __cdecl
-// callees: 0x00682aae
-//
-//   0x004e0a70  mov      eax, dword ptr [ecx + 4]
-//   0x004e0a73  push     eax
-//   0x004e0a74  push     0x6cad88
-//   0x004e0a79  push     0x7b32d8
-//   0x004e0a7e  call     0x682aae
-//   0x004e0a83  add      esp, 0xc
-//   0x004e0a86  mov      eax, 0x7b32d8
-//   0x004e0a8b  ret      
+// SelectTeamCommandClass::Execute -- ALIAS of CommandClass::Get_Name (same machine code at 0x004e0a70); transcribed once.
 void SelectTeamCommandClass::Execute()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SelectTeamCommandClass::Get_Name -- body derived from 10 instructions at 0x004e0a90; semantics not reconstructed.
-// size 34 bytes; signature __cdecl
-// callees: 0x0046ebd0, 0x00682aae
-//
-//   0x004e0a90  mov      eax, dword ptr [ecx + 4]
-//   0x004e0a93  mov      ecx, 0x21
-//   0x004e0a98  push     eax
-//   0x004e0a99  call     0x46ebd0
-//   0x004e0a9e  push     eax
-//   0x004e0a9f  push     0x7b32d8
-//   0x004e0aa4  call     0x682aae
-//   0x004e0aa9  add      esp, 0xc
-//   0x004e0aac  mov      eax, 0x7b32d8
-//   0x004e0ab1  ret      
+// SelectTeamCommandClass::Get_Name -- ALIAS of CommandClass::Get_UI_Name (same machine code at 0x004e0a90); transcribed once.
 const char* SelectTeamCommandClass::Get_Name()
 {
 }
 
-// ---------------------------------------------------------------------------
-// SelectTeamCommandClass::Get_Description -- body derived from 10 instructions at 0x004e0ad0; semantics not reconstructed.
-// size 34 bytes; signature __cdecl
-// callees: 0x0046ebd0, 0x00682aae
-//
-//   0x004e0ad0  mov      eax, dword ptr [ecx + 4]
-//   0x004e0ad3  mov      ecx, 0x22
-//   0x004e0ad8  push     eax
-//   0x004e0ad9  call     0x46ebd0
-//   0x004e0ade  push     eax
-//   0x004e0adf  push     0x7b32d8
-//   0x004e0ae4  call     0x682aae
-//   0x004e0ae9  add      esp, 0xc
-//   0x004e0aec  mov      eax, 0x7b32d8
-//   0x004e0af1  ret      
+// SelectTeamCommandClass::Get_Description -- ALIAS of CommandClass::Get_UI_Description (same machine code at 0x004e0ad0); transcribed once.
 const char* SelectTeamCommandClass::Get_Description()
 {
 }

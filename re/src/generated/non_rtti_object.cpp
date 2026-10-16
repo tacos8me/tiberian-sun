@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "non_rtti_object.h"
 
 // ---------------------------------------------------------------------------
@@ -27,16 +31,7 @@ void non_rtti_object::vfunc_0(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// non_rtti_object::vfunc_1 -- body derived from 5 instructions at 0x006878ac; semantics not reconstructed.
-// size 13 bytes; signature __cdecl
-// callees: none
-//
-//   0x006878ac  mov      eax, dword ptr [ecx + 4]
-//   0x006878af  test     eax, eax
-//   0x006878b1  jne      0x6878b8
-//   0x006878b3  mov      eax, 0x6a7f5c
-//   0x006878b8  ret      
+// non_rtti_object::vfunc_1 -- ALIAS of bad_cast::vfunc_1 (same machine code at 0x006878ac); transcribed once.
 void non_rtti_object::vfunc_1()
 {
 }

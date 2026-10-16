@@ -5,123 +5,23 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "UDPInterfaceClass.h"
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_1 -- body derived from 10 instructions at 0x0066eb20; semantics not reconstructed.
-// size 26 bytes; signature __thiscall
-// callees: 0x00682502
-//
-//   0x0066eb20  push     esi
-//   0x0066eb21  mov      esi, ecx
-//   0x0066eb23  mov      eax, dword ptr [esi + 0x38]
-//   0x0066eb26  cmp      eax, -1
-//   0x0066eb29  je       0x66eb38
-//   0x0066eb2b  push     eax
-//   0x0066eb2c  call     0x682502
-//   0x0066eb31  mov      dword ptr [esi + 0x38], 0xffffffff
-//   0x0066eb38  pop      esi
-//   0x0066eb39  ret      
+// UDPInterfaceClass::vfunc_1 -- ALIAS of IPXInterfaceClass::vfunc_1 (same machine code at 0x0066eb20); transcribed once.
 void UDPInterfaceClass::vfunc_1()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_2 -- body derived from 10 instructions at 0x0066ed50; semantics not reconstructed.
-// size 27 bytes; signature __thiscall nargs=4
-// callees: 0x004f1ca0
-//
-//   0x0066ed50  push     ebx
-//   0x0066ed51  mov      ebx, ecx
-//   0x0066ed53  mov      ecx, dword ptr [0x710ca0]
-//   0x0066ed59  call     0x4f1ca0
-//   0x0066ed5e  mov      eax, dword ptr [ebx + 0x14]
-//   0x0066ed61  test     eax, eax
-//   0x0066ed63  jne      0x66ed6b
-//   0x0066ed65  xor      eax, eax
-//   0x0066ed67  pop      ebx
-//   0x0066ed68  ret      0x10
+// UDPInterfaceClass::vfunc_2 -- ALIAS of IPXInterfaceClass::vfunc_2 (same machine code at 0x0066ed50); transcribed once.
 void UDPInterfaceClass::vfunc_2(int a0, int a1, int a2, int a3)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_3 -- body derived from 72 instructions at 0x0066ede0; semantics not reconstructed.
-// size 185 bytes; signature __thiscall nargs=4
-// callees: 0x004f1ca0, 0x00682997
-//
-//   0x0066ede0  push     ebx
-//   0x0066ede1  push     ebp
-//   0x0066ede2  push     esi
-//   0x0066ede3  push     edi
-//   0x0066ede4  mov      ebp, ecx
-//   0x0066ede6  push     0x448
-//   0x0066edeb  call     0x682997
-//   0x0066edf0  mov      esi, dword ptr [esp + 0x18]
-//   0x0066edf4  mov      ebx, eax
-//   0x0066edf6  mov      eax, dword ptr [esp + 0x1c]
-//   0x0066edfa  add      esp, 4
-//   0x0066edfd  mov      ecx, eax
-//   0x0066edff  lea      edi, [ebx + 0x45]
-//   0x0066ee02  mov      edx, ecx
-//   0x0066ee04  shr      ecx, 2
-//   0x0066ee07  rep movsd dword ptr es:[edi], dword ptr [esi]
-//   0x0066ee09  mov      ecx, edx
-//   0x0066ee0b  and      ecx, 3
-//   0x0066ee0e  rep movsb byte ptr es:[edi], byte ptr [esi]
-//   0x0066ee10  mov      ecx, dword ptr [esp + 0x20]
-//   0x0066ee14  mov      esi, dword ptr [esp + 0x1c]
-//   0x0066ee18  mov      dword ptr [ebx + 0x40], eax
-//   0x0066ee1b  mov      eax, ecx
-//   0x0066ee1d  mov      edi, ebx
-//   0x0066ee1f  mov      byte ptr [ebx + 0x44], 0
-//   0x0066ee23  shr      ecx, 2
-//   0x0066ee26  rep movsd dword ptr es:[edi], dword ptr [esi]
-//   0x0066ee28  mov      ecx, eax
-//   0x0066ee2a  and      ecx, 3
-//   0x0066ee2d  rep movsb byte ptr es:[edi], byte ptr [esi]
-//   0x0066ee2f  mov      eax, dword ptr [ebp + 0x24]
-//   0x0066ee32  mov      ecx, dword ptr [ebp + 0x2c]
-//   0x0066ee35  lea      esi, [ebp + 0x1c]
-//   0x0066ee38  cmp      ecx, eax
-//   0x0066ee3a  jl       0x66ee5e
-//   0x0066ee3c  mov      cl, byte ptr [esi + 0xd]
-//   0x0066ee3f  test     cl, cl
-//   0x0066ee41  jne      0x66ee47
-//   0x0066ee43  test     eax, eax
-//   0x0066ee45  jne      0x66ee6d
-//   0x0066ee47  mov      ecx, dword ptr [esi + 0x14]
-//   0x0066ee4a  test     ecx, ecx
-//   0x0066ee4c  jle      0x66ee6d
-//   0x0066ee4e  mov      edx, dword ptr [esi]
-//   0x0066ee50  add      ecx, eax
-//   0x0066ee52  push     0
-//   0x0066ee54  push     ecx
-//   0x0066ee55  mov      ecx, esi
-//   0x0066ee57  call     dword ptr [edx + 8]
-//   0x0066ee5a  test     al, al
-//   0x0066ee5c  je       0x66ee6d
-//   0x0066ee5e  mov      eax, dword ptr [esi + 0x10]
-//   0x0066ee61  mov      edx, dword ptr [esi + 4]
-//   0x0066ee64  lea      ecx, [eax + 1]
-//   0x0066ee67  mov      dword ptr [esi + 0x10], ecx
-//   0x0066ee6a  mov      dword ptr [edx + eax*4], ebx
-//   0x0066ee6d  mov      eax, dword ptr [ebp]
-//   0x0066ee70  push     2
-//   0x0066ee72  push     0
-//   0x0066ee74  mov      ecx, ebp
-//   0x0066ee76  call     dword ptr [eax + 0x38]
-//   0x0066ee79  mov      ecx, dword ptr [0x832a28]
-//   0x0066ee7f  push     eax
-//   0x0066ee80  push     ecx
-//   0x0066ee81  call     dword ptr [0x698370]
-//   0x0066ee87  mov      ecx, dword ptr [0x710ca0]
-//   0x0066ee8d  call     0x4f1ca0
-//   0x0066ee92  pop      edi
-//   0x0066ee93  pop      esi
-//   0x0066ee94  pop      ebp
-//   0x0066ee95  pop      ebx
-//   0x0066ee96  ret      0x10
+// UDPInterfaceClass::vfunc_3 -- ALIAS of IPXInterfaceClass::vfunc_3 (same machine code at 0x0066ede0); transcribed once.
 void UDPInterfaceClass::vfunc_3(int a0, int a1, int a2, int a3)
 {
 }
@@ -217,190 +117,32 @@ void UDPInterfaceClass::vfunc_4(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_5 -- body derived from 30 instructions at 0x0066ebb0; semantics not reconstructed.
-// size 70 bytes; signature __thiscall
-// callees: 0x0068298c
-//
-//   0x0066ebb0  push     esi
-//   0x0066ebb1  mov      esi, ecx
-//   0x0066ebb3  mov      eax, dword ptr [esi + 0x14]
-//   0x0066ebb6  test     eax, eax
-//   0x0066ebb8  je       0x66ebf4
-//   0x0066ebba  mov      eax, dword ptr [esi + 8]
-//   0x0066ebbd  mov      ecx, dword ptr [eax]
-//   0x0066ebbf  push     ecx
-//   0x0066ebc0  call     0x68298c
-//   0x0066ebc5  mov      eax, dword ptr [esi + 0x14]
-//   0x0066ebc8  add      esp, 4
-//   0x0066ebcb  test     eax, eax
-//   0x0066ebcd  jle      0x66ebed
-//   0x0066ebcf  lea      ecx, [eax - 1]
-//   0x0066ebd2  xor      eax, eax
-//   0x0066ebd4  test     ecx, ecx
-//   0x0066ebd6  mov      dword ptr [esi + 0x14], ecx
-//   0x0066ebd9  jle      0x66ebed
-//   0x0066ebdb  mov      ecx, dword ptr [esi + 8]
-//   0x0066ebde  inc      eax
-//   0x0066ebdf  mov      edx, dword ptr [ecx + eax*4]
-//   0x0066ebe2  mov      dword ptr [ecx + eax*4 - 4], edx
-//   0x0066ebe6  mov      ecx, dword ptr [esi + 0x14]
-//   0x0066ebe9  cmp      eax, ecx
-//   0x0066ebeb  jl       0x66ebdb
-//   0x0066ebed  mov      eax, dword ptr [esi + 0x14]
-//   0x0066ebf0  test     eax, eax
-//   0x0066ebf2  jne      0x66ebba
-//   0x0066ebf4  pop      esi
-//   0x0066ebf5  ret      
+// UDPInterfaceClass::vfunc_5 -- ALIAS of IPXInterfaceClass::vfunc_5 (same machine code at 0x0066ebb0); transcribed once.
 void UDPInterfaceClass::vfunc_5()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_6 -- body derived from 30 instructions at 0x0066ec00; semantics not reconstructed.
-// size 70 bytes; signature __thiscall
-// callees: 0x0068298c
-//
-//   0x0066ec00  push     esi
-//   0x0066ec01  mov      esi, ecx
-//   0x0066ec03  mov      eax, dword ptr [esi + 0x2c]
-//   0x0066ec06  test     eax, eax
-//   0x0066ec08  je       0x66ec44
-//   0x0066ec0a  mov      eax, dword ptr [esi + 0x20]
-//   0x0066ec0d  mov      ecx, dword ptr [eax]
-//   0x0066ec0f  push     ecx
-//   0x0066ec10  call     0x68298c
-//   0x0066ec15  mov      eax, dword ptr [esi + 0x2c]
-//   0x0066ec18  add      esp, 4
-//   0x0066ec1b  test     eax, eax
-//   0x0066ec1d  jle      0x66ec3d
-//   0x0066ec1f  lea      ecx, [eax - 1]
-//   0x0066ec22  xor      eax, eax
-//   0x0066ec24  test     ecx, ecx
-//   0x0066ec26  mov      dword ptr [esi + 0x2c], ecx
-//   0x0066ec29  jle      0x66ec3d
-//   0x0066ec2b  mov      ecx, dword ptr [esi + 0x20]
-//   0x0066ec2e  inc      eax
-//   0x0066ec2f  mov      edx, dword ptr [ecx + eax*4]
-//   0x0066ec32  mov      dword ptr [ecx + eax*4 - 4], edx
-//   0x0066ec36  mov      ecx, dword ptr [esi + 0x2c]
-//   0x0066ec39  cmp      eax, ecx
-//   0x0066ec3b  jl       0x66ec2b
-//   0x0066ec3d  mov      eax, dword ptr [esi + 0x2c]
-//   0x0066ec40  test     eax, eax
-//   0x0066ec42  jne      0x66ec0a
-//   0x0066ec44  pop      esi
-//   0x0066ec45  ret      
+// UDPInterfaceClass::vfunc_6 -- ALIAS of IPXInterfaceClass::vfunc_6 (same machine code at 0x0066ec00); transcribed once.
 void UDPInterfaceClass::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_7 -- body derived from 23 instructions at 0x0066eb40; semantics not reconstructed.
-// size 65 bytes; signature __thiscall
-// callees: 0x00407a60, 0x0068252c, 0x00682532
-//
-//   0x0066eb40  push     esi
-//   0x0066eb41  mov      esi, ecx
-//   0x0066eb43  push     3
-//   0x0066eb45  mov      eax, dword ptr [esi]
-//   0x0066eb47  call     dword ptr [eax + 0x38]
-//   0x0066eb4a  mov      ecx, dword ptr [0x832a28]
-//   0x0066eb50  mov      edx, dword ptr [esi + 0x38]
-//   0x0066eb53  push     eax
-//   0x0066eb54  push     ecx
-//   0x0066eb55  push     edx
-//   0x0066eb56  call     0x682532
-//   0x0066eb5b  cmp      eax, -1
-//   0x0066eb5e  jne      0x66eb81
-//   0x0066eb60  push     0x6e0340
-//   0x0066eb65  call     0x407a60
-//   0x0066eb6a  mov      eax, dword ptr [esi + 0x3c]
-//   0x0066eb6d  add      esp, 4
-//   0x0066eb70  push     eax
-//   0x0066eb71  call     0x68252c
-//   0x0066eb76  mov      dword ptr [esi + 0x3c], 0xffffffff
-//   0x0066eb7d  xor      al, al
-//   0x0066eb7f  pop      esi
-//   0x0066eb80  ret      
+// UDPInterfaceClass::vfunc_7 -- ALIAS of IPXInterfaceClass::vfunc_7 (same machine code at 0x0066eb40); transcribed once.
 void UDPInterfaceClass::vfunc_7()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_8 -- body derived from 10 instructions at 0x0066eb90; semantics not reconstructed.
-// size 26 bytes; signature __thiscall
-// callees: 0x0068252c
-//
-//   0x0066eb90  push     esi
-//   0x0066eb91  mov      esi, ecx
-//   0x0066eb93  mov      eax, dword ptr [esi + 0x3c]
-//   0x0066eb96  cmp      eax, -1
-//   0x0066eb99  je       0x66eba8
-//   0x0066eb9b  push     eax
-//   0x0066eb9c  call     0x68252c
-//   0x0066eba1  mov      dword ptr [esi + 0x3c], 0xffffffff
-//   0x0066eba8  pop      esi
-//   0x0066eba9  ret      
+// UDPInterfaceClass::vfunc_8 -- ALIAS of IPXInterfaceClass::vfunc_8 (same machine code at 0x0066eb90); transcribed once.
 void UDPInterfaceClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_9 -- body derived from 24 instructions at 0x0066ef50; semantics not reconstructed.
-// size 79 bytes; signature __stdcall nargs=1
-// callees: 0x006824fc, 0x00682514
-//
-//   0x0066ef50  push     ecx
-//   0x0066ef51  lea      eax, [esp]
-//   0x0066ef55  push     esi
-//   0x0066ef56  mov      esi, dword ptr [esp + 0xc]
-//   0x0066ef5a  lea      ecx, [esp + 0xc]
-//   0x0066ef5e  push     eax
-//   0x0066ef5f  push     ecx
-//   0x0066ef60  push     0x1007
-//   0x0066ef65  push     0xffff
-//   0x0066ef6a  push     esi
-//   0x0066ef6b  mov      dword ptr [esp + 0x18], 4
-//   0x0066ef73  call     0x6824fc
-//   0x0066ef78  mov      edx, dword ptr [esp + 4]
-//   0x0066ef7c  lea      eax, [esp + 0xc]
-//   0x0066ef80  push     edx
-//   0x0066ef81  push     eax
-//   0x0066ef82  push     0x1007
-//   0x0066ef87  push     0xffff
-//   0x0066ef8c  push     esi
-//   0x0066ef8d  mov      dword ptr [esp + 0x20], 0
-//   0x0066ef95  call     0x682514
-//   0x0066ef9a  pop      esi
-//   0x0066ef9b  pop      ecx
-//   0x0066ef9c  ret      4
+// UDPInterfaceClass::vfunc_9 -- ALIAS of IPXInterfaceClass::vfunc_9 (same machine code at 0x0066ef50); transcribed once.
 void UDPInterfaceClass::vfunc_9(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_10 -- body derived from 17 instructions at 0x0066efa0; semantics not reconstructed.
-// size 55 bytes; signature __thiscall
-// callees: 0x00407a60, 0x0066efe4, 0x006824f6, 0x00682514
-//
-//   0x0066efa0  push     esi
-//   0x0066efa1  mov      esi, ecx
-//   0x0066efa3  push     4
-//   0x0066efa5  push     0x6e0278
-//   0x0066efaa  mov      eax, dword ptr [esi + 0x38]
-//   0x0066efad  push     0x1002
-//   0x0066efb2  push     0xffff
-//   0x0066efb7  push     eax
-//   0x0066efb8  call     0x682514
-//   0x0066efbd  cmp      eax, -1
-//   0x0066efc0  jne      0x66efd7
-//   0x0066efc2  call     0x6824f6
-//   0x0066efc7  push     eax
-//   0x0066efc8  push     0x6e04b4
-//   0x0066efcd  call     0x407a60
-//   0x0066efd2  add      esp, 8
-//   0x0066efd5  jmp      0x66efe4
+// UDPInterfaceClass::vfunc_10 -- ALIAS of IPXInterfaceClass::vfunc_10 (same machine code at 0x0066efa0); transcribed once.
 void UDPInterfaceClass::vfunc_10()
 {
 }
@@ -579,27 +321,7 @@ void UDPInterfaceClass::vfunc_16(int a0, int a1, int a2, int a3)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_17 -- body derived from 16 instructions at 0x0066f030; semantics not reconstructed.
-// size 46 bytes; signature __stdcall nargs=2
-// callees: 0x00407a60, 0x006824f6, 0x0068253e
-//
-//   0x0066f030  mov      eax, dword ptr [esp + 8]
-//   0x0066f034  push     esi
-//   0x0066f035  mov      esi, dword ptr [esp + 8]
-//   0x0066f039  push     eax
-//   0x0066f03a  push     esi
-//   0x0066f03b  call     0x68253e
-//   0x0066f040  cmp      eax, -1
-//   0x0066f043  jne      0x66f05e
-//   0x0066f045  call     0x6824f6
-//   0x0066f04a  push     eax
-//   0x0066f04b  push     0x6e0510
-//   0x0066f050  call     0x407a60
-//   0x0066f055  add      esp, 8
-//   0x0066f058  xor      al, al
-//   0x0066f05a  pop      esi
-//   0x0066f05b  ret      8
+// UDPInterfaceClass::vfunc_17 -- ALIAS of IPXInterfaceClass::vfunc_17 (same machine code at 0x0066f030); transcribed once.
 void UDPInterfaceClass::vfunc_17(int a0, int a1)
 {
 }
@@ -628,14 +350,7 @@ void UDPInterfaceClass::vfunc_19(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// UDPInterfaceClass::vfunc_20 -- body derived from 3 instructions at 0x0066e9a0; semantics not reconstructed.
-// size 13 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0066e9a0  mov      eax, dword ptr [esp + 4]
-//   0x0066e9a4  mov      dword ptr [ecx + 0x444], eax
-//   0x0066e9aa  ret      4
+// UDPInterfaceClass::vfunc_20 -- ALIAS of IPXInterfaceClass::vfunc_20 (same machine code at 0x0066e9a0); transcribed once.
 void UDPInterfaceClass::vfunc_20(int a0)
 {
 }

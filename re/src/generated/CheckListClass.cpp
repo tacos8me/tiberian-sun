@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "CheckListClass.h"
 
 // ---------------------------------------------------------------------------
@@ -111,61 +115,17 @@ void CheckListClass::vfunc_5(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// CheckListClass::vfunc_6 -- body derived from 14 instructions at 0x004f6980; semantics not reconstructed.
-// size 29 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f6980  mov      eax, dword ptr [ecx + 8]
-//   0x004f6983  lea      edx, [ecx + 8]
-//   0x004f6986  test     eax, eax
-//   0x004f6988  push     esi
-//   0x004f6989  je       0x4f699d
-//   0x004f698b  mov      eax, dword ptr [edx]
-//   0x004f698d  cmp      eax, ecx
-//   0x004f698f  je       0x4f699f
-//   0x004f6991  mov      esi, dword ptr [eax + 8]
-//   0x004f6994  lea      edx, [eax + 8]
-//   0x004f6997  test     esi, esi
-//   0x004f6999  jne      0x4f698b
-//   0x004f699b  pop      esi
-//   0x004f699c  ret      
+// CheckListClass::vfunc_6 -- ALIAS of CarryoverClass::vfunc_6 (same machine code at 0x004f6980); transcribed once.
 void CheckListClass::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CheckListClass::vfunc_7 -- body derived from 14 instructions at 0x004f69b0; semantics not reconstructed.
-// size 29 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f69b0  mov      eax, dword ptr [ecx + 4]
-//   0x004f69b3  lea      edx, [ecx + 4]
-//   0x004f69b6  test     eax, eax
-//   0x004f69b8  push     esi
-//   0x004f69b9  je       0x4f69cd
-//   0x004f69bb  mov      eax, dword ptr [edx]
-//   0x004f69bd  cmp      eax, ecx
-//   0x004f69bf  je       0x4f69cf
-//   0x004f69c1  mov      esi, dword ptr [eax + 4]
-//   0x004f69c4  lea      edx, [eax + 4]
-//   0x004f69c7  test     esi, esi
-//   0x004f69c9  jne      0x4f69bb
-//   0x004f69cb  pop      esi
-//   0x004f69cc  ret      
+// CheckListClass::vfunc_7 -- ALIAS of CarryoverClass::vfunc_7 (same machine code at 0x004f69b0); transcribed once.
 void CheckListClass::vfunc_7()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CheckListClass::vfunc_8 -- body derived from 4 instructions at 0x004f6930; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f6930  xor      eax, eax
-//   0x004f6932  mov      dword ptr [ecx + 4], eax
-//   0x004f6935  mov      dword ptr [ecx + 8], eax
-//   0x004f6938  ret      
+// CheckListClass::vfunc_8 -- ALIAS of CarryoverClass::vfunc_8 (same machine code at 0x004f6930); transcribed once.
 void CheckListClass::vfunc_8()
 {
 }

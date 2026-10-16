@@ -5,51 +5,18 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "ScorePrintClass.h"
 
-// ---------------------------------------------------------------------------
-// ScorePrintClass::vfunc_1 -- body derived from 20 instructions at 0x005cde90; semantics not reconstructed.
-// size 50 bytes; signature __thiscall
-// callees: 0x005f0b30
-//
-//   0x005cde90  push     esi
-//   0x005cde91  mov      esi, ecx
-//   0x005cde93  mov      eax, dword ptr [esi + 0xc]
-//   0x005cde96  cmp      eax, -1
-//   0x005cde99  je       0x5cdecf
-//   0x005cde9b  push     edi
-//   0x005cde9c  mov      edi, dword ptr [esi + 0x14]
-//   0x005cde9f  cmp      eax, -1
-//   0x005cdea2  je       0x5cdec4
-//   0x005cdea4  lea      ecx, [esi + 0x10]
-//   0x005cdea7  call     0x5f0b30
-//   0x005cdeac  sub      eax, dword ptr [esi + 0xc]
-//   0x005cdeaf  cmp      eax, edi
-//   0x005cdeb1  jge      0x5cdec2
-//   0x005cdeb3  sub      edi, eax
-//   0x005cdeb5  mov      dword ptr [esi + 0xc], 0xffffffff
-//   0x005cdebc  mov      dword ptr [esi + 0x14], edi
-//   0x005cdebf  pop      edi
-//   0x005cdec0  pop      esi
-//   0x005cdec1  ret      
+// ScorePrintClass::vfunc_1 -- ALIAS of ScoreAnimClass::vfunc_1 (same machine code at 0x005cde90); transcribed once.
 void ScorePrintClass::vfunc_1()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ScorePrintClass::vfunc_2 -- body derived from 9 instructions at 0x005cdee0; semantics not reconstructed.
-// size 22 bytes; signature __thiscall
-// callees: 0x005f0b30
-//
-//   0x005cdee0  push     esi
-//   0x005cdee1  mov      esi, ecx
-//   0x005cdee3  cmp      dword ptr [esi + 0xc], -1
-//   0x005cdee7  jne      0x5cdef4
-//   0x005cdee9  lea      ecx, [esi + 0x10]
-//   0x005cdeec  call     0x5f0b30
-//   0x005cdef1  mov      dword ptr [esi + 0xc], eax
-//   0x005cdef4  pop      esi
-//   0x005cdef5  ret      
+// ScorePrintClass::vfunc_2 -- ALIAS of ScoreAnimClass::vfunc_2 (same machine code at 0x005cdee0); transcribed once.
 void ScorePrintClass::vfunc_2()
 {
 }

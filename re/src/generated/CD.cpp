@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "CD.h"
 
 // ---------------------------------------------------------------------------
@@ -156,19 +160,7 @@ void CD::vfunc_2(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// CD::CD -- body derived from 8 instructions at 0x00447430; semantics not reconstructed.
-// size 33 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x00447430  sub      esp, 8
-//   0x00447433  mov      eax, dword ptr [0x6c1e48]
-//   0x00447438  lea      ecx, [esp]
-//   0x0044743c  push     eax
-//   0x0044743d  mov      dword ptr [esp + 4], 0x69ac10
-//   0x00447445  call     dword ptr [0x69ac10]
-//   0x0044744b  add      esp, 8
-//   0x0044744e  ret      0xc
+// CD::CD -- ALIAS of CCFileClass::vfunc_16 (same machine code at 0x00447430); transcribed once.
 CD::CD()
 {
 }

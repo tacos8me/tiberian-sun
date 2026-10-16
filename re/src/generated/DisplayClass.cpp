@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "DisplayClass.h"
 
 // ---------------------------------------------------------------------------
@@ -439,54 +443,22 @@ void DisplayClass::vfunc_16()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DisplayClass::vfunc_17 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// DisplayClass::vfunc_17 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void DisplayClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DisplayClass::vfunc_18 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// DisplayClass::vfunc_18 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void DisplayClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DisplayClass::vfunc_19 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// DisplayClass::vfunc_19 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void DisplayClass::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DisplayClass::vfunc_20 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// DisplayClass::vfunc_20 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void DisplayClass::vfunc_20()
 {
 }
@@ -1912,15 +1884,7 @@ void DisplayClass::vfunc_37()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DisplayClass::vfunc_38 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// DisplayClass::vfunc_38 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void DisplayClass::vfunc_38()
 {
 }
@@ -2478,37 +2442,7 @@ void DisplayClass::vfunc_53()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DisplayClass::vfunc_54 -- body derived from 26 instructions at 0x005f1020; semantics not reconstructed.
-// size 67 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x005f1020  push     esi
-//   0x005f1021  mov      esi, dword ptr [esp + 8]
-//   0x005f1025  push     edi
-//   0x005f1026  mov      edi, ecx
-//   0x005f1028  cmp      dword ptr [edi + 4], esi
-//   0x005f102b  je       0x5f105e
-//   0x005f102d  test     esi, esi
-//   0x005f102f  je       0x5f1046
-//   0x005f1031  mov      ecx, dword ptr [esi + 8]
-//   0x005f1034  test     ecx, ecx
-//   0x005f1036  je       0x5f1046
-//   0x005f1038  mov      eax, dword ptr [ecx]
-//   0x005f103a  push     0
-//   0x005f103c  call     dword ptr [eax + 4]
-//   0x005f103f  mov      dword ptr [esi + 8], 0
-//   0x005f1046  mov      eax, dword ptr [edi + 4]
-//   0x005f1049  test     eax, eax
-//   0x005f104b  je       0x5f1054
-//   0x005f104d  mov      dword ptr [eax + 8], 0
-//   0x005f1054  test     esi, esi
-//   0x005f1056  mov      dword ptr [edi + 4], esi
-//   0x005f1059  je       0x5f105e
-//   0x005f105b  mov      dword ptr [esi + 8], edi
-//   0x005f105e  pop      edi
-//   0x005f105f  pop      esi
-//   0x005f1060  ret      4
+// DisplayClass::vfunc_54 -- ALIAS of DisplayClass::vfunc_50 (same machine code at 0x005f1020); transcribed once.
 void DisplayClass::vfunc_54()
 {
 }
@@ -2677,54 +2611,12 @@ void DisplayClass::vfunc_63()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DisplayClass::vfunc_64 -- body derived from 5 instructions at 0x00591fb0; semantics not reconstructed.
-// size 12 bytes; signature __cdecl
-// callees: none
-//
-//   0x00591fb0  mov      ecx, dword ptr [ecx + 4]
-//   0x00591fb3  test     ecx, ecx
-//   0x00591fb5  je       0x591fbc
-//   0x00591fb7  mov      eax, dword ptr [ecx]
-//   0x00591fb9  jmp      dword ptr [eax + 4]
+// DisplayClass::vfunc_64 -- ALIAS of DisplayClass::vfunc_58 (same machine code at 0x00591fb0); transcribed once.
 void DisplayClass::vfunc_64()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DisplayClass::vfunc_66 -- body derived from 29 instructions at 0x00591f40; semantics not reconstructed.
-// size 75 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x00591f40  push     esi
-//   0x00591f41  mov      esi, dword ptr [esp + 8]
-//   0x00591f45  push     edi
-//   0x00591f46  mov      edi, ecx
-//   0x00591f48  cmp      dword ptr [edi + 4], esi
-//   0x00591f4b  je       0x591f86
-//   0x00591f4d  test     esi, esi
-//   0x00591f4f  je       0x591f66
-//   0x00591f51  mov      ecx, dword ptr [esi + 8]
-//   0x00591f54  test     ecx, ecx
-//   0x00591f56  je       0x591f66
-//   0x00591f58  mov      eax, dword ptr [ecx]
-//   0x00591f5a  push     0
-//   0x00591f5c  call     dword ptr [eax + 0xc]
-//   0x00591f5f  mov      dword ptr [esi + 8], 0
-//   0x00591f66  mov      eax, dword ptr [edi + 4]
-//   0x00591f69  test     eax, eax
-//   0x00591f6b  je       0x591f7c
-//   0x00591f6d  mov      dword ptr [eax + 8], 0
-//   0x00591f74  mov      ecx, dword ptr [edi + 4]
-//   0x00591f77  mov      edx, dword ptr [ecx]
-//   0x00591f79  call     dword ptr [edx + 4]
-//   0x00591f7c  test     esi, esi
-//   0x00591f7e  mov      dword ptr [edi + 4], esi
-//   0x00591f81  je       0x591f86
-//   0x00591f83  mov      dword ptr [esi + 8], edi
-//   0x00591f86  pop      edi
-//   0x00591f87  pop      esi
-//   0x00591f88  ret      4
+// DisplayClass::vfunc_66 -- ALIAS of DisplayClass::vfunc_60 (same machine code at 0x00591f40); transcribed once.
 void DisplayClass::vfunc_66()
 {
 }
@@ -2931,36 +2823,7 @@ void DisplayClass::vfunc_76()
 {
 }
 
-// ---------------------------------------------------------------------------
-// DisplayClass::vfunc_77 -- body derived from 25 instructions at 0x00478a50; semantics not reconstructed.
-// size 52 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00478a50  mov      edx, dword ptr [esp + 4]
-//   0x00478a54  push     ebx
-//   0x00478a55  push     esi
-//   0x00478a56  push     edi
-//   0x00478a57  mov      edi, dword ptr [ecx + 8]
-//   0x00478a5a  mov      eax, dword ptr [edx + 8]
-//   0x00478a5d  cmp      edi, eax
-//   0x00478a5f  jne      0x478a84
-//   0x00478a61  xor      eax, eax
-//   0x00478a63  test     edi, edi
-//   0x00478a65  jle      0x478a7c
-//   0x00478a67  mov      edx, dword ptr [edx + 4]
-//   0x00478a6a  mov      esi, dword ptr [ecx + 4]
-//   0x00478a6d  mov      cl, byte ptr [esi + eax]
-//   0x00478a70  mov      bl, byte ptr [edx + eax]
-//   0x00478a73  cmp      cl, bl
-//   0x00478a75  jne      0x478a84
-//   0x00478a77  inc      eax
-//   0x00478a78  cmp      eax, edi
-//   0x00478a7a  jl       0x478a6d
-//   0x00478a7c  pop      edi
-//   0x00478a7d  pop      esi
-//   0x00478a7e  mov      al, 1
-//   0x00478a80  pop      ebx
-//   0x00478a81  ret      4
+// DisplayClass::vfunc_77 -- ALIAS of DisplayClass::vfunc_70 (same machine code at 0x00478a50); transcribed once.
 void DisplayClass::vfunc_77()
 {
 }

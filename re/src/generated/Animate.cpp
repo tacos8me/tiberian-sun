@@ -5,127 +5,48 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "Animate.h"
 
-// ---------------------------------------------------------------------------
-// Animate::vfunc_1 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Animate::vfunc_1 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Animate::vfunc_1()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Animate::vfunc_2 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Animate::vfunc_2 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Animate::vfunc_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Animate::vfunc_3 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Animate::vfunc_3 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Animate::vfunc_3()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Animate::vfunc_4 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Animate::vfunc_4 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Animate::vfunc_4()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Animate::vfunc_5 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Animate::vfunc_5 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Animate::vfunc_5()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Animate::vfunc_6 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Animate::vfunc_6 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Animate::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Animate::vfunc_7 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// Animate::vfunc_7 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void Animate::vfunc_7()
 {
 }
 
-// ---------------------------------------------------------------------------
-// Animate::Animate -- body derived from 23 instructions at 0x00416970; semantics not reconstructed.
-// size 89 bytes; signature __thiscall
-// callees: none
-//
-//   0x00416970  mov      eax, ecx
-//   0x00416972  xor      edx, edx
-//   0x00416974  push     esi
-//   0x00416975  mov      esi, 0x100
-//   0x0041697a  mov      dword ptr [eax], 0x699a90
-//   0x00416980  mov      dword ptr [eax + 0x84], edx
-//   0x00416986  mov      byte ptr [eax + 0x88], dl
-//   0x0041698c  mov      byte ptr [eax + 0x89], dl
-//   0x00416992  lea      ecx, [eax + 0x50c]
-//   0x00416998  mov      byte ptr [ecx], dl
-//   0x0041699a  mov      byte ptr [ecx + 1], dl
-//   0x0041699d  mov      byte ptr [ecx + 2], dl
-//   0x004169a0  add      ecx, 3
-//   0x004169a3  dec      esi
-//   0x004169a4  jne      0x416998
-//   0x004169a6  or       ecx, 0xffffffff
-//   0x004169a9  mov      dword ptr [eax + 0xe0c], edx
-//   0x004169af  mov      dword ptr [eax + 0xe10], edx
-//   0x004169b5  mov      dword ptr [eax + 0xe14], ecx
-//   0x004169bb  mov      dword ptr [eax + 0xe18], ecx
-//   0x004169c1  mov      dword ptr [eax], 0x699a6c
-//   0x004169c7  pop      esi
-//   0x004169c8  ret      
+// Animate::Animate -- ALIAS of AnimFile::AnimFile (same machine code at 0x00416970); transcribed once.
 Animate::Animate()
 {
 }

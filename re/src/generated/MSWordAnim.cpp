@@ -5,63 +5,23 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "MSWordAnim.h"
 
-// ---------------------------------------------------------------------------
-// MSWordAnim::vfunc_1 -- body derived from 3 instructions at 0x00557690; semantics not reconstructed.
-// size 10 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00557690  mov      al, byte ptr [esp + 4]
-//   0x00557694  mov      byte ptr [ecx + 0xc], al
-//   0x00557697  ret      4
+// MSWordAnim::vfunc_1 -- ALIAS of MSAnim::vfunc_1 (same machine code at 0x00557690); transcribed once.
 void MSWordAnim::vfunc_1(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// MSWordAnim::vfunc_2 -- body derived from 20 instructions at 0x005576a0; semantics not reconstructed.
-// size 50 bytes; signature __thiscall
-// callees: 0x005f0b30
-//
-//   0x005576a0  push     esi
-//   0x005576a1  mov      esi, ecx
-//   0x005576a3  mov      eax, dword ptr [esi + 0x10]
-//   0x005576a6  cmp      eax, -1
-//   0x005576a9  je       0x5576df
-//   0x005576ab  push     edi
-//   0x005576ac  mov      edi, dword ptr [esi + 0x18]
-//   0x005576af  cmp      eax, -1
-//   0x005576b2  je       0x5576d4
-//   0x005576b4  lea      ecx, [esi + 0x14]
-//   0x005576b7  call     0x5f0b30
-//   0x005576bc  sub      eax, dword ptr [esi + 0x10]
-//   0x005576bf  cmp      eax, edi
-//   0x005576c1  jge      0x5576d2
-//   0x005576c3  sub      edi, eax
-//   0x005576c5  mov      dword ptr [esi + 0x10], 0xffffffff
-//   0x005576cc  mov      dword ptr [esi + 0x18], edi
-//   0x005576cf  pop      edi
-//   0x005576d0  pop      esi
-//   0x005576d1  ret      
+// MSWordAnim::vfunc_2 -- ALIAS of MSAnim::vfunc_2 (same machine code at 0x005576a0); transcribed once.
 void MSWordAnim::vfunc_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// MSWordAnim::vfunc_3 -- body derived from 9 instructions at 0x005576f0; semantics not reconstructed.
-// size 22 bytes; signature __thiscall
-// callees: 0x005f0b30
-//
-//   0x005576f0  push     esi
-//   0x005576f1  mov      esi, ecx
-//   0x005576f3  cmp      dword ptr [esi + 0x10], -1
-//   0x005576f7  jne      0x557704
-//   0x005576f9  lea      ecx, [esi + 0x14]
-//   0x005576fc  call     0x5f0b30
-//   0x00557701  mov      dword ptr [esi + 0x10], eax
-//   0x00557704  pop      esi
-//   0x00557705  ret      
+// MSWordAnim::vfunc_3 -- ALIAS of MSAnim::vfunc_3 (same machine code at 0x005576f0); transcribed once.
 void MSWordAnim::vfunc_3()
 {
 }

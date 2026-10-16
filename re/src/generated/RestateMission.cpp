@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "RestateMission.h"
 
 // ---------------------------------------------------------------------------
@@ -42,12 +46,7 @@ void RestateMission::vfunc_1(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// RestateMission::vfunc_2 -- body derived from 1 instructions at 0x0055cc40; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0055cc40  ret      
+// RestateMission::vfunc_2 -- ALIAS of MSEngine::vfunc_2 (same machine code at 0x0055cc40); transcribed once.
 void RestateMission::vfunc_2()
 {
 }

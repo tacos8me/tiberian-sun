@@ -5,26 +5,18 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "AnimClass.h"
 
-// ---------------------------------------------------------------------------
-// AnimClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// AnimClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void AnimClass::Init()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// AnimClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void AnimClass::Shutdown()
 {
 }
@@ -43,17 +35,7 @@ long AnimClass::QueryInterface(const void*, void**)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::AddRef -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// AnimClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 unsigned long AnimClass::AddRef()
 {
 }
@@ -115,18 +97,7 @@ long AnimClass::Save(IStream* pStm, int fClearDirty)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::GetType -- body derived from 7 instructions at 0x00405910; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00405910  push     esi
-//   0x00405911  mov      esi, dword ptr [esp + 0xc]
-//   0x00405915  test     esi, esi
-//   0x00405917  jne      0x405922
-//   0x00405919  mov      eax, 0x80004003
-//   0x0040591e  pop      esi
-//   0x0040591f  ret      8
+// AnimClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
 int AnimClass::GetType()
 {
 }
@@ -151,12 +122,7 @@ long AnimClass::GetClassID(void* pClassID)
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::Set_ID -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// AnimClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void AnimClass::Set_ID(int id)
 {
 }
@@ -308,49 +274,22 @@ void AnimClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_14 -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// AnimClass::vfunc_14 -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 long AnimClass::vfunc_14()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_15 -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// AnimClass::vfunc_15 -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 long AnimClass::vfunc_15()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_16 -- body derived from 2 instructions at 0x004059f0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059f0  xor      eax, eax
-//   0x004059f2  ret      
+// AnimClass::vfunc_16 -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); transcribed once.
 void AnimClass::vfunc_16()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_17 -- body derived from 5 instructions at 0x00570a20; semantics not reconstructed.
-// size 11 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570a20  mov      dl, byte ptr [ecx + 0x35]
-//   0x00570a23  xor      eax, eax
-//   0x00570a25  test     dl, dl
-//   0x00570a27  sete     al
-//   0x00570a2a  ret      
+// AnimClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); transcribed once.
 void AnimClass::vfunc_17()
 {
 }
@@ -398,47 +337,12 @@ void AnimClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// AnimClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void AnimClass::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_20 -- body derived from 9 instructions at 0x00570e80; semantics not reconstructed.
-// size 26 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570e80  mov      al, byte ptr [ecx + 0x2c]
-//   0x00570e83  test     al, al
-//   0x00570e85  je       0x570e9a
-//   0x00570e87  mov      eax, dword ptr [ecx]
-//   0x00570e89  call     dword ptr [eax + 0x198]
-//   0x00570e8f  cmp      eax, dword ptr [0x7d6a20]
-//   0x00570e95  jge      0x570e9a
-//   0x00570e97  mov      al, 1
-//   0x00570e99  ret      
+// AnimClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); transcribed once.
 void AnimClass::vfunc_20()
 {
 }
@@ -461,29 +365,7 @@ void AnimClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// AnimClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void AnimClass::vfunc_22()
 {
 }
@@ -657,18 +539,7 @@ void AnimClass::vfunc_29()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_30 -- body derived from 7 instructions at 0x00570ef0; semantics not reconstructed.
-// size 19 bytes; signature __cdecl
-// callees: none
-//
-//   0x00570ef0  mov      eax, dword ptr [ecx]
-//   0x00570ef2  call     dword ptr [eax + 0x198]
-//   0x00570ef8  xor      ecx, ecx
-//   0x00570efa  cmp      eax, -0x14
-//   0x00570efd  setg     cl
-//   0x00570f00  mov      al, cl
-//   0x00570f02  ret      
+// AnimClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); transcribed once.
 void AnimClass::vfunc_30()
 {
 }
@@ -772,83 +643,17 @@ void AnimClass::vfunc_39()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_40 -- body derived from 18 instructions at 0x0040e5d0; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e5d0  mov      eax, dword ptr [ecx]
-//   0x0040e5d2  sub      esp, 0xc
-//   0x0040e5d5  lea      edx, [esp]
-//   0x0040e5d9  push     esi
-//   0x0040e5da  push     edx
-//   0x0040e5db  call     dword ptr [eax + 0x48]
-//   0x0040e5de  mov      ecx, eax
-//   0x0040e5e0  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e5e4  mov      edx, eax
-//   0x0040e5e6  mov      esi, dword ptr [ecx]
-//   0x0040e5e8  mov      dword ptr [edx], esi
-//   0x0040e5ea  mov      esi, dword ptr [ecx + 4]
-//   0x0040e5ed  mov      dword ptr [edx + 4], esi
-//   0x0040e5f0  pop      esi
-//   0x0040e5f1  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e5f4  mov      dword ptr [edx + 8], ecx
-//   0x0040e5f7  add      esp, 0xc
-//   0x0040e5fa  ret      4
+// AnimClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); transcribed once.
 void AnimClass::vfunc_40()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_41 -- body derived from 18 instructions at 0x0040e600; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e600  mov      eax, dword ptr [ecx]
-//   0x0040e602  sub      esp, 0xc
-//   0x0040e605  lea      edx, [esp]
-//   0x0040e609  push     esi
-//   0x0040e60a  push     edx
-//   0x0040e60b  call     dword ptr [eax + 0x48]
-//   0x0040e60e  mov      ecx, eax
-//   0x0040e610  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e614  mov      edx, eax
-//   0x0040e616  mov      esi, dword ptr [ecx]
-//   0x0040e618  mov      dword ptr [edx], esi
-//   0x0040e61a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e61d  mov      dword ptr [edx + 4], esi
-//   0x0040e620  pop      esi
-//   0x0040e621  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e624  mov      dword ptr [edx + 8], ecx
-//   0x0040e627  add      esp, 0xc
-//   0x0040e62a  ret      4
+// AnimClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); transcribed once.
 void AnimClass::vfunc_41()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_42 -- body derived from 18 instructions at 0x0040e630; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e630  mov      eax, dword ptr [ecx]
-//   0x0040e632  sub      esp, 0xc
-//   0x0040e635  lea      edx, [esp]
-//   0x0040e639  push     esi
-//   0x0040e63a  push     edx
-//   0x0040e63b  call     dword ptr [eax + 0x48]
-//   0x0040e63e  mov      ecx, eax
-//   0x0040e640  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e644  mov      edx, eax
-//   0x0040e646  mov      esi, dword ptr [ecx]
-//   0x0040e648  mov      dword ptr [edx], esi
-//   0x0040e64a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e64d  mov      dword ptr [edx + 4], esi
-//   0x0040e650  pop      esi
-//   0x0040e651  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e654  mov      dword ptr [edx + 8], ecx
-//   0x0040e657  add      esp, 0xc
-//   0x0040e65a  ret      4
+// AnimClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); transcribed once.
 void AnimClass::vfunc_42()
 {
 }
@@ -883,29 +688,7 @@ void AnimClass::vfunc_43()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_44 -- body derived from 18 instructions at 0x0040e660; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e660  mov      eax, dword ptr [ecx]
-//   0x0040e662  sub      esp, 0xc
-//   0x0040e665  lea      edx, [esp]
-//   0x0040e669  push     esi
-//   0x0040e66a  push     edx
-//   0x0040e66b  call     dword ptr [eax + 0x48]
-//   0x0040e66e  mov      ecx, eax
-//   0x0040e670  mov      eax, dword ptr [esp + 0x14]
-//   0x0040e674  mov      edx, eax
-//   0x0040e676  mov      esi, dword ptr [ecx]
-//   0x0040e678  mov      dword ptr [edx], esi
-//   0x0040e67a  mov      esi, dword ptr [ecx + 4]
-//   0x0040e67d  mov      dword ptr [edx + 4], esi
-//   0x0040e680  pop      esi
-//   0x0040e681  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e684  mov      dword ptr [edx + 8], ecx
-//   0x0040e687  add      esp, 0xc
-//   0x0040e68a  ret      4
+// AnimClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); transcribed once.
 void AnimClass::vfunc_44()
 {
 }
@@ -1343,173 +1126,22 @@ void AnimClass::vfunc_51()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_52 -- body derived from 33 instructions at 0x005700c0; semantics not reconstructed.
-// size 100 bytes; signature __thiscall nargs=1
-// callees: 0x00570148, 0x00682997
-//
-//   0x005700c0  push     esi
-//   0x005700c1  mov      esi, ecx
-//   0x005700c3  push     edi
-//   0x005700c4  mov      edi, dword ptr [esp + 0xc]
-//   0x005700c8  mov      eax, dword ptr [esi]
-//   0x005700ca  push     0x80
-//   0x005700cf  push     edi
-//   0x005700d0  mov      byte ptr [esi + 0x33], 1
-//   0x005700d4  call     dword ptr [eax + 0xc4]
-//   0x005700da  test     al, al
-//   0x005700dc  je       0x570163
-//   0x005700e2  mov      edx, dword ptr [esi]
-//   0x005700e4  push     edi
-//   0x005700e5  mov      ecx, esi
-//   0x005700e7  call     dword ptr [edx + 0x184]
-//   0x005700ed  mov      eax, dword ptr [esi]
-//   0x005700ef  mov      ecx, esi
-//   0x005700f1  call     dword ptr [eax + 0x2c]
-//   0x005700f4  cmp      eax, 8
-//   0x005700f7  push     0x108
-//   0x005700fc  jne      0x570124
-//   0x005700fe  call     0x682997
-//   0x00570103  add      esp, 4
-//   0x00570106  test     eax, eax
-//   0x00570108  je       0x57015c
-//   0x0057010a  mov      ecx, dword ptr [0x714e20]
-//   0x00570110  push     0
-//   0x00570112  push     0x600
-//   0x00570117  push     1
-//   0x00570119  mov      edx, dword ptr [ecx + 0x7f0]
-//   0x0057011f  push     0
-//   0x00570121  push     edi
-//   0x00570122  jmp      0x570148
+// AnimClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); transcribed once.
 void AnimClass::vfunc_52()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_53 -- body derived from 52 instructions at 0x0056ea70; semantics not reconstructed.
-// size 156 bytes; signature __thiscall nargs=1
-// callees: 0x00473150, 0x004731a0, 0x0068309c, 0x006939b0
-//
-//   0x0056ea70  sub      esp, 0xc
-//   0x0056ea73  push     esi
-//   0x0056ea74  mov      esi, ecx
-//   0x0056ea76  push     0
-//   0x0056ea78  mov      eax, dword ptr [esi]
-//   0x0056ea7a  mov      byte ptr [esi + 0x33], 1
-//   0x0056ea7e  mov      byte ptr [esi + 0x34], 1
-//   0x0056ea82  call     dword ptr [eax + 0x10c]
-//   0x0056ea88  push     esi
-//   0x0056ea89  mov      ecx, 0x710d28
-//   0x0056ea8e  call     0x4731a0
-//   0x0056ea93  push     esi
-//   0x0056ea94  mov      ecx, 0x710d28
-//   0x0056ea99  mov      byte ptr [esi + 0x32], 0
-//   0x0056ea9d  call     0x473150
-//   0x0056eaa2  mov      edx, dword ptr [esi]
-//   0x0056eaa4  push     1
-//   0x0056eaa6  mov      ecx, esi
-//   0x0056eaa8  call     dword ptr [edx + 0x10c]
-//   0x0056eaae  push     0
-//   0x0056eab0  push     0x6bf5b0
-//   0x0056eab5  push     0x6bf530
-//   0x0056eaba  push     0
-//   0x0056eabc  push     esi
-//   0x0056eabd  call     0x68309c
-//   0x0056eac2  add      esp, 0x14
-//   0x0056eac5  test     eax, eax
-//   0x0056eac7  je       0x56eb31
-//   0x0056eac9  mov      eax, dword ptr [esi + 0x324]
-//   0x0056eacf  test     eax, eax
-//   0x0056ead1  jne      0x56eadd
-//   0x0056ead3  push     0x80004003
-//   0x0056ead8  call     0x6939b0
-//   0x0056eadd  mov      eax, dword ptr [esi + 0x324]
-//   0x0056eae3  push     eax
-//   0x0056eae4  mov      ecx, dword ptr [eax]
-//   0x0056eae6  call     dword ptr [ecx + 0x10]
-//   0x0056eae9  test     al, al
-//   0x0056eaeb  jne      0x56eb0c
-//   0x0056eaed  push     edi
-//   0x0056eaee  mov      edi, dword ptr [esi]
-//   0x0056eaf0  lea      edx, [esp + 8]
-//   0x0056eaf4  mov      ecx, esi
-//   0x0056eaf6  push     edx
-//   0x0056eaf7  call     dword ptr [edi + 0x180]
-//   0x0056eafd  push     eax
-//   0x0056eafe  mov      ecx, esi
-//   0x0056eb00  call     dword ptr [edi + 0xdc]
-//   0x0056eb06  pop      edi
-//   0x0056eb07  pop      esi
-//   0x0056eb08  add      esp, 0xc
-//   0x0056eb0b  ret      
+// AnimClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); transcribed once.
 void AnimClass::vfunc_53()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_54 -- body derived from 25 instructions at 0x00570480; semantics not reconstructed.
-// size 84 bytes; signature __stdcall nargs=1
-// callees: 0x00502060, 0x00510f70
-//
-//   0x00570480  push     esi
-//   0x00570481  mov      esi, dword ptr [esp + 8]
-//   0x00570485  push     esi
-//   0x00570486  mov      ecx, 0x710d28
-//   0x0057048b  call     0x510f70
-//   0x00570490  mov      edx, dword ptr [0x7d6a1c]
-//   0x00570496  mov      ecx, dword ptr [esi + 8]
-//   0x00570499  add      eax, edx
-//   0x0057049b  cmp      eax, ecx
-//   0x0057049d  jg       0x5704d4
-//   0x0057049f  push     esi
-//   0x005704a0  mov      ecx, 0x710d28
-//   0x005704a5  call     0x502060
-//   0x005704aa  mov      ecx, dword ptr [eax + 0xa4]
-//   0x005704b0  test     ch, 0x10
-//   0x005704b3  je       0x5704d4
-//   0x005704b5  push     esi
-//   0x005704b6  mov      ecx, 0x710d28
-//   0x005704bb  call     0x502060
-//   0x005704c0  mov      ecx, dword ptr [eax + 0xa0]
-//   0x005704c6  add      eax, 0xa0
-//   0x005704cb  or       ecx, 0x40
-//   0x005704ce  pop      esi
-//   0x005704cf  mov      dword ptr [eax], ecx
-//   0x005704d1  ret      4
+// AnimClass::vfunc_54 -- ALIAS of AircraftClass::vfunc_54 (same machine code at 0x00570480); transcribed once.
 void AnimClass::vfunc_54()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_55 -- body derived from 25 instructions at 0x00570500; semantics not reconstructed.
-// size 84 bytes; signature __stdcall nargs=1
-// callees: 0x00502060, 0x00510f70
-//
-//   0x00570500  push     esi
-//   0x00570501  mov      esi, dword ptr [esp + 8]
-//   0x00570505  push     esi
-//   0x00570506  mov      ecx, 0x710d28
-//   0x0057050b  call     0x510f70
-//   0x00570510  mov      edx, dword ptr [0x7d6a1c]
-//   0x00570516  mov      ecx, dword ptr [esi + 8]
-//   0x00570519  add      eax, edx
-//   0x0057051b  cmp      eax, ecx
-//   0x0057051d  jg       0x570554
-//   0x0057051f  push     esi
-//   0x00570520  mov      ecx, 0x710d28
-//   0x00570525  call     0x502060
-//   0x0057052a  mov      ecx, dword ptr [eax + 0xa4]
-//   0x00570530  test     ch, 0x10
-//   0x00570533  je       0x570554
-//   0x00570535  push     esi
-//   0x00570536  mov      ecx, 0x710d28
-//   0x0057053b  call     0x502060
-//   0x00570540  mov      ecx, dword ptr [eax + 0xa0]
-//   0x00570546  add      eax, 0xa0
-//   0x0057054b  and      ecx, 0xffffffbf
-//   0x0057054e  pop      esi
-//   0x0057054f  mov      dword ptr [eax], ecx
-//   0x00570551  ret      4
+// AnimClass::vfunc_55 -- ALIAS of AircraftClass::vfunc_55 (same machine code at 0x00570500); transcribed once.
 void AnimClass::vfunc_55()
 {
 }
@@ -1678,18 +1310,7 @@ void AnimClass::vfunc_63()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_64 -- body derived from 7 instructions at 0x00570990; semantics not reconstructed.
-// size 21 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00570990  mov      edx, dword ptr [esp + 8]
-//   0x00570994  mov      eax, dword ptr [ecx]
-//   0x00570996  push     edx
-//   0x00570997  mov      edx, dword ptr [esp + 8]
-//   0x0057099b  push     edx
-//   0x0057099c  call     dword ptr [eax + 0xfc]
-//   0x005709a2  ret      8
+// AnimClass::vfunc_64 -- ALIAS of AircraftClass::vfunc_64 (same machine code at 0x00570990); transcribed once.
 void AnimClass::vfunc_64()
 {
 }
@@ -1729,122 +1350,22 @@ void AnimClass::vfunc_67()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_68 -- body derived from 37 instructions at 0x0056f000; semantics not reconstructed.
-// size 103 bytes; signature __thiscall nargs=1
-// callees: 0x005f5120
-//
-//   0x0056f000  sub      esp, 0x18
-//   0x0056f003  lea      eax, [esp]
-//   0x0056f007  push     ebx
-//   0x0056f008  push     ebp
-//   0x0056f009  push     esi
-//   0x0056f00a  push     edi
-//   0x0056f00b  mov      esi, ecx
-//   0x0056f00d  push     eax
-//   0x0056f00e  lea      eax, [esp + 0x1c]
-//   0x0056f012  mov      edx, dword ptr [esi]
-//   0x0056f014  push     eax
-//   0x0056f015  call     dword ptr [edx + 0xa8]
-//   0x0056f01b  mov      ecx, dword ptr [0x714eec]
-//   0x0056f021  push     eax
-//   0x0056f022  call     0x5f5120
-//   0x0056f027  mov      edx, dword ptr [esi]
-//   0x0056f029  mov      ecx, esi
-//   0x0056f02b  call     dword ptr [edx + 0x68]
-//   0x0056f02e  mov      edi, eax
-//   0x0056f030  test     edi, edi
-//   0x0056f032  jne      0x56f067
-//   0x0056f034  mov      eax, dword ptr [esp + 0x2c]
-//   0x0056f038  mov      edx, dword ptr [0x7d69a8]
-//   0x0056f03e  mov      ecx, eax
-//   0x0056f040  pop      edi
-//   0x0056f041  pop      esi
-//   0x0056f042  pop      ebp
-//   0x0056f043  mov      dword ptr [ecx], edx
-//   0x0056f045  mov      edx, dword ptr [0x7d69ac]
-//   0x0056f04b  pop      ebx
-//   0x0056f04c  mov      dword ptr [ecx + 4], edx
-//   0x0056f04f  mov      edx, dword ptr [0x7d69b0]
-//   0x0056f055  mov      dword ptr [ecx + 8], edx
-//   0x0056f058  mov      edx, dword ptr [0x7d69b4]
-//   0x0056f05e  mov      dword ptr [ecx + 0xc], edx
-//   0x0056f061  add      esp, 0x18
-//   0x0056f064  ret      4
+// AnimClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); transcribed once.
 void AnimClass::vfunc_68()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_69 -- body derived from 38 instructions at 0x0056f160; semantics not reconstructed.
-// size 120 bytes; signature __thiscall nargs=1
-// callees: 0x005f5120
-//
-//   0x0056f160  sub      esp, 0x54
-//   0x0056f163  push     ebx
-//   0x0056f164  push     esi
-//   0x0056f165  lea      eax, [esp + 0x14]
-//   0x0056f169  mov      esi, ecx
-//   0x0056f16b  push     eax
-//   0x0056f16c  lea      eax, [esp + 0x20]
-//   0x0056f170  mov      edx, dword ptr [esi]
-//   0x0056f172  push     eax
-//   0x0056f173  mov      dword ptr [esp + 0x18], esi
-//   0x0056f177  call     dword ptr [edx + 0xa8]
-//   0x0056f17d  mov      ecx, dword ptr [0x714eec]
-//   0x0056f183  push     eax
-//   0x0056f184  call     0x5f5120
-//   0x0056f189  mov      edx, dword ptr [esi]
-//   0x0056f18b  mov      ecx, esi
-//   0x0056f18d  call     dword ptr [edx + 0x84]
-//   0x0056f193  mov      edx, dword ptr [eax]
-//   0x0056f195  mov      ecx, eax
-//   0x0056f197  call     dword ptr [edx + 0x9c]
-//   0x0056f19d  mov      ebx, eax
-//   0x0056f19f  test     ebx, ebx
-//   0x0056f1a1  mov      dword ptr [esp + 0xc], ebx
-//   0x0056f1a5  jne      0x56f1d8
-//   0x0056f1a7  mov      eax, dword ptr [esp + 0x60]
-//   0x0056f1ab  mov      edx, dword ptr [0x7d69a8]
-//   0x0056f1b1  mov      ecx, eax
-//   0x0056f1b3  pop      esi
-//   0x0056f1b4  pop      ebx
-//   0x0056f1b5  mov      dword ptr [ecx], edx
-//   0x0056f1b7  mov      edx, dword ptr [0x7d69ac]
-//   0x0056f1bd  mov      dword ptr [ecx + 4], edx
-//   0x0056f1c0  mov      edx, dword ptr [0x7d69b0]
-//   0x0056f1c6  mov      dword ptr [ecx + 8], edx
-//   0x0056f1c9  mov      edx, dword ptr [0x7d69b4]
-//   0x0056f1cf  mov      dword ptr [ecx + 0xc], edx
-//   0x0056f1d2  add      esp, 0x54
-//   0x0056f1d5  ret      4
+// AnimClass::vfunc_69 -- ALIAS of AircraftClass::vfunc_69 (same machine code at 0x0056f160); transcribed once.
 void AnimClass::vfunc_69()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_70 -- body derived from 1 instructions at 0x0040e690; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0040e690  ret      
+// AnimClass::vfunc_70 -- ALIAS of AircraftClass::vfunc_70 (same machine code at 0x0040e690); transcribed once.
 void AnimClass::vfunc_70()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_71 -- body derived from 8 instructions at 0x0056f680; semantics not reconstructed.
-// size 24 bytes; signature __cdecl
-// callees: 0x004b2e90
-//
-//   0x0056f680  mov      al, byte ptr [ecx + 0x2e]
-//   0x0056f683  test     al, al
-//   0x0056f685  jne      0x56f697
-//   0x0056f687  mov      byte ptr [ecx + 0x2e], 1
-//   0x0056f68b  push     0
-//   0x0056f68d  mov      ecx, 0x710d28
-//   0x0056f692  call     0x4b2e90
-//   0x0056f697  ret      
+// AnimClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); transcribed once.
 void AnimClass::vfunc_71()
 {
 }
@@ -1913,50 +1434,7 @@ void AnimClass::vfunc_75()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_76 -- body derived from 39 instructions at 0x0056eda0; semantics not reconstructed.
-// size 117 bytes; signature __thiscall nargs=1
-// callees: 0x00478840, 0x00478860
-//
-//   0x0056eda0  push     ecx
-//   0x0056eda1  push     esi
-//   0x0056eda2  mov      esi, ecx
-//   0x0056eda4  mov      al, byte ptr [esi + 0x30]
-//   0x0056eda7  test     al, al
-//   0x0056eda9  je       0x56ee12
-//   0x0056edab  mov      edx, dword ptr [0x7b2d88]
-//   0x0056edb1  lea      eax, [esp + 4]
-//   0x0056edb5  push     eax
-//   0x0056edb6  mov      ecx, 0x7b2d88
-//   0x0056edbb  mov      dword ptr [esp + 8], esi
-//   0x0056edbf  call     dword ptr [edx + 0x10]
-//   0x0056edc2  cmp      eax, -1
-//   0x0056edc5  je       0x56edf4
-//   0x0056edc7  mov      ecx, dword ptr [0x7b2d98]
-//   0x0056edcd  cmp      eax, ecx
-//   0x0056edcf  jge      0x56edf4
-//   0x0056edd1  dec      ecx
-//   0x0056edd2  cmp      eax, ecx
-//   0x0056edd4  mov      dword ptr [0x7b2d98], ecx
-//   0x0056edda  jge      0x56edf4
-//   0x0056eddc  mov      ecx, dword ptr [0x7b2d8c]
-//   0x0056ede2  inc      eax
-//   0x0056ede3  mov      edx, dword ptr [ecx + eax*4]
-//   0x0056ede6  mov      dword ptr [ecx + eax*4 - 4], edx
-//   0x0056edea  mov      ecx, dword ptr [0x7b2d98]
-//   0x0056edf0  cmp      eax, ecx
-//   0x0056edf2  jl       0x56eddc
-//   0x0056edf4  mov      ecx, 0x710d28
-//   0x0056edf9  mov      byte ptr [esi + 0x30], 0
-//   0x0056edfd  call     0x478840
-//   0x0056ee02  cmp      eax, esi
-//   0x0056ee04  jne      0x56ee12
-//   0x0056ee06  push     0
-//   0x0056ee08  mov      ecx, 0x710d28
-//   0x0056ee0d  call     0x478860
-//   0x0056ee12  pop      esi
-//   0x0056ee13  pop      ecx
-//   0x0056ee14  ret      
+// AnimClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); transcribed once.
 void AnimClass::vfunc_76()
 {
 }
@@ -2052,23 +1530,12 @@ void AnimClass::vfunc_80()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_81 -- body derived from 2 instructions at 0x0056eca0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056eca0  xor      al, al
-//   0x0056eca2  ret      
+// AnimClass::vfunc_81 -- ALIAS of AircraftClass::vfunc_81 (same machine code at 0x0056eca0); transcribed once.
 void AnimClass::vfunc_81()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_82 -- body derived from 1 instructions at 0x0056ecb0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x0056ecb0  ret      
+// AnimClass::vfunc_82 -- ALIAS of AircraftClass::vfunc_82 (same machine code at 0x0056ecb0); transcribed once.
 void AnimClass::vfunc_82()
 {
 }
@@ -2115,34 +1582,7 @@ void AnimClass::vfunc_86()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_87 -- body derived from 23 instructions at 0x00570240; semantics not reconstructed.
-// size 51 bytes; signature __thiscall nargs=2
-// callees: none
-//
-//   0x00570240  push     ebx
-//   0x00570241  push     esi
-//   0x00570242  mov      esi, ecx
-//   0x00570244  push     edi
-//   0x00570245  mov      eax, dword ptr [esi]
-//   0x00570247  call     dword ptr [eax + 0x84]
-//   0x0057024d  mov      edx, dword ptr [esi]
-//   0x0057024f  mov      edi, eax
-//   0x00570251  mov      ecx, esi
-//   0x00570253  mov      ebx, dword ptr [edi]
-//   0x00570255  call     dword ptr [edx + 0x3c]
-//   0x00570258  mov      ecx, dword ptr [esp + 0x10]
-//   0x0057025c  push     eax
-//   0x0057025d  mov      eax, dword ptr [esp + 0x18]
-//   0x00570261  push     0
-//   0x00570263  push     eax
-//   0x00570264  push     ecx
-//   0x00570265  mov      ecx, edi
-//   0x00570267  call     dword ptr [ebx + 0x94]
-//   0x0057026d  pop      edi
-//   0x0057026e  pop      esi
-//   0x0057026f  pop      ebx
-//   0x00570270  ret      8
+// AnimClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); transcribed once.
 void AnimClass::vfunc_87()
 {
 }
@@ -2174,12 +1614,7 @@ void AnimClass::vfunc_89()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_90 -- body derived from 1 instructions at 0x0056ece0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0056ece0  ret      4
+// AnimClass::vfunc_90 -- ALIAS of AircraftClass::vfunc_90 (same machine code at 0x0056ece0); transcribed once.
 void AnimClass::vfunc_90()
 {
 }
@@ -2204,66 +1639,7 @@ void AnimClass::vfunc_92()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_93 -- body derived from 55 instructions at 0x0056ed00; semantics not reconstructed.
-// size 156 bytes; signature __thiscall nargs=1
-// callees: 0x00502060
-//
-//   0x0056ed00  sub      esp, 0x18
-//   0x0056ed03  push     ebx
-//   0x0056ed04  push     esi
-//   0x0056ed05  mov      esi, ecx
-//   0x0056ed07  push     edi
-//   0x0056ed08  push     0
-//   0x0056ed0a  mov      eax, dword ptr [esi]
-//   0x0056ed0c  call     dword ptr [eax + 0x10c]
-//   0x0056ed12  mov      edx, dword ptr [esi]
-//   0x0056ed14  lea      eax, [esp + 0x18]
-//   0x0056ed18  push     eax
-//   0x0056ed19  mov      ecx, esi
-//   0x0056ed1b  call     dword ptr [edx + 0x180]
-//   0x0056ed21  mov      edi, dword ptr [esp + 0x28]
-//   0x0056ed25  push     1
-//   0x0056ed27  mov      ecx, edi
-//   0x0056ed29  push     0
-//   0x0056ed2b  and      ecx, 7
-//   0x0056ed2e  push     -1
-//   0x0056ed30  push     edi
-//   0x0056ed31  mov      ebx, dword ptr [ecx*8 + 0x729a48]
-//   0x0056ed38  lea      edx, [ecx*8 + 0x729a48]
-//   0x0056ed3f  mov      ecx, dword ptr [eax]
-//   0x0056ed41  mov      edx, dword ptr [edx + 4]
-//   0x0056ed44  add      ecx, ebx
-//   0x0056ed46  mov      ebx, dword ptr [eax + 4]
-//   0x0056ed49  mov      eax, dword ptr [eax + 8]
-//   0x0056ed4c  add      edx, ebx
-//   0x0056ed4e  mov      ebx, dword ptr [esi]
-//   0x0056ed50  mov      dword ptr [esp + 0x20], edx
-//   0x0056ed54  lea      edx, [esp + 0x1c]
-//   0x0056ed58  mov      dword ptr [esp + 0x1c], ecx
-//   0x0056ed5c  push     edx
-//   0x0056ed5d  mov      ecx, 0x710d28
-//   0x0056ed62  mov      dword ptr [esp + 0x28], eax
-//   0x0056ed66  call     0x502060
-//   0x0056ed6b  push     eax
-//   0x0056ed6c  mov      ecx, esi
-//   0x0056ed6e  call     dword ptr [ebx + 0x178]
-//   0x0056ed74  test     eax, eax
-//   0x0056ed76  jne      0x56ed87
-//   0x0056ed78  mov      eax, dword ptr [esi]
-//   0x0056ed7a  lea      ecx, [esp + 0xc]
-//   0x0056ed7e  push     ecx
-//   0x0056ed7f  mov      ecx, esi
-//   0x0056ed81  call     dword ptr [eax + 0x184]
-//   0x0056ed87  mov      edx, dword ptr [esi]
-//   0x0056ed89  push     1
-//   0x0056ed8b  mov      ecx, esi
-//   0x0056ed8d  call     dword ptr [edx + 0x10c]
-//   0x0056ed93  pop      edi
-//   0x0056ed94  pop      esi
-//   0x0056ed95  pop      ebx
-//   0x0056ed96  add      esp, 0x18
-//   0x0056ed99  ret      4
+// AnimClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); transcribed once.
 void AnimClass::vfunc_93()
 {
 }
@@ -2290,23 +1666,7 @@ void AnimClass::vfunc_95()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_96 -- body derived from 12 instructions at 0x0040e6a0; semantics not reconstructed.
-// size 30 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e6a0  mov      eax, dword ptr [esp + 4]
-//   0x0040e6a4  add      ecx, 0x40
-//   0x0040e6a7  push     esi
-//   0x0040e6a8  mov      edx, eax
-//   0x0040e6aa  mov      esi, dword ptr [ecx]
-//   0x0040e6ac  mov      dword ptr [edx], esi
-//   0x0040e6ae  mov      esi, dword ptr [ecx + 4]
-//   0x0040e6b1  mov      dword ptr [edx + 4], esi
-//   0x0040e6b4  pop      esi
-//   0x0040e6b5  mov      ecx, dword ptr [ecx + 8]
-//   0x0040e6b8  mov      dword ptr [edx + 8], ecx
-//   0x0040e6bb  ret      4
+// AnimClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); transcribed once.
 void AnimClass::vfunc_96()
 {
 }
@@ -2329,188 +1689,32 @@ void AnimClass::vfunc_97()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_98 -- body derived from 18 instructions at 0x0040e6c0; semantics not reconstructed.
-// size 55 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0040e6c0  push     ecx
-//   0x0040e6c1  mov      eax, dword ptr [ecx + 0x40]
-//   0x0040e6c4  cdq      
-//   0x0040e6c5  and      edx, 0xff
-//   0x0040e6cb  add      eax, edx
-//   0x0040e6cd  sar      eax, 8
-//   0x0040e6d0  mov      word ptr [esp], ax
-//   0x0040e6d5  mov      eax, dword ptr [ecx + 0x44]
-//   0x0040e6d8  cdq      
-//   0x0040e6d9  and      edx, 0xff
-//   0x0040e6df  add      eax, edx
-//   0x0040e6e1  sar      eax, 8
-//   0x0040e6e4  mov      word ptr [esp + 2], ax
-//   0x0040e6e9  mov      eax, dword ptr [esp + 8]
-//   0x0040e6ed  mov      ecx, dword ptr [esp]
-//   0x0040e6f1  mov      dword ptr [eax], ecx
-//   0x0040e6f3  pop      ecx
-//   0x0040e6f4  ret      4
+// AnimClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); transcribed once.
 void AnimClass::vfunc_98()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_99 -- body derived from 10 instructions at 0x00570ce0; semantics not reconstructed.
-// size 31 bytes; signature __cdecl
-// callees: 0x00502060
-//
-//   0x00570ce0  mov      eax, dword ptr [ecx]
-//   0x00570ce2  sub      esp, 0xc
-//   0x00570ce5  lea      edx, [esp]
-//   0x00570ce9  push     edx
-//   0x00570cea  call     dword ptr [eax + 0x180]
-//   0x00570cf0  push     eax
-//   0x00570cf1  mov      ecx, 0x710d28
-//   0x00570cf6  call     0x502060
-//   0x00570cfb  add      esp, 0xc
-//   0x00570cfe  ret      
+// AnimClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); transcribed once.
 void AnimClass::vfunc_99()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_100 -- body derived from 23 instructions at 0x00570d00; semantics not reconstructed.
-// size 70 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00570d00  sub      esp, 0x10
-//   0x00570d03  mov      eax, dword ptr [ecx]
-//   0x00570d05  lea      edx, [esp + 4]
-//   0x00570d09  push     edx
-//   0x00570d0a  call     dword ptr [eax + 0x4c]
-//   0x00570d0d  mov      ecx, eax
-//   0x00570d0f  mov      eax, dword ptr [ecx]
-//   0x00570d11  cdq      
-//   0x00570d12  and      edx, 0xff
-//   0x00570d18  add      eax, edx
-//   0x00570d1a  sar      eax, 8
-//   0x00570d1d  mov      word ptr [esp], ax
-//   0x00570d22  mov      eax, dword ptr [ecx + 4]
-//   0x00570d25  cdq      
-//   0x00570d26  and      edx, 0xff
-//   0x00570d2c  add      eax, edx
-//   0x00570d2e  sar      eax, 8
-//   0x00570d31  mov      word ptr [esp + 2], ax
-//   0x00570d36  mov      eax, dword ptr [esp + 0x14]
-//   0x00570d3a  mov      ecx, dword ptr [esp]
-//   0x00570d3e  mov      dword ptr [eax], ecx
-//   0x00570d40  add      esp, 0x10
-//   0x00570d43  ret      4
+// AnimClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); transcribed once.
 void AnimClass::vfunc_100()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_101 -- body derived from 26 instructions at 0x00570d50; semantics not reconstructed.
-// size 81 bytes; signature __cdecl nargs=1
-// callees: 0x005020d0
-//
-//   0x00570d50  sub      esp, 0x14
-//   0x00570d53  mov      eax, dword ptr [ecx]
-//   0x00570d55  lea      edx, [esp + 8]
-//   0x00570d59  push     edx
-//   0x00570d5a  call     dword ptr [eax + 0x4c]
-//   0x00570d5d  mov      ecx, eax
-//   0x00570d5f  mov      eax, dword ptr [ecx]
-//   0x00570d61  cdq      
-//   0x00570d62  and      edx, 0xff
-//   0x00570d68  add      eax, edx
-//   0x00570d6a  sar      eax, 8
-//   0x00570d6d  mov      word ptr [esp], ax
-//   0x00570d72  mov      eax, dword ptr [ecx + 4]
-//   0x00570d75  cdq      
-//   0x00570d76  and      edx, 0xff
-//   0x00570d7c  lea      ecx, [esp + 4]
-//   0x00570d80  add      eax, edx
-//   0x00570d82  push     ecx
-//   0x00570d83  sar      eax, 8
-//   0x00570d86  mov      word ptr [esp + 6], ax
-//   0x00570d8b  mov      eax, dword ptr [esp + 4]
-//   0x00570d8f  mov      ecx, 0x710d28
-//   0x00570d94  mov      dword ptr [esp + 8], eax
-//   0x00570d98  call     0x5020d0
-//   0x00570d9d  add      esp, 0x14
-//   0x00570da0  ret      
+// AnimClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); transcribed once.
 void AnimClass::vfunc_101()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_102 -- body derived from 21 instructions at 0x00570370; semantics not reconstructed.
-// size 57 bytes; signature __thiscall
-// callees: 0x00510f70
-//
-//   0x00570370  sub      esp, 0xc
-//   0x00570373  push     esi
-//   0x00570374  mov      esi, ecx
-//   0x00570376  lea      ecx, [esp + 4]
-//   0x0057037a  mov      eax, dword ptr [esi]
-//   0x0057037c  push     ecx
-//   0x0057037d  mov      ecx, esi
-//   0x0057037f  call     dword ptr [eax + 0x180]
-//   0x00570385  push     eax
-//   0x00570386  mov      ecx, 0x710d28
-//   0x0057038b  call     0x510f70
-//   0x00570390  mov      ecx, dword ptr [esi + 0x48]
-//   0x00570393  sub      ecx, eax
-//   0x00570395  mov      al, byte ptr [esi + 0x32]
-//   0x00570398  test     al, al
-//   0x0057039a  pop      esi
-//   0x0057039b  je       0x5703a3
-//   0x0057039d  sub      ecx, dword ptr [0x7d6a1c]
-//   0x005703a3  mov      eax, ecx
-//   0x005703a5  add      esp, 0xc
-//   0x005703a8  ret      
+// AnimClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); transcribed once.
 void AnimClass::vfunc_102()
 {
 }
 
-// ---------------------------------------------------------------------------
-// AnimClass::vfunc_103 -- body derived from 34 instructions at 0x005703b0; semantics not reconstructed.
-// size 94 bytes; signature __thiscall nargs=1
-// callees: 0x00510f70
-//
-//   0x005703b0  sub      esp, 0xc
-//   0x005703b3  push     esi
-//   0x005703b4  mov      esi, ecx
-//   0x005703b6  push     edi
-//   0x005703b7  mov      edi, dword ptr [esp + 0x18]
-//   0x005703bb  mov      al, byte ptr [esi + 0x32]
-//   0x005703be  test     al, al
-//   0x005703c0  je       0x5703c8
-//   0x005703c2  add      edi, dword ptr [0x7d6a1c]
-//   0x005703c8  mov      al, byte ptr [esi + 0x2c]
-//   0x005703cb  test     al, al
-//   0x005703cd  mov      eax, dword ptr [esi]
-//   0x005703cf  je       0x57040e
-//   0x005703d1  push     0
-//   0x005703d3  mov      ecx, esi
-//   0x005703d5  call     dword ptr [eax + 0x10c]
-//   0x005703db  mov      edx, dword ptr [esi]
-//   0x005703dd  lea      eax, [esp + 8]
-//   0x005703e1  push     eax
-//   0x005703e2  mov      ecx, esi
-//   0x005703e4  call     dword ptr [edx + 0x180]
-//   0x005703ea  push     eax
-//   0x005703eb  mov      ecx, 0x710d28
-//   0x005703f0  call     0x510f70
-//   0x005703f5  mov      edx, dword ptr [esi]
-//   0x005703f7  add      eax, edi
-//   0x005703f9  push     1
-//   0x005703fb  mov      ecx, esi
-//   0x005703fd  mov      dword ptr [esi + 0x48], eax
-//   0x00570400  call     dword ptr [edx + 0x10c]
-//   0x00570406  pop      edi
-//   0x00570407  pop      esi
-//   0x00570408  add      esp, 0xc
-//   0x0057040b  ret      4
+// AnimClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); transcribed once.
 void AnimClass::vfunc_103()
 {
 }

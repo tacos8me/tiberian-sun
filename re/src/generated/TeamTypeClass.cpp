@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "TeamTypeClass.h"
 
 // ---------------------------------------------------------------------------
@@ -56,40 +60,17 @@ TeamTypeClass::TeamTypeClass()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot0 -- body derived from 7 instructions at 0x00405790; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x00405790  mov      eax, dword ptr [esp + 0xc]
-//   0x00405794  push     ebx
-//   0x00405795  test     eax, eax
-//   0x00405797  jne      0x4057a2
-//   0x00405799  mov      eax, 0x80004003
-//   0x0040579e  pop      ebx
-//   0x0040579f  ret      0xc
+// TeamTypeClass::Slot0 -- ALIAS of AbstractClass::vfunc_0 (same machine code at 0x00405790); transcribed once.
 void TeamTypeClass::Slot0()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot1 -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// TeamTypeClass::Slot1 -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void TeamTypeClass::Slot1()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot2 -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// TeamTypeClass::Slot2 -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void TeamTypeClass::Slot2()
 {
 }
@@ -108,17 +89,7 @@ void TeamTypeClass::Slot3()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot4 -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// TeamTypeClass::Slot4 -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 void TeamTypeClass::Slot4()
 {
 }
@@ -187,77 +158,17 @@ void TeamTypeClass::Slot6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot7 -- body derived from 7 instructions at 0x00405910; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00405910  push     esi
-//   0x00405911  mov      esi, dword ptr [esp + 0xc]
-//   0x00405915  test     esi, esi
-//   0x00405917  jne      0x405922
-//   0x00405919  mov      eax, 0x80004003
-//   0x0040591e  pop      esi
-//   0x0040591f  ret      8
+// TeamTypeClass::Slot7 -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
 void TeamTypeClass::Slot7()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot8 -- body derived from 40 instructions at 0x0060ddd0; semantics not reconstructed.
-// size 127 bytes; signature __thiscall nargs=1
-// callees: 0x00405eb0, 0x0062c210, 0x0068298c
-//
-//   0x0060ddd0  push     ecx
-//   0x0060ddd1  push     esi
-//   0x0060ddd2  mov      esi, ecx
-//   0x0060ddd4  mov      dl, 1
-//   0x0060ddd6  mov      dword ptr [esi], 0x6a5670
-//   0x0060dddc  mov      dword ptr [esi + 4], 0x6a5654
-//   0x0060dde3  call     0x62c210
-//   0x0060dde8  mov      edx, dword ptr [0x7b2d70]
-//   0x0060ddee  lea      eax, [esp + 4]
-//   0x0060ddf2  push     eax
-//   0x0060ddf3  mov      ecx, 0x7b2d70
-//   0x0060ddf8  mov      dword ptr [esp + 8], esi
-//   0x0060ddfc  call     dword ptr [edx + 0x10]
-//   0x0060ddff  cmp      eax, -1
-//   0x0060de02  je       0x60de31
-//   0x0060de04  mov      ecx, dword ptr [0x7b2d80]
-//   0x0060de0a  cmp      eax, ecx
-//   0x0060de0c  jge      0x60de31
-//   0x0060de0e  dec      ecx
-//   0x0060de0f  cmp      eax, ecx
-//   0x0060de11  mov      dword ptr [0x7b2d80], ecx
-//   0x0060de17  jge      0x60de31
-//   0x0060de19  mov      ecx, dword ptr [0x7b2d74]
-//   0x0060de1f  inc      eax
-//   0x0060de20  mov      edx, dword ptr [ecx + eax*4]
-//   0x0060de23  mov      dword ptr [ecx + eax*4 - 4], edx
-//   0x0060de27  mov      ecx, dword ptr [0x7b2d80]
-//   0x0060de2d  cmp      eax, ecx
-//   0x0060de2f  jl       0x60de19
-//   0x0060de31  mov      ecx, esi
-//   0x0060de33  call     0x405eb0
-//   0x0060de38  test     byte ptr [esp + 0xc], 1
-//   0x0060de3d  je       0x60de48
-//   0x0060de3f  push     esi
-//   0x0060de40  call     0x68298c
-//   0x0060de45  add      esp, 4
-//   0x0060de48  mov      eax, esi
-//   0x0060de4a  pop      esi
-//   0x0060de4b  pop      ecx
-//   0x0060de4c  ret      4
+// TeamTypeClass::Slot8 -- ALIAS of TeamTypeClass::TeamTypeClass (same machine code at 0x0060ddd0); transcribed once.
 void TeamTypeClass::Slot8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot9 -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// TeamTypeClass::Slot9 -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void TeamTypeClass::Slot9()
 {
 }
@@ -442,24 +353,12 @@ void TeamTypeClass::Slot13()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot14 -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// TeamTypeClass::Slot14 -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 void TeamTypeClass::Slot14()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot15 -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// TeamTypeClass::Slot15 -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 void TeamTypeClass::Slot15()
 {
 }
@@ -475,127 +374,42 @@ void TeamTypeClass::Slot16()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot17 -- body derived from 2 instructions at 0x00405970; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405970  mov      al, 1
-//   0x00405972  ret      
+// TeamTypeClass::Slot17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); transcribed once.
 void TeamTypeClass::Slot17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot18 -- body derived from 9 instructions at 0x00405a00; semantics not reconstructed.
-// size 35 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a00  mov      eax, dword ptr [esp + 4]
-//   0x00405a04  mov      edx, dword ptr [0x715228]
-//   0x00405a0a  mov      ecx, eax
-//   0x00405a0c  mov      dword ptr [ecx], edx
-//   0x00405a0e  mov      edx, dword ptr [0x71522c]
-//   0x00405a14  mov      dword ptr [ecx + 4], edx
-//   0x00405a17  mov      edx, dword ptr [0x715230]
-//   0x00405a1d  mov      dword ptr [ecx + 8], edx
-//   0x00405a20  ret      4
+// TeamTypeClass::Slot18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); transcribed once.
 void TeamTypeClass::Slot18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// TeamTypeClass::Slot19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void TeamTypeClass::Slot19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot20 -- body derived from 2 instructions at 0x00405a60; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a60  xor      al, al
-//   0x00405a62  ret      
+// TeamTypeClass::Slot20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); transcribed once.
 void TeamTypeClass::Slot20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot21 -- body derived from 2 instructions at 0x00405a70; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a70  xor      al, al
-//   0x00405a72  ret      
+// TeamTypeClass::Slot21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); transcribed once.
 void TeamTypeClass::Slot21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// TeamTypeClass::Slot22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void TeamTypeClass::Slot22()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot23 -- body derived from 1 instructions at 0x00405ab0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405ab0  ret      
+// TeamTypeClass::Slot23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); transcribed once.
 void TeamTypeClass::Slot23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TeamTypeClass::Slot24 -- body derived from 1 instructions at 0x00406010; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00406010  ret      4
+// TeamTypeClass::Slot24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); transcribed once.
 void TeamTypeClass::Slot24()
 {
 }

@@ -5,42 +5,23 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "TiberiumClass.h"
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::QueryInterface -- body derived from 7 instructions at 0x00405790; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x00405790  mov      eax, dword ptr [esp + 0xc]
-//   0x00405794  push     ebx
-//   0x00405795  test     eax, eax
-//   0x00405797  jne      0x4057a2
-//   0x00405799  mov      eax, 0x80004003
-//   0x0040579e  pop      ebx
-//   0x0040579f  ret      0xc
+// TiberiumClass::QueryInterface -- ALIAS of AbstractClass::vfunc_0 (same machine code at 0x00405790); transcribed once.
 void TiberiumClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// TiberiumClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void TiberiumClass::Init(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// TiberiumClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void TiberiumClass::Shutdown(int a0)
 {
 }
@@ -59,17 +40,7 @@ void TiberiumClass::vfunc_3(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::Release -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// TiberiumClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 void TiberiumClass::Release(int a0)
 {
 }
@@ -171,12 +142,7 @@ void TiberiumClass::vfunc_8(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::Set_ID -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// TiberiumClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void TiberiumClass::Set_ID()
 {
 }
@@ -293,24 +259,12 @@ void TiberiumClass::vfunc_13(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::Save -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// TiberiumClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 void TiberiumClass::Save()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::GetSizeMax -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// TiberiumClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 void TiberiumClass::GetSizeMax()
 {
 }
@@ -326,127 +280,42 @@ void TiberiumClass::vfunc_16()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::vfunc_17 -- body derived from 2 instructions at 0x00405970; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405970  mov      al, 1
-//   0x00405972  ret      
+// TiberiumClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); transcribed once.
 void TiberiumClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::vfunc_18 -- body derived from 9 instructions at 0x00405a00; semantics not reconstructed.
-// size 35 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a00  mov      eax, dword ptr [esp + 4]
-//   0x00405a04  mov      edx, dword ptr [0x715228]
-//   0x00405a0a  mov      ecx, eax
-//   0x00405a0c  mov      dword ptr [ecx], edx
-//   0x00405a0e  mov      edx, dword ptr [0x71522c]
-//   0x00405a14  mov      dword ptr [ecx + 4], edx
-//   0x00405a17  mov      edx, dword ptr [0x715230]
-//   0x00405a1d  mov      dword ptr [ecx + 8], edx
-//   0x00405a20  ret      4
+// TiberiumClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); transcribed once.
 void TiberiumClass::vfunc_18(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// TiberiumClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void TiberiumClass::vfunc_19(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::vfunc_20 -- body derived from 2 instructions at 0x00405a60; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a60  xor      al, al
-//   0x00405a62  ret      
+// TiberiumClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); transcribed once.
 void TiberiumClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::vfunc_21 -- body derived from 2 instructions at 0x00405a70; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a70  xor      al, al
-//   0x00405a72  ret      
+// TiberiumClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); transcribed once.
 void TiberiumClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// TiberiumClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void TiberiumClass::vfunc_22(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::vfunc_23 -- body derived from 1 instructions at 0x00405ab0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405ab0  ret      
+// TiberiumClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); transcribed once.
 void TiberiumClass::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::vfunc_24 -- body derived from 1 instructions at 0x00406010; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00406010  ret      4
+// TiberiumClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); transcribed once.
 void TiberiumClass::vfunc_24(int a0)
 {
 }
@@ -571,32 +440,7 @@ void TiberiumClass::vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5, int
 {
 }
 
-// ---------------------------------------------------------------------------
-// TiberiumClass::Set_ID -- body derived from 21 instructions at 0x00405fb0; semantics not reconstructed.
-// size 47 bytes; signature __thiscall nargs=1
-// callees: 0x004d44c0, 0x004d6b50
-//
-//   0x00405fb0  push     ebx
-//   0x00405fb1  mov      ebx, dword ptr [esp + 8]
-//   0x00405fb5  push     esi
-//   0x00405fb6  mov      esi, ecx
-//   0x00405fb8  push     edi
-//   0x00405fb9  push     0
-//   0x00405fbb  lea      edi, [esi + 0x14]
-//   0x00405fbe  mov      ecx, ebx
-//   0x00405fc0  push     edi
-//   0x00405fc1  call     0x4d44c0
-//   0x00405fc6  add      esi, 0x2d
-//   0x00405fc9  mov      ecx, ebx
-//   0x00405fcb  push     esi
-//   0x00405fcc  push     0x6bf138
-//   0x00405fd1  push     edi
-//   0x00405fd2  call     0x4d6b50
-//   0x00405fd7  pop      edi
-//   0x00405fd8  pop      esi
-//   0x00405fd9  mov      al, 1
-//   0x00405fdb  pop      ebx
-//   0x00405fdc  ret      4
+// TiberiumClass::Set_ID -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); transcribed once.
 void TiberiumClass::Set_ID(int a0)
 {
 }

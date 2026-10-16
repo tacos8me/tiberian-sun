@@ -5,134 +5,33 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "LogicClass.h"
 
-// ---------------------------------------------------------------------------
-// LogicClass::vfunc_1 -- body derived from 26 instructions at 0x00402540; semantics not reconstructed.
-// size 54 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00402540  push     ebx
-//   0x00402541  push     esi
-//   0x00402542  mov      esi, dword ptr [ecx + 8]
-//   0x00402545  push     edi
-//   0x00402546  mov      edi, dword ptr [esp + 0x10]
-//   0x0040254a  cmp      esi, dword ptr [edi + 8]
-//   0x0040254d  jne      0x402576
-//   0x0040254f  xor      edx, edx
-//   0x00402551  test     esi, esi
-//   0x00402553  jle      0x40256e
-//   0x00402555  mov      eax, dword ptr [ecx + 4]
-//   0x00402558  mov      ecx, dword ptr [edi + 4]
-//   0x0040255b  sub      ecx, eax
-//   0x0040255d  mov      edi, dword ptr [eax]
-//   0x0040255f  mov      ebx, dword ptr [ecx + eax]
-//   0x00402562  cmp      edi, ebx
-//   0x00402564  jne      0x402576
-//   0x00402566  inc      edx
-//   0x00402567  add      eax, 4
-//   0x0040256a  cmp      edx, esi
-//   0x0040256c  jl       0x40255d
-//   0x0040256e  pop      edi
-//   0x0040256f  pop      esi
-//   0x00402570  mov      al, 1
-//   0x00402572  pop      ebx
-//   0x00402573  ret      4
+// LogicClass::vfunc_1 -- ALIAS of LayerClass::vfunc_1 (same machine code at 0x00402540); transcribed once.
 void LogicClass::vfunc_1(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// LogicClass::vfunc_2 -- body derived from 18 instructions at 0x004026c0; semantics not reconstructed.
-// size 46 bytes; signature __thiscall nargs=2
-// callees: 0x004026f0, 0x00682997
-//
-//   0x004026c0  push     ebx
-//   0x004026c1  push     ebp
-//   0x004026c2  mov      ebp, dword ptr [esp + 0xc]
-//   0x004026c6  push     esi
-//   0x004026c7  test     ebp, ebp
-//   0x004026c9  push     edi
-//   0x004026ca  mov      esi, ecx
-//   0x004026cc  je       0x40274a
-//   0x004026ce  mov      ebx, dword ptr [esp + 0x18]
-//   0x004026d2  mov      byte ptr [esi + 0xc], 0
-//   0x004026d6  test     ebx, ebx
-//   0x004026d8  jne      0x4026ee
-//   0x004026da  lea      eax, [ebp*4]
-//   0x004026e1  push     eax
-//   0x004026e2  call     0x682997
-//   0x004026e7  add      esp, 4
-//   0x004026ea  mov      edi, eax
-//   0x004026ec  jmp      0x4026f0
+// LogicClass::vfunc_2 -- ALIAS of LayerClass::vfunc_2 (same machine code at 0x004026c0); transcribed once.
 void LogicClass::vfunc_2(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// LogicClass::vfunc_3 -- body derived from 19 instructions at 0x004024f0; semantics not reconstructed.
-// size 42 bytes; signature __thiscall
-// callees: 0x0068298c
-//
-//   0x004024f0  push     ebx
-//   0x004024f1  push     esi
-//   0x004024f2  mov      esi, ecx
-//   0x004024f4  xor      ebx, ebx
-//   0x004024f6  mov      eax, dword ptr [esi + 4]
-//   0x004024f9  mov      dword ptr [esi + 0x10], ebx
-//   0x004024fc  cmp      eax, ebx
-//   0x004024fe  je       0x402511
-//   0x00402500  cmp      byte ptr [esi + 0xd], bl
-//   0x00402503  je       0x402511
-//   0x00402505  push     eax
-//   0x00402506  call     0x68298c
-//   0x0040250b  add      esp, 4
-//   0x0040250e  mov      dword ptr [esi + 4], ebx
-//   0x00402511  mov      byte ptr [esi + 0xd], bl
-//   0x00402514  mov      dword ptr [esi + 8], ebx
-//   0x00402517  pop      esi
-//   0x00402518  pop      ebx
-//   0x00402519  ret      
+// LogicClass::vfunc_3 -- ALIAS of LayerClass::vfunc_3 (same machine code at 0x004024f0); transcribed once.
 void LogicClass::vfunc_3()
 {
 }
 
-// ---------------------------------------------------------------------------
-// LogicClass::vfunc_4 -- body derived from 17 instructions at 0x00402770; semantics not reconstructed.
-// size 38 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00402770  mov      edx, dword ptr [ecx + 0x10]
-//   0x00402773  xor      eax, eax
-//   0x00402775  push     esi
-//   0x00402776  test     edx, edx
-//   0x00402778  jle      0x40278f
-//   0x0040277a  mov      esi, dword ptr [esp + 8]
-//   0x0040277e  mov      ecx, dword ptr [ecx + 4]
-//   0x00402781  mov      esi, dword ptr [esi]
-//   0x00402783  cmp      dword ptr [ecx], esi
-//   0x00402785  je       0x402792
-//   0x00402787  inc      eax
-//   0x00402788  add      ecx, 4
-//   0x0040278b  cmp      eax, edx
-//   0x0040278d  jl       0x402783
-//   0x0040278f  or       eax, 0xffffffff
-//   0x00402792  pop      esi
-//   0x00402793  ret      4
+// LogicClass::vfunc_4 -- ALIAS of LayerClass::vfunc_4 (same machine code at 0x00402770); transcribed once.
 void LogicClass::vfunc_4(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// LogicClass::vfunc_5 -- body derived from 5 instructions at 0x00402520; semantics not reconstructed.
-// size 12 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00402520  mov      al, byte ptr [ecx + 0xc]
-//   0x00402523  test     al, al
-//   0x00402525  jne      0x40252c
-//   0x00402527  xor      eax, eax
-//   0x00402529  ret      4
+// LogicClass::vfunc_5 -- ALIAS of LayerClass::vfunc_5 (same machine code at 0x00402520); transcribed once.
 void LogicClass::vfunc_5(int a0)
 {
 }
@@ -154,23 +53,12 @@ void LogicClass::vfunc_6(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// LogicClass::vfunc_7 -- body derived from 2 instructions at 0x00402480; semantics not reconstructed.
-// size 5 bytes; signature __cdecl
-// callees: none
-//
-//   0x00402480  mov      eax, dword ptr [ecx]
-//   0x00402482  jmp      dword ptr [eax + 0xc]
+// LogicClass::vfunc_7 -- ALIAS of LayerClass::vfunc_7 (same machine code at 0x00402480); transcribed once.
 void LogicClass::vfunc_7()
 {
 }
 
-// ---------------------------------------------------------------------------
-// LogicClass::vfunc_8 -- body derived from 1 instructions at 0x00402490; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x00402490  ret      
+// LogicClass::vfunc_8 -- ALIAS of LayerClass::vfunc_8 (same machine code at 0x00402490); transcribed once.
 void LogicClass::vfunc_8()
 {
 }

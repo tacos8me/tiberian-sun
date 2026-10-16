@@ -5,26 +5,18 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "CellClass.h"
 
-// ---------------------------------------------------------------------------
-// CellClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// CellClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void CellClass::Init()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// CellClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void CellClass::Shutdown()
 {
 }
@@ -43,17 +35,7 @@ long CellClass::QueryInterface(const void*, void**)
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::AddRef -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// CellClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 unsigned long CellClass::AddRef()
 {
 }
@@ -165,18 +147,7 @@ long CellClass::Save(IStream* pStm, int fClearDirty)
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::GetType -- body derived from 7 instructions at 0x00405910; semantics not reconstructed.
-// size 18 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x00405910  push     esi
-//   0x00405911  mov      esi, dword ptr [esp + 0xc]
-//   0x00405915  test     esi, esi
-//   0x00405917  jne      0x405922
-//   0x00405919  mov      eax, 0x80004003
-//   0x0040591e  pop      esi
-//   0x0040591f  ret      8
+// CellClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
 int CellClass::GetType()
 {
 }
@@ -226,22 +197,12 @@ long CellClass::GetClassID(void* pClassID)
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::Set_ID -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// CellClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void CellClass::Set_ID(int id)
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::Get_RTTI -- body derived from 1 instructions at 0x004059c0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004059c0  ret      8
+// CellClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); transcribed once.
 int CellClass::Get_RTTI()
 {
 }
@@ -268,70 +229,27 @@ long CellClass::GetSizeMax(unsigned long* pcbSize)
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::Compute_CRC -- body derived from 15 instructions at 0x00405940; semantics not reconstructed.
-// size 35 bytes; signature __thiscall nargs=1
-// callees: 0x0046d5d0, 0x0046d680
-//
-//   0x00405940  push     esi
-//   0x00405941  mov      esi, ecx
-//   0x00405943  push     edi
-//   0x00405944  mov      edi, dword ptr [esp + 0xc]
-//   0x00405948  mov      eax, dword ptr [esi + 8]
-//   0x0040594b  mov      ecx, edi
-//   0x0040594d  push     eax
-//   0x0040594e  call     0x46d680
-//   0x00405953  mov      cl, byte ptr [esi + 0x10]
-//   0x00405956  push     ecx
-//   0x00405957  mov      ecx, edi
-//   0x00405959  call     0x46d5d0
-//   0x0040595e  pop      edi
-//   0x0040595f  pop      esi
-//   0x00405960  ret      4
+// CellClass::Compute_CRC -- ALIAS of AbstractClass::Load (same machine code at 0x00405940); transcribed once.
 void CellClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::vfunc_14 -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// CellClass::vfunc_14 -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 long CellClass::vfunc_14()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::vfunc_15 -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// CellClass::vfunc_15 -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 long CellClass::vfunc_15()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::vfunc_16 -- body derived from 2 instructions at 0x004059f0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059f0  xor      eax, eax
-//   0x004059f2  ret      
+// CellClass::vfunc_16 -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); transcribed once.
 void CellClass::vfunc_16()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::vfunc_17 -- body derived from 2 instructions at 0x00405970; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405970  mov      al, 1
-//   0x00405972  ret      
+// CellClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); transcribed once.
 void CellClass::vfunc_17()
 {
 }
@@ -369,51 +287,17 @@ void CellClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// CellClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void CellClass::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::vfunc_20 -- body derived from 2 instructions at 0x00405a60; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a60  xor      al, al
-//   0x00405a62  ret      
+// CellClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); transcribed once.
 void CellClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::vfunc_21 -- body derived from 2 instructions at 0x00405a70; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a70  xor      al, al
-//   0x00405a72  ret      
+// CellClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); transcribed once.
 void CellClass::vfunc_21()
 {
 }
@@ -452,12 +336,7 @@ void CellClass::vfunc_22()
 {
 }
 
-// ---------------------------------------------------------------------------
-// CellClass::vfunc_23 -- body derived from 1 instructions at 0x00405ab0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405ab0  ret      
+// CellClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); transcribed once.
 void CellClass::vfunc_23()
 {
 }

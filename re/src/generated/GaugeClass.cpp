@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "GaugeClass.h"
 
 // ---------------------------------------------------------------------------
@@ -27,469 +31,117 @@ void GaugeClass::vfunc_0(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_3 -- body derived from 11 instructions at 0x004f69e0; semantics not reconstructed.
-// size 31 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x004f69e0  mov      edx, dword ptr [esp + 4]
-//   0x004f69e4  mov      eax, dword ptr [edx + 4]
-//   0x004f69e7  mov      dword ptr [edx + 4], ecx
-//   0x004f69ea  test     eax, eax
-//   0x004f69ec  mov      dword ptr [ecx + 8], edx
-//   0x004f69ef  mov      dword ptr [ecx + 4], eax
-//   0x004f69f2  je       0x4f69f7
-//   0x004f69f4  mov      dword ptr [eax + 8], ecx
-//   0x004f69f7  mov      eax, dword ptr [ecx]
-//   0x004f69f9  call     dword ptr [eax + 0x18]
-//   0x004f69fc  ret      4
+// GaugeClass::vfunc_3 -- ALIAS of CarryoverClass::vfunc_3 (same machine code at 0x004f69e0); transcribed once.
 void GaugeClass::vfunc_3(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_4 -- body derived from 13 instructions at 0x004f6a20; semantics not reconstructed.
-// size 36 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x004f6a20  push     esi
-//   0x004f6a21  mov      esi, ecx
-//   0x004f6a23  mov      ecx, dword ptr [esp + 8]
-//   0x004f6a27  mov      eax, dword ptr [ecx]
-//   0x004f6a29  call     dword ptr [eax + 0x1c]
-//   0x004f6a2c  mov      dword ptr [eax + 4], esi
-//   0x004f6a2f  mov      edx, dword ptr [esi]
-//   0x004f6a31  mov      ecx, esi
-//   0x004f6a33  mov      dword ptr [esi + 8], eax
-//   0x004f6a36  mov      dword ptr [esi + 4], 0
-//   0x004f6a3d  call     dword ptr [edx + 0x18]
-//   0x004f6a40  pop      esi
-//   0x004f6a41  ret      4
+// GaugeClass::vfunc_4 -- ALIAS of CarryoverClass::vfunc_4 (same machine code at 0x004f6a20); transcribed once.
 void GaugeClass::vfunc_4(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_5 -- body derived from 11 instructions at 0x004f6a00; semantics not reconstructed.
-// size 31 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x004f6a00  push     esi
-//   0x004f6a01  mov      esi, ecx
-//   0x004f6a03  mov      ecx, dword ptr [esp + 8]
-//   0x004f6a07  mov      eax, dword ptr [ecx]
-//   0x004f6a09  call     dword ptr [eax + 0x18]
-//   0x004f6a0c  mov      dword ptr [eax + 8], esi
-//   0x004f6a0f  mov      dword ptr [esi + 4], eax
-//   0x004f6a12  mov      dword ptr [esi + 8], 0
-//   0x004f6a19  mov      eax, esi
-//   0x004f6a1b  pop      esi
-//   0x004f6a1c  ret      4
+// GaugeClass::vfunc_5 -- ALIAS of CarryoverClass::vfunc_5 (same machine code at 0x004f6a00); transcribed once.
 void GaugeClass::vfunc_5(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_6 -- body derived from 14 instructions at 0x004f6980; semantics not reconstructed.
-// size 29 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f6980  mov      eax, dword ptr [ecx + 8]
-//   0x004f6983  lea      edx, [ecx + 8]
-//   0x004f6986  test     eax, eax
-//   0x004f6988  push     esi
-//   0x004f6989  je       0x4f699d
-//   0x004f698b  mov      eax, dword ptr [edx]
-//   0x004f698d  cmp      eax, ecx
-//   0x004f698f  je       0x4f699f
-//   0x004f6991  mov      esi, dword ptr [eax + 8]
-//   0x004f6994  lea      edx, [eax + 8]
-//   0x004f6997  test     esi, esi
-//   0x004f6999  jne      0x4f698b
-//   0x004f699b  pop      esi
-//   0x004f699c  ret      
+// GaugeClass::vfunc_6 -- ALIAS of CarryoverClass::vfunc_6 (same machine code at 0x004f6980); transcribed once.
 void GaugeClass::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_7 -- body derived from 14 instructions at 0x004f69b0; semantics not reconstructed.
-// size 29 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f69b0  mov      eax, dword ptr [ecx + 4]
-//   0x004f69b3  lea      edx, [ecx + 4]
-//   0x004f69b6  test     eax, eax
-//   0x004f69b8  push     esi
-//   0x004f69b9  je       0x4f69cd
-//   0x004f69bb  mov      eax, dword ptr [edx]
-//   0x004f69bd  cmp      eax, ecx
-//   0x004f69bf  je       0x4f69cf
-//   0x004f69c1  mov      esi, dword ptr [eax + 4]
-//   0x004f69c4  lea      edx, [eax + 4]
-//   0x004f69c7  test     esi, esi
-//   0x004f69c9  jne      0x4f69bb
-//   0x004f69cb  pop      esi
-//   0x004f69cc  ret      
+// GaugeClass::vfunc_7 -- ALIAS of CarryoverClass::vfunc_7 (same machine code at 0x004f69b0); transcribed once.
 void GaugeClass::vfunc_7()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_8 -- body derived from 4 instructions at 0x004f6930; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f6930  xor      eax, eax
-//   0x004f6932  mov      dword ptr [ecx + 4], eax
-//   0x004f6935  mov      dword ptr [ecx + 8], eax
-//   0x004f6938  ret      
+// GaugeClass::vfunc_8 -- ALIAS of CarryoverClass::vfunc_8 (same machine code at 0x004f6930); transcribed once.
 void GaugeClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_9 -- body derived from 8 instructions at 0x004a5ae0; semantics not reconstructed.
-// size 17 bytes; signature __thiscall
-// callees: 0x004f6a50
-//
-//   0x004a5ae0  push     esi
-//   0x004a5ae1  mov      esi, ecx
-//   0x004a5ae3  mov      eax, dword ptr [esi]
-//   0x004a5ae5  call     dword ptr [eax + 0x54]
-//   0x004a5ae8  mov      ecx, esi
-//   0x004a5aea  call     0x4f6a50
-//   0x004a5aef  pop      esi
-//   0x004a5af0  ret      
+// GaugeClass::vfunc_9 -- ALIAS of ControlClass::vfunc_9 (same machine code at 0x004a5ae0); transcribed once.
 void GaugeClass::vfunc_9()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_10 -- body derived from 41 instructions at 0x004a5be0; semantics not reconstructed.
-// size 148 bytes; signature __thiscall nargs=2
-// callees: 0x004a5c7f, 0x004f1ca0, 0x004f1cf0
-//
-//   0x004a5be0  sub      esp, 8
-//   0x004a5be3  mov      eax, dword ptr [0x77bb04]
-//   0x004a5be8  push     ebx
-//   0x004a5be9  push     ebp
-//   0x004a5bea  push     esi
-//   0x004a5beb  push     edi
-//   0x004a5bec  mov      esi, ecx
-//   0x004a5bee  xor      edi, edi
-//   0x004a5bf0  cmp      eax, esi
-//   0x004a5bf2  mov      dword ptr [esp + 0x14], edi
-//   0x004a5bf6  je       0x4a5c12
-//   0x004a5bf8  mov      dword ptr [0x77bb04], esi
-//   0x004a5bfe  mov      dword ptr [esp + 0x14], 1
-//   0x004a5c06  mov      dword ptr [0x77bb00], edi
-//   0x004a5c0c  mov      dword ptr [0x77bb08], edi
-//   0x004a5c12  mov      ecx, dword ptr [0x710ca0]
-//   0x004a5c18  call     0x4f1ca0
-//   0x004a5c1d  and      eax, 0xffff
-//   0x004a5c22  mov      dword ptr [esp + 0x10], eax
-//   0x004a5c26  je       0x4a5c3c
-//   0x004a5c28  mov      ecx, dword ptr [0x710ca0]
-//   0x004a5c2e  call     0x4f1cf0
-//   0x004a5c33  and      eax, 0xffff
-//   0x004a5c38  mov      dword ptr [esp + 0x10], eax
-//   0x004a5c3c  mov      ecx, eax
-//   0x004a5c3e  and      ecx, 0xff
-//   0x004a5c44  cmp      ecx, 1
-//   0x004a5c47  je       0x4a5c74
-//   0x004a5c49  cmp      ecx, 2
-//   0x004a5c4c  je       0x4a5c74
-//   0x004a5c4e  mov      ecx, dword ptr [0x7151d8]
-//   0x004a5c54  mov      eax, dword ptr [ecx]
-//   0x004a5c56  call     dword ptr [eax + 0x2c]
-//   0x004a5c59  mov      ecx, dword ptr [0x7151d8]
-//   0x004a5c5f  mov      ebp, eax
-//   0x004a5c61  mov      edx, dword ptr [ecx]
-//   0x004a5c63  call     dword ptr [edx + 0x30]
-//   0x004a5c66  mov      ecx, dword ptr [0x710ca0]
-//   0x004a5c6c  mov      ebx, eax
-//   0x004a5c6e  mov      eax, dword ptr [esp + 0x10]
-//   0x004a5c72  jmp      0x4a5c7f
+// GaugeClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); transcribed once.
 void GaugeClass::vfunc_10(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_11 -- body derived from 20 instructions at 0x004a5bb0; semantics not reconstructed.
-// size 44 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x004a5bb0  push     esi
-//   0x004a5bb1  mov      esi, ecx
-//   0x004a5bb3  test     esi, esi
-//   0x004a5bb5  je       0x4a5bd8
-//   0x004a5bb7  push     edi
-//   0x004a5bb8  mov      edi, dword ptr [esp + 0xc]
-//   0x004a5bbc  and      edi, 0xff
-//   0x004a5bc2  mov      eax, dword ptr [esi]
-//   0x004a5bc4  push     edi
-//   0x004a5bc5  mov      ecx, esi
-//   0x004a5bc7  call     dword ptr [eax + 0x6c]
-//   0x004a5bca  mov      edx, dword ptr [esi]
-//   0x004a5bcc  mov      ecx, esi
-//   0x004a5bce  call     dword ptr [edx + 4]
-//   0x004a5bd1  mov      esi, eax
-//   0x004a5bd3  test     esi, esi
-//   0x004a5bd5  jne      0x4a5bc2
-//   0x004a5bd7  pop      edi
-//   0x004a5bd8  pop      esi
-//   0x004a5bd9  ret      4
+// GaugeClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); transcribed once.
 void GaugeClass::vfunc_11(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_12 -- body derived from 37 instructions at 0x004a5b20; semantics not reconstructed.
-// size 74 bytes; signature __thiscall
-// callees: none
-//
-//   0x004a5b20  push     esi
-//   0x004a5b21  mov      esi, ecx
-//   0x004a5b23  mov      eax, dword ptr [esi]
-//   0x004a5b25  call     dword ptr [eax + 8]
-//   0x004a5b28  test     eax, eax
-//   0x004a5b2a  je       0x4a5b40
-//   0x004a5b2c  mov      edx, dword ptr [esi]
-//   0x004a5b2e  mov      ecx, esi
-//   0x004a5b30  call     dword ptr [edx + 8]
-//   0x004a5b33  mov      esi, eax
-//   0x004a5b35  mov      ecx, esi
-//   0x004a5b37  mov      eax, dword ptr [esi]
-//   0x004a5b39  call     dword ptr [eax + 8]
-//   0x004a5b3c  test     eax, eax
-//   0x004a5b3e  jne      0x4a5b2c
-//   0x004a5b40  test     esi, esi
-//   0x004a5b42  je       0x4a5b68
-//   0x004a5b44  push     edi
-//   0x004a5b45  mov      edx, dword ptr [esi]
-//   0x004a5b47  mov      ecx, esi
-//   0x004a5b49  call     dword ptr [edx + 0x54]
-//   0x004a5b4c  mov      eax, dword ptr [esi]
-//   0x004a5b4e  mov      ecx, esi
-//   0x004a5b50  mov      edi, esi
-//   0x004a5b52  call     dword ptr [eax + 4]
-//   0x004a5b55  test     edi, edi
-//   0x004a5b57  mov      esi, eax
-//   0x004a5b59  je       0x4a5b63
-//   0x004a5b5b  mov      edx, dword ptr [edi]
-//   0x004a5b5d  push     1
-//   0x004a5b5f  mov      ecx, edi
-//   0x004a5b61  call     dword ptr [edx]
-//   0x004a5b63  test     esi, esi
-//   0x004a5b65  jne      0x4a5b45
-//   0x004a5b67  pop      edi
-//   0x004a5b68  pop      esi
-//   0x004a5b69  ret      
+// GaugeClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); transcribed once.
 void GaugeClass::vfunc_12()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_13 -- body derived from 23 instructions at 0x004a5de0; semantics not reconstructed.
-// size 47 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x004a5de0  push     esi
-//   0x004a5de1  push     edi
-//   0x004a5de2  mov      edi, dword ptr [esp + 0xc]
-//   0x004a5de6  mov      esi, ecx
-//   0x004a5de8  test     edi, edi
-//   0x004a5dea  je       0x4a5e08
-//   0x004a5dec  test     esi, esi
-//   0x004a5dee  je       0x4a5e08
-//   0x004a5df0  mov      eax, dword ptr [esi]
-//   0x004a5df2  mov      ecx, esi
-//   0x004a5df4  call     dword ptr [eax + 0x44]
-//   0x004a5df7  cmp      eax, edi
-//   0x004a5df9  je       0x4a5e0f
-//   0x004a5dfb  mov      edx, dword ptr [esi]
-//   0x004a5dfd  mov      ecx, esi
-//   0x004a5dff  call     dword ptr [edx + 4]
-//   0x004a5e02  mov      esi, eax
-//   0x004a5e04  test     esi, esi
-//   0x004a5e06  jne      0x4a5df0
-//   0x004a5e08  pop      edi
-//   0x004a5e09  xor      eax, eax
-//   0x004a5e0b  pop      esi
-//   0x004a5e0c  ret      4
+// GaugeClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); transcribed once.
 void GaugeClass::vfunc_13(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_14 -- body derived from 2 instructions at 0x0045afe0; semantics not reconstructed.
-// size 11 bytes; signature __cdecl
-// callees: none
-//
-//   0x0045afe0  mov      dword ptr [0x77bb04], 0
-//   0x0045afea  ret      
+// GaugeClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); transcribed once.
 void GaugeClass::vfunc_14()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_15 -- body derived from 5 instructions at 0x004a5ad0; semantics not reconstructed.
-// size 13 bytes; signature __thiscall
-// callees: none
-//
-//   0x004a5ad0  mov      al, 1
-//   0x004a5ad2  mov      byte ptr [ecx + 0x1e], al
-//   0x004a5ad5  mov      byte ptr [ecx + 0x1c], al
-//   0x004a5ad8  mov      eax, dword ptr [ecx]
-//   0x004a5ada  jmp      dword ptr [eax + 0x54]
+// GaugeClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); transcribed once.
 void GaugeClass::vfunc_15()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_17 -- body derived from 2 instructions at 0x00460610; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x00460610  mov      eax, dword ptr [ecx + 0x24]
-//   0x00460613  ret      
+// GaugeClass::vfunc_17 -- ALIAS of CheckListClass::vfunc_17 (same machine code at 0x00460610); transcribed once.
 void GaugeClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_18 -- body derived from 2 instructions at 0x004a5e20; semantics not reconstructed.
-// size 5 bytes; signature __cdecl
-// callees: none
-//
-//   0x004a5e20  mov      byte ptr [ecx + 0x1c], 1
-//   0x004a5e24  ret      
+// GaugeClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); transcribed once.
 void GaugeClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_19 -- body derived from 1 instructions at 0x00460650; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x00460650  ret      0xc
+// GaugeClass::vfunc_19 -- ALIAS of ControlClass::vfunc_19 (same machine code at 0x00460650); transcribed once.
 void GaugeClass::vfunc_19(int a0, int a1, int a2)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_20 -- body derived from 16 instructions at 0x004a5e60; semantics not reconstructed.
-// size 46 bytes; signature __thiscall
-// callees: none
-//
-//   0x004a5e60  push     esi
-//   0x004a5e61  mov      esi, ecx
-//   0x004a5e63  mov      ecx, dword ptr [0x77bb08]
-//   0x004a5e69  test     ecx, ecx
-//   0x004a5e6b  je       0x4a5e7d
-//   0x004a5e6d  mov      eax, dword ptr [ecx]
-//   0x004a5e6f  call     dword ptr [eax + 0x48]
-//   0x004a5e72  mov      ecx, dword ptr [0x77bb08]
-//   0x004a5e78  mov      edx, dword ptr [ecx]
-//   0x004a5e7a  call     dword ptr [edx + 0x54]
-//   0x004a5e7d  mov      eax, dword ptr [esi + 0x20]
-//   0x004a5e80  or       ah, 1
-//   0x004a5e83  mov      dword ptr [esi + 0x20], eax
-//   0x004a5e86  mov      dword ptr [0x77bb08], esi
-//   0x004a5e8c  pop      esi
-//   0x004a5e8d  ret      
+// GaugeClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); transcribed once.
 void GaugeClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_21 -- body derived from 7 instructions at 0x004a5e90; semantics not reconstructed.
-// size 28 bytes; signature __cdecl
-// callees: none
-//
-//   0x004a5e90  cmp      dword ptr [0x77bb08], ecx
-//   0x004a5e96  jne      0x4a5eab
-//   0x004a5e98  mov      eax, dword ptr [ecx + 0x20]
-//   0x004a5e9b  and      ah, 0xfe
-//   0x004a5e9e  mov      dword ptr [ecx + 0x20], eax
-//   0x004a5ea1  mov      dword ptr [0x77bb08], 0
-//   0x004a5eab  ret      
+// GaugeClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); transcribed once.
 void GaugeClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_22 -- body derived from 5 instructions at 0x004a5eb0; semantics not reconstructed.
-// size 14 bytes; signature __cdecl
-// callees: none
-//
-//   0x004a5eb0  mov      edx, dword ptr [0x77bb08]
-//   0x004a5eb6  xor      eax, eax
-//   0x004a5eb8  cmp      ecx, edx
-//   0x004a5eba  sete     al
-//   0x004a5ebd  ret      
+// GaugeClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); transcribed once.
 void GaugeClass::vfunc_22()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_23 -- body derived from 12 instructions at 0x004a5ec0; semantics not reconstructed.
-// size 25 bytes; signature __cdecl
-// callees: none
-//
-//   0x004a5ec0  test     ecx, ecx
-//   0x004a5ec2  je       0x4a5ed6
-//   0x004a5ec4  mov      al, byte ptr [ecx + 0x1c]
-//   0x004a5ec7  test     al, al
-//   0x004a5ec9  jne      0x4a5ed9
-//   0x004a5ecb  mov      eax, dword ptr [ecx]
-//   0x004a5ecd  call     dword ptr [eax + 4]
-//   0x004a5ed0  mov      ecx, eax
-//   0x004a5ed2  test     ecx, ecx
-//   0x004a5ed4  jne      0x4a5ec4
-//   0x004a5ed6  xor      eax, eax
-//   0x004a5ed8  ret      
+// GaugeClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); transcribed once.
 void GaugeClass::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_24 -- body derived from 2 instructions at 0x0045aff0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x0045aff0  mov      al, byte ptr [ecx + 0x1c]
-//   0x0045aff3  ret      
+// GaugeClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); transcribed once.
 void GaugeClass::vfunc_24()
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_25 -- body derived from 5 instructions at 0x004a5ee0; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004a5ee0  mov      eax, dword ptr [esp + 4]
-//   0x004a5ee4  mov      edx, dword ptr [esp + 8]
-//   0x004a5ee8  mov      dword ptr [ecx + 0xc], eax
-//   0x004a5eeb  mov      dword ptr [ecx + 0x10], edx
-//   0x004a5eee  ret      8
+// GaugeClass::vfunc_25 -- ALIAS of ControlClass::vfunc_25 (same machine code at 0x004a5ee0); transcribed once.
 void GaugeClass::vfunc_25(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_26 -- body derived from 5 instructions at 0x004a5f00; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004a5f00  mov      eax, dword ptr [esp + 4]
-//   0x004a5f04  mov      edx, dword ptr [esp + 8]
-//   0x004a5f08  mov      dword ptr [ecx + 0x14], eax
-//   0x004a5f0b  mov      dword ptr [ecx + 0x18], edx
-//   0x004a5f0e  ret      8
+// GaugeClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); transcribed once.
 void GaugeClass::vfunc_26(int a0, int a1)
 {
 }
@@ -570,19 +222,7 @@ void GaugeClass::vfunc_27(int a0, int a1, int a2, int a3)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_28 -- body derived from 8 instructions at 0x004a5e30; semantics not reconstructed.
-// size 23 bytes; signature __stdcall nargs=1
-// callees: 0x004a5e4f
-//
-//   0x004a5e30  mov      al, byte ptr [ecx + 0x1d]
-//   0x004a5e33  test     al, al
-//   0x004a5e35  mov      al, byte ptr [esp + 4]
-//   0x004a5e39  je       0x4a5e47
-//   0x004a5e3b  test     al, 0x11
-//   0x004a5e3d  je       0x4a5e47
-//   0x004a5e3f  mov      dword ptr [0x77bb00], ecx
-//   0x004a5e45  jmp      0x4a5e4f
+// GaugeClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); transcribed once.
 void GaugeClass::vfunc_28(int a0)
 {
 }
@@ -608,49 +248,12 @@ void GaugeClass::vfunc_29(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_30 -- body derived from 26 instructions at 0x004a5a60; semantics not reconstructed.
-// size 67 bytes; signature __stdcall nargs=4
-// callees: none
-//
-//   0x004a5a60  mov      eax, dword ptr [esp + 8]
-//   0x004a5a64  mov      edx, dword ptr [0x77bb00]
-//   0x004a5a6a  push     esi
-//   0x004a5a6b  mov      esi, dword ptr [ecx + 0x20]
-//   0x004a5a6e  and      eax, esi
-//   0x004a5a70  cmp      ecx, edx
-//   0x004a5a72  je       0x4a5aa3
-//   0x004a5a74  test     ah, 1
-//   0x004a5a77  jne      0x4a5aa3
-//   0x004a5a79  test     eax, eax
-//   0x004a5a7b  je       0x4a5a9d
-//   0x004a5a7d  mov      edx, dword ptr [esp + 0x10]
-//   0x004a5a81  mov      esi, dword ptr [ecx + 0xc]
-//   0x004a5a84  sub      edx, esi
-//   0x004a5a86  mov      esi, dword ptr [ecx + 0x14]
-//   0x004a5a89  cmp      edx, esi
-//   0x004a5a8b  jae      0x4a5a9d
-//   0x004a5a8d  mov      edx, dword ptr [esp + 0x14]
-//   0x004a5a91  mov      esi, dword ptr [ecx + 0x10]
-//   0x004a5a94  sub      edx, esi
-//   0x004a5a96  mov      esi, dword ptr [ecx + 0x18]
-//   0x004a5a99  cmp      edx, esi
-//   0x004a5a9b  jb       0x4a5aa3
-//   0x004a5a9d  xor      eax, eax
-//   0x004a5a9f  pop      esi
-//   0x004a5aa0  ret      0x10
+// GaugeClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); transcribed once.
 void GaugeClass::vfunc_30(int a0, int a1, int a2, int a3)
 {
 }
 
-// ---------------------------------------------------------------------------
-// GaugeClass::vfunc_31 -- body derived from 3 instructions at 0x00460600; semantics not reconstructed.
-// size 10 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00460600  mov      eax, dword ptr [esp + 4]
-//   0x00460604  mov      dword ptr [ecx + 0x28], eax
-//   0x00460607  ret      4
+// GaugeClass::vfunc_31 -- ALIAS of CheckListClass::vfunc_31 (same machine code at 0x00460600); transcribed once.
 void GaugeClass::vfunc_31(int a0)
 {
 }

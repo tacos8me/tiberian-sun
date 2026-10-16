@@ -5,15 +5,13 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "RawFileClass.h"
 
-// ---------------------------------------------------------------------------
-// RawFileClass::vfunc_1 -- body derived from 2 instructions at 0x00419090; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x00419090  mov      eax, dword ptr [ecx + 0x14]
-//   0x00419093  ret      
+// RawFileClass::vfunc_1 -- ALIAS of BufferIOFileClass::vfunc_1 (same machine code at 0x00419090); transcribed once.
 void RawFileClass::vfunc_1()
 {
 }
@@ -48,59 +46,12 @@ void RawFileClass::vfunc_2(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// RawFileClass::vfunc_3 -- body derived from 23 instructions at 0x005a6850; semantics not reconstructed.
-// size 52 bytes; signature __thiscall
-// callees: none
-//
-//   0x005a6850  push     esi
-//   0x005a6851  mov      esi, ecx
-//   0x005a6853  mov      eax, dword ptr [esi]
-//   0x005a6855  call     dword ptr [eax + 0x34]
-//   0x005a6858  mov      edx, dword ptr [esi]
-//   0x005a685a  push     2
-//   0x005a685c  mov      ecx, esi
-//   0x005a685e  call     dword ptr [edx + 0x1c]
-//   0x005a6861  test     eax, eax
-//   0x005a6863  je       0x5a6884
-//   0x005a6865  cmp      dword ptr [esi + 0xc], -1
-//   0x005a6869  je       0x5a6876
-//   0x005a686b  mov      eax, dword ptr [esi]
-//   0x005a686d  push     0
-//   0x005a686f  push     0
-//   0x005a6871  mov      ecx, esi
-//   0x005a6873  call     dword ptr [eax + 0x28]
-//   0x005a6876  mov      edx, dword ptr [esi]
-//   0x005a6878  mov      ecx, esi
-//   0x005a687a  call     dword ptr [edx + 0x34]
-//   0x005a687d  mov      eax, 1
-//   0x005a6882  pop      esi
-//   0x005a6883  ret      
+// RawFileClass::vfunc_3 -- ALIAS of BufferIOFileClass::vfunc_3 (same machine code at 0x005a6850); transcribed once.
 void RawFileClass::vfunc_3()
 {
 }
 
-// ---------------------------------------------------------------------------
-// RawFileClass::vfunc_4 -- body derived from 16 instructions at 0x005a6890; semantics not reconstructed.
-// size 32 bytes; signature __thiscall
-// callees: none
-//
-//   0x005a6890  push     esi
-//   0x005a6891  mov      esi, ecx
-//   0x005a6893  mov      eax, dword ptr [esi]
-//   0x005a6895  call     dword ptr [eax + 0x34]
-//   0x005a6898  mov      eax, dword ptr [esi + 0x14]
-//   0x005a689b  test     eax, eax
-//   0x005a689d  jne      0x5a68b0
-//   0x005a689f  mov      edx, dword ptr [esi]
-//   0x005a68a1  push     0
-//   0x005a68a3  push     0
-//   0x005a68a5  push     2
-//   0x005a68a7  mov      ecx, esi
-//   0x005a68a9  call     dword ptr [edx + 0x40]
-//   0x005a68ac  xor      eax, eax
-//   0x005a68ae  pop      esi
-//   0x005a68af  ret      
+// RawFileClass::vfunc_4 -- ALIAS of BufferIOFileClass::vfunc_4 (same machine code at 0x005a6890); transcribed once.
 void RawFileClass::vfunc_4()
 {
 }
@@ -349,89 +300,17 @@ void RawFileClass::vfunc_13()
 {
 }
 
-// ---------------------------------------------------------------------------
-// RawFileClass::vfunc_14 -- body derived from 23 instructions at 0x005a68f0; semantics not reconstructed.
-// size 71 bytes; signature __cdecl nargs=2
-// callees: none
-//
-//   0x005a68f0  mov      ecx, dword ptr [ecx + 0x10]
-//   0x005a68f3  sub      esp, 0x3c
-//   0x005a68f6  lea      eax, [esp + 8]
-//   0x005a68fa  push     eax
-//   0x005a68fb  push     ecx
-//   0x005a68fc  call     dword ptr [0x6980f0]
-//   0x005a6902  test     eax, eax
-//   0x005a6904  je       0x5a6937
-//   0x005a6906  lea      edx, [esp + 4]
-//   0x005a690a  lea      eax, [esp]
-//   0x005a690e  push     edx
-//   0x005a690f  lea      ecx, [esp + 0x20]
-//   0x005a6913  push     eax
-//   0x005a6914  push     ecx
-//   0x005a6915  call     dword ptr [0x6980ec]
-//   0x005a691b  mov      eax, dword ptr [esp]
-//   0x005a691f  mov      edx, dword ptr [esp + 4]
-//   0x005a6923  and      eax, 0xffff
-//   0x005a6928  and      edx, 0xffff
-//   0x005a692e  shl      eax, 0x10
-//   0x005a6931  or       eax, edx
-//   0x005a6933  add      esp, 0x3c
-//   0x005a6936  ret      
+// RawFileClass::vfunc_14 -- ALIAS of BufferIOFileClass::vfunc_14 (same machine code at 0x005a68f0); transcribed once.
 void RawFileClass::vfunc_14(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// RawFileClass::vfunc_15 -- body derived from 36 instructions at 0x005a6940; semantics not reconstructed.
-// size 92 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x005a6940  sub      esp, 0x3c
-//   0x005a6943  push     esi
-//   0x005a6944  mov      esi, ecx
-//   0x005a6946  mov      eax, dword ptr [esi + 0x10]
-//   0x005a6949  cmp      eax, -1
-//   0x005a694c  je       0x5a699c
-//   0x005a694e  lea      ecx, [esp + 0xc]
-//   0x005a6952  push     ecx
-//   0x005a6953  push     eax
-//   0x005a6954  call     dword ptr [0x6980f0]
-//   0x005a695a  test     eax, eax
-//   0x005a695c  je       0x5a699c
-//   0x005a695e  mov      eax, dword ptr [esp + 0x44]
-//   0x005a6962  lea      edx, [esp + 4]
-//   0x005a6966  push     edx
-//   0x005a6967  push     eax
-//   0x005a6968  shr      eax, 0x10
-//   0x005a696b  push     eax
-//   0x005a696c  call     dword ptr [0x6980f8]
-//   0x005a6972  test     eax, eax
-//   0x005a6974  je       0x5a699c
-//   0x005a6976  lea      eax, [esp + 4]
-//   0x005a697a  lea      ecx, [esp + 4]
-//   0x005a697e  push     eax
-//   0x005a697f  mov      eax, dword ptr [esi + 0x10]
-//   0x005a6982  lea      edx, [esp + 0x14]
-//   0x005a6986  push     ecx
-//   0x005a6987  push     edx
-//   0x005a6988  push     eax
-//   0x005a6989  call     dword ptr [0x6980f4]
-//   0x005a698f  neg      eax
-//   0x005a6991  sbb      eax, eax
-//   0x005a6993  pop      esi
-//   0x005a6994  neg      eax
-//   0x005a6996  add      esp, 0x3c
-//   0x005a6999  ret      4
+// RawFileClass::vfunc_15 -- ALIAS of BufferIOFileClass::vfunc_15 (same machine code at 0x005a6940); transcribed once.
 void RawFileClass::vfunc_15(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// RawFileClass::vfunc_16 -- body derived from 1 instructions at 0x005a6190; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=3
-// callees: none
-//
-//   0x005a6190  ret      0xc
+// RawFileClass::vfunc_16 -- ALIAS of BufferIOFileClass::vfunc_16 (same machine code at 0x005a6190); transcribed once.
 void RawFileClass::vfunc_16(int a0, int a1, int a2)
 {
 }

@@ -5,54 +5,28 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "ObjectTypeClass.h"
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// ObjectTypeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void ObjectTypeClass::Init()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// ObjectTypeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void ObjectTypeClass::Shutdown()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::QueryInterface -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ObjectTypeClass::QueryInterface -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 long ObjectTypeClass::QueryInterface(const void*, void**)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::AddRef -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// ObjectTypeClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 unsigned long ObjectTypeClass::AddRef()
 {
 }
@@ -223,20 +197,7 @@ void ObjectTypeClass::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_7 -- body derived from 9 instructions at 0x00572ba0; semantics not reconstructed.
-// size 24 bytes; signature __stdcall nargs=2
-// callees: 0x00405910
-//
-//   0x00572ba0  mov      eax, dword ptr [esp + 8]
-//   0x00572ba4  mov      ecx, dword ptr [esp + 4]
-//   0x00572ba8  push     eax
-//   0x00572ba9  push     ecx
-//   0x00572baa  call     0x405910
-//   0x00572baf  test     eax, eax
-//   0x00572bb1  jl       0x572bb5
-//   0x00572bb3  xor      eax, eax
-//   0x00572bb5  ret      8
+// ObjectTypeClass::vfunc_7 -- ALIAS of IsometricTileTypeClass::vfunc_7 (same machine code at 0x00572ba0); transcribed once.
 void ObjectTypeClass::vfunc_7()
 {
 }
@@ -261,615 +222,137 @@ void ObjectTypeClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::Set_ID -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// ObjectTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void ObjectTypeClass::Set_ID(int id)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::Get_RTTI -- body derived from 1 instructions at 0x004059c0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004059c0  ret      8
+// ObjectTypeClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); transcribed once.
 int ObjectTypeClass::Get_RTTI()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::GetClassID -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ObjectTypeClass::GetClassID -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 long ObjectTypeClass::GetClassID(void* pClassID)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::IsDirty -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ObjectTypeClass::IsDirty -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 long ObjectTypeClass::IsDirty()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::Load -- body derived from 17 instructions at 0x00405fe0; semantics not reconstructed.
-// size 41 bytes; signature __thiscall nargs=1
-// callees: 0x00405940, 0x0046d6e0
-//
-//   0x00405fe0  push     esi
-//   0x00405fe1  push     edi
-//   0x00405fe2  mov      edi, dword ptr [esp + 0xc]
-//   0x00405fe6  mov      esi, ecx
-//   0x00405fe8  push     edi
-//   0x00405fe9  call     0x405940
-//   0x00405fee  lea      eax, [esi + 0x14]
-//   0x00405ff1  mov      ecx, edi
-//   0x00405ff3  push     eax
-//   0x00405ff4  call     0x46d6e0
-//   0x00405ff9  add      esi, 0x2d
-//   0x00405ffc  mov      ecx, edi
-//   0x00405ffe  push     esi
-//   0x00405fff  call     0x46d6e0
-//   0x00406004  pop      edi
-//   0x00406005  pop      esi
-//   0x00406006  ret      4
+// ObjectTypeClass::Load -- ALIAS of AbstractTypeClass::Load (same machine code at 0x00405fe0); transcribed once.
 long ObjectTypeClass::Load(IStream* pStm)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::Save -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// ObjectTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 long ObjectTypeClass::Save(IStream* pStm, int fClearDirty)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::GetSizeMax -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// ObjectTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 long ObjectTypeClass::GetSizeMax(unsigned long* pcbSize)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::Compute_CRC -- body derived from 2 instructions at 0x004059f0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059f0  xor      eax, eax
-//   0x004059f2  ret      
+// ObjectTypeClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); transcribed once.
 void ObjectTypeClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_17 -- body derived from 2 instructions at 0x00405970; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405970  mov      al, 1
-//   0x00405972  ret      
+// ObjectTypeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); transcribed once.
 void ObjectTypeClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_18 -- body derived from 9 instructions at 0x00405a00; semantics not reconstructed.
-// size 35 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a00  mov      eax, dword ptr [esp + 4]
-//   0x00405a04  mov      edx, dword ptr [0x715228]
-//   0x00405a0a  mov      ecx, eax
-//   0x00405a0c  mov      dword ptr [ecx], edx
-//   0x00405a0e  mov      edx, dword ptr [0x71522c]
-//   0x00405a14  mov      dword ptr [ecx + 4], edx
-//   0x00405a17  mov      edx, dword ptr [0x715230]
-//   0x00405a1d  mov      dword ptr [ecx + 8], edx
-//   0x00405a20  ret      4
+// ObjectTypeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); transcribed once.
 void ObjectTypeClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// ObjectTypeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void ObjectTypeClass::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_20 -- body derived from 2 instructions at 0x00405a60; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a60  xor      al, al
-//   0x00405a62  ret      
+// ObjectTypeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); transcribed once.
 void ObjectTypeClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_21 -- body derived from 2 instructions at 0x00405a70; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a70  xor      al, al
-//   0x00405a72  ret      
+// ObjectTypeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); transcribed once.
 void ObjectTypeClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// ObjectTypeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void ObjectTypeClass::vfunc_22()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_23 -- body derived from 1 instructions at 0x00405ab0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405ab0  ret      
+// ObjectTypeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); transcribed once.
 void ObjectTypeClass::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::GetType_2 -- body derived from 1 instructions at 0x00406010; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00406010  ret      4
+// ObjectTypeClass::GetType_2 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); transcribed once.
 int ObjectTypeClass::GetType_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::Read_INI_2 -- body derived from 209 instructions at 0x00572610; semantics not reconstructed.
-// size 693 bytes; signature __thiscall nargs=1
-// callees: 0x00405f20, 0x004484a0, 0x00448b60, 0x004d60b0, 0x004d6ed0, 0x004d70b0, 0x00547660, 0x005724a0, 0x00647610, 0x00683b18
-//
-//   0x00572610  mov      eax, dword ptr [esp + 4]
-//   0x00572614  sub      esp, 0x1a4
-//   0x0057261a  push     ebx
-//   0x0057261b  mov      ebx, ecx
-//   0x0057261d  push     eax
-//   0x0057261e  call     0x405f20
-//   0x00572623  test     al, al
-//   0x00572625  je       0x5728c5
-//   0x0057262b  push     ebp
-//   0x0057262c  push     esi
-//   0x0057262d  lea      edx, [ebx + 0x94]
-//   0x00572633  push     edi
-//   0x00572634  mov      edi, edx
-//   0x00572636  or       ecx, 0xffffffff
-//   0x00572639  xor      eax, eax
-//   0x0057263b  lea      ebp, [esp + 0x14]
-//   0x0057263f  repne scasb al, byte ptr es:[edi]
-//   0x00572641  not      ecx
-//   0x00572643  sub      edi, ecx
-//   0x00572645  push     0x19
-//   0x00572647  mov      eax, ecx
-//   0x00572649  mov      esi, edi
-//   0x0057264b  mov      edi, ebp
-//   0x0057264d  push     edx
-//   0x0057264e  shr      ecx, 2
-//   0x00572651  rep movsd dword ptr es:[edi], dword ptr [esi]
-//   0x00572653  mov      ecx, eax
-//   0x00572655  lea      ebp, [ebx + 0x14]
-//   0x00572658  and      ecx, 3
-//   0x0057265b  rep movsb byte ptr es:[edi], byte ptr [esi]
-//   0x0057265d  lea      ecx, [esp + 0x1c]
-//   0x00572661  push     ecx
-//   0x00572662  mov      ecx, dword ptr [esp + 0x1c4]
-//   0x00572669  push     0x6c086c
-//   0x0057266e  push     ebp
-//   0x0057266f  call     0x4d6ed0
-//   0x00572674  lea      edx, [ebx + 0xad]
-//   0x0057267a  or       ecx, 0xffffffff
-//   0x0057267d  mov      edi, edx
-//   0x0057267f  xor      eax, eax
-//   0x00572681  repne scasb al, byte ptr es:[edi]
-//   0x00572683  not      ecx
-//   0x00572685  lea      esi, [esp + 0x14]
-//   0x00572689  sub      edi, ecx
-//   0x0057268b  mov      eax, ecx
-//   0x0057268d  mov      dword ptr [esp + 0x10], esi
-//   0x00572691  mov      esi, edi
-//   0x00572693  mov      edi, dword ptr [esp + 0x10]
-//   0x00572697  shr      ecx, 2
-//   0x0057269a  rep movsd dword ptr es:[edi], dword ptr [esi]
-//   0x0057269c  mov      ecx, eax
-//   0x0057269e  push     0x19
-//   0x005726a0  and      ecx, 3
-//   0x005726a3  push     edx
-//   0x005726a4  rep movsb byte ptr es:[edi], byte ptr [esi]
-//   0x005726a6  mov      esi, dword ptr [esp + 0x1c0]
-//   0x005726ad  lea      ecx, [esp + 0x1c]
-//   0x005726b1  push     ecx
-//   0x005726b2  push     0x6d241c
-//   0x005726b7  push     ebp
-//   0x005726b8  mov      ecx, esi
-//   0x005726ba  call     0x4d6ed0
-//   0x005726bf  mov      edi, dword ptr [ebx + 0x90]
-//   0x005726c5  lea      edx, [esp + 0x30]
-//   0x005726c9  push     0x80
-//   0x005726ce  push     edx
-//   0x005726cf  push     0x715524
-//   0x005726d4  push     0x6d2410
-//   0x005726d9  push     ebp
-//   0x005726da  mov      ecx, esi
-//   0x005726dc  call     0x4d6ed0
-//   0x005726e1  test     eax, eax
-//   0x005726e3  je       0x5726f3
-//   0x005726e5  lea      ecx, [esp + 0x30]
-//   0x005726e9  call     0x647610
-//   0x005726ee  cmp      eax, -1
-//   0x005726f1  jne      0x5726f5
-//   0x005726f3  mov      eax, edi
-//   0x005726f5  mov      dword ptr [ebx + 0x90], eax
-//   0x005726fb  mov      al, byte ptr [ebx + 0xc7]
-//   0x00572701  push     eax
-//   0x00572702  push     0x6d2404
-//   0x00572707  push     ebp
-//   0x00572708  mov      ecx, esi
-//   0x0057270a  call     0x4d70b0
-//   0x0057270f  mov      cl, byte ptr [ebx + 0xc8]
-//   0x00572715  mov      byte ptr [ebx + 0xc7], al
-//   0x0057271b  push     ecx
-//   0x0057271c  push     0x6d23f4
-//   0x00572721  push     ebp
-//   0x00572722  mov      ecx, esi
-//   0x00572724  call     0x4d70b0
-//   0x00572729  mov      dl, byte ptr [ebx + 0xc9]
-//   0x0057272f  mov      ecx, esi
-//   0x00572731  push     edx
-//   0x00572732  push     0x6d23e8
-//   0x00572737  push     ebp
-//   0x00572738  mov      byte ptr [ebx + 0xc8], al
-//   0x0057273e  call     0x4d70b0
-//   0x00572743  mov      byte ptr [ebx + 0xc9], al
-//   0x00572749  mov      al, byte ptr [ebx + 0xca]
-//   0x0057274f  push     eax
-//   0x00572750  push     0x6d23dc
-//   0x00572755  push     ebp
-//   0x00572756  mov      ecx, esi
-//   0x00572758  call     0x4d70b0
-//   0x0057275d  mov      ecx, dword ptr [ebx + 0x64]
-//   0x00572760  mov      byte ptr [ebx + 0xca], al
-//   0x00572766  push     ecx
-//   0x00572767  push     0x6c333c
-//   0x0057276c  push     ebp
-//   0x0057276d  mov      ecx, esi
-//   0x0057276f  call     0x448b60
-//   0x00572774  mov      edx, dword ptr [ebx + 0x68]
-//   0x00572777  mov      ecx, esi
-//   0x00572779  push     edx
-//   0x0057277a  push     0x6d23d0
-//   0x0057277f  push     ebp
-//   0x00572780  mov      dword ptr [ebx + 0x64], eax
-//   0x00572783  call     0x4d60b0
-//   0x00572788  mov      dword ptr [ebx + 0x68], eax
-//   0x0057278b  mov      al, byte ptr [ebx + 0xcc]
-//   0x00572791  push     eax
-//   0x00572792  push     0x6d23c8
-//   0x00572797  push     ebp
-//   0x00572798  mov      ecx, esi
-//   0x0057279a  call     0x4d70b0
-//   0x0057279f  mov      cl, byte ptr [ebx + 0xcb]
-//   0x005727a5  mov      byte ptr [ebx + 0xcc], al
-//   0x005727ab  push     ecx
-//   0x005727ac  push     0x6d23b8
-//   0x005727b1  push     ebp
-//   0x005727b2  mov      ecx, esi
-//   0x005727b4  call     0x4d70b0
-//   0x005727b9  mov      dl, byte ptr [ebx + 0xd1]
-//   0x005727bf  mov      ecx, esi
-//   0x005727c1  push     edx
-//   0x005727c2  push     0x6d23a4
-//   0x005727c7  push     ebp
-//   0x005727c8  mov      byte ptr [ebx + 0xcb], al
-//   0x005727ce  call     0x4d70b0
-//   0x005727d3  lea      edi, [ebx + 0x60]
-//   0x005727d6  mov      byte ptr [ebx + 0xd1], al
-//   0x005727dc  push     edi
-//   0x005727dd  push     0x6d2398
-//   0x005727e2  lea      eax, [esp + 0x18]
-//   0x005727e6  push     ebp
-//   0x005727e7  push     eax
-//   0x005727e8  mov      ecx, esi
-//   0x005727ea  call     0x4484a0
-//   0x005727ef  mov      cx, word ptr [eax]
-//   0x005727f2  mov      word ptr [edi], cx
-//   0x005727f5  mov      ecx, esi
-//   0x005727f7  mov      dl, byte ptr [eax + 2]
-//   0x005727fa  mov      al, byte ptr [ebx + 0xd2]
-//   0x00572800  push     eax
-//   0x00572801  push     0x6d2384
-//   0x00572806  mov      byte ptr [edi + 2], dl
-//   0x00572809  push     ebp
-//   0x0057280a  call     0x4d70b0
-//   0x0057280f  mov      cl, byte ptr [ebx + 0xc6]
-//   0x00572815  lea      esi, [ebx + 0x94]
-//   0x0057281b  push     ecx
-//   0x0057281c  push     0x6bff80
-//   0x00572821  push     esi
-//   0x00572822  mov      ecx, 0x714dc8
-//   0x00572827  mov      byte ptr [ebx + 0xd2], al
-//   0x0057282d  call     0x4d70b0
-//   0x00572832  mov      dl, byte ptr [ebx + 0xd0]
-//   0x00572838  mov      ecx, 0x714dc8
-//   0x0057283d  push     edx
-//   0x0057283e  push     0x6bff74
-//   0x00572843  push     esi
-//   0x00572844  mov      byte ptr [ebx + 0xc6], al
-//   0x0057284a  call     0x4d70b0
-//   0x0057284f  mov      byte ptr [ebx + 0xd0], al
-//   0x00572855  mov      al, byte ptr [ebx + 0xcf]
-//   0x0057285b  push     eax
-//   0x0057285c  push     0x6d237c
-//   0x00572861  push     esi
-//   0x00572862  mov      ecx, 0x714dc8
-//   0x00572867  call     0x4d70b0
-//   0x0057286c  pop      edi
-//   0x0057286d  pop      esi
-//   0x0057286e  test     al, al
-//   0x00572870  mov      byte ptr [ebx + 0xcf], al
-//   0x00572876  pop      ebp
-//   0x00572877  jne      0x572880
-//   0x00572879  mov      ecx, ebx
-//   0x0057287b  call     0x5724a0
-//   0x00572880  mov      cl, byte ptr [ebx + 0xad]
-//   0x00572886  lea      eax, [ebx + 0xad]
-//   0x0057288c  test     cl, cl
-//   0x0057288e  je       0x5728b9
-//   0x00572890  push     0x6bfcb4
-//   0x00572895  push     eax
-//   0x00572896  push     0
-//   0x00572898  lea      ecx, [esp + 0xb0]
-//   0x0057289f  push     0
-//   0x005728a1  push     ecx
-//   0x005728a2  call     0x683b18
-//   0x005728a7  add      esp, 0x14
-//   0x005728aa  lea      ecx, [esp + 0xa4]
-//   0x005728b1  call     0x547660
-//   0x005728b6  mov      dword ptr [ebx + 0x70], eax
-//   0x005728b9  mov      al, 1
-//   0x005728bb  pop      ebx
-//   0x005728bc  add      esp, 0x1a4
-//   0x005728c2  ret      4
+// ObjectTypeClass::Read_INI_2 -- ALIAS of IsometricTileTypeClass::Read_INI (same machine code at 0x00572610); transcribed once.
 long ObjectTypeClass::Read_INI_2(void* ini, const char* section)
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::Fetch_ID_2 -- body derived from 21 instructions at 0x00405fb0; semantics not reconstructed.
-// size 47 bytes; signature __thiscall nargs=1
-// callees: 0x004d44c0, 0x004d6b50
-//
-//   0x00405fb0  push     ebx
-//   0x00405fb1  mov      ebx, dword ptr [esp + 8]
-//   0x00405fb5  push     esi
-//   0x00405fb6  mov      esi, ecx
-//   0x00405fb8  push     edi
-//   0x00405fb9  push     0
-//   0x00405fbb  lea      edi, [esi + 0x14]
-//   0x00405fbe  mov      ecx, ebx
-//   0x00405fc0  push     edi
-//   0x00405fc1  call     0x4d44c0
-//   0x00405fc6  add      esi, 0x2d
-//   0x00405fc9  mov      ecx, ebx
-//   0x00405fcb  push     esi
-//   0x00405fcc  push     0x6bf138
-//   0x00405fd1  push     edi
-//   0x00405fd2  call     0x4d6b50
-//   0x00405fd7  pop      edi
-//   0x00405fd8  pop      esi
-//   0x00405fd9  mov      al, 1
-//   0x00405fdb  pop      ebx
-//   0x00405fdc  ret      4
+// ObjectTypeClass::Fetch_ID_2 -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); transcribed once.
 int ObjectTypeClass::Fetch_ID_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::Get_RTTI_2 -- body derived from 12 instructions at 0x0040f600; semantics not reconstructed.
-// size 31 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x0040f600  mov      ecx, dword ptr [esp + 8]
-//   0x0040f604  mov      eax, dword ptr [esp + 4]
-//   0x0040f608  push     esi
-//   0x0040f609  mov      edx, eax
-//   0x0040f60b  mov      esi, dword ptr [ecx]
-//   0x0040f60d  mov      dword ptr [edx], esi
-//   0x0040f60f  mov      esi, dword ptr [ecx + 4]
-//   0x0040f612  mov      dword ptr [edx + 4], esi
-//   0x0040f615  pop      esi
-//   0x0040f616  mov      ecx, dword ptr [ecx + 8]
-//   0x0040f619  mov      dword ptr [edx + 8], ecx
-//   0x0040f61c  ret      8
+// ObjectTypeClass::Get_RTTI_2 -- ALIAS of AircraftTypeClass::Get_RTTI_2 (same machine code at 0x0040f600); transcribed once.
 int ObjectTypeClass::Get_RTTI_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_29 -- body derived from 2 instructions at 0x00418f40; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x00418f40  or       eax, 0xffffffff
-//   0x00418f43  ret      
+// ObjectTypeClass::vfunc_29 -- ALIAS of IsometricTileTypeClass::vfunc_28 (same machine code at 0x00418f40); transcribed once.
 void ObjectTypeClass::vfunc_29()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_30 -- body derived from 2 instructions at 0x005715e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x005715e0  xor      eax, eax
-//   0x005715e2  ret      
+// ObjectTypeClass::vfunc_30 -- ALIAS of IsometricTileTypeClass::vfunc_29 (same machine code at 0x005715e0); transcribed once.
 void ObjectTypeClass::vfunc_30()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_31 -- body derived from 13 instructions at 0x005715f0; semantics not reconstructed.
-// size 30 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x005715f0  mov      eax, dword ptr [esp + 4]
-//   0x005715f4  push     esi
-//   0x005715f5  push     edi
-//   0x005715f6  mov      edi, eax
-//   0x005715f8  mov      ecx, 0xa
-//   0x005715fd  mov      dword ptr [edi], ecx
-//   0x005715ff  mov      edx, ecx
-//   0x00571601  mov      esi, ecx
-//   0x00571603  mov      dword ptr [edi + 4], edx
-//   0x00571606  mov      dword ptr [edi + 8], esi
-//   0x00571609  pop      edi
-//   0x0057160a  pop      esi
-//   0x0057160b  ret      4
+// ObjectTypeClass::vfunc_31 -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); transcribed once.
 void ObjectTypeClass::vfunc_31()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_32 -- body derived from 13 instructions at 0x00571610; semantics not reconstructed.
-// size 33 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x00571610  mov      eax, dword ptr [esp + 4]
-//   0x00571614  push     esi
-//   0x00571615  push     edi
-//   0x00571616  mov      edi, eax
-//   0x00571618  mov      ecx, 0x100
-//   0x0057161d  mov      esi, 0xc8
-//   0x00571622  mov      dword ptr [edi], ecx
-//   0x00571624  mov      edx, ecx
-//   0x00571626  mov      dword ptr [edi + 4], edx
-//   0x00571629  mov      dword ptr [edi + 8], esi
-//   0x0057162c  pop      edi
-//   0x0057162d  pop      esi
-//   0x0057162e  ret      4
+// ObjectTypeClass::vfunc_32 -- ALIAS of IsometricTileTypeClass::vfunc_31 (same machine code at 0x00571610); transcribed once.
 void ObjectTypeClass::vfunc_32()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_33 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ObjectTypeClass::vfunc_33 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ObjectTypeClass::vfunc_33()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_34 -- body derived from 2 instructions at 0x00571640; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00571640  xor      eax, eax
-//   0x00571642  ret      4
+// ObjectTypeClass::vfunc_34 -- ALIAS of IsometricTileTypeClass::vfunc_33 (same machine code at 0x00571640); transcribed once.
 void ObjectTypeClass::vfunc_34()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_35 -- body derived from 2 instructions at 0x00571650; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00571650  xor      eax, eax
-//   0x00571652  ret      
+// ObjectTypeClass::vfunc_35 -- ALIAS of IsometricTileTypeClass::vfunc_34 (same machine code at 0x00571650); transcribed once.
 void ObjectTypeClass::vfunc_35()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_36 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ObjectTypeClass::vfunc_36 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ObjectTypeClass::vfunc_36()
 {
 }
@@ -907,108 +390,12 @@ void ObjectTypeClass::vfunc_37()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_38 -- body derived from 86 instructions at 0x00571710; semantics not reconstructed.
-// size 280 bytes; signature __thiscall nargs=6
-// callees: 0x004b5670, 0x00571836
-//
-//   0x00571710  sub      esp, 8
-//   0x00571713  push     ebx
-//   0x00571714  push     ebp
-//   0x00571715  push     esi
-//   0x00571716  push     edi
-//   0x00571717  mov      edi, ecx
-//   0x00571719  xor      ebp, ebp
-//   0x0057171b  mov      dword ptr [esp + 0x10], ebp
-//   0x0057171f  mov      dword ptr [esp + 0x14], ebp
-//   0x00571723  mov      eax, dword ptr [edi]
-//   0x00571725  call     dword ptr [eax + 0x70]
-//   0x00571728  mov      ebx, eax
-//   0x0057172a  mov      eax, dword ptr [0x7b2c48]
-//   0x0057172f  cmp      eax, ebp
-//   0x00571731  jle      0x57184c
-//   0x00571737  mov      ecx, dword ptr [0x7b2c3c]
-//   0x0057173d  mov      esi, dword ptr [ecx + ebp*4]
-//   0x00571740  mov      al, byte ptr [esi + 0x2f]
-//   0x00571743  test     al, al
-//   0x00571745  jne      0x571836
-//   0x0057174b  mov      edx, dword ptr [esp + 0x28]
-//   0x0057174f  mov      eax, dword ptr [esi + 0xec]
-//   0x00571755  cmp      eax, edx
-//   0x00571757  jne      0x571836
-//   0x0057175d  mov      eax, dword ptr [edi]
-//   0x0057175f  mov      ecx, edi
-//   0x00571761  call     dword ptr [eax + 0x2c]
-//   0x00571764  mov      ecx, dword ptr [esi + 0x218]
-//   0x0057176a  cmp      dword ptr [ecx + 0x500], eax
-//   0x00571770  jne      0x571836
-//   0x00571776  mov      al, byte ptr [esp + 0x20]
-//   0x0057177a  test     al, al
-//   0x0057177c  je       0x57178c
-//   0x0057177e  mov      al, byte ptr [esi + 0x2f4]
-//   0x00571784  test     al, al
-//   0x00571786  je       0x571836
-//   0x0057178c  mov      edx, dword ptr [esi]
-//   0x0057178e  mov      ecx, esi
-//   0x00571790  call     dword ptr [edx + 0x150]
-//   0x00571796  cmp      eax, 0x12
-//   0x00571799  je       0x571836
-//   0x0057179f  cmp      dword ptr [esi + 0x54], 0x12
-//   0x005717a3  je       0x571836
-//   0x005717a9  mov      al, byte ptr [esp + 0x24]
-//   0x005717ad  test     al, al
-//   0x005717af  je       0x5717c5
-//   0x005717b1  mov      ecx, dword ptr [esi + 0xec]
-//   0x005717b7  push     1
-//   0x005717b9  push     1
-//   0x005717bb  push     edi
-//   0x005717bc  call     0x4b5670
-//   0x005717c1  test     eax, eax
-//   0x005717c3  jle      0x571836
-//   0x005717c5  mov      ecx, dword ptr [esi + 0x218]
-//   0x005717cb  mov      eax, dword ptr [ecx]
-//   0x005717cd  call     dword ptr [eax + 0x70]
-//   0x005717d0  test     ebx, eax
-//   0x005717d2  je       0x571836
-//   0x005717d4  mov      ecx, dword ptr [0x714e20]
-//   0x005717da  mov      eax, dword ptr [esi + 0x218]
-//   0x005717e0  mov      edx, dword ptr [ecx + 0x5b4]
-//   0x005717e6  cmp      eax, dword ptr [edx]
-//   0x005717e8  jne      0x5717fb
-//   0x005717ea  mov      ecx, dword ptr [esi + 0x9c]
-//   0x005717f0  mov      edx, 1
-//   0x005717f5  shl      edx, cl
-//   0x005717f7  test     ebx, edx
-//   0x005717f9  je       0x571836
-//   0x005717fb  mov      al, byte ptr [esp + 0x1c]
-//   0x005717ff  test     al, al
-//   0x00571801  jne      0x571828
-//   0x00571803  mov      eax, dword ptr [esi + 0x78]
-//   0x00571806  test     eax, eax
-//   0x00571808  je       0x571828
-//   0x0057180a  mov      eax, dword ptr [edi]
-//   0x0057180c  mov      ecx, edi
-//   0x0057180e  call     dword ptr [eax + 0x2c]
-//   0x00571811  cmp      eax, 3
-//   0x00571814  jne      0x571828
-//   0x00571816  mov      edx, dword ptr [edi]
-//   0x00571818  mov      ecx, edi
-//   0x0057181a  call     dword ptr [edx + 0x2c]
-//   0x0057181d  cmp      eax, 3
-//   0x00571820  jne      0x571836
-//   0x00571822  mov      dword ptr [esp + 0x14], esi
-//   0x00571826  jmp      0x571836
+// ObjectTypeClass::vfunc_38 -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); transcribed once.
 void ObjectTypeClass::vfunc_38()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ObjectTypeClass::vfunc_39 -- body derived from 2 instructions at 0x00571660; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00571660  xor      eax, eax
-//   0x00571662  ret      
+// ObjectTypeClass::vfunc_39 -- ALIAS of IsometricTileTypeClass::vfunc_38 (same machine code at 0x00571660); transcribed once.
 void ObjectTypeClass::vfunc_39()
 {
 }

@@ -5,39 +5,13 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "TechnoClass.h"
 
-// ---------------------------------------------------------------------------
-// FlasherClass::vfunc_1 -- body derived from 26 instructions at 0x0061e2b0; semantics not reconstructed.
-// size 54 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x0061e2b0  push     ebx
-//   0x0061e2b1  push     esi
-//   0x0061e2b2  mov      esi, dword ptr [ecx + 8]
-//   0x0061e2b5  push     edi
-//   0x0061e2b6  mov      edi, dword ptr [esp + 0x10]
-//   0x0061e2ba  cmp      esi, dword ptr [edi + 8]
-//   0x0061e2bd  jne      0x61e2e6
-//   0x0061e2bf  xor      edx, edx
-//   0x0061e2c1  test     esi, esi
-//   0x0061e2c3  jle      0x61e2de
-//   0x0061e2c5  mov      eax, dword ptr [ecx + 4]
-//   0x0061e2c8  mov      ecx, dword ptr [edi + 4]
-//   0x0061e2cb  sub      ecx, eax
-//   0x0061e2cd  mov      edi, dword ptr [eax]
-//   0x0061e2cf  mov      ebx, dword ptr [ecx + eax]
-//   0x0061e2d2  cmp      edi, ebx
-//   0x0061e2d4  jne      0x61e2e6
-//   0x0061e2d6  inc      edx
-//   0x0061e2d7  add      eax, 4
-//   0x0061e2da  cmp      edx, esi
-//   0x0061e2dc  jl       0x61e2cd
-//   0x0061e2de  pop      edi
-//   0x0061e2df  pop      esi
-//   0x0061e2e0  mov      al, 1
-//   0x0061e2e2  pop      ebx
-//   0x0061e2e3  ret      4
+// FlasherClass::vfunc_1 -- ALIAS of StageClass::vfunc_1 (same machine code at 0x0061e2b0); transcribed once.
 void FlasherClass::vfunc_1()
 {
 }

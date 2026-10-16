@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "EnumConnectionsClass.h"
 
 // ---------------------------------------------------------------------------
@@ -167,65 +171,7 @@ void EnumConnectionsClass::vfunc_6(int a0, int a1)
 {
 }
 
-// ---------------------------------------------------------------------------
-// EnumConnectionsClass::EnumConnectionsClass -- body derived from 54 instructions at 0x0046b8e0; semantics not reconstructed.
-// size 150 bytes; signature __stdcall nargs=1
-// callees: 0x0068298c
-//
-//   0x0046b8e0  mov      edx, dword ptr [0x7d3104]
-//   0x0046b8e6  push     ebp
-//   0x0046b8e7  push     edi
-//   0x0046b8e8  mov      edi, dword ptr [esp + 0xc]
-//   0x0046b8ec  dec      edx
-//   0x0046b8ed  lea      eax, [edi + 0x20]
-//   0x0046b8f0  mov      dword ptr [0x7d3104], edx
-//   0x0046b8f6  push     eax
-//   0x0046b8f7  call     dword ptr [0x6981a8]
-//   0x0046b8fd  mov      ebp, eax
-//   0x0046b8ff  test     ebp, ebp
-//   0x0046b901  jne      0x46b976
-//   0x0046b903  test     edi, edi
-//   0x0046b905  je       0x46b976
-//   0x0046b907  mov      dword ptr [edi], 0x69b830
-//   0x0046b90d  mov      eax, dword ptr [edi + 0x14]
-//   0x0046b910  push     esi
-//   0x0046b911  xor      esi, esi
-//   0x0046b913  test     eax, eax
-//   0x0046b915  jle      0x46b92b
-//   0x0046b917  mov      ecx, dword ptr [edi + 8]
-//   0x0046b91a  mov      eax, dword ptr [ecx + esi*8]
-//   0x0046b91d  push     eax
-//   0x0046b91e  mov      edx, dword ptr [eax]
-//   0x0046b920  call     dword ptr [edx + 8]
-//   0x0046b923  mov      eax, dword ptr [edi + 0x14]
-//   0x0046b926  inc      esi
-//   0x0046b927  cmp      esi, eax
-//   0x0046b929  jl       0x46b917
-//   0x0046b92b  mov      eax, dword ptr [edi + 4]
-//   0x0046b92e  lea      esi, [edi + 4]
-//   0x0046b931  mov      ecx, esi
-//   0x0046b933  call     dword ptr [eax + 0xc]
-//   0x0046b936  mov      eax, dword ptr [esi + 4]
-//   0x0046b939  mov      dword ptr [esi], 0x69b814
-//   0x0046b93f  test     eax, eax
-//   0x0046b941  je       0x46b95a
-//   0x0046b943  mov      cl, byte ptr [esi + 0xd]
-//   0x0046b946  test     cl, cl
-//   0x0046b948  je       0x46b95a
-//   0x0046b94a  push     eax
-//   0x0046b94b  call     0x68298c
-//   0x0046b950  add      esp, 4
-//   0x0046b953  mov      dword ptr [esi + 4], 0
-//   0x0046b95a  push     edi
-//   0x0046b95b  mov      byte ptr [esi + 0xd], 0
-//   0x0046b95f  mov      dword ptr [esi + 8], 0
-//   0x0046b966  call     0x68298c
-//   0x0046b96b  add      esp, 4
-//   0x0046b96e  mov      eax, ebp
-//   0x0046b970  pop      esi
-//   0x0046b971  pop      edi
-//   0x0046b972  pop      ebp
-//   0x0046b973  ret      4
+// EnumConnectionsClass::EnumConnectionsClass -- ALIAS of EnumConnectionsClass::Release (same machine code at 0x0046b8e0); transcribed once.
 EnumConnectionsClass::EnumConnectionsClass()
 {
 }

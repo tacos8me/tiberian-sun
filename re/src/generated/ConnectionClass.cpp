@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "ConnectionClass.h"
 
 // ---------------------------------------------------------------------------
@@ -358,15 +362,7 @@ void ConnectionClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// ConnectionClass::vfunc_9 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: 0x006855eb
-//
-//   0x006829a5  push     0x19
-//   0x006829a7  call     0x6855eb
-//   0x006829ac  pop      ecx
-//   0x006829ad  ret      
+// ConnectionClass::vfunc_9 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
 void ConnectionClass::vfunc_9()
 {
 }

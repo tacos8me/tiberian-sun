@@ -5,6 +5,10 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "LinkClass.h"
 
 // ---------------------------------------------------------------------------
@@ -27,186 +31,47 @@ void LinkClass::vfunc_0(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// LinkClass::vfunc_1 -- body derived from 2 instructions at 0x004f6960; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f6960  mov      eax, dword ptr [ecx + 4]
-//   0x004f6963  ret      
+// LinkClass::vfunc_1 -- ALIAS of CarryoverClass::vfunc_1 (same machine code at 0x004f6960); transcribed once.
 void LinkClass::vfunc_1()
 {
 }
 
-// ---------------------------------------------------------------------------
-// LinkClass::vfunc_2 -- body derived from 2 instructions at 0x004f6970; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f6970  mov      eax, dword ptr [ecx + 8]
-//   0x004f6973  ret      
+// LinkClass::vfunc_2 -- ALIAS of CarryoverClass::vfunc_2 (same machine code at 0x004f6970); transcribed once.
 void LinkClass::vfunc_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// LinkClass::vfunc_3 -- body derived from 11 instructions at 0x004f69e0; semantics not reconstructed.
-// size 31 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x004f69e0  mov      edx, dword ptr [esp + 4]
-//   0x004f69e4  mov      eax, dword ptr [edx + 4]
-//   0x004f69e7  mov      dword ptr [edx + 4], ecx
-//   0x004f69ea  test     eax, eax
-//   0x004f69ec  mov      dword ptr [ecx + 8], edx
-//   0x004f69ef  mov      dword ptr [ecx + 4], eax
-//   0x004f69f2  je       0x4f69f7
-//   0x004f69f4  mov      dword ptr [eax + 8], ecx
-//   0x004f69f7  mov      eax, dword ptr [ecx]
-//   0x004f69f9  call     dword ptr [eax + 0x18]
-//   0x004f69fc  ret      4
+// LinkClass::vfunc_3 -- ALIAS of CarryoverClass::vfunc_3 (same machine code at 0x004f69e0); transcribed once.
 void LinkClass::vfunc_3(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// LinkClass::vfunc_4 -- body derived from 13 instructions at 0x004f6a20; semantics not reconstructed.
-// size 36 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x004f6a20  push     esi
-//   0x004f6a21  mov      esi, ecx
-//   0x004f6a23  mov      ecx, dword ptr [esp + 8]
-//   0x004f6a27  mov      eax, dword ptr [ecx]
-//   0x004f6a29  call     dword ptr [eax + 0x1c]
-//   0x004f6a2c  mov      dword ptr [eax + 4], esi
-//   0x004f6a2f  mov      edx, dword ptr [esi]
-//   0x004f6a31  mov      ecx, esi
-//   0x004f6a33  mov      dword ptr [esi + 8], eax
-//   0x004f6a36  mov      dword ptr [esi + 4], 0
-//   0x004f6a3d  call     dword ptr [edx + 0x18]
-//   0x004f6a40  pop      esi
-//   0x004f6a41  ret      4
+// LinkClass::vfunc_4 -- ALIAS of CarryoverClass::vfunc_4 (same machine code at 0x004f6a20); transcribed once.
 void LinkClass::vfunc_4(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// LinkClass::vfunc_5 -- body derived from 11 instructions at 0x004f6a00; semantics not reconstructed.
-// size 31 bytes; signature __thiscall nargs=1
-// callees: none
-//
-//   0x004f6a00  push     esi
-//   0x004f6a01  mov      esi, ecx
-//   0x004f6a03  mov      ecx, dword ptr [esp + 8]
-//   0x004f6a07  mov      eax, dword ptr [ecx]
-//   0x004f6a09  call     dword ptr [eax + 0x18]
-//   0x004f6a0c  mov      dword ptr [eax + 8], esi
-//   0x004f6a0f  mov      dword ptr [esi + 4], eax
-//   0x004f6a12  mov      dword ptr [esi + 8], 0
-//   0x004f6a19  mov      eax, esi
-//   0x004f6a1b  pop      esi
-//   0x004f6a1c  ret      4
+// LinkClass::vfunc_5 -- ALIAS of CarryoverClass::vfunc_5 (same machine code at 0x004f6a00); transcribed once.
 void LinkClass::vfunc_5(int a0)
 {
 }
 
-// ---------------------------------------------------------------------------
-// LinkClass::vfunc_6 -- body derived from 14 instructions at 0x004f6980; semantics not reconstructed.
-// size 29 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f6980  mov      eax, dword ptr [ecx + 8]
-//   0x004f6983  lea      edx, [ecx + 8]
-//   0x004f6986  test     eax, eax
-//   0x004f6988  push     esi
-//   0x004f6989  je       0x4f699d
-//   0x004f698b  mov      eax, dword ptr [edx]
-//   0x004f698d  cmp      eax, ecx
-//   0x004f698f  je       0x4f699f
-//   0x004f6991  mov      esi, dword ptr [eax + 8]
-//   0x004f6994  lea      edx, [eax + 8]
-//   0x004f6997  test     esi, esi
-//   0x004f6999  jne      0x4f698b
-//   0x004f699b  pop      esi
-//   0x004f699c  ret      
+// LinkClass::vfunc_6 -- ALIAS of CarryoverClass::vfunc_6 (same machine code at 0x004f6980); transcribed once.
 void LinkClass::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// LinkClass::vfunc_7 -- body derived from 14 instructions at 0x004f69b0; semantics not reconstructed.
-// size 29 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f69b0  mov      eax, dword ptr [ecx + 4]
-//   0x004f69b3  lea      edx, [ecx + 4]
-//   0x004f69b6  test     eax, eax
-//   0x004f69b8  push     esi
-//   0x004f69b9  je       0x4f69cd
-//   0x004f69bb  mov      eax, dword ptr [edx]
-//   0x004f69bd  cmp      eax, ecx
-//   0x004f69bf  je       0x4f69cf
-//   0x004f69c1  mov      esi, dword ptr [eax + 4]
-//   0x004f69c4  lea      edx, [eax + 4]
-//   0x004f69c7  test     esi, esi
-//   0x004f69c9  jne      0x4f69bb
-//   0x004f69cb  pop      esi
-//   0x004f69cc  ret      
+// LinkClass::vfunc_7 -- ALIAS of CarryoverClass::vfunc_7 (same machine code at 0x004f69b0); transcribed once.
 void LinkClass::vfunc_7()
 {
 }
 
-// ---------------------------------------------------------------------------
-// LinkClass::vfunc_8 -- body derived from 4 instructions at 0x004f6930; semantics not reconstructed.
-// size 9 bytes; signature __cdecl
-// callees: none
-//
-//   0x004f6930  xor      eax, eax
-//   0x004f6932  mov      dword ptr [ecx + 4], eax
-//   0x004f6935  mov      dword ptr [ecx + 8], eax
-//   0x004f6938  ret      
+// LinkClass::vfunc_8 -- ALIAS of CarryoverClass::vfunc_8 (same machine code at 0x004f6930); transcribed once.
 void LinkClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// LinkClass::vfunc_9 -- body derived from 32 instructions at 0x004f6a50; semantics not reconstructed.
-// size 67 bytes; signature __thiscall
-// callees: none
-//
-//   0x004f6a50  push     ebx
-//   0x004f6a51  push     esi
-//   0x004f6a52  mov      esi, ecx
-//   0x004f6a54  push     edi
-//   0x004f6a55  mov      eax, dword ptr [esi]
-//   0x004f6a57  call     dword ptr [eax + 0x18]
-//   0x004f6a5a  mov      edx, dword ptr [esi]
-//   0x004f6a5c  mov      ecx, esi
-//   0x004f6a5e  mov      edi, eax
-//   0x004f6a60  call     dword ptr [edx + 0x1c]
-//   0x004f6a63  mov      edx, dword ptr [esi + 8]
-//   0x004f6a66  xor      ecx, ecx
-//   0x004f6a68  cmp      edx, ecx
-//   0x004f6a6a  je       0x4f6a72
-//   0x004f6a6c  mov      ebx, dword ptr [esi + 4]
-//   0x004f6a6f  mov      dword ptr [edx + 4], ebx
-//   0x004f6a72  mov      edx, dword ptr [esi + 4]
-//   0x004f6a75  cmp      edx, ecx
-//   0x004f6a77  je       0x4f6a7f
-//   0x004f6a79  mov      ebx, dword ptr [esi + 8]
-//   0x004f6a7c  mov      dword ptr [edx + 8], ebx
-//   0x004f6a7f  cmp      edi, esi
-//   0x004f6a81  mov      dword ptr [esi + 8], ecx
-//   0x004f6a84  mov      dword ptr [esi + 4], ecx
-//   0x004f6a87  jne      0x4f6a9e
-//   0x004f6a89  cmp      eax, esi
-//   0x004f6a8b  jne      0x4f6a93
-//   0x004f6a8d  pop      edi
-//   0x004f6a8e  pop      esi
-//   0x004f6a8f  xor      eax, eax
-//   0x004f6a91  pop      ebx
-//   0x004f6a92  ret      
+// LinkClass::vfunc_9 -- ALIAS of CarryoverClass::vfunc_9 (same machine code at 0x004f6a50); transcribed once.
 void LinkClass::vfunc_9()
 {
 }

@@ -5,26 +5,18 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
+//
+// A body marked ALIAS defines the same machine code as another
+// declaration; the code is transcribed once, at the canonical
+// declaration named on the alias line.
 #include "BuildingTypeClass.h"
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405830  mov      eax, 1
-//   0x00405835  ret      4
+// BuildingTypeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); transcribed once.
 void BuildingTypeClass::Init()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::Shutdown -- body derived from 2 instructions at 0x00405840; semantics not reconstructed.
-// size 8 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405840  mov      eax, 1
-//   0x00405845  ret      4
+// BuildingTypeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); transcribed once.
 void BuildingTypeClass::Shutdown()
 {
 }
@@ -43,17 +35,7 @@ long BuildingTypeClass::QueryInterface(const void*, void**)
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::AddRef -- body derived from 6 instructions at 0x00405990; semantics not reconstructed.
-// size 17 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405990  mov      ecx, dword ptr [esp + 4]
-//   0x00405994  xor      eax, eax
-//   0x00405996  mov      dl, byte ptr [ecx + 0x10]
-//   0x00405999  test     dl, dl
-//   0x0040599b  sete     al
-//   0x0040599e  ret      4
+// BuildingTypeClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
 unsigned long BuildingTypeClass::AddRef()
 {
 }
@@ -136,56 +118,7 @@ void BuildingTypeClass::vfunc_6()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_7 -- body derived from 45 instructions at 0x00621bf0; semantics not reconstructed.
-// size 159 bytes; signature __stdcall nargs=2
-// callees: 0x00572ba0
-//
-//   0x00621bf0  push     esi
-//   0x00621bf1  mov      esi, dword ptr [esp + 0xc]
-//   0x00621bf5  push     edi
-//   0x00621bf6  mov      edi, dword ptr [esp + 0xc]
-//   0x00621bfa  push     esi
-//   0x00621bfb  push     edi
-//   0x00621bfc  call     0x572ba0
-//   0x00621c01  test     eax, eax
-//   0x00621c03  jl       0x621c8a
-//   0x00621c09  mov      eax, dword ptr [edi + 0x284]
-//   0x00621c0f  lea      ecx, [eax*4 + 4]
-//   0x00621c16  mov      eax, dword ptr [esi]
-//   0x00621c18  add      eax, ecx
-//   0x00621c1a  mov      dword ptr [esi], eax
-//   0x00621c1c  mov      edx, dword ptr [edi + 0x2a0]
-//   0x00621c22  lea      eax, [eax + edx*4 + 4]
-//   0x00621c26  mov      dword ptr [esi], eax
-//   0x00621c28  mov      ecx, dword ptr [edi + 0x2bc]
-//   0x00621c2e  lea      eax, [eax + ecx*4 + 4]
-//   0x00621c32  mov      dword ptr [esi], eax
-//   0x00621c34  mov      edx, dword ptr [edi + 0x2d8]
-//   0x00621c3a  lea      eax, [eax + edx*4 + 4]
-//   0x00621c3e  mov      dword ptr [esi], eax
-//   0x00621c40  mov      ecx, dword ptr [edi + 0x2f4]
-//   0x00621c46  lea      eax, [eax + ecx*4 + 4]
-//   0x00621c4a  mov      dword ptr [esi], eax
-//   0x00621c4c  mov      edx, dword ptr [edi + 0x39c]
-//   0x00621c52  lea      eax, [eax + edx*4 + 4]
-//   0x00621c56  mov      dword ptr [esi], eax
-//   0x00621c58  mov      ecx, dword ptr [edi + 0x1b4]
-//   0x00621c5e  lea      eax, [eax + ecx*4 + 4]
-//   0x00621c62  mov      dword ptr [esi], eax
-//   0x00621c64  mov      edx, dword ptr [edi + 0x260]
-//   0x00621c6a  lea      eax, [eax + edx*4 + 4]
-//   0x00621c6e  mov      dword ptr [esi], eax
-//   0x00621c70  mov      ecx, dword ptr [edi + 0x1d0]
-//   0x00621c76  lea      eax, [eax + ecx*4 + 4]
-//   0x00621c7a  mov      dword ptr [esi], eax
-//   0x00621c7c  mov      edx, dword ptr [edi + 0x3c8]
-//   0x00621c82  lea      eax, [eax + edx*4 + 4]
-//   0x00621c86  mov      dword ptr [esi], eax
-//   0x00621c88  xor      eax, eax
-//   0x00621c8a  pop      edi
-//   0x00621c8b  pop      esi
-//   0x00621c8c  ret      8
+// BuildingTypeClass::vfunc_7 -- ALIAS of AircraftTypeClass::vfunc_7 (same machine code at 0x00621bf0); transcribed once.
 void BuildingTypeClass::vfunc_7()
 {
 }
@@ -260,22 +193,12 @@ void BuildingTypeClass::vfunc_8()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::Set_ID -- body derived from 1 instructions at 0x004059b0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059b0  ret      
+// BuildingTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
 void BuildingTypeClass::Set_ID(int id)
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::Get_RTTI -- body derived from 1 instructions at 0x004059c0; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=2
-// callees: none
-//
-//   0x004059c0  ret      8
+// BuildingTypeClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); transcribed once.
 int BuildingTypeClass::Get_RTTI()
 {
 }
@@ -556,24 +479,12 @@ long BuildingTypeClass::Load(IStream* pStm)
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::Save -- body derived from 2 instructions at 0x004059d0; semantics not reconstructed.
-// size 4 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059d0  or       eax, 0xffffffff
-//   0x004059d3  ret      
+// BuildingTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
 long BuildingTypeClass::Save(IStream* pStm, int fClearDirty)
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::GetSizeMax -- body derived from 2 instructions at 0x004059e0; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x004059e0  xor      eax, eax
-//   0x004059e2  ret      
+// BuildingTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); transcribed once.
 long BuildingTypeClass::GetSizeMax(unsigned long* pcbSize)
 {
 }
@@ -589,127 +500,42 @@ void BuildingTypeClass::Compute_CRC()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_17 -- body derived from 2 instructions at 0x00405970; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405970  mov      al, 1
-//   0x00405972  ret      
+// BuildingTypeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); transcribed once.
 void BuildingTypeClass::vfunc_17()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_18 -- body derived from 9 instructions at 0x00405a00; semantics not reconstructed.
-// size 35 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a00  mov      eax, dword ptr [esp + 4]
-//   0x00405a04  mov      edx, dword ptr [0x715228]
-//   0x00405a0a  mov      ecx, eax
-//   0x00405a0c  mov      dword ptr [ecx], edx
-//   0x00405a0e  mov      edx, dword ptr [0x71522c]
-//   0x00405a14  mov      dword ptr [ecx + 4], edx
-//   0x00405a17  mov      edx, dword ptr [0x715230]
-//   0x00405a1d  mov      dword ptr [ecx + 8], edx
-//   0x00405a20  ret      4
+// BuildingTypeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); transcribed once.
 void BuildingTypeClass::vfunc_18()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_19 -- body derived from 18 instructions at 0x00405a30; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a30  mov      eax, dword ptr [ecx]
-//   0x00405a32  sub      esp, 0xc
-//   0x00405a35  lea      edx, [esp]
-//   0x00405a39  push     esi
-//   0x00405a3a  push     edx
-//   0x00405a3b  call     dword ptr [eax + 0x48]
-//   0x00405a3e  mov      ecx, eax
-//   0x00405a40  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a44  mov      edx, eax
-//   0x00405a46  mov      esi, dword ptr [ecx]
-//   0x00405a48  mov      dword ptr [edx], esi
-//   0x00405a4a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a4d  mov      dword ptr [edx + 4], esi
-//   0x00405a50  pop      esi
-//   0x00405a51  mov      ecx, dword ptr [ecx + 8]
-//   0x00405a54  mov      dword ptr [edx + 8], ecx
-//   0x00405a57  add      esp, 0xc
-//   0x00405a5a  ret      4
+// BuildingTypeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); transcribed once.
 void BuildingTypeClass::vfunc_19()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_20 -- body derived from 2 instructions at 0x00405a60; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a60  xor      al, al
-//   0x00405a62  ret      
+// BuildingTypeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); transcribed once.
 void BuildingTypeClass::vfunc_20()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_21 -- body derived from 2 instructions at 0x00405a70; semantics not reconstructed.
-// size 3 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405a70  xor      al, al
-//   0x00405a72  ret      
+// BuildingTypeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); transcribed once.
 void BuildingTypeClass::vfunc_21()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_22 -- body derived from 18 instructions at 0x00405a80; semantics not reconstructed.
-// size 45 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00405a80  mov      eax, dword ptr [ecx]
-//   0x00405a82  sub      esp, 0xc
-//   0x00405a85  lea      edx, [esp]
-//   0x00405a89  push     esi
-//   0x00405a8a  push     edx
-//   0x00405a8b  call     dword ptr [eax + 0x48]
-//   0x00405a8e  mov      ecx, eax
-//   0x00405a90  mov      eax, dword ptr [esp + 0x14]
-//   0x00405a94  mov      edx, eax
-//   0x00405a96  mov      esi, dword ptr [ecx]
-//   0x00405a98  mov      dword ptr [edx], esi
-//   0x00405a9a  mov      esi, dword ptr [ecx + 4]
-//   0x00405a9d  mov      dword ptr [edx + 4], esi
-//   0x00405aa0  pop      esi
-//   0x00405aa1  mov      ecx, dword ptr [ecx + 8]
-//   0x00405aa4  mov      dword ptr [edx + 8], ecx
-//   0x00405aa7  add      esp, 0xc
-//   0x00405aaa  ret      4
+// BuildingTypeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); transcribed once.
 void BuildingTypeClass::vfunc_22()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_23 -- body derived from 1 instructions at 0x00405ab0; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
-//
-//   0x00405ab0  ret      
+// BuildingTypeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); transcribed once.
 void BuildingTypeClass::vfunc_23()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::GetType_2 -- body derived from 1 instructions at 0x00406010; semantics not reconstructed.
-// size 3 bytes; signature __stdcall nargs=1
-// callees: none
-//
-//   0x00406010  ret      4
+// BuildingTypeClass::GetType_2 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); transcribed once.
 int BuildingTypeClass::GetType_2()
 {
 }
@@ -874,32 +700,7 @@ long BuildingTypeClass::Read_INI_2(void* ini, const char* section)
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::Fetch_ID_2 -- body derived from 21 instructions at 0x00405fb0; semantics not reconstructed.
-// size 47 bytes; signature __thiscall nargs=1
-// callees: 0x004d44c0, 0x004d6b50
-//
-//   0x00405fb0  push     ebx
-//   0x00405fb1  mov      ebx, dword ptr [esp + 8]
-//   0x00405fb5  push     esi
-//   0x00405fb6  mov      esi, ecx
-//   0x00405fb8  push     edi
-//   0x00405fb9  push     0
-//   0x00405fbb  lea      edi, [esi + 0x14]
-//   0x00405fbe  mov      ecx, ebx
-//   0x00405fc0  push     edi
-//   0x00405fc1  call     0x4d44c0
-//   0x00405fc6  add      esi, 0x2d
-//   0x00405fc9  mov      ecx, ebx
-//   0x00405fcb  push     esi
-//   0x00405fcc  push     0x6bf138
-//   0x00405fd1  push     edi
-//   0x00405fd2  call     0x4d6b50
-//   0x00405fd7  pop      edi
-//   0x00405fd8  pop      esi
-//   0x00405fd9  mov      al, 1
-//   0x00405fdb  pop      ebx
-//   0x00405fdc  ret      4
+// BuildingTypeClass::Fetch_ID_2 -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); transcribed once.
 int BuildingTypeClass::Fetch_ID_2()
 {
 }
@@ -937,20 +738,7 @@ int BuildingTypeClass::Get_RTTI_2()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_29 -- body derived from 9 instructions at 0x0061f470; semantics not reconstructed.
-// size 31 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061f470  mov      al, byte ptr [ecx + 0x441]
-//   0x0061f476  test     al, al
-//   0x0061f478  je       0x61f488
-//   0x0061f47a  mov      eax, dword ptr [0x7b0d38]
-//   0x0061f47f  test     eax, eax
-//   0x0061f481  mov      eax, 0x7fffffff
-//   0x0061f486  jne      0x61f48e
-//   0x0061f488  mov      eax, dword ptr [ecx + 0x358]
-//   0x0061f48e  ret      
+// BuildingTypeClass::vfunc_29 -- ALIAS of AircraftTypeClass::vfunc_29 (same machine code at 0x0061f470); transcribed once.
 void BuildingTypeClass::vfunc_29()
 {
 }
@@ -1140,16 +928,7 @@ void BuildingTypeClass::vfunc_34()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_35 -- body derived from 5 instructions at 0x0061f490; semantics not reconstructed.
-// size 28 bytes; signature ? nargs=1
-// callees: 0x0067faf0
-//
-//   0x0061f490  fild     dword ptr [ecx + 0x31c]
-//   0x0061f496  mov      eax, dword ptr [0x714e20]
-//   0x0061f49b  fmul     qword ptr [eax + 0xee8]
-//   0x0061f4a1  fmul     qword ptr [0x6a14b0]
-//   0x0061f4a7  jmp      0x67faf0
+// BuildingTypeClass::vfunc_35 -- ALIAS of AircraftTypeClass::vfunc_35 (same machine code at 0x0061f490); transcribed once.
 void BuildingTypeClass::vfunc_35()
 {
 }
@@ -1211,108 +990,12 @@ void BuildingTypeClass::vfunc_37()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_38 -- body derived from 86 instructions at 0x00571710; semantics not reconstructed.
-// size 280 bytes; signature __thiscall nargs=6
-// callees: 0x004b5670, 0x00571836
-//
-//   0x00571710  sub      esp, 8
-//   0x00571713  push     ebx
-//   0x00571714  push     ebp
-//   0x00571715  push     esi
-//   0x00571716  push     edi
-//   0x00571717  mov      edi, ecx
-//   0x00571719  xor      ebp, ebp
-//   0x0057171b  mov      dword ptr [esp + 0x10], ebp
-//   0x0057171f  mov      dword ptr [esp + 0x14], ebp
-//   0x00571723  mov      eax, dword ptr [edi]
-//   0x00571725  call     dword ptr [eax + 0x70]
-//   0x00571728  mov      ebx, eax
-//   0x0057172a  mov      eax, dword ptr [0x7b2c48]
-//   0x0057172f  cmp      eax, ebp
-//   0x00571731  jle      0x57184c
-//   0x00571737  mov      ecx, dword ptr [0x7b2c3c]
-//   0x0057173d  mov      esi, dword ptr [ecx + ebp*4]
-//   0x00571740  mov      al, byte ptr [esi + 0x2f]
-//   0x00571743  test     al, al
-//   0x00571745  jne      0x571836
-//   0x0057174b  mov      edx, dword ptr [esp + 0x28]
-//   0x0057174f  mov      eax, dword ptr [esi + 0xec]
-//   0x00571755  cmp      eax, edx
-//   0x00571757  jne      0x571836
-//   0x0057175d  mov      eax, dword ptr [edi]
-//   0x0057175f  mov      ecx, edi
-//   0x00571761  call     dword ptr [eax + 0x2c]
-//   0x00571764  mov      ecx, dword ptr [esi + 0x218]
-//   0x0057176a  cmp      dword ptr [ecx + 0x500], eax
-//   0x00571770  jne      0x571836
-//   0x00571776  mov      al, byte ptr [esp + 0x20]
-//   0x0057177a  test     al, al
-//   0x0057177c  je       0x57178c
-//   0x0057177e  mov      al, byte ptr [esi + 0x2f4]
-//   0x00571784  test     al, al
-//   0x00571786  je       0x571836
-//   0x0057178c  mov      edx, dword ptr [esi]
-//   0x0057178e  mov      ecx, esi
-//   0x00571790  call     dword ptr [edx + 0x150]
-//   0x00571796  cmp      eax, 0x12
-//   0x00571799  je       0x571836
-//   0x0057179f  cmp      dword ptr [esi + 0x54], 0x12
-//   0x005717a3  je       0x571836
-//   0x005717a9  mov      al, byte ptr [esp + 0x24]
-//   0x005717ad  test     al, al
-//   0x005717af  je       0x5717c5
-//   0x005717b1  mov      ecx, dword ptr [esi + 0xec]
-//   0x005717b7  push     1
-//   0x005717b9  push     1
-//   0x005717bb  push     edi
-//   0x005717bc  call     0x4b5670
-//   0x005717c1  test     eax, eax
-//   0x005717c3  jle      0x571836
-//   0x005717c5  mov      ecx, dword ptr [esi + 0x218]
-//   0x005717cb  mov      eax, dword ptr [ecx]
-//   0x005717cd  call     dword ptr [eax + 0x70]
-//   0x005717d0  test     ebx, eax
-//   0x005717d2  je       0x571836
-//   0x005717d4  mov      ecx, dword ptr [0x714e20]
-//   0x005717da  mov      eax, dword ptr [esi + 0x218]
-//   0x005717e0  mov      edx, dword ptr [ecx + 0x5b4]
-//   0x005717e6  cmp      eax, dword ptr [edx]
-//   0x005717e8  jne      0x5717fb
-//   0x005717ea  mov      ecx, dword ptr [esi + 0x9c]
-//   0x005717f0  mov      edx, 1
-//   0x005717f5  shl      edx, cl
-//   0x005717f7  test     ebx, edx
-//   0x005717f9  je       0x571836
-//   0x005717fb  mov      al, byte ptr [esp + 0x1c]
-//   0x005717ff  test     al, al
-//   0x00571801  jne      0x571828
-//   0x00571803  mov      eax, dword ptr [esi + 0x78]
-//   0x00571806  test     eax, eax
-//   0x00571808  je       0x571828
-//   0x0057180a  mov      eax, dword ptr [edi]
-//   0x0057180c  mov      ecx, edi
-//   0x0057180e  call     dword ptr [eax + 0x2c]
-//   0x00571811  cmp      eax, 3
-//   0x00571814  jne      0x571828
-//   0x00571816  mov      edx, dword ptr [edi]
-//   0x00571818  mov      ecx, edi
-//   0x0057181a  call     dword ptr [edx + 0x2c]
-//   0x0057181d  cmp      eax, 3
-//   0x00571820  jne      0x571836
-//   0x00571822  mov      dword ptr [esp + 0x14], esi
-//   0x00571826  jmp      0x571836
+// BuildingTypeClass::vfunc_38 -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); transcribed once.
 void BuildingTypeClass::vfunc_38()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_39 -- body derived from 2 instructions at 0x0061f4f0; semantics not reconstructed.
-// size 7 bytes; signature __cdecl
-// callees: none
-//
-//   0x0061f4f0  mov      eax, dword ptr [ecx + 0x378]
-//   0x0061f4f6  ret      
+// BuildingTypeClass::vfunc_39 -- ALIAS of AircraftTypeClass::vfunc_39 (same machine code at 0x0061f4f0); transcribed once.
 void BuildingTypeClass::vfunc_39()
 {
 }
@@ -1429,37 +1112,7 @@ void BuildingTypeClass::vfunc_42()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_43 -- body derived from 26 instructions at 0x0061f500; semantics not reconstructed.
-// size 71 bytes; signature __thiscall nargs=1
-// callees: 0x0067faf0
-//
-//   0x0061f500  push     ecx
-//   0x0061f501  push     esi
-//   0x0061f502  mov      esi, ecx
-//   0x0061f504  push     edi
-//   0x0061f505  mov      eax, dword ptr [esi]
-//   0x0061f507  call     dword ptr [eax + 0xa4]
-//   0x0061f50d  mov      ecx, dword ptr [0x714e20]
-//   0x0061f513  mov      edi, eax
-//   0x0061f515  mov      eax, dword ptr [esi + 0x68]
-//   0x0061f518  cdq      
-//   0x0061f519  idiv     dword ptr [ecx + 0xe74]
-//   0x0061f51f  mov      esi, eax
-//   0x0061f521  mov      eax, edi
-//   0x0061f523  cdq      
-//   0x0061f524  idiv     esi
-//   0x0061f526  mov      dword ptr [esp + 8], eax
-//   0x0061f52a  fild     dword ptr [esp + 8]
-//   0x0061f52e  fmul     qword ptr [ecx + 0xe78]
-//   0x0061f534  call     0x67faf0
-//   0x0061f539  pop      edi
-//   0x0061f53a  cmp      eax, 1
-//   0x0061f53d  pop      esi
-//   0x0061f53e  jg       0x61f545
-//   0x0061f540  mov      eax, 1
-//   0x0061f545  pop      ecx
-//   0x0061f546  ret      
+// BuildingTypeClass::vfunc_43 -- ALIAS of AircraftTypeClass::vfunc_43 (same machine code at 0x0061f500); transcribed once.
 void BuildingTypeClass::vfunc_43()
 {
 }
@@ -1476,17 +1129,7 @@ void BuildingTypeClass::vfunc_44()
 {
 }
 
-// ---------------------------------------------------------------------------
-// BuildingTypeClass::vfunc_45 -- body derived from 6 instructions at 0x00622180; semantics not reconstructed.
-// size 23 bytes; signature __cdecl
-// callees: none
-//
-//   0x00622180  mov      eax, dword ptr [ecx + 0x320]
-//   0x00622186  cmp      eax, -1
-//   0x00622189  jne      0x622196
-//   0x0062218b  mov      eax, dword ptr [0x714e20]
-//   0x00622190  mov      eax, dword ptr [eax + 0x4cc]
-//   0x00622196  ret      
+// BuildingTypeClass::vfunc_45 -- ALIAS of AircraftTypeClass::vfunc_44 (same machine code at 0x00622180); transcribed once.
 void BuildingTypeClass::vfunc_45()
 {
 }
