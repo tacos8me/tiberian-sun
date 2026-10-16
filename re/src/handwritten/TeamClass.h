@@ -65,6 +65,38 @@ public:
     virtual void Slot21();                   // 0x405a70
     virtual void Slot22();                   // 0x405a80
     virtual void Slot23();                   // 0x6075e0 (dtor)
+
+    // ---- data members (offsets from ctor 0x00606fa7) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a55e8
+    unsigned long m_004;  // init 0x6a55cc
+    unsigned char pad_008[0xc];
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // /* ? */
+    unsigned long m_028;  // /* ? */
+    unsigned long m_02c;  // /* ? */
+    unsigned long m_030;  // /* ? */
+    unsigned long m_034;  // /* ? */
+    unsigned long m_038;  // /* ? */
+    unsigned long m_03c;  // /* ? */
+    unsigned long m_040;  // /* ? */
+    unsigned long m_044;  // /* ? */
+    unsigned long m_048;  // /* ? */
+    unsigned char pad_04c[0x4];
+    unsigned long m_050;  // /* ? */
+    unsigned long m_054;  // /* ? */
+    unsigned char pad_058[0x4];
+    unsigned long m_05c;  // /* ? */
+    unsigned long m_060;  // /* ? */
+    unsigned long m_064;  // /* ? */
+    unsigned long m_068;  // /* ? */
+    unsigned long m_06c;  // /* ? */
+    unsigned long m_070;  // /* ? */
+
 };
 
 #endif // TEAMCLASS_H

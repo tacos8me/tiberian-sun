@@ -65,6 +65,13 @@ public:
     virtual void Slot24();                   // 0x406010
     virtual void Slot25();                   // 0x60d180 (ReadINI part 1)
     virtual void Slot26();                   // 0x60d510 (ReadINI part 2)
+
+    // ---- data members (offsets from ctor 0x0060ca99) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a5670
+    unsigned long m_004;  // init 0x6a5654
+
 };
 
 #endif // TEAMTYPECLASS_H

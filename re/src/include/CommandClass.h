@@ -39,6 +39,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e0a90 (string id 0x21)
     virtual const char* Get_Description();   // 0x4e0ac0 (string id 0x1c)
     virtual const char* Get_UI_Description();// 0x4e0ad0 (string id 0x22)
+
+    // ---- data members (offsets from ctor 0x004e09f9) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0938
+
 };
 
 // ---------------------------------------------------------------------------
@@ -56,6 +62,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e0f50
     virtual const char* Get_Description();   // 0x4e0f60
     virtual const char* Get_UI_Description();// 0x4e0f70
+
+    // ---- data members (offsets from ctor 0x004dea56) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a04bc
+
 };
 
 // vtable 0x6a04bc, COL 0x6b0e70
@@ -68,6 +80,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1010
     virtual const char* Get_Description();   // 0x4e1020
     virtual const char* Get_UI_Description();// 0x4e1030
+
+    // ---- data members (offsets from ctor 0x004dea56) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a04bc
+
 };
 
 // vtable 0x6a04d8, COL 0x6b0f60
@@ -80,6 +98,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e11f0
     virtual const char* Get_Description();   // 0x4e1200
     virtual const char* Get_UI_Description();// 0x4e1210
+
+    // ---- data members (offsets from ctor 0x004de9e9) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a04d8
+
 };
 
 // vtable 0x6a04f4, COL 0x6b0c90
@@ -92,6 +116,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e10d0
     virtual const char* Get_Description();   // 0x4e10e0
     virtual const char* Get_UI_Description();// 0x4e10f0
+
+    // ---- data members (offsets from ctor 0x004de97c) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a04f4
+
 };
 
 // vtable 0x6a0510, COL 0x6b0ba0
@@ -104,6 +134,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1370
     virtual const char* Get_Description();   // 0x4e1380
     virtual const char* Get_UI_Description();// 0x4e1390
+
+    // ---- data members (offsets from ctor 0x004de90f) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0510
+
 };
 
 // vtable 0x6a052c, COL 0x6b0a60
@@ -116,6 +152,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1460
     virtual const char* Get_Description();   // 0x4e1470
     virtual const char* Get_UI_Description();// 0x4e1480
+
+    // ---- data members (offsets from ctor 0x004de8a2) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a052c
+
 };
 
 // vtable 0x6a0548, COL 0x6b0920
@@ -128,6 +170,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1570
     virtual const char* Get_Description();   // 0x4e1580
     virtual const char* Get_UI_Description();// 0x4e1590
+
+    // ---- data members (offsets from ctor 0x004de835) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0548
+
 };
 
 // vtable 0x6a0564, COL 0x6b0790
@@ -140,6 +188,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e15d0
     virtual const char* Get_Description();   // 0x4e15e0
     virtual const char* Get_UI_Description();// 0x4e15f0
+
+    // ---- data members (offsets from ctor 0x004de7c8) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0564
+
 };
 
 // vtable 0x6a0580, COL 0x6b12d0
@@ -152,6 +206,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1870
     virtual const char* Get_Description();   // 0x4e1880
     virtual const char* Get_UI_Description();// 0x4e1890
+
+    // ---- data members (offsets from ctor 0x004de75b) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0580
+
 };
 
 // vtable 0x6a059c, COL 0x6b11e0
@@ -164,6 +224,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e19a0
     virtual const char* Get_Description();   // 0x4e19b0
     virtual const char* Get_UI_Description();// 0x4e19c0
+
+    // ---- data members (offsets from ctor 0x004de6ee) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a059c
+
 };
 
 // vtable 0x6a05b8, COL 0x6b0e20
@@ -176,6 +242,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1a00
     virtual const char* Get_Description();   // 0x4e1a10
     virtual const char* Get_UI_Description();// 0x4e1a20
+
+    // ---- data members (offsets from ctor 0x004de681) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a05b8
+
 };
 
 // vtable 0x6a05d4, COL 0x6b0ce0
@@ -188,6 +260,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1a50
     virtual const char* Get_Description();   // 0x4e1a60
     virtual const char* Get_UI_Description();// 0x4e1a70
+
+    // ---- data members (offsets from ctor 0x004de614) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a05d4
+
 };
 
 // vtable 0x6a05f0, COL 0x6b0ab0
@@ -200,6 +278,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1aa0
     virtual const char* Get_Description();   // 0x4e1ab0
     virtual const char* Get_UI_Description();// 0x4e1ac0
+
+    // ---- data members (offsets from ctor 0x004de5a7) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a05f0
+
 };
 
 // vtable 0x6a060c, COL 0x6b0bf0
@@ -212,6 +296,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1bc0
     virtual const char* Get_Description();   // 0x4e1bd0
     virtual const char* Get_UI_Description();// 0x4e1be0
+
+    // ---- data members (offsets from ctor 0x004de53a) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a060c
+
 };
 
 // vtable 0x6a0628, COL 0x6b0f10
@@ -224,6 +314,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1af0
     virtual const char* Get_Description();   // 0x4e1b00
     virtual const char* Get_UI_Description();// 0x4e1b10
+
+    // ---- data members (offsets from ctor 0x004de4cd) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0628
+
 };
 
 // vtable 0x6a0644, COL 0x6b0fb0
@@ -236,6 +332,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1f80
     virtual const char* Get_Description();   // 0x4e1f90
     virtual const char* Get_UI_Description();// 0x4e1fa0
+
+    // ---- data members (offsets from ctor 0x004de460) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0644
+
 };
 
 // vtable 0x6a0660, COL 0x6b1050
@@ -248,6 +350,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1f30
     virtual const char* Get_Description();   // 0x4e1f40
     virtual const char* Get_UI_Description();// 0x4e1f50
+
+    // ---- data members (offsets from ctor 0x004de3f3) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0660
+
 };
 
 // vtable 0x6a067c, COL 0x6b13d8
@@ -260,6 +368,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1ee0
     virtual const char* Get_Description();   // 0x4e1ef0
     virtual const char* Get_UI_Description();// 0x4e1f00
+
+    // ---- data members (offsets from ctor 0x004de386) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a067c
+
 };
 
 // vtable 0x6a0698, COL 0x6b0d30
@@ -272,6 +386,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1da0
     virtual const char* Get_Description();   // 0x4e1db0
     virtual const char* Get_UI_Description();// 0x4e1dc0
+
+    // ---- data members (offsets from ctor 0x004de319) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0698
+
 };
 
 // vtable 0x6a06b4, COL 0x6b0ec0
@@ -284,6 +404,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1d50
     virtual const char* Get_Description();   // 0x4e1d60
     virtual const char* Get_UI_Description();// 0x4e1d70
+
+    // ---- data members (offsets from ctor 0x004de2ac) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a06b4
+
 };
 
 // vtable 0x6a06d0, COL 0x6b10f0
@@ -296,6 +422,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1d00
     virtual const char* Get_Description();   // 0x4e1d10
     virtual const char* Get_UI_Description();// 0x4e1d20
+
+    // ---- data members (offsets from ctor 0x004de23f) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a06d0
+
 };
 
 // vtable 0x6a06ec, COL 0x6b1190
@@ -308,6 +440,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1e90
     virtual const char* Get_Description();   // 0x4e1ea0
     virtual const char* Get_UI_Description();// 0x4e1eb0
+
+    // ---- data members (offsets from ctor 0x004de1d2) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a06ec
+
 };
 
 // vtable 0x6a0708, COL 0x6b1280
@@ -320,6 +458,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1e40
     virtual const char* Get_Description();   // 0x4e1e50
     virtual const char* Get_UI_Description();// 0x4e1e60
+
+    // ---- data members (offsets from ctor 0x004de165) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0708
+
 };
 
 // vtable 0x6a0724, COL 0x6b1370
@@ -332,6 +476,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1df0
     virtual const char* Get_Description();   // 0x4e1e00
     virtual const char* Get_UI_Description();// 0x4e1e10
+
+    // ---- data members (offsets from ctor 0x004de0f8) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0724
+
 };
 
 // vtable 0x6a0740, COL 0x6b0830
@@ -344,6 +494,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1cb0
     virtual const char* Get_Description();   // 0x4e1cc0
     virtual const char* Get_UI_Description();// 0x4e1cd0
+
+    // ---- data members (offsets from ctor 0x004de08b) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0740
+
 };
 
 // vtable 0x6a075c, COL 0x6b0970
@@ -356,6 +512,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1c60
     virtual const char* Get_Description();   // 0x4e1c70
     virtual const char* Get_UI_Description();// 0x4e1c80
+
+    // ---- data members (offsets from ctor 0x004de01e) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a075c
+
 };
 
 // vtable 0x6a0778, COL 0x6b0740
@@ -368,6 +530,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1c10
     virtual const char* Get_Description();   // 0x4e1c20
     virtual const char* Get_UI_Description();// 0x4e1c30
+
+    // ---- data members (offsets from ctor 0x004ddfb1) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0778
+
 };
 
 // vtable 0x6a0794, COL 0x6b0880
@@ -380,6 +548,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e2140
     virtual const char* Get_Description();   // 0x4e2150
     virtual const char* Get_UI_Description();// 0x4e2160
+
+    // ---- data members (offsets from ctor 0x004ddf44) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0794
+
 };
 
 // vtable 0x6a07b0, COL 0x6b09c0
@@ -392,6 +566,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e20e0
     virtual const char* Get_Description();   // 0x4e20f0
     virtual const char* Get_UI_Description();// 0x4e2100
+
+    // ---- data members (offsets from ctor 0x004dded7) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a07b0
+
 };
 
 // vtable 0x6a07cc, COL 0x6b0b00
@@ -404,6 +584,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e2080
     virtual const char* Get_Description();   // 0x4e2090
     virtual const char* Get_UI_Description();// 0x4e20a0
+
+    // ---- data members (offsets from ctor 0x004dde6b) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a07cc
+
 };
 
 // vtable 0x6a07e8, COL 0x6b0d80
@@ -416,6 +602,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e2020
     virtual const char* Get_Description();   // 0x4e2030
     virtual const char* Get_UI_Description();// 0x4e2040
+
+    // ---- data members (offsets from ctor 0x004dddfa) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a07e8
+
 };
 
 // vtable 0x6a0804, COL 0x6b1230
@@ -428,6 +620,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e1fd0
     virtual const char* Get_Description();   // 0x4e1fe0
     virtual const char* Get_UI_Description();// 0x4e1ff0
+
+    // ---- data members (offsets from ctor 0x004ddd89) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0804
+
 };
 
 // vtable 0x6a0820, COL 0x6b1320
@@ -440,6 +638,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e25d0
     virtual const char* Get_Description();   // 0x4e25e0
     virtual const char* Get_UI_Description();// 0x4e25f0
+
+    // ---- data members (offsets from ctor 0x004ddd1c) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0820
+
 };
 
 // vtable 0x6a083c, COL 0x6b07e0
@@ -452,6 +656,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e2540
     virtual const char* Get_Description();   // 0x4e2550
     virtual const char* Get_UI_Description();// 0x4e2560
+
+    // ---- data members (offsets from ctor 0x004ddcaf) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a083c
+
 };
 
 // vtable 0x6a0858, COL 0x6b08d0
@@ -464,6 +674,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e24b0
     virtual const char* Get_Description();   // 0x4e24c0
     virtual const char* Get_UI_Description();// 0x4e24d0
+
+    // ---- data members (offsets from ctor 0x004ddc42) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0858
+
 };
 
 // vtable 0x6a0874, COL 0x6b0a10
@@ -476,6 +692,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e2420
     virtual const char* Get_Description();   // 0x4e2430
     virtual const char* Get_UI_Description();// 0x4e2440
+
+    // ---- data members (offsets from ctor 0x004ddbd5) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0874
+
 };
 
 // vtable 0x6a0890, COL 0x6b0b50
@@ -488,6 +710,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e2380
     virtual const char* Get_Description();   // 0x4e2390
     virtual const char* Get_UI_Description();// 0x4e23a0
+
+    // ---- data members (offsets from ctor 0x004ddb68) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0890
+
 };
 
 // vtable 0x6a08ac, COL 0x6b0c40
@@ -500,6 +728,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e22e0
     virtual const char* Get_Description();   // 0x4e22f0
     virtual const char* Get_UI_Description();// 0x4e2300
+
+    // ---- data members (offsets from ctor 0x004ddafb) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a08ac
+
 };
 
 // vtable 0x6a08c8, COL 0x6b0dd0
@@ -512,6 +746,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e2240
     virtual const char* Get_Description();   // 0x4e2250
     virtual const char* Get_UI_Description();// 0x4e2260
+
+    // ---- data members (offsets from ctor 0x004dda8e) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a08c8
+
 };
 
 // vtable 0x6a08e4, COL 0x6b1140
@@ -524,6 +764,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e21a0
     virtual const char* Get_Description();   // 0x4e21b0
     virtual const char* Get_UI_Description();// 0x4e21c0
+
+    // ---- data members (offsets from ctor 0x004dda22) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a08e4
+
 };
 
 // vtable 0x6a0900, COL 0x6b1428
@@ -536,6 +782,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e2660
     virtual const char* Get_Description();   // 0x4e2670
     virtual const char* Get_UI_Description();// 0x4e2680
+
+    // ---- data members (offsets from ctor 0x004dd9fa) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a0900
+
 };
 
 // vtable 0x6a091c, COL 0x6b1458
@@ -548,6 +800,13 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e0950 (string id 0x1c)
     virtual const char* Get_Description();   // 0x4e0960 (string id 0x20)
     virtual const char* Get_UI_Description();// 0x4e0990
+
+    // ---- data members (offsets from ctor 0x004e08d7) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a091c
+    unsigned long m_004;  // /* ? */
+
 };
 
 // vtable 0x6a0954, COL 0x6b14f8
@@ -596,6 +855,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e26e0 (string id 0x1b)
     virtual const char* Get_Description();   // 0x4e2700 (string id 0x88)
     virtual const char* Get_UI_Description();// 0x4e2710
+
+    // ---- data members (offsets from ctor 0x004e26b7) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a09a8
+
 };
 
 // vtable 0x6a09c4, COL 0x6b1638
@@ -608,6 +873,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e2740 (string id 0x1b)
     virtual const char* Get_Description();   // 0x4e2760 (string id 0x8d)
     virtual const char* Get_UI_Description();// 0x4e2770 ("SCRN%04d.pcx")
+
+    // ---- data members (offsets from ctor 0x004e271f) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a09c4
+
 };
 
 // vtable 0x6a09e0, COL 0x6b1688
@@ -620,6 +891,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e29b0 (string id 0x1b)
     virtual const char* Get_Description();   // 0x4e29c0 (string id 0x17d)
     virtual const char* Get_UI_Description();// 0x4e29d0
+
+    // ---- data members (offsets from ctor 0x004e2971) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a09e0
+
 };
 
 // vtable 0x6a09fc, COL 0x0 (last vtable in .rdata block)
@@ -632,6 +909,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e2a10 (string id 0x1b)
     virtual const char* Get_Description();   // 0x4e2a20 (string id 0x17b)
     virtual const char* Get_UI_Description();// 0x4e2a30
+
+    // ---- data members (offsets from ctor 0x004e29df) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a09fc
+
 };
 
 #endif // COMMANDCLASS_H

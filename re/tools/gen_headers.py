@@ -76,6 +76,110 @@ def sanitize(name):
     return n
 
 
+def member_block(rtti_class, members, member_names):
+    """Emit the recovered data-member declarations for one class.
+
+    The offset table (out/members.json) is keyed by the RTTI class spelling.
+    Offsets are exact; names are only used where an INI key or string supplies
+    evidence. The block is returned as a list of lines so the same code can
+    either place it inside a class body being generated here, or append it to
+    the header that already defines the class (nested types and template
+    instantiations have no standalone header of their own).
+
+    Returns [] when no offsets were recovered for the class.
+    """
+    md = members.get(rtti_class)
+    if not (md and md.get("members")):
+        return []
+    _mn = member_names.get(rtti_class) or {}
+    named = _mn.get("members", {})
+    # A key can map to several offsets (repeated INI reads). Only the first
+    # use of a name is emitted; later ones fall back to m_XXX.
+    _used_names = set()
+    L = []
+    L.append("")
+    L.append(f"    // ---- data members (offsets from ctor 0x{md['ctor']:08x}) ----")
+    L.append("    // Offsets are exact; names are not yet recovered, so members")
+    L.append("    // are emitted as byte blobs at their real displacements.")
+    prev_end = 0
+    for mem in md["members"]:
+        off = mem["off"]
+        if off < prev_end:
+            continue
+        if off > prev_end:
+            L.append(f"    unsigned char pad_{prev_end:03x}[0x{off - prev_end:x}];")
+        kind = mem["kind"]
+        nm = named.get(str(off), {}).get("name")
+        if kind == "vtable":
+            L.append(f"    void* vptr_{off:03x};  // vtable 0x{mem['value']:08x}")
+            prev_end = off + 4
+        elif nm and nm not in _used_names:
+            _used_names.add(nm)
+            L.append(f"    unsigned long {nm};  // +0x{off:03x} (INI key)")
+            prev_end = off + 4
+        elif kind == "zero":
+            L.append(f"    unsigned long m_{off:03x};  // zero-initialised")
+            prev_end = off + 4
+        elif kind == "imm":
+            L.append(f"    unsigned long m_{off:03x};  // init 0x{mem['value']:x}")
+            prev_end = off + 4
+        else:
+            L.append(f"    unsigned long m_{off:03x};  // /* ? */")
+            prev_end = off + 4
+    return L
+
+
+def class_body_span(src, class_name):
+    """Locate the body of `class_name` in a header.
+
+    Returns (body_start, body_end) as character indices into `src`, where
+    body_end is the index of the '}' that closes the class. Returns None when
+    the class is not defined in the file. Matching is anchored to a definition
+    line (`class NAME {`, `class NAME : public ... {`, or the same with a
+    leading `template <...>`), so a forward declaration (`class NAME;`) or a
+    mention in a comment does not match.
+    """
+    pat = re.compile(
+        r"^[ \t]*(?:template\s*<[^;{}]*>\s*)?(?:class|struct)\s+"
+        + re.escape(class_name) + r"\b[^;{}]*\{", re.M)
+    m = pat.search(src)
+    if not m:
+        return None
+    i = src.index("{", m.start())
+    depth = 0
+    j = i
+    while j < len(src):
+        if src[j] == "{":
+            depth += 1
+        elif src[j] == "}":
+            depth -= 1
+            if depth == 0:
+                return i, j
+        j += 1
+    return None
+
+
+def insert_member_block(src, class_name, block):
+    """Insert a member block at the end of `class_name`'s body.
+
+    Returns the new source, or None when the class body cannot be found.
+    Appending to the owning header (rather than emitting a nested class body)
+    keeps every header compiling standalone, which verify.py check 1 requires.
+    """
+    span = class_body_span(src, class_name)
+    if not span:
+        return None
+    _, end = span
+    # Back up over the trailing whitespace/newline before '}' so the inserted
+    # block lands on its own lines and the closing brace stays put.
+    at = end
+    while at > 0 and src[at - 1] in " \t\r\n":
+        at -= 1
+    return src[:at] + "\n" + "\n".join(block) + "\n" + src[at:]
+
+
+
+
 def main():
     bindir = sys.argv[1] if len(sys.argv) > 1 else "bin/GAME.EXE"
     outdir = sys.argv[2] if len(sys.argv) > 2 else "out"
@@ -174,6 +278,53 @@ def main():
         if os.path.exists(owned_path):
             owned = set(json.load(open(owned_path)))
 
+    # Types that ts_prelude.h defines are owned by the prelude, exactly as if a
+    # hand-written header declared them. Without this, a class that lives only
+    # in the prelude (GScreenClass) gets its own generated header and the
+    # combined TU fails with a redefinition.
+    #
+    # The prelude cannot simply be read here: pipeline stage 0 wipes
+    # src/include/ and restores only src/handwritten/, while ts_prelude.h is
+    # produced later by stage 10 (reconcile_prelude.py). So the set is derived
+    # from the two authoritative sources instead -- the hand-written prelude if
+    # present, plus reconcile_prelude.py's PRELUDE_ONLY, which is the list that
+    # will actually define these types.
+    for cand in (os.path.join(srcdir, "ts_prelude.h"),
+                 os.path.join(hw_dir, "ts_prelude.h")):
+        if os.path.exists(cand):
+            ps = open(cand).read()
+            for pm in re.finditer(
+                    r"^(?:template\s*<[^>]*>\s*)?(?:class|struct)\s+(\w+)",
+                    ps, re.M):
+                owned.add(pm.group(1))
+            break
+    rp = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                      "reconcile_prelude.py")
+    if os.path.exists(rp):
+        rs = open(rp).read()
+        m = re.search(r"PRELUDE_ONLY\s*=\s*\{(.*?)\n\}", rs, re.S)
+        if m:
+            for pm in re.finditer(r'"([A-Za-z_]\w*)"\s*:', m.group(1)):
+                owned.add(pm.group(1))
+
+    # Identifiers the prelude will define; used to keep them out of the
+    # deferred-member list, since the prelude is regenerated later.
+    prelude_owned_types = set()
+    for cand in (os.path.join(srcdir, "ts_prelude.h"),
+                 os.path.join(hw_dir, "ts_prelude.h")):
+        if os.path.exists(cand):
+            for pm in re.finditer(
+                    r"^(?:template\s*<[^>]*>\s*)?(?:class|struct)\s+(\w+)",
+                    open(cand).read(), re.M):
+                prelude_owned_types.add(pm.group(1))
+            break
+    if os.path.exists(rp):
+        _rs = open(rp).read()
+        _m = re.search(r"PRELUDE_ONLY\s*=\s*\{(.*?)\n\}", _rs, re.S)
+        if _m:
+            for pm in re.finditer(r'"([A-Za-z_]\w*)"\s*:', _m.group(1)):
+                prelude_owned_types.add(pm.group(1))
+
     # Template name -> the header that actually defines it. Emitting
     # #include "<template>.h" is wrong when the template lives in a
     # differently-named file (DynamicVectorClass is in VectorClass.h, Node is
@@ -204,17 +355,116 @@ def main():
             for _fp in re.findall(r"[A-Za-z_]\w*", hm.group(1)):
                 template_header.setdefault(_fp, None)
 
+
+    # RTTI class name -> the header file that DEFINES it. Nested classes and
+    # template instantiations have no standalone generated header: their
+    # recovered member offsets still have to be emitted, so the block is
+    # appended to the header that owns the definition instead of being dropped.
+    # Ownership is derived from the definitions that actually exist in the tree
+    # (hand-written headers are copied into srcdir by the pipeline before this
+    # stage runs), so this works from a clean checkout.
+    # Header basename -> the class names it DEFINES (not forward-declares).
+    # Hand-written headers are copied verbatim into srcdir by the pipeline, so a
+    # block appended to a hand-written header's srcdir copy is discarded on the
+    # next run. The authoritative file for a hand-written header is the one in
+    # src/handwritten/, and that is where such a block has to be written for
+    # the change to survive regeneration.
+    owner_header = {}
+    hw_names = set()
+    if os.path.isdir(hw_dir):
+        hw_names = {os.path.basename(p) for p in glob.glob(os.path.join(hw_dir, "*.h"))}
+    # Only a real definition counts. A forward declaration (`class X;`) must not
+    # claim ownership: BrainClass.h says `class NeuronClass;` but never defines
+    # it, and TechnoClass.h -- not LocomotionClass.h -- defines TechnoClass.
+    _def_re = re.compile(
+        r"^[ \t]*(?:template\s*<[^;{}]*>\s*)?(?:class|struct)\s+(\w+)"
+        r"(?:\s*:[^;{}]*)?\s*\{", re.M)
+    for _hp in sorted(glob.glob(os.path.join(srcdir, "*.h"))):
+        _base = os.path.basename(_hp)
+        _hs = open(_hp).read()
+        for _hm in _def_re.finditer(_hs):
+            owner_header.setdefault(_hm.group(1), _base)
+
+    def owning_header(rtti_name):
+        """(writable path, class name as the header spells it) or None.
+
+        The owner is the header that DEFINES the class: for a template
+        instantiation that is the header defining its template
+        (BlitPlain<E> -> Blitter.h); for a nested class the header defining its
+        enclosing class (SidebarClass::StripClass -> SidebarClass.h). Returns
+        None when no header defines the class anywhere.
+
+        The path is redirected into src/handwritten/ when the owning header is
+        hand-written, because the pipeline restores that directory over
+        src/include/ after this stage runs.
+        """
+        n = rtti_name
+        for _kw in ("class ", "struct "):
+            if n.startswith(_kw):
+                n = n[len(_kw):]
+        n = n.strip()
+        base = None
+        if n in owner_header:
+            base = owner_header[n]
+        elif "<" in n and n.split("<")[0].strip() in owner_header:
+            n = n.split("<")[0].strip()
+            base = owner_header[n]
+        elif "::" in n:
+            # Prefer the full nested spelling, then the enclosing class, then
+            # the simple nested name (the header may write either form).
+            if n in owner_header:
+                base = owner_header[n]
+            else:
+                for _cand in (n.split("::")[0].strip(), n.split("::")[-1].strip()):
+                    if _cand in owner_header:
+                        base = owner_header[_cand]
+                        n = _cand
+                        break
+        if base is None:
+            _ident = ident_of.get(rtti_name)
+            if _ident and os.path.exists(os.path.join(srcdir, _ident + ".h")):
+                base = _ident + ".h"
+                n = _ident
+        if base is None:
+            return None
+        if base in hw_names:
+            return os.path.join(hw_dir, base), n
+        return os.path.join(srcdir, base), n
+
+    # Appended after the per-class loop: (header basename, rtti class, lines).
+    # A class the loop skips never enters the file-writing branch, so its
+    # recovered offsets would otherwise be computed and thrown away.
+    deferred_members = []
     os.makedirs(srcdir, exist_ok=True)
     written = 0
     skipped = 0
+    written_idents = set()
     unresolved_bases = defaultdict(set)
-
     for m in manifest:
         ident = m["ident"]
         if not ident:
             continue
         if ident in owned:
             skipped += 1
+            # Hand-written headers own this class. They already document their
+            # members, so only append when the header does NOT yet emit the
+            # recovered offsets -- otherwise a class whose hand-written header
+            # is silent about layout would lose its evidence a second time.
+            #
+            # Types owned by ts_prelude.h are the exception: the prelude is
+            # regenerated by reconcile_prelude.py AFTER this stage, so a block
+            # appended to it would be discarded, and a standalone header would
+            # define the type twice. Report and skip them.
+            if ident in prelude_owned_types:
+                prelude_owned.append(m["class"])
+                continue
+            deferred_members.append(("handwritten", m, ident))
+            continue
+        if ident in written_idents:
+            # Two manifest entries can share one ident (a template head plus a
+            # leaked-formal-parameter instantiation). The file already exists;
+            # append its offsets there instead of overwriting.
+            deferred_members.append(("dup", m, ident))
             continue
         # A template instantiation whose template is defined by a hand-written
         # header is already defined by that header; skip the generated
@@ -227,6 +477,19 @@ def main():
                     _tmpl = _tmpl[len(_kw):]
             if _tmpl.strip() in owned:
                 skipped += 1
+                deferred_members.append(("tmpl", m, ident))
+        # A template instantiation whose template is defined by a hand-written
+        # header is already defined by that header; skip the generated
+        # duplicate. This is decided from the RTTI name, not the mangled ident.
+        _rtti = m.get("class", "")
+        if "<" in _rtti:
+            _tmpl = _rtti.split("<")[0]
+            for _kw in ("class ", "struct "):
+                if _tmpl.startswith(_kw):
+                    _tmpl = _tmpl[len(_kw):]
+            if _tmpl.strip() in owned:
+                skipped += 1
+                deferred_members.append(("tmpl", m, ident))
                 continue
 
         # direct bases only, resolved to idents, deduplicated
@@ -402,48 +665,187 @@ def main():
         L.append(f"    virtual ~{ident}();")
 
         # ---- data members recovered from the constructor ----
-        md = members.get(m["class"])
-        _mn = member_names.get(m["class"]) or member_names.get(m["ident"]) or {}
-        named = _mn.get("members", {})
-        # A key can map to several offsets (repeated INI reads). Only the first
-        # use of a name is emitted; later ones fall back to m_XXX.
-        _used_names = set()
-        if md and md.get("members"):
-            L.append("")
-            L.append(f"    // ---- data members (offsets from ctor 0x{md['ctor']:08x}) ----")
-            L.append("    // Offsets are exact; names are not yet recovered, so members")
-            L.append("    // are emitted as byte blobs at their real displacements.")
-            prev_end = 0
-            for mem in md["members"]:
-                off = mem["off"]
-                if off < prev_end:
-                    continue
-                if off > prev_end:
-                    L.append(f"    unsigned char pad_{prev_end:03x}[0x{off - prev_end:x}];")
-                kind = mem["kind"]
-                nm = named.get(str(off), {}).get("name")
-                if kind == "vtable":
-                    L.append(f"    void* vptr_{off:03x};  // vtable 0x{mem['value']:08x}")
-                    prev_end = off + 4
-                elif nm and nm not in _used_names:
-                    _used_names.add(nm)
-                    L.append(f"    unsigned long {nm};  // +0x{off:03x} (INI key)")
-                    prev_end = off + 4
-                elif kind == "zero":
-                    L.append(f"    unsigned long m_{off:03x};  // zero-initialised")
-                    prev_end = off + 4
-                elif kind == "imm":
-                    L.append(f"    unsigned long m_{off:03x};  // init 0x{mem['value']:x}")
-                    prev_end = off + 4
-                else:
-                    L.append(f"    unsigned long m_{off:03x};  // /* ? */")
-                    prev_end = off + 4
+        L.extend(member_block(m["class"], members, member_names))
         L.append("};")
         L.append("")
 
         with open(os.path.join(srcdir, ident + ".h"), "w") as f:
             f.write("\n".join(L))
         written += 1
+        written_idents.add(ident)
+    # ---- append member blocks for classes with no standalone header ----
+    #
+    # The per-class loop above only reaches the member emission for classes it
+    # writes a file for. Nested classes and template instantiations have no
+    # such file: the offsets recovered for them were computed and discarded.
+    # Append each block to the header that DEFINES the class instead. A class
+    # with no owning header anywhere gets a new one, so nothing is dropped
+    # silently.
+    append_failed = []
+    appended_classes = 0
+    appended_records = 0
+    skipped_already = 0
+    prelude_owned = []
+    orphan_headers = {}
+    seen_blocks = set()
+    # Work on a per-file in-memory copy so several classes owned by the same
+    # header are appended in one deterministic pass instead of racing writes.
+    file_cache = {}
+    for _why, m, ident in deferred_members:
+        hdr = owning_header(m["class"])
+        if hdr is None:
+            # Before creating a new file, check whether some header ALREADY
+            # defines this class (the prelude, or a header that declares
+            # several related types). Creating a standalone header for a type
+            # that is already defined elsewhere makes the combined TU fail
+            # with a redefinition -- which is exactly what happened to
+            # GScreenClass, whose definition lives in ts_prelude.h.
+            simple_n = m["class"]
+            for _kw in ("class ", "struct "):
+                if simple_n.startswith(_kw):
+                    simple_n = simple_n[len(_kw):]
+            simple_n = simple_n.strip()
+            if simple_n in prelude_owned_types:
+                prelude_owned.append(m["class"])
+                continue
+            _defined_elsewhere = False
+            for _hp in sorted(glob.glob(os.path.join(srcdir, "*.h"))):
+                _hs = open(_hp).read()
+                if re.search(r"^(?:template\s*<[^>]*>\s*)?(?:class|struct)\s+"
+                             + re.escape(simple_n) + r"\b", _hs, re.M):
+                    _defined_elsewhere = True
+                    break
+            if _defined_elsewhere:
+                skipped_already += 1
+                continue
+            # No header defines this class anywhere. Emit a standalone header
+            # for it and say so in a comment, rather than dropping the offsets.
+            # The header is written immediately so a second manifest entry for
+            # the same class appends to it instead of failing the existence
+            # check below.
+            key = ident + ".h"
+            block = member_block(m["class"], members, member_names)
+            if not block:
+                continue
+            if key not in orphan_headers:
+                simple = m["class"]
+                for _kw in ("class ", "struct "):
+                    if simple.startswith(_kw):
+                        simple = simple[len(_kw):]
+                simple = simple.strip()
+                lines = [
+                    "#pragma once",
+                    "// " + "=" * 74,
+                    f"// {key}  —  recovered member offsets with no owning header",
+                    "//",
+                    f"// RTTI class : {m['class']}",
+                    "//",
+                    "// No reconstructed header defines this class: it has no",
+                    "// standalone generated file, and no enclosing-class or",
+                    "// template header could be found for it. The ctor-store",
+                    "// offsets recovered for it are emitted here so the evidence",
+                    "// is not dropped again. See gen_headers.py owning_header().",
+                    "// " + "=" * 74,
+                    "",
+                    f"class {simple}",
+                    "{",
+                    "public:",
+                ]
+                lines.extend(block)
+                lines.append("};")
+                lines.append("")
+                open(os.path.join(srcdir, key), "w").write("\n".join(lines))
+                orphan_headers[key] = simple
+                owner_header[simple] = key
+                owner_header[ident] = key
+                appended_classes += 1
+                appended_records += len(block)
+            continue
+        path, simple = hdr
+        if (path, simple) in seen_blocks:
+            continue
+        seen_blocks.add((path, simple))
+        if os.path.basename(path) == "ts_prelude.h":
+            # The prelude is regenerated by reconcile_prelude.py and its
+            # PRELUDE_ONLY types (GScreenClass, IUnknown) are redefined there
+            # unconditionally, so a block appended to the prelude would be
+            # discarded and a separate header would define the type twice.
+            # Report it instead of dropping it silently.
+            prelude_owned.append(m["class"])
+            continue
+        if not os.path.exists(path):
+            append_failed.append(f"{m['class']} -> {path} (missing)")
+            continue
+        src = file_cache.get(path)
+        if src is None:
+            src = open(path).read()
+        # Idempotent and non-destructive: a body that already documents its
+        # members -- the curated hand-written blocks in VectorClass.h and
+        # Pipe.h, or a block appended by an earlier run -- keeps its
+        # authoritative layout. Appending a second, raw block would give the
+        # class two disagreeing layout claims.
+        span = class_body_span(src, simple)
+        if span is None:
+            append_failed.append(f"{m['class']} -> {os.path.basename(path)} "
+                                 f"(no class {simple} in file)")
+            continue
+        body = src[span[0]:span[1]]
+        if "// ---- data members" in body:
+            skipped_already += 1
+            continue
+        block = member_block(m["class"], members, member_names)
+        if not block:
+            continue
+        # A hand-written header may already declare some of these members BY
+        # NAME (AnimTypeClass declares "bool AltPalette;" from an INI key)
+        # without carrying a data-members banner. Re-emitting the same
+        # identifier is a redeclaration error, so drop any block line whose
+        # declared name is already present in the class body.
+        existing = set()
+        for line in body.splitlines():
+            mm = re.match(r"\s*(?:virtual\s+)?[\w:<>,\s\*&]+?\b(\w+)\s*(?:\[[^\]]*\])?\s*;", line)
+            if mm and not line.lstrip().startswith("//"):
+                existing.add(mm.group(1))
+        if existing:
+            kept = []
+            dropped = 0
+            for line in block:
+                dm = re.search(r"\b(\w+)\s*(?:\[[^\]]*\])?\s*;", line)
+                if dm and dm.group(1) in existing:
+                    dropped += 1
+                    continue
+                kept.append(line)
+            if dropped:
+                kept.append(f"    // {dropped} member(s) already declared above; "
+                            f"their offsets are recorded in out/members.json")
+            block = kept
+            if not block:
+                skipped_already += 1
+                continue
+        new = insert_member_block(src, simple, block)
+        if new is None or new == src:
+            continue
+        file_cache[path] = new
+        appended_classes += 1
+        appended_records += len(block)
+    for path, src in sorted(file_cache.items()):
+        open(path, "w").write(src)
+    # Orphan headers are written as they are created (see above), so nothing to
+    # flush here; only their names are reported.
+    print(f"member blocks appended to owning headers: {appended_classes} "
+          f"classes")
+    if prelude_owned:
+        print(f"member blocks owned by ts_prelude.h (not appended): "
+              f"{len(prelude_owned)} ({', '.join(sorted(prelude_owned))})")
+        print(f"member blocks skipped (already documented): {skipped_already} "
+              f"classes")
+    if orphan_headers:
+        print(f"new headers for classes with no owner: {len(orphan_headers)} "
+              f"({', '.join(sorted(orphan_headers))})")
+    if append_failed:
+        print(f"member blocks NOT appended: {len(append_failed)}")
+        for e in append_failed[:10]:
+            print(f"  {e}")
 
     print(f"headers written: {written}")
     print(f"skipped (hand-written owns): {skipped}")

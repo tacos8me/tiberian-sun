@@ -34,6 +34,12 @@ public:
     // +0x14  int m_nNeuronCount /* ? */
 
     virtual ~BrainClass();                   // 0x424dc0 (scalar deleting dtor)
+
+    // ---- data members (offsets from ctor 0x00424925) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69a260
+
 };
 
 #endif // BRAINCLASS_H

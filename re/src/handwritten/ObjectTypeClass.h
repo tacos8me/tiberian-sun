@@ -56,6 +56,15 @@ public:
     // Evidence: ctor 0x405d50 writes [ebp+0x14] (name buffer) and [ebp+0x2d].
     char  m_Name[25];       // +0x14  /* ? */ INI "Name" (25-byte inline buffer)
     bool  m_NameSet;        // +0x2d  /* ? */
+
+    // ---- data members (offsets from ctor 0x00405d42) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x698ae8
+    unsigned long m_004;  // init 0x698acc
+    unsigned char pad_008[0x25];
+    unsigned long m_02d;  // zero-initialised
+
 };
 
 class ObjectTypeClass : public AbstractTypeClass

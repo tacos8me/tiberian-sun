@@ -95,6 +95,29 @@ with open("build/tu_all.cpp", "w") as f:
 print(f"combined TU: {len(hs)} headers")
 PY
 
+# Generate .cpp function bodies for the member functions the reconstructed
+# headers declare and the binary supplies both a function record and a
+# recovered signature for. Must run AFTER the headers are final, since the
+# emitted definitions copy the header declarations verbatim.
+echo "== function bodies =="
+python3 tools/gen_bodies.py "$OUT" "$SRC" src/generated
+# Prove every generated TU compiles standalone against the reconstructed tree.
+python3 - <<'PY'
+import glob, subprocess, sys
+bad = []
+tus = sorted(glob.glob("src/generated/*.cpp"))
+for p in tus:
+    r = subprocess.run(["g++", "-std=c++03", "-fsyntax-only",
+                        "-Isrc/include", "-Ibuild/shim", p],
+                       capture_output=True)
+    if r.returncode != 0:
+        bad.append(p)
+print(f"generated bodies compile: {len(tus)-len(bad)}/{len(tus)}")
+if bad:
+    print("FAILED:", ", ".join(bad[:10]))
+    sys.exit(1)
+PY
+
 echo
 echo "== verification =="
 python3 tools/verify.py "$SRC" build/shim

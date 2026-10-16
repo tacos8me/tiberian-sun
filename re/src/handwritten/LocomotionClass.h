@@ -197,6 +197,13 @@ public:
     virtual HRESULT __stdcall Save(IStream* pStm, BOOL fClearDirty);    // 0x4f9dd0
     virtual HRESULT __stdcall GetSizeMax(ULARGE_INTEGER* pcbSize);      // 0x4cb060
     virtual HRESULT __stdcall Slot8();                                  // 0x6829a5 stub
+
+    // ---- data members (offsets from ctor 0x004cae18) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69fe24
+    unsigned long m_004;  // init 0x69fd5c
+
 };
 
 #endif // LOCOMOTIONCLASS_H

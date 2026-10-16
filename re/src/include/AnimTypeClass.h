@@ -60,6 +60,22 @@ public:
     // ---- helpers -------------------------------------------------------
     // 0x004182CF (SmudgeTypeClass reader) and 0x00417FD0 share the
     // ObjectTypeClass base reader 0x00572610.
+
+    // ---- data members (offsets from ctor 0x00417991) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x699ad8
+    unsigned char pad_004[0xc4];
+    unsigned long m_0c8;  // init 0x1
+    unsigned long m_0cc;  // init 0x1
+    unsigned char pad_0d0[0x54];
+    unsigned long m_124;  // /* ? */
+    unsigned char pad_128[0xac];
+    unsigned long m_1d4;  // /* ? */
+    unsigned long m_1d8;  // /* ? */
+    unsigned long m_1dc;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };
 
 #endif // ANIMTYPECLASS_H

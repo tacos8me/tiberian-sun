@@ -51,6 +51,21 @@ public:
     virtual void    __stdcall Slot32();                                 // 0x62f1b0
     virtual int     __stdcall Slot35();                                 // 0x630840
     virtual bool    __stdcall Slot38();                                 // 0x630860
+
+    // ---- data members (offsets from ctor 0x0062f147) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a65a4
+    unsigned long m_004;  // init 0x6a64dc
+    unsigned char pad_008[0xc];
+    unsigned long m_014;  // /* ? */
+    unsigned char pad_018[0xc];
+    unsigned long m_024;  // /* ? */
+    unsigned char pad_028[0x4];
+    unsigned long m_02c;  // /* ? */
+    unsigned long m_030;  // /* ? */
+    unsigned long m_034;  // /* ? */
+
 };
 
 #endif // TUNNELLOCOMOTIONCLASS_H

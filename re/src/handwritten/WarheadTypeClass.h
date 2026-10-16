@@ -63,6 +63,20 @@ public:
     int   LaserInnerColor;       // /* ? */ INI "LaserInnerColor"
     int   LaserOuterColor;       // /* ? */ INI "LaserOuterColor"
     int   LaserOuterSpread;      // /* ? */ INI "LaserOuterSpread"
+
+    // ---- data members (offsets from ctor 0x00651501) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a7230
+    unsigned long m_004;  // init 0x6a7214
+    unsigned char pad_008[0x94];
+    unsigned long m_09c;  // init 0x6a3c48
+    unsigned long m_0a0;  // /* ? */
+    unsigned long m_0a4;  // /* ? */
+    unsigned long m_0a8;  // init 0x1
+    unsigned long m_0ac;  // /* ? */
+    unsigned long m_0b0;  // init 0xa
+
 };
 
 #endif // WARHEADTYPECLASS_H

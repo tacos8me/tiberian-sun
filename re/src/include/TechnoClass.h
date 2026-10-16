@@ -30,6 +30,22 @@ public:
     virtual ~MissionClass();                                        // [0] 0x405790
     virtual void Init();                                            // [1] 0x405830
     virtual void Shutdown();                                        // [2] 0x405840
+
+    // ---- data members (offsets from ctor 0x00546707) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a20f0
+    unsigned long m_004;  // init 0x6a20d4
+    unsigned char pad_008[0x44];
+    unsigned long m_04c;  // /* ? */
+    unsigned long m_050;  // /* ? */
+    unsigned long m_054;  // /* ? */
+    unsigned long m_058;  // /* ? */
+    unsigned long m_05c;  // /* ? */
+    unsigned long m_060;  // /* ? */
+    unsigned char pad_064[0x4];
+    unsigned long m_068;  // /* ? */
+
 };
 
 class RadioClass : public MissionClass
@@ -38,6 +54,18 @@ public:
     virtual ~RadioClass();                                          // [0] 0x405790
     virtual void Init();                                            // [1] 0x405830
     virtual void Shutdown();                                        // [2] 0x405840
+
+    // ---- data members (offsets from ctor 0x005a5707) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a3738
+    unsigned long m_004;  // init 0x6a371c
+    unsigned char pad_008[0x64];
+    unsigned long m_06c;  // /* ? */
+    unsigned long m_070;  // /* ? */
+    unsigned long m_074;  // /* ? */
+    unsigned long m_078;  // zero-initialised
+
 };
 
 // ---------------------------------------------------------------------------

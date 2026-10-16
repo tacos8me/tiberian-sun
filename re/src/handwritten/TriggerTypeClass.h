@@ -73,6 +73,21 @@ public:
     virtual void Slot24();                   // 0x406010
     virtual void Slot25();                   // 0x62da00 (ReadINI)
     virtual void Slot26();                   // 0x62ddd0
+
+    // ---- data members (offsets from ctor 0x0062d4e7) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a63dc
+    unsigned long m_004;  // init 0x6a63c0
+    unsigned char pad_008[0x58];
+    unsigned long m_060;  // init 0xffffffff
+    unsigned long m_064;  // /* ? */
+    unsigned long m_068;  // /* ? */
+    unsigned long m_06c;  // /* ? */
+    unsigned long m_070;  // /* ? */
+    unsigned long m_074;  // /* ? */
+    unsigned long m_078;  // /* ? */
+
 };
 
 // ---------------------------------------------------------------------------
@@ -116,6 +131,13 @@ public:
     virtual void Slot24();                   // 0x406010
     virtual void Slot25();                   // 0x410730 (ReadINI)
     virtual void Slot26();                   // 0x410c80
+
+    // ---- data members (offsets from ctor 0x0040fa35) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x699250
+    unsigned long m_004;  // init 0x699234
+
 };
 
 #endif // TRIGGERTYPECLASS_H

@@ -30,6 +30,15 @@ public:
     virtual void    __stdcall Slot17();                                 // 0x622840
     virtual void    __stdcall Slot18();                                 // 0x622860
     virtual void    __stdcall Slot29();                                 // 0x622960
+
+    // ---- data members (offsets from ctor 0x00622737) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a5d9c
+    unsigned long m_004;  // init 0x6a5cd4
+    unsigned char pad_008[0xc];
+    unsigned long m_014;  // /* ? */
+
 };
 
 #endif // TELEPORTLOCOMOTIONCLASS_H

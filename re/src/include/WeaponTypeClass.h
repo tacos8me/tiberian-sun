@@ -58,6 +58,15 @@ public:
     // ---- helpers -------------------------------------------------------
     // 0x0064E25E — reads "Projectile" and resolves it to a BulletTypeClass*
     // /* ? */ exact signature not proven.
+
+    // ---- data members (offsets from ctor 0x00656b55) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a75b0
+    unsigned char pad_004[0xcb];
+    unsigned long m_0cf;  // /* ? */
+    unsigned long m_0d3;  // /* ? */
+
 };
 
 #endif // WEAPONTYPECLASS_H

@@ -419,11 +419,35 @@
   "ret": null,
   "evidence": "this in ecx -> esi"
  },
+ "0x403471": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x403475": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "xor eax,eax"
+ },
  "0x4034a0": {
   "cc": "__thiscall",
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> esi"
+ },
+ "0x4034c1": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x4034c5": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "xor eax,eax"
  },
  "0x403980": {
   "cc": "__stdcall",
@@ -1127,6 +1151,30 @@
   "ret": null,
   "evidence": "this in ecx -> esi"
  },
+ "0x408abc": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+40.."
+ },
+ "0x408e5c": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x408e93": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x408f90": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
  "0x408fc0": {
   "cc": "__cdecl",
   "nargs": null,
@@ -1163,6 +1211,36 @@
   "ret": null,
   "evidence": "this in ecx -> esi"
  },
+ "0x409a38": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x409ab9": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x409b30": {
+  "cc": "__cdecl",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+28.."
+ },
+ "0x409c99": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x409cb4": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x409d70": {
   "cc": "__thiscall",
   "nargs": 5,
@@ -1175,11 +1253,65 @@
   "ret": null,
   "evidence": "this in ecx -> esi"
  },
+ "0x409f98": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x40a167": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x40a1de": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x40a389": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x40a510": {
   "cc": "__thiscall",
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> esi"
+ },
+ "0x40a52f": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x40a5b0": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x40a627": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+52.."
+ },
+ "0x40a84f": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x40a86a": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x40a930": {
   "cc": "__thiscall",
@@ -1192,6 +1324,36 @@
   "nargs": 3,
   "ret": null,
   "evidence": "ret 12; this in ecx -> esi"
+ },
+ "0x40acbb": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x40acd2": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x40acda": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x40acf1": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x40ad09": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
  },
  "0x40ad40": {
   "cc": "__stdcall",
@@ -1223,6 +1385,96 @@
   "ret": "int",
   "evidence": "this in ecx -> esi; eax=0x1"
  },
+ "0x40b065": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b0f6": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b2e0": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": "int",
+  "evidence": "ebp+20..; eax=0x1"
+ },
+ "0x40b378": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b393": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b40f": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": "int",
+  "evidence": "ebp+56..; eax=0x1"
+ },
+ "0x40b481": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b4c2": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b69d": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b75f": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b81e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b8f9": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b9d1": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b9e1": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40ba7e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x40bb80": {
   "cc": "__thiscall",
   "nargs": 7,
@@ -1234,6 +1486,72 @@
   "nargs": 2,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+12.."
+ },
+ "0x40be28": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x40be70": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x40bed2": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x40bef4": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x40bf07": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x40bf1b": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x40bfa2": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x40bff5": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x5"
+ },
+ "0x40c06f": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x40c139": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x40c191": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
  },
  "0x40c240": {
   "cc": "__stdcall",
@@ -3551,6 +3869,54 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+84.."
  },
+ "0x425cb8": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; xor eax,eax"
+ },
+ "0x425ebe": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x425f6f": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x42632d": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x42645a": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x426484": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x426569": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x426588": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
  "0x4265e0": {
   "cc": "__thiscall",
   "nargs": 3,
@@ -3617,6 +3983,24 @@
   "ret": null,
   "evidence": "ret 4; this in ecx -> edi"
  },
+ "0x42858a": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4285a9": {
+  "cc": null,
+  "nargs": 22,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x428b03": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
  "0x428c30": {
   "cc": "__thiscall",
   "nargs": 1,
@@ -3682,6 +4066,60 @@
   "nargs": 1,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+268.."
+ },
+ "0x42b7d4": {
+  "cc": null,
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x42bb29": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; eax=0x1"
+ },
+ "0x42c4e8": {
+  "cc": null,
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x42cab6": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
+ },
+ "0x42cb53": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x42cb97": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x42cbdc": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x42cc1d": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x42cc5b": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x42cca0": {
   "cc": "__thiscall",
@@ -3839,6 +4277,60 @@
   "ret": null,
   "evidence": "this in ecx -> esi"
  },
+ "0x431639": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x431659": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x431684": {
+  "cc": "__cdecl",
+  "nargs": 16,
+  "ret": null,
+  "evidence": "ebp+24.."
+ },
+ "0x431880": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x43189d": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x43192f": {
+  "cc": "__cdecl",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x431a30": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+236.."
+ },
+ "0x431a94": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+152.."
+ },
+ "0x431ab6": {
+  "cc": "__cdecl",
+  "nargs": 30,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
  "0x432150": {
   "cc": "__thiscall",
   "nargs": 1,
@@ -3875,6 +4367,36 @@
   "ret": null,
   "evidence": "this in ecx -> ebp; ebp+34.."
  },
+ "0x4324df": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+46.."
+ },
+ "0x432553": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+24.."
+ },
+ "0x43257b": {
+  "cc": null,
+  "nargs": 11,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x432880": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+88.."
+ },
+ "0x4328ae": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+46.."
+ },
  "0x432940": {
   "cc": "__thiscall",
   "nargs": 3,
@@ -3886,6 +4408,30 @@
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> esi"
+ },
+ "0x432a0a": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x432b60": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+28.."
+ },
+ "0x432ba9": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x432c61": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x432dd0": {
   "cc": "__thiscall",
@@ -9095,11 +9641,95 @@
   "ret": null,
   "evidence": "ebp+16.."
  },
+ "0x4713a8": {
+  "cc": null,
+  "nargs": null,
+  "ret": "int",
+  "evidence": "xor eax,eax"
+ },
+ "0x4713b0": {
+  "cc": null,
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ebp+4658412..; xor eax,eax"
+ },
+ "0x4713b8": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+38.."
+ },
+ "0x4713dc": {
+  "cc": null,
+  "nargs": 0,
+  "ret": null,
+  "evidence": "ebp+38.."
+ },
+ "0x4713e6": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+36.."
+ },
+ "0x4713f1": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+36.."
+ },
+ "0x4713fc": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+36.."
+ },
+ "0x471406": {
+  "cc": null,
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
  "0x471780": {
   "cc": "__thiscall",
   "nargs": 7,
   "ret": null,
   "evidence": "this in ecx -> eax; ebp+16.."
+ },
+ "0x4717e6": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x4717ee": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x4717fa": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x471805": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x471811": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x47181c": {
+  "cc": null,
+  "nargs": 16,
+  "ret": null,
+  "evidence": "ebp+16.."
  },
  "0x471c60": {
   "cc": "__thiscall",
@@ -9160,6 +9790,12 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4; this in ecx -> ebx"
+ },
+ "0x472990": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x472c90": {
   "cc": "__thiscall",
@@ -9232,6 +9868,42 @@
   "nargs": 4,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+12.."
+ },
+ "0x474771": {
+  "cc": "__thiscall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "this in ecx -> ebx; ebp+36.."
+ },
+ "0x474778": {
+  "cc": "__thiscall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "this in ecx -> ebx; ebp+36.."
+ },
+ "0x47477f": {
+  "cc": "__thiscall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "this in ecx -> ebx; ebp+32.."
+ },
+ "0x474786": {
+  "cc": "__thiscall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "this in ecx -> ebx; ebp+32.."
+ },
+ "0x4748dd": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+28.."
+ },
+ "0x4749ca": {
+  "cc": "__stdcall",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ret 20"
  },
  "0x475070": {
   "cc": "__thiscall",
@@ -10877,6 +11549,192 @@
   "ret": null,
   "evidence": "this in ecx -> esi"
  },
+ "0x49069b": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x4906e7": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x490733": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x49076b": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x4907a9": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x4907bb": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+104.."
+ },
+ "0x49083f": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x490871": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+92.."
+ },
+ "0x490907": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+44.."
+ },
+ "0x490932": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x490a32": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+36.."
+ },
+ "0x490a5f": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x490a7b": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x490a91": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x490aab": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x490adb": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x490d82": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x490edf": {
+  "cc": "__cdecl",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x491023": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x49108d": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x4910ba": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x4910cc": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x4910ee": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x491102": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x491118": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x491207": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x49122c": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x491292": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x4912da": {
+  "cc": "__cdecl",
+  "nargs": 0,
+  "ret": null,
+  "evidence": "ebp+61.."
+ },
+ "0x49131f": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x491332": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x491830": {
   "cc": null,
   "nargs": 2,
@@ -11135,11 +11993,29 @@
   "ret": null,
   "evidence": "this in ecx -> esi"
  },
+ "0x494e0c": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x494e50": {
   "cc": "__thiscall",
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> esi"
+ },
+ "0x494e83": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x494e97": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x495110": {
   "cc": "__thiscall",
@@ -11579,6 +12455,30 @@
   "ret": "int",
   "evidence": "this in ecx -> esi; eax=0x1"
  },
+ "0x49d0c1": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x49d0e6": {
+  "cc": "__cdecl",
+  "nargs": 12,
+  "ret": "int",
+  "evidence": "ebp+16..; eax=0x3c"
+ },
+ "0x49d3b7": {
+  "cc": "__cdecl",
+  "nargs": 5,
+  "ret": "int",
+  "evidence": "ebp+20..; eax=0x1"
+ },
+ "0x49d75f": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
  "0x49d8e0": {
   "cc": "__thiscall",
   "nargs": 1,
@@ -11651,6 +12551,66 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+120.."
  },
+ "0x49ee9f": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x49ef1e": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x49ef45": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x49ef61": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x49ef95": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x49efe0": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x49f010": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+76.."
+ },
+ "0x49f02d": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x49f05c": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x49f068": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
  "0x49f500": {
   "cc": "__thiscall",
   "nargs": 3,
@@ -11686,6 +12646,48 @@
   "nargs": 2,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+16.."
+ },
+ "0x4a03c8": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x4a03fe": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x4a041b": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x4a04ac": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x4a04c8": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x4a0519": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x14"
+ },
+ "0x4a05ee": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
  },
  "0x4a0660": {
   "cc": "__thiscall",
@@ -15545,11 +16547,71 @@
   "ret": "int",
   "evidence": "this in ecx -> ebp; ebp+16..; eax=0x3"
  },
+ "0x4b7b1f": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x4b7b47": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+512.."
+ },
+ "0x4b7b4f": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+512.."
+ },
+ "0x4b7b57": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+512.."
+ },
+ "0x4b7b5f": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
  "0x4b7e80": {
   "cc": "__thiscall",
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> esi"
+ },
+ "0x4b7e9c": {
+  "cc": null,
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x3"
+ },
+ "0x4b7ea4": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; eax=0x3"
+ },
+ "0x4b7eac": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; eax=0x3"
+ },
+ "0x4b7eb4": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; eax=0x3"
+ },
+ "0x4b7ebe": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; eax=0x3"
  },
  "0x4b8150": {
   "cc": "__thiscall",
@@ -15563,11 +16625,71 @@
   "ret": null,
   "evidence": "this in ecx -> ebp; ebp+19.."
  },
+ "0x4b82eb": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+512.."
+ },
+ "0x4b82f3": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+512.."
+ },
+ "0x4b82fb": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+512.."
+ },
+ "0x4b8303": {
+  "cc": null,
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
+ "0x4b8497": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
  "0x4b85e0": {
   "cc": "__thiscall",
   "nargs": 1,
   "ret": null,
   "evidence": "this in ecx -> edi; ebp+8.."
+ },
+ "0x4b861e": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4b864b": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4b8678": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4b86a5": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4b86c5": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
  },
  "0x4b8850": {
   "cc": "__thiscall",
@@ -15580,6 +16702,36 @@
   "nargs": 2,
   "ret": null,
   "evidence": "ret 8"
+ },
+ "0x4b89f9": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4b8a0f": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4b8a26": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4b8a3c": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4b8a53": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": "int",
+  "evidence": "ret 8; xor eax,eax"
  },
  "0x4b8aa0": {
   "cc": "__thiscall",
@@ -15677,6 +16829,36 @@
   "ret": null,
   "evidence": "ret 4"
  },
+ "0x4bb9f9": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bba02": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bba0b": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bba14": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bba1d": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
+ },
  "0x4bbba0": {
   "cc": "__thiscall",
   "nargs": 1,
@@ -15701,6 +16883,36 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+12.."
  },
+ "0x4bbdb1": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bbdf1": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bbe9d": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bbf49": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bbff5": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
  "0x4bc0d0": {
   "cc": "__thiscall",
   "nargs": 2,
@@ -15718,6 +16930,66 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
+ },
+ "0x4bc369": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bc372": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bc37b": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bc384": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bc38d": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
+ },
+ "0x4bc479": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bc481": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bc489": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bc491": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bc4a0": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
  },
  "0x4bc860": {
   "cc": "__thiscall",
@@ -15809,11 +17081,71 @@
   "ret": null,
   "evidence": "this in ecx -> edi; ebp+28.."
  },
+ "0x4bdb2c": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bdbdf": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bdc05": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bdc2b": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bdc48": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
  "0x4bdc80": {
   "cc": "__thiscall",
   "nargs": 1,
   "ret": null,
   "evidence": "this in ecx -> edi; ebp+28.."
+ },
+ "0x4bdcac": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bdd33": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bdd59": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bdd89": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4bdda6": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
  },
  "0x4bde10": {
   "cc": "__thiscall",
@@ -15868,6 +17200,12 @@
   "nargs": 17,
   "ret": null,
   "evidence": "this in ecx -> edi; ebp+20.."
+ },
+ "0x4bfec0": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
  },
  "0x4bff10": {
   "cc": "__stdcall",
@@ -15946,6 +17284,36 @@
   "nargs": 4,
   "ret": null,
   "evidence": "this in ecx -> ebp; ebp+512.."
+ },
+ "0x4c2de3": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+512.."
+ },
+ "0x4c2deb": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+512.."
+ },
+ "0x4c2df3": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+512.."
+ },
+ "0x4c2dfb": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+512.."
+ },
+ "0x4c2f18": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
  },
  "0x4c2f60": {
   "cc": "__thiscall",
@@ -16954,6 +18322,24 @@
   "nargs": 3,
   "ret": null,
   "evidence": "ret 12; this in ecx -> esi"
+ },
+ "0x4d096b": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x4d0980": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x4d0985": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
  },
  "0x4d09d0": {
   "cc": "__thiscall",
@@ -18929,6 +20315,18 @@
   "ret": null,
   "evidence": "ebp+19.."
  },
+ "0x4e4b78": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
+ "0x4e4b7d": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
  "0x4e5140": {
   "cc": "__cdecl",
   "nargs": 7,
@@ -19427,6 +20825,12 @@
   "ret": "int",
   "evidence": "ret 4; this in ecx -> edi; eax=0x7c42fc"
  },
+ "0x4ea6c0": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x4ea6d0": {
   "cc": "__stdcall",
   "nargs": 1,
@@ -19462,6 +20866,12 @@
   "nargs": 4,
   "ret": "int",
   "evidence": "ebp+8..; xor eax,eax"
+ },
+ "0x4ed4b0": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x4ed4c0": {
   "cc": null,
@@ -19714,6 +21124,24 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ebp+28.."
+ },
+ "0x4f05a8": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x4f062b": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x4f0632": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
  },
  "0x4f0720": {
   "cc": null,
@@ -20969,6 +22397,36 @@
   "ret": null,
   "evidence": "ebp+18.."
  },
+ "0x4fd3cd": {
+  "cc": null,
+  "nargs": 0,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
+ "0x4fd3db": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+24.."
+ },
+ "0x4fd4d6": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+24.."
+ },
+ "0x4fd530": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+18.."
+ },
+ "0x4fd53f": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+18.."
+ },
  "0x4fda90": {
   "cc": "__thiscall",
   "nargs": 5,
@@ -21202,6 +22660,12 @@
   "nargs": 7,
   "ret": null,
   "evidence": "this in ecx -> edi; ebp+16.."
+ },
+ "0x507930": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x507940": {
   "cc": "__thiscall",
@@ -22583,6 +24047,66 @@
   "ret": null,
   "evidence": "ebp+60.."
  },
+ "0x5331ee": {
+  "cc": null,
+  "nargs": 16,
+  "ret": null,
+  "evidence": "ebp+60.."
+ },
+ "0x533282": {
+  "cc": null,
+  "nargs": 16,
+  "ret": null,
+  "evidence": "ebp+60.."
+ },
+ "0x53330e": {
+  "cc": null,
+  "nargs": 16,
+  "ret": null,
+  "evidence": "ebp+60.."
+ },
+ "0x5333a2": {
+  "cc": null,
+  "nargs": 19,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x53343a": {
+  "cc": "__thiscall",
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ret 28; this in ecx -> edx"
+ },
+ "0x533926": {
+  "cc": null,
+  "nargs": 14,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x533cfc": {
+  "cc": null,
+  "nargs": 19,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x5341ae": {
+  "cc": null,
+  "nargs": 19,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x53456b": {
+  "cc": null,
+  "nargs": 24,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x5349fa": {
+  "cc": "__stdcall",
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ret 28"
+ },
  "0x534b20": {
   "cc": "__stdcall",
   "nargs": 2,
@@ -23525,6 +25049,156 @@
   "ret": null,
   "evidence": "this in ecx -> edi; ebp+8.."
  },
+ "0x546939": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x54695b": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x54697d": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x54699f": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x5469c1": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x5469e3": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546a05": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546a27": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546a49": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546a6b": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546a8d": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546aaf": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546ad1": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546af3": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546b15": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546b37": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546b59": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546b7b": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546b9d": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546bbf": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546be1": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546c03": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546c25": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546c47": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x546c69": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
  "0x546d20": {
   "cc": "__cdecl",
   "nargs": 1,
@@ -24172,6 +25846,30 @@
   "nargs": 3,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+16.."
+ },
+ "0x553758": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x553762": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+15.."
+ },
+ "0x55376c": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+15.."
+ },
+ "0x553776": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+15.."
  },
  "0x553960": {
   "cc": "__thiscall",
@@ -25505,6 +27203,12 @@
   "ret": "int",
   "evidence": "ebp+32..; xor eax,eax"
  },
+ "0x562a80": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; eax=0x1"
+ },
  "0x5643d0": {
   "cc": "__thiscall",
   "nargs": 3,
@@ -25516,6 +27220,24 @@
   "nargs": 2,
   "ret": null,
   "evidence": "ret 8; this in ecx -> edi"
+ },
+ "0x5648c0": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x5648d0": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x5648e0": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x567150": {
   "cc": "__thiscall",
@@ -25571,11 +27293,29 @@
   "ret": "int",
   "evidence": "ebp+12..; xor eax,eax"
  },
+ "0x569420": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; eax=0x1"
+ },
  "0x569630": {
   "cc": "__thiscall",
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> edi"
+ },
+ "0x569675": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+200.."
+ },
+ "0x569794": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+12.."
  },
  "0x5698d0": {
   "cc": null,
@@ -25726,6 +27466,12 @@
   "nargs": 7,
   "ret": "int",
   "evidence": "ebp+8..; xor eax,eax"
+ },
+ "0x56de90": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0xfffffc18"
  },
  "0x56e000": {
   "cc": "__stdcall",
@@ -26753,6 +28499,30 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+20.."
  },
+ "0x578351": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+88.."
+ },
+ "0x57839a": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+88.."
+ },
+ "0x5783e3": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+88.."
+ },
+ "0x57842c": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+88.."
+ },
  "0x578640": {
   "cc": "__thiscall",
   "nargs": null,
@@ -26885,6 +28655,30 @@
   "ret": null,
   "evidence": "ebp+360.."
  },
+ "0x57ef2f": {
+  "cc": null,
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ebp+40..; xor eax,eax"
+ },
+ "0x57f079": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x57f1ae": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; xor eax,eax"
+ },
+ "0x57f52d": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+360.."
+ },
  "0x57fbc0": {
   "cc": null,
   "nargs": 7,
@@ -26986,6 +28780,12 @@
   "nargs": 6,
   "ret": null,
   "evidence": "this in ecx -> ebx; ebp+16.."
+ },
+ "0x587e30": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x587f70": {
   "cc": "__thiscall",
@@ -27173,6 +28973,12 @@
   "ret": null,
   "evidence": "this in ecx -> esi"
  },
+ "0x58d20c": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x58d250": {
   "cc": "__thiscall",
   "nargs": 2,
@@ -27346,6 +29152,12 @@
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> esi"
+ },
+ "0x58ff3c": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x58fff0": {
   "cc": "__cdecl",
@@ -28894,6 +30706,30 @@
   "nargs": 7,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+16.."
+ },
+ "0x5a9fdb": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x5a9fed": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x5aa034": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x5aa046": {
+  "cc": null,
+  "nargs": 2,
+  "ret": "int",
+  "evidence": "ebp+16..; xor eax,eax"
  },
  "0x5aa2d0": {
   "cc": "__thiscall",
@@ -34319,6 +36155,36 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+16.."
  },
+ "0x5f1f66": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x5f201d": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x5f2107": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x5f213c": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x5f246a": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
  "0x5f2690": {
   "cc": "__thiscall",
   "nargs": 2,
@@ -36221,6 +38087,30 @@
   "ret": null,
   "evidence": "ebp+8.."
  },
+ "0x60bfcd": {
+  "cc": null,
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x60c02c": {
+  "cc": null,
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+40.."
+ },
+ "0x60c084": {
+  "cc": null,
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ebp+60.."
+ },
+ "0x60c107": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
  "0x60c620": {
   "cc": "__cdecl",
   "nargs": null,
@@ -36514,6 +38404,60 @@
   "nargs": 2,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+20.."
+ },
+ "0x60f624": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x60f661": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x60f692": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x60f6c3": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x60f6e7": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x60f6f2": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x60f71c": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x60f751": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x60f890": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
  },
  "0x60f8f0": {
   "cc": "__thiscall",
@@ -36809,6 +38753,12 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+24.."
  },
+ "0x616672": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
  "0x6167f0": {
   "cc": "__stdcall",
   "nargs": 1,
@@ -36832,6 +38782,24 @@
   "nargs": 1,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+20.."
+ },
+ "0x6178c9": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x6179c4": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x617a3a": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
  },
  "0x617a70": {
   "cc": "__thiscall",
@@ -36905,11 +38873,71 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+27.."
  },
+ "0x618e26": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x61923f": {
+  "cc": null,
+  "nargs": 8,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
+ "0x6192df": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+36.."
+ },
+ "0x6193ad": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+68.."
+ },
+ "0x6193f9": {
+  "cc": "__stdcall",
+  "nargs": 15,
+  "ret": null,
+  "evidence": "ret 60"
+ },
+ "0x619450": {
+  "cc": "__stdcall",
+  "nargs": 15,
+  "ret": null,
+  "evidence": "ret 60"
+ },
  "0x619490": {
   "cc": "__thiscall",
   "nargs": 2,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+16.."
+ },
+ "0x6194be": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+104.."
+ },
+ "0x6194d6": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+44.."
+ },
+ "0x6194dd": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x6197f2": {
+  "cc": "__stdcall",
+  "nargs": 9,
+  "ret": null,
+  "evidence": "ret 36"
  },
  "0x619ab0": {
   "cc": "__thiscall",
@@ -37433,6 +39461,30 @@
   "ret": "int",
   "evidence": "eax=0xa"
  },
+ "0x620f43": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0xa"
+ },
+ "0x620f49": {
+  "cc": "__thiscall",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "this in ecx -> eax; eax=0x5"
+ },
+ "0x620f51": {
+  "cc": "__thiscall",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "this in ecx -> eax; eax=0x5"
+ },
+ "0x620f5e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x5"
+ },
  "0x620f80": {
   "cc": null,
   "nargs": 11,
@@ -37852,6 +39904,66 @@
   "nargs": 6,
   "ret": null,
   "evidence": "ret 24; this in ecx -> ebp"
+ },
+ "0x625cd7": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
+ },
+ "0x625cf6": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
+ },
+ "0x625d18": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
+ },
+ "0x625d43": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
+ },
+ "0x625d65": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
+ },
+ "0x625d8e": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
+ },
+ "0x625db0": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
+ },
+ "0x625dd9": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
+ },
+ "0x625e23": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
+ },
+ "0x625e53": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+44.."
  },
  "0x626680": {
   "cc": "__stdcall",
@@ -38278,6 +40390,24 @@
   "nargs": 1,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+8.."
+ },
+ "0x62ac34": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x62ac75": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x62ad32": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
  },
  "0x62ae60": {
   "cc": "__stdcall",
@@ -38717,11 +40847,59 @@
   "ret": null,
   "evidence": "ebp+44.."
  },
+ "0x62f34e": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x62f513": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
  "0x62f560": {
   "cc": null,
   "nargs": 1,
   "ret": null,
   "evidence": "ebp+36.."
+ },
+ "0x62f5c3": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
+ "0x62f6a6": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x62f747": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
+ "0x62f754": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
+ "0x62f761": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
+ "0x62f7dd": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+12.."
  },
  "0x62f8e0": {
   "cc": "__stdcall",
@@ -38921,6 +41099,60 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+20.."
  },
+ "0x63262c": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x6326bc": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x63273b": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x6327de": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x6328b8": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x5"
+ },
+ "0x6328f4": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x632a06": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x632a68": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x632a80": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
  "0x632b00": {
   "cc": "__thiscall",
   "nargs": 2,
@@ -38981,11 +41213,35 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+19.."
  },
+ "0x6352b5": {
+  "cc": "__stdcall",
+  "nargs": 8,
+  "ret": null,
+  "evidence": "ret 32"
+ },
  "0x6354d0": {
   "cc": "__thiscall",
   "nargs": 9,
   "ret": null,
   "evidence": "this in ecx -> ebp; ebp+68.."
+ },
+ "0x63552e": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+68.."
+ },
+ "0x635535": {
+  "cc": null,
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ebp+68.."
+ },
+ "0x635544": {
+  "cc": null,
+  "nargs": 39,
+  "ret": null,
+  "evidence": "ebp+28.."
  },
  "0x636230": {
   "cc": "__thiscall",
@@ -39010,6 +41266,24 @@
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> esi"
+ },
+ "0x637210": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0xa"
+ },
+ "0x6372c1": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x6372e3": {
+  "cc": null,
+  "nargs": 11,
+  "ret": null,
+  "evidence": "ebp+16.."
  },
  "0x637b50": {
   "cc": "__thiscall",
@@ -40349,6 +42623,54 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+8.."
  },
+ "0x64e62d": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x64e650": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x64e670": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x64e679": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x64e693": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x64e701": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; xor eax,eax"
+ },
+ "0x64e70e": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; xor eax,eax"
+ },
+ "0x64e714": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; xor eax,eax"
+ },
  "0x64e750": {
   "cc": "__cdecl",
   "nargs": 2,
@@ -40361,6 +42683,54 @@
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+8.."
  },
+ "0x64e78d": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x64e7e0": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x64e800": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x64e809": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x64e823": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x64e891": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; xor eax,eax"
+ },
+ "0x64e89e": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; xor eax,eax"
+ },
+ "0x64e8a4": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; xor eax,eax"
+ },
  "0x64e8e0": {
   "cc": "__cdecl",
   "nargs": 2,
@@ -40372,6 +42742,36 @@
   "nargs": 2,
   "ret": null,
   "evidence": "ebp+8.."
+ },
+ "0x64e99e": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ebp+20..; xor eax,eax"
+ },
+ "0x64e9d1": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": "int",
+  "evidence": "ebp+16..; xor eax,eax"
+ },
+ "0x64e9f9": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x64ea01": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "xor eax,eax"
+ },
+ "0x64ea07": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "xor eax,eax"
  },
  "0x64ea60": {
   "cc": "__thiscall",
@@ -41860,6 +44260,12 @@
   "nargs": 5,
   "ret": "int",
   "evidence": "ret 20; xor eax,eax"
+ },
+ "0x66c490": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x66c4a0": {
   "cc": "__stdcall",
@@ -43685,6 +46091,30 @@
   "ret": null,
   "evidence": "this in ecx -> eax; ebp+8.."
  },
+ "0x683d08": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x683d10": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x683d1c": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x683d30": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
  "0x683f70": {
   "cc": "__cdecl",
   "nargs": 2,
@@ -44327,6 +46757,30 @@
   "ret": null,
   "evidence": "this in ecx -> eax; ebp+8.."
  },
+ "0x68cf38": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x68cf40": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x68cf4c": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x68cf60": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
  "0x68d1b4": {
   "cc": "__cdecl",
   "nargs": 2,
@@ -44406,6 +46860,390 @@
   "evidence": ""
  },
  "0x68d8c7": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d8d4": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d8da": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d8df": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d8e5": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d8ea": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d8f0": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d8f6": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d8fc": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d902": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d91e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d923": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d939": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d93e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d95a": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d96a": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d97e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d98e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d9ae": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d9b3": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d9cd": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d9d2": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68d9f2": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68da06": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68da1e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68da32": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68da52": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68da57": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68da71": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68da76": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68da96": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68daaa": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dac2": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dad6": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68daf6": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dafb": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68db15": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68db1a": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68db3a": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68db4e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68db66": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68db7a": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68db9a": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68db9f": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dbb9": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dbbe": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dbde": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dbf2": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dc0a": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dc1e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dc3e": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dc43": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dc5d": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dc62": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dc82": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dc96": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dcae": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dcc2": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dce2": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dce7": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dd01": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dd06": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dd26": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dd3a": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x68dd52": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
@@ -45311,6 +48149,12 @@
   "ret": null,
   "evidence": "ret 8"
  },
+ "0x408b29": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x446e50": {
   "cc": "__cdecl",
   "nargs": null,
@@ -45335,6 +48179,12 @@
   "ret": null,
   "evidence": "ebp+12.."
  },
+ "0x40a6ba": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x40ad8e": {
   "cc": "__stdcall",
   "nargs": 3,
@@ -45352,6 +48202,24 @@
   "nargs": 2,
   "ret": "int",
   "evidence": "ret 8; xor eax,eax"
+ },
+ "0x454b60": {
+  "cc": "__thiscall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "this in ecx -> edi; ebp+15.."
+ },
+ "0x40b8de": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x4c4ff0": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x40bc92": {
   "cc": "__stdcall",
@@ -46097,6 +48965,18 @@
   "ret": null,
   "evidence": "ret 4; this in ecx -> esi"
  },
+ "0x426439": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x426423": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
  "0x470580": {
   "cc": "__cdecl",
   "nargs": null,
@@ -46145,12 +49025,6 @@
   "ret": null,
   "evidence": "ebp+16.."
  },
- "0x4c4ff0": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": null,
-  "evidence": ""
- },
  "0x427ce4": {
   "cc": "__stdcall",
   "nargs": 2,
@@ -46162,6 +49036,18 @@
   "nargs": 2,
   "ret": null,
   "evidence": "ret 8"
+ },
+ "0x44fb60": {
+  "cc": "__thiscall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "this in ecx -> edi; ebp+32.."
+ },
+ "0x4288ad": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
  },
  "0x428d74": {
   "cc": "__cdecl",
@@ -46205,6 +49091,42 @@
   "ret": null,
   "evidence": "ret 24; this in ecx -> esi"
  },
+ "0x4c3330": {
+  "cc": "__thiscall",
+  "nargs": null,
+  "ret": null,
+  "evidence": "this in ecx -> esi"
+ },
+ "0x42b940": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x41ecb0": {
+  "cc": "__thiscall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "this in ecx -> edi; ebp+16..; xor eax,eax"
+ },
+ "0x4c5020": {
+  "cc": "__thiscall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8; this in ecx -> edi"
+ },
+ "0x42c779": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
+ },
+ "0x5d9250": {
+  "cc": "__thiscall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "this in ecx -> esi; ebp+8.."
+ },
  "0x6572d0": {
   "cc": "__cdecl",
   "nargs": null,
@@ -46247,18 +49169,6 @@
   "ret": null,
   "evidence": "ret 4"
  },
- "0x44fb60": {
-  "cc": "__thiscall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "this in ecx -> edi; ebp+32.."
- },
- "0x454b60": {
-  "cc": "__thiscall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "this in ecx -> edi; ebp+15.."
- },
  "0x46b380": {
   "cc": "__thiscall",
   "nargs": 1,
@@ -46271,11 +49181,47 @@
   "ret": "int",
   "evidence": "ebp+16..; eax=0x1"
  },
+ "0x444f70": {
+  "cc": "__thiscall",
+  "nargs": 5,
+  "ret": "int",
+  "evidence": "ret 20; this in ecx -> edi; xor eax,eax"
+ },
+ "0x4320c8": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x45d7b0": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x4328d3": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x432779": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
  "0x432976": {
   "cc": "__cdecl",
   "nargs": 3,
   "ret": null,
   "evidence": "ebp+19.."
+ },
+ "0x432be5": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
  },
  "0x432ea4": {
   "cc": "__stdcall",
@@ -47759,6 +50705,42 @@
   "ret": "int",
   "evidence": "this in ecx -> ebx; xor eax,eax"
  },
+ "0x4713be": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+38.."
+ },
+ "0x47144d": {
+  "cc": "__stdcall",
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ret 28"
+ },
+ "0x471822": {
+  "cc": null,
+  "nargs": 16,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x471826": {
+  "cc": null,
+  "nargs": 16,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x684170": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ebp+8..; xor eax,eax"
+ },
+ "0x471946": {
+  "cc": "__stdcall",
+  "nargs": 8,
+  "ret": null,
+  "evidence": "ret 32"
+ },
  "0x471dc8": {
   "cc": "__cdecl",
   "nargs": 4,
@@ -47854,6 +50836,30 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ebp+16.."
+ },
+ "0x47478e": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x47484c": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+28.."
+ },
+ "0x4bd970": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
+ "0x474939": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+20.."
  },
  "0x490500": {
   "cc": "__thiscall",
@@ -47986,12 +50992,6 @@
   "nargs": 1,
   "ret": null,
   "evidence": "this in ecx -> ebx; ebp+8.."
- },
- "0x4bd970": {
-  "cc": null,
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ebp+12.."
  },
  "0x478758": {
   "cc": "__stdcall",
@@ -48419,6 +51419,42 @@
   "ret": null,
   "evidence": ""
  },
+ "0x4b96f0": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x4909ee": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x490c23": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+40.."
+ },
+ "0x4a13a0": {
+  "cc": "__thiscall",
+  "nargs": null,
+  "ret": null,
+  "evidence": "this in ecx -> esi"
+ },
+ "0x4b8290": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x49118e": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
  "0x49189a": {
   "cc": null,
   "nargs": 1,
@@ -48460,6 +51496,12 @@
   "nargs": 2,
   "ret": null,
   "evidence": "ret 8"
+ },
+ "0x494e1c": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x49524c": {
   "cc": null,
@@ -48587,6 +51629,18 @@
   "ret": null,
   "evidence": "ret 4; this in ecx -> esi"
  },
+ "0x60ebd0": {
+  "cc": "__thiscall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; this in ecx -> esi; xor eax,eax"
+ },
+ "0x49d340": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x49da55": {
   "cc": "__cdecl",
   "nargs": null,
@@ -48599,17 +51653,23 @@
   "ret": null,
   "evidence": ""
  },
- "0x60ebd0": {
-  "cc": "__thiscall",
-  "nargs": 1,
-  "ret": "int",
-  "evidence": "ret 4; this in ecx -> esi; xor eax,eax"
- },
  "0x49ecdb": {
   "cc": "__stdcall",
   "nargs": 2,
   "ret": null,
   "evidence": "ret 8"
+ },
+ "0x49ef12": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x49f1a2": {
+  "cc": null,
+  "nargs": 8,
+  "ret": null,
+  "evidence": "ebp+20.."
  },
  "0x454d60": {
   "cc": "__stdcall",
@@ -49457,11 +52517,41 @@
   "ret": null,
   "evidence": ""
  },
+ "0x4b7b61": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x4b7eba": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; eax=0x3"
+ },
  "0x4b81c7": {
   "cc": "__stdcall",
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
+ },
+ "0x4b8309": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
+ "0x4b8474": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x46b2c0": {
+  "cc": "__thiscall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4; this in ecx -> esi"
  },
  "0x639b50": {
   "cc": "__cdecl",
@@ -49511,12 +52601,6 @@
   "ret": null,
   "evidence": "ebp+24.."
  },
- "0x41ecb0": {
-  "cc": "__thiscall",
-  "nargs": 1,
-  "ret": "int",
-  "evidence": "this in ecx -> edi; ebp+16..; xor eax,eax"
- },
  "0x4badd5": {
   "cc": "__cdecl",
   "nargs": 2,
@@ -49530,6 +52614,12 @@
   "evidence": "ret 8"
  },
  "0x4bc252": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4bc497": {
   "cc": "__stdcall",
   "nargs": 1,
   "ret": null,
@@ -49594,6 +52684,24 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
+ },
+ "0x46b320": {
+  "cc": "__thiscall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4; this in ecx -> esi"
+ },
+ "0x432d80": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x5f0eb0": {
+  "cc": "__thiscall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8; this in ecx -> eax"
  },
  "0x4b3940": {
   "cc": "__thiscall",
@@ -49696,6 +52804,12 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ebp+16.."
+ },
+ "0x4c2f01": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
  },
  "0x60dcb0": {
   "cc": "__thiscall",
@@ -50074,12 +53188,6 @@
   "nargs": 2,
   "ret": null,
   "evidence": "this in ecx -> ebx; ebp+19.."
- },
- "0x684170": {
-  "cc": "__cdecl",
-  "nargs": 1,
-  "ret": "int",
-  "evidence": "ebp+8..; xor eax,eax"
  },
  "0x4d4870": {
   "cc": null,
@@ -50537,6 +53645,12 @@
   "ret": null,
   "evidence": "ret 8; this in ecx -> edi"
  },
+ "0x45d2b0": {
+  "cc": "__thiscall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "this in ecx -> esi; ebp+8.."
+ },
  "0x477670": {
   "cc": "__cdecl",
   "nargs": null,
@@ -50944,6 +54058,30 @@
   "nargs": null,
   "ret": null,
   "evidence": ""
+ },
+ "0x5e2450": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+8.."
+ },
+ "0x4fd33e": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
+ "0x574d40": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x4a6200": {
+  "cc": "__thiscall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "this in ecx -> esi; ebp+20.."
  },
  "0x488850": {
   "cc": "__cdecl",
@@ -52007,6 +55145,54 @@
   "ret": "int",
   "evidence": "ebp+40..; eax=0x64"
  },
+ "0x533434": {
+  "cc": "__thiscall",
+  "nargs": 4,
+  "ret": null,
+  "evidence": "this in ecx -> edx; ebp+16.."
+ },
+ "0x533438": {
+  "cc": "__thiscall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "this in ecx -> edx; ebp+16.."
+ },
+ "0x533460": {
+  "cc": "__thiscall",
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ret 28; this in ecx -> edi"
+ },
+ "0x516900": {
+  "cc": "__stdcall",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ret 20"
+ },
+ "0x533c04": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x5340b6": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x53453c": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+23.."
+ },
+ "0x5349d0": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+23.."
+ },
  "0x534bda": {
   "cc": null,
   "nargs": 4,
@@ -52733,6 +55919,24 @@
   "ret": null,
   "evidence": "ebp+8.."
  },
+ "0x55377e": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+15.."
+ },
+ "0x682cc1": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x5537e5": {
+  "cc": null,
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
  "0x553910": {
   "cc": "__stdcall",
   "nargs": 2,
@@ -53189,6 +56393,12 @@
   "ret": "int",
   "evidence": "ebp+20..; xor eax,eax"
  },
+ "0x5880f0": {
+  "cc": "__thiscall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "this in ecx -> ebx; ebp+8.."
+ },
  "0x4e8360": {
   "cc": "__stdcall",
   "nargs": 4,
@@ -53254,6 +56464,24 @@
   "nargs": 2,
   "ret": null,
   "evidence": "ebp+20.."
+ },
+ "0x5696c7": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+208.."
+ },
+ "0x56988f": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x5697e8": {
+  "cc": "__cdecl",
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+12.."
  },
  "0x569921": {
   "cc": null,
@@ -53495,6 +56723,12 @@
   "ret": null,
   "evidence": "ebp+8.."
  },
+ "0x5785f6": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x578704": {
   "cc": "__stdcall",
   "nargs": 2,
@@ -53554,6 +56788,24 @@
   "nargs": 2,
   "ret": "int",
   "evidence": "ebp+272..; eax=0x1"
+ },
+ "0x57ef7e": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; eax=0x1"
+ },
+ "0x57f0c8": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x57f582": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ret 16"
  },
  "0x57fc6f": {
   "cc": null,
@@ -53699,6 +56951,24 @@
   "ret": null,
   "evidence": "ebp+16.."
  },
+ "0x58c100": {
+  "cc": "__thiscall",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "this in ecx -> ebp; ebp+32.."
+ },
+ "0x58d213": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x58c910": {
+  "cc": "__thiscall",
+  "nargs": null,
+  "ret": null,
+  "evidence": "this in ecx -> esi"
+ },
  "0x58d342": {
   "cc": "__stdcall",
   "nargs": 2,
@@ -53758,6 +57028,12 @@
   "nargs": 2,
   "ret": null,
   "evidence": "this in ecx -> eax; ebp+24.."
+ },
+ "0x58ff43": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x590400": {
   "cc": "__thiscall",
@@ -54232,6 +57508,18 @@
   "nargs": null,
   "ret": null,
   "evidence": ""
+ },
+ "0x5aa01d": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x5aa06d": {
+  "cc": "__cdecl",
+  "nargs": 17,
+  "ret": null,
+  "evidence": "ebp+20.."
  },
  "0x5aa513": {
   "cc": "__thiscall",
@@ -55355,6 +58643,42 @@
   "ret": null,
   "evidence": "ret 12"
  },
+ "0x4e5770": {
+  "cc": "__thiscall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12; this in ecx -> esi"
+ },
+ "0x5f237c": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x657780": {
+  "cc": "__thiscall",
+  "nargs": null,
+  "ret": null,
+  "evidence": "this in ecx -> edi"
+ },
+ "0x5f224d": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x630cc0": {
+  "cc": "__thiscall",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "this in ecx -> esi; ebp+8.."
+ },
+ "0x5f25d2": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
  "0x5f2fb4": {
   "cc": null,
   "nargs": 11,
@@ -55619,12 +58943,6 @@
   "ret": null,
   "evidence": "ret 4"
  },
- "0x45d2b0": {
-  "cc": "__thiscall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "this in ecx -> esi; ebp+8.."
- },
  "0x62d140": {
   "cc": "__cdecl",
   "nargs": null,
@@ -55636,24 +58954,6 @@
   "nargs": null,
   "ret": null,
   "evidence": ""
- },
- "0x4e5770": {
-  "cc": "__thiscall",
-  "nargs": 3,
-  "ret": null,
-  "evidence": "ret 12; this in ecx -> esi"
- },
- "0x657780": {
-  "cc": "__thiscall",
-  "nargs": null,
-  "ret": null,
-  "evidence": "this in ecx -> edi"
- },
- "0x444f70": {
-  "cc": "__thiscall",
-  "nargs": 5,
-  "ret": "int",
-  "evidence": "ret 20; this in ecx -> edi; xor eax,eax"
  },
  "0x602be4": {
   "cc": "__stdcall",
@@ -55991,17 +59291,23 @@
   "ret": null,
   "evidence": "ebp+28.."
  },
+ "0x60c183": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x60c181": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
  "0x6072d0": {
   "cc": "__thiscall",
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> esi"
- },
- "0x682cc1": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": null,
-  "evidence": ""
  },
  "0x60c932": {
   "cc": "__cdecl",
@@ -56117,6 +59423,12 @@
   "ret": null,
   "evidence": "ebp+8.."
  },
+ "0x60f6fb": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
  "0x459d80": {
   "cc": "__thiscall",
   "nargs": 1,
@@ -56207,6 +59519,12 @@
   "ret": null,
   "evidence": "ebp+19.."
  },
+ "0x6166f6": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
  "0x617721": {
   "cc": "__stdcall",
   "nargs": 6,
@@ -56219,6 +59537,18 @@
   "ret": null,
   "evidence": "ret 8"
  },
+ "0x5a4010": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "xor eax,eax"
+ },
+ "0x5a4050": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
+ },
  "0x617b0d": {
   "cc": null,
   "nargs": 2,
@@ -56230,6 +59560,42 @@
   "nargs": 5,
   "ret": null,
   "evidence": "ebp+20.."
+ },
+ "0x618e2b": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x618f32": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x61937e": {
+  "cc": null,
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+72.."
+ },
+ "0x619443": {
+  "cc": "__stdcall",
+  "nargs": 15,
+  "ret": null,
+  "evidence": "ret 60"
+ },
+ "0x6194e2": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x61957b": {
+  "cc": "__stdcall",
+  "nargs": 9,
+  "ret": null,
+  "evidence": "ret 36"
  },
  "0x619cb9": {
   "cc": null,
@@ -56338,6 +59704,12 @@
   "nargs": 3,
   "ret": null,
   "evidence": "ret 12"
+ },
+ "0x620f57": {
+  "cc": "__thiscall",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "this in ecx -> eax; eax=0x5"
  },
  "0x6210d2": {
   "cc": null,
@@ -56543,7 +59915,7 @@
   "ret": "int",
   "evidence": "ret 8; eax=0x1"
  },
- "0x62b0cb": {
+ "0x62ac5b": {
   "cc": "__stdcall",
   "nargs": 1,
   "ret": null,
@@ -56554,6 +59926,12 @@
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> esi"
+ },
+ "0x62b0cb": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
  },
  "0x62aaa0": {
   "cc": "__thiscall",
@@ -56663,6 +60041,24 @@
   "ret": null,
   "evidence": "ebp+16.."
  },
+ "0x62f82c": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x62f789": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
+ "0x62f805": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
  "0x62fa8f": {
   "cc": "__cdecl",
   "nargs": 3,
@@ -56729,6 +60125,42 @@
   "ret": null,
   "evidence": "ebp+16.."
  },
+ "0x635293": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+24.."
+ },
+ "0x6352ae": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+24.."
+ },
+ "0x635278": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x61a230": {
+  "cc": "__thiscall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8; this in ecx -> esi"
+ },
+ "0x63553c": {
+  "cc": null,
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ebp+68.."
+ },
+ "0x63598c": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+48.."
+ },
  "0x63635e": {
   "cc": null,
   "nargs": 41,
@@ -56746,6 +60178,12 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ebp+16.."
+ },
+ "0x6379d3": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x6383bb": {
   "cc": "__cdecl",
@@ -56818,12 +60256,6 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ebp+36.."
- },
- "0x630cc0": {
-  "cc": "__thiscall",
-  "nargs": 5,
-  "ret": null,
-  "evidence": "this in ecx -> esi; ebp+8.."
  },
  "0x63f405": {
   "cc": "__cdecl",
@@ -57287,12 +60719,6 @@
   "ret": null,
   "evidence": "ebp+16.."
  },
- "0x45d7b0": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "ret 8"
- },
  "0x622290": {
   "cc": "__thiscall",
   "nargs": 1,
@@ -57526,12 +60952,6 @@
   "nargs": 4,
   "ret": null,
   "evidence": "ebp+16.."
- },
- "0x5880f0": {
-  "cc": "__thiscall",
-  "nargs": 6,
-  "ret": null,
-  "evidence": "this in ecx -> ebx; ebp+8.."
  },
  "0x663900": {
   "cc": "__thiscall",
@@ -59255,6 +62675,12 @@
   "ret": null,
   "evidence": "ret 12"
  },
+ "0x454b78": {
+  "cc": null,
+  "nargs": 2,
+  "ret": "int",
+  "evidence": "ebp+15..; xor eax,eax"
+ },
  "0x50875e": {
   "cc": "__stdcall",
   "nargs": 3,
@@ -59627,11 +63053,11 @@
   "ret": null,
   "evidence": "ebp+16.."
  },
- "0x4b96f0": {
-  "cc": null,
-  "nargs": 2,
+ "0x44fbb7": {
+  "cc": "__stdcall",
+  "nargs": 3,
   "ret": null,
-  "evidence": "ebp+16.."
+  "evidence": "ret 12"
  },
  "0x4291f4": {
   "cc": "__stdcall",
@@ -59656,6 +63082,30 @@
   "nargs": 11,
   "ret": null,
   "evidence": "ebp+16.."
+ },
+ "0x42c057": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; eax=0x2"
+ },
+ "0x41e950": {
+  "cc": "__thiscall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4; this in ecx -> esi"
+ },
+ "0x41ece9": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
+ },
+ "0x5d9273": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
  },
  "0x42d146": {
   "cc": "__cdecl",
@@ -59699,17 +63149,17 @@
   "ret": null,
   "evidence": "this in ecx -> esi"
  },
- "0x44fbb7": {
-  "cc": "__stdcall",
+ "0x432838": {
+  "cc": null,
   "nargs": 3,
   "ret": null,
-  "evidence": "ret 12"
+  "evidence": "ebp+28.."
  },
- "0x454b78": {
-  "cc": null,
-  "nargs": 2,
-  "ret": "int",
-  "evidence": "ebp+15..; xor eax,eax"
+ "0x432a54": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x433876": {
   "cc": null,
@@ -60479,6 +63929,12 @@
   "ret": null,
   "evidence": "ebp+40.."
  },
+ "0x47149d": {
+  "cc": "__stdcall",
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ret 28"
+ },
  "0x471f8d": {
   "cc": null,
   "nargs": 2,
@@ -60563,6 +64019,18 @@
   "ret": null,
   "evidence": "ret 4"
  },
+ "0x474aca": {
+  "cc": "__stdcall",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ret 20"
+ },
+ "0x4bd99f": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
  "0x4c2c80": {
   "cc": "__cdecl",
   "nargs": null,
@@ -60628,12 +64096,6 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ebp+24.."
- },
- "0x4bd99f": {
-  "cc": "__stdcall",
-  "nargs": 3,
-  "ret": null,
-  "evidence": "ret 12"
  },
  "0x644390": {
   "cc": "__cdecl",
@@ -60833,6 +64295,12 @@
   "ret": null,
   "evidence": "ret 8"
  },
+ "0x4b9772": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
  "0x49318d": {
   "cc": "__cdecl",
   "nargs": 1,
@@ -60904,6 +64372,18 @@
   "nargs": null,
   "ret": null,
   "evidence": "this in ecx -> eax"
+ },
+ "0x49d321": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x49f284": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+28.."
  },
  "0x4b7290": {
   "cc": "__thiscall",
@@ -61313,18 +64793,6 @@
   "ret": null,
   "evidence": "ebp+20.."
  },
- "0x41e950": {
-  "cc": "__thiscall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4; this in ecx -> esi"
- },
- "0x41ece9": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": "int",
-  "evidence": "ret 4; xor eax,eax"
- },
  "0x4d607d": {
   "cc": "__stdcall",
   "nargs": 4,
@@ -61727,12 +65195,6 @@
   "ret": null,
   "evidence": ""
  },
- "0x5a4010": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": "int",
-  "evidence": "xor eax,eax"
- },
  "0x5d941d": {
   "cc": "__stdcall",
   "nargs": 2,
@@ -61756,6 +65218,12 @@
   "nargs": 8,
   "ret": "int",
   "evidence": "ebp+16..; xor eax,eax"
+ },
+ "0x45d2e5": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ret 16"
  },
  "0x457430": {
   "cc": "__thiscall",
@@ -62531,6 +65999,24 @@
   "ret": null,
   "evidence": "ebp+12.."
  },
+ "0x534ab0": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x533ccd": {
+  "cc": null,
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+23.."
+ },
+ "0x53417f": {
+  "cc": null,
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+18.."
+ },
  "0x534c06": {
   "cc": null,
   "nargs": 9,
@@ -62831,6 +66317,12 @@
   "ret": "int",
   "evidence": "ret 8; xor eax,eax"
  },
+ "0x553863": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
  "0x553e7d": {
   "cc": "__stdcall",
   "nargs": 2,
@@ -63004,6 +66496,12 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
+ },
+ "0x5881d1": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+8.."
  },
  "0x564966": {
   "cc": "__cdecl",
@@ -63286,6 +66784,12 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ebp+18.."
+ },
+ "0x58c1b0": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+96.."
  },
  "0x58e137": {
   "cc": "__stdcall",
@@ -64121,6 +67625,18 @@
   "ret": null,
   "evidence": "ebp+20.."
  },
+ "0x63e210": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x630ef1": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
  "0x4488f0": {
   "cc": null,
   "nargs": 4,
@@ -64246,12 +67762,6 @@
   "nargs": 2,
   "ret": null,
   "evidence": "ret 8"
- },
- "0x45d2e5": {
-  "cc": "__stdcall",
-  "nargs": 4,
-  "ret": null,
-  "evidence": "ret 16"
  },
  "0x602d81": {
   "cc": "__stdcall",
@@ -64439,6 +67949,12 @@
   "ret": null,
   "evidence": "ret 8; this in ecx -> edx"
  },
+ "0x618ff1": {
+  "cc": null,
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
  "0x619d04": {
   "cc": "__stdcall",
   "nargs": 8,
@@ -64577,17 +68093,17 @@
   "ret": null,
   "evidence": "ret 8"
  },
- "0x62b970": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": "int",
-  "evidence": "ret 4; xor eax,eax"
- },
  "0x62b41a": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
   "evidence": ""
+ },
+ "0x62b970": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
  },
  "0x62b7a1": {
   "cc": "__stdcall",
@@ -64637,6 +68153,12 @@
   "ret": null,
   "evidence": ""
  },
+ "0x635a89": {
+  "cc": null,
+  "nargs": 25,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
  "0x636779": {
   "cc": "__stdcall",
   "nargs": 7,
@@ -64672,18 +68194,6 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
- },
- "0x63e210": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": null,
-  "evidence": ""
- },
- "0x630ef1": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "ret 8"
  },
  "0x63f7aa": {
   "cc": "__thiscall",
@@ -65008,12 +68518,6 @@
   "nargs": null,
   "ret": null,
   "evidence": ""
- },
- "0x5881d1": {
-  "cc": "__cdecl",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ebp+8.."
  },
  "0x668f3e": {
   "cc": "__cdecl",
@@ -65621,6 +69125,12 @@
   "ret": null,
   "evidence": "ret 32; this in ecx -> eax"
  },
+ "0x454bb2": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
  "0x6031e0": {
   "cc": "__thiscall",
   "nargs": 1,
@@ -65819,17 +69329,17 @@
   "ret": null,
   "evidence": "ret 8"
  },
- "0x4b9772": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "ret 8"
- },
  "0x42aeaa": {
   "cc": null,
   "nargs": 7,
   "ret": null,
   "evidence": "ebp+16.."
+ },
+ "0x5daa60": {
+  "cc": "__thiscall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8; this in ecx -> esi"
  },
  "0x42d37d": {
   "cc": null,
@@ -65842,12 +69352,6 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
- },
- "0x454bb2": {
-  "cc": null,
-  "nargs": 4,
-  "ret": null,
-  "evidence": "ebp+20.."
  },
  "0x433bf8": {
   "cc": null,
@@ -66431,6 +69935,12 @@
   "ret": null,
   "evidence": "ret 20"
  },
+ "0x49f2c7": {
+  "cc": null,
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
  "0x4b7a59": {
   "cc": null,
   "nargs": 3,
@@ -66564,12 +70074,6 @@
   "evidence": "ebp+19.."
  },
  "0x432d10": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": null,
-  "evidence": ""
- },
- "0x432d80": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
@@ -67643,6 +71147,18 @@
   "ret": null,
   "evidence": "ebp+32.."
  },
+ "0x58c1dc": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x58c9c0": {
+  "cc": null,
+  "nargs": 0,
+  "ret": null,
+  "evidence": "ebp+409.."
+ },
  "0x58e5d8": {
   "cc": "__stdcall",
   "nargs": 2,
@@ -68111,6 +71627,12 @@
   "ret": null,
   "evidence": "ebp+18.."
  },
+ "0x6190ee": {
+  "cc": null,
+  "nargs": 8,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
  "0x61ab59": {
   "cc": null,
   "nargs": 13,
@@ -68194,6 +71716,12 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
+ },
+ "0x635de8": {
+  "cc": null,
+  "nargs": 15,
+  "ret": null,
+  "evidence": "ebp+23.."
  },
  "0x636e95": {
   "cc": null,
@@ -68549,6 +72077,12 @@
   "ret": null,
   "evidence": ""
  },
+ "0x454bc2": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
  "0x62c890": {
   "cc": "__thiscall",
   "nargs": 1,
@@ -68722,12 +72256,6 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
- },
- "0x454bc2": {
-  "cc": null,
-  "nargs": 6,
-  "ret": null,
-  "evidence": "ebp+16.."
  },
  "0x433c42": {
   "cc": null,
@@ -68926,6 +72454,12 @@
   "nargs": 4,
   "ret": null,
   "evidence": "ebp+24.."
+ },
+ "0x49f46c": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
  },
  "0x4b7a8a": {
   "cc": "__stdcall",
@@ -69190,12 +72724,6 @@
   "nargs": 8,
   "ret": null,
   "evidence": "ebp+16.."
- },
- "0x516900": {
-  "cc": "__stdcall",
-  "nargs": 5,
-  "ret": null,
-  "evidence": "ret 20"
  },
  "0x515294": {
   "cc": null,
@@ -69509,6 +73037,18 @@
   "ret": null,
   "evidence": "ebp+24.."
  },
+ "0x58c1f4": {
+  "cc": null,
+  "nargs": 8,
+  "ret": null,
+  "evidence": "ebp+17.."
+ },
+ "0x58c9d3": {
+  "cc": "__cdecl",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
  "0x58fa3d": {
   "cc": "__cdecl",
   "nargs": 5,
@@ -69809,6 +73349,12 @@
   "ret": null,
   "evidence": "ebp+20.."
  },
+ "0x6191fa": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
  "0x61ad10": {
   "cc": null,
   "nargs": 5,
@@ -69874,6 +73420,12 @@
   "nargs": 5,
   "ret": null,
   "evidence": "ebp+20.."
+ },
+ "0x636003": {
+  "cc": null,
+  "nargs": 13,
+  "ret": null,
+  "evidence": "ebp+48.."
  },
  "0x636f4b": {
   "cc": "__stdcall",
@@ -70037,6 +73589,12 @@
   "ret": null,
   "evidence": "ebp+12.."
  },
+ "0x454bf5": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ret 16"
+ },
  "0x606cb7": {
   "cc": "__cdecl",
   "nargs": null,
@@ -70114,12 +73672,6 @@
   "nargs": 4,
   "ret": null,
   "evidence": "ebp+60.."
- },
- "0x454bf5": {
-  "cc": "__stdcall",
-  "nargs": 4,
-  "ret": null,
-  "evidence": "ret 16"
  },
  "0x428280": {
   "cc": "__thiscall",
@@ -70469,12 +74021,6 @@
   "ret": null,
   "evidence": "ebp+20.."
  },
- "0x534ab0": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "ret 8"
- },
  "0x5152d3": {
   "cc": null,
   "nargs": 3,
@@ -70684,6 +74230,12 @@
   "nargs": 6,
   "ret": null,
   "evidence": "ebp+19.."
+ },
+ "0x58c327": {
+  "cc": null,
+  "nargs": 0,
+  "ret": null,
+  "evidence": "ebp+17.."
  },
  "0x591465": {
   "cc": "__cdecl",
@@ -70948,6 +74500,12 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
+ },
+ "0x6360cf": {
+  "cc": null,
+  "nargs": 8,
+  "ret": null,
+  "evidence": "ebp+48.."
  },
  "0x63b02e": {
   "cc": "__stdcall",
@@ -71369,6 +74927,12 @@
   "ret": null,
   "evidence": "ebp+19.."
  },
+ "0x58c3c7": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+17.."
+ },
  "0x59b447": {
   "cc": null,
   "nargs": 3,
@@ -71584,6 +75148,12 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
+ },
+ "0x63617c": {
+  "cc": "__thiscall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "this in ecx -> eax; ebp+48.."
  },
  "0x4a12d0": {
   "cc": "__thiscall",
@@ -71885,6 +75455,12 @@
   "ret": null,
   "evidence": "ebp+19.."
  },
+ "0x58c513": {
+  "cc": "__cdecl",
+  "nargs": 16,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
  "0x59b469": {
   "cc": null,
   "nargs": 4,
@@ -71998,6 +75574,12 @@
   "nargs": 8,
   "ret": null,
   "evidence": "ebp+16.."
+ },
+ "0x636197": {
+  "cc": "__stdcall",
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ret 28"
  },
  "0x4a134a": {
   "cc": "__stdcall",
@@ -75101,29 +78683,17 @@
   "ret": null,
   "evidence": ""
  },
- "0x403471": {
+ "0x403479": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+52.."
+ },
+ "0x4034c9": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
   "evidence": ""
- },
- "0x403475": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": "int",
-  "evidence": "xor eax,eax"
- },
- "0x4034c1": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": null,
-  "evidence": ""
- },
- "0x4034c5": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": "int",
-  "evidence": "xor eax,eax"
  },
  "0x403a3e": {
   "cc": "__cdecl",
@@ -75671,17 +79241,23 @@
   "ret": null,
   "evidence": ""
  },
- "0x408abc": {
+ "0x408ee3": {
   "cc": null,
   "nargs": 2,
   "ret": null,
-  "evidence": "ebp+40.."
+  "evidence": "ebp+32.."
  },
- "0x408b29": {
+ "0x408f7d": {
   "cc": "__cdecl",
   "nargs": null,
-  "ret": null,
-  "evidence": ""
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x408fa3": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "xor eax,eax"
  },
  "0x40910a": {
   "cc": "__stdcall",
@@ -75731,11 +79307,23 @@
   "ret": null,
   "evidence": "this in ecx -> esi"
  },
- "0x409a50": {
+ "0x409add": {
   "cc": "__cdecl",
-  "nargs": null,
+  "nargs": 1,
   "ret": null,
-  "evidence": ""
+  "evidence": "ebp+40.."
+ },
+ "0x409c1a": {
+  "cc": "__cdecl",
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x409cec": {
+  "cc": "__cdecl",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ebp+20..; eax=0x1"
  },
  "0x409ed7": {
   "cc": "__cdecl",
@@ -75743,17 +79331,59 @@
   "ret": null,
   "evidence": "ebp+12.."
  },
- "0x409fca": {
+ "0x40a18b": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x40a21e": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
   "evidence": ""
  },
- "0x40a547": {
+ "0x40a3be": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
   "evidence": ""
+ },
+ "0x40a3f0": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+52.."
+ },
+ "0x40a5d4": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+40.."
+ },
+ "0x40a678": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+52.."
+ },
+ "0x40a680": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+52.."
+ },
+ "0x40a6d2": {
+  "cc": "__cdecl",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+36.."
+ },
+ "0x40a8a2": {
+  "cc": "__cdecl",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ebp+20..; eax=0x1"
  },
  "0x40a969": {
   "cc": null,
@@ -75761,13 +79391,7 @@
   "ret": null,
   "evidence": "ebp+20.."
  },
- "0x40acbb": {
-  "cc": "__stdcall",
-  "nargs": 3,
-  "ret": null,
-  "evidence": "ret 12"
- },
- "0x40ad09": {
+ "0x40ad19": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": null,
@@ -75797,17 +79421,53 @@
   "ret": null,
   "evidence": "ret 12"
  },
- "0x40b065": {
+ "0x40b180": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x40b1b0": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": "int",
   "evidence": "eax=0x1"
  },
- "0x40ba7e": {
+ "0x40b3ae": {
+  "cc": null,
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x2d"
+ },
+ "0x40b49c": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b4ab": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": "int",
+  "evidence": "eax=0x1"
+ },
+ "0x40b4df": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+28.."
+ },
+ "0x40ba60": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
   "evidence": ""
+ },
+ "0x40bab5": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+8.."
  },
  "0x40bc90": {
   "cc": null,
@@ -75821,17 +79481,47 @@
   "ret": null,
   "evidence": "ret 4"
  },
- "0x40be28": {
+ "0x40be58": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x40be85": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": "int",
   "evidence": "ret 12; eax=0x1"
  },
- "0x40bf07": {
+ "0x40bf74": {
   "cc": "__stdcall",
   "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x40c123": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x40c12e": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x40c189": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; xor eax,eax"
+ },
+ "0x40c1f6": {
+  "cc": null,
+  "nargs": 2,
   "ret": null,
-  "evidence": "ret 12"
+  "evidence": "ebp+20.."
  },
  "0x40c401": {
   "cc": "__stdcall",
@@ -78431,13 +82121,43 @@
   "ret": null,
   "evidence": "ebp+24.."
  },
- "0x425cb8": {
+ "0x425ce6": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": "int",
-  "evidence": "ret 12; xor eax,eax"
+  "evidence": "ret 12; eax=0xa"
  },
- "0x426588": {
+ "0x425edc": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x425f9a": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x425fcd": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0xa"
+ },
+ "0x426416": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+88.."
+ },
+ "0x426523": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x4265a4": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": null,
@@ -78557,7 +82277,13 @@
   "ret": null,
   "evidence": ""
  },
- "0x42858a": {
+ "0x4288ab": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x428949": {
   "cc": "__stdcall",
   "nargs": 1,
   "ret": null,
@@ -78569,11 +82295,17 @@
   "ret": null,
   "evidence": "ret 4"
  },
- "0x428c0d": {
+ "0x428960": {
   "cc": "__stdcall",
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
+ },
+ "0x428c1c": {
+  "cc": "__thiscall",
+  "nargs": null,
+  "ret": null,
+  "evidence": "this in ecx -> esi"
  },
  "0x428d50": {
   "cc": null,
@@ -78683,29 +82415,71 @@
   "ret": null,
   "evidence": "ret 4"
  },
- "0x42b7d4": {
+ "0x42b91b": {
   "cc": null,
-  "nargs": 7,
+  "nargs": 2,
   "ret": null,
   "evidence": "ebp+16.."
  },
- "0x42cab6": {
+ "0x42b9c2": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x42ba3a": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+28.."
+ },
+ "0x42bbb8": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; eax=0x1"
+ },
+ "0x42c074": {
+  "cc": null,
+  "nargs": 12,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x42c4ad": {
   "cc": "__stdcall",
   "nargs": 1,
   "ret": "int",
   "evidence": "ret 4; xor eax,eax"
  },
- "0x42cb53": {
-  "cc": "__cdecl",
-  "nargs": null,
+ "0x42c637": {
+  "cc": null,
+  "nargs": 6,
   "ret": null,
-  "evidence": ""
+  "evidence": "ebp+20.."
  },
- "0x42cc5b": {
-  "cc": "__cdecl",
-  "nargs": null,
+ "0x42c668": {
+  "cc": null,
+  "nargs": 6,
   "ret": null,
-  "evidence": ""
+  "evidence": "ebp+40.."
+ },
+ "0x42c806": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; eax=0x2"
+ },
+ "0x42c941": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
+ },
+ "0x42ca49": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
  },
  "0x42cd70": {
   "cc": null,
@@ -78971,7 +82745,13 @@
   "ret": "int",
   "evidence": "eax=0x1"
  },
- "0x431639": {
+ "0x431851": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x431873": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
@@ -78982,6 +82762,18 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ebp+176.."
+ },
+ "0x4319da": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+68.."
+ },
+ "0x4320ea": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x43220c": {
   "cc": "__stdcall",
@@ -79007,17 +82799,23 @@
   "ret": null,
   "evidence": "ret 4"
  },
- "0x4324df": {
+ "0x432752": {
   "cc": null,
   "nargs": 4,
   "ret": null,
-  "evidence": "ebp+46.."
+  "evidence": "ebp+16.."
  },
- "0x4328d3": {
-  "cc": "__cdecl",
-  "nargs": null,
+ "0x43279e": {
+  "cc": null,
+  "nargs": 6,
   "ret": null,
-  "evidence": ""
+  "evidence": "ebp+20.."
+ },
+ "0x432860": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+88.."
  },
  "0x432908": {
   "cc": "__cdecl",
@@ -79037,17 +82835,17 @@
   "ret": null,
   "evidence": "ebp+19.."
  },
- "0x432a0a": {
+ "0x432be3": {
   "cc": null,
   "nargs": 1,
   "ret": null,
-  "evidence": "ebp+32.."
+  "evidence": "ebp+8.."
  },
- "0x432a54": {
-  "cc": "__cdecl",
-  "nargs": null,
+ "0x432c10": {
+  "cc": null,
+  "nargs": 1,
   "ret": null,
-  "evidence": ""
+  "evidence": "ebp+48.."
  },
  "0x432ce1": {
   "cc": "__cdecl",
@@ -84341,11 +88139,17 @@
   "ret": null,
   "evidence": ""
  },
- "0x46b2bd": {
-  "cc": "__thiscall",
+ "0x46b315": {
+  "cc": "__stdcall",
   "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4; this in ecx -> esi"
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
+ },
+ "0x46b375": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": "int",
+  "evidence": "ret 4; xor eax,eax"
  },
  "0x46b3c9": {
   "cc": "__stdcall",
@@ -85145,11 +88949,23 @@
   "ret": "int",
   "evidence": "ret 12; xor eax,eax"
  },
- "0x4713b8": {
+ "0x471443": {
   "cc": null,
-  "nargs": 1,
+  "nargs": 4,
   "ret": null,
-  "evidence": "ebp+38.."
+  "evidence": "ebp+20.."
+ },
+ "0x471499": {
+  "cc": "__stdcall",
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ret 28"
+ },
+ "0x4714b4": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x471572": {
   "cc": "__cdecl",
@@ -85175,23 +88991,17 @@
   "ret": null,
   "evidence": "ebp+28.."
  },
- "0x4717e6": {
+ "0x47193d": {
   "cc": null,
-  "nargs": 1,
+  "nargs": 4,
   "ret": null,
-  "evidence": "ebp+16.."
+  "evidence": "ebp+20.."
  },
- "0x47181c": {
+ "0x471973": {
   "cc": null,
-  "nargs": 16,
+  "nargs": 3,
   "ret": null,
-  "evidence": "ebp+16.."
- },
- "0x471959": {
-  "cc": "__stdcall",
-  "nargs": 8,
-  "ret": null,
-  "evidence": "ret 32"
+  "evidence": "ebp+32.."
  },
  "0x471a4d": {
   "cc": "__cdecl",
@@ -85252,6 +89062,12 @@
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
+ },
+ "0x472991": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ret 16"
  },
  "0x472d57": {
   "cc": null,
@@ -85427,23 +89243,29 @@
   "ret": null,
   "evidence": "ret 4"
  },
- "0x474771": {
-  "cc": "__thiscall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "this in ecx -> ebx; ebp+36.."
- },
- "0x474786": {
-  "cc": "__thiscall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "this in ecx -> ebx; ebp+32.."
- },
  "0x47478a": {
   "cc": null,
-  "nargs": 3,
+  "nargs": 2,
   "ret": null,
   "evidence": "ebp+32.."
+ },
+ "0x474aef": {
+  "cc": "__stdcall",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ret 20"
+ },
+ "0x474ba2": {
+  "cc": "__stdcall",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ret 20"
+ },
+ "0x474eb7": {
+  "cc": "__stdcall",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ret 20"
  },
  "0x4751b9": {
   "cc": "__stdcall",
@@ -87461,13 +91283,43 @@
   "ret": null,
   "evidence": "ret 16"
  },
- "0x49069b": {
+ "0x490793": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
   "evidence": ""
  },
- "0x491332": {
+ "0x4909c2": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x490d11": {
+  "cc": "__cdecl",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x4911b8": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x4911e5": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x491271": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x491308": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
@@ -87719,19 +91571,13 @@
   "ret": null,
   "evidence": ""
  },
- "0x494e1c": {
+ "0x494e3a": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
   "evidence": ""
  },
- "0x494e83": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": null,
-  "evidence": ""
- },
- "0x494ea7": {
+ "0x494ea9": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
@@ -88259,17 +92105,29 @@
   "ret": null,
   "evidence": "ebp+8.."
  },
- "0x49d0c1": {
+ "0x49d2d6": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": "int",
-  "evidence": "eax=0x1"
+  "evidence": "eax=0x3c"
  },
- "0x49d347": {
+ "0x49d55c": {
   "cc": "__cdecl",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ebp+20..; eax=0x2d"
+ },
+ "0x49d63e": {
+  "cc": "__cdecl",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ebp+20..; eax=0x1"
+ },
+ "0x49d857": {
+  "cc": null,
   "nargs": null,
-  "ret": null,
-  "evidence": ""
+  "ret": "int",
+  "evidence": "eax=0x1"
  },
  "0x49dbac": {
   "cc": "__cdecl",
@@ -88325,17 +92183,29 @@
   "ret": null,
   "evidence": "ret 24"
  },
- "0x49ee9f": {
+ "0x49ef2a": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": null,
   "evidence": "ret 12"
  },
- "0x49ef1e": {
-  "cc": "__stdcall",
-  "nargs": 3,
+ "0x49f282": {
+  "cc": null,
+  "nargs": 1,
   "ret": null,
-  "evidence": "ret 12"
+  "evidence": "ebp+132.."
+ },
+ "0x49f2c5": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+28.."
+ },
+ "0x49f35c": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+19.."
  },
  "0x49f53e": {
   "cc": null,
@@ -88379,13 +92249,7 @@
   "ret": null,
   "evidence": ""
  },
- "0x4a03c8": {
-  "cc": "__stdcall",
-  "nargs": 3,
-  "ret": null,
-  "evidence": "ret 12"
- },
- "0x4a04ac": {
+ "0x4a057a": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": null,
@@ -88450,12 +92314,6 @@
   "nargs": null,
   "ret": null,
   "evidence": ""
- },
- "0x4a139a": {
-  "cc": "__thiscall",
-  "nargs": null,
-  "ret": null,
-  "evidence": "this in ecx -> esi"
  },
  "0x4a13c1": {
   "cc": "__cdecl",
@@ -92063,35 +95921,23 @@
   "ret": null,
   "evidence": "ret 8"
  },
- "0x4b7b1f": {
-  "cc": "__stdcall",
-  "nargs": 3,
-  "ret": null,
-  "evidence": "ret 12"
- },
  "0x4b7b27": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": null,
   "evidence": "ret 12"
  },
- "0x4b7b5f": {
+ "0x4b7ba0": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": null,
   "evidence": "ret 12"
  },
- "0x4b7e9c": {
-  "cc": null,
-  "nargs": null,
-  "ret": "int",
-  "evidence": "eax=0x3"
- },
- "0x4b7ebe": {
+ "0x4b7ec7": {
   "cc": "__stdcall",
   "nargs": 1,
   "ret": "int",
-  "evidence": "ret 4; eax=0x3"
+  "evidence": "ret 4; xor eax,eax"
  },
  "0x4b7f74": {
   "cc": null,
@@ -92105,35 +95951,23 @@
   "ret": "int",
   "evidence": "ret 8; eax=0x3"
  },
- "0x4b828c": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "ret 8"
- },
- "0x4b82eb": {
+ "0x4b845a": {
   "cc": null,
-  "nargs": 4,
+  "nargs": 0,
   "ret": null,
-  "evidence": "ebp+512.."
+  "evidence": "ebp+19.."
  },
- "0x4b8497": {
+ "0x4b84a5": {
   "cc": "__stdcall",
   "nargs": 2,
   "ret": null,
   "evidence": "ret 8"
  },
- "0x4b861e": {
+ "0x4b86d2": {
   "cc": "__stdcall",
-  "nargs": 1,
+  "nargs": 2,
   "ret": null,
-  "evidence": "ret 4"
- },
- "0x4b86c5": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4"
+  "evidence": "ret 8"
  },
  "0x4b8960": {
   "cc": "__thiscall",
@@ -92141,17 +95975,11 @@
   "ret": null,
   "evidence": "ret 4; this in ecx -> esi"
  },
- "0x4b89f9": {
-  "cc": "__stdcall",
-  "nargs": 2,
+ "0x4b8a58": {
+  "cc": null,
+  "nargs": 1,
   "ret": null,
-  "evidence": "ret 8"
- },
- "0x4b8a53": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": "int",
-  "evidence": "ret 8; xor eax,eax"
+  "evidence": "ebp+28.."
  },
  "0x4b8af0": {
   "cc": null,
@@ -92399,17 +96227,11 @@
   "ret": null,
   "evidence": "ret 4"
  },
- "0x4bb9f9": {
-  "cc": "__stdcall",
+ "0x4bba22": {
+  "cc": null,
   "nargs": 1,
   "ret": null,
-  "evidence": "ret 4"
- },
- "0x4bba1d": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": "int",
-  "evidence": "ret 4; xor eax,eax"
+  "evidence": "ebp+12.."
  },
  "0x4bbab9": {
   "cc": "__stdcall",
@@ -92435,12 +96257,6 @@
   "ret": null,
   "evidence": "ret 4"
  },
- "0x4bbdb1": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "ret 8"
- },
  "0x4bc0a1": {
   "cc": "__stdcall",
   "nargs": 2,
@@ -92459,29 +96275,11 @@
   "ret": null,
   "evidence": "ebp+40.."
  },
- "0x4bc369": {
+ "0x4bc392": {
   "cc": "__stdcall",
-  "nargs": 1,
+  "nargs": 2,
   "ret": null,
-  "evidence": "ret 4"
- },
- "0x4bc38d": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": "int",
-  "evidence": "ret 4; xor eax,eax"
- },
- "0x4bc479": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4"
- },
- "0x4bc4a0": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": "int",
-  "evidence": "ret 4; xor eax,eax"
+  "evidence": "ret 8"
  },
  "0x4bc9ca": {
   "cc": null,
@@ -92603,29 +96401,17 @@
   "ret": "int",
   "evidence": "ret 12; eax=0x80040202"
  },
- "0x4bdb2c": {
+ "0x4bdbbf": {
   "cc": "__stdcall",
   "nargs": 2,
   "ret": null,
   "evidence": "ret 8"
  },
- "0x4bdc48": {
-  "cc": "__stdcall",
-  "nargs": 2,
+ "0x4bdc51": {
+  "cc": null,
+  "nargs": 1,
   "ret": null,
-  "evidence": "ret 8"
- },
- "0x4bdcac": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "ret 8"
- },
- "0x4bdda6": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "ret 8"
+  "evidence": "ebp+28.."
  },
  "0x4be9e0": {
   "cc": "__stdcall",
@@ -92752,12 +96538,6 @@
   "nargs": 4,
   "ret": null,
   "evidence": "ebp+20.."
- },
- "0x4bfeb6": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "ret 8"
  },
  "0x4c008b": {
   "cc": null,
@@ -92927,18 +96707,6 @@
   "ret": null,
   "evidence": ""
  },
- "0x4c2de3": {
-  "cc": null,
-  "nargs": 4,
-  "ret": null,
-  "evidence": "ebp+512.."
- },
- "0x4c2f18": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4"
- },
  "0x4c300a": {
   "cc": "__stdcall",
   "nargs": 1,
@@ -92976,6 +96744,18 @@
   "evidence": "ret 4"
  },
  "0x4c331b": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4c337f": {
+  "cc": "__stdcall",
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ret 4"
+ },
+ "0x4c3506": {
   "cc": "__stdcall",
   "nargs": 1,
   "ret": null,
@@ -93130,6 +96910,12 @@
   "nargs": null,
   "ret": null,
   "evidence": ""
+ },
+ "0x4c503e": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
  },
  "0x4c522c": {
   "cc": "__stdcall",
@@ -94162,18 +97948,6 @@
   "nargs": 2,
   "ret": "int",
   "evidence": "ret 8; eax=0x1a"
- },
- "0x4d096b": {
-  "cc": "__stdcall",
-  "nargs": 3,
-  "ret": null,
-  "evidence": "ret 12"
- },
- "0x4d0985": {
-  "cc": "__stdcall",
-  "nargs": 3,
-  "ret": null,
-  "evidence": "ret 12"
  },
  "0x4d09e8": {
   "cc": "__cdecl",
@@ -95837,23 +99611,11 @@
   "ret": null,
   "evidence": ""
  },
- "0x4e4b78": {
+ "0x4e4db6": {
   "cc": null,
-  "nargs": 2,
+  "nargs": 0,
   "ret": null,
-  "evidence": "ebp+19.."
- },
- "0x4e4b7d": {
-  "cc": null,
-  "nargs": 9,
-  "ret": null,
-  "evidence": "ebp+19.."
- },
- "0x4e4c88": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4"
+  "evidence": "ebp+75.."
  },
  "0x4e4e08": {
   "cc": null,
@@ -96281,12 +100043,6 @@
   "ret": null,
   "evidence": ""
  },
- "0x4ea6b1": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": null,
-  "evidence": ""
- },
  "0x4ea70b": {
   "cc": "__cdecl",
   "nargs": null,
@@ -96635,29 +100391,11 @@
   "ret": null,
   "evidence": "ret 8"
  },
- "0x4f05a8": {
+ "0x4f0708": {
   "cc": null,
-  "nargs": 1,
+  "nargs": 12,
   "ret": null,
-  "evidence": "ebp+32.."
- },
- "0x4f0632": {
-  "cc": null,
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ebp+16.."
- },
- "0x4f06e4": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4"
- },
- "0x4f06fc": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4"
+  "evidence": "ebp+20.."
  },
  "0x4f08f6": {
   "cc": null,
@@ -97835,11 +101573,11 @@
   "ret": "int",
   "evidence": "ret 4; xor eax,eax"
  },
- "0x4fd3cd": {
+ "0x4fd4bb": {
   "cc": null,
-  "nargs": 0,
+  "nargs": 1,
   "ret": null,
-  "evidence": "ebp+19.."
+  "evidence": "ebp+24.."
  },
  "0x4fd54d": {
   "cc": "__cdecl",
@@ -98332,12 +102070,6 @@
   "nargs": 7,
   "ret": null,
   "evidence": "ebp+16.."
- },
- "0x507925": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": null,
-  "evidence": ""
  },
  "0x507ae9": {
   "cc": null,
@@ -102029,17 +105761,65 @@
   "ret": null,
   "evidence": "ret 12"
  },
- "0x5331ee": {
-  "cc": null,
-  "nargs": 16,
-  "ret": null,
-  "evidence": "ebp+60.."
- },
- "0x53343a": {
-  "cc": "__thiscall",
+ "0x5334fe": {
+  "cc": "__stdcall",
   "nargs": 7,
   "ret": null,
-  "evidence": "ret 28; this in ecx -> edx"
+  "evidence": "ret 28"
+ },
+ "0x53350d": {
+  "cc": null,
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+24.."
+ },
+ "0x533512": {
+  "cc": null,
+  "nargs": 25,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x533c00": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+36.."
+ },
+ "0x533c70": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+23.."
+ },
+ "0x5340b2": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+36.."
+ },
+ "0x534122": {
+  "cc": null,
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ebp+23.."
+ },
+ "0x5344db": {
+  "cc": null,
+  "nargs": 7,
+  "ret": null,
+  "evidence": "ebp+23.."
+ },
+ "0x53497a": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x534a73": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
  },
  "0x534af0": {
   "cc": "__stdcall",
@@ -103667,12 +107447,6 @@
   "ret": null,
   "evidence": ""
  },
- "0x546939": {
-  "cc": "__cdecl",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ebp+8.."
- },
  "0x546c8b": {
   "cc": "__cdecl",
   "nargs": 1,
@@ -104435,23 +108209,23 @@
   "ret": null,
   "evidence": "this in ecx -> edx; ebp+20.."
  },
- "0x553758": {
+ "0x5537ce": {
   "cc": null,
-  "nargs": 1,
+  "nargs": 2,
   "ret": null,
-  "evidence": "ebp+16.."
+  "evidence": "ebp+20.."
  },
- "0x553776": {
+ "0x55385e": {
   "cc": null,
   "nargs": 3,
   "ret": null,
-  "evidence": "ebp+15.."
+  "evidence": "ebp+24.."
  },
- "0x5538c5": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4"
+ "0x5538ce": {
+  "cc": null,
+  "nargs": 2,
+  "ret": "int",
+  "evidence": "ebp+12..; xor eax,eax"
  },
  "0x553954": {
   "cc": "__stdcall",
@@ -105971,11 +109745,29 @@
   "ret": null,
   "evidence": ""
  },
- "0x5648ba": {
-  "cc": "__cdecl",
-  "nargs": null,
+ "0x562acc": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; xor eax,eax"
+ },
+ "0x562af2": {
+  "cc": null,
+  "nargs": 2,
   "ret": null,
-  "evidence": ""
+  "evidence": "ebp+20.."
+ },
+ "0x562cb4": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; xor eax,eax"
+ },
+ "0x5630b7": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; xor eax,eax"
  },
  "0x56499c": {
   "cc": "__cdecl",
@@ -106121,11 +109913,47 @@
   "ret": null,
   "evidence": "ebp+12.."
  },
- "0x569675": {
-  "cc": null,
-  "nargs": 2,
+ "0x569455": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; xor eax,eax"
+ },
+ "0x569470": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; xor eax,eax"
+ },
+ "0x569480": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; xor eax,eax"
+ },
+ "0x5695a8": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; xor eax,eax"
+ },
+ "0x5696f0": {
+  "cc": "__cdecl",
+  "nargs": null,
   "ret": null,
-  "evidence": "ebp+200.."
+  "evidence": ""
+ },
+ "0x5697e4": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
+ "0x56987b": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x56994a": {
   "cc": "__cdecl",
@@ -106428,6 +110256,12 @@
   "evidence": "ebp+24.."
  },
  "0x56ddf4": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
+ "0x56decf": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
@@ -106973,6 +110807,12 @@
   "ret": null,
   "evidence": "ret 16"
  },
+ "0x574db1": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
+ },
  "0x5752db": {
   "cc": null,
   "nargs": 2,
@@ -107189,11 +111029,29 @@
   "ret": null,
   "evidence": "ebp+72.."
  },
- "0x578351": {
+ "0x57837b": {
   "cc": null,
   "nargs": 3,
   "ret": null,
   "evidence": "ebp+88.."
+ },
+ "0x5783c4": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+88.."
+ },
+ "0x57840d": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+88.."
+ },
+ "0x578456": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+36.."
  },
  "0x578475": {
   "cc": "__cdecl",
@@ -107201,7 +111059,7 @@
   "ret": null,
   "evidence": "ebp+20.."
  },
- "0x578604": {
+ "0x57860f": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
@@ -107405,11 +111263,17 @@
   "ret": "int",
   "evidence": "ret 16; xor eax,eax"
  },
- "0x57ef2f": {
+ "0x57ef77": {
   "cc": null,
-  "nargs": 3,
-  "ret": "int",
-  "evidence": "ebp+40..; xor eax,eax"
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+40.."
+ },
+ "0x57f0c1": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+16.."
  },
  "0x57f0f4": {
   "cc": null,
@@ -107418,16 +111282,34 @@
   "evidence": "ebp+40.."
  },
  "0x57f18a": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+360.."
+ },
+ "0x57f213": {
   "cc": "__stdcall",
   "nargs": 4,
   "ret": "int",
   "evidence": "ret 16; xor eax,eax"
  },
- "0x57f52d": {
+ "0x57f22e": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; xor eax,eax"
+ },
+ "0x57f575": {
   "cc": null,
   "nargs": 3,
   "ret": null,
   "evidence": "ebp+360.."
+ },
+ "0x57f5af": {
+  "cc": "__stdcall",
+  "nargs": 4,
+  "ret": "int",
+  "evidence": "ret 16; xor eax,eax"
  },
  "0x57fc59": {
   "cc": null,
@@ -108089,11 +111971,59 @@
   "ret": null,
   "evidence": "ret 16"
  },
- "0x58c0f9": {
+ "0x58c19b": {
   "cc": null,
-  "nargs": 5,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+96.."
+ },
+ "0x58c1d0": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+96.."
+ },
+ "0x58c1e8": {
+  "cc": null,
+  "nargs": 3,
   "ret": null,
   "evidence": "ebp+32.."
+ },
+ "0x58c31e": {
+  "cc": null,
+  "nargs": 0,
+  "ret": null,
+  "evidence": "ebp+17.."
+ },
+ "0x58c38c": {
+  "cc": null,
+  "nargs": 0,
+  "ret": null,
+  "evidence": "ebp+17.."
+ },
+ "0x58c3c5": {
+  "cc": null,
+  "nargs": 0,
+  "ret": null,
+  "evidence": "ebp+18.."
+ },
+ "0x58c506": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+76.."
+ },
+ "0x58c76f": {
+  "cc": "__cdecl",
+  "nargs": 0,
+  "ret": null,
+  "evidence": "ebp+206.."
+ },
+ "0x58c776": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x58c8f3": {
   "cc": "__cdecl",
@@ -108106,6 +112036,12 @@
   "nargs": null,
   "ret": null,
   "evidence": ""
+ },
+ "0x58c9cc": {
+  "cc": null,
+  "nargs": 0,
+  "ret": null,
+  "evidence": "ebp+409.."
  },
  "0x58cbf7": {
   "cc": null,
@@ -108174,12 +112110,6 @@
   "evidence": ""
  },
  "0x58d1c5": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": null,
-  "evidence": ""
- },
- "0x58d213": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": null,
@@ -108395,11 +112325,11 @@
   "ret": null,
   "evidence": "this in ecx -> eax"
  },
- "0x58ff43": {
+ "0x58ffd8": {
   "cc": "__cdecl",
   "nargs": null,
-  "ret": null,
-  "evidence": ""
+  "ret": "int",
+  "evidence": "eax=0x1"
  },
  "0x590007": {
   "cc": "__cdecl",
@@ -110381,17 +114311,17 @@
   "ret": null,
   "evidence": ""
  },
- "0x5a9fdb": {
-  "cc": null,
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ebp+16.."
- },
  "0x5aa000": {
   "cc": null,
   "nargs": 3,
   "ret": null,
   "evidence": "ebp+16.."
+ },
+ "0x5aa058": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+28.."
  },
  "0x5aa397": {
   "cc": "__stdcall",
@@ -113879,11 +117809,17 @@
   "ret": null,
   "evidence": "ret 12"
  },
- "0x5d9241": {
+ "0x5d9271": {
   "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
+ "0x5d92b3": {
+  "cc": "__stdcall",
   "nargs": 2,
   "ret": null,
-  "evidence": "ebp+8.."
+  "evidence": "ret 8"
  },
  "0x5d9337": {
   "cc": null,
@@ -114022,6 +117958,12 @@
   "nargs": null,
   "ret": null,
   "evidence": ""
+ },
+ "0x5daad1": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
  },
  "0x5dabba": {
   "cc": "__stdcall",
@@ -116501,12 +120443,6 @@
   "ret": null,
   "evidence": ""
  },
- "0x5f0ea5": {
-  "cc": "__stdcall",
-  "nargs": 2,
-  "ret": null,
-  "evidence": "ret 8"
- },
  "0x5f0f65": {
   "cc": "__stdcall",
   "nargs": 2,
@@ -116609,7 +120545,31 @@
   "ret": "int",
   "evidence": "xor eax,eax"
  },
- "0x5f1f66": {
+ "0x5f223a": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+88.."
+ },
+ "0x5f23ac": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+24.."
+ },
+ "0x5f25a8": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x5f25d0": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x5f262c": {
   "cc": "__stdcall",
   "nargs": 2,
   "ret": null,
@@ -118709,29 +122669,11 @@
   "ret": null,
   "evidence": "ebp+32.."
  },
- "0x60bfcd": {
-  "cc": null,
-  "nargs": 5,
+ "0x60c1de": {
+  "cc": "__thiscall",
+  "nargs": 1,
   "ret": null,
-  "evidence": "ebp+32.."
- },
- "0x60c183": {
-  "cc": null,
-  "nargs": 5,
-  "ret": null,
-  "evidence": "ebp+19.."
- },
- "0x60c1a7": {
-  "cc": "__stdcall",
-  "nargs": 3,
-  "ret": null,
-  "evidence": "ret 12"
- },
- "0x60c1c6": {
-  "cc": "__stdcall",
-  "nargs": 3,
-  "ret": null,
-  "evidence": "ret 12"
+  "evidence": "this in ecx -> edi; ebp+16.."
  },
  "0x60c52f": {
   "cc": "__cdecl",
@@ -119009,17 +122951,23 @@
   "ret": null,
   "evidence": "ret 4"
  },
- "0x60f624": {
+ "0x60f73f": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ret 12"
+ },
+ "0x60f78c": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": "int",
   "evidence": "ret 12; eax=0x1"
  },
- "0x60f890": {
-  "cc": "__stdcall",
-  "nargs": 3,
+ "0x60f8a8": {
+  "cc": "__cdecl",
+  "nargs": null,
   "ret": null,
-  "evidence": "ret 12"
+  "evidence": ""
  },
  "0x60fc76": {
   "cc": null,
@@ -119453,12 +123401,6 @@
   "ret": null,
   "evidence": ""
  },
- "0x616672": {
-  "cc": null,
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ebp+12.."
- },
  "0x6167c6": {
   "cc": "__stdcall",
   "nargs": 1,
@@ -119482,18 +123424,6 @@
   "nargs": 1,
   "ret": null,
   "evidence": "this in ecx -> esi; ebp+20.."
- },
- "0x6178c9": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4"
- },
- "0x617a3a": {
-  "cc": "__stdcall",
-  "nargs": 1,
-  "ret": null,
-  "evidence": "ret 4"
  },
  "0x617ad4": {
   "cc": null,
@@ -119549,29 +123479,77 @@
   "ret": null,
   "evidence": "ebp+16.."
  },
- "0x618e2b": {
-  "cc": null,
-  "nargs": 6,
-  "ret": null,
-  "evidence": "ebp+20.."
- },
- "0x619450": {
-  "cc": "__stdcall",
-  "nargs": 15,
-  "ret": null,
-  "evidence": "ret 60"
- },
- "0x6194be": {
+ "0x618eef": {
   "cc": null,
   "nargs": 1,
   "ret": null,
-  "evidence": "ebp+104.."
+  "evidence": "ebp+20.."
  },
- "0x6194e2": {
+ "0x618f62": {
   "cc": null,
-  "nargs": 10,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
+ "0x618f96": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
+ "0x618fb5": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+19.."
+ },
+ "0x6190d2": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+32.."
+ },
+ "0x6191dd": {
+  "cc": "__thiscall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "this in ecx -> eax; ebp+20.."
+ },
+ "0x6191f0": {
+  "cc": "__thiscall",
+  "nargs": 3,
+  "ret": null,
+  "evidence": "this in ecx -> eax; ebp+20.."
+ },
+ "0x61945a": {
+  "cc": null,
+  "nargs": 2,
   "ret": null,
   "evidence": "ebp+16.."
+ },
+ "0x6194cf": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+44.."
+ },
+ "0x619576": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+48.."
+ },
+ "0x61959f": {
+  "cc": null,
+  "nargs": 12,
+  "ret": null,
+  "evidence": "ebp+28.."
+ },
+ "0x6197fc": {
+  "cc": null,
+  "nargs": 8,
+  "ret": null,
+  "evidence": "ebp+12.."
  },
  "0x6198b4": {
   "cc": null,
@@ -119621,7 +123599,13 @@
   "ret": null,
   "evidence": "ebp+112.."
  },
- "0x61a226": {
+ "0x61a283": {
+  "cc": "__stdcall",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ret 8"
+ },
+ "0x61a28b": {
   "cc": "__stdcall",
   "nargs": 2,
   "ret": null,
@@ -120119,17 +124103,17 @@
   "ret": null,
   "evidence": "ebp+19.."
  },
- "0x620f43": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": "int",
-  "evidence": "eax=0xa"
- },
  "0x620f64": {
   "cc": "__cdecl",
   "nargs": null,
   "ret": "int",
   "evidence": "xor eax,eax"
+ },
+ "0x620f66": {
+  "cc": "__cdecl",
+  "nargs": null,
+  "ret": null,
+  "evidence": ""
  },
  "0x6210c7": {
   "cc": null,
@@ -120449,17 +124433,29 @@
   "ret": null,
   "evidence": ""
  },
- "0x625cd7": {
+ "0x625ec2": {
   "cc": "__stdcall",
   "nargs": 6,
   "ret": null,
   "evidence": "ret 24"
  },
- "0x625e53": {
-  "cc": null,
-  "nargs": 1,
+ "0x6261fc": {
+  "cc": "__stdcall",
+  "nargs": 6,
   "ret": null,
-  "evidence": "ebp+44.."
+  "evidence": "ret 24"
+ },
+ "0x626244": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
+ },
+ "0x626272": {
+  "cc": "__stdcall",
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ret 24"
  },
  "0x6263cc": {
   "cc": "__stdcall",
@@ -120923,11 +124919,11 @@
   "ret": null,
   "evidence": "ret 8"
  },
- "0x62ad32": {
-  "cc": "__stdcall",
+ "0x62ad36": {
+  "cc": null,
   "nargs": 1,
   "ret": null,
-  "evidence": "ret 4"
+  "evidence": "ebp+20.."
  },
  "0x62ae6d": {
   "cc": "__cdecl",
@@ -121427,23 +125423,47 @@
   "ret": null,
   "evidence": "ret 8"
  },
- "0x62f34e": {
+ "0x62f4d7": {
   "cc": "__stdcall",
   "nargs": 1,
   "ret": null,
   "evidence": "ret 4"
  },
- "0x62f52f": {
-  "cc": "__stdcall",
+ "0x62f538": {
+  "cc": null,
   "nargs": 1,
   "ret": null,
-  "evidence": "ret 4"
+  "evidence": "ebp+36.."
  },
- "0x62f82c": {
-  "cc": "__stdcall",
+ "0x62f5b6": {
+  "cc": null,
   "nargs": 1,
   "ret": null,
-  "evidence": "ret 4"
+  "evidence": "ebp+12.."
+ },
+ "0x62f5d3": {
+  "cc": null,
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
+ "0x62f6c5": {
+  "cc": null,
+  "nargs": 5,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x62f787": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+44.."
+ },
+ "0x62f803": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+44.."
  },
  "0x62f8ae": {
   "cc": "__stdcall",
@@ -121667,17 +125687,35 @@
   "ret": null,
   "evidence": ""
  },
- "0x63262c": {
+ "0x63266b": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": "int",
   "evidence": "ret 12; eax=0xa"
  },
- "0x632a68": {
+ "0x6327d2": {
   "cc": "__stdcall",
   "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; xor eax,eax"
+ },
+ "0x63284c": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x63295d": {
+  "cc": "__stdcall",
+  "nargs": 3,
+  "ret": "int",
+  "evidence": "ret 12; eax=0x1"
+ },
+ "0x632abc": {
+  "cc": null,
+  "nargs": 1,
   "ret": null,
-  "evidence": "ret 12"
+  "evidence": "ebp+24.."
  },
  "0x632b98": {
   "cc": "__stdcall",
@@ -121757,23 +125795,59 @@
   "ret": null,
   "evidence": "ret 12"
  },
- "0x63528e": {
+ "0x635459": {
   "cc": "__stdcall",
   "nargs": 8,
   "ret": null,
   "evidence": "ret 32"
  },
- "0x63552e": {
+ "0x635987": {
+  "cc": null,
+  "nargs": 1,
+  "ret": null,
+  "evidence": "ebp+48.."
+ },
+ "0x635a29": {
+  "cc": null,
+  "nargs": 10,
+  "ret": null,
+  "evidence": "ebp+76.."
+ },
+ "0x635d57": {
+  "cc": null,
+  "nargs": 13,
+  "ret": null,
+  "evidence": "ebp+23.."
+ },
+ "0x635ef3": {
+  "cc": null,
+  "nargs": 14,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x6360cb": {
   "cc": null,
   "nargs": 4,
   "ret": null,
-  "evidence": "ebp+68.."
+  "evidence": "ebp+52.."
  },
- "0x635535": {
-  "cc": null,
-  "nargs": 41,
+ "0x636178": {
+  "cc": "__thiscall",
+  "nargs": 3,
   "ret": null,
-  "evidence": "ebp+28.."
+  "evidence": "this in ecx -> eax; ebp+48.."
+ },
+ "0x63618f": {
+  "cc": "__thiscall",
+  "nargs": 5,
+  "ret": null,
+  "evidence": "this in ecx -> eax; ebp+104.."
+ },
+ "0x636210": {
+  "cc": null,
+  "nargs": 6,
+  "ret": null,
+  "evidence": "ebp+19.."
  },
  "0x6362c4": {
   "cc": null,
@@ -121835,11 +125909,23 @@
   "ret": null,
   "evidence": "ebp+20.."
  },
- "0x637210": {
+ "0x63723f": {
   "cc": "__cdecl",
-  "nargs": null,
-  "ret": "int",
-  "evidence": "eax=0xa"
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+20.."
+ },
+ "0x637456": {
+  "cc": null,
+  "nargs": 3,
+  "ret": null,
+  "evidence": "ebp+16.."
+ },
+ "0x6379ee": {
+  "cc": null,
+  "nargs": 4,
+  "ret": null,
+  "evidence": "ebp+24.."
  },
  "0x637b80": {
   "cc": "__cdecl",
@@ -123563,29 +127649,29 @@
   "ret": null,
   "evidence": "ret 8"
  },
- "0x64e62d": {
+ "0x64e6c9": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": null,
   "evidence": "ret 12"
  },
- "0x64e710": {
+ "0x64e724": {
+  "cc": "__cdecl",
+  "nargs": 2,
+  "ret": null,
+  "evidence": "ebp+12.."
+ },
+ "0x64e859": {
   "cc": "__stdcall",
   "nargs": 3,
   "ret": null,
   "evidence": "ret 12"
  },
- "0x64e78d": {
-  "cc": "__stdcall",
-  "nargs": 3,
+ "0x64e8b4": {
+  "cc": "__cdecl",
+  "nargs": 2,
   "ret": null,
-  "evidence": "ret 12"
- },
- "0x64e8a0": {
-  "cc": "__stdcall",
-  "nargs": 3,
-  "ret": null,
-  "evidence": "ret 12"
+  "evidence": "ebp+12.."
  },
  "0x64e8ff": {
   "cc": "__stdcall",
@@ -123593,14 +127679,8 @@
   "ret": null,
   "evidence": "ret 8"
  },
- "0x64e99e": {
-  "cc": "__cdecl",
-  "nargs": 1,
-  "ret": "int",
-  "evidence": "ebp+20..; xor eax,eax"
- },
- "0x64ea07": {
-  "cc": "__cdecl",
+ "0x64ea0b": {
+  "cc": null,
   "nargs": null,
   "ret": "int",
   "evidence": "xor eax,eax"
@@ -128944,12 +133024,6 @@
   "nargs": 5,
   "ret": null,
   "evidence": "ebp+12.."
- },
- "0x68d8d4": {
-  "cc": "__cdecl",
-  "nargs": null,
-  "ret": null,
-  "evidence": ""
  },
  "0x68dd8c": {
   "cc": "__stdcall",
