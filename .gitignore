@@ -1,3 +1,13 @@
+# Derived / input data: reproducible, not source.
 .orch/
 __pycache__/
-re/tools/__pycache__/
+**/__pycache__/
+
+# Raw CD images and the extracted ISO trees. These are ~2.7 GB and are inputs
+# to the recovery pipeline, not part of the reconstruction. Keeping them out of
+# git is what makes `git push` finish.
+ts1.bin
+ts2.bin
+ts1.cue
+ts2.cue
+work/
