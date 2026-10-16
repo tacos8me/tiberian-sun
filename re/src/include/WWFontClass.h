@@ -4,7 +4,8 @@
 //
 // RTTI class   : class WWFontClass
 // vtable       : 0x006a7b34  (9 slots)
-// constructor  : 0x00671bb7
+// constructor  : 0x00671860
+// vtable store : 0x00671bb7  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -27,7 +28,7 @@ public:
     virtual void vfunc_7(int a0);  // [7] 0x00671e10  // __thiscall
     virtual void vfunc_8(int a0);  // [8] 0x00671e60  // __thiscall
 
-    WWFontClass();  // 0x00671bb7
+    WWFontClass();  // 0x00671860
     virtual ~WWFontClass();
 
     // ---- data members (offsets from ctor 0x00671b87) ----

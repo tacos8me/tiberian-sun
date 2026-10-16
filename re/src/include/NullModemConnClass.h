@@ -4,7 +4,8 @@
 //
 // RTTI class   : class NullModemConnClass
 // vtable       : 0x006a27d4  (10 slots)
-// constructor  : 0x0056a2ce
+// constructor  : 0x0056a1c0
+// vtable store : 0x0056a2ce  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -28,7 +29,7 @@ public:
     virtual void vfunc_8();  // [8] 0x0045f030  // __thiscall, returns int
     virtual void vfunc_9(int a0, int a1, int a2, int a3);  // [9] 0x0056a330  // __thiscall, returns int
 
-    NullModemConnClass();  // 0x0056a2ce
+    NullModemConnClass();  // 0x0056a1c0
     virtual ~NullModemConnClass();
 
     // ---- data members (offsets from ctor 0x0056a29c) ----

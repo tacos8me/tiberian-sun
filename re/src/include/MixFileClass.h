@@ -4,7 +4,8 @@
 //
 // RTTI class   : class MixFileClass
 // vtable       : 0x006a2318  (1 slots)
-// constructor  : 0x005472cb
+// constructor  : 0x00547290
+// vtable store : 0x005472cb  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -19,7 +20,7 @@ class MixFileClass : public GenericNode
 public:
     // ---- vtable 0x006a2318 (1 slots) ----
 
-    MixFileClass();  // 0x005472cb
+    MixFileClass();  // 0x00547290
     virtual ~MixFileClass();
 
     // ---- data members (offsets from ctor 0x0054728e) ----

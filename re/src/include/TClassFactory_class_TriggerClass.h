@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TClassFactory<class TriggerClass>
 // vtable       : 0x006a4a78  (5 slots)
-// constructor  : 0x005ea63b
+// constructor  : 0x005ea600
+// vtable store : 0x005ea63b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -24,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ea700  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ea780  // __stdcall, returns int
 
-    TClassFactory_class_TriggerClass();  // 0x005ea63b
+    TClassFactory_class_TriggerClass();  // 0x005ea600
     virtual ~TClassFactory_class_TriggerClass();
 
     // ---- data members (offsets from ctor 0x005ea621) ----

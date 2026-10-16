@@ -4,7 +4,8 @@
 //
 // RTTI class   : class GaugeClass
 // vtable       : 0x0069e804  (40 slots)
-// constructor  : 0x004a6a35
+// constructor  : 0x004a69a0
+// vtable store : 0x004a6a35  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -59,7 +60,7 @@ public:
     virtual void vfunc_38(int a0);  // [38] 0x004a6ad0
     virtual void vfunc_39(int a0);  // [39] 0x004a6b50
 
-    GaugeClass();  // 0x004a6a35
+    GaugeClass();  // 0x004a69a0
     virtual ~GaugeClass();
 
     // ---- data members (offsets from ctor 0x004a69f7) ----

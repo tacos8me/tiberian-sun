@@ -4,7 +4,8 @@
 //
 // RTTI class   : class RestateMission
 // vtable       : 0x006a3a7c  (3 slots)
-// constructor  : 0x005a80e6
+// constructor  : 0x005a80c0
+// vtable store : 0x005a80e6  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -21,7 +22,7 @@ public:
     virtual void vfunc_1(int a0);  // [1] 0x005a8d30  // __thiscall
     virtual void vfunc_2();  // [2] 0x0055cc40  // __cdecl
 
-    RestateMission();  // 0x005a80e6
+    RestateMission();  // 0x005a80c0
     virtual ~RestateMission();
 
     // ---- data members (offsets from ctor 0x005a820c) ----

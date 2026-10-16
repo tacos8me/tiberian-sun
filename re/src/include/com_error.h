@@ -4,7 +4,8 @@
 //
 // RTTI class   : class _com_error
 // vtable       : 0x006a8c10  (1 slots)
-// constructor  : 0x00694064
+// constructor  : 0x00694050
+// vtable store : 0x00694064  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -19,7 +20,7 @@ public:
     // ---- vtable 0x006a8c10 (1 slots) ----
     virtual void vfunc_0(int a0);  // [0] 0x00694082  // __thiscall
 
-    com_error();  // 0x00694064
+    com_error();  // 0x00694050
     virtual ~com_error();
 
     // ---- data members (offsets from ctor 0x0069402c) ----

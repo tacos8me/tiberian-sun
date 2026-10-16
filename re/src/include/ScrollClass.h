@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ScrollClass
 // vtable       : 0x006a4084  (51 slots)
-// constructor  : 0x005cf057
+// constructor  : 0x005cf020
+// vtable store : 0x005cf057  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -70,7 +71,7 @@ public:
     virtual void vfunc_49(int a0);  // [49] 0x005a1460  // __stdcall
     virtual void vfunc_50();  // [50] 0x005f4700  // __thiscall
 
-    ScrollClass();  // 0x005cf057
+    ScrollClass();  // 0x005cf020
     virtual ~ScrollClass();
 
     // ---- data members (offsets from ctor 0x005cf015) ----

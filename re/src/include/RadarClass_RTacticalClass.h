@@ -4,7 +4,8 @@
 //
 // RTTI class   : class RadarClass::RTacticalClass
 // vtable       : 0x006a357c  (31 slots)
-// constructor  : 0x005a06c4
+// constructor  : 0x005a0410
+// vtable store : 0x005a06c4  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -50,6 +51,6 @@ public:
     virtual void vfunc_29(int a0, int a1);  // [29] 0x005a1050
     virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
 
-    RadarClass_RTacticalClass();  // 0x005a06c4
+    RadarClass_RTacticalClass();  // 0x005a0410
     virtual ~RadarClass_RTacticalClass();
 };

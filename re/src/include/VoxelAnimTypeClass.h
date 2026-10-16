@@ -4,7 +4,8 @@
 //
 // RTTI class   : class VoxelAnimTypeClass
 // vtable       : 0x006a6d48  (40 slots)
-// constructor  : 0x00641bc3
+// constructor  : 0x00641ad0
+// vtable store : 0x00641bc3  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -58,7 +59,7 @@ public:
     virtual void vfunc_38();  // [38] 0x00571660  // __cdecl, returns int
     virtual void vfunc_39();  // [39] 0x0040f620  // __cdecl
 
-    VoxelAnimTypeClass();  // 0x00641bc3
+    VoxelAnimTypeClass();  // 0x00641ad0
     virtual ~VoxelAnimTypeClass();
 
     // ---- data members (offsets from ctor 0x00641cab) ----

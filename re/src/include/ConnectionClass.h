@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ConnectionClass
 // vtable       : 0x0069b09c  (10 slots)
-// constructor  : 0x0045eac5
+// constructor  : 0x0045ea80
+// vtable store : 0x0045eac5  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -27,7 +28,7 @@ public:
     virtual void vfunc_8();  // [8] 0x0045f030  // __thiscall, returns int
     virtual void vfunc_9();  // [9] 0x006829a5  // __cdecl
 
-    ConnectionClass();  // 0x0045eac5
+    ConnectionClass();  // 0x0045ea80
     virtual ~ConnectionClass();
 
     // ---- data members (offsets from ctor 0x0045ea9e) ----

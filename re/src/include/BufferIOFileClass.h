@@ -4,7 +4,8 @@
 //
 // RTTI class   : class BufferIOFileClass
 // vtable       : 0x00699f40  (17 slots)
-// constructor  : 0x00420099
+// constructor  : 0x0041ff40
+// vtable store : 0x00420099  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -35,7 +36,7 @@ public:
     virtual void vfunc_15(int a0);  // [15] 0x005a6940  // __thiscall
     virtual void vfunc_16(int a0, int a1, int a2);  // [16] 0x005a6190  // __stdcall
 
-    BufferIOFileClass();  // 0x00420099
+    BufferIOFileClass();  // 0x0041ff40
     virtual ~BufferIOFileClass();
 
     // ---- data members (offsets from ctor 0x00420035) ----

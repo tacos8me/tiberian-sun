@@ -10,6 +10,7 @@ For every class recovered from RTTI, emit a header containing:
 
 This guarantees complete coverage rather than hand-writing a subset.
 """
+import bisect
 import json
 import os
 import re
@@ -94,10 +95,21 @@ def vtable_entries(bin_, vtva, limit=400):
     return ents
 
 
-def find_ctor(bin_, vtva):
-    """Find the function that stores this vtable pointer (the constructor)."""
+def find_ctor(bin_, vtva, fn_starts=None):
+    """Find the function that stores this vtable pointer (the constructor).
+
+    The byte scan locates the immediate operand of `mov [reg], <vtable>`.
+    That address is INSIDE the constructor, not its entry point, so each hit
+    is mapped back to the enclosing recovered function. Previously the raw
+    operand address was emitted and labelled "constructor", which was wrong:
+    0 of 179 sampled sites were function starts, with a median offset of ~690
+    bytes into the enclosing function.
+
+    Returns (store_sites, entry_points): the store-site VAs as evidence, and
+    the deduplicated function entry points derived from them.
+    """
     pat = struct.pack("<I", vtva)
-    hits = []
+    sites = []
     start = 0
     while True:
         j = bin_.data.find(pat, start)
@@ -105,9 +117,19 @@ def find_ctor(bin_, vtva):
             break
         va = bin_.va_of(j)
         if va is not None and bin_.in_text(va):
-            hits.append(va)
+            sites.append(va)
         start = j + 1
-    return hits
+
+    if not fn_starts:
+        return sites, []
+    entries = []
+    for s in sites:
+        i = bisect.bisect_right(fn_starts, s) - 1
+        if i >= 0:
+            e = fn_starts[i]
+            if e not in entries:
+                entries.append(e)
+    return sites, entries
 
 
 def main():
@@ -118,7 +140,9 @@ def main():
     bin_ = Bin(bindir)
     cls, fns, keys = load(outdir)
     byva = {f["va"]: f for f in fns["functions"]}
-
+    # Sorted function entry points, used to map a vtable-store site back to the
+    # constructor that contains it.
+    fn_starts = sorted(byva)
     # class -> vtables
     vtmap = defaultdict(list)
     for v in cls["vtables"]:
@@ -148,14 +172,18 @@ def main():
             if best is None or len(e) > len(best[1]):
                 best = (v, e)
         primary, ents = best
-        ctors = find_ctor(bin_, primary["vtable_va"])
+        sites, ctor_fns = find_ctor(bin_, primary["vtable_va"], fn_starts)
         manifest.append({
             "class": cname,
             "ident": ident,
             "vtable": primary["vtable_va"],
             "nvirtuals": len(ents),
             "bases": bases,
-            "ctors": ctors,
+            # ctor_sites are the raw vtable-store operands (evidence);
+            # ctors are the enclosing function entry points, which is what a
+            # reader means by "the constructor".
+            "ctor_sites": sites,
+            "ctors": ctor_fns,
             "entries": ents,
         })
 

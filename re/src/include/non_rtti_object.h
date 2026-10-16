@@ -4,7 +4,8 @@
 //
 // RTTI class   : class __non_rtti_object
 // vtable       : 0x006a7d40  (2 slots)
-// constructor  : 0x00682f40
+// constructor  : 0x00682f29
+// vtable store : 0x00682f40  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -21,7 +22,7 @@ public:
     virtual void vfunc_0(int a0);  // [0] 0x00682f4b  // __thiscall
     virtual void vfunc_1();  // [1] 0x006878ac  // __cdecl, returns int
 
-    non_rtti_object();  // 0x00682f40
+    non_rtti_object();  // 0x00682f29
     virtual ~non_rtti_object();
 
     // ---- data members (offsets from ctor 0x00682f29) ----

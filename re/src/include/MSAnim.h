@@ -4,7 +4,8 @@
 //
 // RTTI class   : class MSAnim
 // vtable       : 0x006a2470  (6 slots)
-// constructor  : 0x0055771b
+// constructor  : 0x00557710
+// vtable store : 0x0055771b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -23,7 +24,7 @@ public:
     virtual void vfunc_4();  // [4] 0x006829a5  // __cdecl
     virtual void vfunc_5();  // [5] 0x006829a5  // __cdecl
 
-    MSAnim();  // 0x0055771b
+    MSAnim();  // 0x00557710
     virtual ~MSAnim();
 
     // ---- data members (offsets from ctor 0x00557706) ----

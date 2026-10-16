@@ -4,7 +4,8 @@
 //
 // RTTI class   : class CounterClass
 // vtable       : 0x0069b7ec  (6 slots)
-// constructor  : 0x0046b283
+// constructor  : 0x0046b270
+// vtable store : 0x0046b283  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -25,7 +26,7 @@ public:
     virtual void vfunc_4(int a0);  // [4] 0x0044b050  // __stdcall, returns int
     virtual void vfunc_5(int a0);  // [5] 0x0044b090  // __stdcall, returns int
 
-    CounterClass();  // 0x0046b283
+    CounterClass();  // 0x0046b270
     virtual ~CounterClass();
 
     // ---- data members (offsets from ctor 0x0046b26f) ----

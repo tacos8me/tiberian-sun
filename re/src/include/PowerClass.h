@@ -4,7 +4,8 @@
 //
 // RTTI class   : class PowerClass
 // vtable       : 0x006a328c  (51 slots)
-// constructor  : 0x00593b0e
+// constructor  : 0x00593aa0
+// vtable store : 0x00593b0e  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -70,7 +71,7 @@ public:
     virtual void vfunc_49(int a0);  // [49] 0x005a1460  // __stdcall
     virtual void vfunc_50();  // [50] 0x00593bb0  // __cdecl
 
-    PowerClass();  // 0x00593b0e
+    PowerClass();  // 0x00593aa0
     virtual ~PowerClass();
 
     // ---- data members (offsets from ctor 0x00593aa6) ----

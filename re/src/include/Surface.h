@@ -4,7 +4,8 @@
 //
 // RTTI class   : class Surface
 // vtable       : 0x00698c78  (33 slots)
-// constructor  : 0x0040698b
+// constructor  : 0x00406980
+// vtable store : 0x0040698b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -50,7 +51,7 @@ public:
     virtual void vfunc_31();  // [31] 0x00406930  // __cdecl
     virtual void vfunc_32();  // [32] 0x004069a0  // __cdecl
 
-    Surface();  // 0x0040698b
+    Surface();  // 0x00406980
     virtual ~Surface();
 
     // ---- data members (offsets from ctor 0x00406973) ----

@@ -4,7 +4,8 @@
 //
 // RTTI class   : class InfantryClass
 // vtable       : 0x0069ff50  (237 slots)
-// constructor  : 0x004cb599
+// constructor  : 0x004cb520
+// vtable store : 0x004cb599  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -256,7 +257,7 @@ public:
     virtual void vfunc_235(int a0);  // [235] 0x004a4140  // __thiscall
     virtual void vfunc_236(int a0, int a1, int a2);  // [236] 0x004cf920  // __thiscall
 
-    InfantryClass();  // 0x004cb599
+    InfantryClass();  // 0x004cb520
     virtual ~InfantryClass();
 
     // ---- data members (offsets from ctor 0x004cb517) ----

@@ -4,7 +4,8 @@
 //
 // RTTI class   : class WaveClass
 // vtable       : 0x006a72e0  (105 slots)
-// constructor  : 0x006522d0
+// constructor  : 0x006521f0
+// vtable store : 0x006522d0  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -123,7 +124,7 @@ public:
     virtual void vfunc_103(int a0);  // [103] 0x005703b0  // __thiscall
     virtual void vfunc_104();  // [104] 0x00570360
 
-    WaveClass();  // 0x006522d0
+    WaveClass();  // 0x006521f0
     virtual ~WaveClass();
 
     // ---- data members (offsets from ctor 0x00652224) ----

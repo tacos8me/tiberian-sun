@@ -4,7 +4,8 @@
 //
 // RTTI class   : class Mouse
 // vtable       : 0x006a7bcc  (17 slots)
-// constructor  : 0x006727da
+// constructor  : 0x006727c0
+// vtable store : 0x006727da  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -34,7 +35,7 @@ public:
     virtual void vfunc_15();  // [15] 0x006829a5  // __cdecl
     virtual void vfunc_16();  // [16] 0x006829a5  // __cdecl
 
-    Mouse();  // 0x006727da
+    Mouse();  // 0x006727c0
     virtual ~Mouse();
 
     // ---- data members (offsets from ctor 0x006727bf) ----

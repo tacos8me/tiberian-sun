@@ -4,7 +4,8 @@
 //
 // RTTI class   : class MSVQAnim
 // vtable       : 0x006a24e0  (6 slots)
-// constructor  : 0x00558a5b
+// constructor  : 0x00558a10
+// vtable store : 0x00558a5b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -24,7 +25,7 @@ public:
     virtual void vfunc_4(int a0, int a1);  // [4] 0x00558c70  // __thiscall
     virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [5] 0x00558dc0
 
-    MSVQAnim();  // 0x00558a5b
+    MSVQAnim();  // 0x00558a10
     virtual ~MSVQAnim();
 
     // ---- data members (offsets from ctor 0x00558a0c) ----

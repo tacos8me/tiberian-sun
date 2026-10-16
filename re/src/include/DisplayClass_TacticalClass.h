@@ -4,7 +4,8 @@
 //
 // RTTI class   : class DisplayClass::TacticalClass
 // vtable       : 0x0069ba88  (31 slots)
-// constructor  : 0x00472371
+// constructor  : 0x00472000
+// vtable store : 0x00472371  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -50,6 +51,6 @@ public:
     virtual void vfunc_29(int a0, int a1, int a2, int a3, int a4);  // [29] 0x00474410  // __thiscall
     virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
 
-    DisplayClass_TacticalClass();  // 0x00472371
+    DisplayClass_TacticalClass();  // 0x00472000
     virtual ~DisplayClass_TacticalClass();
 };

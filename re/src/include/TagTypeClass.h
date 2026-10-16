@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TagTypeClass
 // vtable       : 0x006a54b4  (27 slots)
-// constructor  : 0x00603f08
+// constructor  : 0x00603ee0
+// vtable store : 0x00603f08  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -46,7 +47,7 @@ public:
     virtual void vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [25] 0x006043a0  // __thiscall
     virtual void vfunc_26(int a0);  // [26] 0x00604470  // __thiscall
 
-    TagTypeClass();  // 0x00603f08
+    TagTypeClass();  // 0x00603ee0
     virtual ~TagTypeClass();
 
     // ---- data members (offsets from ctor 0x00603edb) ----

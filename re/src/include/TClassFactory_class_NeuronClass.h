@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TClassFactory<class NeuronClass>
 // vtable       : 0x006a4e80  (5 slots)
-// constructor  : 0x005ee6bb
+// constructor  : 0x005ee680
+// vtable store : 0x005ee6bb  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -24,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ee780  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ee800  // __stdcall, returns int
 
-    TClassFactory_class_NeuronClass();  // 0x005ee6bb
+    TClassFactory_class_NeuronClass();  // 0x005ee680
     virtual ~TClassFactory_class_NeuronClass();
 
     // ---- data members (offsets from ctor 0x005ee6a1) ----

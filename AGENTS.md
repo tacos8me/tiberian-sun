@@ -137,17 +137,28 @@ done
 
 ## Current status
 
-Last updated at commit `c0755e7` (P2 integration complete, `VERIFICATION PASSED`).
+Last updated after the P0 tooling fixes: `VERIFICATION PASSED` with five checks,
+and disassembly coverage roughly doubled.
 
 **Done and verified.** RTTI recovery (788 type descriptors, 755 hierarchies,
-843 vtables), disassembly (9,057 functions), full class manifest (749 classes,
-9,810 virtual slots, every class has a located constructor), direct-base
-reduction, member offsets (4,634 across 629 classes), member names from INI
-keys (135 across 20 classes), virtual names (1,242 across 624 classes),
-signatures (8,689 functions with calling conventions), and headers for all 749
-classes. The pipeline reproduces all of it from `bin/GAME.EXE` alone and
-`tools/verify.py` passes: 259/259 standalone, combined TU PASS, 749/749
-coverage, 200/200 vtable bindings.
+843 vtables), disassembly (12,784 functions, 49.2% of `.text` bytes), full class
+manifest (749 classes, 9,810 virtual slots, every class has a located
+constructor that is a **real function entry point**), direct-base reduction,
+member offsets (1,887 emitted across 629 classes), member names from INI keys
+(135 across 20 classes), signatures (8,689 functions with calling conventions),
+and headers for all 749 classes. The pipeline reproduces all of it from
+`bin/GAME.EXE` alone and `tools/verify.py` passes: 259/259 standalone, combined
+TU PASS, 749/749 coverage, 200/200 vtable bindings, 219/219 header content.
+
+**Read `todo.md` before starting work.** It is the prioritized, evidence-backed
+work list, and it records defects found by the last review that are *not* yet
+fixed. Do not read the status above as "everything is fine".
+
+**What `VERIFICATION PASSED` does and does not mean.** It means the tree
+compiles and that each header's cited vtable evidence matches the manifest. It
+does **not** yet validate inheritance clauses, member offsets, or member layout,
+and it does not prove the disassembly is correct. Checks 3 and 4 still skip
+silently when `out/` is absent.
 
 **P2 templates, recovered and integrated.** Three hand-written template headers
 were added under `src/handwritten/` after recovering the layouts from the

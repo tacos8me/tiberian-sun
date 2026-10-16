@@ -4,7 +4,8 @@
 //
 // RTTI class   : class MSFont
 // vtable       : 0x006a2708  (5 slots)
-// constructor  : 0x0055d5a5
+// constructor  : 0x0055d590
+// vtable store : 0x0055d5a5  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -23,7 +24,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [3] 0x0055dcb0  // __thiscall
     virtual void vfunc_4(int a0, int a1, int a2, int a3, int a4);  // [4] 0x0055db40  // __thiscall
 
-    MSFont();  // 0x0055d5a5
+    MSFont();  // 0x0055d590
     virtual ~MSFont();
 
     // ---- data members (offsets from ctor 0x0055d587) ----

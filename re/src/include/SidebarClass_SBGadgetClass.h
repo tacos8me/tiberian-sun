@@ -4,7 +4,8 @@
 //
 // RTTI class   : class SidebarClass::SBGadgetClass
 // vtable       : 0x006a437c  (31 slots)
-// constructor  : 0x005d84d1
+// constructor  : 0x005d81b0
+// vtable store : 0x005d84d1  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -50,6 +51,6 @@ public:
     virtual void vfunc_29(int a0, int a1);  // [29] 0x005dc310  // __stdcall, returns int
     virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
 
-    SidebarClass_SBGadgetClass();  // 0x005d84d1
+    SidebarClass_SBGadgetClass();  // 0x005d81b0
     virtual ~SidebarClass_SBGadgetClass();
 };

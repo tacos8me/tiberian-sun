@@ -4,7 +4,8 @@
 //
 // RTTI class   : class MultiScore
 // vtable       : 0x006a2444  (3 slots)
-// constructor  : 0x00554fab
+// constructor  : 0x00554f80
+// vtable store : 0x00554fab  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -21,7 +22,7 @@ public:
     virtual void vfunc_1(int a0);  // [1] 0x005554f0  // __stdcall
     virtual void vfunc_2();  // [2] 0x00557490
 
-    MultiScore();  // 0x00554fab
+    MultiScore();  // 0x00554f80
     virtual ~MultiScore();
 
     // ---- data members (offsets from ctor 0x00554f72) ----

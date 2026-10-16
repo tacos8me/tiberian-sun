@@ -4,7 +4,8 @@
 //
 // RTTI class   : class RAMFileClass
 // vtable       : 0x006a3958  (17 slots)
-// constructor  : 0x005a59ba
+// constructor  : 0x005a5960
+// vtable store : 0x005a59ba  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -35,7 +36,7 @@ public:
     virtual void vfunc_15(int a0);  // [15] 0x005a5cc0  // __stdcall
     virtual void vfunc_16(int a0, int a1, int a2);  // [16] 0x005a5cd0  // __stdcall
 
-    RAMFileClass();  // 0x005a59ba
+    RAMFileClass();  // 0x005a5960
     virtual ~RAMFileClass();
 
     // ---- data members (offsets from ctor 0x005a598b) ----

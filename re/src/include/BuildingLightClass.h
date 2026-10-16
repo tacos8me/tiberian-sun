@@ -4,7 +4,8 @@
 //
 // RTTI class   : class BuildingLightClass
 // vtable       : 0x00699fb8  (105 slots)
-// constructor  : 0x00420f53
+// constructor  : 0x00420ee0
+// vtable store : 0x00420f53  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -123,7 +124,7 @@ public:
     virtual void vfunc_103(int a0);  // [103] 0x005703b0  // __thiscall
     virtual void vfunc_104();  // [104] 0x00570360
 
-    BuildingLightClass();  // 0x00420f53
+    BuildingLightClass();  // 0x00420ee0
     virtual ~BuildingLightClass();
 
     // ---- data members (offsets from ctor 0x00420ee0) ----

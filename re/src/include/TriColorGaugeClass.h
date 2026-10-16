@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TriColorGaugeClass
 // vtable       : 0x0069e8a8  (42 slots)
-// constructor  : 0x004a6fc7
+// constructor  : 0x004a6e90
+// vtable store : 0x004a6fc7  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -61,7 +62,7 @@ public:
     virtual void vfunc_40(int a0);  // [40] 0x004a6fe0  // __stdcall, returns int
     virtual void vfunc_41(int a0);  // [41] 0x004a7010  // __stdcall, returns int
 
-    TriColorGaugeClass();  // 0x004a6fc7
+    TriColorGaugeClass();  // 0x004a6e90
     virtual ~TriColorGaugeClass();
 
     // ---- data members (offsets from ctor 0x004a6f3c) ----

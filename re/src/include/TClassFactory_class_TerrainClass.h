@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TClassFactory<class TerrainClass>
 // vtable       : 0x006a48e0  (5 slots)
-// constructor  : 0x005e8cbb
+// constructor  : 0x005e8c80
+// vtable store : 0x005e8cbb  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -24,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005e8d80  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005e8e00  // __stdcall, returns int
 
-    TClassFactory_class_TerrainClass();  // 0x005e8cbb
+    TClassFactory_class_TerrainClass();  // 0x005e8c80
     virtual ~TClassFactory_class_TerrainClass();
 
     // ---- data members (offsets from ctor 0x005e8ca1) ----

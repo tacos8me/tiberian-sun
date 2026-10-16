@@ -4,7 +4,8 @@
 //
 // RTTI class   : class CStreamClass
 // vtable       : 0x0069b91c  (15 slots)
-// constructor  : 0x0046e080
+// constructor  : 0x0046e040
+// vtable store : 0x0046e080  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -32,7 +33,7 @@ public:
     virtual void vfunc_12(int a0, int a1, int a2);  // [12] 0x0046e7e0  // __stdcall
     virtual void vfunc_13(int a0, int a1);  // [13] 0x0046e810  // __stdcall
 
-    CStreamClass();  // 0x0046e080
+    CStreamClass();  // 0x0046e040
     virtual ~CStreamClass();
 
     // ---- data members (offsets from ctor 0x0046e033) ----

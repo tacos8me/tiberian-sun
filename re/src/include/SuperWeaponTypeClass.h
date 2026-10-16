@@ -4,7 +4,8 @@
 //
 // RTTI class   : class SuperWeaponTypeClass
 // vtable       : 0x006a5018  (28 slots)
-// constructor  : 0x00503f0a
+// constructor  : 0x00503ec0
+// vtable store : 0x00503f0a  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -46,7 +47,7 @@ public:
     virtual void Set_ID(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
     virtual void vfunc_27(int a0, int a1);  // [27] 0x005f3330  // __stdcall
 
-    SuperWeaponTypeClass();  // 0x00503f0a
+    SuperWeaponTypeClass();  // 0x00503ec0
     virtual ~SuperWeaponTypeClass();
 
     // ---- data members (offsets from ctor 0x005f2bd5) ----

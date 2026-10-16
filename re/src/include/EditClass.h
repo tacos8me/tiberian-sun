@@ -4,7 +4,8 @@
 //
 // RTTI class   : class EditClass
 // vtable       : 0x0069d9b4  (37 slots)
-// constructor  : 0x0047f1bf
+// constructor  : 0x0047efb0
+// vtable store : 0x0047f1bf  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -56,7 +57,7 @@ public:
     virtual void vfunc_35(int a0);  // [35] 0x0048cd10  // __thiscall
     virtual void vfunc_36(int a0);  // [36] 0x0048ce50  // __thiscall
 
-    EditClass();  // 0x0047f1bf
+    EditClass();  // 0x0047efb0
     virtual ~EditClass();
 
     // ---- data members (offsets from ctor 0x0047f172) ----

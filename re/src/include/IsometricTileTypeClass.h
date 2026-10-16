@@ -4,7 +4,8 @@
 //
 // RTTI class   : class IsometricTileTypeClass
 // vtable       : 0x006a12d8  (40 slots)
-// constructor  : 0x004ea1cb
+// constructor  : 0x004ea0c0
+// vtable store : 0x004ea1cb  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -59,7 +60,7 @@ public:
     virtual void vfunc_38();  // [38] 0x00571660  // __cdecl, returns int
     virtual void vfunc_39();  // [39] 0x004ea590  // __thiscall
 
-    IsometricTileTypeClass();  // 0x004ea1cb
+    IsometricTileTypeClass();  // 0x004ea0c0
     virtual ~IsometricTileTypeClass();
 
     // ---- data members (offsets from ctor 0x004ea0b9) ----

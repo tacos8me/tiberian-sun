@@ -4,7 +4,8 @@
 //
 // RTTI class   : class FontClass
 // vtable       : 0x006a7b5c  (9 slots)
-// constructor  : 0x0067257b
+// constructor  : 0x00672570
+// vtable store : 0x0067257b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -26,7 +27,7 @@ public:
     virtual void vfunc_7();  // [7] 0x006829a5  // __cdecl
     virtual void vfunc_8();  // [8] 0x006829a5  // __cdecl
 
-    FontClass();  // 0x0067257b
+    FontClass();  // 0x00672570
     virtual ~FontClass();
 
     // ---- data members (offsets from ctor 0x00672569) ----

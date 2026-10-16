@@ -4,7 +4,8 @@
 //
 // RTTI class   : class XSurface
 // vtable       : 0x00698be8  (35 slots)
-// constructor  : 0x0040611d
+// constructor  : 0x004060c0
+// vtable store : 0x0040611d  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -53,7 +54,7 @@ public:
     virtual void vfunc_33(int a0, int a1, int a2);  // [33] 0x00674d10  // __thiscall
     virtual void vfunc_34(int a0, int a1);  // [34] 0x00674c90  // __thiscall
 
-    XSurface();  // 0x0040611d
+    XSurface();  // 0x004060c0
     virtual ~XSurface();
 
     // ---- data members (offsets from ctor 0x004060b7) ----

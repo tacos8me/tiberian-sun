@@ -4,7 +4,8 @@
 //
 // RTTI class   : class DropListClass
 // vtable       : 0x0069d7f4  (44 slots)
-// constructor  : 0x0047ec5e
+// constructor  : 0x0047eb90
+// vtable store : 0x0047ec5e  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -62,7 +63,7 @@ public:
     virtual void vfunc_42();  // [42] 0x0047f330
     virtual void vfunc_43(int a0);  // [43] 0x0047f350  // __stdcall
 
-    DropListClass();  // 0x0047ec5e
+    DropListClass();  // 0x0047eb90
     virtual ~DropListClass();
 
     // ---- data members (offsets from ctor 0x0047ebb7) ----

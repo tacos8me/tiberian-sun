@@ -4,7 +4,8 @@
 //
 // RTTI class   : class WinsockInterfaceClass
 // vtable       : 0x006a79fc  (21 slots)
-// constructor  : 0x0066ea58
+// constructor  : 0x0066ea10
+// vtable store : 0x0066ea58  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -38,7 +39,7 @@ public:
     virtual void vfunc_19(int a0);  // [19] 0x0066e990  // __stdcall, returns int
     virtual void vfunc_20(int a0);  // [20] 0x0066e9a0  // __stdcall
 
-    WinsockInterfaceClass();  // 0x0066ea58
+    WinsockInterfaceClass();  // 0x0066ea10
     virtual ~WinsockInterfaceClass();
 
     // ---- data members (offsets from ctor 0x0066ea07) ----

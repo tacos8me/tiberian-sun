@@ -4,7 +4,8 @@
 //
 // RTTI class   : class BaseClass
 // vtable       : 0x00699db8  (3 slots)
-// constructor  : 0x0041e943
+// constructor  : 0x0041e8c0
+// vtable store : 0x0041e943  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -21,7 +22,7 @@ public:
     virtual void vfunc_1(int a0, int a1);  // [1] 0x0041f1b0  // __stdcall
     virtual void vfunc_2(int a0);  // [2] 0x0041f2b0  // __thiscall
 
-    BaseClass();  // 0x0041e943
+    BaseClass();  // 0x0041e8c0
     virtual ~BaseClass();
 
     // ---- data members (offsets from ctor 0x0041e8b5) ----

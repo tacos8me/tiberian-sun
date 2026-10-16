@@ -4,7 +4,8 @@
 //
 // RTTI class   : class MapSeedClass
 // vtable       : 0x006a1e24  (5 slots)
-// constructor  : 0x0052c54a
+// constructor  : 0x0052c500
+// vtable store : 0x0052c54a  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -24,7 +25,7 @@ public:
     virtual void vfunc_3(int a0);  // [3] 0x0052da20  // __stdcall
     virtual void vfunc_4(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13);  // [4] 0x0052da30
 
-    MapSeedClass();  // 0x0052c54a
+    MapSeedClass();  // 0x0052c500
     virtual ~MapSeedClass();
 
     // ---- data members (offsets from ctor 0x0052c4f4) ----

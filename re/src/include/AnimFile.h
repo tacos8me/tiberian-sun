@@ -4,7 +4,8 @@
 //
 // RTTI class   : class AnimFile
 // vtable       : 0x00699a6c  (8 slots)
-// constructor  : 0x004169c3
+// constructor  : 0x00416920
+// vtable store : 0x004169c3  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -26,7 +27,7 @@ public:
     virtual void vfunc_6();  // [6] 0x00416d70  // __cdecl, returns int
     virtual void vfunc_7();  // [7] 0x00416d80  // __cdecl, returns int
 
-    AnimFile();  // 0x004169c3
+    AnimFile();  // 0x00416920
     virtual ~AnimFile();
 
     // ---- data members (offsets from ctor 0x004169b0) ----

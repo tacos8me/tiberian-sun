@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TActionClass
 // vtable       : 0x006a5364  (24 slots)
-// constructor  : 0x005fde22
+// constructor  : 0x005fddf0
+// vtable store : 0x005fde22  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -42,7 +43,7 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
 
-    TActionClass();  // 0x005fde22
+    TActionClass();  // 0x005fddf0
     virtual ~TActionClass();
 
     // ---- data members (offsets from ctor 0x005fddeb) ----

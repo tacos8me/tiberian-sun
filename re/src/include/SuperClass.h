@@ -4,7 +4,8 @@
 //
 // RTTI class   : class SuperClass
 // vtable       : 0x006a4f88  (24 slots)
-// constructor  : 0x005f1315
+// constructor  : 0x005f12e0
+// vtable store : 0x005f1315  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -42,7 +43,7 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
 
-    SuperClass();  // 0x005f1315
+    SuperClass();  // 0x005f12e0
     virtual ~SuperClass();
 
     // ---- data members (offsets from ctor 0x005f12d2) ----

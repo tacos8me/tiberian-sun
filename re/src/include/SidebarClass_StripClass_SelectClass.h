@@ -4,7 +4,8 @@
 //
 // RTTI class   : class SidebarClass::StripClass::SelectClass
 // vtable       : 0x006a43fc  (32 slots)
-// constructor  : 0x005d86e8
+// constructor  : 0x005d81b0
+// vtable store : 0x005d86e8  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -51,7 +52,7 @@ public:
     virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
     virtual void vfunc_31(int a0);  // [31] 0x00460600  // __stdcall
 
-    SidebarClass_StripClass_SelectClass();  // 0x005d86e8
+    SidebarClass_StripClass_SelectClass();  // 0x005d81b0
     virtual ~SidebarClass_StripClass_SelectClass();
 
     // ---- data members (offsets from ctor 0x005dbd81) ----

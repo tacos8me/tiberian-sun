@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TaskForceClass
 // vtable       : 0x006a5550  (27 slots)
-// constructor  : 0x006062f6
+// constructor  : 0x006062d0
+// vtable store : 0x006062f6  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -45,7 +46,7 @@ public:
     virtual void vfunc_25(int a0);  // [25] 0x006068d0  // __thiscall  // refs "Group"
     virtual void vfunc_26(int a0, int a1, int a2);  // [26] 0x00606990  // __thiscall
 
-    TaskForceClass();  // 0x006062f6
+    TaskForceClass();  // 0x006062d0
     virtual ~TaskForceClass();
 
     // ---- data members (offsets from ctor 0x006062c7) ----

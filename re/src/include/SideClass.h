@@ -4,7 +4,8 @@
 //
 // RTTI class   : class SideClass
 // vtable       : 0x006a4300  (27 slots)
-// constructor  : 0x005d7e94
+// constructor  : 0x005d7e60
+// vtable store : 0x005d7e94  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -45,7 +46,7 @@ public:
     virtual void Fetch_ID(int a0, int a1, int a2, int a3, int a4);  // [25] 0x00405f20  // __thiscall  // refs "Name"
     virtual void Set_ID(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
 
-    SideClass();  // 0x005d7e94
+    SideClass();  // 0x005d7e60
     virtual ~SideClass();
 
     // ---- data members (offsets from ctor 0x005d7e52) ----

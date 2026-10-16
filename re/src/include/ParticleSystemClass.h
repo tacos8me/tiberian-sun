@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ParticleSystemClass
 // vtable       : 0x006a3084  (105 slots)
-// constructor  : 0x0058e00d
+// constructor  : 0x0058df60
+// vtable store : 0x0058e00d  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -124,7 +125,7 @@ public:
     virtual void vfunc_103(int a0);  // [103] 0x005703b0  // __thiscall
     virtual void vfunc_104();  // [104] 0x00570360
 
-    ParticleSystemClass();  // 0x0058e00d
+    ParticleSystemClass();  // 0x0058df60
     virtual ~ParticleSystemClass();
 
     // ---- data members (offsets from ctor 0x0058dff0) ----

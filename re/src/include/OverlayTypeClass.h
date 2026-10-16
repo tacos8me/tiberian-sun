@@ -4,7 +4,8 @@
 //
 // RTTI class   : class OverlayTypeClass
 // vtable       : 0x006a2d58  (41 slots)
-// constructor  : 0x00576c81
+// constructor  : 0x00576bf0
+// vtable store : 0x00576c81  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -59,7 +60,7 @@ public:
     virtual void vfunc_39(int a0, int a1);  // [39] 0x00577720  // __thiscall
     virtual void vfunc_40(int a0, int a1, int a2);  // [40] 0x00576f10  // __stdcall
 
-    OverlayTypeClass();  // 0x00576c81
+    OverlayTypeClass();  // 0x00576bf0
     virtual ~OverlayTypeClass();
 
     // ---- data members (offsets from ctor 0x00576be2) ----

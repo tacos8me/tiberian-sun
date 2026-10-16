@@ -4,7 +4,8 @@
 //
 // RTTI class   : class CCFileClass
 // vtable       : 0x00699bc8  (17 slots)
-// constructor  : 0x00418ec3
+// constructor  : 0x00418e88
+// vtable store : 0x00418ec3  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -35,7 +36,7 @@ public:
     virtual void vfunc_15(int a0);  // [15] 0x00447830  // __thiscall
     virtual void vfunc_16(int a0, int a1, int a2);  // [16] 0x00447430  // __stdcall
 
-    CCFileClass();  // 0x00418ec3
+    CCFileClass();  // 0x00418e88
     virtual ~CCFileClass();
 
     // ---- data members (offsets from ctor 0x00418dcb) ----

@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ScriptTypeClass
 // vtable       : 0x006a4008  (27 slots)
-// constructor  : 0x00423acd
+// constructor  : 0x004239a0
+// vtable store : 0x00423acd  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -45,7 +46,7 @@ public:
     virtual void vfunc_25(int a0);  // [25] 0x005ce700  // __thiscall
     virtual void vfunc_26(int a0, int a1, int a2, int a3);  // [26] 0x005ce660  // __thiscall
 
-    ScriptTypeClass();  // 0x00423acd
+    ScriptTypeClass();  // 0x004239a0
     virtual ~ScriptTypeClass();
 
     // ---- data members (offsets from ctor 0x005ce53d) ----

@@ -4,7 +4,8 @@
 //
 // RTTI class   : class WinModemClass
 // vtable       : 0x006a7620  (10 slots)
-// constructor  : 0x0065791a
+// constructor  : 0x00657910
+// vtable store : 0x0065791a  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -27,7 +28,7 @@ public:
     virtual void vfunc_8(int a0);  // [8] 0x00658c40  // __stdcall
     virtual void vfunc_9(int a0);  // [9] 0x00658c50  // __stdcall
 
-    WinModemClass();  // 0x0065791a
+    WinModemClass();  // 0x00657910
     virtual ~WinModemClass();
 
     // ---- data members (offsets from ctor 0x00657907) ----

@@ -4,7 +4,8 @@
 //
 // RTTI class   : class UDPInterfaceClass
 // vtable       : 0x006a7a94  (21 slots)
-// constructor  : 0x0066f73c
+// constructor  : 0x0066f6d0
+// vtable store : 0x0066f73c  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -39,7 +40,7 @@ public:
     virtual void vfunc_19(int a0);  // [19] 0x0066ff20  // __stdcall
     virtual void vfunc_20(int a0);  // [20] 0x0066e9a0  // __stdcall
 
-    UDPInterfaceClass();  // 0x0066f73c
+    UDPInterfaceClass();  // 0x0066f6d0
     virtual ~UDPInterfaceClass();
 
     // ---- data members (offsets from ctor 0x0066f6c2) ----

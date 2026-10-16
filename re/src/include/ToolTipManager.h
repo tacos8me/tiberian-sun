@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ToolTipManager
 // vtable       : 0x006a62c4  (6 slots)
-// constructor  : 0x0062aa5c
+// constructor  : 0x0062a9f0
+// vtable store : 0x0062aa5c  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -24,7 +25,7 @@ public:
     virtual void vfunc_4(int a0);  // [4] 0x0062b4d0  // __stdcall
     virtual void vfunc_5(int a0);  // [5] 0x0062b4f0  // __stdcall, returns int
 
-    ToolTipManager();  // 0x0062aa5c
+    ToolTipManager();  // 0x0062a9f0
     virtual ~ToolTipManager();
 
     // ---- data members (offsets from ctor 0x0062a9e7) ----

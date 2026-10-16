@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TerrainTypeClass
 // vtable       : 0x006a5fc8  (40 slots)
-// constructor  : 0x00624f99
+// constructor  : 0x00624f20
+// vtable store : 0x00624f99  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -58,7 +59,7 @@ public:
     virtual void vfunc_38();  // [38] 0x00571660  // __cdecl, returns int
     virtual void vfunc_39();  // [39] 0x0040f620  // __cdecl
 
-    TerrainTypeClass();  // 0x00624f99
+    TerrainTypeClass();  // 0x00624f20
     virtual ~TerrainTypeClass();
 
     // ---- data members (offsets from ctor 0x00624f1d) ----

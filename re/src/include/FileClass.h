@@ -4,7 +4,8 @@
 //
 // RTTI class   : class FileClass
 // vtable       : 0x006a39a0  (17 slots)
-// constructor  : 0x005a5a0d
+// constructor  : 0x005a59e0
+// vtable store : 0x005a5a0d  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -34,7 +35,7 @@ public:
     virtual void vfunc_15(int a0);  // [15] 0x005a5d40  // __stdcall
     virtual void vfunc_16();  // [16] 0x006829a5  // __cdecl
 
-    FileClass();  // 0x005a5a0d
+    FileClass();  // 0x005a59e0
     virtual ~FileClass();
 
     // ---- data members (offsets from ctor 0x005a59da) ----

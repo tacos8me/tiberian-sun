@@ -4,7 +4,8 @@
 //
 // RTTI class   : class CarryoverClass
 // vtable       : 0x0069abe4  (10 slots)
-// constructor  : 0x00447149
+// constructor  : 0x00447120
+// vtable store : 0x00447149  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -29,7 +30,7 @@ public:
     virtual void vfunc_8();  // [8] 0x004f6930  // __cdecl, returns int
     virtual void vfunc_9();  // [9] 0x004f6a50  // __thiscall, returns int
 
-    CarryoverClass();  // 0x00447149
+    CarryoverClass();  // 0x00447120
     virtual ~CarryoverClass();
 
     // ---- data members (offsets from ctor 0x00447117) ----

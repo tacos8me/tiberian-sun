@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TerrainClass
 // vtable       : 0x006a5dfc  (105 slots)
-// constructor  : 0x00622bfe
+// constructor  : 0x00622bf0
+// vtable store : 0x00622bfe  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -124,7 +125,7 @@ public:
     virtual void vfunc_103(int a0);  // [103] 0x005703b0  // __thiscall
     virtual void vfunc_104();  // [104] 0x00570360
 
-    TerrainClass();  // 0x00622bfe
+    TerrainClass();  // 0x00622bf0
     virtual ~TerrainClass();
 
     // ---- data members (offsets from ctor 0x00622be7) ----

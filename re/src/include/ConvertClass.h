@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ConvertClass
 // vtable       : 0x0069b208  (1 slots)
-// constructor  : 0x0046093d
+// constructor  : 0x00460740
+// vtable store : 0x0046093d  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -18,7 +19,7 @@ class ConvertClass
 public:
     // ---- vtable 0x0069b208 (1 slots) ----
 
-    ConvertClass();  // 0x0046093d
+    ConvertClass();  // 0x00460740
     virtual ~ConvertClass();
 
     // ---- data members (offsets from ctor 0x00460824) ----

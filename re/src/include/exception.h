@@ -4,7 +4,8 @@
 //
 // RTTI class   : class exception
 // vtable       : 0x006a7f54  (2 slots)
-// constructor  : 0x006877cf
+// constructor  : 0x006877be
+// vtable store : 0x006877cf  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -20,6 +21,6 @@ public:
     virtual void vfunc_0(int a0);  // [0] 0x006877d4  // __thiscall
     virtual void vfunc_1();  // [1] 0x006878ac  // __cdecl, returns int
 
-    exception();  // 0x006877cf
+    exception();  // 0x006877be
     virtual ~exception();
 };

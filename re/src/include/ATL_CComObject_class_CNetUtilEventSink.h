@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ATL::CComObject<class CNetUtilEventSink>
 // vtable       : 0x006a7970  (8 slots)
-// constructor  : 0x0066ca3b
+// constructor  : 0x0066ca20
+// vtable store : 0x0066ca3b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -26,6 +27,6 @@ public:
     virtual void vfunc_6(int a0, int a1, int a2, int a3, int a4, int a5);  // [6] 0x0066d040
     virtual void vfunc_7(int a0, int a1, int a2, int a3);  // [7] 0x0066d120  // __stdcall, returns int  // refs "OnAgeCheck"
 
-    ATL_CComObject_class_CNetUtilEventSink();  // 0x0066ca3b
+    ATL_CComObject_class_CNetUtilEventSink();  // 0x0066ca20
     virtual ~ATL_CComObject_class_CNetUtilEventSink();
 };

@@ -4,7 +4,8 @@
 //
 // RTTI class   : class UnitClass
 // vtable       : 0x006a66a8  (239 slots)
-// constructor  : 0x00630d2e
+// constructor  : 0x00630cc0
+// vtable store : 0x00630d2e  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -258,7 +259,7 @@ public:
     virtual void vfunc_237(int a0, int a1, int a2, int a3, int a4, int a5);  // [237] 0x00636230  // __thiscall
     virtual void vfunc_238(int a0, int a1);  // [238] 0x006350f0  // __thiscall
 
-    UnitClass();  // 0x00630d2e
+    UnitClass();  // 0x00630cc0
     virtual ~UnitClass();
 
     // ---- data members (offsets from ctor 0x00630cbd) ----

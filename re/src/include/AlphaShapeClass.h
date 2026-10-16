@@ -4,7 +4,8 @@
 //
 // RTTI class   : class AlphaShapeClass
 // vtable       : 0x006997ec  (24 slots)
-// constructor  : 0x00411a0e
+// constructor  : 0x004119f0
+// vtable store : 0x00411a0e  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -42,7 +43,7 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
 
-    AlphaShapeClass();  // 0x00411a0e
+    AlphaShapeClass();  // 0x004119f0
     virtual ~AlphaShapeClass();
 
     // ---- data members (offsets from ctor 0x004119eb) ----

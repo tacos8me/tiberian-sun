@@ -4,7 +4,8 @@
 //
 // RTTI class   : class CampaignClass
 // vtable       : 0x0069ab60  (27 slots)
-// constructor  : 0x00446684
+// constructor  : 0x00446670
+// vtable store : 0x00446684  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -45,7 +46,7 @@ public:
     virtual void vfunc_25(int a0);  // [25] 0x004467d0  // __thiscall  // refs "FinalMovie"
     virtual void Set_ID(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
 
-    CampaignClass();  // 0x00446684
+    CampaignClass();  // 0x00446670
     virtual ~CampaignClass();
 
     // ---- data members (offsets from ctor 0x00446662) ----

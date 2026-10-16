@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ATL::CComObject<class CDownloadEventSink>
 // vtable       : 0x006a794c  (8 slots)
-// constructor  : 0x0066c6d6
+// constructor  : 0x0066c6b0
+// vtable store : 0x0066c6d6  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -26,6 +27,6 @@ public:
     virtual void vfunc_6(int a0);  // [6] 0x0066c8a0  // __stdcall, returns int
     virtual void vfunc_7(int a0);  // [7] 0x0066c830
 
-    ATL_CComObject_class_CDownloadEventSink();  // 0x0066c6d6
+    ATL_CComObject_class_CDownloadEventSink();  // 0x0066c6b0
     virtual ~ATL_CComObject_class_CDownloadEventSink();
 };

@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ATL::CComObject<class CChatEventSink>
 // vtable       : 0x006a7834  (33 slots)
-// constructor  : 0x0065fce0
+// constructor  : 0x0065fc40
+// vtable store : 0x0065fce0  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -52,7 +53,7 @@ public:
     virtual void vfunc_31(int a0, int a1, int a2, int a3);  // [31] 0x0066c2b0  // __stdcall, returns int
     virtual void vfunc_32(int a0, int a1, int a2);  // [32] 0x00669c10
 
-    ATL_CComObject_class_CChatEventSink();  // 0x0065fce0
+    ATL_CComObject_class_CChatEventSink();  // 0x0065fc40
     virtual ~ATL_CComObject_class_CChatEventSink();
 
     // ---- data members (offsets from ctor 0x0065fc37) ----

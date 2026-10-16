@@ -4,7 +4,8 @@
 //
 // RTTI class   : class MSPrintAnim
 // vtable       : 0x006a24fc  (6 slots)
-// constructor  : 0x00558f7f
+// constructor  : 0x00558f20
+// vtable store : 0x00558f7f  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -24,7 +25,7 @@ public:
     virtual void vfunc_4(int a0, int a1);  // [4] 0x00559310  // __thiscall
     virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [5] 0x005594a0  // __thiscall
 
-    MSPrintAnim();  // 0x00558f7f
+    MSPrintAnim();  // 0x00558f20
     virtual ~MSPrintAnim();
 
     // ---- data members (offsets from ctor 0x00558f13) ----

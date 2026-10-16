@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ConnManClass
 // vtable       : 0x006a0b7c  (16 slots)
-// constructor  : 0x004e7e47
+// constructor  : 0x004e7df0
+// vtable store : 0x004e7e47  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -33,7 +34,7 @@ public:
     virtual void vfunc_14();  // [14] 0x006829a5  // __cdecl
     virtual void vfunc_15();  // [15] 0x006829a5  // __cdecl
 
-    ConnManClass();  // 0x004e7e47
+    ConnManClass();  // 0x004e7df0
     virtual ~ConnManClass();
 
     // ---- data members (offsets from ctor 0x004e7deb) ----

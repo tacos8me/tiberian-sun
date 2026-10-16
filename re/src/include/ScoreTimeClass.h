@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ScoreTimeClass
 // vtable       : 0x006a3ee4  (4 slots)
-// constructor  : 0x005ca0db
+// constructor  : 0x005ca088
+// vtable store : 0x005ca0db  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -22,7 +23,7 @@ public:
     virtual void vfunc_2();  // [2] 0x005cdee0  // __thiscall
     virtual void vfunc_3(int a0);  // [3] 0x005cda00  // __thiscall
 
-    ScoreTimeClass();  // 0x005ca0db
+    ScoreTimeClass();  // 0x005ca088
     virtual ~ScoreTimeClass();
 
     // ---- data members (offsets from ctor 0x005ca01c) ----

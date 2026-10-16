@@ -4,7 +4,8 @@
 //
 // RTTI class   : class IPXInterfaceClass
 // vtable       : 0x006a79a4  (21 slots)
-// constructor  : 0x0066e146
+// constructor  : 0x0066e130
+// vtable store : 0x0066e146  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -40,7 +41,7 @@ public:
     virtual void vfunc_19(int a0);  // [19] 0x0066e990  // __stdcall, returns int
     virtual void vfunc_20(int a0);  // [20] 0x0066e9a0  // __stdcall
 
-    IPXInterfaceClass();  // 0x0066e146
+    IPXInterfaceClass();  // 0x0066e130
     virtual ~IPXInterfaceClass();
 
     // ---- data members (offsets from ctor 0x0066e122) ----

@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TiberiumClass
 // vtable       : 0x006a6248  (27 slots)
-// constructor  : 0x006282b3
+// constructor  : 0x006281e0
+// vtable store : 0x006282b3  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -45,7 +46,7 @@ public:
     virtual void vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [25] 0x00628540  // __thiscall  // refs "Spread"
     virtual void Set_ID(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
 
-    TiberiumClass();  // 0x006282b3
+    TiberiumClass();  // 0x006281e0
     virtual ~TiberiumClass();
 
     // ---- data members (offsets from ctor 0x006281db) ----

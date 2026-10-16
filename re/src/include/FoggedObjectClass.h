@@ -4,7 +4,8 @@
 //
 // RTTI class   : class FoggedObjectClass
 // vtable       : 0x0069e218  (25 slots)
-// constructor  : 0x0049986f
+// constructor  : 0x00499840
+// vtable store : 0x0049986f  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -44,7 +45,7 @@ public:
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
     virtual void vfunc_24(int a0);  // [24] 0x0049b7d0  // __stdcall
 
-    FoggedObjectClass();  // 0x0049986f
+    FoggedObjectClass();  // 0x00499840
     virtual ~FoggedObjectClass();
 
     // ---- data members (offsets from ctor 0x0049993b) ----

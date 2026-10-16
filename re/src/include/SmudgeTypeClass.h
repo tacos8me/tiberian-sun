@@ -4,7 +4,8 @@
 //
 // RTTI class   : class SmudgeTypeClass
 // vtable       : 0x006a4790  (41 slots)
-// constructor  : 0x005e15bd
+// constructor  : 0x005e1580
+// vtable store : 0x005e15bd  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -59,7 +60,7 @@ public:
     virtual void vfunc_39();  // [39] 0x0040f620  // __cdecl
     virtual void vfunc_40(int a0, int a1, int a2, int a3, int a4);  // [40] 0x005e1880  // __thiscall
 
-    SmudgeTypeClass();  // 0x005e15bd
+    SmudgeTypeClass();  // 0x005e1580
     virtual ~SmudgeTypeClass();
 
     // ---- data members (offsets from ctor 0x005e1572) ----

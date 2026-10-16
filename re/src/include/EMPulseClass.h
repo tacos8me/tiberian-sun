@@ -4,7 +4,8 @@
 //
 // RTTI class   : class EMPulseClass
 // vtable       : 0x0069df00  (24 slots)
-// constructor  : 0x0048ee2c
+// constructor  : 0x0048ee00
+// vtable store : 0x0048ee2c  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -42,7 +43,7 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
 
-    EMPulseClass();  // 0x0048ee2c
+    EMPulseClass();  // 0x0048ee00
     virtual ~EMPulseClass();
 
     // ---- data members (offsets from ctor 0x0048edf8) ----

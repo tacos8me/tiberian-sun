@@ -4,7 +4,8 @@
 //
 // RTTI class   : class FootClass
 // vtable       : 0x0069e340  (236 slots)
-// constructor  : 0x0049c2c3
+// constructor  : 0x0049c0f0
+// vtable store : 0x0049c2c3  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -255,7 +256,7 @@ public:
     virtual void vfunc_234();  // [234] 0x004a2330
     virtual void vfunc_235(int a0);  // [235] 0x004a4140  // __thiscall
 
-    FootClass();  // 0x0049c2c3
+    FootClass();  // 0x0049c0f0
     virtual ~FootClass();
 
     // ---- data members (offsets from ctor 0x0049c1cf) ----

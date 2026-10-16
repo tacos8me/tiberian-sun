@@ -4,7 +4,8 @@
 //
 // RTTI class   : class LightConvertClass
 // vtable       : 0x006a163c  (2 slots)
-// constructor  : 0x004f62d5
+// constructor  : 0x004f6250
+// vtable store : 0x004f62d5  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -20,7 +21,7 @@ public:
     // ---- vtable 0x006a163c (2 slots) ----
     virtual void vfunc_1(int a0, int a1, int a2, int a3);  // [1] 0x004f63e0  // __thiscall
 
-    LightConvertClass();  // 0x004f62d5
+    LightConvertClass();  // 0x004f6250
     virtual ~LightConvertClass();
 
     // ---- data members (offsets from ctor 0x004f629a) ----

@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TClassFactory<class TubeClass>
 // vtable       : 0x006a49b8  (5 slots)
-// constructor  : 0x005e9a3b
+// constructor  : 0x005e9a00
+// vtable store : 0x005e9a3b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -24,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005e9b00  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005e9b80  // __stdcall, returns int
 
-    TClassFactory_class_TubeClass();  // 0x005e9a3b
+    TClassFactory_class_TubeClass();  // 0x005e9a00
     virtual ~TClassFactory_class_TubeClass();
 
     // ---- data members (offsets from ctor 0x005e9a21) ----

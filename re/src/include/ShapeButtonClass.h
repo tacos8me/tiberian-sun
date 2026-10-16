@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ShapeButtonClass
 // vtable       : 0x0069d8a8  (33 slots)
-// constructor  : 0x0047f233
+// constructor  : 0x0047efb0
+// vtable store : 0x0047f233  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -52,7 +53,7 @@ public:
     virtual void vfunc_31(int a0);  // [31] 0x00460600  // __stdcall
     virtual void vfunc_32(int a0, int a1, int a2);  // [32] 0x005d7a90  // __stdcall
 
-    ShapeButtonClass();  // 0x0047f233
+    ShapeButtonClass();  // 0x0047efb0
     virtual ~ShapeButtonClass();
 
     // ---- data members (offsets from ctor 0x0047f172) ----

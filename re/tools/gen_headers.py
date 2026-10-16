@@ -236,8 +236,10 @@ def main():
         L.append("//")
         L.append(f"// RTTI class   : {m['class']}")
         L.append(f"// vtable       : 0x{m['vtable']:08x}  ({m['nvirtuals']} slots)")
-        if m["ctors"]:
+        if m.get("ctors"):
             L.append(f"// constructor  : 0x{m['ctors'][0]:08x}")
+        if m.get("ctor_sites"):
+            L.append(f"// vtable store : 0x{m['ctor_sites'][0]:08x}  (inside the ctor)")
         L.append("//")
         L.append("// Virtual slots are in real vtable order; each carries its target")
         L.append("// address as evidence. Slots named vfunc_N have no established")

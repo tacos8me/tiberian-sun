@@ -4,7 +4,8 @@
 //
 // RTTI class   : class GadgetClass
 // vtable       : 0x0069e74c  (31 slots)
-// constructor  : 0x004a599f
+// constructor  : 0x004a5960
+// vtable store : 0x004a599f  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -49,7 +50,7 @@ public:
     virtual void vfunc_29(int a0, int a1);  // [29] 0x004a5b70  // __stdcall, returns int
     virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
 
-    GadgetClass();  // 0x004a599f
+    GadgetClass();  // 0x004a5960
     virtual ~GadgetClass();
 
     // ---- data members (offsets from ctor 0x004a595a) ----

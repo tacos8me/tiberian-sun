@@ -4,7 +4,8 @@
 //
 // RTTI class   : class WaypointPathClass
 // vtable       : 0x006a74f0  (24 slots)
-// constructor  : 0x00655811
+// constructor  : 0x006557e0
+// vtable store : 0x00655811  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -42,7 +43,7 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
 
-    WaypointPathClass();  // 0x00655811
+    WaypointPathClass();  // 0x006557e0
     virtual ~WaypointPathClass();
 
     // ---- data members (offsets from ctor 0x006557d1) ----

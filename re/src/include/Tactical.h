@@ -4,7 +4,8 @@
 //
 // RTTI class   : class Tactical
 // vtable       : 0x006a5298  (25 slots)
-// constructor  : 0x005f4c45
+// constructor  : 0x005f4b30
+// vtable store : 0x005f4c45  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -43,7 +44,7 @@ public:
     virtual void vfunc_23(int a0, int a1, int a2, int a3, int a4);  // [23] 0x005f55d0  // __thiscall
     virtual void vfunc_24(int a0, int a1, int a2, int a3);  // [24] 0x005fcf50  // __thiscall
 
-    Tactical();  // 0x005f4c45
+    Tactical();  // 0x005f4b30
     virtual ~Tactical();
 
     // ---- data members (offsets from ctor 0x005f4d3b) ----

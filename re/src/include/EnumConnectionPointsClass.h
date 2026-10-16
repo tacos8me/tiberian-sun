@@ -4,7 +4,8 @@
 //
 // RTTI class   : class EnumConnectionPointsClass
 // vtable       : 0x0069b8ac  (7 slots)
-// constructor  : 0x0046c2a9
+// constructor  : 0x0046c280
+// vtable store : 0x0046c2a9  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -24,7 +25,7 @@ public:
     virtual void vfunc_5(int a0);  // [5] 0x0046c3e0  // __stdcall, returns int
     virtual void vfunc_6(int a0, int a1);  // [6] 0x0046c3f0  // __stdcall, returns int
 
-    EnumConnectionPointsClass();  // 0x0046c2a9
+    EnumConnectionPointsClass();  // 0x0046c280
     virtual ~EnumConnectionPointsClass();
 
     // ---- data members (offsets from ctor 0x0046c27e) ----

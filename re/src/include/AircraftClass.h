@@ -4,7 +4,8 @@
 //
 // RTTI class   : class AircraftClass
 // vtable       : 0x00698d50  (236 slots)
-// constructor  : 0x00407dca
+// constructor  : 0x00407d60
+// vtable store : 0x00407dca  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -255,7 +256,7 @@ public:
     virtual void vfunc_234();  // [234] 0x004a2330
     virtual void vfunc_235(int a0);  // [235] 0x004a4140  // __thiscall
 
-    AircraftClass();  // 0x00407dca
+    AircraftClass();  // 0x00407d60
     virtual ~AircraftClass();
 
     // ---- data members (offsets from ctor 0x00407d54) ----

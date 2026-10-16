@@ -4,7 +4,8 @@
 //
 // RTTI class   : class MSWordAnim
 // vtable       : 0x006a2454  (6 slots)
-// constructor  : 0x00555578
+// constructor  : 0x00555500
+// vtable store : 0x00555578  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -24,7 +25,7 @@ public:
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005595a0  // __thiscall
     virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [5] 0x005597a0  // __thiscall
 
-    MSWordAnim();  // 0x00555578
+    MSWordAnim();  // 0x00555500
     virtual ~MSWordAnim();
 
     // ---- data members (offsets from ctor 0x005554f3) ----

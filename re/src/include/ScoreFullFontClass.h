@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ScoreFullFontClass
 // vtable       : 0x006a3f30  (5 slots)
-// constructor  : 0x005cd864
+// constructor  : 0x005cd830
+// vtable store : 0x005cd864  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -23,7 +24,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2);  // [3] 0x005cd6e0  // __thiscall
     virtual void vfunc_4(int a0, int a1, int a2, int a3, int a4);  // [4] 0x005cd590  // __thiscall
 
-    ScoreFullFontClass();  // 0x005cd864
+    ScoreFullFontClass();  // 0x005cd830
     virtual ~ScoreFullFontClass();
 
     // ---- data members (offsets from ctor 0x005cd822) ----

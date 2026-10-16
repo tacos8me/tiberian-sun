@@ -4,7 +4,8 @@
 //
 // RTTI class   : class INIClass::INISection
 // vtable       : 0x006a0410  (1 slots)
-// constructor  : 0x004d4b1e
+// constructor  : 0x004d4870
+// vtable store : 0x004d4b1e  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -22,7 +23,7 @@ public:
     // ---- vtable 0x006a0410 (1 slots) ----
     virtual void vfunc_0(int a0);  // [0] 0x004d7f80  // __thiscall
 
-    INIClass_INISection();  // 0x004d4b1e
+    INIClass_INISection();  // 0x004d4870
     virtual ~INIClass_INISection();
 
     // ---- data members (offsets from ctor 0x004d6b4b) ----

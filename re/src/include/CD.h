@@ -4,7 +4,8 @@
 //
 // RTTI class   : class CD
 // vtable       : 0x0069ac10  (3 slots)
-// constructor  : 0x00447441
+// constructor  : 0x00447430
+// vtable store : 0x00447441  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -21,7 +22,7 @@ public:
     virtual void vfunc_1(int a0, int a1);  // [1] 0x0044c240  // __thiscall
     virtual void vfunc_2(int a0);  // [2] 0x0044c3b0  // __thiscall
 
-    CD();  // 0x00447441
+    CD();  // 0x00447430
     virtual ~CD();
 
     // ---- data members (offsets from ctor 0x00447425) ----

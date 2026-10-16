@@ -4,7 +4,8 @@
 //
 // RTTI class   : class FactoryClass
 // vtable       : 0x0069dff8  (24 slots)
-// constructor  : 0x00492ee6
+// constructor  : 0x00492e80
+// vtable store : 0x00492ee6  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -43,7 +44,7 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23(int a0);  // [23] 0x004930c0  // __thiscall
 
-    FactoryClass();  // 0x00492ee6
+    FactoryClass();  // 0x00492e80
     virtual ~FactoryClass();
 
     // ---- data members (offsets from ctor 0x00492e77) ----

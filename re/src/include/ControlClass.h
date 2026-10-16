@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ControlClass
 // vtable       : 0x0069b14c  (32 slots)
-// constructor  : 0x00460558
+// constructor  : 0x00460520
+// vtable store : 0x00460558  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -51,7 +52,7 @@ public:
     virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
     virtual void vfunc_31(int a0);  // [31] 0x00460600  // __stdcall
 
-    ControlClass();  // 0x00460558
+    ControlClass();  // 0x00460520
     virtual ~ControlClass();
 
     // ---- data members (offsets from ctor 0x00460517) ----

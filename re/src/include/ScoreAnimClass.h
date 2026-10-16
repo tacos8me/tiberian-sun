@@ -4,7 +4,8 @@
 //
 // RTTI class   : class ScoreAnimClass
 // vtable       : 0x006a3efc  (4 slots)
-// constructor  : 0x005cde7c
+// constructor  : 0x005cde50
+// vtable store : 0x005cde7c  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -21,7 +22,7 @@ public:
     virtual void vfunc_2();  // [2] 0x005cdee0  // __thiscall
     virtual void vfunc_3();  // [3] 0x006829a5  // __cdecl
 
-    ScoreAnimClass();  // 0x005cde7c
+    ScoreAnimClass();  // 0x005cde50
     virtual ~ScoreAnimClass();
 
     // ---- data members (offsets from ctor 0x005cde48) ----

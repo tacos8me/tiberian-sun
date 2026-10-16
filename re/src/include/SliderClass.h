@@ -4,7 +4,8 @@
 //
 // RTTI class   : class SliderClass
 // vtable       : 0x006a1758  (43 slots)
-// constructor  : 0x004f6dc9
+// constructor  : 0x004f6a50
+// vtable store : 0x004f6dc9  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -62,7 +63,7 @@ public:
     virtual void vfunc_41(int a0);  // [41] 0x005de320  // __stdcall
     virtual void vfunc_42(int a0);  // [42] 0x005de360  // __stdcall
 
-    SliderClass();  // 0x004f6dc9
+    SliderClass();  // 0x004f6a50
     virtual ~SliderClass();
 
     // ---- data members (offsets from ctor 0x004f6c21) ----

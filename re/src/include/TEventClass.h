@@ -4,7 +4,8 @@
 //
 // RTTI class   : class TEventClass
 // vtable       : 0x006a60c8  (24 slots)
-// constructor  : 0x00625a7d
+// constructor  : 0x00625a60
+// vtable store : 0x00625a7d  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
 // address as evidence. Slots named vfunc_N have no established
@@ -42,7 +43,7 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
 
-    TEventClass();  // 0x00625a7d
+    TEventClass();  // 0x00625a60
     virtual ~TEventClass();
 
     // ---- data members (offsets from ctor 0x00625a5b) ----
