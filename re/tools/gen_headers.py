@@ -13,6 +13,7 @@ Design:
 
 Output is deterministic and regenerable.
 """
+import bisect
 import glob
 import json
 import os
@@ -20,6 +21,8 @@ import re
 import struct
 import sys
 from collections import defaultdict
+
+import capstone
 
 _KEYWORDS = {"class", "struct", "const", "unsigned", "signed", "int",
              "char", "short", "long", "void", "bool", "float", "double"}
@@ -76,15 +79,129 @@ def sanitize(name):
     return n
 
 
-def member_block(rtti_class, members, member_names):
+class StoreWidths:
+    """Access-width evidence for recovered member offsets, read from the ctor.
+
+    gen_members.py records WHERE a constructor stores (the displacement and the
+    kind of value) but not HOW WIDE the store is, so this emitter previously
+    declared every member as a 4-byte `unsigned long`. That is wrong for the
+    offsets the constructor writes with a byte store (`mov byte ptr [eax+0xc],
+    1`), and it silently swallowed every recovered offset that fell inside the
+    4-byte span of such a declaration.
+
+    This re-reads the constructor's machine code -- the same evidence the
+    offset table came from -- and records the width of the store at each
+    displacement. Only stores through the register that receives the class's
+    vtable pointer (the `this` register) count, so a store through a reused
+    scratch register into some other object is not attributed to a member.
+    """
+
+    # Matches gen_members.py / verify_members_binary.py: the vtable write must
+    # be early in the function and go through a non-stack register, and the
+    # function body is read as one blob from its recovered entry point.
+    MAX_FN = 0x800
+    VTABLE_WRITE_WINDOW = 200
+
+    def __init__(self, bin_, fn_starts):
+        self.bin = bin_
+        self.starts = fn_starts
+        self.md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        self.md.detail = True
+        self._insns = {}
+        self._maps = {}
+
+    def _fn_insns(self, site):
+        """Instructions of the recovered function enclosing `site`."""
+        i = bisect.bisect_right(self.starts, site) - 1
+        if i < 0:
+            return []
+        fn = self.starts[i]
+        if fn not in self._insns:
+            blob = self.bin.rd(fn, self.MAX_FN)
+            self._insns[fn] = list(self.md.disasm(blob, fn)) if blob else []
+        return self._insns[fn]
+
+    def width_map(self, vtva, ctor_site):
+        """offset -> (store width in bytes, the store instruction as text).
+
+        Where the constructor stores more than one width to one displacement
+        the WIDEST store is kept: a field cannot be narrower than a store into
+        it, and declaring it narrower would move the members that follow.
+        """
+        key = (vtva, ctor_site)
+        if key in self._maps:
+            return self._maps[key]
+        insns = self._fn_insns(ctor_site) if ctor_site else []
+        this_reg = None
+        for pos, ins in enumerate(insns):
+            if pos > self.VTABLE_WRITE_WINDOW:
+                break
+            if ins.mnemonic != "mov" or len(ins.operands) != 2:
+                continue
+            dst, src = ins.operands
+            if (dst.type == capstone.x86.X86_OP_MEM
+                    and src.type == capstone.x86.X86_OP_IMM
+                    and src.imm == vtva):
+                base = ins.reg_name(dst.mem.base)
+                if base not in ("esp", "ebp"):
+                    this_reg = base
+                    break
+        wmap = {}
+        if this_reg:
+            for ins in insns:
+                if ins.mnemonic not in ("mov", "movzx", "movsx", "and", "or"):
+                    continue
+                if len(ins.operands) != 2:
+                    continue
+                dst = ins.operands[0]
+                if dst.type != capstone.x86.X86_OP_MEM:
+                    continue
+                if ins.reg_name(dst.mem.base) != this_reg:
+                    continue
+                w = dst.size
+                if w not in (1, 2, 4):
+                    continue
+                off = dst.mem.disp
+                cur = wmap.get(off)
+                if cur is None or w > cur[0]:
+                    wmap[off] = (w, f"{ins.mnemonic} {ins.op_str}")
+        self._maps[key] = wmap
+        return wmap
+
+
+# Declared type for each store width the binary uses. `unsigned long` is the
+# widest form; nothing here is inferred beyond the store instruction itself.
+_WIDTH_TYPE = {1: "unsigned char", 2: "unsigned short", 4: "unsigned long"}
+
+
+def member_width(widths, off):
+    """(declared type, size in bytes, evidence annotation) for member `off`.
+
+    The declared type follows the store width the constructor uses at that
+    displacement. A record whose width could not be determined keeps
+    `unsigned long` and is annotated `/* width ? */` rather than guessed at.
+    """
+    rec = widths.get(off)
+    if rec:
+        w, insn = rec
+        typ = _WIDTH_TYPE.get(w)
+        if typ:
+            return typ, w, f"{w}-byte store: {insn}"
+    return "unsigned long", 4, "/* width ? */"
+
+
+def member_block(rtti_class, members, member_names, widths):
     """Emit the recovered data-member declarations for one class.
 
     The offset table (out/members.json) is keyed by the RTTI class spelling.
     Offsets are exact; names are only used where an INI key or string supplies
-    evidence. The block is returned as a list of lines so the same code can
-    either place it inside a class body being generated here, or append it to
-    the header that already defines the class (nested types and template
-    instantiations have no standalone header of their own).
+    evidence. Each member is declared at the access width the constructor
+    actually stores it with (`widths`, from StoreWidths) and the store
+    instruction is quoted in the comment as evidence. The block is returned as
+    a list of lines so the same code can either place it inside a class body
+    being generated here, or append it to the header that already defines the
+    class (nested types and template instantiations have no standalone header
+    of their own).
 
     Returns [] when no offsets were recovered for the class.
     """
@@ -99,8 +216,9 @@ def member_block(rtti_class, members, member_names):
     L = []
     L.append("")
     L.append(f"    // ---- data members (offsets from ctor 0x{md['ctor']:08x}) ----")
-    L.append("    // Offsets are exact; names are not yet recovered, so members")
-    L.append("    // are emitted as byte blobs at their real displacements.")
+    L.append("    // Offsets are exact. Each member is declared at the access width")
+    L.append("    // the constructor stores it with; the store instruction is quoted")
+    L.append("    // as evidence. `/* width ? */` means no store could be classified.")
     prev_end = 0
     for mem in md["members"]:
         off = mem["off"]
@@ -115,17 +233,22 @@ def member_block(rtti_class, members, member_names):
             prev_end = off + 4
         elif nm and nm not in _used_names:
             _used_names.add(nm)
-            L.append(f"    unsigned long {nm};  // +0x{off:03x} (INI key)")
-            prev_end = off + 4
+            typ, size, ann = member_width(widths, off)
+            L.append(f"    {typ} {nm};  // +0x{off:03x} (INI key); {ann}")
+            prev_end = off + size
         elif kind == "zero":
-            L.append(f"    unsigned long m_{off:03x};  // zero-initialised")
-            prev_end = off + 4
+            typ, size, ann = member_width(widths, off)
+            L.append(f"    {typ} m_{off:03x};  // +0x{off:03x} zero-initialised; {ann}")
+            prev_end = off + size
         elif kind == "imm":
-            L.append(f"    unsigned long m_{off:03x};  // init 0x{mem['value']:x}")
-            prev_end = off + 4
+            typ, size, ann = member_width(widths, off)
+            L.append(f"    {typ} m_{off:03x};  // +0x{off:03x} init "
+                     f"0x{mem['value']:x}; {ann}")
+            prev_end = off + size
         else:
-            L.append(f"    unsigned long m_{off:03x};  // /* ? */")
-            prev_end = off + 4
+            typ, size, ann = member_width(widths, off)
+            L.append(f"    {typ} m_{off:03x};  // +0x{off:03x} /* ? */; {ann}")
+            prev_end = off + size
     return L
 
 
@@ -210,6 +333,17 @@ def main():
     members = json.load(open(members_path)) if os.path.exists(members_path) else {}
     mn_path = os.path.join(outdir, "member_names.json")
     member_names = json.load(open(mn_path)) if os.path.exists(mn_path) else {}
+    # Access-width evidence: re-read each constructor's machine code to learn
+    # how wide the store at each recovered displacement is, so a member is
+    # declared at its real width instead of always as a 4-byte `unsigned long`.
+    # See StoreWidths.
+    store_widths = StoreWidths(bin_, sorted(fns))
+    widths_by_class = {}
+    for _m in manifest:
+        _entry = members.get(_m["class"])
+        if _entry:
+            widths_by_class[_m["class"]] = store_widths.width_map(
+                _m["vtable"], _entry.get("ctor"))
     vn_path = os.path.join(outdir, "virtual_names.json")
     # Fail loudly rather than silently defaulting to {}. The silent default is
     # exactly what hid the fact that no pipeline stage produced this file: a
@@ -682,7 +816,8 @@ def main():
         L.append(f"    virtual ~{ident}();")
 
         # ---- data members recovered from the constructor ----
-        L.extend(member_block(m["class"], members, member_names))
+        L.extend(member_block(m["class"], members, member_names,
+                                     widths_by_class.get(m["class"]) or {}))
         L.append("};")
         L.append("")
 
@@ -741,7 +876,8 @@ def main():
             # the same class appends to it instead of failing the existence
             # check below.
             key = ident + ".h"
-            block = member_block(m["class"], members, member_names)
+            block = member_block(m["class"], members, member_names,
+                                     widths_by_class.get(m["class"]) or {})
             if not block:
                 continue
             if key not in orphan_headers:
@@ -813,7 +949,8 @@ def main():
         # otherwise survive and verify.py check 7 would (correctly) report an
         # emitted offset with no recovered entry. insert_member_block excises
         # the old block first, so re-running is idempotent.
-        block = member_block(m["class"], members, member_names)
+        block = member_block(m["class"], members, member_names,
+                                     widths_by_class.get(m["class"]) or {})
         if not block:
             continue
         # A hand-written header may already declare some of these members BY
