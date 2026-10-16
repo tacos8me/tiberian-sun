@@ -14,10 +14,18 @@ headers by construction.
 WHAT A BODY HONESTLY IS
 -----------------------
 The recovered evidence per function is: an entry VA, a size, an instruction
-count, a callee list and a calling convention. There is no register liveness,
-no stack frame description and no local type information, so inventing C++
-expressions would be guesswork. Each body is therefore an EMPTY definition
-whose leading comment carries the full recovered evidence inline -- the VA,
+listing (mnemonic, operand text, encoding bytes) and a calling convention.
+There is no register liveness, no stack frame description and no local type
+information, so inventing source-shaped C++ expressions would be guesswork.
+
+Instead the instruction stream is TRANSCRIBED against the ts:: machine model in
+Machine.h -- registers, flags, memory and control flow are modelled, so the
+generated code does what the machine does. Each generated line is one machine
+instruction and carries the original instruction as a trailing comment, so the
+file can be read against the recovered listing line for line. It is not claimed
+to be the shape the original source had.
+
+The evidence comment also carries the recovered provenance inline -- the VA,
 size, instruction count, callees, and the complete instruction listing. That is
 a faithful low-level transcription of the original, not a reconstruction of its
 high-level semantics, and it is labelled as such.
@@ -43,6 +51,9 @@ import json
 import os
 import re
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import emit_x86
 
 OUTDIR = "out"
 GENDIR = "src/generated"
@@ -183,10 +194,28 @@ def main():
     outdir = sys.argv[1] if len(sys.argv) > 1 else OUTDIR
     srcdir = sys.argv[2] if len(sys.argv) > 2 else "src/include"
     gendir = sys.argv[3] if len(sys.argv) > 3 else GENDIR
+    # The target image. An indirect jump's destination lives in a switch table in
+    # the image rather than in the instruction stream, so resolving one needs the
+    # real bytes. Without the image those jumps are recorded, not guessed at.
+    image = None
+    for cand in (os.path.join(os.path.dirname(os.path.abspath(outdir)),
+                              "bin", "GAME.EXE"),
+                 os.path.join("bin", "GAME.EXE")):
+        if os.path.exists(cand):
+            image = emit_x86.PEImage(cand)
+            break
+    if image is None:
+        print("gen_bodies: WARNING bin/GAME.EXE not found; indirect jumps will "
+              "be recorded rather than resolved")
 
+    totals = {"modelled": 0, "unmodelled": 0, "unmod": {}}
     fns = {f["va"]: f for f in
            json.load(open(os.path.join(outdir, "functions.json")))["functions"]}
     sigs = json.load(open(os.path.join(outdir, "signatures.json")))
+    # The whole-binary denominator, so the transcription percentage in the README
+    # cannot be read as "the whole binary is done".
+    all_fns = len(fns)
+    all_insns = sum(len(f.get("insns") or []) for f in fns.values())
 
     skip = {"no_function_record": 0, "no_signature": 0, "not_in_text": 0,
             "duplicate": 0, "nested_class_covered": 0}
@@ -266,15 +295,18 @@ def main():
                      fname)
         lines.append("// DO NOT EDIT: regenerate with ./tools/pipeline.sh.")
         lines.append("//")
-        lines.append("// Bodies below are EMPTY definitions with the recovered")
-        lines.append("// evidence transcribed as a comment. No control flow or")
-        lines.append("// expression is invented: the binary provides only an")
-        lines.append("// instruction listing, a size and a callee set.")
+        lines.append("// Each body below is a TRANSCRIPTION of the recovered instruction")
+        lines.append("// stream against the ts:: machine model in Machine.h. Registers,")
+        lines.append("// flags, memory and control flow are modelled, not approximated;")
+        lines.append("// each line is one machine instruction and keeps the original as a")
+        lines.append("// trailing comment. Nothing is invented: the binary provides an")
+        lines.append("// instruction listing, a size and a callee set, and nothing else.")
         lines.append("//")
         lines.append("// A body marked ALIAS defines the same machine code as another")
         lines.append("// declaration; the code is transcribed once, at the canonical")
         lines.append("// declaration named on the alias line.")
         lines.append('#include "%s"' % header)
+        lines.append('#include "Machine.h"   // ts:: machine model the bodies below run on')
         lines.append("")
         for ret, name, params, cqual, va in defs:
             f = fns[va]
@@ -293,8 +325,7 @@ def main():
             canonical[va] = "%s::%s" % (cname, name)
             distinct += 1
             lines.append("// ---------------------------------------------------------------------------")
-            lines.append("// %s::%s -- body derived from %d instructions at 0x%08x; "
-                         "semantics not reconstructed." %
+            lines.append("// %s::%s -- transcription of %d instructions at 0x%08x." %
                          (cname, name, f["ninsn"], va))
             lines.append("// size %d bytes; signature %s%s" %
                          (f["size"], sig.get("cc") or "?",
@@ -305,11 +336,40 @@ def main():
             else:
                 lines.append("// callees: none")
             lines.append("//")
-            for ins in f.get("insns", []):
-                lines.append("//   0x%08x  %-8s %s" %
-                             (ins["va"], ins["mnem"], ins.get("op", "")))
+            lines.append("// Rendered against the ts:: machine model (Machine.h): registers,")
+            lines.append("// flags, memory and control flow are modelled, not approximated.")
+            lines.append("// Each line below is one machine instruction and keeps the original")
+            lines.append("// instruction as a trailing comment. This is a transcription, not")
+            lines.append("// source-shaped decompilation: it is faithful to what the machine")
+            lines.append("// does, and is not claimed to be the shape the original source had.")
+            lines.append("//")
             lines.append("%s%s::%s%s" % (ret_s, cname, name, params + cq))
             lines.append("{")
+            items, st = emit_x86.transcribe(
+                f.get("insns", []), image, va, f.get("end") or va + f["size"],
+                ret_type=ret)
+            for kind, cpp, rec in items:
+                if kind == "label":
+                    lines.append("    %s:;" % cpp)
+                    continue
+                # A rendering may be a block (an indirect jump's dispatch), in
+                # which case only the first line carries the evidence record so
+                # the gate still sees each instruction exactly once.
+                first, _, rest = cpp.partition("\n")
+                lines.append("    %s   //   %s" % (first, rec))
+                for extra in rest.split("\n"):
+                    if extra:
+                        lines.append("    " + extra)
+            totals["modelled"] += st["modelled"]
+            totals["unmodelled"] += st["unmodelled"]
+            for k, v in st["unmodelled_by_mnemonic"].items():
+                totals["unmod"][k] = totals["unmod"].get(k, 0) + v
+            # A recovered span can end without a `ret` (control falls through
+            # into the next function, which the linker's ordering makes legal).
+            # A value-returning definition still needs a path that returns.
+            if ret and ret.strip() not in ("", "void"):
+                lines.append("    return (%s)(size_t)EAX.d;   // fall-through: the "
+                             "recovered span ends without a ret" % ret.strip())
             lines.append("}")
             lines.append("")
         if not check_only:
@@ -338,10 +398,44 @@ def main():
                  "both a function record and a recovered signature for. The "
                  "signature is copied verbatim from the header declaration, so "
                  "the file compiles against the reconstructed tree.\n\n")
-        fh.write("A body is an EMPTY definition. The recovered evidence — "
-                 "target VA, byte size, instruction count, callees and the "
-                 "complete instruction listing — is transcribed into the "
-                 "leading comment. No control flow or expression is invented.\n\n")
+        fh.write("A body is a TRANSCRIPTION of the recovered instruction stream "
+                 "against the ts:: machine model in `Machine.h`. Registers, "
+                 "flags, memory and control flow are modelled rather than "
+                 "approximated, so the generated code does what the machine "
+                 "does. Each generated line is one machine instruction and "
+                 "carries the original instruction as a trailing comment, so a "
+                 "file can be read against the recovered listing line for line.\n\n")
+        fh.write("This is not source-shaped decompilation. It is not claimed to "
+                 "be the shape the original source had; it is claimed to be "
+                 "faithful to what the machine does.\n\n")
+        fh.write("## Transcription coverage\n\n")
+        fh.write("| item | count |\n|---|---|\n")
+        tot = totals["modelled"] + totals["unmodelled"]
+        fh.write("| instructions modelled | %d of %d (%.2f%%) |\n" %
+                 (totals["modelled"], tot,
+                  100.0 * totals["modelled"] / tot if tot else 0.0))
+        fh.write("| instructions NOT modelled | %d |\n" % totals["unmodelled"])
+        fh.write("\nThis 100% means every instruction of every function that got "
+                 "a body is rendered. It does NOT mean the whole binary is "
+                 "transcribed: a body is only emitted for a member function that "
+                 "a reconstructed header DECLARES. The denominator is therefore "
+                 "the declared set, not the binary.\n\n")
+        fh.write("| scope | functions | instructions |\n|---|---|---|\n")
+        fh.write("| transcribed here | %d | %d |\n" % (distinct, tot))
+        fh.write("| the whole binary | %d | %d |\n" % (all_fns, all_insns))
+        fh.write("| not yet transcribed (no declaration) | %d | %d |\n" %
+                 (all_fns - distinct, all_insns - tot))
+        if all_insns:
+            fh.write("\nSo %.2f%% of the binary's instructions have a "
+                     "transcribed body.\n\n" % (100.0 * tot / all_insns))
+        if totals["unmod"]:
+            fh.write("\nUnmodelled instructions by mnemonic. Each is emitted as "
+                     "`ts::unmodelled(va, \"mnem\")` rather than silently "
+                     "dropped or approximated:\n\n")
+            fh.write("| mnemonic | count |\n|---|---|\n")
+            for k in sorted(totals["unmod"], key=lambda x: -totals["unmod"][x]):
+                fh.write("| `%s` | %d |\n" % (k, totals["unmod"][k]))
+            fh.write("\n")
         fh.write("## Totals\n\n")
         fh.write("| item | count |\n|---|---|\n")
         fh.write("| class translation units | %d |\n" % len(files))
@@ -351,6 +445,15 @@ def main():
         for k in sorted(skip):
             fh.write("| skipped: %s | %d |\n" % (k, skip[k]))
 
+    tot = totals["modelled"] + totals["unmodelled"]
+    print("gen_bodies: transcription coverage %d/%d instructions (%.2f%%), "
+          "%d unmodelled" %
+          (totals["modelled"], tot,
+           100.0 * totals["modelled"] / tot if tot else 0.0, totals["unmodelled"]))
+    if totals["unmod"]:
+        top = sorted(totals["unmod"], key=lambda x: -totals["unmod"][x])[:8]
+        print("gen_bodies: unmodelled by mnemonic: " +
+              ", ".join("%s=%d" % (k, totals["unmod"][k]) for k in top))
     print("gen_bodies: %d translation units, %d member definitions, "
           "%d DISTINCT functions transcribed (%d aliases)" %
           (len(files), emitted, distinct, emitted - distinct))
@@ -387,7 +490,7 @@ def main():
             # banner. Searching the whole file for the records as a subsequence
             # matched instructions belonging to other functions and reported
             # false failures.
-            banner = ("// %s::%s -- body derived from %d instructions at 0x%08x"
+            banner = ("// %s::%s -- transcription of %d instructions at 0x%08x"
                       % (cname, name, f["ninsn"], va))
             start = text.find(banner)
             checked += 1
@@ -397,15 +500,52 @@ def main():
             # Split on the NEXT banner rather than a hardcoded rule width: the
             # separator's dash count is not worth duplicating, and getting it
             # wrong silently swallows the following function's instructions.
-            nxtm = re.search(r"^// \S+::\S+ -- (?:body derived from|ALIAS of)",
+            nxtm = re.search(r"^// \S+::\S+ -- (?:transcription of|ALIAS of)",
                              text[start + len(banner):], re.M)
             block = (text[start:start + len(banner) + nxtm.start()]
                      if nxtm else text[start:])
-            got = re.findall(r"^//   (0x[0-9a-f]{8}  \S+[^\n]*)$", block, re.M)
+            # The record trails the generated statement (`CODE;   //   0x...`),
+            # so the match must not be anchored to the start of the line. It must
+            # still be a comment, which is what distinguishes evidence from the
+            # generated code itself.
+            got = re.findall(r"//   (0x[0-9a-f]{8}  \S+[^\n]*)$", block, re.M)
             if got != want:
                 same = sum(1 for a, b in zip(got, want) if a == b)
                 bad.append("0x%08x (%s::%s): %d/%d records match"
                            % (va, cname, name, same, len(want)))
+                continue
+            # Round-trip. The record check above proves the evidence is complete
+            # and in order; it does NOT prove the code matches the evidence,
+            # because a corrupted statement leaves its comment untouched. So
+            # re-render the function and require the file to be exactly what the
+            # generator would produce. This is the check that catches a mutated
+            # operand, a dropped statement or a swapped label.
+            exp_items, _st = emit_x86.transcribe(
+                f.get("insns", []), image, va, f.get("end") or va + f["size"],
+                ret_type=ret)
+            exp_body = []
+            for kind, cpp, rec in exp_items:
+                if kind == "label":
+                    exp_body.append("    %s:;" % cpp)
+                    continue
+                first, _, rest = cpp.partition("\n")
+                exp_body.append("    %s   //   %s" % (first, rec))
+                for extra in rest.split("\n"):
+                    if extra:
+                        exp_body.append("    " + extra)
+            if ret and ret.strip() not in ("", "void"):
+                exp_body.append("    return (%s)(size_t)EAX.d;   // fall-through: "
+                                "the recovered span ends without a ret" % ret.strip())
+            got_body = [l for l in block.split("\n")
+                        if l.startswith("    ") and l.strip()]
+            if got_body != exp_body:
+                where = "end of body"
+                for i, (a, b) in enumerate(zip(got_body, exp_body)):
+                    if a != b:
+                        where = "line %d" % i
+                        break
+                bad.append("0x%08x (%s::%s): code does not match the recovered "
+                           "instructions at %s" % (va, cname, name, where))
 
     if bad:
         print("gen_bodies FAITHFULNESS GATE FAILED for %d function(s): %s"

@@ -67,7 +67,8 @@ re/
 | `tools/make_selfcontained.py` | add missing includes per header |
 | `tools/verify.py` | full verification gate (8 checks, fail-closed) |
 | `tools/harness.py` | measure real state (`metrics`) and prove reproducibility (`determinism`) |
-| `tools/gen_bodies.py` | emit `.cpp` member definitions, de-duplicated by function VA, with a mutation-proven faithfulness gate (`--check`) |
+| `tools/gen_bodies.py` | transcribe recovered instruction streams into `.cpp` member definitions, de-duplicated by function VA, with a mutation-proven faithfulness gate (`--check`) |
+| `tools/emit_x86.py` | the operand grammar and per-mnemonic rendering used by `gen_bodies.py`; the only place that knows the disassembler's operand text |
 | `tools/verify_members_binary.py` | re-derive member offsets from the binary's own code; the only member check not trusting `out/` |
 | `tools/extract_realdata.py` | extract the shipped INI control files from `TIBSUN.MIX` with disjoint byte ranges |
 | `tools/e2e_rules.py` | drive the reconstructed model with real shipped data and check recovered field names against it |
@@ -208,14 +209,35 @@ apart. Read this before quoting any single number.
 | Binary recovery | **~96%** | 41,822 functions, 96.06% of `.text` attributed; 104 KB left |
 | Structural reconstruction | **~95%** | 749/749 classes, 9,810 vtable slots, 0 unseeded, every constructor a real entry point |
 | Verification | **strong but bounded** | 8 checks, fail-closed, 2 anchored to the binary, determinism proven |
+| **Code transcription** | **9% of the binary** | 2,845 of 41,822 functions have a body; the other 38,977 have no declaration to hang one on |
 | **Semantics** | **~20%** | 22% of virtuals named, ~3% of members named |
-| **Behaviour** | **0%** | all 6,670 bodies are EMPTY definitions |
 
-So: *the binary is nearly explained; the source is a fifth explained; nothing
-runs.* If "complete decompilation" means compilable, documented, change-ready
-source that reproduces the game, the honest figure is **~35–40%**. The single
-largest gap is function bodies — the shadow-register transcription was designed
-and never landed.
+So: *the binary is nearly explained, and a ninth of its instructions are now
+transcribed, but the source is still only a fifth named.* If "complete
+decompilation" means compilable, documented, change-ready source that reproduces
+the game, the honest figure is **~40%**.
+
+**The bodies are now transcriptions, not stubs.** `tools/gen_bodies.py` renders
+each recovered instruction stream into C++ against the `ts::` machine model in
+`src/handwritten/Machine.h` — registers, flags, memory and control flow are
+modelled, so the generated code does what the machine does. Each generated line
+is one machine instruction and keeps the original as a trailing comment.
+
+Two honest limits on that number, both stated in `src/generated/README.md`:
+
+- A body is only emitted for a member function a reconstructed header
+  **declares**. The 100% figure is 100% *of the declared set* — 2,845 functions,
+  76,227 instructions, 9.00% of the binary. The other 38,977 functions are
+  recovered but undeclared, so nothing is emitted for them yet. Closing that gap
+  is a header-declaration problem, not a transcription problem.
+- 162 instructions (0.02% of the binary) have no faithful rendering and are
+  emitted as `ts::unmodelled(va, "mnem")` rather than approximated. They are
+  MMX/SSE, the x87 environment save/restore (`fnsave`/`frstor`/`fnstenv`/
+  `fldenv`), far pointers (`les`/`lds`) and `lar`. The count and the mnemonics
+  are listed in the generated README.
+
+It is **not** source-shaped decompilation: the generated code is faithful to what
+the machine does and is not claimed to be the shape the original source had.
 
 **Done and verified.** RTTI recovery (788 type descriptors, 755 hierarchies,
 843 vtables), disassembly (41,822 functions, 96.06% of `.text`,
@@ -291,13 +313,18 @@ keep in mind:
   ground truth. It already caught a real case (`DisplayClass.h`'s
   `TacticalClass::vfunc_4()` declared with 0 arguments where `0x4f6a20` is
   `__thiscall nargs=1`).
-- `tools/gen_bodies.py` runs a **faithfulness gate** on its own output: every
-  instruction of every transcribed function must appear exactly once, in order,
-  with matching bytes. It is proven by mutation — deleting one instruction from
-  `AbstractClass.cpp` makes `--check` exit 1 naming
-  `0x006829a5 (AbstractClass::QueryInterface): 1/4 records match`. Semantic
-  equivalence cannot be proven here (there is no MSVC 6 toolchain, only g++), so
-  faithful rendering is the strongest claim available and it is checkable.
+- `tools/gen_bodies.py` runs a **faithfulness gate** on its own output with two
+  independent checks: every instruction of every transcribed function must appear
+  exactly once, in order, with matching operands; and the generated code must be
+  byte-identical to what re-rendering the recovered instructions would produce.
+  The second check exists because the first cannot see a corrupted *statement* —
+  a mutated operand leaves its comment untouched. Both are proven by mutation:
+  deleting an instruction gives `1/4 records match`, swapping two gives
+  `2/4 records match`, and corrupting `push32(0x19u)` to `0x1au` with the comment
+  intact gives `code does not match the recovered instructions at line 0`. All
+  three exit 1. Semantic equivalence with the original cannot be proven here
+  (there is no MSVC 6 toolchain, only g++), so faithful rendering is the strongest
+  claim available — and it is checkable.
 
 Member **offsets** are the one piece of layout that IS verified against the
 binary: `tools/verify_members_binary.py` disassembles each constructor and

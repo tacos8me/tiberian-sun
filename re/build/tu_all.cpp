@@ -95,6 +95,7 @@
 #include "MSShapeAnim.h"
 #include "MSVQAnim.h"
 #include "MSWordAnim.h"
+#include "Machine.h"
 #include "MapClass.h"
 #include "MapSeedClass.h"
 #include "MapSelect.h"
