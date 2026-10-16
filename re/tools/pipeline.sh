@@ -123,5 +123,12 @@ echo "== verification =="
 python3 tools/verify.py "$SRC" build/shim
 
 echo
+echo "== binary-anchored member verification =="
+# Report only, not a gate: this is the only check whose input is the binary
+# rather than another tool's output, and it currently confirms ~71%. The floor
+# guards against regression while the remaining refutations are investigated.
+python3 tools/verify_members_binary.py --fail-under 70
+
+echo
 echo "== metrics =="
 python3 tools/harness.py metrics
