@@ -199,10 +199,10 @@ public:
     virtual HRESULT __stdcall Slot8();                                  // 0x6829a5 stub
 
     // ---- data members (offsets from ctor 0x004cae20) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69fe24
-    unsigned long m_004;  // init 0x69fd5c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

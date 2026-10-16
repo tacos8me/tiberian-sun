@@ -50,12 +50,13 @@ public:
     virtual ~TaskForceClass();
 
     // ---- data members (offsets from ctor 0x006062d0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a5550
-    unsigned long m_004;  // init 0x6a5534
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a5550; 4-byte store: mov dword ptr [esi], 0x6a5550
+    unsigned long m_004;  // +0x004 init 0x6a5534; 4-byte store: mov dword ptr [esi + 4], 0x6a5534
     unsigned char pad_008[0x58];
-    unsigned long m_060;  // init 0xffffffff
-    unsigned long m_064;  // zero-initialised
-    unsigned long m_068;  // zero-initialised
+    unsigned long m_060;  // +0x060 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x60], 0xffffffff
+    unsigned long m_064;  // +0x064 zero-initialised; 4-byte store: mov dword ptr [esi + 0x64], 0
+    unsigned long m_068;  // +0x068 zero-initialised; 4-byte store: mov dword ptr [esi + 0x68], 0
 };

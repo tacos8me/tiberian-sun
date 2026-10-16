@@ -50,39 +50,40 @@ public:
     virtual ~TiberiumClass();
 
     // ---- data members (offsets from ctor 0x006281e0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a6248
-    unsigned long m_004;  // init 0x6a622c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a6248; 4-byte store: mov dword ptr [esi], 0x6a6248
+    unsigned long m_004;  // +0x004 init 0x6a622c; 4-byte store: mov dword ptr [esi + 4], 0x6a622c
     unsigned char pad_008[0x58];
-    unsigned long m_060;  // init 0xffffffff
-    unsigned long m_064;  // /* ? */
-    unsigned long m_068;  // /* ? */
-    unsigned long m_06c;  // /* ? */
-    unsigned long m_070;  // /* ? */
+    unsigned long m_060;  // +0x060 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x60], 0xffffffff
+    unsigned long m_064;  // +0x064 /* ? */; 4-byte store: mov dword ptr [esi + 0x64], ebx
+    unsigned long m_068;  // +0x068 /* ? */; 4-byte store: mov dword ptr [esi + 0x68], ecx
+    unsigned long m_06c;  // +0x06c /* ? */; 4-byte store: mov dword ptr [esi + 0x6c], eax
+    unsigned long m_070;  // +0x070 /* ? */; 4-byte store: mov dword ptr [esi + 0x70], ebx
     unsigned char pad_074[0x4];
-    unsigned long m_078;  // /* ? */
-    unsigned long m_07c;  // /* ? */
-    unsigned long Value;  // +0x080 (INI key)
-    unsigned long m_084;  // /* ? */
-    unsigned long m_088;  // /* ? */
+    unsigned long m_078;  // +0x078 /* ? */; 4-byte store: mov dword ptr [esi + 0x78], ecx
+    unsigned long m_07c;  // +0x07c /* ? */; 4-byte store: mov dword ptr [esi + 0x7c], eax
+    unsigned long Value;  // +0x080 (INI key); 4-byte store: mov dword ptr [esi + 0x80], ebx
+    unsigned long m_084;  // +0x084 /* ? */; 4-byte store: mov dword ptr [esi + 0x84], ebx
+    unsigned long m_088;  // +0x088 /* ? */; 4-byte store: mov dword ptr [esi + 0x88], ebx
     unsigned char pad_08c[0x1c];
-    unsigned long m_0a8;  // /* ? */
-    unsigned long m_0ac;  // /* ? */
-    unsigned long m_0b0;  // /* ? */
-    unsigned long m_0b4;  // /* ? */
-    unsigned long m_0b8;  // /* ? */
-    unsigned long m_0bc;  // /* ? */
-    unsigned long m_0c0;  // /* ? */
-    unsigned long m_0c4;  // /* ? */
-    unsigned long m_0c8;  // /* ? */
+    unsigned long m_0a8;  // +0x0a8 /* ? */; 4-byte store: mov dword ptr [esi + 0xa8], ebx
+    unsigned long m_0ac;  // +0x0ac /* ? */; 4-byte store: mov dword ptr [esi + 0xac], ebx
+    unsigned long m_0b0;  // +0x0b0 /* ? */; 4-byte store: mov dword ptr [esi + 0xb0], ebx
+    unsigned long m_0b4;  // +0x0b4 /* ? */; 4-byte store: mov dword ptr [esi + 0xb4], ebx
+    unsigned long m_0b8;  // +0x0b8 /* ? */; 4-byte store: mov dword ptr [esi + 0xb8], ebx
+    unsigned long m_0bc;  // +0x0bc /* ? */; 4-byte store: mov dword ptr [esi + 0xbc], ebx
+    unsigned long m_0c0;  // +0x0c0 /* ? */; 4-byte store: mov dword ptr [esi + 0xc0], ebx
+    unsigned long m_0c4;  // +0x0c4 /* ? */; 4-byte store: mov dword ptr [esi + 0xc4], ebx
+    unsigned long m_0c8;  // +0x0c8 /* ? */; 4-byte store: mov dword ptr [esi + 0xc8], ecx
     unsigned char pad_0cc[0x4];
-    unsigned long m_0d0;  // /* ? */
-    unsigned long m_0d4;  // /* ? */
-    unsigned long m_0d8;  // /* ? */
-    unsigned long m_0dc;  // /* ? */
-    unsigned long m_0e0;  // /* ? */
-    unsigned long m_0e4;  // /* ? */
+    unsigned long m_0d0;  // +0x0d0 /* ? */; 4-byte store: mov dword ptr [esi + 0xd0], ebx
+    unsigned long m_0d4;  // +0x0d4 /* ? */; 4-byte store: mov dword ptr [esi + 0xd4], ebx
+    unsigned long m_0d8;  // +0x0d8 /* ? */; 4-byte store: mov dword ptr [esi + 0xd8], ebx
+    unsigned long m_0dc;  // +0x0dc /* ? */; 4-byte store: mov dword ptr [esi + 0xdc], ebx
+    unsigned long m_0e0;  // +0x0e0 /* ? */; 4-byte store: mov dword ptr [esi + 0xe0], ebx
+    unsigned long m_0e4;  // +0x0e4 /* ? */; 4-byte store: mov dword ptr [esi + 0xe4], edx
     unsigned char pad_0e8[0x4];
-    unsigned long m_0ec;  // /* ? */
+    unsigned long m_0ec;  // +0x0ec /* ? */; 4-byte store: mov dword ptr [esi + 0xec], ebx
 };

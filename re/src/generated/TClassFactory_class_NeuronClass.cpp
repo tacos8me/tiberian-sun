@@ -99,14 +99,14 @@ void TClassFactory_class_NeuronClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_NeuronClass::TClassFactory_class_NeuronClass -- body derived from 4 instructions at 0x005ee698; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_NeuronClass::TClassFactory_class_NeuronClass -- body derived from 4 instructions at 0x005ee6b0; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ee698  dec      ecx
-//   0x005ee699  mov      dword ptr [eax + 4], ecx
-//   0x005ee69c  xor      eax, eax
-//   0x005ee69e  ret      8
+//   0x005ee6b0  mov      eax, ecx
+//   0x005ee6b2  mov      dword ptr [eax + 4], 0
+//   0x005ee6b9  mov      dword ptr [eax], 0x6a4e80
+//   0x005ee6bf  ret      
 TClassFactory_class_NeuronClass::TClassFactory_class_NeuronClass()
 {
 }

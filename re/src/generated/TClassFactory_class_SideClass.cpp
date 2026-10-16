@@ -99,14 +99,14 @@ void TClassFactory_class_SideClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_SideClass::TClassFactory_class_SideClass -- body derived from 4 instructions at 0x005e9718; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_SideClass::TClassFactory_class_SideClass -- body derived from 4 instructions at 0x005e9730; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005e9718  dec      ecx
-//   0x005e9719  mov      dword ptr [eax + 4], ecx
-//   0x005e971c  xor      eax, eax
-//   0x005e971e  ret      8
+//   0x005e9730  mov      eax, ecx
+//   0x005e9732  mov      dword ptr [eax + 4], 0
+//   0x005e9739  mov      dword ptr [eax], 0x6a4988
+//   0x005e973f  ret      
 TClassFactory_class_SideClass::TClassFactory_class_SideClass()
 {
 }

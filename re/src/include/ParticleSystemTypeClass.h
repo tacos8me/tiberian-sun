@@ -63,41 +63,45 @@ public:
     virtual ~ParticleSystemTypeClass();
 
     // ---- data members (offsets from ctor 0x00596e90) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a33a8
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a33a8; 4-byte store: mov dword ptr [esi], 0x6a33a8
     unsigned char pad_004[0xc9];
-    unsigned long m_0cd;  // init 0x1
-    unsigned char pad_0d1[0x53];
-    unsigned long HoldsWhat;  // +0x124 (INI key)
-    unsigned long m_128;  // /* ? */
-    unsigned long SpawnFrames;  // +0x12c (INI key)
-    unsigned long m_130;  // /* ? */
-    unsigned long ParticleCap;  // +0x134 (INI key)
-    unsigned long SpawnRadius;  // +0x138 (INI key)
-    unsigned long m_13c;  // /* ? */
-    unsigned long m_140;  // /* ? */
-    unsigned long m_144;  // /* ? */
-    unsigned long Lifetime;  // +0x148 (INI key)
-    unsigned long m_14c;  // /* ? */
-    unsigned long m_150;  // /* ? */
-    unsigned long m_154;  // /* ? */
-    unsigned long m_158;  // /* ? */
-    unsigned long m_15c;  // init 0x3fb99999
-    unsigned long m_160;  // /* ? */
-    unsigned long m_164;  // init 0x3f999999
-    unsigned long m_168;  // /* ? */
-    unsigned long m_16c;  // init 0x40390000
-    unsigned long m_170;  // /* ? */
-    unsigned long m_174;  // /* ? */
-    unsigned long m_178;  // /* ? */
-    unsigned long m_17c;  // /* ? */
-    unsigned long m_180;  // /* ? */
-    unsigned long m_184;  // /* ? */
-    unsigned long m_188;  // /* ? */
-    unsigned long m_18c;  // /* ? */
-    unsigned long m_190;  // /* ? */
-    unsigned long LightSize;  // +0x194 (INI key)
-    unsigned long m_198;  // /* ? */
-    unsigned long m_19c;  // /* ? */
+    unsigned char m_0cd;  // +0x0cd init 0x1; 1-byte store: mov byte ptr [esi + 0xcd], 1
+    unsigned char pad_0ce[0x56];
+    unsigned long HoldsWhat;  // +0x124 (INI key); 4-byte store: mov dword ptr [esi + 0x124], eax
+    unsigned char m_128;  // +0x128 /* ? */; 1-byte store: mov byte ptr [esi + 0x128], bl
+    unsigned char pad_129[0x3];
+    unsigned long SpawnFrames;  // +0x12c (INI key); 4-byte store: mov dword ptr [esi + 0x12c], 1
+    unsigned long m_130;  // +0x130 /* ? */; 4-byte store: mov dword ptr [esi + 0x130], ebx
+    unsigned long ParticleCap;  // +0x134 (INI key); 4-byte store: mov dword ptr [esi + 0x134], 0x32
+    unsigned long SpawnRadius;  // +0x138 (INI key); 4-byte store: mov dword ptr [esi + 0x138], ebx
+    unsigned long m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [esi + 0x13c], ebx
+    unsigned long m_140;  // +0x140 /* ? */; 4-byte store: mov dword ptr [esi + 0x140], ebx
+    unsigned long m_144;  // +0x144 /* ? */; 4-byte store: mov dword ptr [esi + 0x144], eax
+    unsigned long Lifetime;  // +0x148 (INI key); 4-byte store: mov dword ptr [esi + 0x148], eax
+    unsigned long m_14c;  // +0x14c /* ? */; 4-byte store: mov dword ptr [esi + 0x14c], ebx
+    unsigned long m_150;  // +0x150 /* ? */; 4-byte store: mov dword ptr [esi + 0x150], ebx
+    unsigned long m_154;  // +0x154 /* ? */; 4-byte store: mov dword ptr [esi + 0x154], ebx
+    unsigned long m_158;  // +0x158 /* ? */; 4-byte store: mov dword ptr [esi + 0x158], eax
+    unsigned long m_15c;  // +0x15c init 0x3fb99999; 4-byte store: mov dword ptr [esi + 0x15c], 0x3fb99999
+    unsigned long m_160;  // +0x160 /* ? */; 4-byte store: mov dword ptr [esi + 0x160], eax
+    unsigned long m_164;  // +0x164 init 0x3f999999; 4-byte store: mov dword ptr [esi + 0x164], 0x3f999999
+    unsigned long m_168;  // +0x168 /* ? */; 4-byte store: mov dword ptr [esi + 0x168], ebx
+    unsigned long m_16c;  // +0x16c init 0x40390000; 4-byte store: mov dword ptr [esi + 0x16c], 0x40390000
+    unsigned long m_170;  // +0x170 /* ? */; 4-byte store: mov dword ptr [esi + 0x170], ebx
+    unsigned long m_174;  // +0x174 /* ? */; 4-byte store: mov dword ptr [esi + 0x174], ebx
+    unsigned long m_178;  // +0x178 /* ? */; 4-byte store: mov dword ptr [esi + 0x178], ebx
+    unsigned long m_17c;  // +0x17c /* ? */; 4-byte store: mov dword ptr [esi + 0x17c], ebx
+    unsigned long m_180;  // +0x180 /* ? */; 4-byte store: mov dword ptr [esi + 0x180], ebx
+    unsigned long m_184;  // +0x184 /* ? */; 4-byte store: mov dword ptr [esi + 0x184], ebx
+    unsigned long m_188;  // +0x188 /* ? */; 4-byte store: mov dword ptr [esi + 0x188], ebx
+    unsigned long m_18c;  // +0x18c /* ? */; 4-byte store: mov dword ptr [esi + 0x18c], ebx
+    unsigned long m_190;  // +0x190 /* ? */; 4-byte store: mov dword ptr [esi + 0x190], ebx
+    unsigned long LightSize;  // +0x194 (INI key); 4-byte store: mov dword ptr [esi + 0x194], ebx
+    unsigned short m_198;  // +0x198 /* ? */; 2-byte store: mov word ptr [esi + 0x198], dx
+    unsigned char m_19a;  // +0x19a /* ? */; 1-byte store: mov byte ptr [esi + 0x19a], bl
+    unsigned char Laser;  // +0x19b (INI key); 1-byte store: mov byte ptr [esi + 0x19b], bl
+    unsigned char m_19c;  // +0x19c /* ? */; 1-byte store: mov byte ptr [esi + 0x19c], bl
 };

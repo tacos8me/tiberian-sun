@@ -99,14 +99,14 @@ void TClassFactory_class_TaskForceClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TaskForceClass::TClassFactory_class_TaskForceClass -- body derived from 4 instructions at 0x005eb218; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_TaskForceClass::TClassFactory_class_TaskForceClass -- body derived from 4 instructions at 0x005eb230; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005eb218  dec      ecx
-//   0x005eb219  mov      dword ptr [eax + 4], ecx
-//   0x005eb21c  xor      eax, eax
-//   0x005eb21e  ret      8
+//   0x005eb230  mov      eax, ecx
+//   0x005eb232  mov      dword ptr [eax + 4], 0
+//   0x005eb239  mov      dword ptr [eax], 0x6a4b38
+//   0x005eb23f  ret      
 TClassFactory_class_TaskForceClass::TClassFactory_class_TaskForceClass()
 {
 }

@@ -306,15 +306,34 @@ void WWFontClass::vfunc_8(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// WWFontClass::WWFontClass -- body derived from 5 instructions at 0x00671876; semantics not reconstructed.
-// size 10 bytes; signature ? nargs=1
-// callees: 0x0067188c
+// WWFontClass::WWFontClass -- body derived from 24 instructions at 0x00671b90; semantics not reconstructed.
+// size 70 bytes; signature __thiscall nargs=2
+// callees: 0x00671bdd
 //
-//   0x00671876  mov      edx, dword ptr [esi]
-//   0x00671878  test     edx, edx
-//   0x0067187a  jne      0x671880
-//   0x0067187c  xor      ecx, ecx
-//   0x0067187e  jmp      0x67188c
+//   0x00671b90  mov      al, byte ptr [esp + 8]
+//   0x00671b94  mov      edx, dword ptr [esp + 4]
+//   0x00671b98  push     esi
+//   0x00671b99  mov      esi, ecx
+//   0x00671b9b  mov      ecx, dword ptr [esp + 0x10]
+//   0x00671b9f  push     edi
+//   0x00671ba0  or       edi, 0xffffffff
+//   0x00671ba3  mov      byte ptr [esi + 4], al
+//   0x00671ba6  test     al, al
+//   0x00671ba8  mov      dword ptr [esi + 8], ecx
+//   0x00671bab  mov      dword ptr [esi + 0x10], 0
+//   0x00671bb2  mov      dword ptr [esi + 0x14], edx
+//   0x00671bb5  mov      dword ptr [esi], 0x6a7b34
+//   0x00671bbb  mov      dword ptr [esi + 0xc], 0
+//   0x00671bc2  je       0x671bdd
+//   0x00671bc4  mov      eax, ecx
+//   0x00671bc6  sub      eax, 0
+//   0x00671bc9  je       0x671bd6
+//   0x00671bcb  dec      eax
+//   0x00671bcc  je       0x671bd1
+//   0x00671bce  dec      eax
+//   0x00671bcf  jne      0x671bdd
+//   0x00671bd1  mov      dword ptr [esi + 0xc], edi
+//   0x00671bd4  jmp      0x671bdd
 WWFontClass::WWFontClass()
 {
 }

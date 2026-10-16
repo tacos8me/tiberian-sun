@@ -99,14 +99,14 @@ void TClassFactory_class_BulletClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_BulletClass::TClassFactory_class_BulletClass -- body derived from 4 instructions at 0x005ed918; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_BulletClass::TClassFactory_class_BulletClass -- body derived from 4 instructions at 0x005ed930; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ed918  dec      ecx
-//   0x005ed919  mov      dword ptr [eax + 4], ecx
-//   0x005ed91c  xor      eax, eax
-//   0x005ed91e  ret      8
+//   0x005ed930  mov      eax, ecx
+//   0x005ed932  mov      dword ptr [eax + 4], 0
+//   0x005ed939  mov      dword ptr [eax], 0x6a4da8
+//   0x005ed93f  ret      
 TClassFactory_class_BulletClass::TClassFactory_class_BulletClass()
 {
 }

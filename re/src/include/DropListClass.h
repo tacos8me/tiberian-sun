@@ -4,7 +4,7 @@
 //
 // RTTI class   : class DropListClass
 // vtable       : 0x0069d7f4  (44 slots)
-// constructor  : 0x0047eb9a
+// constructor  : 0x0047ebc0
 // vtable store : 0x0047ec5e  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -63,11 +63,18 @@ public:
     virtual void vfunc_42();  // [42] 0x0047f330
     virtual void vfunc_43(int a0);  // [43] 0x0047f350  // __stdcall
 
-    DropListClass();  // 0x0047eb9a
+    DropListClass();  // 0x0047ebc0
     virtual ~DropListClass();
 
-    // ---- data members (offsets from ctor 0x0047f370) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69d7f4
+    // ---- data members (offsets from ctor 0x0047ebc0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x69d7f4; 4-byte store: mov dword ptr [esi], 0x69d7f4
+    unsigned char pad_004[0x14];
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], eax
+    unsigned char pad_01c[0x2c];
+    unsigned char m_048;  // +0x048 zero-initialised; 1-byte store: mov byte ptr [esi + 0x48], 0
+    unsigned char pad_049[0x3];
+    unsigned long m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [esi + 0x4c], edx
 };

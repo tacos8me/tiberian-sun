@@ -99,14 +99,14 @@ void TClassFactory_class_WaypointPathClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_WaypointPathClass::TClassFactory_class_WaypointPathClass -- body derived from 4 instructions at 0x005e9e98; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_WaypointPathClass::TClassFactory_class_WaypointPathClass -- body derived from 4 instructions at 0x005e9eb0; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005e9e98  dec      ecx
-//   0x005e9e99  mov      dword ptr [eax + 4], ecx
-//   0x005e9e9c  xor      eax, eax
-//   0x005e9e9e  ret      8
+//   0x005e9eb0  mov      eax, ecx
+//   0x005e9eb2  mov      dword ptr [eax + 4], 0
+//   0x005e9eb9  mov      dword ptr [eax], 0x6a4a00
+//   0x005e9ebf  ret      
 TClassFactory_class_WaypointPathClass::TClassFactory_class_WaypointPathClass()
 {
 }

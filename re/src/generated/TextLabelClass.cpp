@@ -626,18 +626,35 @@ void TextLabelClass::vfunc_31(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// TextLabelClass::TextLabelClass -- body derived from 8 instructions at 0x006308ae; semantics not reconstructed.
-// size 25 bytes; signature __cdecl
-// callees: none
+// TextLabelClass::TextLabelClass -- body derived from 25 instructions at 0x006308d0; semantics not reconstructed.
+// size 82 bytes; signature __thiscall nargs=5
+// callees: 0x004a5960
 //
-//   0x006308ae  nop      
-//   0x006308af  nop      
-//   0x006308b0  xor      eax, eax
-//   0x006308b2  mov      dword ptr [0x7dd778], eax
-//   0x006308b7  mov      dword ptr [0x7dd77c], eax
-//   0x006308bc  mov      dword ptr [0x7dd780], eax
-//   0x006308c1  mov      dword ptr [0x7dd784], eax
-//   0x006308c6  ret      
+//   0x006308d0  mov      eax, dword ptr [esp + 0xc]
+//   0x006308d4  push     esi
+//   0x006308d5  push     0
+//   0x006308d7  mov      esi, ecx
+//   0x006308d9  mov      ecx, dword ptr [esp + 0x10]
+//   0x006308dd  push     0
+//   0x006308df  push     1
+//   0x006308e1  push     1
+//   0x006308e3  push     eax
+//   0x006308e4  push     ecx
+//   0x006308e5  mov      ecx, esi
+//   0x006308e7  call     0x4a5960
+//   0x006308ec  mov      eax, dword ptr [esp + 8]
+//   0x006308f0  mov      edx, dword ptr [esp + 0x18]
+//   0x006308f4  mov      ecx, dword ptr [esp + 0x14]
+//   0x006308f8  mov      dword ptr [esi + 0x30], eax
+//   0x006308fb  mov      dword ptr [esi + 0x24], 0
+//   0x00630902  mov      dword ptr [esi + 0x28], 0
+//   0x00630909  mov      dword ptr [esi + 0x2c], edx
+//   0x0063090c  mov      dword ptr [esi + 0x34], ecx
+//   0x0063090f  mov      dword ptr [esi + 0x38], 0xffffffff
+//   0x00630916  mov      dword ptr [esi], 0x6a65f4
+//   0x0063091c  mov      eax, esi
+//   0x0063091e  pop      esi
+//   0x0063091f  ret      0x14
 TextLabelClass::TextLabelClass()
 {
 }

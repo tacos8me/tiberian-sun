@@ -4,7 +4,7 @@
 //
 // RTTI class   : class ConnectionClass
 // vtable       : 0x0069b09c  (10 slots)
-// constructor  : 0x0045ea9e
+// constructor  : 0x0045eaa0
 // vtable store : 0x0045eac5  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -28,18 +28,20 @@ public:
     virtual void vfunc_8();  // [8] 0x0045f030  // __thiscall, returns int
     virtual void vfunc_9();  // [9] 0x006829a5  // __cdecl
 
-    ConnectionClass();  // 0x0045ea9e
+    ConnectionClass();  // 0x0045eaa0
     virtual ~ConnectionClass();
 
-    // ---- data members (offsets from ctor 0x0045ea9e) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b09c
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
+    // ---- data members (offsets from ctor 0x0045eaa0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x69b09c; 4-byte store: mov dword ptr [esi], 0x69b09c
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], eax
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], eax
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], eax
+    unsigned short m_010;  // +0x010 /* ? */; 2-byte store: mov word ptr [esi + 0x10], cx
+    unsigned char pad_012[0x2];
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], edx
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], ecx
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], edx
 };

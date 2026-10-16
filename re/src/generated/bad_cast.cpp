@@ -42,34 +42,18 @@ void bad_cast::vfunc_1()
 }
 
 // ---------------------------------------------------------------------------
-// bad_cast::bad_cast -- body derived from 24 instructions at 0x006830da; semantics not reconstructed.
-// size 62 bytes; signature ? nargs=2
-// callees: 0x00683132, 0x00683204, 0x0068321e
+// bad_cast::bad_cast -- body derived from 8 instructions at 0x006831b3; semantics not reconstructed.
+// size 24 bytes; signature __thiscall nargs=1
+// callees: 0x006877f0
 //
-//   0x006830da  and      dword ptr [ebp - 4], 0
-//   0x006830de  push     esi
-//   0x006830df  call     0x683204
-//   0x006830e4  pop      ecx
-//   0x006830e5  mov      edi, eax
-//   0x006830e7  mov      dword ptr [ebp - 0x2c], edi
-//   0x006830ea  mov      eax, dword ptr [esi]
-//   0x006830ec  mov      eax, dword ptr [eax - 4]
-//   0x006830ef  mov      dword ptr [ebp - 0x24], eax
-//   0x006830f2  sub      esi, dword ptr [ebp + 0xc]
-//   0x006830f5  mov      dword ptr [ebp + 8], esi
-//   0x006830f8  sub      esi, edi
-//   0x006830fa  mov      dword ptr [ebp - 0x28], esi
-//   0x006830fd  mov      ecx, dword ptr [eax + 0x10]
-//   0x00683100  mov      ecx, dword ptr [ecx + 4]
-//   0x00683103  test     cl, 1
-//   0x00683106  jne      0x683118
-//   0x00683108  push     dword ptr [ebp + 0x14]
-//   0x0068310b  push     esi
-//   0x0068310c  push     dword ptr [ebp + 0x10]
-//   0x0068310f  push     eax
-//   0x00683110  push     edi
-//   0x00683111  call     0x68321e
-//   0x00683116  jmp      0x683132
+//   0x006831b3  push     esi
+//   0x006831b4  mov      esi, ecx
+//   0x006831b6  push     dword ptr [esp + 8]
+//   0x006831ba  call     0x6877f0
+//   0x006831bf  mov      dword ptr [esi], 0x6a7dd0
+//   0x006831c5  mov      eax, esi
+//   0x006831c7  pop      esi
+//   0x006831c8  ret      4
 bad_cast::bad_cast()
 {
 }

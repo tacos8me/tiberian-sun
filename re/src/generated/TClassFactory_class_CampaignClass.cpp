@@ -99,14 +99,14 @@ void TClassFactory_class_CampaignClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_CampaignClass::TClassFactory_class_CampaignClass -- body derived from 4 instructions at 0x005e9b98; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_CampaignClass::TClassFactory_class_CampaignClass -- body derived from 4 instructions at 0x005e9bb0; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005e9b98  dec      ecx
-//   0x005e9b99  mov      dword ptr [eax + 4], ecx
-//   0x005e9b9c  xor      eax, eax
-//   0x005e9b9e  ret      8
+//   0x005e9bb0  mov      eax, ecx
+//   0x005e9bb2  mov      dword ptr [eax + 4], 0
+//   0x005e9bb9  mov      dword ptr [eax], 0x6a49d0
+//   0x005e9bbf  ret      
 TClassFactory_class_CampaignClass::TClassFactory_class_CampaignClass()
 {
 }

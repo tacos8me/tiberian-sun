@@ -99,14 +99,14 @@ void TClassFactory_class_HouseClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_HouseClass::TClassFactory_class_HouseClass -- body derived from 4 instructions at 0x005eca18; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_HouseClass::TClassFactory_class_HouseClass -- body derived from 4 instructions at 0x005eca30; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005eca18  dec      ecx
-//   0x005eca19  mov      dword ptr [eax + 4], ecx
-//   0x005eca1c  xor      eax, eax
-//   0x005eca1e  ret      8
+//   0x005eca30  mov      eax, ecx
+//   0x005eca32  mov      dword ptr [eax + 4], 0
+//   0x005eca39  mov      dword ptr [eax], 0x6a4cb8
+//   0x005eca3f  ret      
 TClassFactory_class_HouseClass::TClassFactory_class_HouseClass()
 {
 }

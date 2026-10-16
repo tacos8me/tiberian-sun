@@ -4,7 +4,7 @@
 //
 // RTTI class   : class NullModemConnClass
 // vtable       : 0x006a27d4  (10 slots)
-// constructor  : 0x0056a1fd
+// constructor  : 0x0056a2a0
 // vtable store : 0x0056a2ce  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -29,11 +29,15 @@ public:
     virtual void vfunc_8();  // [8] 0x0045f030  // __thiscall, returns int
     virtual void vfunc_9(int a0, int a1, int a2, int a3);  // [9] 0x0056a330  // __thiscall, returns int
 
-    NullModemConnClass();  // 0x0056a1fd
+    NullModemConnClass();  // 0x0056a2a0
     virtual ~NullModemConnClass();
 
-    // ---- data members (offsets from ctor 0x0056a2f0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a27d4
+    // ---- data members (offsets from ctor 0x0056a2a0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a27d4; 4-byte store: mov dword ptr [esi], 0x6a27d4
+    unsigned char pad_004[0x34];
+    unsigned long m_038;  // +0x038 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x38], 0xffffffff
+    unsigned long m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [esi + 0x3c], eax
 };

@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class LightSourceClass>
 // vtable       : 0x006a4970  (5 slots)
-// constructor  : 0x005e9598
+// constructor  : 0x005e95b0
 // vtable store : 0x005e95bb  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,6 +25,13 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005e9680  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005e9700  // __stdcall, returns int
 
-    TClassFactory_class_LightSourceClass();  // 0x005e9598
+    TClassFactory_class_LightSourceClass();  // 0x005e95b0
     virtual ~TClassFactory_class_LightSourceClass();
+
+    // ---- data members (offsets from ctor 0x005e95b0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a4970; 4-byte store: mov dword ptr [eax], 0x6a4970
+    unsigned long m_004;  // +0x004 zero-initialised; 4-byte store: mov dword ptr [eax + 4], 0
 };

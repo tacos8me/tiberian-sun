@@ -50,13 +50,14 @@ public:
     virtual ~CampaignClass();
 
     // ---- data members (offsets from ctor 0x00446670) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69ab60
-    unsigned long m_004;  // init 0x69ab44
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x69ab60; 4-byte store: mov dword ptr [ebx], 0x69ab60
+    unsigned long m_004;  // +0x004 init 0x69ab44; 4-byte store: mov dword ptr [ebx + 4], 0x69ab44
     unsigned char pad_008[0x58];
-    unsigned long m_060;  // /* ? */
-    unsigned long m_064;  // zero-initialised
-    unsigned char pad_068[0x1fc];
-    unsigned long m_264;  // /* ? */
+    unsigned long m_060;  // +0x060 /* ? */; 4-byte store: mov dword ptr [ebx + 0x60], esi
+    unsigned char m_064;  // +0x064 zero-initialised; 1-byte store: mov byte ptr [ebx + 0x64], 0
+    unsigned char pad_065[0x1ff];
+    unsigned long m_264;  // +0x264 /* ? */; 4-byte store: mov dword ptr [ebx + 0x264], esi
 };

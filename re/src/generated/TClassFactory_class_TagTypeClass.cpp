@@ -99,14 +99,14 @@ void TClassFactory_class_TagTypeClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TagTypeClass::TClassFactory_class_TagTypeClass -- body derived from 4 instructions at 0x005ead98; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_TagTypeClass::TClassFactory_class_TagTypeClass -- body derived from 4 instructions at 0x005eadb0; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ead98  dec      ecx
-//   0x005ead99  mov      dword ptr [eax + 4], ecx
-//   0x005ead9c  xor      eax, eax
-//   0x005ead9e  ret      8
+//   0x005eadb0  mov      eax, ecx
+//   0x005eadb2  mov      dword ptr [eax + 4], 0
+//   0x005eadb9  mov      dword ptr [eax], 0x6a4af0
+//   0x005eadbf  ret      
 TClassFactory_class_TagTypeClass::TClassFactory_class_TagTypeClass()
 {
 }

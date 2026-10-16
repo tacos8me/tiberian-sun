@@ -64,28 +64,23 @@ public:
     // 0x00445BA0 calls the ObjectTypeClass base reader 0x00572610.
 
     // ---- data members (offsets from ctor 0x00445900) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69aa98
-    unsigned char pad_004[0xc4];
-    unsigned long m_0c8;  // init 0x1
-    unsigned long m_0cc;  // init 0x1
-    unsigned char pad_0d0[0x54];
-    unsigned long m_128;  // init 0x1
-    unsigned long m_12c;  // /* ? */
-    unsigned long m_130;  // /* ? */
-    unsigned long m_134;  // /* ? */
-    unsigned long m_138;  // init 0x1
-    unsigned long m_13c;  // /* ? */
-    unsigned long m_140;  // /* ? */
-    unsigned long m_144;  // init 0x3fe80000
-    unsigned long m_148;  // init 0x3
-    unsigned long m_14c;  // /* ? */
-    unsigned long m_150;  // /* ? */
-    unsigned long ROT;  // +0x154 (INI key)
-    unsigned long Arm;  // +0x158 (INI key)
-    unsigned long m_15c;  // /* ? */
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned char m_0c9;  // +0x0c9 /* ? */; 1-byte store: mov byte ptr [esi + 0xc9], bl
+    unsigned char m_0ca;  // +0x0ca /* ? */; 1-byte store: mov byte ptr [esi + 0xca], bl
+    unsigned char m_0cb;  // +0x0cb init 0x1; 1-byte store: mov byte ptr [esi + 0xcb], 1
+    unsigned char m_0cd;  // +0x0cd init 0x1; 1-byte store: mov byte ptr [esi + 0xcd], 1
+    unsigned char m_0ce;  // +0x0ce /* ? */; 1-byte store: mov byte ptr [esi + 0xce], bl
+    unsigned char pad_0cf[0x55];
+    unsigned char m_125;  // +0x125 /* ? */; 1-byte store: mov byte ptr [esi + 0x125], bl
+    unsigned char m_12e;  // +0x12e init 0x1; 1-byte store: mov byte ptr [esi + 0x12e], 1
+    unsigned char m_131;  // +0x131 init 0x1; 1-byte store: mov byte ptr [esi + 0x131], 1
+    unsigned char m_133;  // +0x133 /* ? */; 1-byte store: mov byte ptr [esi + 0x133], bl
+    unsigned char pad_135[0x3];
+    unsigned char m_15d;  // +0x15d /* ? */; 1-byte store: mov byte ptr [esi + 0x15d], bl
+    unsigned char m_15e;  // +0x15e /* ? */; 1-byte store: mov byte ptr [esi + 0x15e], bl
+    // 27 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

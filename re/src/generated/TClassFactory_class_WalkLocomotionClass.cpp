@@ -99,14 +99,14 @@ void TClassFactory_class_WalkLocomotionClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_WalkLocomotionClass::TClassFactory_class_WalkLocomotionClass -- body derived from 4 instructions at 0x005ed198; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_WalkLocomotionClass::TClassFactory_class_WalkLocomotionClass -- body derived from 4 instructions at 0x005ed1b0; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ed198  dec      ecx
-//   0x005ed199  mov      dword ptr [eax + 4], ecx
-//   0x005ed19c  xor      eax, eax
-//   0x005ed19e  ret      8
+//   0x005ed1b0  mov      eax, ecx
+//   0x005ed1b2  mov      dword ptr [eax + 4], 0
+//   0x005ed1b9  mov      dword ptr [eax], 0x6a4d30
+//   0x005ed1bf  ret      
 TClassFactory_class_WalkLocomotionClass::TClassFactory_class_WalkLocomotionClass()
 {
 }

@@ -99,14 +99,14 @@ void TClassFactory_class_VoxelAnimClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_VoxelAnimClass::TClassFactory_class_VoxelAnimClass -- body derived from 4 instructions at 0x005ea318; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_VoxelAnimClass::TClassFactory_class_VoxelAnimClass -- body derived from 4 instructions at 0x005ea330; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ea318  dec      ecx
-//   0x005ea319  mov      dword ptr [eax + 4], ecx
-//   0x005ea31c  xor      eax, eax
-//   0x005ea31e  ret      8
+//   0x005ea330  mov      eax, ecx
+//   0x005ea332  mov      dword ptr [eax + 4], 0
+//   0x005ea339  mov      dword ptr [eax], 0x6a4a48
+//   0x005ea33f  ret      
 TClassFactory_class_VoxelAnimClass::TClassFactory_class_VoxelAnimClass()
 {
 }

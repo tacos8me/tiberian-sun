@@ -400,22 +400,81 @@ void IPXConnClass::vfunc_9(int a0, int a1, int a2, int a3, int a4, int a5)
 }
 
 // ---------------------------------------------------------------------------
-// IPXConnClass::IPXConnClass -- body derived from 12 instructions at 0x004e6e2a; semantics not reconstructed.
-// size 29 bytes; signature __cdecl
-// callees: none
+// IPXConnClass::IPXConnClass -- body derived from 71 instructions at 0x004e6e50; semantics not reconstructed.
+// size 188 bytes; signature __thiscall nargs=8
+// callees: 0x0045eaa0, 0x004e6a40, 0x004e6b50
 //
-//   0x004e6e2a  nop      
-//   0x004e6e2b  nop      
-//   0x004e6e2c  nop      
-//   0x004e6e2d  nop      
-//   0x004e6e2e  nop      
-//   0x004e6e2f  nop      
-//   0x004e6e30  xor      eax, eax
-//   0x004e6e32  mov      dword ptr [0x7c3cd0], eax
-//   0x004e6e37  mov      dword ptr [0x7c3cd4], eax
-//   0x004e6e3c  mov      dword ptr [0x7c3cd8], eax
-//   0x004e6e41  mov      dword ptr [0x7c3cdc], eax
-//   0x004e6e46  ret      
+//   0x004e6e50  mov      eax, dword ptr [esp + 0x20]
+//   0x004e6e54  sub      esp, 8
+//   0x004e6e57  mov      edx, dword ptr [esp + 0x14]
+//   0x004e6e5b  push     ebx
+//   0x004e6e5c  push     ebp
+//   0x004e6e5d  push     esi
+//   0x004e6e5e  push     edi
+//   0x004e6e5f  mov      ebx, ecx
+//   0x004e6e61  push     eax
+//   0x004e6e62  mov      ecx, dword ptr [esp + 0x2c]
+//   0x004e6e66  mov      eax, dword ptr [esp + 0x24]
+//   0x004e6e6a  push     0x3c
+//   0x004e6e6c  push     -1
+//   0x004e6e6e  push     2
+//   0x004e6e70  push     ecx
+//   0x004e6e71  mov      ecx, dword ptr [esp + 0x30]
+//   0x004e6e75  push     edx
+//   0x004e6e76  push     eax
+//   0x004e6e77  push     ecx
+//   0x004e6e78  mov      ecx, ebx
+//   0x004e6e7a  call     0x45eaa0
+//   0x004e6e7f  lea      ebp, [ebx + 0x38]
+//   0x004e6e82  mov      ecx, ebp
+//   0x004e6e84  call     0x4e6a40
+//   0x004e6e89  mov      eax, dword ptr [esp + 0x2c]
+//   0x004e6e8d  mov      dword ptr [ebx], 0x6a0abc
+//   0x004e6e93  test     eax, eax
+//   0x004e6e95  je       0x4e6eab
+//   0x004e6e97  mov      ecx, dword ptr [eax]
+//   0x004e6e99  mov      edx, ebp
+//   0x004e6e9b  mov      dword ptr [edx], ecx
+//   0x004e6e9d  mov      ecx, dword ptr [eax + 4]
+//   0x004e6ea0  mov      dword ptr [edx + 4], ecx
+//   0x004e6ea3  mov      ax, word ptr [eax + 8]
+//   0x004e6ea7  mov      word ptr [edx + 8], ax
+//   0x004e6eab  mov      ecx, dword ptr [esp + 0x30]
+//   0x004e6eaf  mov      edi, dword ptr [esp + 0x34]
+//   0x004e6eb3  mov      dword ptr [ebx + 0x4c], ecx
+//   0x004e6eb6  or       ecx, 0xffffffff
+//   0x004e6eb9  xor      eax, eax
+//   0x004e6ebb  lea      edx, [ebx + 0x50]
+//   0x004e6ebe  repne scasb al, byte ptr es:[edi]
+//   0x004e6ec0  not      ecx
+//   0x004e6ec2  sub      edi, ecx
+//   0x004e6ec4  mov      eax, ecx
+//   0x004e6ec6  mov      esi, edi
+//   0x004e6ec8  mov      edi, edx
+//   0x004e6eca  lea      edx, [esp + 0x38]
+//   0x004e6ece  shr      ecx, 2
+//   0x004e6ed1  rep movsd dword ptr es:[edi], dword ptr [esi]
+//   0x004e6ed3  mov      ecx, eax
+//   0x004e6ed5  and      ecx, 3
+//   0x004e6ed8  rep movsb byte ptr es:[edi], byte ptr [esi]
+//   0x004e6eda  lea      ecx, [esp + 0x10]
+//   0x004e6ede  push     ecx
+//   0x004e6edf  push     edx
+//   0x004e6ee0  mov      ecx, ebp
+//   0x004e6ee2  call     0x4e6b50
+//   0x004e6ee7  mov      ecx, dword ptr [esp + 0x10]
+//   0x004e6eeb  mov      dx, word ptr [esp + 0x14]
+//   0x004e6ef0  lea      eax, [ebx + 0x42]
+//   0x004e6ef3  pop      edi
+//   0x004e6ef4  pop      esi
+//   0x004e6ef5  mov      dword ptr [ebx + 0x48], 0
+//   0x004e6efc  mov      dword ptr [eax], ecx
+//   0x004e6efe  pop      ebp
+//   0x004e6eff  mov      word ptr [eax + 4], dx
+//   0x004e6f03  mov      eax, ebx
+//   0x004e6f05  pop      ebx
+//   0x004e6f06  add      esp, 8
+//   0x004e6f09  ret      0x20
 IPXConnClass::IPXConnClass()
 {
 }

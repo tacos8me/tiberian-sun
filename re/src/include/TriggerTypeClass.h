@@ -75,18 +75,14 @@ public:
     virtual void Slot26();                   // 0x62ddd0
 
     // ---- data members (offsets from ctor 0x0062d4f0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a63dc
-    unsigned long m_004;  // init 0x6a63c0
-    unsigned char pad_008[0x58];
-    unsigned long m_060;  // init 0xffffffff
-    unsigned long m_064;  // /* ? */
-    unsigned long m_068;  // /* ? */
-    unsigned long m_06c;  // /* ? */
-    unsigned long m_070;  // /* ? */
-    unsigned long m_074;  // /* ? */
-    unsigned long m_078;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned char m_065;  // +0x065 /* ? */; 1-byte store: mov byte ptr [esi + 0x65], al
+    unsigned char m_066;  // +0x066 /* ? */; 1-byte store: mov byte ptr [esi + 0x66], al
+    unsigned char m_067;  // +0x067 /* ? */; 1-byte store: mov byte ptr [esi + 0x67], al
+    unsigned char pad_069[0x3];
+    // 10 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -133,11 +129,38 @@ public:
     virtual void Slot26();                   // 0x410c80
 
     // ---- data members (offsets from ctor 0x0040f930) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x699250
-    unsigned long m_004;  // init 0x699234
-    // 23 member(s) already declared above; their offsets are recorded in out/members.json
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned char pad_008[0x58];
+    unsigned long m_060;  // +0x060 /* ? */; 4-byte store: mov dword ptr [esi + 0x60], eax
+    unsigned long m_064;  // +0x064 /* ? */; 4-byte store: mov dword ptr [esi + 0x64], edx
+    unsigned long m_068;  // +0x068 /* ? */; 4-byte store: mov dword ptr [esi + 0x68], edx
+    unsigned char m_06c;  // +0x06c /* ? */; 1-byte store: mov byte ptr [esi + 0x6c], dl
+    unsigned char pad_06d[0x3];
+    unsigned long m_070;  // +0x070 /* ? */; 4-byte store: mov dword ptr [esi + 0x70], eax
+    unsigned long m_074;  // +0x074 /* ? */; 4-byte store: mov dword ptr [esi + 0x74], edx
+    unsigned long m_078;  // +0x078 /* ? */; 4-byte store: mov dword ptr [esi + 0x78], edx
+    unsigned char pad_07c[0x4];
+    unsigned long m_080;  // +0x080 /* ? */; 4-byte store: mov dword ptr [esi + 0x80], edx
+    unsigned long m_084;  // +0x084 /* ? */; 4-byte store: mov dword ptr [esi + 0x84], eax
+    unsigned long m_088;  // +0x088 /* ? */; 4-byte store: mov dword ptr [esi + 0x88], edx
+    unsigned long m_08c;  // +0x08c /* ? */; 4-byte store: mov dword ptr [esi + 0x8c], eax
+    unsigned long m_090;  // +0x090 /* ? */; 4-byte store: mov dword ptr [esi + 0x90], edx
+    unsigned long m_094;  // +0x094 /* ? */; 4-byte store: mov dword ptr [esi + 0x94], eax
+    unsigned char m_098;  // +0x098 /* ? */; 1-byte store: mov byte ptr [esi + 0x98], dl
+    unsigned char m_099;  // +0x099 /* ? */; 1-byte store: mov byte ptr [esi + 0x99], dl
+    unsigned char m_09a;  // +0x09a /* ? */; 1-byte store: mov byte ptr [esi + 0x9a], al
+    unsigned char m_09b;  // +0x09b /* ? */; 1-byte store: mov byte ptr [esi + 0x9b], al
+    unsigned char m_09c;  // +0x09c /* ? */; 1-byte store: mov byte ptr [esi + 0x9c], al
+    unsigned char pad_09d[0x3];
+    unsigned long m_0a0;  // +0x0a0 /* ? */; 4-byte store: mov dword ptr [esi + 0xa0], edx
+    unsigned long m_0a4;  // +0x0a4 /* ? */; 4-byte store: mov dword ptr [esi + 0xa4], edx
+    unsigned long m_0a8;  // +0x0a8 /* ? */; 4-byte store: mov dword ptr [esi + 0xa8], edx
+    unsigned char pad_0ac[0x20];
+    unsigned long m_0cc;  // +0x0cc /* ? */; 4-byte store: mov dword ptr [esi + 0xcc], edx
+    unsigned long m_0d0;  // +0x0d0 /* ? */; 4-byte store: mov dword ptr [esi + 0xd0], edx
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

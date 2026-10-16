@@ -27,12 +27,13 @@ public:
     virtual ~LoadOptionsClass();
 
     // ---- data members (offsets from ctor 0x004f8000) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a1814
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // init 0x6cc528
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // init 0x800
-    unsigned long m_014;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a1814; 4-byte store: mov dword ptr [esi], 0x6a1814
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], eax
+    unsigned long m_008;  // +0x008 init 0x6cc528; 4-byte store: mov dword ptr [esi + 8], 0x6cc528
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], eax
+    unsigned long m_010;  // +0x010 init 0x800; 4-byte store: mov dword ptr [esi + 0x10], 0x800
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
 };

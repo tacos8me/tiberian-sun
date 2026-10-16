@@ -99,14 +99,14 @@ void TClassFactory_class_FoggedObjectClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_FoggedObjectClass::TClassFactory_class_FoggedObjectClass -- body derived from 4 instructions at 0x005ee818; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_FoggedObjectClass::TClassFactory_class_FoggedObjectClass -- body derived from 4 instructions at 0x005ee830; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ee818  dec      ecx
-//   0x005ee819  mov      dword ptr [eax + 4], ecx
-//   0x005ee81c  xor      eax, eax
-//   0x005ee81e  ret      8
+//   0x005ee830  mov      eax, ecx
+//   0x005ee832  mov      dword ptr [eax + 4], 0
+//   0x005ee839  mov      dword ptr [eax], 0x6a4e98
+//   0x005ee83f  ret      
 TClassFactory_class_FoggedObjectClass::TClassFactory_class_FoggedObjectClass()
 {
 }

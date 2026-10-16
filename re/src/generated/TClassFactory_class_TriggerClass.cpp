@@ -99,14 +99,14 @@ void TClassFactory_class_TriggerClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TriggerClass::TClassFactory_class_TriggerClass -- body derived from 4 instructions at 0x005ea618; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_TriggerClass::TClassFactory_class_TriggerClass -- body derived from 4 instructions at 0x005ea630; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ea618  dec      ecx
-//   0x005ea619  mov      dword ptr [eax + 4], ecx
-//   0x005ea61c  xor      eax, eax
-//   0x005ea61e  ret      8
+//   0x005ea630  mov      eax, ecx
+//   0x005ea632  mov      dword ptr [eax + 4], 0
+//   0x005ea639  mov      dword ptr [eax], 0x6a4a78
+//   0x005ea63f  ret      
 TClassFactory_class_TriggerClass::TClassFactory_class_TriggerClass()
 {
 }

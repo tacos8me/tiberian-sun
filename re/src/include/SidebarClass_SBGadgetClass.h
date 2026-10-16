@@ -4,7 +4,7 @@
 //
 // RTTI class   : class SidebarClass::SBGadgetClass
 // vtable       : 0x006a437c  (31 slots)
-// constructor  : 0x005d825f
+// constructor  : 0x005d84b0
 // vtable store : 0x005d84d1  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -51,6 +51,12 @@ public:
     virtual void vfunc_29(int a0, int a1);  // [29] 0x005dc310  // __stdcall, returns int
     virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
 
-    SidebarClass_SBGadgetClass();  // 0x005d825f
+    SidebarClass_SBGadgetClass();  // 0x005d84b0
     virtual ~SidebarClass_SBGadgetClass();
+
+    // ---- data members (offsets from ctor 0x005d8740) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a437c; 4-byte store: mov dword ptr [esi], 0x6a437c
 };

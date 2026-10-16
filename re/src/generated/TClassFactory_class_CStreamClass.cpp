@@ -99,13 +99,14 @@ void TClassFactory_class_CStreamClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_CStreamClass::TClassFactory_class_CStreamClass -- body derived from 3 instructions at 0x005e8823; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=3
+// TClassFactory_class_CStreamClass::TClassFactory_class_CStreamClass -- body derived from 4 instructions at 0x005e8830; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005e8823  pop      edi
-//   0x005e8824  pop      esi
-//   0x005e8825  ret      0xc
+//   0x005e8830  mov      eax, ecx
+//   0x005e8832  mov      dword ptr [eax + 4], 0
+//   0x005e8839  mov      dword ptr [eax], 0x6a4898
+//   0x005e883f  ret      
 TClassFactory_class_CStreamClass::TClassFactory_class_CStreamClass()
 {
 }

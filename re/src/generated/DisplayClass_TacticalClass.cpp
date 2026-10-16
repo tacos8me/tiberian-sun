@@ -588,12 +588,23 @@ void DisplayClass_TacticalClass::vfunc_30(int a0, int a1, int a2, int a3)
 }
 
 // ---------------------------------------------------------------------------
-// DisplayClass_TacticalClass::DisplayClass_TacticalClass -- body derived from 2 instructions at 0x00472040; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=1
-// callees: none
+// DisplayClass_TacticalClass::DisplayClass_TacticalClass -- body derived from 13 instructions at 0x00472350; semantics not reconstructed.
+// size 44 bytes; signature __cdecl
+// callees: 0x004a5960, 0x00682610
 //
-//   0x00472040  mov      al, 1
-//   0x00472042  ret      4
+//   0x00472350  push     1
+//   0x00472352  push     0x7f
+//   0x00472354  push     0
+//   0x00472356  push     0
+//   0x00472358  push     0
+//   0x0047235a  push     0
+//   0x0047235c  mov      ecx, 0x76a9e0
+//   0x00472361  call     0x4a5960
+//   0x00472366  push     0x472380
+//   0x0047236b  mov      dword ptr [0x76a9e0], 0x69ba88
+//   0x00472375  call     0x682610
+//   0x0047237a  pop      ecx
+//   0x0047237b  ret      
 DisplayClass_TacticalClass::DisplayClass_TacticalClass()
 {
 }

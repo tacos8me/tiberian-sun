@@ -58,16 +58,13 @@ public:
     virtual bool    __stdcall Is_Piggybacking();                        // 0x651010
 
     // ---- data members (offsets from ctor 0x0064f0f0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a71e0
-    unsigned long m_004;  // init 0x6a7118
-    unsigned char pad_008[0xc];
-    unsigned long m_014;  // init 0x6a70f4
-    unsigned long m_018;  // /* ? */
-    unsigned char pad_01c[0x14];
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned char m_031;  // +0x031 /* ? */; 1-byte store: mov byte ptr [esi + 0x31], al
+    unsigned char m_032;  // +0x032 /* ? */; 1-byte store: mov byte ptr [esi + 0x32], al
+    unsigned char pad_033[0x1];
+    // 8 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

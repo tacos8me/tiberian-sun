@@ -871,15 +871,160 @@ void SliderClass::vfunc_42(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// SliderClass::SliderClass -- body derived from 5 instructions at 0x004f6a9e; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
+// SliderClass::SliderClass -- body derived from 150 instructions at 0x004f6c30; semantics not reconstructed.
+// size 476 bytes; signature __thiscall nargs=1
+// callees: 0x00460570, 0x0047f5a0
 //
-//   0x004f6a9e  mov      eax, edi
-//   0x004f6aa0  pop      edi
-//   0x004f6aa1  pop      esi
-//   0x004f6aa2  pop      ebx
-//   0x004f6aa3  ret      
+//   0x004f6c30  push     ebx
+//   0x004f6c31  push     ebp
+//   0x004f6c32  push     esi
+//   0x004f6c33  push     edi
+//   0x004f6c34  mov      edi, dword ptr [esp + 0x14]
+//   0x004f6c38  mov      esi, ecx
+//   0x004f6c3a  push     edi
+//   0x004f6c3b  call     0x460570
+//   0x004f6c40  mov      eax, dword ptr [edi + 0x2c]
+//   0x004f6c43  lea      ebp, [edi + 0x34]
+//   0x004f6c46  mov      dword ptr [esi + 0x2c], eax
+//   0x004f6c49  mov      ecx, dword ptr [edi + 0x30]
+//   0x004f6c4c  lea      ebx, [esi + 0x34]
+//   0x004f6c4f  mov      dword ptr [esi + 0x30], ecx
+//   0x004f6c52  xor      eax, eax
+//   0x004f6c54  push     ebp
+//   0x004f6c55  mov      ecx, ebx
+//   0x004f6c57  mov      dword ptr [ebx + 4], eax
+//   0x004f6c5a  mov      dword ptr [ebx + 8], eax
+//   0x004f6c5d  mov      byte ptr [ebx + 0xc], 1
+//   0x004f6c61  mov      byte ptr [ebx + 0xd], al
+//   0x004f6c64  mov      dword ptr [ebx], 0x6a173c
+//   0x004f6c6a  call     0x47f5a0
+//   0x004f6c6f  mov      edx, dword ptr [ebp + 0x10]
+//   0x004f6c72  mov      dword ptr [ebx + 0x10], edx
+//   0x004f6c75  mov      eax, dword ptr [ebp + 0x14]
+//   0x004f6c78  mov      dword ptr [ebx + 0x14], eax
+//   0x004f6c7b  mov      dword ptr [ebx], 0x6a1720
+//   0x004f6c81  mov      ecx, dword ptr [edi + 0x4c]
+//   0x004f6c84  lea      ebp, [edi + 0x58]
+//   0x004f6c87  mov      dword ptr [esi + 0x4c], ecx
+//   0x004f6c8a  mov      edx, dword ptr [edi + 0x50]
+//   0x004f6c8d  mov      dword ptr [esi + 0x50], edx
+//   0x004f6c90  mov      al, byte ptr [edi + 0x54]
+//   0x004f6c93  lea      ebx, [esi + 0x58]
+//   0x004f6c96  push     ebp
+//   0x004f6c97  mov      ecx, ebx
+//   0x004f6c99  mov      byte ptr [esi + 0x54], al
+//   0x004f6c9c  call     0x460570
+//   0x004f6ca1  mov      cl, byte ptr [ebp + 0x2c]
+//   0x004f6ca4  add      edi, 0xa4
+//   0x004f6caa  mov      byte ptr [ebx + 0x2c], cl
+//   0x004f6cad  mov      dl, byte ptr [ebp + 0x2d]
+//   0x004f6cb0  mov      byte ptr [ebx + 0x2d], dl
+//   0x004f6cb3  mov      al, byte ptr [ebp + 0x2e]
+//   0x004f6cb6  mov      byte ptr [ebx + 0x2e], al
+//   0x004f6cb9  mov      dword ptr [ebx], 0x69d930
+//   0x004f6cbf  mov      cl, byte ptr [ebp + 0x30]
+//   0x004f6cc2  push     edi
+//   0x004f6cc3  mov      byte ptr [ebx + 0x30], cl
+//   0x004f6cc6  mov      edx, dword ptr [ebp + 0x34]
+//   0x004f6cc9  mov      dword ptr [ebx + 0x34], edx
+//   0x004f6ccc  mov      eax, dword ptr [ebp + 0x38]
+//   0x004f6ccf  mov      dword ptr [ebx + 0x38], eax
+//   0x004f6cd2  mov      cl, byte ptr [ebp + 0x3c]
+//   0x004f6cd5  mov      byte ptr [ebx + 0x3c], cl
+//   0x004f6cd8  mov      edx, dword ptr [ebp + 0x40]
+//   0x004f6cdb  mov      dword ptr [ebx + 0x40], edx
+//   0x004f6cde  mov      al, byte ptr [ebp + 0x44]
+//   0x004f6ce1  mov      byte ptr [ebx + 0x44], al
+//   0x004f6ce4  mov      cl, byte ptr [ebp + 0x45]
+//   0x004f6ce7  mov      byte ptr [ebx + 0x45], cl
+//   0x004f6cea  mov      edx, dword ptr [ebp + 0x48]
+//   0x004f6ced  lea      ebp, [esi + 0xa4]
+//   0x004f6cf3  mov      dword ptr [ebx + 0x48], edx
+//   0x004f6cf6  mov      ecx, ebp
+//   0x004f6cf8  mov      dword ptr [ebx], 0x69d8a8
+//   0x004f6cfe  call     0x460570
+//   0x004f6d03  mov      al, byte ptr [edi + 0x2c]
+//   0x004f6d06  mov      byte ptr [ebp + 0x2c], al
+//   0x004f6d09  mov      cl, byte ptr [edi + 0x2d]
+//   0x004f6d0c  mov      byte ptr [ebp + 0x2d], cl
+//   0x004f6d0f  mov      dl, byte ptr [edi + 0x2e]
+//   0x004f6d12  mov      byte ptr [ebp + 0x2e], dl
+//   0x004f6d15  mov      dword ptr [ebp], 0x69d930
+//   0x004f6d1c  mov      al, byte ptr [edi + 0x30]
+//   0x004f6d1f  mov      byte ptr [ebp + 0x30], al
+//   0x004f6d22  mov      ecx, dword ptr [edi + 0x34]
+//   0x004f6d25  mov      dword ptr [ebp + 0x34], ecx
+//   0x004f6d28  mov      edx, dword ptr [edi + 0x38]
+//   0x004f6d2b  mov      dword ptr [ebp + 0x38], edx
+//   0x004f6d2e  mov      al, byte ptr [edi + 0x3c]
+//   0x004f6d31  mov      byte ptr [ebp + 0x3c], al
+//   0x004f6d34  mov      ecx, dword ptr [edi + 0x40]
+//   0x004f6d37  mov      dword ptr [ebp + 0x40], ecx
+//   0x004f6d3a  mov      dl, byte ptr [edi + 0x44]
+//   0x004f6d3d  mov      byte ptr [ebp + 0x44], dl
+//   0x004f6d40  mov      al, byte ptr [edi + 0x45]
+//   0x004f6d43  mov      edx, dword ptr [esp + 0x14]
+//   0x004f6d47  mov      byte ptr [ebp + 0x45], al
+//   0x004f6d4a  mov      ecx, dword ptr [edi + 0x48]
+//   0x004f6d4d  lea      edi, [esi + 0xf0]
+//   0x004f6d53  lea      eax, [edx + 0xf0]
+//   0x004f6d59  mov      dword ptr [ebp + 0x48], ecx
+//   0x004f6d5c  push     eax
+//   0x004f6d5d  mov      ecx, edi
+//   0x004f6d5f  mov      dword ptr [ebp], 0x69d8a8
+//   0x004f6d66  call     0x460570
+//   0x004f6d6b  mov      eax, dword ptr [esp + 0x14]
+//   0x004f6d6f  push     esi
+//   0x004f6d70  add      eax, 0xf0
+//   0x004f6d75  mov      cl, byte ptr [eax + 0x2c]
+//   0x004f6d78  mov      byte ptr [edi + 0x2c], cl
+//   0x004f6d7b  mov      dl, byte ptr [eax + 0x2d]
+//   0x004f6d7e  mov      byte ptr [edi + 0x2d], dl
+//   0x004f6d81  mov      cl, byte ptr [eax + 0x2e]
+//   0x004f6d84  mov      byte ptr [edi + 0x2e], cl
+//   0x004f6d87  mov      edx, dword ptr [eax + 0x30]
+//   0x004f6d8a  mov      dword ptr [edi + 0x30], edx
+//   0x004f6d8d  mov      ecx, dword ptr [eax + 0x34]
+//   0x004f6d90  mov      dword ptr [edi + 0x34], ecx
+//   0x004f6d93  mov      edx, dword ptr [eax + 0x38]
+//   0x004f6d96  mov      dword ptr [edi + 0x38], edx
+//   0x004f6d99  mov      dword ptr [edi], 0x69e804
+//   0x004f6d9f  mov      ecx, dword ptr [eax + 0x3c]
+//   0x004f6da2  mov      dword ptr [edi + 0x3c], ecx
+//   0x004f6da5  mov      edx, dword ptr [eax + 0x40]
+//   0x004f6da8  mov      dword ptr [edi + 0x40], edx
+//   0x004f6dab  mov      cl, byte ptr [eax + 0x44]
+//   0x004f6dae  mov      byte ptr [edi + 0x44], cl
+//   0x004f6db1  mov      edx, dword ptr [eax + 0x48]
+//   0x004f6db4  mov      dword ptr [edi + 0x48], edx
+//   0x004f6db7  mov      ecx, dword ptr [eax + 0x4c]
+//   0x004f6dba  mov      dword ptr [edi + 0x4c], ecx
+//   0x004f6dbd  mov      edx, dword ptr [eax + 0x50]
+//   0x004f6dc0  mov      eax, dword ptr [esp + 0x18]
+//   0x004f6dc4  mov      dword ptr [edi + 0x50], edx
+//   0x004f6dc7  mov      dword ptr [edi], 0x6a1758
+//   0x004f6dcd  mov      ecx, dword ptr [eax + 0x144]
+//   0x004f6dd3  mov      dword ptr [esi + 0x144], ecx
+//   0x004f6dd9  mov      edx, dword ptr [eax + 0x148]
+//   0x004f6ddf  mov      eax, dword ptr [ebx]
+//   0x004f6de1  mov      ecx, ebx
+//   0x004f6de3  mov      dword ptr [esi + 0x148], edx
+//   0x004f6de9  mov      dword ptr [esi], 0x6a1654
+//   0x004f6def  call     dword ptr [eax + 0x7c]
+//   0x004f6df2  mov      edx, dword ptr [ebp]
+//   0x004f6df5  push     esi
+//   0x004f6df6  mov      ecx, ebp
+//   0x004f6df8  call     dword ptr [edx + 0x7c]
+//   0x004f6dfb  mov      eax, dword ptr [edi]
+//   0x004f6dfd  push     esi
+//   0x004f6dfe  mov      ecx, edi
+//   0x004f6e00  call     dword ptr [eax + 0x7c]
+//   0x004f6e03  mov      eax, esi
+//   0x004f6e05  pop      edi
+//   0x004f6e06  pop      esi
+//   0x004f6e07  pop      ebp
+//   0x004f6e08  pop      ebx
+//   0x004f6e09  ret      4
 SliderClass::SliderClass()
 {
 }

@@ -588,12 +588,12 @@
  },
  "class AnimFile": {
   "ident": "AnimFile",
-  "ctor": 4289952,
+  "ctor": 4286832,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6920812
+    "value": 6920848
    },
    {
     "off": 132,
@@ -617,6 +617,16 @@
    },
    {
     "off": 3600,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3604,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3608,
     "kind": "reg",
     "value": null
    }
@@ -1005,12 +1015,47 @@
  },
  "class Animate": {
   "ident": "Animate",
-  "ctor": 4289904,
+  "ctor": 4286832,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6920848
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 137,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3596,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3600,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3604,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 3608,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -1160,7 +1205,7 @@
  },
  "class BlitPlainXlatAlpha<G>": {
   "ident": "BlitPlainXlatAlpha_G",
-  "ctor": 4627920,
+  "ctor": 4592726,
   "members": [
    {
     "off": 0,
@@ -1168,20 +1213,51 @@
     "value": 6927700
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitPlainXlatZRead<G>": {
   "ident": "BlitPlainXlatZRead_G",
-  "ctor": 4591700,
+  "ctor": 4591993,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6927972
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitPlainXlatZReadWrite<G>": {
+  "ident": "BlitPlainXlatZReadWrite_G",
+  "ctor": 4592430,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927812
    },
    {
     "off": 4,
@@ -1197,12 +1273,12 @@
  },
  "class BlitTransDarken<G>": {
   "ident": "BlitTransDarken_G",
-  "ctor": 4591700,
+  "ctor": 4591814,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6928036
    },
    {
     "off": 4,
@@ -1218,12 +1294,33 @@
  },
  "class BlitTransDarkenZRead<G>": {
   "ident": "BlitTransDarkenZRead_G",
-  "ctor": 4591700,
+  "ctor": 4592110,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6927924
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransDarkenZReadWrite<G>": {
+  "ident": "BlitTransDarkenZReadWrite_G",
+  "ctor": 4592547,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927764
    },
    {
     "off": 4,
@@ -1239,12 +1336,12 @@
  },
  "class BlitTransLucent25<G>": {
   "ident": "BlitTransLucent25_G",
-  "ctor": 4591700,
+  "ctor": 4591946,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6927988
    },
    {
     "off": 4,
@@ -1260,7 +1357,7 @@
  },
  "class BlitTransLucent25Alpha<G>": {
   "ident": "BlitTransLucent25Alpha_G",
-  "ctor": 4628240,
+  "ctor": 4593063,
   "members": [
    {
     "off": 0,
@@ -1268,15 +1365,25 @@
     "value": 6927620
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent25AlphaZRead<G>": {
   "ident": "BlitTransLucent25AlphaZRead_G",
-  "ctor": 4628720,
+  "ctor": 4593682,
   "members": [
    {
     "off": 0,
@@ -1284,15 +1391,25 @@
     "value": 6927460
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent25AlphaZReadWarp<G>": {
   "ident": "BlitTransLucent25AlphaZReadWarp_G",
-  "ctor": 4628912,
+  "ctor": 4593907,
   "members": [
    {
     "off": 0,
@@ -1300,15 +1417,25 @@
     "value": 6927412
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent25AlphaZReadWrite<G>": {
   "ident": "BlitTransLucent25AlphaZReadWrite_G",
-  "ctor": 4629232,
+  "ctor": 4594333,
   "members": [
    {
     "off": 0,
@@ -1316,20 +1443,72 @@
     "value": 6927332
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent25ZRead<G>": {
   "ident": "BlitTransLucent25ZRead_G",
-  "ctor": 4591700,
+  "ctor": 4592242,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6927876
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent25ZReadWarp<G>": {
+  "ident": "BlitTransLucent25ZReadWarp_G",
+  "ctor": 4592383,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927828
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent25ZReadWrite<G>": {
+  "ident": "BlitTransLucent25ZReadWrite_G",
+  "ctor": 4592679,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927716
    },
    {
     "off": 4,
@@ -1345,12 +1524,12 @@
  },
  "class BlitTransLucent50<G>": {
   "ident": "BlitTransLucent50_G",
-  "ctor": 4591700,
+  "ctor": 4591899,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6928004
    },
    {
     "off": 4,
@@ -1366,7 +1545,7 @@
  },
  "class BlitTransLucent50Alpha<G>": {
   "ident": "BlitTransLucent50Alpha_G",
-  "ctor": 4628176,
+  "ctor": 4592991,
   "members": [
    {
     "off": 0,
@@ -1374,15 +1553,25 @@
     "value": 6927636
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent50AlphaZRead<G>": {
   "ident": "BlitTransLucent50AlphaZRead_G",
-  "ctor": 4628656,
+  "ctor": 4593607,
   "members": [
    {
     "off": 0,
@@ -1390,15 +1579,25 @@
     "value": 6927476
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent50AlphaZReadWarp<G>": {
   "ident": "BlitTransLucent50AlphaZReadWarp_G",
-  "ctor": 4628848,
+  "ctor": 4593832,
   "members": [
    {
     "off": 0,
@@ -1406,15 +1605,25 @@
     "value": 6927428
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent50AlphaZReadWrite<G>": {
   "ident": "BlitTransLucent50AlphaZReadWrite_G",
-  "ctor": 4629168,
+  "ctor": 4594258,
   "members": [
    {
     "off": 0,
@@ -1422,20 +1631,30 @@
     "value": 6927348
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent50ZRead<G>": {
   "ident": "BlitTransLucent50ZRead_G",
-  "ctor": 4591700,
+  "ctor": 4592195,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6927892
    },
    {
     "off": 4,
@@ -1451,12 +1670,33 @@
  },
  "class BlitTransLucent50ZReadWarp<G>": {
   "ident": "BlitTransLucent50ZReadWarp_G",
-  "ctor": 4591700,
+  "ctor": 4592336,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6927844
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent50ZReadWrite<G>": {
+  "ident": "BlitTransLucent50ZReadWrite_G",
+  "ctor": 4592632,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927732
    },
    {
     "off": 4,
@@ -1472,12 +1712,12 @@
  },
  "class BlitTransLucent75<G>": {
   "ident": "BlitTransLucent75_G",
-  "ctor": 4591700,
+  "ctor": 4591852,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6928020
    },
    {
     "off": 4,
@@ -1493,7 +1733,7 @@
  },
  "class BlitTransLucent75Alpha<G>": {
   "ident": "BlitTransLucent75Alpha_G",
-  "ctor": 4628112,
+  "ctor": 4592919,
   "members": [
    {
     "off": 0,
@@ -1501,15 +1741,25 @@
     "value": 6927652
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent75AlphaZRead<G>": {
   "ident": "BlitTransLucent75AlphaZRead_G",
-  "ctor": 4628592,
+  "ctor": 4593532,
   "members": [
    {
     "off": 0,
@@ -1517,15 +1767,25 @@
     "value": 6927492
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent75AlphaZReadWarp<G>": {
   "ident": "BlitTransLucent75AlphaZReadWarp_G",
-  "ctor": 4628784,
+  "ctor": 4593757,
   "members": [
    {
     "off": 0,
@@ -1533,15 +1793,25 @@
     "value": 6927444
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent75AlphaZReadWrite<G>": {
   "ident": "BlitTransLucent75AlphaZReadWrite_G",
-  "ctor": 4629104,
+  "ctor": 4594183,
   "members": [
    {
     "off": 0,
@@ -1549,20 +1819,30 @@
     "value": 6927364
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransLucent75ZRead<G>": {
   "ident": "BlitTransLucent75ZRead_G",
-  "ctor": 4591700,
+  "ctor": 4592148,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6927908
    },
    {
     "off": 4,
@@ -1578,12 +1858,33 @@
  },
  "class BlitTransLucent75ZReadWarp<G>": {
   "ident": "BlitTransLucent75ZReadWarp_G",
-  "ctor": 4591700,
+  "ctor": 4592289,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6927860
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransLucent75ZReadWrite<G>": {
+  "ident": "BlitTransLucent75ZReadWrite_G",
+  "ctor": 4592585,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927748
    },
    {
     "off": 4,
@@ -1662,12 +1963,12 @@
  },
  "class BlitTransXlat<G>": {
   "ident": "BlitTransXlat_G",
-  "ctor": 4591700,
+  "ctor": 4591733,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6928068
    },
    {
     "off": 4,
@@ -1683,7 +1984,7 @@
  },
  "class BlitTransXlatAlpha<G>": {
   "ident": "BlitTransXlatAlpha_G",
-  "ctor": 4627984,
+  "ctor": 4592788,
   "members": [
    {
     "off": 0,
@@ -1691,15 +1992,25 @@
     "value": 6927684
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransXlatAlphaZRead<G>": {
   "ident": "BlitTransXlatAlphaZRead_G",
-  "ctor": 4628464,
+  "ctor": 4593395,
   "members": [
    {
     "off": 0,
@@ -1707,15 +2018,25 @@
     "value": 6927524
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransXlatAlphaZReadWrite<G>": {
   "ident": "BlitTransXlatAlphaZReadWrite_G",
-  "ctor": 4628976,
+  "ctor": 4594046,
   "members": [
    {
     "off": 0,
@@ -1723,20 +2044,93 @@
     "value": 6927396
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransXlatMultWriteAlpha<G>": {
+  "ident": "BlitTransXlatMultWriteAlpha_G",
+  "ctor": 4593162,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927588
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransXlatWriteAlpha<G>": {
+  "ident": "BlitTransXlatWriteAlpha_G",
+  "ctor": 4593135,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927604
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransXlatZRead<G>": {
   "ident": "BlitTransXlatZRead_G",
-  "ctor": 4591700,
+  "ctor": 4592029,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6927956
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransXlatZReadWrite<G>": {
+  "ident": "BlitTransXlatZReadWrite_G",
+  "ctor": 4592466,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927796
    },
    {
     "off": 4,
@@ -1773,12 +2167,12 @@
  },
  "class BlitTransZRemapXlat<G>": {
   "ident": "BlitTransZRemapXlat_G",
-  "ctor": 4591700,
+  "ctor": 4591769,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6928052
    },
    {
     "off": 4,
@@ -1794,7 +2188,7 @@
  },
  "class BlitTransZRemapXlatAlpha<G>": {
   "ident": "BlitTransZRemapXlatAlpha_G",
-  "ctor": 4628048,
+  "ctor": 4592849,
   "members": [
    {
     "off": 0,
@@ -1802,15 +2196,25 @@
     "value": 6927668
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 12,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransZRemapXlatAlphaZRead<G>": {
   "ident": "BlitTransZRemapXlatAlphaZRead_G",
-  "ctor": 4628528,
+  "ctor": 4593459,
   "members": [
    {
     "off": 0,
@@ -1818,15 +2222,25 @@
     "value": 6927508
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 12,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransZRemapXlatAlphaZReadWrite<G>": {
   "ident": "BlitTransZRemapXlatAlphaZReadWrite_G",
-  "ctor": 4629040,
+  "ctor": 4594110,
   "members": [
    {
     "off": 0,
@@ -1834,20 +2248,114 @@
     "value": 6927380
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 12,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class BlitTransZRemapXlatZRead<G>": {
   "ident": "BlitTransZRemapXlatZRead_G",
-  "ctor": 4591700,
+  "ctor": 4592065,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928084
+    "value": 6927940
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTransZRemapXlatZReadWrite<G>": {
+  "ident": "BlitTransZRemapXlatZReadWrite_G",
+  "ctor": 4592502,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927780
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTranslucent50NonzeroAlpha<G>": {
+  "ident": "BlitTranslucent50NonzeroAlpha_G",
+  "ctor": 4593231,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927556
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTranslucent50ZeroAlpha<G>": {
+  "ident": "BlitTranslucent50ZeroAlpha_G",
+  "ctor": 4593281,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927540
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class BlitTranslucentWriteAlpha<G>": {
+  "ident": "BlitTranslucentWriteAlpha_G",
+  "ctor": 4593192,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927572
    },
    {
     "off": 4,
@@ -1874,17 +2382,82 @@
  },
  "class BlowPipe": {
   "ident": "BlowPipe",
-  "ctor": 5844976,
+  "ctor": 5844240,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6959704
+    "value": 6959676
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 12,
-    "kind": "zero",
-    "value": 0
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 6959704
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -1906,7 +2479,7 @@
  },
  "class BrainClass": {
   "ident": "BrainClass",
-  "ctor": 4344101,
+  "ctor": 4344112,
   "members": [
    {
     "off": 0,
@@ -1917,7 +2490,7 @@
  },
  "class BufferIOFileClass": {
   "ident": "BufferIOFileClass",
-  "ctor": 4325680,
+  "ctor": 4325440,
   "members": [
    {
     "off": 0,
@@ -2801,7 +3374,7 @@
  },
  "class BulletClass": {
   "ident": "BulletClass",
-  "ctor": 4466656,
+  "ctor": 4466336,
   "members": [
    {
     "off": 0,
@@ -2809,19 +3382,79 @@
     "value": 6924364
    },
    {
-    "off": 4,
-    "kind": "imm",
-    "value": 6924336
-   },
-   {
     "off": 76,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 80,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 160,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 165,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 184,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 192,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 196,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 197,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -3080,12 +3713,17 @@
  },
  "class CCToolTip": {
   "ident": "CCToolTip",
-  "ctor": 6669232,
+  "ctor": 6667261,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6977108
+   },
+   {
+    "off": 352,
+    "kind": "imm",
+    "value": 7
    }
   ]
  },
@@ -3336,23 +3974,68 @@
  },
  "class CheckListClass": {
   "ident": "CheckListClass",
-  "ctor": 4566048,
+  "ctor": 4565968,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6926008
+   },
+   {
+    "off": 332,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class ColorListClass": {
   "ident": "ColorListClass",
-  "ctor": 4569312,
+  "ctor": 4567232,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6926212
+   },
+   {
+    "off": 332,
+    "kind": "imm",
+    "value": 6926428
+   },
+   {
+    "off": 336,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 344,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 345,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 348,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 352,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 356,
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 360,
@@ -3363,12 +4046,52 @@
  },
  "class CommBufferClass": {
   "ident": "CommBufferClass",
-  "ctor": 4577936,
+  "ctor": 4577664,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6926484
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -3411,7 +4134,7 @@
  },
  "class ConnectionClass": {
   "ident": "ConnectionClass",
-  "ctor": 4582046,
+  "ctor": 4582048,
   "members": [
    {
     "off": 0,
@@ -4103,6 +4826,202 @@
    }
   ]
  },
+ "class Dial8Class": {
+  "ident": "Dial8Class",
+  "ctor": 4654944,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6928796
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 116,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 124,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 128,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 140,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 144,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 152,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 156,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 160,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 164,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 168,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 172,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 180,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 184,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class DisplayClass": {
   "ident": "DisplayClass",
   "ctor": 4662176,
@@ -4377,12 +5296,27 @@
  },
  "class DropListClass": {
   "ident": "DropListClass",
-  "ctor": 4715376,
+  "ctor": 4713408,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6936564
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -4626,6 +5560,143 @@
    }
   ]
  },
+ "class DynamicVectorClass<D&*>": {
+  "ident": "DynamicVectorClass_D",
+  "ctor": 6108832,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6963640
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<D*>": {
+  "ident": "DynamicVectorClass_D",
+  "ctor": 5204688,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6952532
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "imm",
+    "value": 6952736
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 65,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 180,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 252,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 256,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 260,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 264,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 328,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class DynamicVectorClass<FileEntryClass*>": {
   "ident": "DynamicVectorClass_FileEntryClass",
   "ctor": 5210112,
@@ -4669,7 +5740,7 @@
  },
  "class DynamicVectorClass<FoggedObjectClass*>": {
   "ident": "DynamicVectorClass_FoggedObjectClass",
-  "ctor": 4431904,
+  "ctor": 4431970,
   "members": [
    {
     "off": 0,
@@ -4761,20 +5832,55 @@
  },
  "class DynamicVectorClass<H>": {
   "ident": "DynamicVectorClass_H",
-  "ctor": 5063214,
+  "ctor": 4567232,
   "members": [
    {
     "off": 0,
     "kind": "imm",
+    "value": 6926212
+   },
+   {
+    "off": 332,
+    "kind": "imm",
     "value": 6926428
    },
    {
-    "off": 16,
+    "off": 336,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 20,
+    "off": 340,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 344,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 345,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 348,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 352,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 356,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 360,
     "kind": "reg",
     "value": null
    }
@@ -4813,32 +5919,12 @@
  },
  "class DynamicVectorClass<IConnectionPoint*>": {
   "ident": "DynamicVectorClass_IConnectionPoint",
-  "ctor": 4637702,
+  "ctor": 4637848,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928528
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 13,
-    "kind": "reg",
-    "value": null
+    "value": 6928588
    },
    {
     "off": 16,
@@ -5219,6 +6305,58 @@
    }
   ]
  },
+ "class DynamicVectorClass<NodeNameType*>": {
+  "ident": "DynamicVectorClass_NodeNameType",
+  "ctor": 6108832,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6963640
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class DynamicVectorClass<ObjectClass*>": {
+  "ident": "DynamicVectorClass_ObjectClass",
+  "ctor": 4661920,
+  "members": [
+   {
+    "off": 0,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 5,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
  "class DynamicVectorClass<ParticleClass*>": {
   "ident": "DynamicVectorClass_ParticleClass",
   "ctor": 5824352,
@@ -5346,7 +6484,7 @@
  },
  "class DynamicVectorClass<ThemeControl*>": {
   "ident": "DynamicVectorClass_ThemeControl",
-  "ctor": 6452904,
+  "ctor": 6452912,
   "members": [
    {
     "off": 0,
@@ -5620,6 +6758,87 @@
     "off": 20,
     "kind": "imm",
     "value": 10
+   }
+  ]
+ },
+ "class DynamicVectorClass<class SwizzlePointerClass>": {
+  "ident": "DynamicVectorClass_class_SwizzlePointerClass",
+  "ctor": 6239776,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6967440
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6967484
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 17,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "imm",
+    "value": 6967484
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 41,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -6025,32 +7244,12 @@
  },
  "class DynamicVectorClass<struct tagCONNECTDATA>": {
   "ident": "DynamicVectorClass_struct_tagCONNECTDATA",
-  "ctor": 4635254,
+  "ctor": 4635410,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6928404
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 13,
-    "kind": "reg",
-    "value": null
+    "value": 6928464
    },
    {
     "off": 16,
@@ -6118,12 +7317,57 @@
  },
  "class EditClass": {
   "ident": "EditClass",
-  "ctor": 4770528,
+  "ctor": 4714880,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6937012
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -6860,6 +8104,47 @@
    }
   ]
  },
+ "class GaugeClass": {
+  "ident": "GaugeClass",
+  "ctor": 4876800,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6940676
+   },
+   {
+    "off": 44,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 45,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 46,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
  "class GenericNode": {
   "ident": "GenericNode",
   "ctor": 4208992,
@@ -7066,7 +8351,7 @@
  },
  "class HoverLocomotionClass": {
   "ident": "HoverLocomotionClass",
-  "ctor": 5013325,
+  "ctor": 5013104,
   "members": [
    {
     "off": 0,
@@ -7079,7 +8364,57 @@
     "value": 6945884
    },
    {
-    "off": 44,
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 84,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "imm",
+    "value": 1072693248
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
     "kind": "reg",
     "value": null
    }
@@ -7123,12 +8458,12 @@
  },
  "class INIClass::INIEntry": {
   "ident": "INIClass_INIEntry",
-  "ctor": 5078736,
+  "ctor": 5065967,
   "members": [
    {
     "off": 0,
-    "kind": "imm",
-    "value": 6947848
+    "kind": "zero",
+    "value": 0
    },
    {
     "off": 4,
@@ -7159,12 +8494,27 @@
     "off": 24,
     "kind": "reg",
     "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class INIClass::INISection": {
   "ident": "INIClass_INISection",
-  "ctor": 5073863,
+  "ctor": 5065424,
   "members": [
    {
     "off": 0,
@@ -7177,12 +8527,12 @@
     "value": null
    },
    {
-    "off": 12,
+    "off": 8,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 16,
+    "off": 12,
     "kind": "reg",
     "value": null
    },
@@ -7195,18 +8545,28 @@
  },
  "class IPXConnClass": {
   "ident": "IPXConnClass",
-  "ctor": 5140960,
+  "ctor": 5140048,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6949564
+   },
+   {
+    "off": 72,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class IPXGlobalConnClass": {
   "ident": "IPXGlobalConnClass",
-  "ctor": 5143104,
+  "ctor": 5141600,
   "members": [
    {
     "off": 0,
@@ -7214,14 +8574,34 @@
     "value": 6949620
    },
    {
+    "off": 120,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 136,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 140,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 144,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 148,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -7243,7 +8623,7 @@
  },
  "class IPXManagerClass": {
   "ident": "IPXManagerClass",
-  "ctor": 5144048,
+  "ctor": 5143808,
   "members": [
    {
     "off": 0,
@@ -7251,7 +8631,47 @@
     "value": 6949684
    },
    {
+    "off": 4,
+    "kind": "imm",
+    "value": 1
+   },
+   {
     "off": 5,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 26,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
     "kind": "reg",
     "value": null
    },
@@ -7262,6 +8682,41 @@
    },
    {
     "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "imm",
+    "value": 2
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "imm",
+    "value": 60
+   },
+   {
+    "off": 132,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 136,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 140,
     "kind": "reg",
     "value": null
    }
@@ -7613,7 +9068,7 @@
  },
  "class JumpjetLocomotionClass": {
   "ident": "JumpjetLocomotionClass",
-  "ctor": 5180336,
+  "ctor": 5178400,
   "members": [
    {
     "off": 0,
@@ -7624,6 +9079,56 @@
     "off": 4,
     "kind": "imm",
     "value": 6951868
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 88,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -7885,6 +9390,37 @@
    }
   ]
  },
+ "class LayerClass": {
+  "ident": "LayerClass",
+  "ctor": 4661920,
+  "members": [
+   {
+    "off": 0,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 5,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 10
+   }
+  ]
+ },
  "class LightConvertClass": {
   "ident": "LightConvertClass",
   "ctor": 5202512,
@@ -7999,7 +9535,7 @@
  },
  "class LinkClass": {
   "ident": "LinkClass",
-  "ctor": 4872623,
+  "ctor": 4872624,
   "members": [
    {
     "off": 0,
@@ -8060,7 +9596,7 @@
  },
  "class ListClass": {
   "ident": "ListClass",
-  "ctor": 5205664,
+  "ctor": 5204688,
   "members": [
    {
     "off": 0,
@@ -8068,14 +9604,19 @@
     "value": 6952532
    },
    {
-    "off": 20,
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
     "kind": "reg",
     "value": null
    },
    {
     "off": 52,
     "kind": "imm",
-    "value": 6952764
+    "value": 6952736
    },
    {
     "off": 56,
@@ -8088,12 +9629,82 @@
     "value": null
    },
    {
+    "off": 64,
+    "kind": "imm",
+    "value": 1
+   },
+   {
     "off": 65,
     "kind": "reg",
     "value": null
    },
    {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "imm",
+    "value": 10
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 84,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 100,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 176,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 180,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 252,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 256,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 260,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 264,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 324,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 328,
     "kind": "reg",
     "value": null
    }
@@ -8180,7 +9791,7 @@
  },
  "class MSFadeAnim": {
   "ident": "MSFadeAnim",
-  "ctor": 5603540,
+  "ctor": 5603552,
   "members": [
    {
     "off": 0,
@@ -8222,7 +9833,7 @@
  },
  "class MSOverlayAnim": {
   "ident": "MSOverlayAnim",
-  "ctor": 5604957,
+  "ctor": 5604960,
   "members": [
    {
     "off": 0,
@@ -8928,7 +10539,7 @@
  },
  "class Node<INISection*, INIClass>": {
   "ident": "Node_INISection_INIClass",
-  "ctor": 5073863,
+  "ctor": 5065424,
   "members": [
    {
     "off": 0,
@@ -8941,12 +10552,12 @@
     "value": null
    },
    {
-    "off": 12,
+    "off": 8,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 16,
+    "off": 12,
     "kind": "reg",
     "value": null
    },
@@ -8959,7 +10570,7 @@
  },
  "class NullModemClass": {
   "ident": "NullModemClass",
-  "ctor": 5686208,
+  "ctor": 5686064,
   "members": [
    {
     "off": 0,
@@ -8967,7 +10578,127 @@
     "value": 6957076
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "imm",
+    "value": 500
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "imm",
+    "value": 3000
+   },
+   {
+    "off": 40,
+    "kind": "imm",
+    "value": 1200
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "imm",
+    "value": 43
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 92,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 96,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 100,
+    "kind": "imm",
+    "value": 1200
+   },
+   {
+    "off": 104,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 108,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 112,
     "kind": "reg",
     "value": null
    }
@@ -8975,12 +10706,22 @@
  },
  "class NullModemConnClass": {
   "ident": "NullModemConnClass",
-  "ctor": 5677808,
+  "ctor": 5677728,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6957012
+   },
+   {
+    "off": 56,
+    "kind": "imm",
+    "value": 4294967295
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -9364,6 +11105,87 @@
    },
    {
     "off": 325,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class PKPipe": {
+  "ident": "PKPipe",
+  "ctor": 5844240,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6959676
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 6959704
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 316,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 320,
     "kind": "reg",
     "value": null
    }
@@ -10140,7 +11962,7 @@
  },
  "class RAMFileClass": {
   "ident": "RAMFileClass",
-  "ctor": 5921163,
+  "ctor": 5921168,
   "members": [
    {
     "off": 0,
@@ -10184,9 +12006,93 @@
    }
   ]
  },
+ "class RLEBlitTransDarken<G>": {
+  "ident": "RLEBlitTransDarken_G",
+  "ctor": 4594495,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927296
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransDarkenZRead<G>": {
+  "ident": "RLEBlitTransDarkenZRead_G",
+  "ctor": 4594773,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927224
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransDarkenZReadWrite<G>": {
+  "ident": "RLEBlitTransDarkenZReadWrite_G",
+  "ctor": 4595201,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927116
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent25<G>": {
+  "ident": "RLEBlitTransLucent25_G",
+  "ctor": 4594636,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927260
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class RLEBlitTransLucent25Alpha<G>": {
   "ident": "RLEBlitTransLucent25Alpha_G",
-  "ctor": 4630224,
+  "ctor": 4595679,
   "members": [
    {
     "off": 0,
@@ -10194,15 +12100,25 @@
     "value": 6927020
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent25AlphaZRead<G>": {
   "ident": "RLEBlitTransLucent25AlphaZRead_G",
-  "ctor": 4630544,
+  "ctor": 4596041,
   "members": [
    {
     "off": 0,
@@ -10210,15 +12126,25 @@
     "value": 6926960
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent25AlphaZReadWarp<G>": {
   "ident": "RLEBlitTransLucent25AlphaZReadWarp_G",
-  "ctor": 4630736,
+  "ctor": 4596266,
   "members": [
    {
     "off": 0,
@@ -10226,15 +12152,25 @@
     "value": 6926924
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent25AlphaZReadWrite<G>": {
   "ident": "RLEBlitTransLucent25AlphaZReadWrite_G",
-  "ctor": 4631056,
+  "ctor": 4596628,
   "members": [
    {
     "off": 0,
@@ -10242,15 +12178,109 @@
     "value": 6926864
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent25ZRead<G>": {
+  "ident": "RLEBlitTransLucent25ZRead_G",
+  "ctor": 4594914,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927188
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent25ZReadWarp<G>": {
+  "ident": "RLEBlitTransLucent25ZReadWarp_G",
+  "ctor": 4595064,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927152
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent25ZReadWrite<G>": {
+  "ident": "RLEBlitTransLucent25ZReadWrite_G",
+  "ctor": 4595342,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927080
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent50<G>": {
+  "ident": "RLEBlitTransLucent50_G",
+  "ctor": 4594586,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927272
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent50Alpha<G>": {
   "ident": "RLEBlitTransLucent50Alpha_G",
-  "ctor": 4630160,
+  "ctor": 4595604,
   "members": [
    {
     "off": 0,
@@ -10258,15 +12288,25 @@
     "value": 6927032
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent50AlphaZRead<G>": {
   "ident": "RLEBlitTransLucent50AlphaZRead_G",
-  "ctor": 4630480,
+  "ctor": 4595966,
   "members": [
    {
     "off": 0,
@@ -10274,15 +12314,25 @@
     "value": 6926972
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent50AlphaZReadWarp<G>": {
   "ident": "RLEBlitTransLucent50AlphaZReadWarp_G",
-  "ctor": 4630672,
+  "ctor": 4596191,
   "members": [
    {
     "off": 0,
@@ -10290,15 +12340,25 @@
     "value": 6926936
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent50AlphaZReadWrite<G>": {
   "ident": "RLEBlitTransLucent50AlphaZReadWrite_G",
-  "ctor": 4630992,
+  "ctor": 4596553,
   "members": [
    {
     "off": 0,
@@ -10306,15 +12366,109 @@
     "value": 6926876
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent50ZRead<G>": {
+  "ident": "RLEBlitTransLucent50ZRead_G",
+  "ctor": 4594864,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927200
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent50ZReadWarp<G>": {
+  "ident": "RLEBlitTransLucent50ZReadWarp_G",
+  "ctor": 4595014,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927164
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent50ZReadWrite<G>": {
+  "ident": "RLEBlitTransLucent50ZReadWrite_G",
+  "ctor": 4595292,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927092
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75<G>": {
+  "ident": "RLEBlitTransLucent75_G",
+  "ctor": 4594536,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927284
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent75Alpha<G>": {
   "ident": "RLEBlitTransLucent75Alpha_G",
-  "ctor": 4630096,
+  "ctor": 4595529,
   "members": [
    {
     "off": 0,
@@ -10322,15 +12476,25 @@
     "value": 6927044
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent75AlphaZRead<G>": {
   "ident": "RLEBlitTransLucent75AlphaZRead_G",
-  "ctor": 4630416,
+  "ctor": 4595891,
   "members": [
    {
     "off": 0,
@@ -10338,15 +12502,25 @@
     "value": 6926984
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent75AlphaZReadWarp<G>": {
   "ident": "RLEBlitTransLucent75AlphaZReadWarp_G",
-  "ctor": 4630608,
+  "ctor": 4596116,
   "members": [
    {
     "off": 0,
@@ -10354,15 +12528,25 @@
     "value": 6926948
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransLucent75AlphaZReadWrite<G>": {
   "ident": "RLEBlitTransLucent75AlphaZReadWrite_G",
-  "ctor": 4630928,
+  "ctor": 4596478,
   "members": [
    {
     "off": 0,
@@ -10370,9 +12554,82 @@
     "value": 6926888
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75ZRead<G>": {
+  "ident": "RLEBlitTransLucent75ZRead_G",
+  "ctor": 4594814,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927212
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75ZReadWarp<G>": {
+  "ident": "RLEBlitTransLucent75ZReadWarp_G",
+  "ctor": 4594964,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927176
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransLucent75ZReadWrite<G>": {
+  "ident": "RLEBlitTransLucent75ZReadWrite_G",
+  "ctor": 4595242,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927104
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -10523,9 +12780,30 @@
    }
   ]
  },
+ "class RLEBlitTransXlat<G>": {
+  "ident": "RLEBlitTransXlat_G",
+  "ctor": 4594408,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927320
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class RLEBlitTransXlatAlpha<G>": {
   "ident": "RLEBlitTransXlatAlpha_G",
-  "ctor": 4629968,
+  "ctor": 4595392,
   "members": [
    {
     "off": 0,
@@ -10533,15 +12811,25 @@
     "value": 6927068
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransXlatAlphaZRead<G>": {
   "ident": "RLEBlitTransXlatAlphaZRead_G",
-  "ctor": 4630288,
+  "ctor": 4595754,
   "members": [
    {
     "off": 0,
@@ -10549,15 +12837,25 @@
     "value": 6927008
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransXlatAlphaZReadWrite<G>": {
   "ident": "RLEBlitTransXlatAlphaZReadWrite_G",
-  "ctor": 4630800,
+  "ctor": 4596341,
   "members": [
    {
     "off": 0,
@@ -10565,9 +12863,19 @@
     "value": 6926912
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -10579,6 +12887,27 @@
     "off": 0,
     "kind": "imm",
     "value": 6928184
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransXlatZRead<G>": {
+  "ident": "RLEBlitTransXlatZRead_G",
+  "ctor": 4594686,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927248
    },
    {
     "off": 4,
@@ -10613,6 +12942,27 @@
    }
   ]
  },
+ "class RLEBlitTransXlatZReadWrite<G>": {
+  "ident": "RLEBlitTransXlatZReadWrite_G",
+  "ctor": 4595114,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927140
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class RLEBlitTransZRemapXlat<E>": {
   "ident": "RLEBlitTransZRemapXlat_E",
   "ctor": 4590913,
@@ -10634,9 +12984,30 @@
    }
   ]
  },
+ "class RLEBlitTransZRemapXlat<G>": {
+  "ident": "RLEBlitTransZRemapXlat_G",
+  "ctor": 4594447,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927308
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class RLEBlitTransZRemapXlatAlpha<G>": {
   "ident": "RLEBlitTransZRemapXlatAlpha_G",
-  "ctor": 4630032,
+  "ctor": 4595456,
   "members": [
    {
     "off": 0,
@@ -10644,15 +13015,25 @@
     "value": 6927056
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 12,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransZRemapXlatAlphaZRead<G>": {
   "ident": "RLEBlitTransZRemapXlatAlphaZRead_G",
-  "ctor": 4630352,
+  "ctor": 4595818,
   "members": [
    {
     "off": 0,
@@ -10660,15 +13041,25 @@
     "value": 6926996
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 12,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
    }
   ]
  },
  "class RLEBlitTransZRemapXlatAlphaZReadWrite<G>": {
   "ident": "RLEBlitTransZRemapXlatAlphaZReadWrite_G",
-  "ctor": 4630864,
+  "ctor": 4596405,
   "members": [
    {
     "off": 0,
@@ -10676,9 +13067,19 @@
     "value": 6926900
    },
    {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 12,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -10703,6 +13104,27 @@
    }
   ]
  },
+ "class RLEBlitTransZRemapXlatZRead<G>": {
+  "ident": "RLEBlitTransZRemapXlatZRead_G",
+  "ctor": 4594725,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927236
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class RLEBlitTransZRemapXlatZReadWrite<E>": {
   "ident": "RLEBlitTransZRemapXlatZReadWrite_E",
   "ctor": 4591453,
@@ -10711,6 +13133,27 @@
     "off": 0,
     "kind": "imm",
     "value": 6928124
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class RLEBlitTransZRemapXlatZReadWrite<G>": {
+  "ident": "RLEBlitTransZRemapXlatZReadWrite_G",
+  "ctor": 4595153,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6927128
    },
    {
     "off": 4,
@@ -11018,12 +13461,22 @@
  },
  "class RandomStraw": {
   "ident": "RandomStraw",
-  "ctor": 5945744,
+  "ctor": 5944272,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6962040
+    "value": 6929372
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 12,
@@ -11597,20 +14050,25 @@
  },
  "class ShapeButtonClass": {
   "ident": "ShapeButtonClass",
-  "ctor": 6126096,
+  "ctor": 4714880,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6936744
+    "value": 6936880
    },
    {
-    "off": 20,
+    "off": 44,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 24,
+    "off": 45,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 46,
     "kind": "reg",
     "value": null
    },
@@ -11636,6 +14094,11 @@
    },
    {
     "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
     "kind": "reg",
     "value": null
    },
@@ -11773,6 +14236,38 @@
    }
   ]
  },
+ "class SidebarClass::SBGadgetClass": {
+  "ident": "SidebarClass_SBGadgetClass",
+  "ctor": 6129472,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6964092
+   }
+  ]
+ },
+ "class SidebarClass::StripClass::SelectClass": {
+  "ident": "SidebarClass_StripClass_SelectClass",
+  "ctor": 6129344,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6964220
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class SidebarDownCommandClass": {
   "ident": "SidebarDownCommandClass",
   "ctor": 5103863,
@@ -11819,22 +14314,72 @@
  },
  "class SliderClass": {
   "ident": "SliderClass",
-  "ctor": 6152240,
+  "ctor": 5205040,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6952792
+    "value": 6940676
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 45,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 46,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 60,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 64,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 76,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 80,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -11922,12 +14467,32 @@
  },
  "class StaticButtonClass": {
   "ident": "StaticButtonClass",
-  "ctor": 6221760,
+  "ctor": 6221536,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6966984
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -11944,7 +14509,7 @@
  },
  "class Straw": {
   "ident": "Straw",
-  "ctor": 6229984,
+  "ctor": 5944272,
   "members": [
    {
     "off": 0,
@@ -11958,6 +14523,16 @@
    },
    {
     "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
     "kind": "reg",
     "value": null
    }
@@ -12061,6 +14636,87 @@
    }
   ]
  },
+ "class SwizzleManagerClass": {
+  "ident": "SwizzleManagerClass",
+  "ctor": 6239776,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6967440
+   },
+   {
+    "off": 4,
+    "kind": "imm",
+    "value": 6967484
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 17,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "imm",
+    "value": 6967484
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 40,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 41,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class TActionClass": {
   "ident": "TActionClass",
   "ctor": 6282736,
@@ -12134,6 +14790,1062 @@
     "off": 64,
     "kind": "reg",
     "value": null
+   }
+  ]
+ },
+ "class TClassFactory<class AITriggerTypeClass>": {
+  "ident": "TClassFactory_class_AITriggerTypeClass",
+  "ctor": 6219056,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966888
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class AircraftClass>": {
+  "ident": "TClassFactory_class_AircraftClass",
+  "ctor": 6210224,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966336
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class AircraftTypeClass>": {
+  "ident": "TClassFactory_class_AircraftTypeClass",
+  "ctor": 6207152,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966144
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class AlphaShapeClass>": {
+  "ident": "TClassFactory_class_AlphaShapeClass",
+  "ctor": 6220208,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966960
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class AnimClass>": {
+  "ident": "TClassFactory_class_AnimClass",
+  "ctor": 6210992,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966384
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class AnimTypeClass>": {
+  "ident": "TClassFactory_class_AnimTypeClass",
+  "ctor": 6211376,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966408
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class BuildingClass>": {
+  "ident": "TClassFactory_class_BuildingClass",
+  "ctor": 6209840,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966312
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class BuildingLightClass>": {
+  "ident": "TClassFactory_class_BuildingLightClass",
+  "ctor": 6200624,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965736
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class BuildingTypeClass>": {
+  "ident": "TClassFactory_class_BuildingTypeClass",
+  "ctor": 6206768,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966120
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class BulletClass>": {
+  "ident": "TClassFactory_class_BulletClass",
+  "ctor": 6215984,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966696
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class BulletTypeClass>": {
+  "ident": "TClassFactory_class_BulletTypeClass",
+  "ctor": 6207920,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966192
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class CStreamClass>": {
+  "ident": "TClassFactory_class_CStreamClass",
+  "ctor": 6195248,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965400
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class CampaignClass>": {
+  "ident": "TClassFactory_class_CampaignClass",
+  "ctor": 6200240,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965712
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class CellClass>": {
+  "ident": "TClassFactory_class_CellClass",
+  "ctor": 6197936,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965568
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class DriveLocomotionClass>": {
+  "ident": "TClassFactory_class_DriveLocomotionClass",
+  "ctor": 6212528,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966480
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class DropPodLocomotionClass>": {
+  "ident": "TClassFactory_class_DropPodLocomotionClass",
+  "ctor": 6214448,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966600
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class EMPulseClass>": {
+  "ident": "TClassFactory_class_EMPulseClass",
+  "ctor": 6198320,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965592
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class FactoryClass>": {
+  "ident": "TClassFactory_class_FactoryClass",
+  "ctor": 6216368,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966720
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class FlyLocomotionClass>": {
+  "ident": "TClassFactory_class_FlyLocomotionClass",
+  "ctor": 6214832,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966624
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class FoggedObjectClass>": {
+  "ident": "TClassFactory_class_FoggedObjectClass",
+  "ctor": 6219824,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966936
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class HouseClass>": {
+  "ident": "TClassFactory_class_HouseClass",
+  "ctor": 6212144,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966456
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class HouseTypeClass>": {
+  "ident": "TClassFactory_class_HouseTypeClass",
+  "ctor": 6211760,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966432
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class HoverLocomotionClass>": {
+  "ident": "TClassFactory_class_HoverLocomotionClass",
+  "ctor": 6213296,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966528
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class InfantryClass>": {
+  "ident": "TClassFactory_class_InfantryClass",
+  "ctor": 6210608,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966360
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class InfantryTypeClass>": {
+  "ident": "TClassFactory_class_InfantryTypeClass",
+  "ctor": 6207536,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966168
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class IsometricTileTypeClass>": {
+  "ident": "TClassFactory_class_IsometricTileTypeClass",
+  "ctor": 6208304,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966216
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class JumpjetLocomotionClass>": {
+  "ident": "TClassFactory_class_JumpjetLocomotionClass",
+  "ctor": 6212912,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966504
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class LightSourceClass>": {
+  "ident": "TClassFactory_class_LightSourceClass",
+  "ctor": 6198704,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965616
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class MechLocomotionClass>": {
+  "ident": "TClassFactory_class_MechLocomotionClass",
+  "ctor": 6215600,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966672
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class NeuronClass>": {
+  "ident": "TClassFactory_class_NeuronClass",
+  "ctor": 6219440,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966912
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class OverlayTypeClass>": {
+  "ident": "TClassFactory_class_OverlayTypeClass",
+  "ctor": 6208688,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966240
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class ParticleClass>": {
+  "ident": "TClassFactory_class_ParticleClass",
+  "ctor": 6217520,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966792
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class ParticleSystemClass>": {
+  "ident": "TClassFactory_class_ParticleSystemClass",
+  "ctor": 6218288,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966840
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class ParticleSystemTypeClass>": {
+  "ident": "TClassFactory_class_ParticleSystemTypeClass",
+  "ctor": 6218672,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966864
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class ParticleTypeClass>": {
+  "ident": "TClassFactory_class_ParticleTypeClass",
+  "ctor": 6217904,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966816
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class ScriptClass>": {
+  "ident": "TClassFactory_class_ScriptClass",
+  "ctor": 6203696,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965928
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class ScriptTypeClass>": {
+  "ident": "TClassFactory_class_ScriptTypeClass",
+  "ctor": 6204080,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965952
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class SideClass>": {
+  "ident": "TClassFactory_class_SideClass",
+  "ctor": 6199088,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965640
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class SmudgeTypeClass>": {
+  "ident": "TClassFactory_class_SmudgeTypeClass",
+  "ctor": 6209072,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966264
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class SuperClass>": {
+  "ident": "TClassFactory_class_SuperClass",
+  "ctor": 6197168,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965520
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class SuperWeaponTypeClass>": {
+  "ident": "TClassFactory_class_SuperWeaponTypeClass",
+  "ctor": 6196784,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965496
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TActionClass>": {
+  "ident": "TClassFactory_class_TActionClass",
+  "ctor": 6202544,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965856
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TEventClass>": {
+  "ident": "TClassFactory_class_TEventClass",
+  "ctor": 6201392,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965784
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class Tactical>": {
+  "ident": "TClassFactory_class_Tactical",
+  "ctor": 6197552,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965544
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TagClass>": {
+  "ident": "TClassFactory_class_TagClass",
+  "ctor": 6204464,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965976
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TagTypeClass>": {
+  "ident": "TClassFactory_class_TagTypeClass",
+  "ctor": 6204848,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966000
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TaskForceClass>": {
+  "ident": "TClassFactory_class_TaskForceClass",
+  "ctor": 6206000,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966072
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TeamClass>": {
+  "ident": "TClassFactory_class_TeamClass",
+  "ctor": 6205232,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966024
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TeamTypeClass>": {
+  "ident": "TClassFactory_class_TeamTypeClass",
+  "ctor": 6205616,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966048
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TeleportLocomotionClass>": {
+  "ident": "TClassFactory_class_TeleportLocomotionClass",
+  "ctor": 6215216,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966648
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TerrainClass>": {
+  "ident": "TClassFactory_class_TerrainClass",
+  "ctor": 6196400,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965472
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TerrainTypeClass>": {
+  "ident": "TClassFactory_class_TerrainTypeClass",
+  "ctor": 6196016,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965448
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TiberiumClass>": {
+  "ident": "TClassFactory_class_TiberiumClass",
+  "ctor": 6199472,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965664
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TriggerClass>": {
+  "ident": "TClassFactory_class_TriggerClass",
+  "ctor": 6202928,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965880
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TriggerTypeClass>": {
+  "ident": "TClassFactory_class_TriggerTypeClass",
+  "ctor": 6203312,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965904
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TubeClass>": {
+  "ident": "TClassFactory_class_TubeClass",
+  "ctor": 6199856,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965688
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class TunnelLocomotionClass>": {
+  "ident": "TClassFactory_class_TunnelLocomotionClass",
+  "ctor": 6213680,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966552
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class UnitClass>": {
+  "ident": "TClassFactory_class_UnitClass",
+  "ctor": 6209456,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966288
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class UnitTypeClass>": {
+  "ident": "TClassFactory_class_UnitTypeClass",
+  "ctor": 6206384,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966096
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class VoxelAnimClass>": {
+  "ident": "TClassFactory_class_VoxelAnimClass",
+  "ctor": 6202160,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965832
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class VoxelAnimTypeClass>": {
+  "ident": "TClassFactory_class_VoxelAnimTypeClass",
+  "ctor": 6201776,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965808
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class WalkLocomotionClass>": {
+  "ident": "TClassFactory_class_WalkLocomotionClass",
+  "ctor": 6214064,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966576
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class WarheadTypeClass>": {
+  "ident": "TClassFactory_class_WarheadTypeClass",
+  "ctor": 6216752,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966744
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class WaveClass>": {
+  "ident": "TClassFactory_class_WaveClass",
+  "ctor": 6195632,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965424
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class WaypointPathClass>": {
+  "ident": "TClassFactory_class_WaypointPathClass",
+  "ctor": 6201008,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6965760
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   }
+  ]
+ },
+ "class TClassFactory<class WeaponTypeClass>": {
+  "ident": "TClassFactory_class_WeaponTypeClass",
+  "ctor": 6217136,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6966768
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -13835,6 +17547,88 @@
    }
   ]
  },
+ "class TextButtonClass": {
+  "ident": "TextButtonClass",
+  "ctor": 6450432,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6971692
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 24,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 49,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
+ "class TextLabelClass": {
+  "ident": "TextLabelClass",
+  "ctor": 6490320,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6972916
+   },
+   {
+    "off": 36,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 40,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "imm",
+    "value": 4294967295
+   }
+  ]
+ },
  "class TiberiumClass": {
   "ident": "TiberiumClass",
   "ctor": 6455776,
@@ -13983,7 +17777,7 @@
  },
  "class ToggleClass": {
   "ident": "ToggleClass",
-  "ctor": 6465632,
+  "ctor": 4714880,
   "members": [
    {
     "off": 0,
@@ -14002,6 +17796,46 @@
    },
    {
     "off": 46,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 60,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 64,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 69,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
     "kind": "reg",
     "value": null
    }
@@ -14109,6 +17943,57 @@
     "off": 344,
     "kind": "reg",
     "value": null
+   }
+  ]
+ },
+ "class TriColorGaugeClass": {
+  "ident": "TriColorGaugeClass",
+  "ctor": 4878144,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6940676
+   },
+   {
+    "off": 44,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 45,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 46,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 52,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 56,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 60,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 64,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -14355,7 +18240,7 @@
  },
  "class TypeList<TeamTypeClass*>": {
   "ident": "TypeList_TeamTypeClass",
-  "ctor": 6344830,
+  "ctor": 4946426,
   "members": [
    {
     "off": 0,
@@ -14417,7 +18302,7 @@
  },
  "class TypeList<W4DiskID>": {
   "ident": "TypeList_W4DiskID",
-  "ctor": 6115559,
+  "ctor": 6115661,
   "members": [
    {
     "off": 0,
@@ -15852,12 +19737,37 @@
  },
  "class VectorClass<D*>": {
   "ident": "VectorClass_D",
-  "ctor": 5205664,
+  "ctor": 5205040,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6952532
+    "value": 6952764
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 20,
@@ -15865,9 +19775,29 @@
     "value": null
    },
    {
+    "off": 44,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 45,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 46,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 48,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 52,
-    "kind": "imm",
-    "value": 6952764
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 56,
@@ -15880,12 +19810,22 @@
     "value": null
    },
    {
-    "off": 65,
+    "off": 64,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 84,
+    "off": 68,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 69,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 72,
     "kind": "reg",
     "value": null
    }
@@ -15893,7 +19833,7 @@
  },
  "class VectorClass<E&*>": {
   "ident": "VectorClass_E",
-  "ctor": 6747972,
+  "ctor": 6747984,
   "members": [
    {
     "off": 0,
@@ -16218,27 +20158,177 @@
  },
  "class VectorClass<GlobalPacketType*>": {
   "ident": "VectorClass_GlobalPacketType",
-  "ctor": 6124240,
+  "ctor": 6109856,
   "members": [
    {
-    "off": 0,
+    "off": 184,
+    "kind": "imm",
+    "value": 6963724
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 192,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 197,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 788,
     "kind": "imm",
     "value": 6963752
    },
    {
-    "off": 4,
-    "kind": "zero",
-    "value": 0
+    "off": 792,
+    "kind": "reg",
+    "value": null
    },
    {
-    "off": 8,
-    "kind": "zero",
-    "value": 0
+    "off": 796,
+    "kind": "reg",
+    "value": null
    },
    {
-    "off": 13,
-    "kind": "zero",
-    "value": 0
+    "off": 801,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5788,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5792,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5796,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5801,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5812,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5816,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5820,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5825,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5836,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5840,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5844,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5849,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5988,
+    "kind": "imm",
+    "value": 6963808
+   },
+   {
+    "off": 5992,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5996,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6001,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6012,
+    "kind": "imm",
+    "value": 6954812
+   },
+   {
+    "off": 6016,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6020,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6025,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6028,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6036,
+    "kind": "imm",
+    "value": 6952764
+   },
+   {
+    "off": 6040,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6044,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6049,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6052,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -16363,7 +20453,7 @@
  },
  "class VectorClass<I>": {
   "ident": "VectorClass_I",
-  "ctor": 4303622,
+  "ctor": 4303632,
   "members": [
    {
     "off": 0,
@@ -17088,27 +21178,177 @@
  },
  "class VectorClass<MultiMission*>": {
   "ident": "VectorClass_MultiMission",
-  "ctor": 6124080,
+  "ctor": 6109856,
   "members": [
    {
-    "off": 0,
+    "off": 184,
     "kind": "imm",
     "value": 6963724
    },
    {
-    "off": 4,
-    "kind": "zero",
-    "value": 0
+    "off": 188,
+    "kind": "reg",
+    "value": null
    },
    {
-    "off": 8,
-    "kind": "zero",
-    "value": 0
+    "off": 192,
+    "kind": "reg",
+    "value": null
    },
    {
-    "off": 13,
-    "kind": "zero",
-    "value": 0
+    "off": 197,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 788,
+    "kind": "imm",
+    "value": 6963752
+   },
+   {
+    "off": 792,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 796,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 801,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5788,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5792,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5796,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5801,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5812,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5816,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5820,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5825,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5836,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5840,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5844,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5849,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5988,
+    "kind": "imm",
+    "value": 6963808
+   },
+   {
+    "off": 5992,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5996,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6001,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6012,
+    "kind": "imm",
+    "value": 6954812
+   },
+   {
+    "off": 6016,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6020,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6025,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6028,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6036,
+    "kind": "imm",
+    "value": 6952764
+   },
+   {
+    "off": 6040,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6044,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6049,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6052,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -17145,7 +21385,7 @@
  },
  "class VectorClass<NeuronClass*>": {
   "ident": "VectorClass_NeuronClass",
-  "ctor": 4344101,
+  "ctor": 4344112,
   "members": [
    {
     "off": 0,
@@ -17431,27 +21671,177 @@
  },
  "class VectorClass<PhoneEntryClass*>": {
   "ident": "VectorClass_PhoneEntryClass",
-  "ctor": 6124560,
+  "ctor": 6109856,
   "members": [
    {
-    "off": 0,
+    "off": 184,
+    "kind": "imm",
+    "value": 6963724
+   },
+   {
+    "off": 188,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 192,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 197,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 788,
+    "kind": "imm",
+    "value": 6963752
+   },
+   {
+    "off": 792,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 796,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 801,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5788,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5792,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5796,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5801,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5812,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5816,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5820,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5825,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5836,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5840,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5844,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5849,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 5988,
     "kind": "imm",
     "value": 6963808
    },
    {
-    "off": 4,
-    "kind": "zero",
-    "value": 0
+    "off": 5992,
+    "kind": "reg",
+    "value": null
    },
    {
-    "off": 8,
-    "kind": "zero",
-    "value": 0
+    "off": 5996,
+    "kind": "reg",
+    "value": null
    },
    {
-    "off": 13,
-    "kind": "zero",
-    "value": 0
+    "off": 6001,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6012,
+    "kind": "imm",
+    "value": 6954812
+   },
+   {
+    "off": 6016,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6020,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6025,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6028,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6036,
+    "kind": "imm",
+    "value": 6952764
+   },
+   {
+    "off": 6040,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6044,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6049,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 6052,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -18976,27 +23366,52 @@
  },
  "class VectorClass<class SwizzlePointerClass>": {
   "ident": "VectorClass_class_SwizzlePointerClass",
-  "ctor": 6241488,
+  "ctor": 6239856,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6967512
+    "value": 6967440
    },
    {
     "off": 4,
-    "kind": "zero",
-    "value": 0
+    "kind": "imm",
+    "value": 6967512
    },
    {
     "off": 8,
-    "kind": "zero",
-    "value": 0
+    "kind": "reg",
+    "value": null
    },
    {
-    "off": 13,
-    "kind": "zero",
-    "value": 0
+    "off": 12,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 17,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 28,
+    "kind": "imm",
+    "value": 6967512
+   },
+   {
+    "off": 32,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 36,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 41,
+    "kind": "reg",
+    "value": null
    }
   ]
  },
@@ -20124,6 +24539,42 @@
    }
   ]
  },
+ "class WWFontClass": {
+  "ident": "WWFontClass",
+  "ctor": 6757264,
+  "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6978356
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 16,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "reg",
+    "value": null
+   }
+  ]
+ },
  "class WWMouseClass": {
   "ident": "WWMouseClass",
   "ctor": 6760384,
@@ -20948,7 +25399,7 @@
  },
  "class bad_cast": {
   "ident": "bad_cast",
-  "ctor": 6828524,
+  "ctor": 6828467,
   "members": [
    {
     "off": 0,
@@ -20959,7 +25410,7 @@
  },
  "class bad_typeid": {
   "ident": "bad_typeid",
-  "ctor": 6828163,
+  "ctor": 6827908,
   "members": [
    {
     "off": 0,

@@ -572,24 +572,31 @@ void IPXManagerClass::vfunc_16(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// IPXManagerClass::IPXManagerClass -- body derived from 14 instructions at 0x004e7aa6; semantics not reconstructed.
-// size 29 bytes; signature __cdecl
-// callees: none
+// IPXManagerClass::IPXManagerClass -- body derived from 21 instructions at 0x004e7d00; semantics not reconstructed.
+// size 61 bytes; signature __thiscall
+// callees: 0x004e7d3f, 0x0066e130, 0x00682997
 //
-//   0x004e7aa6  nop      
-//   0x004e7aa7  nop      
-//   0x004e7aa8  nop      
-//   0x004e7aa9  nop      
-//   0x004e7aaa  nop      
-//   0x004e7aab  nop      
-//   0x004e7aac  nop      
-//   0x004e7aad  nop      
-//   0x004e7aae  nop      
-//   0x004e7aaf  nop      
-//   0x004e7ab0  fld      qword ptr [0x6a0b28]
-//   0x004e7ab6  fmul     qword ptr [0x6985f0]
-//   0x004e7abc  fstp     qword ptr [0x7c3de0]
-//   0x004e7ac2  ret      
+//   0x004e7d00  push     ebx
+//   0x004e7d01  push     esi
+//   0x004e7d02  mov      esi, ecx
+//   0x004e7d04  xor      ebx, ebx
+//   0x004e7d06  push     edi
+//   0x004e7d07  mov      dword ptr [esi], 0x6a0b34
+//   0x004e7d0d  mov      ecx, dword ptr [0x7151c0]
+//   0x004e7d13  cmp      ecx, ebx
+//   0x004e7d15  je       0x4e7d23
+//   0x004e7d17  mov      eax, dword ptr [ecx]
+//   0x004e7d19  push     1
+//   0x004e7d1b  call     dword ptr [eax]
+//   0x004e7d1d  mov      dword ptr [0x7151c0], ebx
+//   0x004e7d23  push     0x45c
+//   0x004e7d28  call     0x682997
+//   0x004e7d2d  add      esp, 4
+//   0x004e7d30  cmp      eax, ebx
+//   0x004e7d32  je       0x4e7d3d
+//   0x004e7d34  mov      ecx, eax
+//   0x004e7d36  call     0x66e130
+//   0x004e7d3b  jmp      0x4e7d3f
 IPXManagerClass::IPXManagerClass()
 {
 }

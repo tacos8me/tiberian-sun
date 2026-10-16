@@ -99,14 +99,14 @@ void TClassFactory_class_InfantryClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_InfantryClass::TClassFactory_class_InfantryClass -- body derived from 4 instructions at 0x005ec418; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_InfantryClass::TClassFactory_class_InfantryClass -- body derived from 4 instructions at 0x005ec430; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ec418  dec      ecx
-//   0x005ec419  mov      dword ptr [eax + 4], ecx
-//   0x005ec41c  xor      eax, eax
-//   0x005ec41e  ret      8
+//   0x005ec430  mov      eax, ecx
+//   0x005ec432  mov      dword ptr [eax + 4], 0
+//   0x005ec439  mov      dword ptr [eax], 0x6a4c58
+//   0x005ec43f  ret      
 TClassFactory_class_InfantryClass::TClassFactory_class_InfantryClass()
 {
 }

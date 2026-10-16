@@ -4,7 +4,7 @@
 //
 // RTTI class   : class ColorListClass
 // vtable       : 0x0069af84  (53 slots)
-// constructor  : 0x0045b093
+// constructor  : 0x0045b0c0
 // vtable store : 0x0045b139  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -72,13 +72,23 @@ public:
     virtual void vfunc_51(int a0, int a1);  // [51] 0x0045b1b0  // __thiscall
     virtual void vfunc_52(int a0, int a1);  // [52] 0x0045b320  // __stdcall
 
-    ColorListClass();  // 0x0045b093
+    ColorListClass();  // 0x0045b0c0
     virtual ~ColorListClass();
 
-    // ---- data members (offsets from ctor 0x0045b8e0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69af84
-    unsigned char pad_004[0x164];
-    unsigned long m_168;  // /* ? */
+    // ---- data members (offsets from ctor 0x0045b0c0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x69af84; 4-byte store: mov dword ptr [esi], 0x69af84
+    unsigned char pad_004[0x148];
+    unsigned long m_14c;  // +0x14c init 0x69b05c; 4-byte store: mov dword ptr [esi + 0x14c], 0x69b05c
+    unsigned long m_150;  // +0x150 /* ? */; 4-byte store: mov dword ptr [esi + 0x150], eax
+    unsigned long m_154;  // +0x154 /* ? */; 4-byte store: mov dword ptr [esi + 0x154], eax
+    unsigned char m_158;  // +0x158 /* ? */; 1-byte store: mov byte ptr [esi + 0x158], cl
+    unsigned char m_159;  // +0x159 /* ? */; 1-byte store: mov byte ptr [esi + 0x159], al
+    unsigned char pad_15a[0x2];
+    unsigned long m_15c;  // +0x15c /* ? */; 4-byte store: mov dword ptr [esi + 0x15c], eax
+    unsigned long m_160;  // +0x160 init 0xa; 4-byte store: mov dword ptr [esi + 0x160], 0xa
+    unsigned long m_164;  // +0x164 /* ? */; 4-byte store: mov dword ptr [esi + 0x164], ecx
+    unsigned long m_168;  // +0x168 /* ? */; 4-byte store: mov dword ptr [esi + 0x168], eax
 };

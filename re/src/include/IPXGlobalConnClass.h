@@ -4,7 +4,7 @@
 //
 // RTTI class   : class IPXGlobalConnClass
 // vtable       : 0x006a0af4  (13 slots)
-// constructor  : 0x004e7204
+// constructor  : 0x004e7460
 // vtable store : 0x004e749e  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -32,14 +32,20 @@ public:
     virtual void vfunc_11(int a0, int a1, int a2);  // [11] 0x004e7640  // __thiscall, returns int
     virtual void vfunc_12(int a0, int a1, int a2, int a3);  // [12] 0x004e7810  // __stdcall, returns int
 
-    IPXGlobalConnClass();  // 0x004e7204
+    IPXGlobalConnClass();  // 0x004e7460
     virtual ~IPXGlobalConnClass();
 
-    // ---- data members (offsets from ctor 0x004e7a40) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0af4
-    unsigned char pad_004[0x84];
-    unsigned long m_088;  // zero-initialised
-    unsigned long m_08c;  // zero-initialised
+    // ---- data members (offsets from ctor 0x004e7460) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a0af4; 4-byte store: mov dword ptr [esi], 0x6a0af4
+    unsigned char pad_004[0x74];
+    unsigned short m_078;  // +0x078 /* ? */; 2-byte store: mov word ptr [esi + 0x78], dx
+    unsigned char pad_07a[0xa];
+    unsigned long m_084;  // +0x084 /* ? */; 4-byte store: mov dword ptr [esi + 0x84], ebp
+    unsigned long m_088;  // +0x088 /* ? */; 4-byte store: mov dword ptr [esi + 0x88], ebx
+    unsigned long m_08c;  // +0x08c /* ? */; 4-byte store: mov dword ptr [esi + 0x8c], eax
+    unsigned long m_090;  // +0x090 /* ? */; 4-byte store: mov dword ptr [esi + 0x90], edi
+    unsigned long m_094;  // +0x094 /* ? */; 4-byte store: mov dword ptr [esi + 0x94], ebp
 };

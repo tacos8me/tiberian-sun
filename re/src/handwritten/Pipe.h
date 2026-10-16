@@ -82,11 +82,10 @@ public:
     Pipe *Prev;    // +0x08  previous stage (set by the next stage's Next())
 
     // ---- data members (offsets from ctor 0x00591f00) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69bc04
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -110,12 +109,13 @@ public:
     Straw *Next;   // +0x04  next stage in the chain
     Straw *Prev;   // +0x08  previous stage
 
-    // ---- data members (offsets from ctor 0x005f0fe0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69bbdc
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // ---- data members (offsets from ctor 0x005ab3d0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], edi
+    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], edi
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -133,12 +133,10 @@ class BufferPipe : public Pipe {
 class FilePipe   : public Pipe {
 
     // ---- data members (offsets from ctor 0x006741b0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69ad1c
-    unsigned char pad_004[0x8];
-    unsigned long m_00c;  // zero-initialised
-    unsigned long m_010;  // zero-initialised
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
 
 };   // vtable 0x69ad1c
 class SHAPipe    : public Pipe {
@@ -160,45 +158,43 @@ class Base64Pipe : public Pipe {
 class LCWPipe    : public Pipe {
 
     // ---- data members (offsets from ctor 0x004f4100) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a150c
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // init 0xffff
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 10 member(s) already declared above; their offsets are recorded in out/members.json
 
 };   // vtable 0x6a150c  LCW
 class LZOPipe    : public Pipe {
 
     // ---- data members (offsets from ctor 0x004fb4e0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a1884
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // init 0xffff
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 10 member(s) already declared above; their offsets are recorded in out/members.json
 
 };   // vtable 0x6a1884  LZO
 class BlowPipe   : public Pipe {
 
-    // ---- data members (offsets from ctor 0x00592ff0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a3258
-    unsigned long m_00c;  // zero-initialised
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    // ---- data members (offsets from ctor 0x00592d10) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [eax + 0x10], edx
+    unsigned long m_014;  // +0x014 init 0x6a3258; 4-byte store: mov dword ptr [eax + 0x14], 0x6a3258
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [eax + 0x18], ecx
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [eax + 0x1c], ecx
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [eax + 0x20], ecx
+    unsigned char pad_024[0x8];
+    unsigned long m_02c;  // +0x02c /* ? */; 4-byte store: mov dword ptr [eax + 0x2c], ecx
+    unsigned long m_030;  // +0x030 /* ? */; 4-byte store: mov dword ptr [eax + 0x30], edx
+    unsigned long m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [eax + 0x34], esi
+    unsigned long m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [eax + 0x38], ecx
+    unsigned char pad_03c[0x100];
+    unsigned long m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [eax + 0x13c], ecx
+    unsigned long m_140;  // +0x140 /* ? */; 4-byte store: mov dword ptr [eax + 0x140], ecx
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };   // vtable 0x6a3258  Blowfish
 
@@ -210,26 +206,11 @@ public:
     // [5] Put_End  /* ? */ finalises the PKZIP stream
     virtual int Put_End();
 
-    // ---- data members (offsets from ctor 0x00592d0c) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a323c
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // init 0x1
-    unsigned long m_010;  // /* ? */
-    unsigned long m_014;  // init 0x6a3258
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
-    unsigned char pad_024[0x8];
-    unsigned long m_02c;  // /* ? */
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // /* ? */
-    unsigned long m_038;  // /* ? */
-    unsigned char pad_03c[0x100];
-    unsigned long m_13c;  // /* ? */
-    unsigned long m_140;  // /* ? */
+    // ---- data members (offsets from ctor 0x00592d10) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 17 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -249,12 +230,10 @@ class BufferStraw : public Straw {
 class FileStraw   : public Straw {
 
     // ---- data members (offsets from ctor 0x00674320) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69ad0c
-    unsigned char pad_004[0x8];
-    unsigned long m_00c;  // zero-initialised
-    unsigned long m_010;  // zero-initialised
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
 
 };  // vtable 0x69ad0c
 class SHAStraw    : public Straw {
@@ -292,54 +271,39 @@ class CacheStraw  : public Straw {
 class LCWStraw    : public Straw {
 
     // ---- data members (offsets from ctor 0x004f44f0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a1524
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 9 member(s) already declared above; their offsets are recorded in out/members.json
 
 };  // vtable 0x6a1524  LCW
 class LZOStraw    : public Straw {
 
     // ---- data members (offsets from ctor 0x004fb950) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a189c
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 9 member(s) already declared above; their offsets are recorded in out/members.json
 
 };  // vtable 0x6a189c  LZO
 class BlowStraw   : public Straw {
 
     // ---- data members (offsets from ctor 0x00547b90) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a2308
-    unsigned char pad_004[0x8];
-    unsigned long m_00c;  // zero-initialised
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };  // vtable 0x6a2308  Blowfish
 class RandomStraw : public Straw {
 
-    // ---- data members (offsets from ctor 0x005ab990) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a3b78
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    // ---- data members (offsets from ctor 0x005ab3d0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };  // vtable 0x6a3b78  PRNG
 
@@ -352,18 +316,9 @@ public:
     virtual int Get_End();
 
     // ---- data members (offsets from ctor 0x005930b0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a3270
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // init 0x1
-    unsigned long m_010;  // /* ? */
-    unsigned char pad_014[0x20];
-    unsigned long m_034;  // /* ? */
-    unsigned long m_038;  // /* ? */
-    unsigned char pad_03c[0x100];
-    unsigned long m_13c;  // /* ? */
-    unsigned long m_140;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 11 member(s) already declared above; their offsets are recorded in out/members.json
 
 };

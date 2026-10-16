@@ -599,17 +599,38 @@ void SidebarClass_StripClass_SelectClass::vfunc_31(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// SidebarClass_StripClass_SelectClass::SidebarClass_StripClass_SelectClass -- body derived from 7 instructions at 0x005d825f; semantics not reconstructed.
-// size 24 bytes; signature __cdecl
-// callees: none
+// SidebarClass_StripClass_SelectClass::SidebarClass_StripClass_SelectClass -- body derived from 28 instructions at 0x005d86c0; semantics not reconstructed.
+// size 67 bytes; signature __cdecl
+// callees: 0x00460520, 0x00682610
 //
-//   0x005d825f  nop      
-//   0x005d8260  xor      eax, eax
-//   0x005d8262  mov      dword ptr [0x7d9628], eax
-//   0x005d8267  mov      dword ptr [0x7d962c], eax
-//   0x005d826c  mov      dword ptr [0x7d9630], eax
-//   0x005d8271  mov      dword ptr [0x7d9634], eax
-//   0x005d8276  ret      
+//   0x005d86c0  push     ebx
+//   0x005d86c1  push     esi
+//   0x005d86c2  push     edi
+//   0x005d86c3  mov      esi, 0x7d98a0
+//   0x005d86c8  mov      ebx, 0x28
+//   0x005d86cd  xor      edi, edi
+//   0x005d86cf  push     edi
+//   0x005d86d0  push     0x19
+//   0x005d86d2  push     0x33
+//   0x005d86d4  push     0x3f
+//   0x005d86d6  push     edi
+//   0x005d86d7  push     edi
+//   0x005d86d8  push     edi
+//   0x005d86d9  mov      ecx, esi
+//   0x005d86db  call     0x460520
+//   0x005d86e0  mov      dword ptr [esi + 0x2c], edi
+//   0x005d86e3  mov      dword ptr [esi + 0x30], edi
+//   0x005d86e6  mov      dword ptr [esi], 0x6a43fc
+//   0x005d86ec  add      esi, 0x34
+//   0x005d86ef  dec      ebx
+//   0x005d86f0  jne      0x5d86cf
+//   0x005d86f2  push     0x5d8710
+//   0x005d86f7  call     0x682610
+//   0x005d86fc  add      esp, 4
+//   0x005d86ff  pop      edi
+//   0x005d8700  pop      esi
+//   0x005d8701  pop      ebx
+//   0x005d8702  ret      
 SidebarClass_StripClass_SelectClass::SidebarClass_StripClass_SelectClass()
 {
 }

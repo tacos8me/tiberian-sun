@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class DropPodLocomotionClass>
 // vtable       : 0x006a4d48  (5 slots)
-// constructor  : 0x005ed318
+// constructor  : 0x005ed330
 // vtable store : 0x005ed33b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,6 +25,13 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ed400  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ed480  // __stdcall, returns int
 
-    TClassFactory_class_DropPodLocomotionClass();  // 0x005ed318
+    TClassFactory_class_DropPodLocomotionClass();  // 0x005ed330
     virtual ~TClassFactory_class_DropPodLocomotionClass();
+
+    // ---- data members (offsets from ctor 0x005ed330) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a4d48; 4-byte store: mov dword ptr [eax], 0x6a4d48
+    unsigned long m_004;  // +0x004 zero-initialised; 4-byte store: mov dword ptr [eax + 4], 0
 };

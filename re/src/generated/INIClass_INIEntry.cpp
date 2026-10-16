@@ -8,133 +8,82 @@
 #include "INIClass_INIEntry.h"
 
 // ---------------------------------------------------------------------------
-// INIClass_INIEntry::INIClass_INIEntry -- body derived from 123 instructions at 0x004d48c6; semantics not reconstructed.
-// size 363 bytes; signature ? nargs=7
-// callees: 0x004d4940, 0x004d6b50, 0x005a6be0, 0x0062e450, 0x00684170
+// INIClass_INIEntry::INIClass_INIEntry -- body derived from 72 instructions at 0x004d4cef; semantics not reconstructed.
+// size 233 bytes; signature ? nargs=13
+// callees: 0x0046d710, 0x004d4de6, 0x00682997, 0x00683fa4, 0x0068be26
 //
-//   0x004d48c6  mov      al, byte ptr [esp + 0x1b]
-//   0x004d48ca  test     al, al
-//   0x004d48cc  je       0x4d4a6c
-//   0x004d48d2  mov      al, byte ptr [esp + 0x13]
-//   0x004d48d6  test     al, al
-//   0x004d48d8  jne      0x4d4a3d
-//   0x004d48de  lea      ecx, [esp + 0x78]
-//   0x004d48e2  mov      byte ptr [esp + 0x278], 0
-//   0x004d48ea  call     0x62e450
-//   0x004d48ef  cmp      byte ptr [esp + 0x78], 0x5b
-//   0x004d48f4  jne      0x4d4934
-//   0x004d48f6  lea      edx, [esp + 0x78]
-//   0x004d48fa  push     0x5d
-//   0x004d48fc  push     edx
-//   0x004d48fd  call     0x684170
-//   0x004d4902  add      esp, 8
-//   0x004d4905  test     eax, eax
-//   0x004d4907  je       0x4d490c
-//   0x004d4909  mov      byte ptr [eax], 0
-//   0x004d490c  lea      edi, [esp + 0x79]
-//   0x004d4910  or       ecx, 0xffffffff
-//   0x004d4913  xor      eax, eax
-//   0x004d4915  lea      edx, [esp + 0x278]
-//   0x004d491c  repne scasb al, byte ptr es:[edi]
-//   0x004d491e  not      ecx
-//   0x004d4920  sub      edi, ecx
-//   0x004d4922  mov      eax, ecx
-//   0x004d4924  mov      esi, edi
-//   0x004d4926  mov      edi, edx
-//   0x004d4928  shr      ecx, 2
-//   0x004d492b  rep movsd dword ptr es:[edi], dword ptr [esi]
-//   0x004d492d  mov      ecx, eax
-//   0x004d492f  and      ecx, 3
-//   0x004d4932  rep movsb byte ptr es:[edi], byte ptr [esi]
-//   0x004d4934  mov      al, byte ptr [esp + 0x13]
-//   0x004d4938  test     al, al
-//   0x004d493a  jne      0x4d4a3d
-//   0x004d4940  lea      ecx, [esp + 0x13]
-//   0x004d4944  lea      edx, [esp + 0x78]
-//   0x004d4948  push     ecx
-//   0x004d4949  push     0x200
-//   0x004d494e  lea      ecx, [esp + 0x44]
-//   0x004d4952  call     0x5a6be0
-//   0x004d4957  lea      edx, [esp + 0x78]
-//   0x004d495b  mov      esi, eax
-//   0x004d495d  test     edx, edx
-//   0x004d495f  lea      ecx, [esp + 0x78]
-//   0x004d4963  je       0x4d49b0
-//   0x004d4965  mov      al, byte ptr [esp + 0x78]
-//   0x004d4969  test     al, al
-//   0x004d496b  je       0x4d4979
-//   0x004d496d  cmp      al, 0x20
-//   0x004d496f  ja       0x4d4979
-//   0x004d4971  mov      al, byte ptr [ecx + 1]
-//   0x004d4974  inc      ecx
-//   0x004d4975  test     al, al
-//   0x004d4977  jne      0x4d496d
-//   0x004d4979  cmp      byte ptr [ecx], 0x5b
-//   0x004d497c  jne      0x4d4991
-//   0x004d497e  push     0x5d
-//   0x004d4980  push     ecx
-//   0x004d4981  call     0x684170
-//   0x004d4986  add      esp, 8
-//   0x004d4989  test     eax, eax
-//   0x004d498b  jne      0x4d4a31
-//   0x004d4991  lea      eax, [esp + 0x78]
-//   0x004d4995  push     0x3b
-//   0x004d4997  push     eax
-//   0x004d4998  call     0x684170
-//   0x004d499d  add      esp, 8
-//   0x004d49a0  test     eax, eax
-//   0x004d49a2  je       0x4d49b0
-//   0x004d49a4  lea      ecx, [esp + 0x78]
-//   0x004d49a8  mov      byte ptr [eax], 0
-//   0x004d49ab  call     0x62e450
-//   0x004d49b0  test     esi, esi
-//   0x004d49b2  je       0x4d4a24
-//   0x004d49b4  mov      al, byte ptr [esp + 0x78]
-//   0x004d49b8  cmp      al, 0x3b
-//   0x004d49ba  je       0x4d4a24
-//   0x004d49bc  cmp      al, 0x3d
-//   0x004d49be  je       0x4d4a24
-//   0x004d49c0  lea      ecx, [esp + 0x78]
-//   0x004d49c4  push     0x3d
-//   0x004d49c6  push     ecx
-//   0x004d49c7  call     0x684170
-//   0x004d49cc  mov      esi, eax
-//   0x004d49ce  add      esp, 8
-//   0x004d49d1  test     esi, esi
-//   0x004d49d3  je       0x4d4a24
-//   0x004d49d5  mov      byte ptr [esi], 0
-//   0x004d49d8  lea      ecx, [esp + 0x78]
-//   0x004d49dc  inc      esi
-//   0x004d49dd  call     0x62e450
-//   0x004d49e2  lea      edi, [esp + 0x78]
-//   0x004d49e6  or       ecx, 0xffffffff
-//   0x004d49e9  xor      eax, eax
-//   0x004d49eb  repne scasb al, byte ptr es:[edi]
-//   0x004d49ed  not      ecx
-//   0x004d49ef  dec      ecx
-//   0x004d49f0  je       0x4d4a24
-//   0x004d49f2  mov      ecx, esi
-//   0x004d49f4  call     0x62e450
-//   0x004d49f9  mov      edi, esi
-//   0x004d49fb  or       ecx, 0xffffffff
-//   0x004d49fe  xor      eax, eax
-//   0x004d4a00  repne scasb al, byte ptr es:[edi]
-//   0x004d4a02  not      ecx
-//   0x004d4a04  dec      ecx
-//   0x004d4a05  je       0x4d4a24
-//   0x004d4a07  lea      edx, [esp + 0x78]
-//   0x004d4a0b  push     esi
-//   0x004d4a0c  lea      eax, [esp + 0x27c]
-//   0x004d4a13  push     edx
-//   0x004d4a14  push     eax
-//   0x004d4a15  mov      ecx, ebp
-//   0x004d4a17  call     0x4d6b50
-//   0x004d4a1c  test     al, al
-//   0x004d4a1e  je       0x4d50cf
-//   0x004d4a24  mov      al, byte ptr [esp + 0x13]
-//   0x004d4a28  test     al, al
-//   0x004d4a2a  jne      0x4d4a3d
-//   0x004d4a2c  jmp      0x4d4940
+//   0x004d4cef  mov      al, byte ptr [esp + 0x480]
+//   0x004d4cf6  test     al, al
+//   0x004d4cf8  je       0x4d4d17
+//   0x004d4cfa  mov      esi, dword ptr [esp + 0x1c]
+//   0x004d4cfe  test     esi, esi
+//   0x004d4d00  je       0x4d4d17
+//   0x004d4d02  mov      eax, dword ptr [esi]
+//   0x004d4d04  test     eax, eax
+//   0x004d4d06  je       0x4d4d17
+//   0x004d4d08  push     eax
+//   0x004d4d09  call     0x683fa4
+//   0x004d4d0e  add      esp, 4
+//   0x004d4d11  mov      dword ptr [esi], 0
+//   0x004d4d17  push     0x28
+//   0x004d4d19  call     0x682997
+//   0x004d4d1e  mov      esi, eax
+//   0x004d4d20  add      esp, 4
+//   0x004d4d23  test     esi, esi
+//   0x004d4d25  je       0x4d5087
+//   0x004d4d2b  mov      ecx, dword ptr [esp + 0x24]
+//   0x004d4d2f  mov      eax, dword ptr [esp + 0x2c]
+//   0x004d4d33  mov      edi, dword ptr [esp + 0x34]
+//   0x004d4d37  mov      ebx, dword ptr [esp + 0x30]
+//   0x004d4d3b  push     ecx
+//   0x004d4d3c  mov      dword ptr [esp + 0x20], eax
+//   0x004d4d40  call     0x68be26
+//   0x004d4d45  lea      edx, [esp + 0x7c]
+//   0x004d4d49  mov      dword ptr [esp + 0x28], eax
+//   0x004d4d4d  push     edx
+//   0x004d4d4e  call     0x68be26
+//   0x004d4d53  mov      edx, dword ptr [esp + 0x1c]
+//   0x004d4d57  mov      dword ptr [esi + 0xc], eax
+//   0x004d4d5a  mov      eax, dword ptr [esp + 0x2c]
+//   0x004d4d5e  mov      dword ptr [esi + 0x14], edx
+//   0x004d4d61  mov      edx, dword ptr [esp + 0x24]
+//   0x004d4d65  mov      dword ptr [esi + 0x10], eax
+//   0x004d4d68  mov      eax, dword ptr [esp + 0x28]
+//   0x004d4d6c  xor      ecx, ecx
+//   0x004d4d6e  mov      dword ptr [esi + 4], ecx
+//   0x004d4d71  mov      dword ptr [esi + 8], ecx
+//   0x004d4d74  mov      dword ptr [esi + 0x18], eax
+//   0x004d4d77  mov      dword ptr [esi + 0x1c], ebx
+//   0x004d4d7a  mov      dword ptr [esi + 0x20], edi
+//   0x004d4d7d  mov      dword ptr [esi + 0x24], edx
+//   0x004d4d80  mov      dword ptr [esi], 0x6a0408
+//   0x004d4d86  mov      edx, dword ptr [esi + 0xc]
+//   0x004d4d89  mov      dword ptr [esp + 0x24], ecx
+//   0x004d4d8d  mov      dword ptr [esp + 0x1c], ecx
+//   0x004d4d91  mov      dword ptr [esp + 0x68], ecx
+//   0x004d4d95  mov      dword ptr [esp + 0x6c], ecx
+//   0x004d4d99  mov      dword ptr [esp + 0x70], ecx
+//   0x004d4d9d  mov      edi, edx
+//   0x004d4d9f  or       ecx, 0xffffffff
+//   0x004d4da2  xor      eax, eax
+//   0x004d4da4  add      esp, 8
+//   0x004d4da7  repne scasb al, byte ptr es:[edi]
+//   0x004d4da9  not      ecx
+//   0x004d4dab  dec      ecx
+//   0x004d4dac  push     ecx
+//   0x004d4dad  push     edx
+//   0x004d4dae  lea      ecx, [esp + 0x68]
+//   0x004d4db2  call     0x46d710
+//   0x004d4db7  mov      ecx, dword ptr [ebp + 4]
+//   0x004d4dba  mov      dword ptr [esp + 0x24], eax
+//   0x004d4dbe  mov      eax, dword ptr [ebp + 8]
+//   0x004d4dc1  inc      ecx
+//   0x004d4dc2  cmp      ecx, eax
+//   0x004d4dc4  jle      0x4d4e55
+//   0x004d4dca  test     eax, eax
+//   0x004d4dcc  jne      0x4d4dd8
+//   0x004d4dce  mov      dword ptr [esp + 0x20], 0xa
+//   0x004d4dd6  jmp      0x4d4de6
 INIClass_INIEntry::INIClass_INIEntry()
 {
 }

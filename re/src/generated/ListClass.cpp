@@ -1378,15 +1378,123 @@ void ListClass::vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5)
 }
 
 // ---------------------------------------------------------------------------
-// ListClass::ListClass -- body derived from 5 instructions at 0x004f6a9e; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
-// callees: none
+// ListClass::ListClass -- body derived from 113 instructions at 0x004f6ad0; semantics not reconstructed.
+// size 337 bytes; signature __thiscall nargs=8
+// callees: 0x00460520, 0x00471560, 0x005d7a10, 0x005dde60
 //
-//   0x004f6a9e  mov      eax, edi
-//   0x004f6aa0  pop      edi
-//   0x004f6aa1  pop      esi
-//   0x004f6aa2  pop      ebx
-//   0x004f6aa3  ret      
+//   0x004f6ad0  mov      eax, dword ptr [esp + 8]
+//   0x004f6ad4  push     ebx
+//   0x004f6ad5  mov      ebx, dword ptr [esp + 0x18]
+//   0x004f6ad9  push     ebp
+//   0x004f6ada  mov      ebp, dword ptr [esp + 0x18]
+//   0x004f6ade  push     esi
+//   0x004f6adf  push     edi
+//   0x004f6ae0  mov      edi, dword ptr [esp + 0x1c]
+//   0x004f6ae4  push     0
+//   0x004f6ae6  push     0x105
+//   0x004f6aeb  mov      esi, ecx
+//   0x004f6aed  push     ebx
+//   0x004f6aee  mov      ecx, dword ptr [esp + 0x20]
+//   0x004f6af2  push     ebp
+//   0x004f6af3  push     edi
+//   0x004f6af4  push     eax
+//   0x004f6af5  push     ecx
+//   0x004f6af6  mov      ecx, esi
+//   0x004f6af8  call     0x460520
+//   0x004f6afd  mov      edx, dword ptr [esp + 0x18]
+//   0x004f6b01  xor      eax, eax
+//   0x004f6b03  push     eax
+//   0x004f6b04  push     eax
+//   0x004f6b05  mov      dword ptr [esi + 0x38], eax
+//   0x004f6b08  mov      dword ptr [esi + 0x3c], eax
+//   0x004f6b0b  mov      byte ptr [esi + 0x41], al
+//   0x004f6b0e  mov      dword ptr [esi + 0x44], eax
+//   0x004f6b11  add      ebp, edx
+//   0x004f6b13  push     eax
+//   0x004f6b14  mov      eax, dword ptr [esp + 0x38]
+//   0x004f6b18  push     edi
+//   0x004f6b19  push     ebp
+//   0x004f6b1a  push     eax
+//   0x004f6b1b  push     0
+//   0x004f6b1d  lea      ecx, [esi + 0x58]
+//   0x004f6b20  mov      byte ptr [esi + 0x40], 1
+//   0x004f6b24  mov      dword ptr [esi + 0x34], 0x6a1720
+//   0x004f6b2b  mov      dword ptr [esi + 0x48], 0xa
+//   0x004f6b32  call     0x5d7a10
+//   0x004f6b37  mov      edx, dword ptr [esp + 0x30]
+//   0x004f6b3b  push     0
+//   0x004f6b3d  push     0
+//   0x004f6b3f  lea      ecx, [edi + ebx]
+//   0x004f6b42  push     0
+//   0x004f6b44  push     ecx
+//   0x004f6b45  push     ebp
+//   0x004f6b46  push     edx
+//   0x004f6b47  push     0
+//   0x004f6b49  lea      ecx, [esi + 0xa4]
+//   0x004f6b4f  call     0x5d7a10
+//   0x004f6b54  push     1
+//   0x004f6b56  push     ebx
+//   0x004f6b57  push     0
+//   0x004f6b59  push     edi
+//   0x004f6b5a  push     ebp
+//   0x004f6b5b  push     0
+//   0x004f6b5d  lea      ecx, [esi + 0xf0]
+//   0x004f6b63  call     0x5dde60
+//   0x004f6b68  mov      ecx, dword ptr [esi + 0xb8]
+//   0x004f6b6e  mov      edx, dword ptr [esi + 0xb0]
+//   0x004f6b74  mov      eax, dword ptr [esi + 0x6c]
+//   0x004f6b77  mov      edi, dword ptr [esi + 0x64]
+//   0x004f6b7a  mov      ebp, dword ptr [esi + 0xb4]
+//   0x004f6b80  sub      edx, ecx
+//   0x004f6b82  mov      dword ptr [esi + 0xb0], edx
+//   0x004f6b88  mov      edx, dword ptr [esi + 0xbc]
+//   0x004f6b8e  sub      edi, eax
+//   0x004f6b90  sub      ebp, edx
+//   0x004f6b92  mov      dword ptr [esi + 0x64], edi
+//   0x004f6b95  cmp      eax, ecx
+//   0x004f6b97  mov      dword ptr [esi], 0x6a1654
+//   0x004f6b9d  mov      dword ptr [esi + 0xb4], ebp
+//   0x004f6ba3  mov      edi, eax
+//   0x004f6ba5  jg       0x4f6ba9
+//   0x004f6ba7  mov      edi, ecx
+//   0x004f6ba9  mov      ebp, dword ptr [esi + 0xfc]
+//   0x004f6baf  sub      ebp, edi
+//   0x004f6bb1  mov      edi, dword ptr [esi + 0x70]
+//   0x004f6bb4  mov      dword ptr [esi + 0xfc], ebp
+//   0x004f6bba  mov      ebp, dword ptr [esi + 0x10]
+//   0x004f6bbd  add      ebp, edi
+//   0x004f6bbf  add      edi, edx
+//   0x004f6bc1  mov      dword ptr [esi + 0x100], ebp
+//   0x004f6bc7  mov      ebp, dword ptr [esi + 0x108]
+//   0x004f6bcd  sub      ebp, edi
+//   0x004f6bcf  cmp      eax, ecx
+//   0x004f6bd1  mov      dword ptr [esi + 0x108], ebp
+//   0x004f6bd7  jg       0x4f6bdb
+//   0x004f6bd9  mov      eax, ecx
+//   0x004f6bdb  mov      ecx, dword ptr [esp + 0x28]
+//   0x004f6bdf  mov      dword ptr [esi + 0x104], eax
+//   0x004f6be5  xor      eax, eax
+//   0x004f6be7  mov      dword ptr [esi + 0x2c], ecx
+//   0x004f6bea  mov      byte ptr [esi + 0x54], 0
+//   0x004f6bee  mov      dword ptr [esi + 0x30], eax
+//   0x004f6bf1  mov      dword ptr [esi + 0x144], eax
+//   0x004f6bf7  mov      dword ptr [esi + 0x148], eax
+//   0x004f6bfd  call     0x471560
+//   0x004f6c02  mov      edx, dword ptr [eax]
+//   0x004f6c04  mov      ecx, eax
+//   0x004f6c06  call     dword ptr [edx + 0x14]
+//   0x004f6c09  lea      ecx, [eax - 1]
+//   0x004f6c0c  lea      eax, [ebx - 1]
+//   0x004f6c0f  cdq      
+//   0x004f6c10  idiv     ecx
+//   0x004f6c12  mov      dword ptr [esi + 0x4c], ecx
+//   0x004f6c15  pop      edi
+//   0x004f6c16  mov      dword ptr [esi + 0x50], eax
+//   0x004f6c19  mov      eax, esi
+//   0x004f6c1b  pop      esi
+//   0x004f6c1c  pop      ebp
+//   0x004f6c1d  pop      ebx
+//   0x004f6c1e  ret      0x20
 ListClass::ListClass()
 {
 }

@@ -73,8 +73,19 @@ public:
     bool  m_CustomRotor;        // +0x477 ctor: mov byte ptr [esi+0x477], bl (0)  INI "CustomRotor"
 
     // ---- data members (offsets from ctor 0x0040f040) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    // 8 member(s) already declared above; their offsets are recorded in out/members.json
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x699168; 4-byte store: mov dword ptr [esi], 0x699168
+    unsigned char pad_004[0x378];
+    unsigned long m_37c;  // +0x37c init 0x20; 4-byte store: mov dword ptr [esi + 0x37c], 0x20
+    unsigned char pad_380[0xb5];
+    unsigned char m_435;  // +0x435 /* ? */; 1-byte store: mov byte ptr [esi + 0x435], bl
+    unsigned char pad_436[0x3a];
+    unsigned long m_470;  // +0x470 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x470], 0xffffffff
+    unsigned char m_474;  // +0x474 /* ? */; 1-byte store: mov byte ptr [esi + 0x474], bl
+    unsigned char Rotors;  // +0x475 (INI key); 1-byte store: mov byte ptr [esi + 0x475], bl
+    unsigned char CustomRotor;  // +0x476 (INI key); 1-byte store: mov byte ptr [esi + 0x476], bl
+    unsigned char Landable;  // +0x477 (INI key); 1-byte store: mov byte ptr [esi + 0x477], bl
 
 };

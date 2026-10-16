@@ -292,15 +292,10 @@ void RAMFileClass::vfunc_16(int a0, int a1, int a2)
 }
 
 // ---------------------------------------------------------------------------
-// RAMFileClass::RAMFileClass -- body derived from 30 instructions at 0x005a598b; semantics not reconstructed.
-// size 79 bytes; signature __thiscall nargs=2
+// RAMFileClass::RAMFileClass -- body derived from 25 instructions at 0x005a5990; semantics not reconstructed.
+// size 74 bytes; signature __thiscall nargs=2
 // callees: 0x00682997
 //
-//   0x005a598b  nop      
-//   0x005a598c  nop      
-//   0x005a598d  nop      
-//   0x005a598e  nop      
-//   0x005a598f  nop      
 //   0x005a5990  mov      eax, dword ptr [esp + 8]
 //   0x005a5994  push     esi
 //   0x005a5995  mov      esi, ecx

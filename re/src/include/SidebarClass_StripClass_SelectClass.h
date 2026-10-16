@@ -4,7 +4,7 @@
 //
 // RTTI class   : class SidebarClass::StripClass::SelectClass
 // vtable       : 0x006a43fc  (32 slots)
-// constructor  : 0x005d825f
+// constructor  : 0x005d86c0
 // vtable store : 0x005d86e8  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -52,6 +52,15 @@ public:
     virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
     virtual void vfunc_31(int a0);  // [31] 0x00460600  // __stdcall
 
-    SidebarClass_StripClass_SelectClass();  // 0x005d825f
+    SidebarClass_StripClass_SelectClass();  // 0x005d86c0
     virtual ~SidebarClass_StripClass_SelectClass();
+
+    // ---- data members (offsets from ctor 0x005d86c0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a43fc; 4-byte store: mov dword ptr [esi], 0x6a43fc
+    unsigned char pad_004[0x28];
+    unsigned long m_02c;  // +0x02c /* ? */; 4-byte store: mov dword ptr [esi + 0x2c], edi
+    unsigned long m_030;  // +0x030 /* ? */; 4-byte store: mov dword ptr [esi + 0x30], edi
 };

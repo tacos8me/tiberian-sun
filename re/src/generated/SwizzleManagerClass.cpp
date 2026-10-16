@@ -180,18 +180,10 @@ void SwizzleManagerClass::vfunc_9(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// SwizzleManagerClass::SwizzleManagerClass -- body derived from 29 instructions at 0x005f3508; semantics not reconstructed.
-// size 123 bytes; signature __cdecl
+// SwizzleManagerClass::SwizzleManagerClass -- body derived from 21 instructions at 0x005f3510; semantics not reconstructed.
+// size 115 bytes; signature __cdecl
 // callees: 0x005f3d70, 0x00682610
 //
-//   0x005f3508  nop      
-//   0x005f3509  nop      
-//   0x005f350a  nop      
-//   0x005f350b  nop      
-//   0x005f350c  nop      
-//   0x005f350d  nop      
-//   0x005f350e  nop      
-//   0x005f350f  nop      
 //   0x005f3510  push     0
 //   0x005f3512  push     0
 //   0x005f3514  mov      ecx, 0x7daca4

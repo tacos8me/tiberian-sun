@@ -32,12 +32,10 @@ public:
     virtual void    __stdcall Slot29();                                 // 0x622960
 
     // ---- data members (offsets from ctor 0x00622740) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a5d9c
-    unsigned long m_004;  // init 0x6a5cd4
-    unsigned char pad_008[0xc];
-    unsigned long m_014;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

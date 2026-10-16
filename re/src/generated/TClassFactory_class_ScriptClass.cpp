@@ -99,14 +99,14 @@ void TClassFactory_class_ScriptClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_ScriptClass::TClassFactory_class_ScriptClass -- body derived from 4 instructions at 0x005ea918; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_ScriptClass::TClassFactory_class_ScriptClass -- body derived from 4 instructions at 0x005ea930; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ea918  dec      ecx
-//   0x005ea919  mov      dword ptr [eax + 4], ecx
-//   0x005ea91c  xor      eax, eax
-//   0x005ea91e  ret      8
+//   0x005ea930  mov      eax, ecx
+//   0x005ea932  mov      dword ptr [eax + 4], 0
+//   0x005ea939  mov      dword ptr [eax], 0x6a4aa8
+//   0x005ea93f  ret      
 TClassFactory_class_ScriptClass::TClassFactory_class_ScriptClass()
 {
 }

@@ -4,7 +4,7 @@
 //
 // RTTI class   : class SliderClass
 // vtable       : 0x006a1758  (43 slots)
-// constructor  : 0x004f6a9e
+// constructor  : 0x004f6c30
 // vtable store : 0x004f6dc9  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -63,14 +63,27 @@ public:
     virtual void vfunc_41(int a0);  // [41] 0x005de320  // __stdcall
     virtual void vfunc_42(int a0);  // [42] 0x005de360  // __stdcall
 
-    SliderClass();  // 0x004f6a9e
+    SliderClass();  // 0x004f6c30
     virtual ~SliderClass();
 
-    // ---- data members (offsets from ctor 0x005de030) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a1758
-    unsigned char pad_004[0x38];
-    unsigned long m_03c;  // zero-initialised
-    unsigned long m_040;  // zero-initialised
+    // ---- data members (offsets from ctor 0x004f6c30) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x69e804; 4-byte store: mov dword ptr [edi], 0x69e804
+    unsigned char pad_004[0x28];
+    unsigned char m_02c;  // +0x02c /* ? */; 1-byte store: mov byte ptr [edi + 0x2c], cl
+    unsigned char m_02d;  // +0x02d /* ? */; 1-byte store: mov byte ptr [edi + 0x2d], dl
+    unsigned char m_02e;  // +0x02e /* ? */; 1-byte store: mov byte ptr [edi + 0x2e], cl
+    unsigned char pad_02f[0x1];
+    unsigned long m_030;  // +0x030 /* ? */; 4-byte store: mov dword ptr [edi + 0x30], edx
+    unsigned long m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [edi + 0x34], ecx
+    unsigned long m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [edi + 0x38], edx
+    unsigned long m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [edi + 0x3c], ecx
+    unsigned long m_040;  // +0x040 /* ? */; 4-byte store: mov dword ptr [edi + 0x40], edx
+    unsigned char m_044;  // +0x044 /* ? */; 1-byte store: mov byte ptr [edi + 0x44], cl
+    unsigned char pad_045[0x3];
+    unsigned long m_048;  // +0x048 /* ? */; 4-byte store: mov dword ptr [edi + 0x48], edx
+    unsigned long m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [edi + 0x4c], ecx
+    unsigned long m_050;  // +0x050 /* ? */; 4-byte store: mov dword ptr [edi + 0x50], edx
 };

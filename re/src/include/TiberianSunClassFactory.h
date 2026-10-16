@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TiberianSunClassFactory
 // vtable       : 0x0069f804  (5 slots)
-// constructor  : 0x004a771b
+// constructor  : 0x004a8ff0
 // vtable store : 0x004a8ff6  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -24,6 +24,6 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x00419470  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x004a9480  // __stdcall, returns int
 
-    TiberianSunClassFactory();  // 0x004a771b
+    TiberianSunClassFactory();  // 0x004a8ff0
     virtual ~TiberianSunClassFactory();
 };

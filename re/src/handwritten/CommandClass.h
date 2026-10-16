@@ -41,9 +41,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e0ad0 (string id 0x22)
 
     // ---- data members (offsets from ctor 0x004e0a00) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0938
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -64,9 +65,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e0f70
 
     // ---- data members (offsets from ctor 0x004deac6) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a04a0
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -82,9 +84,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1030
 
     // ---- data members (offsets from ctor 0x004dea55) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a04bc
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -100,9 +103,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1210
 
     // ---- data members (offsets from ctor 0x004de9e8) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a04d8
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -118,9 +122,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e10f0
 
     // ---- data members (offsets from ctor 0x004de97b) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a04f4
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -136,9 +141,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1390
 
     // ---- data members (offsets from ctor 0x004de90e) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0510
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -154,9 +160,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1480
 
     // ---- data members (offsets from ctor 0x004de8a1) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a052c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -172,9 +179,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1590
 
     // ---- data members (offsets from ctor 0x004de834) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0548
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -190,9 +198,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e15f0
 
     // ---- data members (offsets from ctor 0x004de7c7) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0564
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -208,9 +217,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1890
 
     // ---- data members (offsets from ctor 0x004de75a) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0580
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -226,9 +236,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e19c0
 
     // ---- data members (offsets from ctor 0x004de6ed) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a059c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -244,9 +255,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1a20
 
     // ---- data members (offsets from ctor 0x004de680) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a05b8
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -262,9 +274,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1a70
 
     // ---- data members (offsets from ctor 0x004de613) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a05d4
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -280,9 +293,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1ac0
 
     // ---- data members (offsets from ctor 0x004de5a6) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a05f0
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -298,9 +312,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1be0
 
     // ---- data members (offsets from ctor 0x004de539) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a060c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -316,9 +331,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1b10
 
     // ---- data members (offsets from ctor 0x004de4cc) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0628
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -334,9 +350,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1fa0
 
     // ---- data members (offsets from ctor 0x004de45f) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0644
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -352,9 +369,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1f50
 
     // ---- data members (offsets from ctor 0x004de3f2) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0660
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -370,9 +388,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1f00
 
     // ---- data members (offsets from ctor 0x004de385) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a067c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -388,9 +407,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1dc0
 
     // ---- data members (offsets from ctor 0x004de318) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0698
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -406,9 +426,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1d70
 
     // ---- data members (offsets from ctor 0x004de2ab) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a06b4
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -424,9 +445,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1d20
 
     // ---- data members (offsets from ctor 0x004de23e) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a06d0
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -442,9 +464,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1eb0
 
     // ---- data members (offsets from ctor 0x004de1d1) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a06ec
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -460,9 +483,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1e60
 
     // ---- data members (offsets from ctor 0x004de164) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0708
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -478,9 +502,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1e10
 
     // ---- data members (offsets from ctor 0x004de0f7) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0724
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -496,9 +521,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1cd0
 
     // ---- data members (offsets from ctor 0x004de08a) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0740
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -514,9 +540,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1c80
 
     // ---- data members (offsets from ctor 0x004de01d) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a075c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -532,9 +559,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1c30
 
     // ---- data members (offsets from ctor 0x004ddfb0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0778
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -550,9 +578,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2160
 
     // ---- data members (offsets from ctor 0x004ddf43) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0794
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -568,9 +597,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2100
 
     // ---- data members (offsets from ctor 0x004dded6) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a07b0
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -586,9 +616,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e20a0
 
     // ---- data members (offsets from ctor 0x004dde6a) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a07cc
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -604,9 +635,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2040
 
     // ---- data members (offsets from ctor 0x004dddf9) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a07e8
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -622,9 +654,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e1ff0
 
     // ---- data members (offsets from ctor 0x004ddd88) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0804
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -640,9 +673,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e25f0
 
     // ---- data members (offsets from ctor 0x004ddd1b) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0820
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -658,9 +692,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2560
 
     // ---- data members (offsets from ctor 0x004ddcae) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a083c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -676,9 +711,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e24d0
 
     // ---- data members (offsets from ctor 0x004ddc41) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0858
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -694,9 +730,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2440
 
     // ---- data members (offsets from ctor 0x004ddbd4) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0874
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -712,9 +749,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e23a0
 
     // ---- data members (offsets from ctor 0x004ddb67) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0890
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -730,9 +768,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2300
 
     // ---- data members (offsets from ctor 0x004ddafa) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a08ac
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -748,9 +787,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2260
 
     // ---- data members (offsets from ctor 0x004dda8d) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a08c8
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -766,9 +806,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e21c0
 
     // ---- data members (offsets from ctor 0x004dda21) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a08e4
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -784,9 +825,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2680
 
     // ---- data members (offsets from ctor 0x004dda00) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0900
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -802,10 +844,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e0990
 
     // ---- data members (offsets from ctor 0x004e08e0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a091c
-    unsigned long m_004;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -821,10 +863,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e0b00
 
     // ---- data members (offsets from ctor 0x004e0a50) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0954
-    unsigned long m_004;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -840,10 +882,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e0cb0
 
     // ---- data members (offsets from ctor 0x004e0c00) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0970
-    unsigned long m_004;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -859,10 +901,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e0e20
 
     // ---- data members (offsets from ctor 0x004e0d70) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a098c
-    unsigned long m_004;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -878,9 +920,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2710
 
     // ---- data members (offsets from ctor 0x004e26c0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a09a8
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -896,9 +939,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2770 ("SCRN%04d.pcx")
 
     // ---- data members (offsets from ctor 0x004e2720) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a09c4
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -914,9 +958,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e29d0
 
     // ---- data members (offsets from ctor 0x004e2980) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a09e0
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -932,9 +977,10 @@ public:
     virtual const char* Get_UI_Description();// 0x4e2a30
 
     // ---- data members (offsets from ctor 0x004e29e0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a09fc
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

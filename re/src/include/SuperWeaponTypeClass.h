@@ -51,10 +51,11 @@ public:
     virtual ~SuperWeaponTypeClass();
 
     // ---- data members (offsets from ctor 0x005f2cd0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a5018
-    unsigned long m_004;  // init 0x6a4ffc
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a5018; 4-byte store: mov dword ptr [esi], 0x6a5018
+    unsigned long m_004;  // +0x004 init 0x6a4ffc; 4-byte store: mov dword ptr [esi + 4], 0x6a4ffc
     unsigned char pad_008[0x78];
-    unsigned long m_080;  // zero-initialised
+    unsigned long m_080;  // +0x080 zero-initialised; 4-byte store: mov dword ptr [esi + 0x80], 0
 };

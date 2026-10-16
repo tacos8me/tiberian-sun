@@ -47,16 +47,19 @@ public:
     virtual ~WaypointPathClass();
 
     // ---- data members (offsets from ctor 0x006557e0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a74f0
-    unsigned long m_004;  // init 0x6a74d4
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a74f0; 4-byte store: mov dword ptr [esi], 0x6a74f0
+    unsigned long m_004;  // +0x004 init 0x6a74d4; 4-byte store: mov dword ptr [esi + 4], 0x6a74d4
     unsigned char pad_008[0xc];
-    unsigned long m_014;  // init 0xffffffff
-    unsigned long m_018;  // init 0x6a7554
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // init 0x1
-    unsigned long m_028;  // /* ? */
-    unsigned long m_02c;  // init 0xa
+    unsigned long m_014;  // +0x014 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x14], 0xffffffff
+    unsigned long m_018;  // +0x018 init 0x6a7554; 4-byte store: mov dword ptr [esi + 0x18], 0x6a7554
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], eax
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], eax
+    unsigned char m_024;  // +0x024 init 0x1; 1-byte store: mov byte ptr [esi + 0x24], 1
+    unsigned char m_025;  // +0x025 /* ? */; 1-byte store: mov byte ptr [esi + 0x25], al
+    unsigned char pad_026[0x2];
+    unsigned long m_028;  // +0x028 /* ? */; 4-byte store: mov dword ptr [esi + 0x28], eax
+    unsigned long m_02c;  // +0x02c init 0xa; 4-byte store: mov dword ptr [esi + 0x2c], 0xa
 };

@@ -758,23 +758,64 @@ void TextButtonClass::vfunc_36()
 }
 
 // ---------------------------------------------------------------------------
-// TextButtonClass::TextButtonClass -- body derived from 13 instructions at 0x00626cd9; semantics not reconstructed.
-// size 30 bytes; signature __cdecl
-// callees: none
+// TextButtonClass::TextButtonClass -- body derived from 54 instructions at 0x00626d00; semantics not reconstructed.
+// size 138 bytes; signature __thiscall nargs=9
+// callees: 0x00471560, 0x0062a860
 //
-//   0x00626cd9  nop      
-//   0x00626cda  nop      
-//   0x00626cdb  nop      
-//   0x00626cdc  nop      
-//   0x00626cdd  nop      
-//   0x00626cde  nop      
-//   0x00626cdf  nop      
-//   0x00626ce0  xor      eax, eax
-//   0x00626ce2  mov      dword ptr [0x7dd050], eax
-//   0x00626ce7  mov      dword ptr [0x7dd054], eax
-//   0x00626cec  mov      dword ptr [0x7dd058], eax
-//   0x00626cf1  mov      dword ptr [0x7dd05c], eax
-//   0x00626cf6  ret      
+//   0x00626d00  mov      eax, dword ptr [esp + 0x14]
+//   0x00626d04  mov      edx, dword ptr [esp + 4]
+//   0x00626d08  push     ebx
+//   0x00626d09  push     ebp
+//   0x00626d0a  mov      ebp, dword ptr [esp + 0x24]
+//   0x00626d0e  push     esi
+//   0x00626d0f  push     edi
+//   0x00626d10  mov      edi, dword ptr [esp + 0x28]
+//   0x00626d14  mov      esi, ecx
+//   0x00626d16  push     ebp
+//   0x00626d17  mov      ecx, dword ptr [esp + 0x24]
+//   0x00626d1b  push     edi
+//   0x00626d1c  push     eax
+//   0x00626d1d  push     ecx
+//   0x00626d1e  push     edx
+//   0x00626d1f  mov      ecx, esi
+//   0x00626d21  call     0x62a860
+//   0x00626d26  mov      cl, byte ptr [esp + 0x34]
+//   0x00626d2a  mov      al, byte ptr [esp + 0x30]
+//   0x00626d2e  mov      edx, dword ptr [esp + 0x18]
+//   0x00626d32  mov      byte ptr [esi + 0x31], cl
+//   0x00626d35  mov      ecx, dword ptr [esp + 0x1c]
+//   0x00626d39  cmp      edi, -1
+//   0x00626d3c  mov      byte ptr [esi + 0x30], al
+//   0x00626d3f  mov      dword ptr [esi + 0x34], edx
+//   0x00626d42  mov      dword ptr [esi + 0x38], ecx
+//   0x00626d45  mov      dword ptr [esi], 0x6a612c
+//   0x00626d4b  je       0x626d52
+//   0x00626d4d  cmp      ebp, -1
+//   0x00626d50  jne      0x626d81
+//   0x00626d52  call     0x471560
+//   0x00626d57  cmp      edi, -1
+//   0x00626d5a  mov      ebx, eax
+//   0x00626d5c  jne      0x626d6f
+//   0x00626d5e  mov      ecx, dword ptr [esi + 0x34]
+//   0x00626d61  mov      eax, dword ptr [ebx]
+//   0x00626d63  push     ecx
+//   0x00626d64  mov      ecx, ebx
+//   0x00626d66  call     dword ptr [eax + 8]
+//   0x00626d69  add      eax, 8
+//   0x00626d6c  mov      dword ptr [esi + 0x14], eax
+//   0x00626d6f  cmp      ebp, -1
+//   0x00626d72  jne      0x626d81
+//   0x00626d74  mov      edx, dword ptr [ebx]
+//   0x00626d76  mov      ecx, ebx
+//   0x00626d78  call     dword ptr [edx + 0x14]
+//   0x00626d7b  add      eax, 2
+//   0x00626d7e  mov      dword ptr [esi + 0x18], eax
+//   0x00626d81  mov      eax, esi
+//   0x00626d83  pop      edi
+//   0x00626d84  pop      esi
+//   0x00626d85  pop      ebp
+//   0x00626d86  pop      ebx
+//   0x00626d87  ret      0x24
 TextButtonClass::TextButtonClass()
 {
 }

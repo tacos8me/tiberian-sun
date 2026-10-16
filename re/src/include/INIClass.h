@@ -32,11 +32,10 @@ public:
     GenericNode* Prev;   // /* ? */
 
     // ---- data members (offsets from ctor 0x00403960) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6988c4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -45,16 +44,13 @@ template <class T, class Key> class Node : public GenericNode
 public:
     T    Item;           // /* ? */ payload (INISection* / INIEntry*)
 
-    // ---- data members (offsets from ctor 0x004d6bc7) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0418
-    unsigned long m_004;  // /* ? */
-    unsigned char pad_008[0x4];
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    unsigned char pad_014[0x28];
-    unsigned long m_03c;  // /* ? */
+    // ---- data members (offsets from ctor 0x004d4ad0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [ebx + 8], edi
+    unsigned char pad_010[0x2c];
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -123,15 +119,11 @@ private:
     void*       m_sectionList;   // /* ? */ offset 0x1C per 0x4D6B50/0x4D72B0
 
     // ---- data members (offsets from ctor 0x004d4430) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0400
-    unsigned char pad_004[0x18];
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // /* ? */
-    unsigned long m_028;  // /* ? */
-    unsigned long m_02c;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned char pad_029[0x3];
+    // 7 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

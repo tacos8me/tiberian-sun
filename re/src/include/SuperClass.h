@@ -47,18 +47,22 @@ public:
     virtual ~SuperClass();
 
     // ---- data members (offsets from ctor 0x005f12e0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4f88
-    unsigned long m_004;  // init 0x6a4f6c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a4f88; 4-byte store: mov dword ptr [esi], 0x6a4f88
+    unsigned long m_004;  // +0x004 init 0x6a4f6c; 4-byte store: mov dword ptr [esi + 4], 0x6a4f6c
     unsigned char pad_008[0xc];
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], eax
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ecx
     unsigned char pad_020[0x4];
-    unsigned long m_024;  // /* ? */
-    unsigned long m_028;  // init 0x1
-    unsigned long m_02c;  // /* ? */
-    unsigned char pad_030[0x4];
-    unsigned long m_034;  // init 0xffffffff
+    unsigned long m_024;  // +0x024 /* ? */; 4-byte store: mov dword ptr [esi + 0x24], eax
+    unsigned char m_028;  // +0x028 init 0x1; 1-byte store: mov byte ptr [esi + 0x28], 1
+    unsigned char m_029;  // +0x029 /* ? */; 1-byte store: mov byte ptr [esi + 0x29], al
+    unsigned char m_02a;  // +0x02a /* ? */; 1-byte store: mov byte ptr [esi + 0x2a], al
+    unsigned char m_02b;  // +0x02b /* ? */; 1-byte store: mov byte ptr [esi + 0x2b], al
+    unsigned char m_02c;  // +0x02c /* ? */; 1-byte store: mov byte ptr [esi + 0x2c], al
+    unsigned char pad_02d[0x7];
+    unsigned long m_034;  // +0x034 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x34], 0xffffffff
 };

@@ -39,10 +39,12 @@ public:
     virtual ~FileClass();
 
     // ---- data members (offsets from ctor 0x005a59e0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a3958
-    unsigned long m_004;  // zero-initialised
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a3958; 4-byte store: mov dword ptr [esi], 0x6a3958
+    unsigned long m_004;  // +0x004 zero-initialised; 4-byte store: mov dword ptr [esi + 4], 0
     unsigned char pad_008[0x10];
-    unsigned long m_018;  // zero-initialised
+    unsigned char m_018;  // +0x018 zero-initialised; 1-byte store: mov byte ptr [esi + 0x18], 0
+    unsigned char m_019;  // +0x019 zero-initialised; 1-byte store: mov byte ptr [esi + 0x19], 0
 };

@@ -99,14 +99,14 @@ void TClassFactory_class_LightSourceClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_LightSourceClass::TClassFactory_class_LightSourceClass -- body derived from 4 instructions at 0x005e9598; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_LightSourceClass::TClassFactory_class_LightSourceClass -- body derived from 4 instructions at 0x005e95b0; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005e9598  dec      ecx
-//   0x005e9599  mov      dword ptr [eax + 4], ecx
-//   0x005e959c  xor      eax, eax
-//   0x005e959e  ret      8
+//   0x005e95b0  mov      eax, ecx
+//   0x005e95b2  mov      dword ptr [eax + 4], 0
+//   0x005e95b9  mov      dword ptr [eax], 0x6a4970
+//   0x005e95bf  ret      
 TClassFactory_class_LightSourceClass::TClassFactory_class_LightSourceClass()
 {
 }

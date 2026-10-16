@@ -76,9 +76,14 @@ public:
     virtual bool vfunc_5() const;   // /* ? */ predicate over m_bIsActive
 
     // ---- data members (offsets from ctor 0x004b0850) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    // 5 member(s) already declared above; their offsets are recorded in out/members.json
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x69ef28; 4-byte store: mov dword ptr [esi], 0x69ef28
+    unsigned long m_004;  // +0x004 zero-initialised; 4-byte store: mov dword ptr [esi + 4], 0
+    unsigned long m_008;  // +0x008 zero-initialised; 4-byte store: mov dword ptr [esi + 8], 0
+    unsigned char pad_00c[0x1];
+    unsigned char m_00d;  // +0x00d zero-initialised; 1-byte store: mov byte ptr [esi + 0xd], 0
 
 };
 
@@ -140,13 +145,11 @@ public:
     virtual bool vfunc_5() const;   // /* ? */
 
     // ---- data members (offsets from ctor 0x00449400) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69ad58
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // init 0x1
-    unsigned long m_010;  // /* ? */
-    unsigned long m_014;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned char m_00d;  // +0x00d /* ? */; 1-byte store: mov byte ptr [esi + 0xd], bl
+    unsigned char pad_00e[0x2];
+    // 6 member(s) already declared above; their offsets are recorded in out/members.json
 
 };

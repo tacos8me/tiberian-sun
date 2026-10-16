@@ -64,15 +64,18 @@ public:
     virtual ~IsometricTileTypeClass();
 
     // ---- data members (offsets from ctor 0x004ea2f0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a12d8
-    unsigned long m_004;  // init 0x6a12bc
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a12d8; 4-byte store: mov dword ptr [esi], 0x6a12d8
+    unsigned long m_004;  // +0x004 init 0x6a12bc; 4-byte store: mov dword ptr [esi + 4], 0x6a12bc
     unsigned char pad_008[0x12c];
-    unsigned long m_134;  // init 0x6a137c
-    unsigned long m_138;  // /* ? */
-    unsigned long m_13c;  // /* ? */
-    unsigned long m_140;  // init 0x1
-    unsigned long m_144;  // /* ? */
-    unsigned long m_148;  // init 0xa
+    unsigned long m_134;  // +0x134 init 0x6a137c; 4-byte store: mov dword ptr [esi + 0x134], 0x6a137c
+    unsigned long m_138;  // +0x138 /* ? */; 4-byte store: mov dword ptr [esi + 0x138], eax
+    unsigned long m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [esi + 0x13c], eax
+    unsigned char m_140;  // +0x140 init 0x1; 1-byte store: mov byte ptr [esi + 0x140], 1
+    unsigned char m_141;  // +0x141 /* ? */; 1-byte store: mov byte ptr [esi + 0x141], al
+    unsigned char pad_142[0x2];
+    unsigned long m_144;  // +0x144 /* ? */; 4-byte store: mov dword ptr [esi + 0x144], eax
+    unsigned long m_148;  // +0x148 init 0xa; 4-byte store: mov dword ptr [esi + 0x148], 0xa
 };

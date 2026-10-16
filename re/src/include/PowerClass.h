@@ -75,22 +75,25 @@ public:
     virtual ~PowerClass();
 
     // ---- data members (offsets from ctor 0x00593aa0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a328c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a328c; 4-byte store: mov dword ptr [esi], 0x6a328c
     unsigned char pad_004[0x14f0];
-    unsigned long m_14f4;  // /* ? */
-    unsigned long m_14f8;  // /* ? */
+    unsigned char m_14f4;  // +0x14f4 /* ? */; 1-byte store: mov byte ptr [esi + 0x14f4], bl
+    unsigned char pad_14f5[0x3];
+    unsigned long m_14f8;  // +0x14f8 /* ? */; 4-byte store: mov dword ptr [esi + 0x14f8], eax
     unsigned char pad_14fc[0x4];
-    unsigned long m_1500;  // /* ? */
-    unsigned long m_1504;  // /* ? */
-    unsigned long m_1508;  // /* ? */
+    unsigned long m_1500;  // +0x1500 /* ? */; 4-byte store: mov dword ptr [esi + 0x1500], ebx
+    unsigned long m_1504;  // +0x1504 /* ? */; 4-byte store: mov dword ptr [esi + 0x1504], ebx
+    unsigned long m_1508;  // +0x1508 /* ? */; 4-byte store: mov dword ptr [esi + 0x1508], eax
     unsigned char pad_150c[0x4];
-    unsigned long m_1510;  // /* ? */
-    unsigned long m_1514;  // /* ? */
-    unsigned long m_1518;  // /* ? */
-    unsigned long m_151c;  // /* ? */
-    unsigned long m_1520;  // /* ? */
-    unsigned long m_1524;  // /* ? */
-    unsigned long m_1528;  // /* ? */
+    unsigned long m_1510;  // +0x1510 /* ? */; 4-byte store: mov dword ptr [esi + 0x1510], ebx
+    unsigned long m_1514;  // +0x1514 /* ? */; 4-byte store: mov dword ptr [esi + 0x1514], ebx
+    unsigned long m_1518;  // +0x1518 /* ? */; 4-byte store: mov dword ptr [esi + 0x1518], ebx
+    unsigned long m_151c;  // +0x151c /* ? */; 4-byte store: mov dword ptr [esi + 0x151c], ebx
+    unsigned char m_1520;  // +0x1520 /* ? */; 1-byte store: mov byte ptr [esi + 0x1520], bl
+    unsigned char pad_1521[0x3];
+    unsigned long m_1524;  // +0x1524 /* ? */; 4-byte store: mov dword ptr [esi + 0x1524], eax
+    unsigned long m_1528;  // +0x1528 /* ? */; 4-byte store: mov dword ptr [esi + 0x1528], eax
 };

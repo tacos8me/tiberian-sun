@@ -604,8 +604,8 @@ void CCFileClass::vfunc_16(int a0, int a1, int a2)
 }
 
 // ---------------------------------------------------------------------------
-// CCFileClass::CCFileClass -- body derived from 25 instructions at 0x00418e88; semantics not reconstructed.
-// size 103 bytes; signature __cdecl nargs=4
+// CCFileClass::CCFileClass -- body derived from 22 instructions at 0x00418e88; semantics not reconstructed.
+// size 95 bytes; signature __cdecl nargs=4
 // callees: 0x00420190, 0x00425170, 0x004473c0, 0x0046ea70
 //
 //   0x00418e88  lea      ecx, [esp + 0x68]
@@ -630,9 +630,6 @@ void CCFileClass::vfunc_16(int a0, int a1, int a2)
 //   0x00418ed8  mov      dword ptr [esp + 4], 0x699b80
 //   0x00418ee0  call     0x420190
 //   0x00418ee5  mov      eax, esi
-//   0x00418ee7  pop      esi
-//   0x00418ee8  add      esp, 0x264
-//   0x00418eee  ret      
 CCFileClass::CCFileClass()
 {
 }

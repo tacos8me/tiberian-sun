@@ -137,22 +137,10 @@ void MSFadeAnim::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5)
 }
 
 // ---------------------------------------------------------------------------
-// MSFadeAnim::MSFadeAnim -- body derived from 35 instructions at 0x005580d4; semantics not reconstructed.
-// size 73 bytes; signature __stdcall nargs=7
+// MSFadeAnim::MSFadeAnim -- body derived from 23 instructions at 0x005580e0; semantics not reconstructed.
+// size 61 bytes; signature __thiscall nargs=7
 // callees: 0x00557ac0
 //
-//   0x005580d4  nop      
-//   0x005580d5  nop      
-//   0x005580d6  nop      
-//   0x005580d7  nop      
-//   0x005580d8  nop      
-//   0x005580d9  nop      
-//   0x005580da  nop      
-//   0x005580db  nop      
-//   0x005580dc  nop      
-//   0x005580dd  nop      
-//   0x005580de  nop      
-//   0x005580df  nop      
 //   0x005580e0  mov      eax, dword ptr [esp + 0x18]
 //   0x005580e4  mov      edx, dword ptr [esp + 0x10]
 //   0x005580e8  push     esi

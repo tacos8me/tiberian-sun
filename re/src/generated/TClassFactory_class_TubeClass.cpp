@@ -99,14 +99,14 @@ void TClassFactory_class_TubeClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TubeClass::TClassFactory_class_TubeClass -- body derived from 4 instructions at 0x005e9a18; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_TubeClass::TClassFactory_class_TubeClass -- body derived from 4 instructions at 0x005e9a30; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005e9a18  dec      ecx
-//   0x005e9a19  mov      dword ptr [eax + 4], ecx
-//   0x005e9a1c  xor      eax, eax
-//   0x005e9a1e  ret      8
+//   0x005e9a30  mov      eax, ecx
+//   0x005e9a32  mov      dword ptr [eax + 4], 0
+//   0x005e9a39  mov      dword ptr [eax], 0x6a49b8
+//   0x005e9a3f  ret      
 TClassFactory_class_TubeClass::TClassFactory_class_TubeClass()
 {
 }

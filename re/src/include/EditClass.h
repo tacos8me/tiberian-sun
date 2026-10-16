@@ -4,7 +4,7 @@
 //
 // RTTI class   : class EditClass
 // vtable       : 0x0069d9b4  (37 slots)
-// constructor  : 0x0047efcf
+// constructor  : 0x0047f180
 // vtable store : 0x0047f1bf  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -57,11 +57,22 @@ public:
     virtual void vfunc_35(int a0);  // [35] 0x0048cd10  // __thiscall
     virtual void vfunc_36(int a0);  // [36] 0x0048ce50  // __thiscall
 
-    EditClass();  // 0x0047efcf
+    EditClass();  // 0x0047f180
     virtual ~EditClass();
 
-    // ---- data members (offsets from ctor 0x0048cae0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69d9b4
+    // ---- data members (offsets from ctor 0x0047f180) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x69d9b4; 4-byte store: mov dword ptr [esi], 0x69d9b4
+    unsigned char pad_004[0x28];
+    unsigned long m_02c;  // +0x02c /* ? */; 4-byte store: mov dword ptr [esi + 0x2c], eax
+    unsigned long m_030;  // +0x030 /* ? */; 4-byte store: mov dword ptr [esi + 0x30], ecx
+    unsigned long m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [esi + 0x34], edx
+    unsigned long m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [esi + 0x38], eax
+    unsigned long m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [esi + 0x3c], ecx
+    unsigned long m_040;  // +0x040 /* ? */; 4-byte store: mov dword ptr [esi + 0x40], edx
+    unsigned long m_044;  // +0x044 /* ? */; 4-byte store: mov dword ptr [esi + 0x44], eax
+    unsigned long m_048;  // +0x048 /* ? */; 4-byte store: mov dword ptr [esi + 0x48], edx
+    unsigned long m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [esi + 0x4c], edx
 };

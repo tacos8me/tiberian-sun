@@ -38,12 +38,13 @@ public:
     virtual ~ConnManClass();
 
     // ---- data members (offsets from ctor 0x004e7df0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0b34
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a0b34; 4-byte store: mov dword ptr [esi], 0x6a0b34
     unsigned char pad_004[0x1];
-    unsigned long m_005;  // /* ? */
-    unsigned char pad_009[0x33];
-    unsigned long m_03c;  // /* ? */
-    unsigned long m_040;  // /* ? */
+    unsigned char m_005;  // +0x005 /* ? */; 1-byte store: mov byte ptr [esi + 5], bl
+    unsigned char pad_006[0x36];
+    unsigned long m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [esi + 0x3c], ebx
+    unsigned long m_040;  // +0x040 /* ? */; 4-byte store: mov dword ptr [esi + 0x40], ebx
 };

@@ -4,7 +4,7 @@
 //
 // RTTI class   : class ListClass
 // vtable       : 0x006a1654  (50 slots)
-// constructor  : 0x004f6a9e
+// constructor  : 0x004f6ad0
 // vtable store : 0x004f6b99  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -69,21 +69,39 @@ public:
     virtual void vfunc_48(int a0);  // [48] 0x004f7340  // __thiscall
     virtual void vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5);  // [49] 0x004f75f0  // __thiscall
 
-    ListClass();  // 0x004f6a9e
+    ListClass();  // 0x004f6ad0
     virtual ~ListClass();
 
-    // ---- data members (offsets from ctor 0x004f6ea0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a1654
-    unsigned char pad_004[0x10];
-    unsigned long m_014;  // /* ? */
-    unsigned char pad_018[0x1c];
-    unsigned long m_034;  // init 0x6a173c
-    unsigned long m_038;  // /* ? */
-    unsigned long m_03c;  // /* ? */
-    unsigned char pad_040[0x1];
-    unsigned long m_041;  // /* ? */
-    unsigned char pad_045[0xf];
-    unsigned long m_054;  // /* ? */
+    // ---- data members (offsets from ctor 0x004f6ad0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a1654; 4-byte store: mov dword ptr [esi], 0x6a1654
+    unsigned char pad_004[0x28];
+    unsigned long m_02c;  // +0x02c /* ? */; 4-byte store: mov dword ptr [esi + 0x2c], ecx
+    unsigned long m_030;  // +0x030 /* ? */; 4-byte store: mov dword ptr [esi + 0x30], eax
+    unsigned long m_034;  // +0x034 init 0x6a1720; 4-byte store: mov dword ptr [esi + 0x34], 0x6a1720
+    unsigned long m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [esi + 0x38], eax
+    unsigned long m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [esi + 0x3c], eax
+    unsigned char m_040;  // +0x040 init 0x1; 1-byte store: mov byte ptr [esi + 0x40], 1
+    unsigned char m_041;  // +0x041 /* ? */; 1-byte store: mov byte ptr [esi + 0x41], al
+    unsigned char pad_042[0x2];
+    unsigned long m_044;  // +0x044 /* ? */; 4-byte store: mov dword ptr [esi + 0x44], eax
+    unsigned long m_048;  // +0x048 init 0xa; 4-byte store: mov dword ptr [esi + 0x48], 0xa
+    unsigned long m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [esi + 0x4c], ecx
+    unsigned long m_050;  // +0x050 /* ? */; 4-byte store: mov dword ptr [esi + 0x50], eax
+    unsigned char m_054;  // +0x054 zero-initialised; 1-byte store: mov byte ptr [esi + 0x54], 0
+    unsigned char pad_055[0xf];
+    unsigned long m_064;  // +0x064 /* ? */; 4-byte store: mov dword ptr [esi + 0x64], edi
+    unsigned char pad_068[0x48];
+    unsigned long m_0b0;  // +0x0b0 /* ? */; 4-byte store: mov dword ptr [esi + 0xb0], edx
+    unsigned long m_0b4;  // +0x0b4 /* ? */; 4-byte store: mov dword ptr [esi + 0xb4], ebp
+    unsigned char pad_0b8[0x44];
+    unsigned long m_0fc;  // +0x0fc /* ? */; 4-byte store: mov dword ptr [esi + 0xfc], ebp
+    unsigned long m_100;  // +0x100 /* ? */; 4-byte store: mov dword ptr [esi + 0x100], ebp
+    unsigned long m_104;  // +0x104 /* ? */; 4-byte store: mov dword ptr [esi + 0x104], eax
+    unsigned long m_108;  // +0x108 /* ? */; 4-byte store: mov dword ptr [esi + 0x108], ebp
+    unsigned char pad_10c[0x38];
+    unsigned long m_144;  // +0x144 /* ? */; 4-byte store: mov dword ptr [esi + 0x144], eax
+    unsigned long m_148;  // +0x148 /* ? */; 4-byte store: mov dword ptr [esi + 0x148], eax
 };

@@ -35,10 +35,11 @@ public:
 
     virtual ~BrainClass();                   // 0x424dc0 (scalar deleting dtor)
 
-    // ---- data members (offsets from ctor 0x00424925) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69a260
+    // ---- data members (offsets from ctor 0x00424930) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

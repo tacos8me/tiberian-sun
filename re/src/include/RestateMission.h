@@ -26,15 +26,16 @@ public:
     virtual ~RestateMission();
 
     // ---- data members (offsets from ctor 0x005a8210) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a3a7c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a3a7c; 4-byte store: mov dword ptr [esi], 0x6a3a7c
     unsigned char pad_004[0x44];
-    unsigned long m_048;  // /* ? */
+    unsigned long m_048;  // +0x048 /* ? */; 4-byte store: mov dword ptr [esi + 0x48], eax
     unsigned char pad_04c[0x400];
-    unsigned long m_44c;  // /* ? */
+    unsigned long m_44c;  // +0x44c /* ? */; 4-byte store: mov dword ptr [esi + 0x44c], eax
     unsigned char pad_450[0x18];
-    unsigned long m_468;  // /* ? */
-    unsigned long m_46c;  // /* ? */
-    unsigned long m_470;  // /* ? */
+    unsigned long m_468;  // +0x468 /* ? */; 4-byte store: mov dword ptr [esi + 0x468], eax
+    unsigned long m_46c;  // +0x46c /* ? */; 4-byte store: mov dword ptr [esi + 0x46c], eax
+    unsigned long m_470;  // +0x470 /* ? */; 4-byte store: mov dword ptr [esi + 0x470], eax
 };

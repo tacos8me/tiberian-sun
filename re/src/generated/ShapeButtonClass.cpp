@@ -658,21 +658,86 @@ void ShapeButtonClass::vfunc_32(int a0, int a1, int a2)
 }
 
 // ---------------------------------------------------------------------------
-// ShapeButtonClass::ShapeButtonClass -- body derived from 11 instructions at 0x0047efcf; semantics not reconstructed.
-// size 20 bytes; signature __thiscall nargs=1
-// callees: none
+// ShapeButtonClass::ShapeButtonClass -- body derived from 76 instructions at 0x0047f180; semantics not reconstructed.
+// size 219 bytes; signature __thiscall nargs=1
+// callees: 0x00460570, 0x004f6c30
 //
-//   0x0047efcf  nop      
-//   0x0047efd0  push     esi
-//   0x0047efd1  push     edi
-//   0x0047efd2  mov      edi, dword ptr [esp + 0xc]
-//   0x0047efd6  mov      esi, ecx
-//   0x0047efd8  cmp      esi, edi
-//   0x0047efda  jne      0x47efe3
-//   0x0047efdc  mov      eax, esi
-//   0x0047efde  pop      edi
-//   0x0047efdf  pop      esi
-//   0x0047efe0  ret      4
+//   0x0047f180  push     ebx
+//   0x0047f181  push     ebp
+//   0x0047f182  mov      ebp, dword ptr [esp + 0xc]
+//   0x0047f186  push     esi
+//   0x0047f187  push     edi
+//   0x0047f188  mov      esi, ecx
+//   0x0047f18a  push     ebp
+//   0x0047f18b  call     0x460570
+//   0x0047f190  mov      eax, dword ptr [ebp + 0x2c]
+//   0x0047f193  lea      ebx, [ebp + 0x50]
+//   0x0047f196  mov      dword ptr [esi + 0x2c], eax
+//   0x0047f199  mov      ecx, dword ptr [ebp + 0x30]
+//   0x0047f19c  mov      dword ptr [esi + 0x30], ecx
+//   0x0047f19f  mov      edx, dword ptr [ebp + 0x34]
+//   0x0047f1a2  mov      dword ptr [esi + 0x34], edx
+//   0x0047f1a5  mov      eax, dword ptr [ebp + 0x38]
+//   0x0047f1a8  mov      dword ptr [esi + 0x38], eax
+//   0x0047f1ab  mov      ecx, dword ptr [ebp + 0x3c]
+//   0x0047f1ae  mov      dword ptr [esi + 0x3c], ecx
+//   0x0047f1b1  mov      edx, dword ptr [ebp + 0x40]
+//   0x0047f1b4  mov      dword ptr [esi + 0x40], edx
+//   0x0047f1b7  mov      eax, dword ptr [ebp + 0x44]
+//   0x0047f1ba  mov      dword ptr [esi + 0x44], eax
+//   0x0047f1bd  mov      dword ptr [esi], 0x69d9b4
+//   0x0047f1c3  mov      cl, byte ptr [ebp + 0x48]
+//   0x0047f1c6  lea      edi, [esi + 0x50]
+//   0x0047f1c9  mov      byte ptr [esi + 0x48], cl
+//   0x0047f1cc  mov      edx, dword ptr [ebp + 0x4c]
+//   0x0047f1cf  push     ebx
+//   0x0047f1d0  mov      ecx, edi
+//   0x0047f1d2  mov      dword ptr [esi + 0x4c], edx
+//   0x0047f1d5  call     0x460570
+//   0x0047f1da  mov      al, byte ptr [ebx + 0x2c]
+//   0x0047f1dd  add      ebp, 0x9c
+//   0x0047f1e3  mov      byte ptr [edi + 0x2c], al
+//   0x0047f1e6  mov      cl, byte ptr [ebx + 0x2d]
+//   0x0047f1e9  mov      byte ptr [edi + 0x2d], cl
+//   0x0047f1ec  mov      dl, byte ptr [ebx + 0x2e]
+//   0x0047f1ef  mov      byte ptr [edi + 0x2e], dl
+//   0x0047f1f2  mov      dword ptr [edi], 0x69d930
+//   0x0047f1f8  mov      al, byte ptr [ebx + 0x30]
+//   0x0047f1fb  push     ebp
+//   0x0047f1fc  mov      byte ptr [edi + 0x30], al
+//   0x0047f1ff  mov      ecx, dword ptr [ebx + 0x34]
+//   0x0047f202  mov      dword ptr [edi + 0x34], ecx
+//   0x0047f205  mov      edx, dword ptr [ebx + 0x38]
+//   0x0047f208  mov      dword ptr [edi + 0x38], edx
+//   0x0047f20b  mov      al, byte ptr [ebx + 0x3c]
+//   0x0047f20e  mov      byte ptr [edi + 0x3c], al
+//   0x0047f211  mov      ecx, dword ptr [ebx + 0x40]
+//   0x0047f214  mov      dword ptr [edi + 0x40], ecx
+//   0x0047f217  mov      dl, byte ptr [ebx + 0x44]
+//   0x0047f21a  mov      byte ptr [edi + 0x44], dl
+//   0x0047f21d  mov      al, byte ptr [ebx + 0x45]
+//   0x0047f220  mov      byte ptr [edi + 0x45], al
+//   0x0047f223  mov      ecx, dword ptr [ebx + 0x48]
+//   0x0047f226  lea      ebx, [esi + 0x9c]
+//   0x0047f22c  mov      dword ptr [edi + 0x48], ecx
+//   0x0047f22f  mov      ecx, ebx
+//   0x0047f231  mov      dword ptr [edi], 0x69d8a8
+//   0x0047f237  call     0x4f6c30
+//   0x0047f23c  mov      edx, dword ptr [ebx]
+//   0x0047f23e  push     esi
+//   0x0047f23f  mov      ecx, ebx
+//   0x0047f241  mov      dword ptr [esi], 0x69d7f4
+//   0x0047f247  call     dword ptr [edx + 0x7c]
+//   0x0047f24a  mov      eax, dword ptr [edi]
+//   0x0047f24c  push     esi
+//   0x0047f24d  mov      ecx, edi
+//   0x0047f24f  call     dword ptr [eax + 0x7c]
+//   0x0047f252  mov      eax, esi
+//   0x0047f254  pop      edi
+//   0x0047f255  pop      esi
+//   0x0047f256  pop      ebp
+//   0x0047f257  pop      ebx
+//   0x0047f258  ret      4
 ShapeButtonClass::ShapeButtonClass()
 {
 }

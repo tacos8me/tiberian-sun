@@ -181,12 +181,29 @@ void LayerClass::vfunc_8()
 }
 
 // ---------------------------------------------------------------------------
-// LayerClass::LayerClass -- body derived from 2 instructions at 0x00472040; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=1
-// callees: none
+// LayerClass::LayerClass -- body derived from 19 instructions at 0x004722a0; semantics not reconstructed.
+// size 73 bytes; signature __cdecl
+// callees: 0x00682610
 //
-//   0x00472040  mov      al, 1
-//   0x00472042  ret      4
+//   0x004722a0  mov      eax, 0x76a838
+//   0x004722a5  mov      edx, 5
+//   0x004722aa  xor      ecx, ecx
+//   0x004722ac  mov      dword ptr [eax - 4], ecx
+//   0x004722af  mov      dword ptr [eax], ecx
+//   0x004722b1  mov      byte ptr [eax + 4], 1
+//   0x004722b5  mov      byte ptr [eax + 5], cl
+//   0x004722b8  mov      dword ptr [eax - 8], 0x698730
+//   0x004722bf  mov      dword ptr [eax - 8], 0x69ae9c
+//   0x004722c6  mov      dword ptr [eax + 0xc], 0xa
+//   0x004722cd  mov      dword ptr [eax + 8], ecx
+//   0x004722d0  mov      dword ptr [eax - 8], 0x69ba60
+//   0x004722d7  add      eax, 0x18
+//   0x004722da  dec      edx
+//   0x004722db  jne      0x4722ac
+//   0x004722dd  push     0x4722f0
+//   0x004722e2  call     0x682610
+//   0x004722e7  pop      ecx
+//   0x004722e8  ret      
 LayerClass::LayerClass()
 {
 }

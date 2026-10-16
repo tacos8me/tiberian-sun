@@ -99,14 +99,14 @@ void TClassFactory_class_HoverLocomotionClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_HoverLocomotionClass::TClassFactory_class_HoverLocomotionClass -- body derived from 4 instructions at 0x005ece98; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_HoverLocomotionClass::TClassFactory_class_HoverLocomotionClass -- body derived from 4 instructions at 0x005eceb0; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ece98  dec      ecx
-//   0x005ece99  mov      dword ptr [eax + 4], ecx
-//   0x005ece9c  xor      eax, eax
-//   0x005ece9e  ret      8
+//   0x005eceb0  mov      eax, ecx
+//   0x005eceb2  mov      dword ptr [eax + 4], 0
+//   0x005eceb9  mov      dword ptr [eax], 0x6a4d00
+//   0x005ecebf  ret      
 TClassFactory_class_HoverLocomotionClass::TClassFactory_class_HoverLocomotionClass()
 {
 }

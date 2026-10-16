@@ -260,17 +260,22 @@ public:
     virtual ~AircraftClass();
 
     // ---- data members (offsets from ctor 0x00407d60) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x698d50
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x698d50; 4-byte store: mov dword ptr [esi], 0x698d50
     unsigned char pad_004[0x344];
-    unsigned long m_348;  // init 0x698d10
-    unsigned long m_34c;  // /* ? */
-    unsigned long m_350;  // zero-initialised
-    unsigned long m_354;  // zero-initialised
-    unsigned long m_358;  // /* ? */
+    unsigned long m_348;  // +0x348 init 0x698d10; 4-byte store: mov dword ptr [esi + 0x348], 0x698d10
+    unsigned long m_34c;  // +0x34c /* ? */; 4-byte store: mov dword ptr [esi + 0x34c], ecx
+    unsigned char m_350;  // +0x350 zero-initialised; 1-byte store: mov byte ptr [esi + 0x350], 0
+    unsigned char m_351;  // +0x351 zero-initialised; 1-byte store: mov byte ptr [esi + 0x351], 0
+    unsigned char m_352;  // +0x352 zero-initialised; 1-byte store: mov byte ptr [esi + 0x352], 0
+    unsigned char m_353;  // +0x353 zero-initialised; 1-byte store: mov byte ptr [esi + 0x353], 0
+    unsigned char m_354;  // +0x354 zero-initialised; 1-byte store: mov byte ptr [esi + 0x354], 0
+    unsigned char pad_355[0x3];
+    unsigned long m_358;  // +0x358 /* ? */; 4-byte store: mov dword ptr [esi + 0x358], edx
     unsigned char pad_35c[0x4];
-    unsigned long m_360;  // zero-initialised
-    unsigned long m_364;  // /* ? */
-    unsigned long m_368;  // /* ? */
+    unsigned long m_360;  // +0x360 zero-initialised; 4-byte store: mov dword ptr [esi + 0x360], 0
+    unsigned long m_364;  // +0x364 /* ? */; 4-byte store: mov dword ptr [esi + 0x364], eax
+    unsigned char m_368;  // +0x368 /* ? */; 1-byte store: mov byte ptr [esi + 0x368], al
 };

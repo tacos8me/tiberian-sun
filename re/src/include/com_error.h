@@ -24,10 +24,11 @@ public:
     virtual ~com_error();
 
     // ---- data members (offsets from ctor 0x00694050) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a8c10
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // zero-initialised
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a8c10; 4-byte store: mov dword ptr [esi], 0x6a8c10
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], eax
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], eax
+    unsigned long m_00c;  // +0x00c zero-initialised; 4-byte store: and dword ptr [esi + 0xc], 0
 };

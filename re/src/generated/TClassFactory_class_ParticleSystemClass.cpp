@@ -99,14 +99,14 @@ void TClassFactory_class_ParticleSystemClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_ParticleSystemClass::TClassFactory_class_ParticleSystemClass -- body derived from 4 instructions at 0x005ee218; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_ParticleSystemClass::TClassFactory_class_ParticleSystemClass -- body derived from 4 instructions at 0x005ee230; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ee218  dec      ecx
-//   0x005ee219  mov      dword ptr [eax + 4], ecx
-//   0x005ee21c  xor      eax, eax
-//   0x005ee21e  ret      8
+//   0x005ee230  mov      eax, ecx
+//   0x005ee232  mov      dword ptr [eax + 4], 0
+//   0x005ee239  mov      dword ptr [eax], 0x6a4e38
+//   0x005ee23f  ret      
 TClassFactory_class_ParticleSystemClass::TClassFactory_class_ParticleSystemClass()
 {
 }

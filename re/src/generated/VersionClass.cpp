@@ -8,19 +8,12 @@
 #include "VersionClass.h"
 
 // ---------------------------------------------------------------------------
-// VersionClass::VersionClass -- body derived from 9 instructions at 0x004a771b; semantics not reconstructed.
-// size 24 bytes; signature __cdecl
+// VersionClass::VersionClass -- body derived from 2 instructions at 0x004a9150; semantics not reconstructed.
+// size 11 bytes; signature __cdecl
 // callees: none
 //
-//   0x004a771b  nop      
-//   0x004a771c  nop      
-//   0x004a771d  nop      
-//   0x004a771e  nop      
-//   0x004a771f  nop      
-//   0x004a7720  fld      qword ptr [0x69ef00]
-//   0x004a7726  fmul     qword ptr [0x6985f0]
-//   0x004a772c  fstp     qword ptr [0x7b2c18]
-//   0x004a7732  ret      
+//   0x004a9150  mov      dword ptr [0x7b2db0], 0x69f81c
+//   0x004a915a  ret      
 VersionClass::VersionClass()
 {
 }

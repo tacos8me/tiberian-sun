@@ -1059,11 +1059,92 @@ void DropListClass::vfunc_43(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// DropListClass::DropListClass -- body derived from 1 instructions at 0x0047eb9a; semantics not reconstructed.
-// size 1 bytes; signature __cdecl
-// callees: none
+// DropListClass::DropListClass -- body derived from 82 instructions at 0x0047ebc0; semantics not reconstructed.
+// size 204 bytes; signature __thiscall nargs=10
+// callees: 0x00471560, 0x0048c9e0, 0x004f6ad0, 0x005d7a10
 //
-//   0x0047eb9a  int3     
+//   0x0047ebc0  mov      eax, dword ptr [esp + 0x14]
+//   0x0047ebc4  push     ebx
+//   0x0047ebc5  mov      ebx, dword ptr [esp + 0x20]
+//   0x0047ebc9  mov      edx, dword ptr [esp + 0x10]
+//   0x0047ebcd  push     ebp
+//   0x0047ebce  mov      ebp, dword ptr [esp + 0x20]
+//   0x0047ebd2  push     esi
+//   0x0047ebd3  push     edi
+//   0x0047ebd4  push     7
+//   0x0047ebd6  mov      esi, ecx
+//   0x0047ebd8  mov      ecx, dword ptr [esp + 0x24]
+//   0x0047ebdc  push     0x12
+//   0x0047ebde  push     ebx
+//   0x0047ebdf  push     ebp
+//   0x0047ebe0  push     eax
+//   0x0047ebe1  mov      eax, dword ptr [esp + 0x2c]
+//   0x0047ebe5  push     ecx
+//   0x0047ebe6  mov      ecx, dword ptr [esp + 0x2c]
+//   0x0047ebea  push     edx
+//   0x0047ebeb  push     eax
+//   0x0047ebec  push     ecx
+//   0x0047ebed  mov      ecx, esi
+//   0x0047ebef  call     0x48c9e0
+//   0x0047ebf4  mov      eax, dword ptr [esp + 0x24]
+//   0x0047ebf8  mov      edx, dword ptr [esp + 0x30]
+//   0x0047ebfc  push     0
+//   0x0047ebfe  push     0
+//   0x0047ec00  push     0
+//   0x0047ec02  add      eax, ebx
+//   0x0047ec04  mov      ebx, dword ptr [esp + 0x44]
+//   0x0047ec08  push     ebp
+//   0x0047ec09  lea      edi, [esi + 0x50]
+//   0x0047ec0c  push     eax
+//   0x0047ec0d  push     ebx
+//   0x0047ec0e  push     0
+//   0x0047ec10  mov      ecx, edi
+//   0x0047ec12  mov      byte ptr [esi + 0x48], 0
+//   0x0047ec16  mov      dword ptr [esi + 0x4c], edx
+//   0x0047ec19  call     0x5d7a10
+//   0x0047ec1e  mov      ecx, dword ptr [esp + 0x34]
+//   0x0047ec22  mov      edx, dword ptr [esp + 0x20]
+//   0x0047ec26  mov      eax, dword ptr [esp + 0x30]
+//   0x0047ec2a  push     ebx
+//   0x0047ec2b  push     ecx
+//   0x0047ec2c  push     edx
+//   0x0047ec2d  movsx    ecx, word ptr [ebx + 2]
+//   0x0047ec31  movsx    edx, word ptr [ebx + 4]
+//   0x0047ec35  push     eax
+//   0x0047ec36  mov      eax, dword ptr [esp + 0x3c]
+//   0x0047ec3a  add      ecx, eax
+//   0x0047ec3c  mov      eax, dword ptr [esp + 0x38]
+//   0x0047ec40  add      edx, eax
+//   0x0047ec42  mov      eax, dword ptr [esp + 0x34]
+//   0x0047ec46  push     ecx
+//   0x0047ec47  lea      ebp, [esi + 0x9c]
+//   0x0047ec4d  push     edx
+//   0x0047ec4e  push     eax
+//   0x0047ec4f  push     0
+//   0x0047ec51  mov      ecx, ebp
+//   0x0047ec53  call     0x4f6ad0
+//   0x0047ec58  mov      ecx, dword ptr [esp + 0x20]
+//   0x0047ec5c  mov      dword ptr [esi], 0x69d7f4
+//   0x0047ec62  call     0x471560
+//   0x0047ec67  mov      edx, dword ptr [eax]
+//   0x0047ec69  mov      ecx, eax
+//   0x0047ec6b  call     dword ptr [edx + 0x14]
+//   0x0047ec6e  inc      eax
+//   0x0047ec6f  push     esi
+//   0x0047ec70  mov      dword ptr [esi + 0x18], eax
+//   0x0047ec73  mov      eax, dword ptr [ebp]
+//   0x0047ec76  mov      ecx, ebp
+//   0x0047ec78  call     dword ptr [eax + 0x7c]
+//   0x0047ec7b  mov      edx, dword ptr [edi]
+//   0x0047ec7d  push     esi
+//   0x0047ec7e  mov      ecx, edi
+//   0x0047ec80  call     dword ptr [edx + 0x7c]
+//   0x0047ec83  mov      eax, esi
+//   0x0047ec85  pop      edi
+//   0x0047ec86  pop      esi
+//   0x0047ec87  pop      ebp
+//   0x0047ec88  pop      ebx
+//   0x0047ec89  ret      0x28
 DropListClass::DropListClass()
 {
 }

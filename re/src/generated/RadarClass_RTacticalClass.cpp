@@ -596,12 +596,23 @@ void RadarClass_RTacticalClass::vfunc_30(int a0, int a1, int a2, int a3)
 }
 
 // ---------------------------------------------------------------------------
-// RadarClass_RTacticalClass::RadarClass_RTacticalClass -- body derived from 2 instructions at 0x005a043c; semantics not reconstructed.
-// size 5 bytes; signature __stdcall nargs=1
-// callees: none
+// RadarClass_RTacticalClass::RadarClass_RTacticalClass -- body derived from 13 instructions at 0x005a06a0; semantics not reconstructed.
+// size 47 bytes; signature __cdecl
+// callees: 0x004a5960, 0x00682610
 //
-//   0x005a043c  xor      al, al
-//   0x005a043e  ret      4
+//   0x005a06a0  push     1
+//   0x005a06a2  push     0x9f
+//   0x005a06a7  push     0
+//   0x005a06a9  push     0
+//   0x005a06ab  push     0
+//   0x005a06ad  push     0
+//   0x005a06af  mov      ecx, 0x7d7df8
+//   0x005a06b4  call     0x4a5960
+//   0x005a06b9  push     0x5a06d0
+//   0x005a06be  mov      dword ptr [0x7d7df8], 0x6a357c
+//   0x005a06c8  call     0x682610
+//   0x005a06cd  pop      ecx
+//   0x005a06ce  ret      
 RadarClass_RTacticalClass::RadarClass_RTacticalClass()
 {
 }

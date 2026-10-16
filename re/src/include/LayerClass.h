@@ -4,7 +4,7 @@
 //
 // RTTI class   : class LayerClass
 // vtable       : 0x0069ba60  (9 slots)
-// constructor  : 0x00472040
+// constructor  : 0x004722a0
 // vtable store : 0x004722d3  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -29,6 +29,17 @@ public:
     virtual void vfunc_7();  // [7] 0x00402480  // __cdecl
     virtual void vfunc_8();  // [8] 0x00402490  // __cdecl
 
-    LayerClass();  // 0x00472040
+    LayerClass();  // 0x004722a0
     virtual ~LayerClass();
+
+    // ---- data members (offsets from ctor 0x004722a0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 /* ? */; 4-byte store: mov dword ptr [eax], ecx
+    unsigned char m_004;  // +0x004 init 0x1; 1-byte store: mov byte ptr [eax + 4], 1
+    unsigned char m_005;  // +0x005 /* ? */; 1-byte store: mov byte ptr [eax + 5], cl
+    unsigned char pad_006[0x2];
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    unsigned long m_00c;  // +0x00c init 0xa; 4-byte store: mov dword ptr [eax + 0xc], 0xa
 };

@@ -99,14 +99,14 @@ void TClassFactory_class_BuildingClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_BuildingClass::TClassFactory_class_BuildingClass -- body derived from 4 instructions at 0x005ec118; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_BuildingClass::TClassFactory_class_BuildingClass -- body derived from 4 instructions at 0x005ec130; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ec118  dec      ecx
-//   0x005ec119  mov      dword ptr [eax + 4], ecx
-//   0x005ec11c  xor      eax, eax
-//   0x005ec11e  ret      8
+//   0x005ec130  mov      eax, ecx
+//   0x005ec132  mov      dword ptr [eax + 4], 0
+//   0x005ec139  mov      dword ptr [eax], 0x6a4c28
+//   0x005ec13f  ret      
 TClassFactory_class_BuildingClass::TClassFactory_class_BuildingClass()
 {
 }

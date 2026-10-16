@@ -128,9 +128,10 @@ public:
     virtual ~OverlayClass();
 
     // ---- data members (offsets from ctor 0x00575080) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a2b6c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a2b6c; 4-byte store: mov dword ptr [esi], 0x6a2b6c
     unsigned char pad_004[0x48];
-    unsigned long m_04c;  // /* ? */
+    unsigned long m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [esi + 0x4c], eax
 };

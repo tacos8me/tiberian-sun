@@ -1285,14 +1285,35 @@ void CheckListClass::vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5, in
 }
 
 // ---------------------------------------------------------------------------
-// CheckListClass::CheckListClass -- body derived from 4 instructions at 0x0045ab54; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=1
-// callees: none
+// CheckListClass::CheckListClass -- body derived from 25 instructions at 0x0045abd0; semantics not reconstructed.
+// size 69 bytes; signature __thiscall nargs=8
+// callees: 0x004f6ad0
 //
-//   0x0045ab54  xor      eax, eax
-//   0x0045ab56  pop      esi
-//   0x0045ab57  add      esp, 0x10
-//   0x0045ab5a  ret      4
+//   0x0045abd0  mov      eax, dword ptr [esp + 0x20]
+//   0x0045abd4  mov      edx, dword ptr [esp + 0x18]
+//   0x0045abd8  push     esi
+//   0x0045abd9  mov      esi, ecx
+//   0x0045abdb  mov      ecx, dword ptr [esp + 0x20]
+//   0x0045abdf  push     eax
+//   0x0045abe0  mov      eax, dword ptr [esp + 0x1c]
+//   0x0045abe4  push     ecx
+//   0x0045abe5  mov      ecx, dword ptr [esp + 0x1c]
+//   0x0045abe9  push     edx
+//   0x0045abea  mov      edx, dword ptr [esp + 0x1c]
+//   0x0045abee  push     eax
+//   0x0045abef  mov      eax, dword ptr [esp + 0x1c]
+//   0x0045abf3  push     ecx
+//   0x0045abf4  mov      ecx, dword ptr [esp + 0x1c]
+//   0x0045abf8  push     edx
+//   0x0045abf9  push     eax
+//   0x0045abfa  push     ecx
+//   0x0045abfb  mov      ecx, esi
+//   0x0045abfd  call     0x4f6ad0
+//   0x0045ac02  mov      byte ptr [esi + 0x14c], 0
+//   0x0045ac09  mov      dword ptr [esi], 0x69aeb8
+//   0x0045ac0f  mov      eax, esi
+//   0x0045ac11  pop      esi
+//   0x0045ac12  ret      0x20
 CheckListClass::CheckListClass()
 {
 }

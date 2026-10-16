@@ -2034,23 +2034,25 @@ void MouseClass::vfunc_50()
 }
 
 // ---------------------------------------------------------------------------
-// MouseClass::MouseClass -- body derived from 13 instructions at 0x004027e9; semantics not reconstructed.
-// size 30 bytes; signature __cdecl
-// callees: none
+// MouseClass::MouseClass -- body derived from 15 instructions at 0x00402a60; semantics not reconstructed.
+// size 51 bytes; signature __cdecl
+// callees: 0x00402b70, 0x005a0980
 //
-//   0x004027e9  nop      
-//   0x004027ea  nop      
-//   0x004027eb  nop      
-//   0x004027ec  nop      
-//   0x004027ed  nop      
-//   0x004027ee  nop      
-//   0x004027ef  nop      
-//   0x004027f0  xor      eax, eax
-//   0x004027f2  mov      dword ptr [0x710cc8], eax
-//   0x004027f7  mov      dword ptr [0x710ccc], eax
-//   0x004027fc  mov      dword ptr [0x710cd0], eax
-//   0x00402801  mov      dword ptr [0x710cd4], eax
-//   0x00402806  ret      
+//   0x00402a60  push     esi
+//   0x00402a61  push     edi
+//   0x00402a62  mov      dword ptr [0x710d28], 0x698754
+//   0x00402a6c  mov      esi, 0x712a00
+//   0x00402a71  mov      edi, 2
+//   0x00402a76  sub      esi, 0x3d4
+//   0x00402a7c  mov      ecx, esi
+//   0x00402a7e  call     0x402b70
+//   0x00402a83  dec      edi
+//   0x00402a84  jne      0x402a76
+//   0x00402a86  mov      ecx, 0x710d28
+//   0x00402a8b  call     0x5a0980
+//   0x00402a90  pop      edi
+//   0x00402a91  pop      esi
+//   0x00402a92  ret      
 MouseClass::MouseClass()
 {
 }

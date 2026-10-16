@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TextButtonClass
 // vtable       : 0x006a612c  (37 slots)
-// constructor  : 0x00626cd9
+// constructor  : 0x00626d00
 // vtable store : 0x00626d47  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -57,6 +57,21 @@ public:
     virtual void vfunc_35(int a0, int a1);  // [35] 0x00626f30  // __thiscall
     virtual void vfunc_36();  // [36] 0x00627000  // __thiscall
 
-    TextButtonClass();  // 0x00626cd9
+    TextButtonClass();  // 0x00626d00
     virtual ~TextButtonClass();
+
+    // ---- data members (offsets from ctor 0x00626d00) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a612c; 4-byte store: mov dword ptr [esi], 0x6a612c
+    unsigned char pad_004[0x10];
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], eax
+    unsigned char pad_01c[0x14];
+    unsigned char m_030;  // +0x030 /* ? */; 1-byte store: mov byte ptr [esi + 0x30], al
+    unsigned char m_031;  // +0x031 /* ? */; 1-byte store: mov byte ptr [esi + 0x31], cl
+    unsigned char pad_032[0x2];
+    unsigned long m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [esi + 0x34], edx
+    unsigned long m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [esi + 0x38], ecx
 };

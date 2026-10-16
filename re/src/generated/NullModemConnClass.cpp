@@ -356,80 +356,37 @@ void NullModemConnClass::vfunc_9(int a0, int a1, int a2, int a3)
 }
 
 // ---------------------------------------------------------------------------
-// NullModemConnClass::NullModemConnClass -- body derived from 70 instructions at 0x0056a1fd; semantics not reconstructed.
-// size 159 bytes; signature __thiscall nargs=1
-// callees: 0x0068298c, 0x00682997
+// NullModemConnClass::NullModemConnClass -- body derived from 27 instructions at 0x0056a2a0; semantics not reconstructed.
+// size 78 bytes; signature __thiscall nargs=4
+// callees: 0x0045eaa0, 0x00682997
 //
-//   0x0056a1fd  nop      
-//   0x0056a1fe  nop      
-//   0x0056a1ff  nop      
-//   0x0056a200  push     ecx
-//   0x0056a201  push     ebx
-//   0x0056a202  mov      ebx, ecx
-//   0x0056a204  cmp      byte ptr [ebx + 0x14], 1
-//   0x0056a208  je       0x56a299
-//   0x0056a20e  push     ebp
-//   0x0056a20f  push     esi
-//   0x0056a210  mov      esi, dword ptr [ebx + 8]
-//   0x0056a213  mov      ebp, dword ptr [ebx]
-//   0x0056a215  push     edi
-//   0x0056a216  mov      edi, dword ptr [ebx + 0xc]
-//   0x0056a219  lea      eax, [esi + esi]
-//   0x0056a21c  inc      edi
-//   0x0056a21d  mov      dword ptr [ebx + 8], eax
-//   0x0056a220  mov      dword ptr [esp + 0x10], ebp
-//   0x0056a224  shl      eax, 2
-//   0x0056a227  push     eax
-//   0x0056a228  mov      dword ptr [ebx + 0xc], edi
-//   0x0056a22b  call     0x682997
-//   0x0056a230  mov      ecx, dword ptr [ebx + 8]
-//   0x0056a233  mov      edi, eax
-//   0x0056a235  shl      ecx, 2
-//   0x0056a238  mov      edx, ecx
-//   0x0056a23a  xor      eax, eax
-//   0x0056a23c  shr      ecx, 2
-//   0x0056a23f  mov      dword ptr [ebx], edi
-//   0x0056a241  add      esp, 4
-//   0x0056a244  rep stosd dword ptr es:[edi], eax
-//   0x0056a246  mov      ecx, edx
-//   0x0056a248  and      ecx, 3
-//   0x0056a24b  test     esi, esi
-//   0x0056a24d  rep stosb byte ptr es:[edi], al
-//   0x0056a24f  jle      0x56a28d
-//   0x0056a251  mov      edi, ebp
-//   0x0056a253  mov      ebp, esi
-//   0x0056a255  mov      esi, dword ptr [edi]
-//   0x0056a257  test     esi, esi
-//   0x0056a259  je       0x56a283
-//   0x0056a25b  mov      ecx, esi
-//   0x0056a25d  call     dword ptr [ebx + 0x18]
-//   0x0056a260  mov      ecx, dword ptr [ebx + 0xc]
-//   0x0056a263  mov      edx, 1
-//   0x0056a268  shl      edx, cl
-//   0x0056a26a  dec      edx
-//   0x0056a26b  and      edx, eax
-//   0x0056a26d  mov      eax, dword ptr [ebx]
-//   0x0056a26f  mov      ecx, dword ptr [eax + edx*4]
-//   0x0056a272  lea      eax, [eax + edx*4]
-//   0x0056a275  mov      dword ptr [eax], esi
-//   0x0056a277  mov      eax, dword ptr [esi + 8]
-//   0x0056a27a  mov      dword ptr [esi + 8], ecx
-//   0x0056a27d  mov      esi, eax
-//   0x0056a27f  test     eax, eax
-//   0x0056a281  jne      0x56a25b
-//   0x0056a283  add      edi, 4
-//   0x0056a286  dec      ebp
-//   0x0056a287  jne      0x56a255
-//   0x0056a289  mov      ebp, dword ptr [esp + 0x10]
-//   0x0056a28d  push     ebp
-//   0x0056a28e  call     0x68298c
-//   0x0056a293  add      esp, 4
-//   0x0056a296  pop      edi
-//   0x0056a297  pop      esi
-//   0x0056a298  pop      ebp
-//   0x0056a299  pop      ebx
-//   0x0056a29a  pop      ecx
-//   0x0056a29b  ret      
+//   0x0056a2a0  mov      eax, dword ptr [esp + 0x10]
+//   0x0056a2a4  mov      edx, dword ptr [esp + 8]
+//   0x0056a2a8  push     esi
+//   0x0056a2a9  push     0
+//   0x0056a2ab  mov      esi, ecx
+//   0x0056a2ad  push     0x4b0
+//   0x0056a2b2  mov      ecx, dword ptr [esp + 0x18]
+//   0x0056a2b6  push     -1
+//   0x0056a2b8  push     0x3c
+//   0x0056a2ba  push     eax
+//   0x0056a2bb  mov      eax, dword ptr [esp + 0x1c]
+//   0x0056a2bf  push     ecx
+//   0x0056a2c0  push     edx
+//   0x0056a2c1  push     eax
+//   0x0056a2c2  mov      ecx, esi
+//   0x0056a2c4  call     0x45eaa0
+//   0x0056a2c9  mov      ecx, dword ptr [esi + 8]
+//   0x0056a2cc  mov      dword ptr [esi], 0x6a27d4
+//   0x0056a2d2  add      ecx, 0xb
+//   0x0056a2d5  mov      dword ptr [esi + 0x38], 0xffffffff
+//   0x0056a2dc  push     ecx
+//   0x0056a2dd  call     0x682997
+//   0x0056a2e2  add      esp, 4
+//   0x0056a2e5  mov      dword ptr [esi + 0x3c], eax
+//   0x0056a2e8  mov      eax, esi
+//   0x0056a2ea  pop      esi
+//   0x0056a2eb  ret      0x10
 NullModemConnClass::NullModemConnClass()
 {
 }

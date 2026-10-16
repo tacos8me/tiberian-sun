@@ -47,14 +47,15 @@ public:
     virtual ~TEventClass();
 
     // ---- data members (offsets from ctor 0x00625a60) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a60c8
-    unsigned long m_004;  // init 0x6a60ac
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a60c8; 4-byte store: mov dword ptr [esi], 0x6a60c8
+    unsigned long m_004;  // +0x004 init 0x6a60ac; 4-byte store: mov dword ptr [esi + 4], 0x6a60ac
     unsigned char pad_008[0xc];
-    unsigned long m_014;  // init 0xffffffff
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // /* ? */
+    unsigned long m_014;  // +0x014 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x14], 0xffffffff
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], ebx
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ebx
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], ebx
+    unsigned long m_024;  // +0x024 /* ? */; 4-byte store: mov dword ptr [esi + 0x24], ebx
 };

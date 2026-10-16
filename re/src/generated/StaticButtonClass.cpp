@@ -786,18 +786,67 @@ void StaticButtonClass::vfunc_33(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// StaticButtonClass::StaticButtonClass -- body derived from 8 instructions at 0x005eeea3; semantics not reconstructed.
-// size 15 bytes; signature __cdecl
-// callees: none
+// StaticButtonClass::StaticButtonClass -- body derived from 57 instructions at 0x005eeee0; semantics not reconstructed.
+// size 146 bytes; signature __thiscall nargs=7
+// callees: 0x00425020, 0x00471560, 0x004a5960, 0x005ef030
 //
-//   0x005eeea3  xor      edx, edx
-//   0x005eeea5  cmp      eax, ecx
-//   0x005eeea7  setge    dl
-//   0x005eeeaa  dec      edx
-//   0x005eeeab  and      edx, 0xfffffffe
-//   0x005eeeae  inc      edx
-//   0x005eeeaf  mov      eax, edx
-//   0x005eeeb1  ret      
+//   0x005eeee0  mov      eax, dword ptr [esp + 0x14]
+//   0x005eeee4  push     ebx
+//   0x005eeee5  push     ebp
+//   0x005eeee6  mov      ebp, dword ptr [esp + 0x24]
+//   0x005eeeea  push     esi
+//   0x005eeeeb  push     edi
+//   0x005eeeec  mov      edi, dword ptr [esp + 0x28]
+//   0x005eeef0  push     0
+//   0x005eeef2  mov      esi, ecx
+//   0x005eeef4  push     0
+//   0x005eeef6  mov      ecx, dword ptr [esp + 0x28]
+//   0x005eeefa  push     ebp
+//   0x005eeefb  push     edi
+//   0x005eeefc  push     eax
+//   0x005eeefd  push     ecx
+//   0x005eeefe  mov      ecx, esi
+//   0x005eef00  call     0x4a5960
+//   0x005eef05  push     0
+//   0x005eef07  push     0
+//   0x005eef09  lea      ecx, [esi + 0x24]
+//   0x005eef0c  call     0x425020
+//   0x005eef11  mov      eax, dword ptr [esp + 0x18]
+//   0x005eef15  mov      edx, dword ptr [esp + 0x1c]
+//   0x005eef19  push     0
+//   0x005eef1b  push     eax
+//   0x005eef1c  mov      ecx, esi
+//   0x005eef1e  mov      dword ptr [esi + 0x30], 0
+//   0x005eef25  mov      dword ptr [esi + 0x34], edx
+//   0x005eef28  mov      dword ptr [esi], 0x6a4ec8
+//   0x005eef2e  call     0x5ef030
+//   0x005eef33  cmp      edi, -1
+//   0x005eef36  je       0x5eef3d
+//   0x005eef38  cmp      ebp, -1
+//   0x005eef3b  jne      0x5eef69
+//   0x005eef3d  mov      ecx, dword ptr [esi + 0x34]
+//   0x005eef40  call     0x471560
+//   0x005eef45  cmp      edi, -1
+//   0x005eef48  mov      ebx, eax
+//   0x005eef4a  jne      0x5eef5a
+//   0x005eef4c  mov      eax, dword ptr [esi + 0x30]
+//   0x005eef4f  mov      edx, dword ptr [ebx]
+//   0x005eef51  push     eax
+//   0x005eef52  mov      ecx, ebx
+//   0x005eef54  call     dword ptr [edx + 8]
+//   0x005eef57  mov      dword ptr [esi + 0x14], eax
+//   0x005eef5a  cmp      ebp, -1
+//   0x005eef5d  jne      0x5eef69
+//   0x005eef5f  mov      edx, dword ptr [ebx]
+//   0x005eef61  mov      ecx, ebx
+//   0x005eef63  call     dword ptr [edx + 0x14]
+//   0x005eef66  mov      dword ptr [esi + 0x18], eax
+//   0x005eef69  mov      eax, esi
+//   0x005eef6b  pop      edi
+//   0x005eef6c  pop      esi
+//   0x005eef6d  pop      ebp
+//   0x005eef6e  pop      ebx
+//   0x005eef6f  ret      0x1c
 StaticButtonClass::StaticButtonClass()
 {
 }

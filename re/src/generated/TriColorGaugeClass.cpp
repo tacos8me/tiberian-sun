@@ -861,23 +861,61 @@ void TriColorGaugeClass::vfunc_41(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// TriColorGaugeClass::TriColorGaugeClass -- body derived from 13 instructions at 0x004a6f0f; semantics not reconstructed.
-// size 45 bytes; signature __cdecl nargs=5
-// callees: 0x00470d90
+// TriColorGaugeClass::TriColorGaugeClass -- body derived from 51 instructions at 0x004a6f40; semantics not reconstructed.
+// size 147 bytes; signature __thiscall nargs=5
+// callees: 0x00460520
 //
-//   0x004a6f0f  mov      dword ptr [esp + 8], eax
-//   0x004a6f13  mov      eax, dword ptr [esi + 0x14]
-//   0x004a6f16  push     1
-//   0x004a6f18  mov      edx, 1
-//   0x004a6f1d  lea      ecx, [esp + 0xc]
-//   0x004a6f21  mov      dword ptr [esp + 0x10], edi
-//   0x004a6f25  mov      dword ptr [esp + 0x14], eax
-//   0x004a6f29  mov      dword ptr [esp + 0x18], 4
-//   0x004a6f31  call     0x470d90
-//   0x004a6f36  pop      edi
-//   0x004a6f37  pop      esi
-//   0x004a6f38  add      esp, 0x10
-//   0x004a6f3b  ret      
+//   0x004a6f40  mov      eax, dword ptr [esp + 0xc]
+//   0x004a6f44  mov      edx, dword ptr [esp + 4]
+//   0x004a6f48  push     ebx
+//   0x004a6f49  mov      ebx, dword ptr [esp + 0x14]
+//   0x004a6f4d  push     ebp
+//   0x004a6f4e  mov      ebp, dword ptr [esp + 0x1c]
+//   0x004a6f52  push     esi
+//   0x004a6f53  push     1
+//   0x004a6f55  mov      esi, ecx
+//   0x004a6f57  push     7
+//   0x004a6f59  mov      ecx, dword ptr [esp + 0x1c]
+//   0x004a6f5d  push     ebp
+//   0x004a6f5e  push     ebx
+//   0x004a6f5f  push     eax
+//   0x004a6f60  push     ecx
+//   0x004a6f61  push     edx
+//   0x004a6f62  mov      ecx, esi
+//   0x004a6f64  call     0x460520
+//   0x004a6f69  mov      ecx, dword ptr [esi + 0x30]
+//   0x004a6f6c  mov      eax, 0xff
+//   0x004a6f71  cmp      ecx, eax
+//   0x004a6f73  mov      dword ptr [esi], 0x69e804
+//   0x004a6f79  je       0x4a6f86
+//   0x004a6f7b  mov      ecx, esi
+//   0x004a6f7d  mov      dword ptr [esi + 0x30], eax
+//   0x004a6f80  call     dword ptr [0x69e84c]
+//   0x004a6f86  mov      ecx, dword ptr [esi + 0x30]
+//   0x004a6f89  xor      eax, eax
+//   0x004a6f8b  test     ecx, ecx
+//   0x004a6f8d  jge      0x4a6f91
+//   0x004a6f8f  mov      eax, ecx
+//   0x004a6f91  cmp      eax, dword ptr [esi + 0x34]
+//   0x004a6f94  je       0x4a6fa0
+//   0x004a6f96  mov      dword ptr [esi + 0x34], eax
+//   0x004a6f99  mov      eax, dword ptr [esi]
+//   0x004a6f9b  mov      ecx, esi
+//   0x004a6f9d  call     dword ptr [eax + 0x48]
+//   0x004a6fa0  cmp      ebx, ebp
+//   0x004a6fa2  mov      byte ptr [esi + 0x2d], 1
+//   0x004a6fa6  setg     cl
+//   0x004a6fa9  mov      byte ptr [esi + 0x2e], cl
+//   0x004a6fac  mov      byte ptr [esi + 0x2c], 1
+//   0x004a6fb0  mov      dword ptr [esi + 0x38], 0
+//   0x004a6fb7  mov      dword ptr [esi + 0x3c], 0
+//   0x004a6fbe  mov      dword ptr [esi + 0x40], 0
+//   0x004a6fc5  mov      dword ptr [esi], 0x69e8a8
+//   0x004a6fcb  mov      eax, esi
+//   0x004a6fcd  pop      esi
+//   0x004a6fce  pop      ebp
+//   0x004a6fcf  pop      ebx
+//   0x004a6fd0  ret      0x14
 TriColorGaugeClass::TriColorGaugeClass()
 {
 }

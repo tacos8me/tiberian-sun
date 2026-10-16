@@ -100,8 +100,36 @@ public:
     //   "UseTurretShadow", "WalkFrames", "Weeder"
 
     // ---- data members (offsets from ctor 0x0063e470) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    // 15 member(s) already declared above; their offsets are recorded in out/members.json
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a6a90; 4-byte store: mov dword ptr [esi], 0x6a6a90
+    unsigned char pad_004[0x378];
+    unsigned long m_37c;  // +0x37c init 0x20; 4-byte store: mov dword ptr [esi + 0x37c], 0x20
+    unsigned char pad_380[0xf0];
+    unsigned long m_470;  // +0x470 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x470], 0xffffffff
+    unsigned long m_474;  // +0x474 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x474], 0xffffffff
+    unsigned long m_478;  // +0x478 /* ? */; 4-byte store: mov dword ptr [esi + 0x478], ebx
+    unsigned long m_47c;  // +0x47c /* ? */; 4-byte store: mov dword ptr [esi + 0x47c], ebx
+    unsigned long m_480;  // +0x480 /* ? */; 4-byte store: mov dword ptr [esi + 0x480], ebx
+    unsigned char m_484;  // +0x484 /* ? */; 1-byte store: mov byte ptr [esi + 0x484], bl
+    unsigned char CrateGoodie;  // +0x485 (INI key); 1-byte store: mov byte ptr [esi + 0x485], bl
+    unsigned char Harvester;  // +0x486 (INI key); 1-byte store: mov byte ptr [esi + 0x486], bl
+    unsigned char Weeder;  // +0x487 (INI key); 1-byte store: mov byte ptr [esi + 0x487], bl
+    unsigned char m_488;  // +0x488 /* ? */; 1-byte store: mov byte ptr [esi + 0x488], bl
+    unsigned char m_489;  // +0x489 /* ? */; 1-byte store: mov byte ptr [esi + 0x489], bl
+    unsigned char m_48a;  // +0x48a /* ? */; 1-byte store: mov byte ptr [esi + 0x48a], bl
+    unsigned char DeployToFire;  // +0x48b (INI key); 1-byte store: mov byte ptr [esi + 0x48b], bl
+    unsigned char m_48c;  // +0x48c init 0x1; 1-byte store: mov byte ptr [esi + 0x48c], 1
+    unsigned char m_48d;  // +0x48d /* ? */; 1-byte store: mov byte ptr [esi + 0x48d], bl
+    unsigned char m_48e;  // +0x48e /* ? */; 1-byte store: mov byte ptr [esi + 0x48e], bl
+    unsigned char SmallVisceroid;  // +0x48f (INI key); 1-byte store: mov byte ptr [esi + 0x48f], bl
+    unsigned char LargeVisceroid;  // +0x490 (INI key); 1-byte store: mov byte ptr [esi + 0x490], bl
+    unsigned char CarriesCrate;  // +0x491 (INI key); 1-byte store: mov byte ptr [esi + 0x491], bl
+    unsigned char pad_492[0x2];
+    unsigned long m_494;  // +0x494 /* ? */; 4-byte store: mov dword ptr [esi + 0x494], ebx
+    unsigned char WalkFrames;  // +0x498 (INI key); 1-byte store: mov byte ptr [esi + 0x498], 0xc
+    unsigned char FiringFrames;  // +0x499 (INI key); 1-byte store: mov byte ptr [esi + 0x499], bl
+    unsigned char m_49a;  // +0x49a /* ? */; 1-byte store: mov byte ptr [esi + 0x49a], bl
 
 };

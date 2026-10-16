@@ -99,14 +99,14 @@ void TClassFactory_class_Tactical::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_Tactical::TClassFactory_class_Tactical -- body derived from 4 instructions at 0x005e9118; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_Tactical::TClassFactory_class_Tactical -- body derived from 4 instructions at 0x005e9130; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005e9118  dec      ecx
-//   0x005e9119  mov      dword ptr [eax + 4], ecx
-//   0x005e911c  xor      eax, eax
-//   0x005e911e  ret      8
+//   0x005e9130  mov      eax, ecx
+//   0x005e9132  mov      dword ptr [eax + 4], 0
+//   0x005e9139  mov      dword ptr [eax], 0x6a4928
+//   0x005e913f  ret      
 TClassFactory_class_Tactical::TClassFactory_class_Tactical()
 {
 }

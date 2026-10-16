@@ -669,26 +669,243 @@ void Dial8Class::vfunc_31(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// Dial8Class::Dial8Class -- body derived from 16 instructions at 0x00470736; semantics not reconstructed.
-// size 33 bytes; signature __cdecl
-// callees: none
+// Dial8Class::Dial8Class -- body derived from 233 instructions at 0x00470760; semantics not reconstructed.
+// size 688 bytes; signature __thiscall nargs=6
+// callees: 0x00460520
 //
-//   0x00470736  nop      
-//   0x00470737  nop      
-//   0x00470738  nop      
-//   0x00470739  nop      
-//   0x0047073a  nop      
-//   0x0047073b  nop      
-//   0x0047073c  nop      
-//   0x0047073d  nop      
-//   0x0047073e  nop      
-//   0x0047073f  nop      
-//   0x00470740  xor      eax, eax
-//   0x00470742  mov      dword ptr [0x76a7e8], eax
-//   0x00470747  mov      dword ptr [0x76a7ec], eax
-//   0x0047074c  mov      dword ptr [0x76a7f0], eax
-//   0x00470751  mov      dword ptr [0x76a7f4], eax
-//   0x00470756  ret      
+//   0x00470760  mov      eax, dword ptr [esp + 0xc]
+//   0x00470764  push     ebx
+//   0x00470765  mov      ebx, dword ptr [esp + 0x18]
+//   0x00470769  mov      edx, dword ptr [esp + 8]
+//   0x0047076d  push     ebp
+//   0x0047076e  mov      ebp, dword ptr [esp + 0x18]
+//   0x00470772  push     esi
+//   0x00470773  push     edi
+//   0x00470774  push     1
+//   0x00470776  mov      esi, ecx
+//   0x00470778  mov      ecx, dword ptr [esp + 0x1c]
+//   0x0047077c  push     7
+//   0x0047077e  push     ebx
+//   0x0047077f  push     ebp
+//   0x00470780  push     eax
+//   0x00470781  push     ecx
+//   0x00470782  push     edx
+//   0x00470783  mov      ecx, esi
+//   0x00470785  call     0x460520
+//   0x0047078a  mov      dword ptr [esi], 0x69b99c
+//   0x00470790  mov      eax, dword ptr [esi + 0x14]
+//   0x00470793  cdq      
+//   0x00470794  sub      eax, edx
+//   0x00470796  mov      edx, dword ptr [esi + 0xc]
+//   0x00470799  sar      eax, 1
+//   0x0047079b  add      eax, edx
+//   0x0047079d  xor      ecx, ecx
+//   0x0047079f  mov      dword ptr [esi + 0x2c], eax
+//   0x004707a2  mov      eax, dword ptr [esi + 0x18]
+//   0x004707a5  cdq      
+//   0x004707a6  sub      eax, edx
+//   0x004707a8  mov      edx, dword ptr [esi + 0x10]
+//   0x004707ab  sar      eax, 1
+//   0x004707ad  add      eax, edx
+//   0x004707af  mov      dword ptr [esi + 0x30], eax
+//   0x004707b2  mov      eax, dword ptr [esp + 0x28]
+//   0x004707b6  mov      ch, al
+//   0x004707b8  mov      dword ptr [esi + 0xb4], eax
+//   0x004707be  mov      word ptr [esp + 0x24], cx
+//   0x004707c3  mov      eax, dword ptr [esp + 0x24]
+//   0x004707c7  shr      eax, 0xc
+//   0x004707ca  inc      eax
+//   0x004707cb  shr      eax, 1
+//   0x004707cd  and      eax, 7
+//   0x004707d0  mov      dword ptr [esi + 0xb8], eax
+//   0x004707d6  mov      dword ptr [esi + 0xbc], eax
+//   0x004707dc  mov      edx, dword ptr [esi + 0x2c]
+//   0x004707df  lea      eax, [ebx*8]
+//   0x004707e6  mov      dword ptr [esi + 0x34], edx
+//   0x004707e9  mov      edi, dword ptr [esi + 0x30]
+//   0x004707ec  cdq      
+//   0x004707ed  sub      eax, edx
+//   0x004707ef  mov      ecx, eax
+//   0x004707f1  mov      eax, 0x66666667
+//   0x004707f6  sar      ecx, 1
+//   0x004707f8  imul     ecx
+//   0x004707fa  sar      edx, 2
+//   0x004707fd  mov      eax, edx
+//   0x004707ff  mov      ecx, edi
+//   0x00470801  shr      eax, 0x1f
+//   0x00470804  add      edx, eax
+//   0x00470806  lea      eax, [ebp*8]
+//   0x0047080d  sub      eax, ebp
+//   0x0047080f  mov      dword ptr [esp + 0x1c], edx
+//   0x00470813  shl      eax, 3
+//   0x00470816  sub      ecx, edx
+//   0x00470818  cdq      
+//   0x00470819  sub      eax, edx
+//   0x0047081b  mov      dword ptr [esi + 0x38], ecx
+//   0x0047081e  mov      ecx, eax
+//   0x00470820  mov      eax, 0x51eb851f
+//   0x00470825  sar      ecx, 1
+//   0x00470827  imul     ecx
+//   0x00470829  mov      ecx, dword ptr [esi + 0x2c]
+//   0x0047082c  sar      edx, 5
+//   0x0047082f  mov      eax, edx
+//   0x00470831  shr      eax, 0x1f
+//   0x00470834  add      edx, eax
+//   0x00470836  mov      dword ptr [esp + 0x24], edx
+//   0x0047083a  lea      eax, [edx + ecx]
+//   0x0047083d  mov      dword ptr [esi + 0x3c], eax
+//   0x00470840  lea      eax, [ebx*8]
+//   0x00470847  mov      dword ptr [esi + 0x48], edi
+//   0x0047084a  sub      eax, ebx
+//   0x0047084c  mov      dword ptr [esi + 0x54], ecx
+//   0x0047084f  shl      eax, 3
+//   0x00470852  cdq      
+//   0x00470853  sub      eax, edx
+//   0x00470855  mov      dword ptr [esi + 0x68], edi
+//   0x00470858  mov      edx, eax
+//   0x0047085a  mov      eax, 0x51eb851f
+//   0x0047085f  sar      edx, 1
+//   0x00470861  imul     edx
+//   0x00470863  sar      edx, 5
+//   0x00470866  mov      eax, edx
+//   0x00470868  mov      dword ptr [esi + 0x74], ecx
+//   0x0047086b  shr      eax, 0x1f
+//   0x0047086e  add      edx, eax
+//   0x00470870  mov      eax, edi
+//   0x00470872  sub      eax, edx
+//   0x00470874  mov      dword ptr [esp + 0x20], edx
+//   0x00470878  mov      dword ptr [esp + 0x14], eax
+//   0x0047087c  mov      dword ptr [esi + 0x40], eax
+//   0x0047087f  lea      eax, [ebp*8]
+//   0x00470886  cdq      
+//   0x00470887  sub      eax, edx
+//   0x00470889  mov      edx, eax
+//   0x0047088b  mov      eax, 0x66666667
+//   0x00470890  sar      edx, 1
+//   0x00470892  imul     edx
+//   0x00470894  sar      edx, 2
+//   0x00470897  mov      eax, edx
+//   0x00470899  shr      eax, 0x1f
+//   0x0047089c  add      edx, eax
+//   0x0047089e  mov      dword ptr [esp + 0x18], edx
+//   0x004708a2  add      edx, ecx
+//   0x004708a4  mov      dword ptr [esi + 0x44], edx
+//   0x004708a7  mov      edx, dword ptr [esp + 0x24]
+//   0x004708ab  lea      eax, [edx + ecx]
+//   0x004708ae  mov      edx, dword ptr [esp + 0x1c]
+//   0x004708b2  mov      dword ptr [esi + 0x4c], eax
+//   0x004708b5  mov      eax, dword ptr [esp + 0x20]
+//   0x004708b9  add      eax, edi
+//   0x004708bb  mov      dword ptr [esp + 0x20], eax
+//   0x004708bf  mov      dword ptr [esi + 0x50], eax
+//   0x004708c2  lea      eax, [edi + edx]
+//   0x004708c5  mov      edx, dword ptr [esp + 0x24]
+//   0x004708c9  mov      dword ptr [esi + 0x58], eax
+//   0x004708cc  mov      eax, ecx
+//   0x004708ce  sub      eax, edx
+//   0x004708d0  mov      edx, dword ptr [esp + 0x20]
+//   0x004708d4  mov      dword ptr [esp + 0x24], eax
+//   0x004708d8  mov      dword ptr [esi + 0x5c], eax
+//   0x004708db  mov      dword ptr [esi + 0x60], edx
+//   0x004708de  mov      edx, dword ptr [esp + 0x18]
+//   0x004708e2  mov      eax, ecx
+//   0x004708e4  sub      eax, edx
+//   0x004708e6  mov      edx, dword ptr [esp + 0x24]
+//   0x004708ea  mov      dword ptr [esi + 0x64], eax
+//   0x004708ed  mov      eax, dword ptr [esp + 0x14]
+//   0x004708f1  mov      dword ptr [esi + 0x70], eax
+//   0x004708f4  lea      eax, [ebx + ebx*2]
+//   0x004708f7  shl      eax, 1
+//   0x004708f9  mov      dword ptr [esi + 0x6c], edx
+//   0x004708fc  cdq      
+//   0x004708fd  sub      eax, edx
+//   0x004708ff  mov      edx, eax
+//   0x00470901  mov      eax, 0x66666667
+//   0x00470906  sar      edx, 1
+//   0x00470908  imul     edx
+//   0x0047090a  sar      edx, 2
+//   0x0047090d  mov      eax, edx
+//   0x0047090f  shr      eax, 0x1f
+//   0x00470912  add      edx, eax
+//   0x00470914  mov      eax, edi
+//   0x00470916  sub      eax, edx
+//   0x00470918  mov      dword ptr [esp + 0x1c], edx
+//   0x0047091c  mov      dword ptr [esi + 0x78], eax
+//   0x0047091f  lea      eax, [ebp*8]
+//   0x00470926  sub      eax, ebp
+//   0x00470928  lea      eax, [eax + eax*2]
+//   0x0047092b  shl      eax, 1
+//   0x0047092d  cdq      
+//   0x0047092e  sub      eax, edx
+//   0x00470930  mov      dword ptr [esi + 0x94], ecx
+//   0x00470936  mov      edx, eax
+//   0x00470938  mov      eax, 0x51eb851f
+//   0x0047093d  sar      edx, 1
+//   0x0047093f  imul     edx
+//   0x00470941  sar      edx, 5
+//   0x00470944  mov      eax, edx
+//   0x00470946  mov      dword ptr [esi + 0x88], edi
+//   0x0047094c  shr      eax, 0x1f
+//   0x0047094f  add      edx, eax
+//   0x00470951  mov      dword ptr [esi + 0xa8], edi
+//   0x00470957  mov      dword ptr [esp + 0x24], edx
+//   0x0047095b  lea      eax, [edx + ecx]
+//   0x0047095e  mov      dword ptr [esi + 0x7c], eax
+//   0x00470961  lea      eax, [ebx*8]
+//   0x00470968  sub      eax, ebx
+//   0x0047096a  mov      ebx, edi
+//   0x0047096c  lea      eax, [eax + eax*2]
+//   0x0047096f  shl      eax, 1
+//   0x00470971  cdq      
+//   0x00470972  sub      eax, edx
+//   0x00470974  mov      edx, eax
+//   0x00470976  mov      eax, 0x51eb851f
+//   0x0047097b  sar      edx, 1
+//   0x0047097d  imul     edx
+//   0x0047097f  sar      edx, 5
+//   0x00470982  mov      eax, edx
+//   0x00470984  shr      eax, 0x1f
+//   0x00470987  add      edx, eax
+//   0x00470989  lea      eax, [ebp + ebp*2]
+//   0x0047098d  shl      eax, 1
+//   0x0047098f  mov      dword ptr [esp + 0x20], edx
+//   0x00470993  sub      ebx, edx
+//   0x00470995  cdq      
+//   0x00470996  sub      eax, edx
+//   0x00470998  mov      dword ptr [esi + 0x80], ebx
+//   0x0047099e  mov      edx, eax
+//   0x004709a0  mov      eax, 0x66666667
+//   0x004709a5  sar      edx, 1
+//   0x004709a7  imul     edx
+//   0x004709a9  sar      edx, 2
+//   0x004709ac  mov      eax, edx
+//   0x004709ae  mov      dword ptr [esi + 0xb0], ebx
+//   0x004709b4  shr      eax, 0x1f
+//   0x004709b7  add      edx, eax
+//   0x004709b9  lea      eax, [edx + ecx]
+//   0x004709bc  mov      dword ptr [esi + 0x84], eax
+//   0x004709c2  mov      eax, dword ptr [esp + 0x24]
+//   0x004709c6  add      eax, ecx
+//   0x004709c8  mov      dword ptr [esi + 0x8c], eax
+//   0x004709ce  mov      eax, dword ptr [esp + 0x20]
+//   0x004709d2  lea      ebp, [eax + edi]
+//   0x004709d5  mov      eax, dword ptr [esp + 0x1c]
+//   0x004709d9  add      eax, edi
+//   0x004709db  mov      dword ptr [esi + 0x90], ebp
+//   0x004709e1  mov      dword ptr [esi + 0x98], eax
+//   0x004709e7  mov      eax, ecx
+//   0x004709e9  sub      eax, dword ptr [esp + 0x24]
+//   0x004709ed  sub      ecx, edx
+//   0x004709ef  mov      dword ptr [esi + 0xa0], ebp
+//   0x004709f5  mov      dword ptr [esi + 0xa4], ecx
+//   0x004709fb  mov      dword ptr [esi + 0x9c], eax
+//   0x00470a01  mov      dword ptr [esi + 0xac], eax
+//   0x00470a07  mov      eax, esi
+//   0x00470a09  pop      edi
+//   0x00470a0a  pop      esi
+//   0x00470a0b  pop      ebp
+//   0x00470a0c  pop      ebx
+//   0x00470a0d  ret      0x18
 Dial8Class::Dial8Class()
 {
 }

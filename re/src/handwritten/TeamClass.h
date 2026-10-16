@@ -67,35 +67,22 @@ public:
     virtual void Slot23();                   // 0x6075e0 (dtor)
 
     // ---- data members (offsets from ctor 0x00606fb0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a55e8
-    unsigned long m_004;  // init 0x6a55cc
-    unsigned char pad_008[0xc];
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // /* ? */
-    unsigned long m_028;  // /* ? */
-    unsigned long m_02c;  // /* ? */
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // /* ? */
-    unsigned long m_038;  // /* ? */
-    unsigned long m_03c;  // /* ? */
-    unsigned long m_040;  // /* ? */
-    unsigned long m_044;  // /* ? */
-    unsigned long m_048;  // /* ? */
-    unsigned char pad_04c[0x4];
-    unsigned long m_050;  // /* ? */
-    unsigned long m_054;  // /* ? */
-    unsigned char pad_058[0x4];
-    unsigned long m_05c;  // /* ? */
-    unsigned long m_060;  // /* ? */
-    unsigned long m_064;  // /* ? */
-    unsigned long m_068;  // /* ? */
-    unsigned long m_06c;  // /* ? */
-    unsigned long m_070;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned char m_065;  // +0x065 /* ? */; 1-byte store: mov byte ptr [esi + 0x65], bl
+    unsigned char m_066;  // +0x066 /* ? */; 1-byte store: mov byte ptr [esi + 0x66], bl
+    unsigned char m_067;  // +0x067 /* ? */; 1-byte store: mov byte ptr [esi + 0x67], bl
+    unsigned char m_069;  // +0x069 /* ? */; 1-byte store: mov byte ptr [esi + 0x69], bl
+    unsigned char m_06a;  // +0x06a /* ? */; 1-byte store: mov byte ptr [esi + 0x6a], al
+    unsigned char m_06b;  // +0x06b /* ? */; 1-byte store: mov byte ptr [esi + 0x6b], bl
+    unsigned char m_06d;  // +0x06d /* ? */; 1-byte store: mov byte ptr [esi + 0x6d], al
+    unsigned char m_06e;  // +0x06e /* ? */; 1-byte store: mov byte ptr [esi + 0x6e], bl
+    unsigned char m_06f;  // +0x06f /* ? */; 1-byte store: mov byte ptr [esi + 0x6f], bl
+    unsigned char m_071;  // +0x071 /* ? */; 1-byte store: mov byte ptr [esi + 0x71], bl
+    unsigned char m_072;  // +0x072 /* ? */; 1-byte store: mov byte ptr [esi + 0x72], bl
+    unsigned char m_073;  // +0x073 /* ? */; 1-byte store: mov byte ptr [esi + 0x73], bl
+    // 27 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

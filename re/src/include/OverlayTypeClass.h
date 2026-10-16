@@ -64,21 +64,35 @@ public:
     virtual ~OverlayTypeClass();
 
     // ---- data members (offsets from ctor 0x00576bf0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a2d58
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a2d58; 4-byte store: mov dword ptr [esi], 0x6a2d58
     unsigned char pad_004[0xc4];
-    unsigned long m_0c8;  // init 0x1
+    unsigned char m_0c8;  // +0x0c8 init 0x1; 1-byte store: mov byte ptr [esi + 0xc8], 1
+    unsigned char m_0c9;  // +0x0c9 /* ? */; 1-byte store: mov byte ptr [esi + 0xc9], bl
+    unsigned char pad_0ca[0x1];
+    unsigned char m_0cb;  // +0x0cb init 0x1; 1-byte store: mov byte ptr [esi + 0xcb], 1
     unsigned char pad_0cc[0x2];
-    unsigned long m_0ce;  // /* ? */
-    unsigned char pad_0d2[0x52];
-    unsigned long m_124;  // init 0xffffffff
-    unsigned long m_128;  // /* ? */
-    unsigned long m_12c;  // /* ? */
-    unsigned long m_130;  // /* ? */
-    unsigned long m_134;  // /* ? */
-    unsigned long Wall;  // +0x138 (INI key)
-    unsigned long CrateTrigger;  // +0x13c (INI key)
-    unsigned long m_140;  // /* ? */
-    unsigned long m_144;  // /* ? */
+    unsigned char m_0ce;  // +0x0ce /* ? */; 1-byte store: mov byte ptr [esi + 0xce], bl
+    unsigned char pad_0cf[0x55];
+    unsigned long m_124;  // +0x124 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x124], 0xffffffff
+    unsigned long m_128;  // +0x128 /* ? */; 4-byte store: mov dword ptr [esi + 0x128], ebx
+    unsigned long m_12c;  // +0x12c /* ? */; 4-byte store: mov dword ptr [esi + 0x12c], ebx
+    unsigned long m_130;  // +0x130 /* ? */; 4-byte store: mov dword ptr [esi + 0x130], eax
+    unsigned long m_134;  // +0x134 /* ? */; 4-byte store: mov dword ptr [esi + 0x134], eax
+    unsigned char Wall;  // +0x138 (INI key); 1-byte store: mov byte ptr [esi + 0x138], bl
+    unsigned char High;  // +0x139 (INI key); 1-byte store: mov byte ptr [esi + 0x139], bl
+    unsigned char m_13a;  // +0x13a /* ? */; 1-byte store: mov byte ptr [esi + 0x13a], bl
+    unsigned char Crate;  // +0x13b (INI key); 1-byte store: mov byte ptr [esi + 0x13b], bl
+    unsigned char CrateTrigger;  // +0x13c (INI key); 1-byte store: mov byte ptr [esi + 0x13c], bl
+    unsigned char m_13d;  // +0x13d /* ? */; 1-byte store: mov byte ptr [esi + 0x13d], al
+    unsigned char m_13e;  // +0x13e /* ? */; 1-byte store: mov byte ptr [esi + 0x13e], bl
+    unsigned char m_13f;  // +0x13f /* ? */; 1-byte store: mov byte ptr [esi + 0x13f], bl
+    unsigned char m_140;  // +0x140 /* ? */; 1-byte store: mov byte ptr [esi + 0x140], bl
+    unsigned char m_141;  // +0x141 /* ? */; 1-byte store: mov byte ptr [esi + 0x141], bl
+    unsigned char m_142;  // +0x142 /* ? */; 1-byte store: mov byte ptr [esi + 0x142], bl
+    unsigned char Overrides;  // +0x143 (INI key); 1-byte store: mov byte ptr [esi + 0x143], bl
+    unsigned char m_144;  // +0x144 /* ? */; 1-byte store: mov byte ptr [esi + 0x144], al
+    unsigned char m_145;  // +0x145 /* ? */; 1-byte store: mov byte ptr [esi + 0x145], bl
 };

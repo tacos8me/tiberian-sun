@@ -446,28 +446,60 @@ void IPXGlobalConnClass::vfunc_12(int a0, int a1, int a2, int a3)
 }
 
 // ---------------------------------------------------------------------------
-// IPXGlobalConnClass::IPXGlobalConnClass -- body derived from 18 instructions at 0x004e7204; semantics not reconstructed.
-// size 35 bytes; signature __cdecl
-// callees: none
+// IPXGlobalConnClass::IPXGlobalConnClass -- body derived from 50 instructions at 0x004e7460; semantics not reconstructed.
+// size 148 bytes; signature __thiscall nargs=4
+// callees: 0x004e6a40, 0x004e6e50, 0x004e74f6, 0x00682997
 //
-//   0x004e7204  nop      
-//   0x004e7205  nop      
-//   0x004e7206  nop      
-//   0x004e7207  nop      
-//   0x004e7208  nop      
-//   0x004e7209  nop      
-//   0x004e720a  nop      
-//   0x004e720b  nop      
-//   0x004e720c  nop      
-//   0x004e720d  nop      
-//   0x004e720e  nop      
-//   0x004e720f  nop      
-//   0x004e7210  xor      eax, eax
-//   0x004e7212  mov      dword ptr [0x7c3d10], eax
-//   0x004e7217  mov      dword ptr [0x7c3d14], eax
-//   0x004e721c  mov      dword ptr [0x7c3d18], eax
-//   0x004e7221  mov      dword ptr [0x7c3d1c], eax
-//   0x004e7226  ret      
+//   0x004e7460  mov      eax, dword ptr [esp + 0xc]
+//   0x004e7464  push     ebx
+//   0x004e7465  push     ebp
+//   0x004e7466  push     esi
+//   0x004e7467  push     edi
+//   0x004e7468  mov      edi, dword ptr [esp + 0x18]
+//   0x004e746c  push     0xa
+//   0x004e746e  xor      ebp, ebp
+//   0x004e7470  push     0x715524
+//   0x004e7475  push     ebp
+//   0x004e7476  mov      esi, ecx
+//   0x004e7478  push     ebp
+//   0x004e7479  mov      ecx, dword ptr [esp + 0x24]
+//   0x004e747d  add      eax, 2
+//   0x004e7480  push     0x1235
+//   0x004e7485  push     eax
+//   0x004e7486  push     edi
+//   0x004e7487  push     ecx
+//   0x004e7488  mov      ecx, esi
+//   0x004e748a  call     0x4e6e50
+//   0x004e748f  mov      dx, word ptr [esp + 0x20]
+//   0x004e7494  lea      eax, [edi*4]
+//   0x004e749b  push     eax
+//   0x004e749c  mov      dword ptr [esi], 0x6a0af4
+//   0x004e74a2  mov      word ptr [esi + 0x78], dx
+//   0x004e74a6  mov      dword ptr [esi + 0x84], ebp
+//   0x004e74ac  mov      dword ptr [esi + 0x90], edi
+//   0x004e74b2  call     0x682997
+//   0x004e74b7  mov      edi, dword ptr [esi + 0x90]
+//   0x004e74bd  mov      dword ptr [esi + 0x8c], eax
+//   0x004e74c3  lea      ecx, [edi + edi*4]
+//   0x004e74c6  shl      ecx, 1
+//   0x004e74c8  push     ecx
+//   0x004e74c9  call     0x682997
+//   0x004e74ce  mov      ebx, eax
+//   0x004e74d0  add      esp, 8
+//   0x004e74d3  cmp      ebx, ebp
+//   0x004e74d5  je       0x4e74f4
+//   0x004e74d7  lea      eax, [edi - 1]
+//   0x004e74da  mov      ebp, ebx
+//   0x004e74dc  test     eax, eax
+//   0x004e74de  jl       0x4e74f0
+//   0x004e74e0  lea      edi, [eax + 1]
+//   0x004e74e3  mov      ecx, ebp
+//   0x004e74e5  call     0x4e6a40
+//   0x004e74ea  add      ebp, 0xa
+//   0x004e74ed  dec      edi
+//   0x004e74ee  jne      0x4e74e3
+//   0x004e74f0  xor      ebp, ebp
+//   0x004e74f2  jmp      0x4e74f6
 IPXGlobalConnClass::IPXGlobalConnClass()
 {
 }

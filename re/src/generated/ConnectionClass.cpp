@@ -372,12 +372,10 @@ void ConnectionClass::vfunc_9()
 }
 
 // ---------------------------------------------------------------------------
-// ConnectionClass::ConnectionClass -- body derived from 38 instructions at 0x0045ea9e; semantics not reconstructed.
-// size 109 bytes; signature __thiscall nargs=8
+// ConnectionClass::ConnectionClass -- body derived from 36 instructions at 0x0045eaa0; semantics not reconstructed.
+// size 107 bytes; signature __thiscall nargs=8
 // callees: 0x0045d980, 0x00682997
 //
-//   0x0045ea9e  nop      
-//   0x0045ea9f  nop      
 //   0x0045eaa0  mov      eax, dword ptr [esp + 0xc]
 //   0x0045eaa4  mov      edx, dword ptr [esp + 0x14]
 //   0x0045eaa8  push     esi

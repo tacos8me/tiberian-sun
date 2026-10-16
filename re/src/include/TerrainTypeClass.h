@@ -63,25 +63,35 @@ public:
     virtual ~TerrainTypeClass();
 
     // ---- data members (offsets from ctor 0x00624f20) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a5fc8
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a5fc8; 4-byte store: mov dword ptr [esi], 0x6a5fc8
     unsigned char pad_004[0x60];
-    unsigned long m_064;  // init 0x1
-    unsigned long m_068;  // init 0xffffffff
+    unsigned long m_064;  // +0x064 init 0x1; 4-byte store: mov dword ptr [esi + 0x64], 1
+    unsigned long m_068;  // +0x068 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x68], 0xffffffff
     unsigned char pad_06c[0x5c];
-    unsigned long m_0c8;  // init 0x1
+    unsigned char m_0c8;  // +0x0c8 init 0x1; 1-byte store: mov byte ptr [esi + 0xc8], 1
+    unsigned char m_0c9;  // +0x0c9 /* ? */; 1-byte store: mov byte ptr [esi + 0xc9], bl
+    unsigned char m_0ca;  // +0x0ca /* ? */; 1-byte store: mov byte ptr [esi + 0xca], bl
+    unsigned char m_0cb;  // +0x0cb init 0x1; 1-byte store: mov byte ptr [esi + 0xcb], 1
     unsigned char pad_0cc[0x1];
-    unsigned long m_0cd;  // init 0x1
-    unsigned char pad_0d1[0x53];
-    unsigned long m_124;  // init 0xffffffff
-    unsigned long m_128;  // /* ? */
-    unsigned long m_12c;  // /* ? */
-    unsigned long m_130;  // /* ? */
-    unsigned long m_134;  // /* ? */
-    unsigned long m_138;  // /* ? */
-    unsigned long m_13c;  // /* ? */
-    unsigned long WaterBound;  // +0x140 (INI key)
-    unsigned long IsVeinhole;  // +0x144 (INI key)
-    unsigned long m_148;  // /* ? */
+    unsigned char m_0cd;  // +0x0cd init 0x1; 1-byte store: mov byte ptr [esi + 0xcd], 1
+    unsigned char pad_0ce[0x56];
+    unsigned long m_124;  // +0x124 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x124], 0xffffffff
+    unsigned long m_128;  // +0x128 /* ? */; 4-byte store: mov dword ptr [esi + 0x128], ebx
+    unsigned short m_12c;  // +0x12c /* ? */; 2-byte store: mov word ptr [esi + 0x12c], cx
+    unsigned char m_12e;  // +0x12e /* ? */; 1-byte store: mov byte ptr [esi + 0x12e], bl
+    unsigned char pad_12f[0x1];
+    unsigned long m_130;  // +0x130 /* ? */; 4-byte store: mov dword ptr [esi + 0x130], ebx
+    unsigned long m_134;  // +0x134 /* ? */; 4-byte store: mov dword ptr [esi + 0x134], ebx
+    unsigned long m_138;  // +0x138 /* ? */; 4-byte store: mov dword ptr [esi + 0x138], eax
+    unsigned long m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [esi + 0x13c], eax
+    unsigned char WaterBound;  // +0x140 (INI key); 1-byte store: mov byte ptr [esi + 0x140], bl
+    unsigned char m_141;  // +0x141 /* ? */; 1-byte store: mov byte ptr [esi + 0x141], bl
+    unsigned char IsFlammable;  // +0x142 (INI key); 1-byte store: mov byte ptr [esi + 0x142], bl
+    unsigned char m_143;  // +0x143 /* ? */; 1-byte store: mov byte ptr [esi + 0x143], bl
+    unsigned char IsVeinhole;  // +0x144 (INI key); 1-byte store: mov byte ptr [esi + 0x144], bl
+    unsigned char pad_145[0x3];
+    unsigned long m_148;  // +0x148 /* ? */; 4-byte store: mov dword ptr [esi + 0x148], ebx
 };

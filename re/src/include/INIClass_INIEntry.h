@@ -4,7 +4,7 @@
 //
 // RTTI class   : class INIClass::INIEntry
 // vtable       : 0x006a0408  (1 slots)
-// constructor  : 0x004d48c6
+// constructor  : 0x004d4cef
 // vtable store : 0x004d4d82  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -19,17 +19,21 @@ class INIClass_INIEntry
 public:
     // ---- vtable 0x006a0408 (1 slots) ----
 
-    INIClass_INIEntry();  // 0x004d48c6
+    INIClass_INIEntry();  // 0x004d4cef
     virtual ~INIClass_INIEntry();
 
-    // ---- data members (offsets from ctor 0x004d7ed0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0408
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
+    // ---- data members (offsets from ctor 0x004d4cef) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 zero-initialised; 4-byte store: mov dword ptr [esi], 0
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], ecx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], ecx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], eax
+    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], eax
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], edx
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], eax
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ebx
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], edi
+    unsigned long m_024;  // +0x024 /* ? */; 4-byte store: mov dword ptr [esi + 0x24], edx
 };

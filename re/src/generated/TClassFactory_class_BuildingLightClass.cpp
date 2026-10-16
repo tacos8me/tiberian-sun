@@ -99,14 +99,14 @@ void TClassFactory_class_BuildingLightClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_BuildingLightClass::TClassFactory_class_BuildingLightClass -- body derived from 4 instructions at 0x005e9d18; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_BuildingLightClass::TClassFactory_class_BuildingLightClass -- body derived from 4 instructions at 0x005e9d30; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005e9d18  dec      ecx
-//   0x005e9d19  mov      dword ptr [eax + 4], ecx
-//   0x005e9d1c  xor      eax, eax
-//   0x005e9d1e  ret      8
+//   0x005e9d30  mov      eax, ecx
+//   0x005e9d32  mov      dword ptr [eax + 4], 0
+//   0x005e9d39  mov      dword ptr [eax], 0x6a49e8
+//   0x005e9d3f  ret      
 TClassFactory_class_BuildingLightClass::TClassFactory_class_BuildingLightClass()
 {
 }

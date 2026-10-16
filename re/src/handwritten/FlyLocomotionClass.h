@@ -46,24 +46,13 @@ public:
     virtual void    __stdcall Slot37();                                 // 0x499090
 
     // ---- data members (offsets from ctor 0x004956d0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69e1c0
-    unsigned long m_004;  // init 0x69e0f8
-    unsigned char pad_008[0xc];
-    unsigned long m_014;  // /* ? */
-    unsigned char pad_018[0x14];
-    unsigned long m_02c;  // /* ? */
-    unsigned long m_030;  // /* ? */
-    unsigned char pad_034[0x4];
-    unsigned long m_038;  // /* ? */
-    unsigned long m_03c;  // /* ? */
-    unsigned long m_040;  // /* ? */
-    unsigned long m_044;  // /* ? */
-    unsigned long m_048;  // /* ? */
-    unsigned long m_04c;  // /* ? */
-    unsigned long m_050;  // /* ? */
-    unsigned long m_054;  // /* ? */
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned char m_049;  // +0x049 /* ? */; 1-byte store: mov byte ptr [esi + 0x49], al
+    unsigned char m_04a;  // +0x04a /* ? */; 1-byte store: mov byte ptr [esi + 0x4a], al
+    unsigned char m_04b;  // +0x04b /* ? */; 1-byte store: mov byte ptr [esi + 0x4b], al
+    // 16 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

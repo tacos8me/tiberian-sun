@@ -957,55 +957,48 @@ void MyButton::vfunc_36(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// MyButton::MyButton -- body derived from 45 instructions at 0x005a8783; semantics not reconstructed.
-// size 159 bytes; signature ? nargs=5
-// callees: 0x00407a60, 0x004475d0, 0x00447620, 0x00447b40, 0x0044e320, 0x004d54c0, 0x005a8834
+// MyButton::MyButton -- body derived from 38 instructions at 0x005a8a20; semantics not reconstructed.
+// size 110 bytes; signature ? nargs=1
+// callees: 0x00626dc0, 0x00682997
 //
-//   0x005a8783  mov      dword ptr [ebx + 0x48], esi
-//   0x005a8786  mov      ecx, dword ptr [0x714ed4]
-//   0x005a878c  mov      eax, dword ptr [ecx]
-//   0x005a878e  call     dword ptr [eax + 0x78]
-//   0x005a8791  sub      eax, 0x280
-//   0x005a8796  cdq      
-//   0x005a8797  sub      eax, edx
-//   0x005a8799  sar      eax, 1
-//   0x005a879b  mov      dword ptr [ebx + 0x460], eax
-//   0x005a87a1  mov      ecx, dword ptr [0x714ed4]
-//   0x005a87a7  mov      edx, dword ptr [ecx]
-//   0x005a87a9  call     dword ptr [edx + 0x7c]
-//   0x005a87ac  sub      eax, 0x190
-//   0x005a87b1  lea      ecx, [esp + 0x14]
-//   0x005a87b5  cdq      
-//   0x005a87b6  sub      eax, edx
-//   0x005a87b8  sar      eax, 1
-//   0x005a87ba  mov      dword ptr [ebx + 0x464], eax
-//   0x005a87c0  call     0x447620
-//   0x005a87c5  push     0x6d4ec8
-//   0x005a87ca  lea      ecx, [esp + 0x18]
-//   0x005a87ce  call     0x44e320
-//   0x005a87d3  push     ebp
-//   0x005a87d4  lea      ecx, [esp + 0x18]
-//   0x005a87d8  call     0x4475d0
-//   0x005a87dd  cmp      al, 1
-//   0x005a87df  jne      0x5a88f3
-//   0x005a87e5  push     ebp
-//   0x005a87e6  lea      eax, [esp + 0x18]
-//   0x005a87ea  push     ebp
-//   0x005a87eb  push     eax
-//   0x005a87ec  lea      ecx, [esp + 0x84]
-//   0x005a87f3  call     0x447b40
-//   0x005a87f8  push     0x6d4e94
-//   0x005a87fd  call     0x407a60
-//   0x005a8802  mov      eax, dword ptr [ebx + 0x48]
-//   0x005a8805  mov      ecx, 0x6d4e88
-//   0x005a880a  add      esp, 4
-//   0x005a880d  add      eax, 0x800
-//   0x005a8812  test     ecx, ecx
-//   0x005a8814  jne      0x5a8822
-//   0x005a8816  push     eax
-//   0x005a8817  lea      ecx, [esp + 0x7c]
-//   0x005a881b  call     0x4d54c0
-//   0x005a8820  jmp      0x5a8834
+//   0x005a8a20  push     0x44
+//   0x005a8a22  call     0x682997
+//   0x005a8a27  mov      ebp, eax
+//   0x005a8a29  add      esp, 4
+//   0x005a8a2c  test     ebp, ebp
+//   0x005a8a2e  je       0x5a8ac4
+//   0x005a8a34  mov      edx, dword ptr [edi + 4]
+//   0x005a8a37  mov      eax, dword ptr [edi]
+//   0x005a8a39  mov      ecx, dword ptr [edi - 4]
+//   0x005a8a3c  push     0
+//   0x005a8a3e  push     0
+//   0x005a8a40  push     edx
+//   0x005a8a41  mov      edx, dword ptr [edi - 8]
+//   0x005a8a44  push     eax
+//   0x005a8a45  mov      eax, dword ptr [edi - 0xc]
+//   0x005a8a48  push     ecx
+//   0x005a8a49  mov      ecx, dword ptr [edi - 0x10]
+//   0x005a8a4c  push     edx
+//   0x005a8a4d  push     0x116
+//   0x005a8a52  push     eax
+//   0x005a8a53  push     ecx
+//   0x005a8a54  mov      ecx, ebp
+//   0x005a8a56  call     0x626dc0
+//   0x005a8a5b  mov      dword ptr [ebp + 0x40], ebx
+//   0x005a8a5e  mov      dword ptr [ebp], 0x6a3a8c
+//   0x005a8a65  mov      edx, dword ptr [ebp]
+//   0x005a8a68  mov      ecx, ebp
+//   0x005a8a6a  call     dword ptr [edx + 0x3c]
+//   0x005a8a6d  mov      eax, dword ptr [ebx + 0x47c]
+//   0x005a8a73  mov      ecx, dword ptr [ebx + 0x484]
+//   0x005a8a79  lea      esi, [ebx + 0x474]
+//   0x005a8a7f  cmp      ecx, eax
+//   0x005a8a81  jl       0x5a8aa5
+//   0x005a8a83  mov      cl, byte ptr [esi + 0xd]
+//   0x005a8a86  test     cl, cl
+//   0x005a8a88  jne      0x5a8a8e
+//   0x005a8a8a  test     eax, eax
+//   0x005a8a8c  jne      0x5a8ab4
 MyButton::MyButton()
 {
 }

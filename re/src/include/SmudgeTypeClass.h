@@ -64,15 +64,22 @@ public:
     virtual ~SmudgeTypeClass();
 
     // ---- data members (offsets from ctor 0x005e1580) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4790
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a4790; 4-byte store: mov dword ptr [esi], 0x6a4790
     unsigned char pad_004[0xc4];
-    unsigned long m_0c8;  // /* ? */
-    unsigned long m_0cc;  // /* ? */
-    unsigned char pad_0d0[0x54];
-    unsigned long m_124;  // init 0xffffffff
-    unsigned long Width;  // +0x128 (INI key)
-    unsigned long Height;  // +0x12c (INI key)
-    unsigned long Crater;  // +0x130 (INI key)
+    unsigned char m_0c8;  // +0x0c8 /* ? */; 1-byte store: mov byte ptr [esi + 0xc8], bl
+    unsigned char m_0c9;  // +0x0c9 zero-initialised; 1-byte store: mov byte ptr [esi + 0xc9], 0
+    unsigned char m_0ca;  // +0x0ca zero-initialised; 1-byte store: mov byte ptr [esi + 0xca], 0
+    unsigned char m_0cb;  // +0x0cb /* ? */; 1-byte store: mov byte ptr [esi + 0xcb], bl
+    unsigned char m_0cc;  // +0x0cc /* ? */; 1-byte store: mov byte ptr [esi + 0xcc], bl
+    unsigned char pad_0cd[0x1];
+    unsigned char m_0ce;  // +0x0ce zero-initialised; 1-byte store: mov byte ptr [esi + 0xce], 0
+    unsigned char pad_0cf[0x55];
+    unsigned long m_124;  // +0x124 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x124], 0xffffffff
+    unsigned long Width;  // +0x128 (INI key); 4-byte store: mov dword ptr [esi + 0x128], ebx
+    unsigned long Height;  // +0x12c (INI key); 4-byte store: mov dword ptr [esi + 0x12c], ebx
+    unsigned char Crater;  // +0x130 (INI key); 1-byte store: mov byte ptr [esi + 0x130], 0
+    unsigned char m_131;  // +0x131 zero-initialised; 1-byte store: mov byte ptr [esi + 0x131], 0
 };

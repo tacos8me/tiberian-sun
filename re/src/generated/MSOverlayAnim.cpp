@@ -159,13 +159,10 @@ void MSOverlayAnim::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5)
 }
 
 // ---------------------------------------------------------------------------
-// MSOverlayAnim::MSOverlayAnim -- body derived from 25 instructions at 0x0055865d; semantics not reconstructed.
-// size 61 bytes; signature __thiscall nargs=6
+// MSOverlayAnim::MSOverlayAnim -- body derived from 22 instructions at 0x00558660; semantics not reconstructed.
+// size 58 bytes; signature __thiscall nargs=6
 // callees: 0x00557ac0
 //
-//   0x0055865d  nop      
-//   0x0055865e  nop      
-//   0x0055865f  nop      
 //   0x00558660  mov      eax, dword ptr [esp + 0x14]
 //   0x00558664  mov      edx, dword ptr [esp + 0xc]
 //   0x00558668  push     esi

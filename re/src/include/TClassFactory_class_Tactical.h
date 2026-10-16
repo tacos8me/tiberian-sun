@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class Tactical>
 // vtable       : 0x006a4928  (5 slots)
-// constructor  : 0x005e9118
+// constructor  : 0x005e9130
 // vtable store : 0x005e913b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,6 +25,13 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005e9200  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005e9280  // __stdcall, returns int
 
-    TClassFactory_class_Tactical();  // 0x005e9118
+    TClassFactory_class_Tactical();  // 0x005e9130
     virtual ~TClassFactory_class_Tactical();
+
+    // ---- data members (offsets from ctor 0x005e9130) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a4928; 4-byte store: mov dword ptr [eax], 0x6a4928
+    unsigned long m_004;  // +0x004 zero-initialised; 4-byte store: mov dword ptr [eax + 4], 0
 };

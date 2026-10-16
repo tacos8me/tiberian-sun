@@ -176,15 +176,12 @@ void ApplicationClass::vfunc_10(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// ApplicationClass::ApplicationClass -- body derived from 5 instructions at 0x004191aa; semantics not reconstructed.
-// size 6 bytes; signature __cdecl
+// ApplicationClass::ApplicationClass -- body derived from 2 instructions at 0x00419400; semantics not reconstructed.
+// size 11 bytes; signature __cdecl
 // callees: none
 //
-//   0x004191aa  pop      edi
-//   0x004191ab  pop      esi
-//   0x004191ac  xor      eax, eax
-//   0x004191ae  pop      ebx
-//   0x004191af  ret      
+//   0x00419400  mov      dword ptr [0x725734], 0x699c2c
+//   0x0041940a  ret      
 ApplicationClass::ApplicationClass()
 {
 }

@@ -44,20 +44,25 @@ public:
     virtual ~UDPInterfaceClass();
 
     // ---- data members (offsets from ctor 0x0066f6d0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a7a94
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a7a94; 4-byte store: mov dword ptr [esi], 0x6a7a94
     unsigned char pad_004[0x444];
-    unsigned long m_448;  // /* ? */
-    unsigned long m_44c;  // /* ? */
-    unsigned long m_450;  // /* ? */
-    unsigned long m_454;  // init 0x1
-    unsigned long m_458;  // /* ? */
-    unsigned long m_45c;  // /* ? */
-    unsigned long m_460;  // /* ? */
-    unsigned long m_464;  // /* ? */
-    unsigned long m_468;  // /* ? */
-    unsigned long m_46c;  // init 0x1
-    unsigned long m_470;  // /* ? */
-    unsigned long m_474;  // /* ? */
+    unsigned long m_448;  // +0x448 /* ? */; 4-byte store: mov dword ptr [esi + 0x448], edx
+    unsigned long m_44c;  // +0x44c /* ? */; 4-byte store: mov dword ptr [esi + 0x44c], eax
+    unsigned long m_450;  // +0x450 /* ? */; 4-byte store: mov dword ptr [esi + 0x450], eax
+    unsigned char m_454;  // +0x454 init 0x1; 1-byte store: mov byte ptr [esi + 0x454], 1
+    unsigned char m_455;  // +0x455 /* ? */; 1-byte store: mov byte ptr [esi + 0x455], al
+    unsigned char pad_456[0x2];
+    unsigned long m_458;  // +0x458 /* ? */; 4-byte store: mov dword ptr [esi + 0x458], eax
+    unsigned long m_45c;  // +0x45c /* ? */; 4-byte store: mov dword ptr [esi + 0x45c], ecx
+    unsigned long m_460;  // +0x460 /* ? */; 4-byte store: mov dword ptr [esi + 0x460], edx
+    unsigned long m_464;  // +0x464 /* ? */; 4-byte store: mov dword ptr [esi + 0x464], eax
+    unsigned long m_468;  // +0x468 /* ? */; 4-byte store: mov dword ptr [esi + 0x468], eax
+    unsigned char m_46c;  // +0x46c init 0x1; 1-byte store: mov byte ptr [esi + 0x46c], 1
+    unsigned char m_46d;  // +0x46d /* ? */; 1-byte store: mov byte ptr [esi + 0x46d], al
+    unsigned char pad_46e[0x2];
+    unsigned long m_470;  // +0x470 /* ? */; 4-byte store: mov dword ptr [esi + 0x470], eax
+    unsigned long m_474;  // +0x474 /* ? */; 4-byte store: mov dword ptr [esi + 0x474], ecx
 };

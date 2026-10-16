@@ -4,7 +4,7 @@
 //
 // RTTI class   : class WWFontClass
 // vtable       : 0x006a7b34  (9 slots)
-// constructor  : 0x00671876
+// constructor  : 0x00671b90
 // vtable store : 0x00671bb7  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -28,6 +28,18 @@ public:
     virtual void vfunc_7(int a0);  // [7] 0x00671e10  // __thiscall
     virtual void vfunc_8(int a0);  // [8] 0x00671e60  // __thiscall
 
-    WWFontClass();  // 0x00671876
+    WWFontClass();  // 0x00671b90
     virtual ~WWFontClass();
+
+    // ---- data members (offsets from ctor 0x00671b90) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a7b34; 4-byte store: mov dword ptr [esi], 0x6a7b34
+    unsigned char m_004;  // +0x004 /* ? */; 1-byte store: mov byte ptr [esi + 4], al
+    unsigned char pad_005[0x3];
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], ecx
+    unsigned long m_00c;  // +0x00c zero-initialised; 4-byte store: mov dword ptr [esi + 0xc], 0
+    unsigned long m_010;  // +0x010 zero-initialised; 4-byte store: mov dword ptr [esi + 0x10], 0
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], edx
 };

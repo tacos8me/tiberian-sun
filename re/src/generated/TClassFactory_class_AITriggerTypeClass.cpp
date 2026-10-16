@@ -99,14 +99,14 @@ void TClassFactory_class_AITriggerTypeClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_AITriggerTypeClass::TClassFactory_class_AITriggerTypeClass -- body derived from 4 instructions at 0x005ee518; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_AITriggerTypeClass::TClassFactory_class_AITriggerTypeClass -- body derived from 4 instructions at 0x005ee530; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ee518  dec      ecx
-//   0x005ee519  mov      dword ptr [eax + 4], ecx
-//   0x005ee51c  xor      eax, eax
-//   0x005ee51e  ret      8
+//   0x005ee530  mov      eax, ecx
+//   0x005ee532  mov      dword ptr [eax + 4], 0
+//   0x005ee539  mov      dword ptr [eax], 0x6a4e68
+//   0x005ee53f  ret      
 TClassFactory_class_AITriggerTypeClass::TClassFactory_class_AITriggerTypeClass()
 {
 }

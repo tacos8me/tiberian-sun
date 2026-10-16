@@ -4,7 +4,7 @@
 //
 // RTTI class   : class ApplicationClass
 // vtable       : 0x00699c2c  (11 slots)
-// constructor  : 0x004191aa
+// constructor  : 0x00419400
 // vtable store : 0x00419406  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -30,6 +30,6 @@ public:
     virtual void vfunc_9(int a0, int a1);  // [9] 0x00419600  // __stdcall
     virtual void vfunc_10(int a0, int a1);  // [10] 0x00419680  // __stdcall
 
-    ApplicationClass();  // 0x004191aa
+    ApplicationClass();  // 0x00419400
     virtual ~ApplicationClass();
 };

@@ -47,16 +47,17 @@ public:
     virtual ~LightSourceClass();
 
     // ---- data members (offsets from ctor 0x004f4cb0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a15c8
-    unsigned long m_004;  // init 0x6a15ac
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a15c8; 4-byte store: mov dword ptr [esi], 0x6a15c8
+    unsigned long m_004;  // +0x004 init 0x6a15ac; 4-byte store: mov dword ptr [esi + 4], 0x6a15ac
     unsigned char pad_008[0xc];
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], ecx
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], edx
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], eax
     unsigned char pad_024[0xc];
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // zero-initialised
+    unsigned long m_030;  // +0x030 /* ? */; 4-byte store: mov dword ptr [esi + 0x30], eax
+    unsigned char m_034;  // +0x034 zero-initialised; 1-byte store: mov byte ptr [esi + 0x34], 0
 };

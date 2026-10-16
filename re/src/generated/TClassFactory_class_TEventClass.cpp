@@ -99,14 +99,14 @@ void TClassFactory_class_TEventClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TEventClass::TClassFactory_class_TEventClass -- body derived from 4 instructions at 0x005ea018; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_TEventClass::TClassFactory_class_TEventClass -- body derived from 4 instructions at 0x005ea030; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ea018  dec      ecx
-//   0x005ea019  mov      dword ptr [eax + 4], ecx
-//   0x005ea01c  xor      eax, eax
-//   0x005ea01e  ret      8
+//   0x005ea030  mov      eax, ecx
+//   0x005ea032  mov      dword ptr [eax + 4], 0
+//   0x005ea039  mov      dword ptr [eax], 0x6a4a18
+//   0x005ea03f  ret      
 TClassFactory_class_TEventClass::TClassFactory_class_TEventClass()
 {
 }

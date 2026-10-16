@@ -28,8 +28,8 @@ void com_error::vfunc_0(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// com_error::com_error -- body derived from 18 instructions at 0x00694050; semantics not reconstructed.
-// size 50 bytes; signature __thiscall nargs=3
+// com_error::com_error -- body derived from 15 instructions at 0x00694050; semantics not reconstructed.
+// size 44 bytes; signature __thiscall nargs=3
 // callees: none
 //
 //   0x00694050  mov      eax, dword ptr [esp + 4]
@@ -47,9 +47,6 @@ void com_error::vfunc_0(int a0)
 //   0x00694076  mov      ecx, dword ptr [eax]
 //   0x00694078  push     eax
 //   0x00694079  call     dword ptr [ecx + 4]
-//   0x0069407c  mov      eax, esi
-//   0x0069407e  pop      esi
-//   0x0069407f  ret      0xc
 com_error::com_error()
 {
 }

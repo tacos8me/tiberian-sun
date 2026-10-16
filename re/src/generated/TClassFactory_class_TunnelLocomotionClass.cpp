@@ -99,14 +99,14 @@ void TClassFactory_class_TunnelLocomotionClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TunnelLocomotionClass::TClassFactory_class_TunnelLocomotionClass -- body derived from 4 instructions at 0x005ed018; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_TunnelLocomotionClass::TClassFactory_class_TunnelLocomotionClass -- body derived from 4 instructions at 0x005ed030; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ed018  dec      ecx
-//   0x005ed019  mov      dword ptr [eax + 4], ecx
-//   0x005ed01c  xor      eax, eax
-//   0x005ed01e  ret      8
+//   0x005ed030  mov      eax, ecx
+//   0x005ed032  mov      dword ptr [eax + 4], 0
+//   0x005ed039  mov      dword ptr [eax], 0x6a4d18
+//   0x005ed03f  ret      
 TClassFactory_class_TunnelLocomotionClass::TClassFactory_class_TunnelLocomotionClass()
 {
 }

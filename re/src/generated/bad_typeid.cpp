@@ -42,18 +42,18 @@ void bad_typeid::vfunc_1()
 }
 
 // ---------------------------------------------------------------------------
-// bad_typeid::bad_typeid -- body derived from 8 instructions at 0x00682f6c; semantics not reconstructed.
+// bad_typeid::bad_typeid -- body derived from 8 instructions at 0x00682f84; semantics not reconstructed.
 // size 24 bytes; signature __thiscall nargs=1
 // callees: 0x0068782d
 //
-//   0x00682f6c  push     esi
-//   0x00682f6d  mov      esi, ecx
-//   0x00682f6f  push     dword ptr [esp + 8]
-//   0x00682f73  call     0x68782d
-//   0x00682f78  mov      dword ptr [esi], 0x6a7d40
-//   0x00682f7e  mov      eax, esi
-//   0x00682f80  pop      esi
-//   0x00682f81  ret      4
+//   0x00682f84  push     esi
+//   0x00682f85  mov      esi, ecx
+//   0x00682f87  push     dword ptr [esp + 8]
+//   0x00682f8b  call     0x68782d
+//   0x00682f90  mov      dword ptr [esi], 0x6a7d4c
+//   0x00682f96  mov      eax, esi
+//   0x00682f98  pop      esi
+//   0x00682f99  ret      4
 bad_typeid::bad_typeid()
 {
 }

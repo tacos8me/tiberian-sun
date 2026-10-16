@@ -253,17 +253,47 @@ void NullModemClass::vfunc_15(int a0, int a1, int a2, int a3, int a4, int a5)
 }
 
 // ---------------------------------------------------------------------------
-// NullModemClass::NullModemClass -- body derived from 7 instructions at 0x0056c0df; semantics not reconstructed.
-// size 24 bytes; signature __cdecl
+// NullModemClass::NullModemClass -- body derived from 37 instructions at 0x0056c330; semantics not reconstructed.
+// size 133 bytes; signature __thiscall nargs=4
 // callees: none
 //
-//   0x0056c0df  nop      
-//   0x0056c0e0  xor      eax, eax
-//   0x0056c0e2  mov      dword ptr [0x7d68d8], eax
-//   0x0056c0e7  mov      dword ptr [0x7d68dc], eax
-//   0x0056c0ec  mov      dword ptr [0x7d68e0], eax
-//   0x0056c0f1  mov      dword ptr [0x7d68e4], eax
-//   0x0056c0f6  ret      
+//   0x0056c330  push     esi
+//   0x0056c331  mov      esi, dword ptr [esp + 8]
+//   0x0056c335  mov      eax, ecx
+//   0x0056c337  or       edx, 0xffffffff
+//   0x0056c33a  xor      ecx, ecx
+//   0x0056c33c  mov      dword ptr [eax + 0x44], esi
+//   0x0056c33f  mov      esi, dword ptr [esp + 0xc]
+//   0x0056c343  mov      dword ptr [eax + 0x48], esi
+//   0x0056c346  mov      esi, dword ptr [esp + 0x10]
+//   0x0056c34a  mov      dword ptr [eax + 8], esi
+//   0x0056c34d  mov      si, word ptr [esp + 0x14]
+//   0x0056c352  mov      word ptr [eax + 0x4c], si
+//   0x0056c356  mov      esi, 0x3c
+//   0x0056c35b  mov      dword ptr [eax + 0x2c], esi
+//   0x0056c35e  mov      dword ptr [eax + 0x5c], esi
+//   0x0056c361  mov      dword ptr [eax], 0x6a2814
+//   0x0056c367  mov      dword ptr [eax + 0x40], edx
+//   0x0056c36a  mov      dword ptr [eax + 0x38], ecx
+//   0x0056c36d  mov      dword ptr [eax + 0x50], ecx
+//   0x0056c370  mov      dword ptr [eax + 4], ecx
+//   0x0056c373  mov      dword ptr [eax + 0x10], 0x1f4
+//   0x0056c37a  mov      dword ptr [eax + 0xc], ecx
+//   0x0056c37d  mov      dword ptr [eax + 0x18], edx
+//   0x0056c380  mov      dword ptr [eax + 0x1c], ecx
+//   0x0056c383  mov      dword ptr [eax + 0x20], ecx
+//   0x0056c386  mov      dword ptr [eax + 0x24], 0xbb8
+//   0x0056c38d  mov      dword ptr [eax + 0x28], 0x4b0
+//   0x0056c394  mov      byte ptr [eax + 0x30], 0x2b
+//   0x0056c398  mov      dword ptr [eax + 0x68], ecx
+//   0x0056c39b  mov      dword ptr [eax + 0x6c], ecx
+//   0x0056c39e  mov      dword ptr [eax + 0x70], ecx
+//   0x0056c3a1  mov      dword ptr [eax + 0x3c], ecx
+//   0x0056c3a4  mov      dword ptr [eax + 0x60], edx
+//   0x0056c3a7  mov      dword ptr [eax + 0x64], 0x4b0
+//   0x0056c3ae  mov      dword ptr [eax + 0x34], ecx
+//   0x0056c3b1  pop      esi
+//   0x0056c3b2  ret      0x10
 NullModemClass::NullModemClass()
 {
 }

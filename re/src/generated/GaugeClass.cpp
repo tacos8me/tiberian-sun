@@ -817,17 +817,58 @@ void GaugeClass::vfunc_39(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// GaugeClass::GaugeClass -- body derived from 7 instructions at 0x004a69c3; semantics not reconstructed.
-// size 18 bytes; signature __cdecl
-// callees: none
+// GaugeClass::GaugeClass -- body derived from 48 instructions at 0x004a6a00; semantics not reconstructed.
+// size 127 bytes; signature __thiscall nargs=5
+// callees: 0x00460520
 //
-//   0x004a69c3  sub      eax, ecx
-//   0x004a69c5  lea      ecx, [eax + eax*2]
-//   0x004a69c8  mov      eax, 0x51eb851f
-//   0x004a69cd  mul      ecx
-//   0x004a69cf  mov      eax, edx
-//   0x004a69d1  shr      eax, 4
-//   0x004a69d4  ret      
+//   0x004a6a00  mov      eax, dword ptr [esp + 0xc]
+//   0x004a6a04  mov      edx, dword ptr [esp + 4]
+//   0x004a6a08  push     ebp
+//   0x004a6a09  mov      ebp, dword ptr [esp + 0x14]
+//   0x004a6a0d  push     esi
+//   0x004a6a0e  push     edi
+//   0x004a6a0f  mov      edi, dword ptr [esp + 0x20]
+//   0x004a6a13  push     1
+//   0x004a6a15  mov      esi, ecx
+//   0x004a6a17  push     7
+//   0x004a6a19  mov      ecx, dword ptr [esp + 0x1c]
+//   0x004a6a1d  push     edi
+//   0x004a6a1e  push     ebp
+//   0x004a6a1f  push     eax
+//   0x004a6a20  push     ecx
+//   0x004a6a21  push     edx
+//   0x004a6a22  mov      ecx, esi
+//   0x004a6a24  call     0x460520
+//   0x004a6a29  mov      ecx, dword ptr [esi + 0x30]
+//   0x004a6a2c  mov      eax, 0xff
+//   0x004a6a31  cmp      ecx, eax
+//   0x004a6a33  mov      dword ptr [esi], 0x69e804
+//   0x004a6a39  je       0x4a6a46
+//   0x004a6a3b  mov      ecx, esi
+//   0x004a6a3d  mov      dword ptr [esi + 0x30], eax
+//   0x004a6a40  call     dword ptr [0x69e84c]
+//   0x004a6a46  mov      ecx, dword ptr [esi + 0x30]
+//   0x004a6a49  xor      eax, eax
+//   0x004a6a4b  test     ecx, ecx
+//   0x004a6a4d  jge      0x4a6a51
+//   0x004a6a4f  mov      eax, ecx
+//   0x004a6a51  cmp      eax, dword ptr [esi + 0x34]
+//   0x004a6a54  je       0x4a6a60
+//   0x004a6a56  mov      dword ptr [esi + 0x34], eax
+//   0x004a6a59  mov      eax, dword ptr [esi]
+//   0x004a6a5b  mov      ecx, esi
+//   0x004a6a5d  call     dword ptr [eax + 0x48]
+//   0x004a6a60  cmp      ebp, edi
+//   0x004a6a62  mov      byte ptr [esi + 0x2d], 1
+//   0x004a6a66  setg     cl
+//   0x004a6a69  mov      byte ptr [esi + 0x2e], cl
+//   0x004a6a6c  mov      byte ptr [esi + 0x2c], 1
+//   0x004a6a70  mov      dword ptr [esi + 0x38], 0
+//   0x004a6a77  mov      eax, esi
+//   0x004a6a79  pop      edi
+//   0x004a6a7a  pop      esi
+//   0x004a6a7b  pop      ebp
+//   0x004a6a7c  ret      0x14
 GaugeClass::GaugeClass()
 {
 }

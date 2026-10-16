@@ -181,8 +181,15 @@ public:
     // and installs vtable 0x699dc8 at +0x1184 (a different vector type).
 
     // ---- data members (offsets from ctor 0x00501930) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    // 6 member(s) already declared above; their offsets are recorded in out/members.json
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a19f0; 4-byte store: mov dword ptr [esi], 0x6a19f0
+    unsigned char pad_004[0x160];
+    unsigned long m_164;  // +0x164 init 0x6a1a68; 4-byte store: mov dword ptr [esi + 0x164], 0x6a1a68
+    unsigned long m_168;  // +0x168 /* ? */; 4-byte store: mov dword ptr [esi + 0x168], ebx
+    unsigned long m_16c;  // +0x16c /* ? */; 4-byte store: mov dword ptr [esi + 0x16c], ebx
+    unsigned char m_170;  // +0x170 init 0x1; 1-byte store: mov byte ptr [esi + 0x170], 1
+    unsigned char m_171;  // +0x171 /* ? */; 1-byte store: mov byte ptr [esi + 0x171], bl
 
 };

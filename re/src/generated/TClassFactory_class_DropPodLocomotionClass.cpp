@@ -99,14 +99,14 @@ void TClassFactory_class_DropPodLocomotionClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_DropPodLocomotionClass::TClassFactory_class_DropPodLocomotionClass -- body derived from 4 instructions at 0x005ed318; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_DropPodLocomotionClass::TClassFactory_class_DropPodLocomotionClass -- body derived from 4 instructions at 0x005ed330; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ed318  dec      ecx
-//   0x005ed319  mov      dword ptr [eax + 4], ecx
-//   0x005ed31c  xor      eax, eax
-//   0x005ed31e  ret      8
+//   0x005ed330  mov      eax, ecx
+//   0x005ed332  mov      dword ptr [eax + 4], 0
+//   0x005ed339  mov      dword ptr [eax], 0x6a4d48
+//   0x005ed33f  ret      
 TClassFactory_class_DropPodLocomotionClass::TClassFactory_class_DropPodLocomotionClass()
 {
 }

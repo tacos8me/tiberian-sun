@@ -4,7 +4,7 @@
 //
 // RTTI class   : class MyButton
 // vtable       : 0x006a3a8c  (37 slots)
-// constructor  : 0x005a8783
+// constructor  : 0x005a8a20
 // vtable store : 0x005a8a61  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -56,11 +56,12 @@ public:
     virtual void vfunc_35(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21, int a22, int a23);  // [35] 0x005a90a0  // __thiscall
     virtual void vfunc_36(int a0);  // [36] 0x005a92f0  // __stdcall  // refs "dlgsys"
 
-    MyButton();  // 0x005a8783
+    MyButton();  // 0x005a8a20
     virtual ~MyButton();
 
     // ---- data members (offsets from ctor 0x005a9360) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a3a8c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a3a8c; 4-byte store: mov dword ptr [esi], 0x6a3a8c
 };

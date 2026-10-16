@@ -47,12 +47,13 @@ public:
     virtual ~ScriptClass();
 
     // ---- data members (offsets from ctor 0x005ce2a0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a3f88
-    unsigned long m_004;  // init 0x6a3f6c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a3f88; 4-byte store: mov dword ptr [esi], 0x6a3f88
+    unsigned long m_004;  // +0x004 init 0x6a3f6c; 4-byte store: mov dword ptr [esi + 4], 0x6a3f6c
     unsigned char pad_008[0xc];
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // zero-initialised
-    unsigned long m_01c;  // init 0xffffffff
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
+    unsigned long m_018;  // +0x018 zero-initialised; 4-byte store: mov dword ptr [esi + 0x18], 0
+    unsigned long m_01c;  // +0x01c init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x1c], 0xffffffff
 };

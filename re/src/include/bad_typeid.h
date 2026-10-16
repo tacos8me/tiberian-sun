@@ -4,7 +4,7 @@
 //
 // RTTI class   : class bad_typeid
 // vtable       : 0x006a7d4c  (2 slots)
-// constructor  : 0x00682f6c
+// constructor  : 0x00682f84
 // vtable store : 0x00682f92  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -22,11 +22,12 @@ public:
     virtual void vfunc_0(int a0);  // [0] 0x00682f9c  // __thiscall
     virtual void vfunc_1();  // [1] 0x006878ac  // __cdecl, returns int
 
-    bad_typeid();  // 0x00682f6c
+    bad_typeid();  // 0x00682f84
     virtual ~bad_typeid();
 
-    // ---- data members (offsets from ctor 0x00683083) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a7d4c
+    // ---- data members (offsets from ctor 0x00682f84) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a7d4c; 4-byte store: mov dword ptr [esi], 0x6a7d4c
 };

@@ -4,7 +4,7 @@
 //
 // RTTI class   : class CheckListClass
 // vtable       : 0x0069aeb8  (50 slots)
-// constructor  : 0x0045ab54
+// constructor  : 0x0045abd0
 // vtable store : 0x0045ac0b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -69,11 +69,14 @@ public:
     virtual void vfunc_48(int a0);  // [48] 0x004f7340  // __thiscall
     virtual void vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [49] 0x0045ae70  // __thiscall
 
-    CheckListClass();  // 0x0045ab54
+    CheckListClass();  // 0x0045abd0
     virtual ~CheckListClass();
 
-    // ---- data members (offsets from ctor 0x0045ac20) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69aeb8
+    // ---- data members (offsets from ctor 0x0045abd0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x69aeb8; 4-byte store: mov dword ptr [esi], 0x69aeb8
+    unsigned char pad_004[0x148];
+    unsigned long m_14c;  // +0x14c zero-initialised; 4-byte store: mov dword ptr [esi + 0x14c], 0x69b05c
 };

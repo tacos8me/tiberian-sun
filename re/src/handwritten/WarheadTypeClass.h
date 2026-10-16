@@ -65,17 +65,12 @@ public:
     int   LaserOuterSpread;      // /* ? */ INI "LaserOuterSpread"
 
     // ---- data members (offsets from ctor 0x00651510) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a7230
-    unsigned long m_004;  // init 0x6a7214
-    unsigned char pad_008[0x94];
-    unsigned long m_09c;  // init 0x6a3c48
-    unsigned long m_0a0;  // /* ? */
-    unsigned long m_0a4;  // /* ? */
-    unsigned long m_0a8;  // init 0x1
-    unsigned long m_0ac;  // /* ? */
-    unsigned long m_0b0;  // init 0xa
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned char m_0a9;  // +0x0a9 /* ? */; 1-byte store: mov byte ptr [esi + 0xa9], al
+    unsigned char pad_0aa[0x2];
+    // 9 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

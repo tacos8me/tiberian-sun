@@ -99,14 +99,14 @@ void TClassFactory_class_WarheadTypeClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_WarheadTypeClass::TClassFactory_class_WarheadTypeClass -- body derived from 4 instructions at 0x005edc18; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_WarheadTypeClass::TClassFactory_class_WarheadTypeClass -- body derived from 4 instructions at 0x005edc30; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005edc18  dec      ecx
-//   0x005edc19  mov      dword ptr [eax + 4], ecx
-//   0x005edc1c  xor      eax, eax
-//   0x005edc1e  ret      8
+//   0x005edc30  mov      eax, ecx
+//   0x005edc32  mov      dword ptr [eax + 4], 0
+//   0x005edc39  mov      dword ptr [eax], 0x6a4dd8
+//   0x005edc3f  ret      
 TClassFactory_class_WarheadTypeClass::TClassFactory_class_WarheadTypeClass()
 {
 }

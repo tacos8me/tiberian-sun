@@ -579,17 +579,23 @@ void SidebarClass_SBGadgetClass::vfunc_30(int a0, int a1, int a2, int a3)
 }
 
 // ---------------------------------------------------------------------------
-// SidebarClass_SBGadgetClass::SidebarClass_SBGadgetClass -- body derived from 7 instructions at 0x005d825f; semantics not reconstructed.
-// size 24 bytes; signature __cdecl
-// callees: none
+// SidebarClass_SBGadgetClass::SidebarClass_SBGadgetClass -- body derived from 13 instructions at 0x005d84b0; semantics not reconstructed.
+// size 44 bytes; signature __cdecl
+// callees: 0x004a5960, 0x00682610
 //
-//   0x005d825f  nop      
-//   0x005d8260  xor      eax, eax
-//   0x005d8262  mov      dword ptr [0x7d9628], eax
-//   0x005d8267  mov      dword ptr [0x7d962c], eax
-//   0x005d826c  mov      dword ptr [0x7d9630], eax
-//   0x005d8271  mov      dword ptr [0x7d9634], eax
-//   0x005d8276  ret      
+//   0x005d84b0  push     0
+//   0x005d84b2  push     8
+//   0x005d84b4  push     1
+//   0x005d84b6  push     1
+//   0x005d84b8  push     0
+//   0x005d84ba  push     0
+//   0x005d84bc  mov      ecx, 0x7da168
+//   0x005d84c1  call     0x4a5960
+//   0x005d84c6  push     0x5d84e0
+//   0x005d84cb  mov      dword ptr [0x7da168], 0x6a437c
+//   0x005d84d5  call     0x682610
+//   0x005d84da  pop      ecx
+//   0x005d84db  ret      
 SidebarClass_SBGadgetClass::SidebarClass_SBGadgetClass()
 {
 }

@@ -223,17 +223,10 @@ void LogicClass::vfunc_9(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// LogicClass::LogicClass -- body derived from 19 instructions at 0x004023f9; semantics not reconstructed.
-// size 68 bytes; signature __cdecl
+// LogicClass::LogicClass -- body derived from 12 instructions at 0x00402400; semantics not reconstructed.
+// size 61 bytes; signature __cdecl
 // callees: 0x00682610
 //
-//   0x004023f9  nop      
-//   0x004023fa  nop      
-//   0x004023fb  nop      
-//   0x004023fc  nop      
-//   0x004023fd  nop      
-//   0x004023fe  nop      
-//   0x004023ff  nop      
 //   0x00402400  xor      eax, eax
 //   0x00402402  push     0x402440
 //   0x00402407  mov      dword ptr [0x710cac], eax

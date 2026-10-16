@@ -99,14 +99,14 @@ void TClassFactory_class_TActionClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TActionClass::TClassFactory_class_TActionClass -- body derived from 4 instructions at 0x005ea498; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_TActionClass::TClassFactory_class_TActionClass -- body derived from 4 instructions at 0x005ea4b0; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ea498  dec      ecx
-//   0x005ea499  mov      dword ptr [eax + 4], ecx
-//   0x005ea49c  xor      eax, eax
-//   0x005ea49e  ret      8
+//   0x005ea4b0  mov      eax, ecx
+//   0x005ea4b2  mov      dword ptr [eax + 4], 0
+//   0x005ea4b9  mov      dword ptr [eax], 0x6a4a60
+//   0x005ea4bf  ret      
 TClassFactory_class_TActionClass::TClassFactory_class_TActionClass()
 {
 }

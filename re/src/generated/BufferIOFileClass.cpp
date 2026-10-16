@@ -450,38 +450,70 @@ void BufferIOFileClass::vfunc_16(int a0, int a1, int a2)
 }
 
 // ---------------------------------------------------------------------------
-// BufferIOFileClass::BufferIOFileClass -- body derived from 28 instructions at 0x0041ff80; semantics not reconstructed.
-// size 68 bytes; signature __thiscall nargs=1
-// callees: 0x0067fc39
+// BufferIOFileClass::BufferIOFileClass -- body derived from 60 instructions at 0x00420040; semantics not reconstructed.
+// size 164 bytes; signature __thiscall nargs=1
+// callees: 0x004200e9
 //
-//   0x0041ff80  push     ecx
-//   0x0041ff81  lea      eax, [esp]
-//   0x0041ff85  push     esi
-//   0x0041ff86  mov      esi, ecx
-//   0x0041ff88  push     eax
-//   0x0041ff89  call     0x67fc39
-//   0x0041ff8e  mov      ecx, dword ptr [esp + 8]
-//   0x0041ff92  add      esp, 4
-//   0x0041ff95  shl      ecx, 0x1c
-//   0x0041ff98  shr      eax, 4
-//   0x0041ff9b  or       ecx, eax
-//   0x0041ff9d  mov      eax, dword ptr [esi]
-//   0x0041ff9f  sub      ecx, eax
-//   0x0041ffa1  mov      eax, dword ptr [esi + 0xc]
-//   0x0041ffa4  cmp      eax, 0x100
-//   0x0041ffa9  jne      0x41ffc4
-//   0x0041ffab  mov      eax, dword ptr [esi + 8]
-//   0x0041ffae  mov      edx, eax
-//   0x0041ffb0  shr      edx, 8
-//   0x0041ffb3  sub      eax, edx
-//   0x0041ffb5  add      eax, ecx
-//   0x0041ffb7  mov      dword ptr [esi + 8], eax
-//   0x0041ffba  mov      eax, dword ptr [esi + 0x10]
-//   0x0041ffbd  inc      eax
-//   0x0041ffbe  mov      dword ptr [esi + 0x10], eax
-//   0x0041ffc1  pop      esi
-//   0x0041ffc2  pop      ecx
-//   0x0041ffc3  ret      
+//   0x00420040  push     ebx
+//   0x00420041  push     esi
+//   0x00420042  mov      esi, ecx
+//   0x00420044  xor      ebx, ebx
+//   0x00420046  or       eax, 0xffffffff
+//   0x00420049  mov      dword ptr [esi + 4], 1
+//   0x00420050  mov      dword ptr [esi + 8], ebx
+//   0x00420053  mov      dword ptr [esi + 0xc], eax
+//   0x00420056  mov      dword ptr [esi + 0x10], eax
+//   0x00420059  mov      dword ptr [esi + 0x14], ebx
+//   0x0042005c  mov      word ptr [esi + 0x18], bx
+//   0x00420060  mov      word ptr [esi + 0x1a], bx
+//   0x00420064  mov      byte ptr [esi + 0x1c], bl
+//   0x00420067  mov      byte ptr [esi + 0x20], bl
+//   0x0042006a  mov      byte ptr [esi + 0x21], bl
+//   0x0042006d  mov      byte ptr [esi + 0x22], bl
+//   0x00420070  mov      byte ptr [esi + 0x23], bl
+//   0x00420073  mov      byte ptr [esi + 0x24], bl
+//   0x00420076  mov      byte ptr [esi + 0x25], bl
+//   0x00420079  mov      dword ptr [esi + 0x28], ebx
+//   0x0042007c  mov      dword ptr [esi + 0x2c], ebx
+//   0x0042007f  mov      dword ptr [esi + 0x30], ebx
+//   0x00420082  mov      dword ptr [esi + 0x34], ebx
+//   0x00420085  mov      dword ptr [esi + 0x38], ebx
+//   0x00420088  mov      dword ptr [esi + 0x3c], eax
+//   0x0042008b  mov      dword ptr [esi + 0x40], eax
+//   0x0042008e  mov      dword ptr [esi + 0x44], ebx
+//   0x00420091  mov      dword ptr [esi + 0x48], ebx
+//   0x00420094  mov      dword ptr [esi + 0x4c], ebx
+//   0x00420097  mov      dword ptr [esi], 0x699f40
+//   0x0042009d  call     dword ptr [0x699f44]
+//   0x004200a3  test     eax, eax
+//   0x004200a5  je       0x420107
+//   0x004200a7  cmp      byte ptr [esi + 0x25], bl
+//   0x004200aa  je       0x420107
+//   0x004200ac  mov      eax, dword ptr [esi]
+//   0x004200ae  push     ebp
+//   0x004200af  push     edi
+//   0x004200b0  mov      ecx, esi
+//   0x004200b2  call     dword ptr [eax + 4]
+//   0x004200b5  mov      edi, dword ptr [esp + 0x14]
+//   0x004200b9  mov      ebp, eax
+//   0x004200bb  mov      cl, byte ptr [edi]
+//   0x004200bd  mov      dl, byte ptr [ebp]
+//   0x004200c0  mov      al, cl
+//   0x004200c2  cmp      cl, dl
+//   0x004200c4  jne      0x4200e4
+//   0x004200c6  cmp      al, bl
+//   0x004200c8  je       0x4200e0
+//   0x004200ca  mov      dl, byte ptr [edi + 1]
+//   0x004200cd  mov      cl, byte ptr [ebp + 1]
+//   0x004200d0  mov      al, dl
+//   0x004200d2  cmp      dl, cl
+//   0x004200d4  jne      0x4200e4
+//   0x004200d6  add      edi, 2
+//   0x004200d9  add      ebp, 2
+//   0x004200dc  cmp      al, bl
+//   0x004200de  jne      0x4200bb
+//   0x004200e0  xor      eax, eax
+//   0x004200e2  jmp      0x4200e9
 BufferIOFileClass::BufferIOFileClass()
 {
 }

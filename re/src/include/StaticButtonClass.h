@@ -4,7 +4,7 @@
 //
 // RTTI class   : class StaticButtonClass
 // vtable       : 0x006a4ec8  (34 slots)
-// constructor  : 0x005eeea3
+// constructor  : 0x005eeee0
 // vtable store : 0x005eef2a  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -53,11 +53,18 @@ public:
     virtual void vfunc_32(int a0, int a1, int a2, int a3);  // [32] 0x005ef100  // __thiscall
     virtual void vfunc_33(int a0);  // [33] 0x005ef1b0  // __thiscall
 
-    StaticButtonClass();  // 0x005eeea3
+    StaticButtonClass();  // 0x005eeee0
     virtual ~StaticButtonClass();
 
-    // ---- data members (offsets from ctor 0x005eefc0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4ec8
+    // ---- data members (offsets from ctor 0x005eeee0) ----
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a4ec8; 4-byte store: mov dword ptr [esi], 0x6a4ec8
+    unsigned char pad_004[0x10];
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], eax
+    unsigned char pad_01c[0x14];
+    unsigned long m_030;  // +0x030 zero-initialised; 4-byte store: mov dword ptr [esi + 0x30], 0
+    unsigned long m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [esi + 0x34], edx
 };

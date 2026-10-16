@@ -29,13 +29,14 @@ public:
     virtual ~MSWordAnim();
 
     // ---- data members (offsets from ctor 0x00555500) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a2454
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a2454; 4-byte store: mov dword ptr [edi], 0x6a2454
     unsigned char pad_004[0x44];
-    unsigned long m_048;  // /* ? */
-    unsigned long m_04c;  // /* ? */
-    unsigned long m_050;  // /* ? */
-    unsigned long m_054;  // /* ? */
-    unsigned long m_058;  // /* ? */
+    unsigned long m_048;  // +0x048 /* ? */; 4-byte store: mov dword ptr [edi + 0x48], ecx
+    unsigned long m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [edi + 0x4c], eax
+    unsigned long m_050;  // +0x050 /* ? */; 4-byte store: mov dword ptr [edi + 0x50], eax
+    unsigned long m_054;  // +0x054 /* ? */; 4-byte store: mov dword ptr [edi + 0x54], eax
+    unsigned long m_058;  // +0x058 /* ? */; 4-byte store: mov dword ptr [edi + 0x58], eax
 };

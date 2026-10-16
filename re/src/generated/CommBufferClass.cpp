@@ -28,13 +28,62 @@ void CommBufferClass::vfunc_0(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// CommBufferClass::CommBufferClass -- body derived from 3 instructions at 0x0045d974; semantics not reconstructed.
-// size 6 bytes; signature __stdcall nargs=2
-// callees: none
+// CommBufferClass::CommBufferClass -- body derived from 52 instructions at 0x0045d980; semantics not reconstructed.
+// size 156 bytes; signature __thiscall nargs=3
+// callees: 0x0045da27, 0x00682997
 //
-//   0x0045d974  mov      eax, esi
-//   0x0045d976  pop      esi
-//   0x0045d977  ret      8
+//   0x0045d980  push     ebx
+//   0x0045d981  mov      ebx, dword ptr [esp + 8]
+//   0x0045d985  mov      eax, dword ptr [esp + 0x14]
+//   0x0045d989  push     ebp
+//   0x0045d98a  mov      ebp, dword ptr [esp + 0x14]
+//   0x0045d98e  push     esi
+//   0x0045d98f  mov      esi, ecx
+//   0x0045d991  push     edi
+//   0x0045d992  mov      edi, dword ptr [esp + 0x18]
+//   0x0045d996  mov      ecx, ebx
+//   0x0045d998  shl      ecx, 5
+//   0x0045d99b  push     ecx
+//   0x0045d99c  mov      dword ptr [esi], 0x69b094
+//   0x0045d9a2  mov      dword ptr [esi + 4], ebx
+//   0x0045d9a5  mov      dword ptr [esi + 8], edi
+//   0x0045d9a8  mov      dword ptr [esi + 0xc], ebp
+//   0x0045d9ab  mov      dword ptr [esi + 0x10], eax
+//   0x0045d9ae  call     0x682997
+//   0x0045d9b3  lea      edx, [edi + edi*4]
+//   0x0045d9b6  mov      dword ptr [esi + 0x24], eax
+//   0x0045d9b9  shl      edx, 2
+//   0x0045d9bc  push     edx
+//   0x0045d9bd  call     0x682997
+//   0x0045d9c2  mov      dword ptr [esi + 0x34], eax
+//   0x0045d9c5  lea      eax, [ebx*4]
+//   0x0045d9cc  push     eax
+//   0x0045d9cd  call     0x682997
+//   0x0045d9d2  lea      ecx, [edi*4]
+//   0x0045d9d9  mov      dword ptr [esi + 0x30], eax
+//   0x0045d9dc  push     ecx
+//   0x0045d9dd  call     0x682997
+//   0x0045d9e2  mov      dword ptr [esi + 0x40], eax
+//   0x0045d9e5  mov      eax, dword ptr [esi + 4]
+//   0x0045d9e8  add      esp, 0x10
+//   0x0045d9eb  xor      ebx, ebx
+//   0x0045d9ed  test     eax, eax
+//   0x0045d9ef  jle      0x45da32
+//   0x0045d9f1  xor      edi, edi
+//   0x0045d9f3  push     ebp
+//   0x0045d9f4  call     0x682997
+//   0x0045d9f9  mov      edx, dword ptr [esi + 0x24]
+//   0x0045d9fc  add      esp, 4
+//   0x0045d9ff  mov      dword ptr [edx + edi + 0x14], eax
+//   0x0045da03  mov      eax, dword ptr [esi + 0x10]
+//   0x0045da06  test     eax, eax
+//   0x0045da08  jle      0x45da1c
+//   0x0045da0a  push     eax
+//   0x0045da0b  call     0x682997
+//   0x0045da10  mov      ecx, dword ptr [esi + 0x24]
+//   0x0045da13  add      esp, 4
+//   0x0045da16  mov      dword ptr [ecx + edi + 0x1c], eax
+//   0x0045da1a  jmp      0x45da27
 CommBufferClass::CommBufferClass()
 {
 }

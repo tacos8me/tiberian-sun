@@ -99,14 +99,14 @@ void TClassFactory_class_TeamTypeClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TeamTypeClass::TClassFactory_class_TeamTypeClass -- body derived from 4 instructions at 0x005eb098; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_TeamTypeClass::TClassFactory_class_TeamTypeClass -- body derived from 4 instructions at 0x005eb0b0; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005eb098  dec      ecx
-//   0x005eb099  mov      dword ptr [eax + 4], ecx
-//   0x005eb09c  xor      eax, eax
-//   0x005eb09e  ret      8
+//   0x005eb0b0  mov      eax, ecx
+//   0x005eb0b2  mov      dword ptr [eax + 4], 0
+//   0x005eb0b9  mov      dword ptr [eax], 0x6a4b20
+//   0x005eb0bf  ret      
 TClassFactory_class_TeamTypeClass::TClassFactory_class_TeamTypeClass()
 {
 }

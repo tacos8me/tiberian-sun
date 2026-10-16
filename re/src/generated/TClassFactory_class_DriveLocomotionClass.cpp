@@ -99,14 +99,14 @@ void TClassFactory_class_DriveLocomotionClass::vfunc_4(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_DriveLocomotionClass::TClassFactory_class_DriveLocomotionClass -- body derived from 4 instructions at 0x005ecb98; semantics not reconstructed.
-// size 9 bytes; signature __stdcall nargs=2
+// TClassFactory_class_DriveLocomotionClass::TClassFactory_class_DriveLocomotionClass -- body derived from 4 instructions at 0x005ecbb0; semantics not reconstructed.
+// size 16 bytes; signature __thiscall
 // callees: none
 //
-//   0x005ecb98  dec      ecx
-//   0x005ecb99  mov      dword ptr [eax + 4], ecx
-//   0x005ecb9c  xor      eax, eax
-//   0x005ecb9e  ret      8
+//   0x005ecbb0  mov      eax, ecx
+//   0x005ecbb2  mov      dword ptr [eax + 4], 0
+//   0x005ecbb9  mov      dword ptr [eax], 0x6a4cd0
+//   0x005ecbbf  ret      
 TClassFactory_class_DriveLocomotionClass::TClassFactory_class_DriveLocomotionClass()
 {
 }

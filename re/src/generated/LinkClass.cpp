@@ -212,11 +212,10 @@ void LinkClass::vfunc_9()
 }
 
 // ---------------------------------------------------------------------------
-// LinkClass::LinkClass -- body derived from 25 instructions at 0x004a59af; semantics not reconstructed.
-// size 78 bytes; signature __thiscall nargs=1
+// LinkClass::LinkClass -- body derived from 24 instructions at 0x004a59b0; semantics not reconstructed.
+// size 77 bytes; signature __thiscall nargs=1
 // callees: none
 //
-//   0x004a59af  nop      
 //   0x004a59b0  mov      eax, ecx
 //   0x004a59b2  xor      ecx, ecx
 //   0x004a59b4  mov      dword ptr [eax + 4], ecx

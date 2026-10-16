@@ -1421,29 +1421,45 @@ void ColorListClass::vfunc_52(int a0, int a1)
 }
 
 // ---------------------------------------------------------------------------
-// ColorListClass::ColorListClass -- body derived from 19 instructions at 0x0045b093; semantics not reconstructed.
-// size 36 bytes; signature __cdecl
-// callees: none
+// ColorListClass::ColorListClass -- body derived from 35 instructions at 0x0045b0c0; semantics not reconstructed.
+// size 131 bytes; signature __thiscall nargs=8
+// callees: 0x004f6ad0
 //
-//   0x0045b093  nop      
-//   0x0045b094  nop      
-//   0x0045b095  nop      
-//   0x0045b096  nop      
-//   0x0045b097  nop      
-//   0x0045b098  nop      
-//   0x0045b099  nop      
-//   0x0045b09a  nop      
-//   0x0045b09b  nop      
-//   0x0045b09c  nop      
-//   0x0045b09d  nop      
-//   0x0045b09e  nop      
-//   0x0045b09f  nop      
-//   0x0045b0a0  xor      eax, eax
-//   0x0045b0a2  mov      dword ptr [0x7295c0], eax
-//   0x0045b0a7  mov      dword ptr [0x7295c4], eax
-//   0x0045b0ac  mov      dword ptr [0x7295c8], eax
-//   0x0045b0b1  mov      dword ptr [0x7295cc], eax
-//   0x0045b0b6  ret      
+//   0x0045b0c0  mov      eax, dword ptr [esp + 0x20]
+//   0x0045b0c4  mov      edx, dword ptr [esp + 0x18]
+//   0x0045b0c8  push     esi
+//   0x0045b0c9  mov      esi, ecx
+//   0x0045b0cb  mov      ecx, dword ptr [esp + 0x20]
+//   0x0045b0cf  push     eax
+//   0x0045b0d0  mov      eax, dword ptr [esp + 0x1c]
+//   0x0045b0d4  push     ecx
+//   0x0045b0d5  mov      ecx, dword ptr [esp + 0x1c]
+//   0x0045b0d9  push     edx
+//   0x0045b0da  mov      edx, dword ptr [esp + 0x1c]
+//   0x0045b0de  push     eax
+//   0x0045b0df  mov      eax, dword ptr [esp + 0x1c]
+//   0x0045b0e3  push     ecx
+//   0x0045b0e4  mov      ecx, dword ptr [esp + 0x1c]
+//   0x0045b0e8  push     edx
+//   0x0045b0e9  push     eax
+//   0x0045b0ea  push     ecx
+//   0x0045b0eb  mov      ecx, esi
+//   0x0045b0ed  call     0x4f6ad0
+//   0x0045b0f2  xor      eax, eax
+//   0x0045b0f4  mov      ecx, 1
+//   0x0045b0f9  mov      dword ptr [esi + 0x150], eax
+//   0x0045b0ff  mov      dword ptr [esi + 0x154], eax
+//   0x0045b105  mov      byte ptr [esi + 0x158], cl
+//   0x0045b10b  mov      byte ptr [esi + 0x159], al
+//   0x0045b111  mov      dword ptr [esi + 0x14c], 0x69b05c
+//   0x0045b11b  mov      dword ptr [esi + 0x160], 0xa
+//   0x0045b125  mov      dword ptr [esi + 0x15c], eax
+//   0x0045b12b  mov      dword ptr [esi + 0x168], eax
+//   0x0045b131  mov      dword ptr [esi + 0x164], ecx
+//   0x0045b137  mov      dword ptr [esi], 0x69af84
+//   0x0045b13d  mov      eax, esi
+//   0x0045b13f  pop      esi
+//   0x0045b140  ret      0x20
 ColorListClass::ColorListClass()
 {
 }

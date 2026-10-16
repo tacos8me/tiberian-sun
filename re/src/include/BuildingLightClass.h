@@ -128,23 +128,25 @@ public:
     virtual ~BuildingLightClass();
 
     // ---- data members (offsets from ctor 0x00420ee0) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x699fb8
-    unsigned long m_004;  // init 0x699f9c
+    // Offsets are exact. Each member is declared at the access width
+    // the constructor stores it with; the store instruction is quoted
+    // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x699fb8; 4-byte store: mov dword ptr [esi], 0x699fb8
+    unsigned long m_004;  // +0x004 init 0x699f9c; 4-byte store: mov dword ptr [esi + 4], 0x699f9c
     unsigned char pad_008[0x48];
-    unsigned long m_050;  // /* ? */
-    unsigned long m_054;  // /* ? */
-    unsigned long m_058;  // /* ? */
-    unsigned long m_05c;  // /* ? */
-    unsigned long m_060;  // /* ? */
-    unsigned long m_064;  // /* ? */
-    unsigned long m_068;  // /* ? */
-    unsigned long m_06c;  // /* ? */
-    unsigned long m_070;  // /* ? */
-    unsigned long m_074;  // /* ? */
-    unsigned long m_078;  // /* ? */
-    unsigned long m_07c;  // /* ? */
-    unsigned long m_080;  // /* ? */
-    unsigned long m_084;  // /* ? */
+    unsigned long m_050;  // +0x050 /* ? */; 4-byte store: mov dword ptr [esi + 0x50], ebx
+    unsigned long m_054;  // +0x054 /* ? */; 4-byte store: mov dword ptr [esi + 0x54], ebx
+    unsigned long m_058;  // +0x058 /* ? */; 4-byte store: mov dword ptr [esi + 0x58], edx
+    unsigned long m_05c;  // +0x05c /* ? */; 4-byte store: mov dword ptr [esi + 0x5c], ecx
+    unsigned long m_060;  // +0x060 /* ? */; 4-byte store: mov dword ptr [esi + 0x60], edx
+    unsigned long m_064;  // +0x064 /* ? */; 4-byte store: mov dword ptr [esi + 0x64], edx
+    unsigned long m_068;  // +0x068 /* ? */; 4-byte store: mov dword ptr [esi + 0x68], ecx
+    unsigned long m_06c;  // +0x06c /* ? */; 4-byte store: mov dword ptr [esi + 0x6c], edx
+    unsigned long m_070;  // +0x070 /* ? */; 4-byte store: mov dword ptr [esi + 0x70], ebx
+    unsigned long m_074;  // +0x074 /* ? */; 4-byte store: mov dword ptr [esi + 0x74], ebx
+    unsigned char m_078;  // +0x078 /* ? */; 1-byte store: mov byte ptr [esi + 0x78], bl
+    unsigned char pad_079[0x3];
+    unsigned long m_07c;  // +0x07c /* ? */; 4-byte store: mov dword ptr [esi + 0x7c], ebx
+    unsigned long m_080;  // +0x080 /* ? */; 4-byte store: mov dword ptr [esi + 0x80], ebx
+    unsigned long m_084;  // +0x084 /* ? */; 4-byte store: mov dword ptr [esi + 0x84], edi
 };
