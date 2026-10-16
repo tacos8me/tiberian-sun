@@ -9,7 +9,11 @@ Strategy:
        - all import thunk targets
        - MSVC prologue patterns
   2. Linear-sweep disassemble each function with capstone.
-  3. Record direct call/jmp targets to extend the worklist.
+  2. Linear-sweep disassemble each function with capstone.
+  3. Extend the worklist to a fixpoint: every body feeds back its direct
+     call/jmp targets, every branch target (conditional jumps included) and the
+     in-.text entries of any switch table it dispatches through, and the start
+     of each remaining unattributed gap.
   4. Emit per-function JSON: address, size, instructions, callees, strings.
 
 This is the substrate for source reconstruction.
