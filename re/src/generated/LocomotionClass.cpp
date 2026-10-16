@@ -111,7 +111,20 @@ HRESULT LocomotionClass::IsDirty()
 }
 
 // ---------------------------------------------------------------------------
-// LocomotionClass::Load -- body derived from 9 instructions at 0x004f9d00; semantics not reconstructed.
+// LocomotionClass::Load -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
+// size 9 bytes; signature __cdecl
+// callees: 0x006855eb
+//
+//   0x006829a5  push     0x19
+//   0x006829a7  call     0x6855eb
+//   0x006829ac  pop      ecx
+//   0x006829ad  ret      
+HRESULT LocomotionClass::Load(IStream* pStm)
+{
+}
+
+// ---------------------------------------------------------------------------
+// LocomotionClass::Save -- body derived from 9 instructions at 0x004f9d00; semantics not reconstructed.
 // size 20 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -124,12 +137,12 @@ HRESULT LocomotionClass::IsDirty()
 //   0x004f9d0b  mov      eax, 0x80004003
 //   0x004f9d10  pop      esi
 //   0x004f9d11  ret      0xc
-HRESULT LocomotionClass::Load(IStream* pStm)
+HRESULT LocomotionClass::Save(IStream* pStm, BOOL fClearDirty)
 {
 }
 
 // ---------------------------------------------------------------------------
-// LocomotionClass::Save -- body derived from 7 instructions at 0x004f9dd0; semantics not reconstructed.
+// LocomotionClass::GetSizeMax -- body derived from 7 instructions at 0x004f9dd0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=2
 // callees: none
 //
@@ -140,26 +153,6 @@ HRESULT LocomotionClass::Load(IStream* pStm)
 //   0x004f9dd9  mov      eax, 0x80004003
 //   0x004f9dde  pop      esi
 //   0x004f9ddf  ret      8
-HRESULT LocomotionClass::Save(IStream* pStm, BOOL fClearDirty)
-{
-}
-
-// ---------------------------------------------------------------------------
-// LocomotionClass::GetSizeMax -- body derived from 11 instructions at 0x004cb060; semantics not reconstructed.
-// size 30 bytes; signature __thiscall nargs=1
-// callees: 0x004f99a0, 0x0068298c
-//
-//   0x004cb060  push     esi
-//   0x004cb061  mov      esi, ecx
-//   0x004cb063  call     0x4f99a0
-//   0x004cb068  test     byte ptr [esp + 8], 1
-//   0x004cb06d  je       0x4cb078
-//   0x004cb06f  push     esi
-//   0x004cb070  call     0x68298c
-//   0x004cb075  add      esp, 4
-//   0x004cb078  mov      eax, esi
-//   0x004cb07a  pop      esi
-//   0x004cb07b  ret      4
 HRESULT LocomotionClass::GetSizeMax(ULARGE_INTEGER* pcbSize)
 {
 }

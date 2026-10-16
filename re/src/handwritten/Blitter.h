@@ -79,7 +79,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b7c4; 4-byte store: mov dword ptr [esi], 0x69b7c4
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -100,7 +100,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b7d4; 4-byte store: mov dword ptr [esi], 0x69b7d4
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -128,9 +128,7 @@ template <class T> class BlitPlainXlat : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b7b4; 4-byte store: mov dword ptr [eax], 0x69b7b4
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };          // E,G
 template <class T> class BlitPlainXlatAlpha : public Blitter {
@@ -139,8 +137,8 @@ template <class T> class BlitPlainXlatAlpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b554; 4-byte store: mov dword ptr [edi], 0x69b554
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };     // G
@@ -150,9 +148,7 @@ template <class T> class BlitPlainXlatZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b664; 4-byte store: mov dword ptr [eax], 0x69b664
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };     // G
 template <class T> class BlitPlainXlatZReadWrite : public Blitter {
@@ -161,7 +157,9 @@ template <class T> class BlitPlainXlatZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b5c4; 4-byte store: mov dword ptr [eax], 0x69b5c4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 };// G
 
@@ -180,9 +178,7 @@ template <class T> class BlitTransDarken : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b6a4; 4-byte store: mov dword ptr [eax], 0x69b6a4
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };        // G
 template <class T> class BlitTransDarkenZRead : public Blitter {
@@ -191,9 +187,7 @@ template <class T> class BlitTransDarkenZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b634; 4-byte store: mov dword ptr [eax], 0x69b634
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };   // G
 template <class T> class BlitTransDarkenZReadWrite : public Blitter {
@@ -202,7 +196,9 @@ template <class T> class BlitTransDarkenZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b594; 4-byte store: mov dword ptr [eax], 0x69b594
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class BlitTransRemapDest : public Blitter {
@@ -211,9 +207,7 @@ template <class T> class BlitTransRemapDest : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b784; 4-byte store: mov dword ptr [eax], 0x69b784
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };     // E
 template <class T> class BlitTransRemapXlat : public Blitter {
@@ -222,9 +216,7 @@ template <class T> class BlitTransRemapXlat : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b774; 4-byte store: mov dword ptr [eax], 0x69b774
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };     // E
 template <class T> class BlitTransXlat : public Blitter {
@@ -233,9 +225,7 @@ template <class T> class BlitTransXlat : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b7a4; 4-byte store: mov dword ptr [eax], 0x69b7a4
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };          // E,G
 template <class T> class BlitTransXlatAlpha : public Blitter {
@@ -244,8 +234,8 @@ template <class T> class BlitTransXlatAlpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b544; 4-byte store: mov dword ptr [edi], 0x69b544
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };     // G
@@ -255,8 +245,8 @@ template <class T> class BlitTransXlatAlphaZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b4a4; 4-byte store: mov dword ptr [edi], 0x69b4a4
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };// G
@@ -266,8 +256,8 @@ template <class T> class BlitTransXlatAlphaZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b424; 4-byte store: mov dword ptr [edi], 0x69b424
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -277,7 +267,9 @@ template <class T> class BlitTransXlatMultWriteAlpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b4e4; 4-byte store: mov dword ptr [eax], 0x69b4e4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 };  // G
 template <class T> class BlitTransXlatWriteAlpha : public Blitter {
@@ -286,7 +278,9 @@ template <class T> class BlitTransXlatWriteAlpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b4f4; 4-byte store: mov dword ptr [eax], 0x69b4f4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 };// G
 template <class T> class BlitTransXlatZRead : public Blitter {
@@ -295,9 +289,7 @@ template <class T> class BlitTransXlatZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b654; 4-byte store: mov dword ptr [eax], 0x69b654
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };     // G
 template <class T> class BlitTransXlatZReadWrite : public Blitter {
@@ -306,7 +298,9 @@ template <class T> class BlitTransXlatZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b5b4; 4-byte store: mov dword ptr [eax], 0x69b5b4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 };// G
 template <class T> class BlitTransZRemapXlat : public Blitter {
@@ -315,9 +309,7 @@ template <class T> class BlitTransZRemapXlat : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b794; 4-byte store: mov dword ptr [eax], 0x69b794
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };    // E,G
 template <class T> class BlitTransZRemapXlatAlpha : public Blitter {
@@ -326,8 +318,8 @@ template <class T> class BlitTransZRemapXlatAlpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b534; 4-byte store: mov dword ptr [edi], 0x69b534
-    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -337,8 +329,8 @@ template <class T> class BlitTransZRemapXlatAlphaZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b494; 4-byte store: mov dword ptr [edi], 0x69b494
-    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -348,8 +340,8 @@ template <class T> class BlitTransZRemapXlatAlphaZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b414; 4-byte store: mov dword ptr [edi], 0x69b414
-    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -359,9 +351,7 @@ template <class T> class BlitTransZRemapXlatZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b644; 4-byte store: mov dword ptr [eax], 0x69b644
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
 template <class T> class BlitTransZRemapXlatZReadWrite : public Blitter {
@@ -370,7 +360,9 @@ template <class T> class BlitTransZRemapXlatZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b5a4; 4-byte store: mov dword ptr [eax], 0x69b5a4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 
@@ -381,9 +373,7 @@ template <class T> class BlitTransLucent25 : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b674; 4-byte store: mov dword ptr [eax], 0x69b674
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };      // G
 template <class T> class BlitTransLucent25Alpha : public Blitter {
@@ -392,8 +382,8 @@ template <class T> class BlitTransLucent25Alpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b504; 4-byte store: mov dword ptr [edi], 0x69b504
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -403,8 +393,8 @@ template <class T> class BlitTransLucent25AlphaZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b464; 4-byte store: mov dword ptr [edi], 0x69b464
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -414,8 +404,8 @@ template <class T> class BlitTransLucent25AlphaZReadWarp : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b434; 4-byte store: mov dword ptr [edi], 0x69b434
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -425,8 +415,8 @@ template <class T> class BlitTransLucent25AlphaZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b3e4; 4-byte store: mov dword ptr [edi], 0x69b3e4
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -436,9 +426,7 @@ template <class T> class BlitTransLucent25ZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b604; 4-byte store: mov dword ptr [eax], 0x69b604
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
 template <class T> class BlitTransLucent25ZReadWarp : public Blitter {
@@ -447,7 +435,9 @@ template <class T> class BlitTransLucent25ZReadWarp : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b5d4; 4-byte store: mov dword ptr [eax], 0x69b5d4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class BlitTransLucent25ZReadWrite : public Blitter {
@@ -456,7 +446,9 @@ template <class T> class BlitTransLucent25ZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b564; 4-byte store: mov dword ptr [eax], 0x69b564
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class BlitTransLucent50 : public Blitter {
@@ -465,9 +457,7 @@ template <class T> class BlitTransLucent50 : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b684; 4-byte store: mov dword ptr [eax], 0x69b684
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };      // G
 template <class T> class BlitTransLucent50Alpha : public Blitter {
@@ -476,8 +466,8 @@ template <class T> class BlitTransLucent50Alpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b514; 4-byte store: mov dword ptr [edi], 0x69b514
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -487,8 +477,8 @@ template <class T> class BlitTransLucent50AlphaZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b474; 4-byte store: mov dword ptr [edi], 0x69b474
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -498,8 +488,8 @@ template <class T> class BlitTransLucent50AlphaZReadWarp : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b444; 4-byte store: mov dword ptr [edi], 0x69b444
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -509,8 +499,8 @@ template <class T> class BlitTransLucent50AlphaZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b3f4; 4-byte store: mov dword ptr [edi], 0x69b3f4
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -520,9 +510,7 @@ template <class T> class BlitTransLucent50ZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b614; 4-byte store: mov dword ptr [eax], 0x69b614
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
 template <class T> class BlitTransLucent50ZReadWarp : public Blitter {
@@ -531,9 +519,7 @@ template <class T> class BlitTransLucent50ZReadWarp : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b5e4; 4-byte store: mov dword ptr [eax], 0x69b5e4
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
 template <class T> class BlitTransLucent50ZReadWrite : public Blitter {
@@ -542,7 +528,9 @@ template <class T> class BlitTransLucent50ZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b574; 4-byte store: mov dword ptr [eax], 0x69b574
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class BlitTransLucent75 : public Blitter {
@@ -551,9 +539,7 @@ template <class T> class BlitTransLucent75 : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b694; 4-byte store: mov dword ptr [eax], 0x69b694
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };      // G
 template <class T> class BlitTransLucent75Alpha : public Blitter {
@@ -562,8 +548,8 @@ template <class T> class BlitTransLucent75Alpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b524; 4-byte store: mov dword ptr [edi], 0x69b524
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -573,8 +559,8 @@ template <class T> class BlitTransLucent75AlphaZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b484; 4-byte store: mov dword ptr [edi], 0x69b484
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -584,8 +570,8 @@ template <class T> class BlitTransLucent75AlphaZReadWarp : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b454; 4-byte store: mov dword ptr [edi], 0x69b454
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -595,8 +581,8 @@ template <class T> class BlitTransLucent75AlphaZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b404; 4-byte store: mov dword ptr [edi], 0x69b404
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -606,9 +592,7 @@ template <class T> class BlitTransLucent75ZRead : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b624; 4-byte store: mov dword ptr [eax], 0x69b624
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
 template <class T> class BlitTransLucent75ZReadWarp : public Blitter {
@@ -617,9 +601,7 @@ template <class T> class BlitTransLucent75ZReadWarp : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b5f4; 4-byte store: mov dword ptr [eax], 0x69b5f4
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
 template <class T> class BlitTransLucent75ZReadWrite : public Blitter {
@@ -628,7 +610,9 @@ template <class T> class BlitTransLucent75ZReadWrite : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b584; 4-byte store: mov dword ptr [eax], 0x69b584
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 
@@ -639,7 +623,9 @@ template <class T> class BlitTranslucent50NonzeroAlpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b4c4; 4-byte store: mov dword ptr [eax], 0x69b4c4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class BlitTranslucent50ZeroAlpha : public Blitter {
@@ -648,7 +634,9 @@ template <class T> class BlitTranslucent50ZeroAlpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b4b4; 4-byte store: mov dword ptr [eax], 0x69b4b4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 };    // G
 template <class T> class BlitTranslucentWriteAlpha : public Blitter {
@@ -657,7 +645,9 @@ template <class T> class BlitTranslucentWriteAlpha : public Blitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b4d4; 4-byte store: mov dword ptr [eax], 0x69b4d4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 };     // G
 
@@ -668,7 +658,9 @@ template <class T> class RLEBlitTransDarken : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b3c0; 4-byte store: mov dword ptr [eax], 0x69b3c0
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 };  // G
 template <class T> class RLEBlitTransDarkenZRead : public RLEBlitter {
@@ -677,7 +669,9 @@ template <class T> class RLEBlitTransDarkenZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b378; 4-byte store: mov dword ptr [eax], 0x69b378
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class RLEBlitTransDarkenZReadWrite : public RLEBlitter {
@@ -686,7 +680,9 @@ template <class T> class RLEBlitTransDarkenZReadWrite : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b30c; 4-byte store: mov dword ptr [eax], 0x69b30c
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned short m_008;  // +0x008 /* ? */; 2-byte store: mov word ptr [eax + 8], cx
 
 }; // G
 template <class T> class RLEBlitTransLucent25 : public RLEBlitter {
@@ -695,7 +691,9 @@ template <class T> class RLEBlitTransLucent25 : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b39c; 4-byte store: mov dword ptr [eax], 0x69b39c
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class RLEBlitTransLucent25Alpha : public RLEBlitter {
@@ -704,8 +702,8 @@ template <class T> class RLEBlitTransLucent25Alpha : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b2ac; 4-byte store: mov dword ptr [edi], 0x69b2ac
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -715,8 +713,8 @@ template <class T> class RLEBlitTransLucent25AlphaZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b270; 4-byte store: mov dword ptr [edi], 0x69b270
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -726,8 +724,8 @@ template <class T> class RLEBlitTransLucent25AlphaZReadWarp : public RLEBlitter 
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b24c; 4-byte store: mov dword ptr [edi], 0x69b24c
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -737,8 +735,8 @@ template <class T> class RLEBlitTransLucent25AlphaZReadWrite : public RLEBlitter
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b210; 4-byte store: mov dword ptr [edi], 0x69b210
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned short m_00c;  // +0x00c /* ? */; 2-byte store: mov word ptr [edi + 0xc], ax
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -748,7 +746,9 @@ template <class T> class RLEBlitTransLucent25ZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b354; 4-byte store: mov dword ptr [eax], 0x69b354
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class RLEBlitTransLucent25ZReadWarp : public RLEBlitter {
@@ -757,7 +757,9 @@ template <class T> class RLEBlitTransLucent25ZReadWarp : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b330; 4-byte store: mov dword ptr [eax], 0x69b330
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class RLEBlitTransLucent25ZReadWrite : public RLEBlitter {
@@ -766,7 +768,9 @@ template <class T> class RLEBlitTransLucent25ZReadWrite : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b2e8; 4-byte store: mov dword ptr [eax], 0x69b2e8
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned short m_008;  // +0x008 /* ? */; 2-byte store: mov word ptr [eax + 8], cx
 
 }; // G
 template <class T> class RLEBlitTransLucent50 : public RLEBlitter {
@@ -775,7 +779,9 @@ template <class T> class RLEBlitTransLucent50 : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b3a8; 4-byte store: mov dword ptr [eax], 0x69b3a8
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class RLEBlitTransLucent50Alpha : public RLEBlitter {
@@ -784,8 +790,8 @@ template <class T> class RLEBlitTransLucent50Alpha : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b2b8; 4-byte store: mov dword ptr [edi], 0x69b2b8
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -795,8 +801,8 @@ template <class T> class RLEBlitTransLucent50AlphaZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b27c; 4-byte store: mov dword ptr [edi], 0x69b27c
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -806,8 +812,8 @@ template <class T> class RLEBlitTransLucent50AlphaZReadWarp : public RLEBlitter 
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b258; 4-byte store: mov dword ptr [edi], 0x69b258
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -817,8 +823,8 @@ template <class T> class RLEBlitTransLucent50AlphaZReadWrite : public RLEBlitter
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b21c; 4-byte store: mov dword ptr [edi], 0x69b21c
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned short m_00c;  // +0x00c /* ? */; 2-byte store: mov word ptr [edi + 0xc], ax
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -828,7 +834,9 @@ template <class T> class RLEBlitTransLucent50ZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b360; 4-byte store: mov dword ptr [eax], 0x69b360
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class RLEBlitTransLucent50ZReadWarp : public RLEBlitter {
@@ -837,7 +845,9 @@ template <class T> class RLEBlitTransLucent50ZReadWarp : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b33c; 4-byte store: mov dword ptr [eax], 0x69b33c
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class RLEBlitTransLucent50ZReadWrite : public RLEBlitter {
@@ -846,7 +856,9 @@ template <class T> class RLEBlitTransLucent50ZReadWrite : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b2f4; 4-byte store: mov dword ptr [eax], 0x69b2f4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned short m_008;  // +0x008 /* ? */; 2-byte store: mov word ptr [eax + 8], cx
 
 }; // G
 template <class T> class RLEBlitTransLucent75 : public RLEBlitter {
@@ -855,7 +867,9 @@ template <class T> class RLEBlitTransLucent75 : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b3b4; 4-byte store: mov dword ptr [eax], 0x69b3b4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class RLEBlitTransLucent75Alpha : public RLEBlitter {
@@ -864,8 +878,8 @@ template <class T> class RLEBlitTransLucent75Alpha : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b2c4; 4-byte store: mov dword ptr [edi], 0x69b2c4
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -875,8 +889,8 @@ template <class T> class RLEBlitTransLucent75AlphaZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b288; 4-byte store: mov dword ptr [edi], 0x69b288
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -886,8 +900,8 @@ template <class T> class RLEBlitTransLucent75AlphaZReadWarp : public RLEBlitter 
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b264; 4-byte store: mov dword ptr [edi], 0x69b264
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -897,8 +911,8 @@ template <class T> class RLEBlitTransLucent75AlphaZReadWrite : public RLEBlitter
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b228; 4-byte store: mov dword ptr [edi], 0x69b228
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned short m_00c;  // +0x00c /* ? */; 2-byte store: mov word ptr [edi + 0xc], ax
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -908,7 +922,9 @@ template <class T> class RLEBlitTransLucent75ZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b36c; 4-byte store: mov dword ptr [eax], 0x69b36c
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class RLEBlitTransLucent75ZReadWarp : public RLEBlitter {
@@ -917,7 +933,9 @@ template <class T> class RLEBlitTransLucent75ZReadWarp : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b348; 4-byte store: mov dword ptr [eax], 0x69b348
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // G
 template <class T> class RLEBlitTransLucent75ZReadWrite : public RLEBlitter {
@@ -926,7 +944,9 @@ template <class T> class RLEBlitTransLucent75ZReadWrite : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69b300; 4-byte store: mov dword ptr [eax], 0x69b300
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned short m_008;  // +0x008 /* ? */; 2-byte store: mov word ptr [eax + 8], cx
 
 }; // G
 template <class T> class RLEBlitTransRemapDest : public RLEBlitter {
@@ -935,9 +955,7 @@ template <class T> class RLEBlitTransRemapDest : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b750; 4-byte store: mov dword ptr [eax], 0x69b750
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E
 template <class T> class RLEBlitTransRemapDestZRead : public RLEBlitter {
@@ -946,9 +964,7 @@ template <class T> class RLEBlitTransRemapDestZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b720; 4-byte store: mov dword ptr [eax], 0x69b720
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E
 template <class T> class RLEBlitTransRemapDestZReadWrite : public RLEBlitter {
@@ -957,9 +973,7 @@ template <class T> class RLEBlitTransRemapDestZReadWrite : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b6f0; 4-byte store: mov dword ptr [eax], 0x69b6f0
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E
 template <class T> class RLEBlitTransRemapXlat : public RLEBlitter {
@@ -968,9 +982,7 @@ template <class T> class RLEBlitTransRemapXlat : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b744; 4-byte store: mov dword ptr [eax], 0x69b744
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E
 template <class T> class RLEBlitTransRemapXlatZRead : public RLEBlitter {
@@ -979,9 +991,7 @@ template <class T> class RLEBlitTransRemapXlatZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b714; 4-byte store: mov dword ptr [eax], 0x69b714
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E
 template <class T> class RLEBlitTransRemapXlatZReadWrite : public RLEBlitter {
@@ -990,9 +1000,7 @@ template <class T> class RLEBlitTransRemapXlatZReadWrite : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b6e4; 4-byte store: mov dword ptr [eax], 0x69b6e4
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E
 template <class T> class RLEBlitTransXlat : public RLEBlitter {
@@ -1001,9 +1009,7 @@ template <class T> class RLEBlitTransXlat : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b768; 4-byte store: mov dword ptr [eax], 0x69b768
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };    // E,G
 template <class T> class RLEBlitTransXlatAlpha : public RLEBlitter {
@@ -1012,8 +1018,8 @@ template <class T> class RLEBlitTransXlatAlpha : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b2dc; 4-byte store: mov dword ptr [edi], 0x69b2dc
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -1023,8 +1029,8 @@ template <class T> class RLEBlitTransXlatAlphaZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b2a0; 4-byte store: mov dword ptr [edi], 0x69b2a0
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -1034,8 +1040,8 @@ template <class T> class RLEBlitTransXlatAlphaZReadWrite : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b240; 4-byte store: mov dword ptr [edi], 0x69b240
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -1045,9 +1051,7 @@ template <class T> class RLEBlitTransXlatZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b738; 4-byte store: mov dword ptr [eax], 0x69b738
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E,G
 template <class T> class RLEBlitTransXlatZReadWrite : public RLEBlitter {
@@ -1056,9 +1060,7 @@ template <class T> class RLEBlitTransXlatZReadWrite : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b708; 4-byte store: mov dword ptr [eax], 0x69b708
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E,G
 template <class T> class RLEBlitTransZRemapXlat : public RLEBlitter {
@@ -1067,9 +1069,7 @@ template <class T> class RLEBlitTransZRemapXlat : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b75c; 4-byte store: mov dword ptr [eax], 0x69b75c
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E,G
 template <class T> class RLEBlitTransZRemapXlatAlpha : public RLEBlitter {
@@ -1078,8 +1078,8 @@ template <class T> class RLEBlitTransZRemapXlatAlpha : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b2d0; 4-byte store: mov dword ptr [edi], 0x69b2d0
-    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -1089,8 +1089,8 @@ template <class T> class RLEBlitTransZRemapXlatAlphaZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b294; 4-byte store: mov dword ptr [edi], 0x69b294
-    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -1100,8 +1100,8 @@ template <class T> class RLEBlitTransZRemapXlatAlphaZReadWrite : public RLEBlitt
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b234; 4-byte store: mov dword ptr [edi], 0x69b234
-    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // G
@@ -1111,9 +1111,7 @@ template <class T> class RLEBlitTransZRemapXlatZRead : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b72c; 4-byte store: mov dword ptr [eax], 0x69b72c
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E,G
 template <class T> class RLEBlitTransZRemapXlatZReadWrite : public RLEBlitter {
@@ -1122,8 +1120,6 @@ template <class T> class RLEBlitTransZRemapXlatZReadWrite : public RLEBlitter {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x69b6fc; 4-byte store: mov dword ptr [eax], 0x69b6fc
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 }; // E,G

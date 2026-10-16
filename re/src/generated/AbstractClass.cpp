@@ -19,7 +19,7 @@
 //   0x00405799  mov      eax, 0x80004003
 //   0x0040579e  pop      ebx
 //   0x0040579f  ret      0xc
-HRESULT AbstractClass::vfunc_0()
+void AbstractClass::vfunc_0()
 {
 }
 
@@ -95,7 +95,7 @@ ULONG AbstractClass::Release()
 //   0x006829a7  call     0x6855eb
 //   0x006829ac  pop      ecx
 //   0x006829ad  ret      
-HRESULT AbstractClass::vfunc_6()
+void AbstractClass::vfunc_6()
 {
 }
 
