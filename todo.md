@@ -267,6 +267,20 @@ is 24, against 4 and 16 in the PE32 target, and `__stdcall` is defined away
 entirely. So the calling-convention data recovered for 22,328 functions is not
 exercised by the build.
 
+**There is a cheaper fix for the width half of this, and it should come first.**
+The generator emits every recovered member as `unsigned long`, which is 8 bytes
+here and 4 in the game:
+
+```
+   2313 unsigned long   <- wrong width on this host
+    569 unsigned char
+     36 unsigned short
+```
+
+`unsigned int` is 4 bytes on both, so retyping the emission fixes 2,313 of the
+2,919 member declarations with no toolchain change at all. What it does not fix:
+pointer width, `__stdcall`/`__thiscall`, and `GUID` — those need `-m32`.
+
 **Measured, and better than expected.** After installing `g++-multilib`:
 
 ```

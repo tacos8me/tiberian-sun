@@ -54,10 +54,27 @@ Function discovery is done.
 
 ### 2.2 The ABI gap is real, and it is a gate fix, not a project
 
-The host build is LP64. The shim says `typedef unsigned long DWORD`, so on the
-host `sizeof(DWORD)==8`, `sizeof(void*)==8`, and `#define __stdcall` is a no-op.
-Every struct in the tree therefore has the wrong layout when compiled — the
-recovered offsets are *documented in comments* but not *reproduced by the code*.
+The host build is LP64, so `sizeof(void*)==8` and `#define __stdcall` is a no-op.
+But the bigger and more immediate problem is what the generator emits:
+
+```
+member declarations in the generated headers, by declared type
+   2313 unsigned long        <- 8 bytes here, 4 in the game
+    569 unsigned char
+     36 unsigned short
+```
+
+`unsigned long` is the generator's universal slot type for a recovered member, so
+**2,313 of 2,919 member declarations have the wrong width on this host** and every
+generated struct is inflated (`ObjectClass`: 248 bytes here against 164 at the
+target's ABI). The recovered offsets are documented in comments and cannot be
+reproduced by the code.
+
+That part needs no toolchain change: `unsigned int` is 4 bytes on both LP64 and
+i386, so retyping the emission fixes the width problem outright. What it cannot
+fix is pointer width, `__stdcall`/`__thiscall` (the 22,328 recovered calling
+conventions are not exercised at all while the macro is defined away), or `GUID`
+(24 bytes here against 16). Those need the real 32-bit target.
 
 I installed `g++-multilib` and measured what `-m32` gives:
 
@@ -160,6 +177,14 @@ instructions rather than more recovery.
 ### P0 — Make "compilable" mean the game's ABI
 
 *Small, immediate, unblocks every later claim about layout.*
+
+- **0.0** Stop emitting members as `unsigned long`. That is the generator's
+  universal slot type, and it is 8 bytes on this host against 4 in the game:
+  **2,313 of the 2,919 member declarations in the generated headers are
+  `unsigned long`**, so every generated struct is inflated and no recovered
+  offset can mean anything. `unsigned int` is 4 bytes on both, so this costs
+  nothing and needs no toolchain change. Do this first: it is the reason the
+  offsets disagree, and it is independent of the `-m32` question below.
 
 - **0.1** Gate on `-m32`, fail closed when multilib is absent (a gate that
   silently skips is exactly how an unlinkable tree survived for months).
