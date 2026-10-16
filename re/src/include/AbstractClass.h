@@ -1,4 +1,5 @@
 #pragma once
+#include "ts_prelude.h"
 // ============================================================================
 // AbstractClass.h  —  reconstructed from GAME.EXE (C&C Tiberian Sun, 1999)
 //
@@ -23,13 +24,7 @@ struct IStream;
 // Evidence: RTTI base list of AbstractClass (classes.json, chd_va 0x6a94d8):
 //   IPersistStream (mdisp 0), IPersist (mdisp 0), IUnknown (mdisp 0),
 //   IRTTITypeInfo (mdisp 4), IUnknown (mdisp 4).
-struct IUnknown
-{
-    virtual long  QueryInterface(const void* iid, void** ppv) = 0;  // vtbl[0]
-    virtual unsigned long AddRef() = 0;                             // vtbl[1]
-    virtual unsigned long Release() = 0;                            // vtbl[2]
-};
-
+// IUnknown is defined by ts_prelude.h (shared COM base).
 struct IPersist : public IUnknown
 {
     virtual long GetClassID(void* pClassID) = 0;                    // vtbl[3]

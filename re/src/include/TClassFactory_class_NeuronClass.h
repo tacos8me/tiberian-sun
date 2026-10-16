@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "BrainClass.h"
 
 class TClassFactory_class_NeuronClass : public IClassFactory, public IUnknown
 {

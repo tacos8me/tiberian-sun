@@ -19,7 +19,6 @@
 #define DROPPODLOCOMOTIONCLASS_H
 
 #include "LocomotionClass.h"
-#include "ts_prelude.h"
 
 class DropPodLocomotionClass : public LocomotionClass, public IPiggyback
 {

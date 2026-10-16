@@ -12,7 +12,8 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "DynamicVectorClass.h"
+#include "VectorClass.h"
+#include "ObjectClass.h"
 
 class LayerClass : public DynamicVectorClass<ObjectClass*>
 {

@@ -53,7 +53,6 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "Pipe.h"
 
 // --------------------------------------------------------------------------
 // Pipe — write side of the pipeline.
@@ -76,7 +75,10 @@ public:
 
     // ---- data members ----
     void *vptr;    // +0x00  vtable 0x69bc04
-    Pipe *Next;    // +0x04  next stage in the chain
+    // NOTE: this member cannot be named Next — it would collide with the
+    // virtual Next(Pipe*) recovered from vtable 0x69bc04 slot [3]. The virtual
+    // name is the evidence-backed one, so the member is named NextStage.
+    Pipe *NextStage;    // +0x04  next stage in the chain
     Pipe *Prev;    // +0x08  previous stage (set by the next stage's Next())
 };
 

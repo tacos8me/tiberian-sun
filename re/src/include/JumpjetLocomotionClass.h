@@ -15,7 +15,6 @@
 #define JUMPJETLOCOMOTIONCLASS_H
 
 #include "LocomotionClass.h"
-#include "ts_prelude.h"
 
 class JumpjetLocomotionClass : public LocomotionClass
 {

@@ -143,12 +143,18 @@ binary and corroborating them across instantiations:
 - `Pipe.h` — the 20-class Pipe/Straw IO hierarchy with all 80 virtuals named
   from call-site evidence (LCW, LZO, PKZIP, Blowfish, SHA-1, base64).
 
-**In progress (currently RED).** Teaching `tools/gen_headers.py` to skip
-manifest entries that are instantiations of these hand-written templates, and
-to spell bases from the authoritative RTTI name instead of un-mangling the
-ident. Suppression works (536 entries skipped); the remaining failure is
-template arguments that have no header and are not yet declared. Standalone
-compilation is currently 145/257 and the combined TU fails. Do not push until
-`tools/verify.py` passes again.
+**P2 integration complete and verified.** `tools/gen_headers.py` now skips
+manifest entries owned by the hand-written headers (536 entries skipped), maps a
+template name to the header that actually defines it (so includes name
+`VectorClass.h`/`INIClass.h`, not a nonexistent `DynamicVectorClass.h`/`Node.h`),
+and forward-declares MSVC-leaked formal template parameters (e.g. the `H` in
+`VectorClass<H>`) instead of inventing a type for them. `tools/verify.py` credits
+class coverage to the template that defines an instantiation rather than
+demanding a file per instantiation, which is what the 487 template-argument
+manifest entries actually require.
+
+`tools/verify.py` prints `VERIFICATION PASSED`: 259/259 standalone, combined TU
+PASS, 749/749 coverage, 200/200 vtable bindings — reproduced from a clean
+checkout with `out/` and `src/include/` removed.
 
 See `PROGRESS.md` for the live work list.

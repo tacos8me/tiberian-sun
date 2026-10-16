@@ -12,8 +12,10 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "Node.h"
+#include "INIClass.h"
+#include "INIClass.h"
 
+class INISection;  // RTTI formal param, no type evidence
 class INIClass_INISection : public Node<INIClass::INISection*, INIClass>
 {
 public:

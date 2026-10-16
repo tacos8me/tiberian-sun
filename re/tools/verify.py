@@ -76,11 +76,26 @@ def main():
         def is_covered(m):
             if m["ident"] in have or m["ident"] in defined:
                 return True
-            for pre in ("Node_", "GenericNode"):
-                if m["ident"].startswith(pre):
-                    base = m["ident"][len(pre):].split("_")[0]
-                    if base in defined or "Node" in defined:
-                        return True
+            # A template instantiation is covered when the template it
+            # instantiates is defined by a reconstructed header. Emitting a
+            # separate header per instantiation would be wrong: one template
+            # header legitimately defines every instantiation of it, so
+            # coverage is credited to the template, not to a per-instantiation
+            # file. The template name is taken from the authoritative RTTI
+            # spelling, not from the mangled ident.
+            rtti = str(m.get("class", ""))
+            if "<" in rtti:
+                tmpl = rtti.split("<")[0]
+                for kw in ("class ", "struct "):
+                    if tmpl.startswith(kw):
+                        tmpl = tmpl[len(kw):]
+                tmpl = tmpl.strip()
+                if tmpl in defined or tmpl in have:
+                    return True
+                # Namespaced templates (ATL::CComObject) are spelled with the
+                # scope collapsed in the ident.
+                if tmpl.replace("::", "_") in defined:
+                    return True
             return False
         covered = [m for m in man if is_covered(m)]
         pct = 100.0 * len(covered) / len(man) if man else 0

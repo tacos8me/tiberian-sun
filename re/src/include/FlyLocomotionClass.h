@@ -15,7 +15,6 @@
 #define FLYLOCOMOTIONCLASS_H
 
 #include "LocomotionClass.h"
-#include "ts_prelude.h"
 
 class FlyLocomotionClass : public LocomotionClass
 {

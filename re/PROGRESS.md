@@ -1,22 +1,29 @@
 # PROGRESS — Tiberian Sun reconstruction
-
-Last updated: after initial RTTI/disassembly recovery and first header pass.
+Last updated: P2 header integration complete — `tools/verify.py` passes.
 
 ## Status summary
 
-**Class coverage is now complete: all 749 classes recovered from RTTI have a
-header, and the entire set compiles** — 692 headers, 27,026 lines, verified
-both standalone (692/692) and as a combined translation unit.
+**Class coverage is complete and verified: `tools/verify.py` prints
+VERIFICATION PASSED** — 259/259 headers compile standalone, the combined
+translation unit compiles, all 749 manifest classes are covered, and 200/200
+sampled vtable→class bindings re-resolve correctly against the binary.
 
 Coverage is achieved in two tiers:
-  - **96 classes** have hand-written headers with named virtuals, recovered
-    member offsets, and per-declaration evidence citations.
-  - **653 classes** have generated headers carrying exact inheritance, the full
-    vtable in real order with target addresses, and the constructor VA.
+  - **hand-written headers** with named virtuals, recovered member offsets, and
+    per-declaration evidence citations (including the `VectorClass`/
+    `DynamicVectorClass`/`TypeList`, `Blitter`, and `Pipe`/`Straw` templates).
+  - **generated headers** carrying exact inheritance, the full vtable in real
+    order with target addresses, and the constructor VA.
 
 The generated tier is mechanically correct but shallow: virtuals are named
 `vfunc_N` and data members are not yet emitted. Deepening that tier is the
 current work (see P1 below).
+
+Instantiations of the hand-written templates are covered by the template
+header that defines them rather than by a per-instantiation file; `verify.py`
+credits coverage to the defining template (487 of the 749 manifest entries are
+template instantiations, e.g. 150 `VectorClass`, 147 `DynamicVectorClass`,
+66 `TClassFactory`, 12 `TypeList`).
 
 ## Completed and verified
 
@@ -80,21 +87,23 @@ hand-written set:
       to 9810 — the earlier figure was truncated by picking a secondary
       interface vtable)
 
-### P2 — next
-- [ ] Emit `.cpp` stubs with real bodies where feasible
-- [ ] Reconstruct the ~58 `Blit*` blitter templates as one template header
-- [ ] Reconstruct `TypeList<>` / `VectorClass<>` / `Node<>` container templates
-- [ ] Reconstruct the Pipe/Straw IO hierarchy (20 classes)
-- [ ] Reconstruct the MS* multimedia classes
-- [ ] Reconstruct the WOL/ATL COM layer
+### P2 — templates  [DONE]
+- [x] Reconstruct the `Blit*`/`RLEBlit*` blitter family as one template header
+      (`src/handwritten/Blitter.h`, `<E>`/`<G>` split proven from stride)
+- [x] Reconstruct `VectorClass<>` / `DynamicVectorClass<>` / `TypeList<>`
+      (`src/handwritten/VectorClass.h`, layout from ctor `0x445640`)
+- [x] Reconstruct the Pipe/Straw IO hierarchy (`src/handwritten/Pipe.h`,
+      20 classes, 80 virtuals named from call-site evidence)
+- [x] Wire template ownership into the generator so instantiations are not
+      re-emitted as duplicate headers, and credit coverage to the defining
+      template
 
-### P2 — coverage beyond classes
-- [ ] Reconstruct the ~58 `Blit*` blitter templates as one template header
-- [ ] Reconstruct `TypeList<>` / `VectorClass<>` / `Node<>` container templates
-- [ ] Reconstruct the Pipe/Straw IO hierarchy (20 classes)
+### P2 — remaining
+- [ ] `Node<>` container template (currently declared in `INIClass.h`; should
+      become its own header with recovered layout)
 - [ ] Reconstruct the MS* multimedia classes (MSAnim, MSFont, ...)
 - [ ] Reconstruct the WOL/ATL COM layer
-
+- [ ] Emit `.cpp` stubs with real bodies where feasible
 ### P3 — validation
 - [ ] Byte-level validation: recompile and diff generated code against the
       original binary where a matching compiler is available
@@ -138,10 +147,10 @@ python3 tools/verify.py src/include build/shim
 
 ## Verification status
 
-`tools/verify.py` currently reports:
+`tools/verify.py` reports, both in-tree and from a clean checkout:
 
 ```
-[1] standalone compile: 691/691
+[1] standalone compile: 259/259
 [2] combined TU compile: PASS
 [3] class coverage: 749/749 (100.0%)
 [4] vtable->class bindings: 200/200 verified

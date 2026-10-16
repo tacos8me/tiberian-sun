@@ -14,6 +14,7 @@
 #include "ts_prelude.h"
 #include "VectorClass.h"
 
+class H;  // RTTI formal param, no type evidence
 class CounterClass : public VectorClass<H>
 {
 public:

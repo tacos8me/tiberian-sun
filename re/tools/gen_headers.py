@@ -163,6 +163,36 @@ def main():
         if os.path.exists(owned_path):
             owned = set(json.load(open(owned_path)))
 
+    # Template name -> the header that actually defines it. Emitting
+    # #include "<template>.h" is wrong when the template lives in a
+    # differently-named file (DynamicVectorClass is in VectorClass.h, Node is
+    # in INIClass.h); the include must name the defining file.
+    template_header = {
+        "VectorClass": "VectorClass.h",
+        "DynamicVectorClass": "VectorClass.h",
+        "TypeList": "VectorClass.h",
+        "Node": "INIClass.h",
+    }
+    if os.path.isdir(hw_dir):
+        for hp in glob.glob(os.path.join(hw_dir, "*.h")):
+            hs = open(hp).read()
+            for hm in re.finditer(
+                    r"^(?:template\s*<[^>]*>\s*)?(?:class|struct)\s+(\w+)",
+                    hs, re.M):
+                template_header.setdefault(hm.group(1),
+                                           os.path.basename(hp))
+    # Templates whose formal parameters have no evidence-backed concrete type.
+    # MSVC leaks the formal parameter name into RTTI for instantiations that
+    # occur inside the template body, so e.g. "VectorClass<H>" has no real H.
+    # Such an argument must be forward-declared, not spelled as a template
+    # argument of an unknown type.
+    for hp in glob.glob(os.path.join(hw_dir, "*.h")) if os.path.isdir(hw_dir) else []:
+        hs = open(hp).read()
+        for hm in re.finditer(
+                r"^(?:template\s*<([^>]*)>)\s*(?:class|struct)\s+(\w+)", hs, re.M):
+            for _fp in re.findall(r"[A-Za-z_]\w*", hm.group(1)):
+                template_header.setdefault(_fp, None)
+
     os.makedirs(srcdir, exist_ok=True)
     written = 0
     skipped = 0
@@ -231,8 +261,19 @@ def main():
                     if _t.startswith(_kw):
                         _t = _t[len(_kw):]
                 _t = _t.strip()
-                if _t in owned:
-                    L.append(f'#include "{_t}.h"')
+                _hdr = template_header.get(_t)
+                if _hdr:
+                    L.append(f'#include "{_hdr}"')
+                # The base's template ARGUMENTS must also be complete types:
+                # DynamicVectorClass<ObjectClass*> needs ObjectClass.h. Include
+                # the header of every argument that has one.
+                for _at in re.findall(r"[A-Za-z_]\w*", _bt[_bt.index("<"):]):
+                    if _at in _KEYWORDS:
+                        continue
+                    if os.path.exists(os.path.join(srcdir, _at + ".h")):
+                        L.append(f'#include "{_at}.h"')
+                    elif template_header.get(_at):
+                        L.append(f'#include "{template_header[_at]}"')
         # A template instantiation needs its template arguments declared.
         # Derive them from the RTTI name, e.g.
         #   class DynamicVectorClass<AbstractClass*>  ->  AbstractClass.h
@@ -246,6 +287,10 @@ def main():
                 seen.add(tok)
                 if os.path.exists(os.path.join(srcdir, tok + ".h")):
                     L.append(f'#include "{tok}.h"')
+                elif template_header.get(tok):
+                    # The argument is itself defined by a hand-written template
+                    # header (e.g. an instantiation nested in another template).
+                    L.append(f'#include "{template_header[tok]}"')
                 elif tok not in owned and tok not in prelude_types:
                     # The argument has no header of its own (MSVC emits the
                     # formal parameter name for instantiations inside a
@@ -255,6 +300,27 @@ def main():
         L.append("")
 
         if bases:
+            # Base clauses may mention a template argument that is only a leaked
+            # MSVC formal parameter (CounterClass : public VectorClass<H>). Such
+            # an argument has no evidence-backed type, so forward-declare it
+            # rather than inventing one; this keeps the template-id well-formed
+            # while preserving the recovered inheritance edge.
+            _declared = set()
+            for _b in bases:
+                _bt = rtti_by_ident.get(_b, "")
+                if "<" not in _bt:
+                    continue
+                for _tok in re.findall(r"[A-Za-z_]\w*", _bt[_bt.index("<"):]):
+                    if _tok in _KEYWORDS or _tok in _declared:
+                        continue
+                    _declared.add(_tok)
+                    if os.path.exists(os.path.join(srcdir, _tok + ".h")):
+                        continue
+                    if _tok in owned or _tok in prelude_types:
+                        continue
+                    if template_header.get(_tok):
+                        continue
+                    L.append(f"class {_tok};  // RTTI formal param, no type evidence")
             spelled = []
             for b in bases:
                 if b in cpp_name:

@@ -21,7 +21,6 @@
 #define DRIVELOCOMOTIONCLASS_H
 
 #include "LocomotionClass.h"
-#include "ts_prelude.h"
 
 class DriveLocomotionClass : public LocomotionClass, public IPiggyback
 {

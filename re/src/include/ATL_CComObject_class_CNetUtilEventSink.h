@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "ts_prelude.h"
 
 class ATL_CComObject_class_CNetUtilEventSink : public CNetUtilEventSink, public ATL::CComObjectRootEx<ATL::CComMultiThreadModel, void>, public ATL::CComObjectRootBase, public WOL::INetUtilEvent, public IUnknown
 {
