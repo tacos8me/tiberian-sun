@@ -28,7 +28,7 @@ void MapSeedClass::vfunc_0(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// MapSeedClass::vfunc_1 -- body derived from 162 instructions at 0x0052d760; semantics not reconstructed.
+// MapSeedClass::Read_INI -- body derived from 162 instructions at 0x0052d760; semantics not reconstructed.
 // size 616 bytes; signature __thiscall nargs=1
 // callees: 0x00403960, 0x00403980, 0x00407a60, 0x00420190, 0x00425170, 0x004473c0, 0x0046ebd0, 0x004d4430, 0x004d4700, 0x004d60b0, 0x004d6ed0
 //
@@ -194,12 +194,12 @@ void MapSeedClass::vfunc_0(int a0)
 //   0x0052d9be  pop      ebx
 //   0x0052d9bf  add      esp, 0x98
 //   0x0052d9c5  ret      4
-void MapSeedClass::vfunc_1(int a0)
+void MapSeedClass::Read_INI(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// MapSeedClass::vfunc_2 -- body derived from 160 instructions at 0x0052d4f0; semantics not reconstructed.
+// MapSeedClass::Read_INI -- body derived from 160 instructions at 0x0052d4f0; semantics not reconstructed.
 // size 574 bytes; signature __thiscall nargs=2
 // callees: 0x00403980, 0x00407a60, 0x00420190, 0x00425170, 0x004473c0, 0x004d4430, 0x004d50f0, 0x004d6030, 0x004d6b50
 //
@@ -363,7 +363,7 @@ void MapSeedClass::vfunc_1(int a0)
 //   0x0052d724  pop      ebx
 //   0x0052d725  add      esp, 0x98
 //   0x0052d72b  ret      8
-void MapSeedClass::vfunc_2(int a0, int a1)
+void MapSeedClass::Read_INI(int a0, int a1)
 {
 }
 

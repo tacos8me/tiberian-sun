@@ -18,9 +18,9 @@ class ApplicationClass : public IApplication
 {
 public:
     // ---- vtable 0x00699c2c (11 slots) ----
-    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x00419560  // __stdcall, returns int
-    virtual void vfunc_1(int a0);  // [1] 0x004195e0  // __stdcall, returns int
-    virtual void vfunc_2(int a0);  // [2] 0x004195f0  // __stdcall, returns int
+    virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x00419560  // __stdcall, returns int
+    virtual void AddRef(int a0);  // [1] 0x004195e0  // __stdcall, returns int
+    virtual void Release(int a0);  // [2] 0x004195f0  // __stdcall, returns int
     virtual void vfunc_3(int a0, int a1);  // [3] 0x00419620  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x00419650  // __stdcall, returns int
     virtual void vfunc_5(int a0);  // [5] 0x004196a0  // __stdcall, returns int

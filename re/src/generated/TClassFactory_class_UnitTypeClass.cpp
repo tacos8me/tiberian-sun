@@ -8,7 +8,7 @@
 #include "TClassFactory_class_UnitTypeClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_UnitTypeClass::vfunc_0 -- body derived from 7 instructions at 0x005eb3c0; semantics not reconstructed.
+// TClassFactory_class_UnitTypeClass::QueryInterface -- body derived from 7 instructions at 0x005eb3c0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005eb3c9  mov      eax, 0x80004003
 //   0x005eb3ce  pop      ebx
 //   0x005eb3cf  ret      0xc
-void TClassFactory_class_UnitTypeClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_UnitTypeClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_UnitTypeClass::vfunc_1 -- body derived from 5 instructions at 0x005eb430; semantics not reconstructed.
+// TClassFactory_class_UnitTypeClass::AddRef -- body derived from 5 instructions at 0x005eb430; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_UnitTypeClass::vfunc_0(int a0, int a1, int a2)
 //   0x005eb437  push     eax
 //   0x005eb438  call     dword ptr [0x6981a4]
 //   0x005eb43e  ret      4
-void TClassFactory_class_UnitTypeClass::vfunc_1(int a0)
+void TClassFactory_class_UnitTypeClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_UnitTypeClass::vfunc_2 -- body derived from 16 instructions at 0x005eb450; semantics not reconstructed.
+// TClassFactory_class_UnitTypeClass::Release -- body derived from 16 instructions at 0x005eb450; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_UnitTypeClass::vfunc_1(int a0)
 //   0x005eb471  pop      edi
 //   0x005eb472  pop      esi
 //   0x005eb473  ret      4
-void TClassFactory_class_UnitTypeClass::vfunc_2(int a0)
+void TClassFactory_class_UnitTypeClass::Release(int a0)
 {
 }
 

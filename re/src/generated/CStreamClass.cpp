@@ -8,7 +8,7 @@
 #include "CStreamClass.h"
 
 // ---------------------------------------------------------------------------
-// CStreamClass::vfunc_0 -- body derived from 7 instructions at 0x0046e1b0; semantics not reconstructed.
+// CStreamClass::QueryInterface -- body derived from 7 instructions at 0x0046e1b0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x0046e1b9  mov      eax, 0x80004003
 //   0x0046e1be  pop      ebx
 //   0x0046e1bf  ret      0xc
-void CStreamClass::vfunc_0(int a0, int a1, int a2)
+void CStreamClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// CStreamClass::vfunc_1 -- body derived from 8 instructions at 0x0046e150; semantics not reconstructed.
+// CStreamClass::AddRef -- body derived from 8 instructions at 0x0046e150; semantics not reconstructed.
 // size 30 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -36,12 +36,12 @@ void CStreamClass::vfunc_0(int a0, int a1, int a2)
 //   0x0046e15f  mov      dword ptr [0x7d3104], edx
 //   0x0046e165  call     dword ptr [0x6981a4]
 //   0x0046e16b  ret      4
-void CStreamClass::vfunc_1(int a0)
+void CStreamClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// CStreamClass::vfunc_2 -- body derived from 22 instructions at 0x0046e170; semantics not reconstructed.
+// CStreamClass::Release -- body derived from 22 instructions at 0x0046e170; semantics not reconstructed.
 // size 55 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -67,7 +67,7 @@ void CStreamClass::vfunc_1(int a0)
 //   0x0046e1a2  pop      edi
 //   0x0046e1a3  pop      esi
 //   0x0046e1a4  ret      4
-void CStreamClass::vfunc_2(int a0)
+void CStreamClass::Release(int a0)
 {
 }
 

@@ -8,7 +8,7 @@
 #include "TClassFactory_class_VoxelAnimTypeClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_VoxelAnimTypeClass::vfunc_0 -- body derived from 7 instructions at 0x005ea1c0; semantics not reconstructed.
+// TClassFactory_class_VoxelAnimTypeClass::QueryInterface -- body derived from 7 instructions at 0x005ea1c0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005ea1c9  mov      eax, 0x80004003
 //   0x005ea1ce  pop      ebx
 //   0x005ea1cf  ret      0xc
-void TClassFactory_class_VoxelAnimTypeClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_VoxelAnimTypeClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_VoxelAnimTypeClass::vfunc_1 -- body derived from 5 instructions at 0x005ea230; semantics not reconstructed.
+// TClassFactory_class_VoxelAnimTypeClass::AddRef -- body derived from 5 instructions at 0x005ea230; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_VoxelAnimTypeClass::vfunc_0(int a0, int a1, int a2)
 //   0x005ea237  push     eax
 //   0x005ea238  call     dword ptr [0x6981a4]
 //   0x005ea23e  ret      4
-void TClassFactory_class_VoxelAnimTypeClass::vfunc_1(int a0)
+void TClassFactory_class_VoxelAnimTypeClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_VoxelAnimTypeClass::vfunc_2 -- body derived from 16 instructions at 0x005ea250; semantics not reconstructed.
+// TClassFactory_class_VoxelAnimTypeClass::Release -- body derived from 16 instructions at 0x005ea250; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_VoxelAnimTypeClass::vfunc_1(int a0)
 //   0x005ea271  pop      edi
 //   0x005ea272  pop      esi
 //   0x005ea273  ret      4
-void TClassFactory_class_VoxelAnimTypeClass::vfunc_2(int a0)
+void TClassFactory_class_VoxelAnimTypeClass::Release(int a0)
 {
 }
 

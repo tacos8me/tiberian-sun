@@ -8,7 +8,7 @@
 #include "TClassFactory_class_ParticleSystemTypeClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_ParticleSystemTypeClass::vfunc_0 -- body derived from 7 instructions at 0x005ee3c0; semantics not reconstructed.
+// TClassFactory_class_ParticleSystemTypeClass::QueryInterface -- body derived from 7 instructions at 0x005ee3c0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005ee3c9  mov      eax, 0x80004003
 //   0x005ee3ce  pop      ebx
 //   0x005ee3cf  ret      0xc
-void TClassFactory_class_ParticleSystemTypeClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_ParticleSystemTypeClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_ParticleSystemTypeClass::vfunc_1 -- body derived from 5 instructions at 0x005ee430; semantics not reconstructed.
+// TClassFactory_class_ParticleSystemTypeClass::AddRef -- body derived from 5 instructions at 0x005ee430; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_ParticleSystemTypeClass::vfunc_0(int a0, int a1, int a2
 //   0x005ee437  push     eax
 //   0x005ee438  call     dword ptr [0x6981a4]
 //   0x005ee43e  ret      4
-void TClassFactory_class_ParticleSystemTypeClass::vfunc_1(int a0)
+void TClassFactory_class_ParticleSystemTypeClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_ParticleSystemTypeClass::vfunc_2 -- body derived from 16 instructions at 0x005ee450; semantics not reconstructed.
+// TClassFactory_class_ParticleSystemTypeClass::Release -- body derived from 16 instructions at 0x005ee450; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_ParticleSystemTypeClass::vfunc_1(int a0)
 //   0x005ee471  pop      edi
 //   0x005ee472  pop      esi
 //   0x005ee473  ret      4
-void TClassFactory_class_ParticleSystemTypeClass::vfunc_2(int a0)
+void TClassFactory_class_ParticleSystemTypeClass::Release(int a0)
 {
 }
 

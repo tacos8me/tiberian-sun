@@ -8,7 +8,7 @@
 #include "TClassFactory_class_UnitClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_UnitClass::vfunc_0 -- body derived from 7 instructions at 0x005ebfc0; semantics not reconstructed.
+// TClassFactory_class_UnitClass::QueryInterface -- body derived from 7 instructions at 0x005ebfc0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005ebfc9  mov      eax, 0x80004003
 //   0x005ebfce  pop      ebx
 //   0x005ebfcf  ret      0xc
-void TClassFactory_class_UnitClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_UnitClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_UnitClass::vfunc_1 -- body derived from 5 instructions at 0x005ec030; semantics not reconstructed.
+// TClassFactory_class_UnitClass::AddRef -- body derived from 5 instructions at 0x005ec030; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_UnitClass::vfunc_0(int a0, int a1, int a2)
 //   0x005ec037  push     eax
 //   0x005ec038  call     dword ptr [0x6981a4]
 //   0x005ec03e  ret      4
-void TClassFactory_class_UnitClass::vfunc_1(int a0)
+void TClassFactory_class_UnitClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_UnitClass::vfunc_2 -- body derived from 16 instructions at 0x005ec050; semantics not reconstructed.
+// TClassFactory_class_UnitClass::Release -- body derived from 16 instructions at 0x005ec050; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_UnitClass::vfunc_1(int a0)
 //   0x005ec071  pop      edi
 //   0x005ec072  pop      esi
 //   0x005ec073  ret      4
-void TClassFactory_class_UnitClass::vfunc_2(int a0)
+void TClassFactory_class_UnitClass::Release(int a0)
 {
 }
 

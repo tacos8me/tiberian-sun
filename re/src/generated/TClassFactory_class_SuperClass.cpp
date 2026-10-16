@@ -8,7 +8,7 @@
 #include "TClassFactory_class_SuperClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_SuperClass::vfunc_0 -- body derived from 7 instructions at 0x005e8fc0; semantics not reconstructed.
+// TClassFactory_class_SuperClass::QueryInterface -- body derived from 7 instructions at 0x005e8fc0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005e8fc9  mov      eax, 0x80004003
 //   0x005e8fce  pop      ebx
 //   0x005e8fcf  ret      0xc
-void TClassFactory_class_SuperClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_SuperClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_SuperClass::vfunc_1 -- body derived from 5 instructions at 0x005e9030; semantics not reconstructed.
+// TClassFactory_class_SuperClass::AddRef -- body derived from 5 instructions at 0x005e9030; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_SuperClass::vfunc_0(int a0, int a1, int a2)
 //   0x005e9037  push     eax
 //   0x005e9038  call     dword ptr [0x6981a4]
 //   0x005e903e  ret      4
-void TClassFactory_class_SuperClass::vfunc_1(int a0)
+void TClassFactory_class_SuperClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_SuperClass::vfunc_2 -- body derived from 16 instructions at 0x005e9050; semantics not reconstructed.
+// TClassFactory_class_SuperClass::Release -- body derived from 16 instructions at 0x005e9050; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_SuperClass::vfunc_1(int a0)
 //   0x005e9071  pop      edi
 //   0x005e9072  pop      esi
 //   0x005e9073  ret      4
-void TClassFactory_class_SuperClass::vfunc_2(int a0)
+void TClassFactory_class_SuperClass::Release(int a0)
 {
 }
 

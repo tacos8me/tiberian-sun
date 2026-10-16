@@ -11,7 +11,8 @@
 // The ILocomotion vtable at 0x69fd5c has 50 slots (0x00..0xC4).  Slots 0..48 are
 // the pure/overridable ILocomotion interface; slot 49 is the RTTI
 // CompleteObjectLocator pointer (0x6b0310).  The IPersistStream vtable at
-// 0x69fe24 has 9 slots (0x00..0x20) followed by the COL.
+// 0x69fe24 has 10 code slots (0x00..0x24); its COL is at 0x69fe20,
+// immediately BEFORE it.
 //
 // Slot semantics below are inferred from the base implementations and from the
 // concrete overrides in the derived classes (see LOCOMOTION_INDEX.md).  Names
@@ -185,24 +186,36 @@ public:
     // +0x08  bool m_bIsMoving /* ? */ (set by ILocomotion slot 22/23)
 
     LocomotionClass();                       // 0x4f99a0
-    virtual ~LocomotionClass();              // 0x4cb060 (scalar deleting dtor)
+    virtual ~LocomotionClass();              // 0x4cb060 (scalar deleting dtor; the IPersistStream vtable's slot-8 entry)
 
-    // IPersistStream (vtable 0x69fe24, 9 slots)
-    virtual HRESULT __stdcall QueryInterface(REFIID riid, void** ppv);  // 0x4f9c50
-    virtual ULONG   __stdcall AddRef();                                 // 0x4f9bf0
-    virtual ULONG   __stdcall Release();                                // 0x4f9c10
-    virtual HRESULT __stdcall GetClassID(CLSID* pClassID);              // 0x6829a5 stub
-    virtual HRESULT __stdcall IsDirty();                                // 0x47e9f0
-    virtual HRESULT __stdcall Load(IStream* pStm);                      // 0x4f9d00
-    virtual HRESULT __stdcall Save(IStream* pStm, BOOL fClearDirty);    // 0x4f9dd0
-    virtual HRESULT __stdcall GetSizeMax(ULARGE_INTEGER* pcbSize);      // 0x4cb060
-    virtual HRESULT __stdcall Slot8();                                  // 0x6829a5 stub
+    // IPersistStream (vtable 0x69fe24).  Real COM order.  The vtable holds 10
+    // code entries (0x00..0x24) and its RTTI CompleteObjectLocator is at
+    // 0x69fe20, immediately BEFORE the vtable -- not in a slot.
+    // Each citation below is the dword at 0x69fe24 + 4*slot, read from the
+    // binary: slot 0 0x4f9c50, slot 1 0x4f9bf0, slot 2 0x4f9c10,
+    // slot 3 0x6829a5 (shared E_POINTER stub), slot 4 0x47e9f0,
+    // slot 5 0x6829a5 (shared E_POINTER stub), slot 6 0x4f9d00,
+    // slot 7 0x4f9dd0, slot 8 0x4cb060 (scalar deleting dtor),
+    // slot 9 0x6829a5 (shared E_POINTER stub).
+    // An earlier revision of this header omitted slot 5 and so shifted the
+    // three citations after it by one: Load cited Save's address, Save cited
+    // GetSizeMax's, and GetSizeMax cited the scalar deleting destructor.
+    virtual HRESULT __stdcall QueryInterface(REFIID riid, void** ppv);  // 0x4f9c50 slot 0
+    virtual ULONG   __stdcall AddRef();                                 // 0x4f9bf0 slot 1
+    virtual ULONG   __stdcall Release();                                // 0x4f9c10 slot 2
+    virtual HRESULT __stdcall GetClassID(CLSID* pClassID);              // 0x6829a5 stub, slot 3
+    virtual HRESULT __stdcall IsDirty();                                // 0x47e9f0 slot 4
+    virtual HRESULT __stdcall Load(IStream* pStm);                      // 0x6829a5 stub, slot 5
+    virtual HRESULT __stdcall Save(IStream* pStm, BOOL fClearDirty);    // 0x4f9d00 slot 6
+    virtual HRESULT __stdcall GetSizeMax(ULARGE_INTEGER* pcbSize);      // 0x4f9dd0 slot 7
+    virtual HRESULT __stdcall Slot8();                                  // 0x6829a5 stub, vtable slot 9
 
     // ---- data members (offsets from ctor 0x004cae20) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69fe24; 4-byte store: mov dword ptr [esi], 0x69fe24
+    unsigned long m_004;  // +0x004 init 0x69fd5c; 4-byte store: mov dword ptr [esi + 4], 0x69fd5c
 
 };
 

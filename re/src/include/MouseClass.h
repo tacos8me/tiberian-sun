@@ -19,9 +19,9 @@ class MouseClass : public ScrollClass
 {
 public:
     // ---- vtable 0x00698754 (51 slots) ----
-    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x004b2de0  // __stdcall, returns int
-    virtual void vfunc_1(int a0);  // [1] 0x00402ad0  // __stdcall, returns int
-    virtual void vfunc_2(int a0);  // [2] 0x00402ae0  // __stdcall, returns int
+    virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x004b2de0  // __stdcall, returns int
+    virtual void AddRef(int a0);  // [1] 0x00402ad0  // __stdcall, returns int
+    virtual void Release(int a0);  // [2] 0x00402ae0  // __stdcall, returns int
     virtual void vfunc_3(int a0, int a1);  // [3] 0x00502000  // __stdcall
     virtual void vfunc_5();  // [5] 0x0054f650  // __cdecl
     virtual void vfunc_6(int a0);  // [6] 0x004b2e50  // __thiscall

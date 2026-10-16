@@ -21,6 +21,7 @@
 #define WARHEADTYPECLASS_H
 
 #include "ObjectTypeClass.h"  // declares AbstractTypeClass (no separate header)
+#include "ts_prelude.h"
 
 class WarheadTypeClass : public AbstractTypeClass
 {
@@ -68,9 +69,16 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned char m_0a9;  // +0x0a9 /* ? */; 1-byte store: mov byte ptr [esi + 0xa9], al
-    unsigned char pad_0aa[0x2];
-    // 9 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a7230; 4-byte store: mov dword ptr [esi], 0x6a7230
+    unsigned long m_004;  // +0x004 init 0x6a7214; 4-byte store: mov dword ptr [esi + 4], 0x6a7214
+    unsigned char pad_008[0x94];
+    unsigned long m_09c;  // +0x09c init 0x6a3c48; 4-byte store: mov dword ptr [esi + 0x9c], 0x6a3c48
+    unsigned long m_0a0;  // +0x0a0 /* ? */; 4-byte store: mov dword ptr [esi + 0xa0], eax
+    unsigned long m_0a4;  // +0x0a4 /* ? */; 4-byte store: mov dword ptr [esi + 0xa4], eax
+    unsigned char m_0a8;  // +0x0a8 init 0x1; 1-byte store: mov byte ptr [esi + 0xa8], 1
+    unsigned long m_0ac;  // +0x0ac /* ? */; 4-byte store: mov dword ptr [esi + 0xac], eax
+    unsigned long m_0b0;  // +0x0b0 init 0xa; 4-byte store: mov dword ptr [esi + 0xb0], 0xa
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

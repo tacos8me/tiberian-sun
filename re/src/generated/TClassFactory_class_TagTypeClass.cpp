@@ -8,7 +8,7 @@
 #include "TClassFactory_class_TagTypeClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TagTypeClass::vfunc_0 -- body derived from 7 instructions at 0x005eadc0; semantics not reconstructed.
+// TClassFactory_class_TagTypeClass::QueryInterface -- body derived from 7 instructions at 0x005eadc0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005eadc9  mov      eax, 0x80004003
 //   0x005eadce  pop      ebx
 //   0x005eadcf  ret      0xc
-void TClassFactory_class_TagTypeClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_TagTypeClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TagTypeClass::vfunc_1 -- body derived from 5 instructions at 0x005eae30; semantics not reconstructed.
+// TClassFactory_class_TagTypeClass::AddRef -- body derived from 5 instructions at 0x005eae30; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_TagTypeClass::vfunc_0(int a0, int a1, int a2)
 //   0x005eae37  push     eax
 //   0x005eae38  call     dword ptr [0x6981a4]
 //   0x005eae3e  ret      4
-void TClassFactory_class_TagTypeClass::vfunc_1(int a0)
+void TClassFactory_class_TagTypeClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TagTypeClass::vfunc_2 -- body derived from 16 instructions at 0x005eae50; semantics not reconstructed.
+// TClassFactory_class_TagTypeClass::Release -- body derived from 16 instructions at 0x005eae50; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_TagTypeClass::vfunc_1(int a0)
 //   0x005eae71  pop      edi
 //   0x005eae72  pop      esi
 //   0x005eae73  ret      4
-void TClassFactory_class_TagTypeClass::vfunc_2(int a0)
+void TClassFactory_class_TagTypeClass::Release(int a0)
 {
 }
 

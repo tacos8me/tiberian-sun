@@ -8,7 +8,7 @@
 #include "PowerClass.h"
 
 // ---------------------------------------------------------------------------
-// PowerClass::vfunc_0 -- body derived from 9 instructions at 0x004b2de0; semantics not reconstructed.
+// PowerClass::QueryInterface -- body derived from 9 instructions at 0x004b2de0; semantics not reconstructed.
 // size 20 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -21,29 +21,29 @@
 //   0x004b2deb  mov      eax, 0x80004003
 //   0x004b2df0  pop      esi
 //   0x004b2df1  ret      0xc
-void PowerClass::vfunc_0(int a0, int a1, int a2)
+void PowerClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// PowerClass::vfunc_1 -- body derived from 2 instructions at 0x00402ad0; semantics not reconstructed.
+// PowerClass::AddRef -- body derived from 2 instructions at 0x00402ad0; semantics not reconstructed.
 // size 8 bytes; signature __stdcall nargs=1
 // callees: none
 //
 //   0x00402ad0  mov      eax, 1
 //   0x00402ad5  ret      4
-void PowerClass::vfunc_1(int a0)
+void PowerClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// PowerClass::vfunc_2 -- body derived from 2 instructions at 0x00402ae0; semantics not reconstructed.
+// PowerClass::Release -- body derived from 2 instructions at 0x00402ae0; semantics not reconstructed.
 // size 8 bytes; signature __stdcall nargs=1
 // callees: none
 //
 //   0x00402ae0  mov      eax, 1
 //   0x00402ae5  ret      4
-void PowerClass::vfunc_2(int a0)
+void PowerClass::Release(int a0)
 {
 }
 

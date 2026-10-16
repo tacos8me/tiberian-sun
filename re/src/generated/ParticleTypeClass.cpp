@@ -570,7 +570,7 @@ void ParticleTypeClass::vfunc_24(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// ParticleTypeClass::vfunc_25 -- body derived from 75 instructions at 0x00597d00; semantics not reconstructed.
+// ParticleTypeClass::Read_INI -- body derived from 75 instructions at 0x00597d00; semantics not reconstructed.
 // size 268 bytes; signature __thiscall nargs=7
 // callees: 0x0044a1b0, 0x0044b690, 0x0044bb30, 0x004d41b0, 0x004d60b0, 0x004d6ed0, 0x00572610, 0x00597e0e, 0x005987f0, 0x00651d30
 //
@@ -649,7 +649,7 @@ void ParticleTypeClass::vfunc_24(int a0)
 //   0x00597e01  lea      ecx, [esp + 0x5c]
 //   0x00597e05  call     0x651d30
 //   0x00597e0a  jmp      0x597e0e
-void ParticleTypeClass::vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void ParticleTypeClass::Read_INI(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
 }
 

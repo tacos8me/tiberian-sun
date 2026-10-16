@@ -8,7 +8,7 @@
 #include "TClassFactory_class_EMPulseClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_EMPulseClass::vfunc_0 -- body derived from 7 instructions at 0x005e9440; semantics not reconstructed.
+// TClassFactory_class_EMPulseClass::QueryInterface -- body derived from 7 instructions at 0x005e9440; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005e9449  mov      eax, 0x80004003
 //   0x005e944e  pop      ebx
 //   0x005e944f  ret      0xc
-void TClassFactory_class_EMPulseClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_EMPulseClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_EMPulseClass::vfunc_1 -- body derived from 5 instructions at 0x005e94b0; semantics not reconstructed.
+// TClassFactory_class_EMPulseClass::AddRef -- body derived from 5 instructions at 0x005e94b0; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_EMPulseClass::vfunc_0(int a0, int a1, int a2)
 //   0x005e94b7  push     eax
 //   0x005e94b8  call     dword ptr [0x6981a4]
 //   0x005e94be  ret      4
-void TClassFactory_class_EMPulseClass::vfunc_1(int a0)
+void TClassFactory_class_EMPulseClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_EMPulseClass::vfunc_2 -- body derived from 16 instructions at 0x005e94d0; semantics not reconstructed.
+// TClassFactory_class_EMPulseClass::Release -- body derived from 16 instructions at 0x005e94d0; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_EMPulseClass::vfunc_1(int a0)
 //   0x005e94f1  pop      edi
 //   0x005e94f2  pop      esi
 //   0x005e94f3  ret      4
-void TClassFactory_class_EMPulseClass::vfunc_2(int a0)
+void TClassFactory_class_EMPulseClass::Release(int a0)
 {
 }
 

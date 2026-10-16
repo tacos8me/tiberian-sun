@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "AbstractClass.h"
+#include "ts_prelude.h"
 
 class ObjectClass : public AbstractClass
 {
@@ -119,29 +120,6 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a2880; 4-byte store: mov dword ptr [esi], 0x6a2880
-    unsigned long m_004;  // +0x004 init 0x6a2864; 4-byte store: mov dword ptr [esi + 4], 0x6a2864
-    unsigned char pad_008[0xc];
-    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], ebx
-    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], ebx
-    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ebx
-    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], ebx
-    unsigned long m_024;  // +0x024 /* ? */; 4-byte store: mov dword ptr [esi + 0x24], ebx
-    unsigned long m_028;  // +0x028 init 0xff; 4-byte store: mov dword ptr [esi + 0x28], 0xff
-    unsigned char m_02c;  // +0x02c /* ? */; 1-byte store: mov byte ptr [esi + 0x2c], bl
-    unsigned char m_02d;  // +0x02d /* ? */; 1-byte store: mov byte ptr [esi + 0x2d], bl
-    unsigned char m_02e;  // +0x02e /* ? */; 1-byte store: mov byte ptr [esi + 0x2e], bl
-    unsigned char m_02f;  // +0x02f /* ? */; 1-byte store: mov byte ptr [esi + 0x2f], al
-    unsigned char m_030;  // +0x030 /* ? */; 1-byte store: mov byte ptr [esi + 0x30], bl
-    unsigned char m_031;  // +0x031 /* ? */; 1-byte store: mov byte ptr [esi + 0x31], bl
-    unsigned char m_032;  // +0x032 /* ? */; 1-byte store: mov byte ptr [esi + 0x32], bl
-    unsigned char m_033;  // +0x033 /* ? */; 1-byte store: mov byte ptr [esi + 0x33], bl
-    unsigned char m_034;  // +0x034 /* ? */; 1-byte store: mov byte ptr [esi + 0x34], bl
-    unsigned char m_035;  // +0x035 /* ? */; 1-byte store: mov byte ptr [esi + 0x35], al
-    unsigned char pad_036[0x2];
-    unsigned long m_038;  // +0x038 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x38], 0xffffffff
-    unsigned char m_03c;  // +0x03c /* ? */; 1-byte store: mov byte ptr [esi + 0x3c], bl
-    unsigned char pad_03d[0x3];
-    unsigned long m_040;  // +0x040 /* ? */; 4-byte store: mov dword ptr [esi + 0x40], ecx
+    // 24 member(s) already declared above; their offsets are recorded in out/members.json
 
 };

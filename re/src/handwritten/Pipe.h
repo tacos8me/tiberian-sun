@@ -85,7 +85,9 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69bc04; 4-byte store: mov dword ptr [esi], 0x69bc04
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
 
 };
 
@@ -113,9 +115,10 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], edi
-    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], edi
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69bbdc; 4-byte store: mov dword ptr [esi], 0x69bbdc
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -136,7 +139,10 @@ class FilePipe   : public Pipe {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69ad1c; 4-byte store: mov dword ptr [esi], 0x69ad1c
+    unsigned char pad_004[0x8];
+    unsigned long m_00c;  // +0x00c zero-initialised; 4-byte store: mov dword ptr [esi + 0xc], 0
+    unsigned char m_010;  // +0x010 zero-initialised; 1-byte store: mov byte ptr [esi + 0x10], 0
 
 };   // vtable 0x69ad1c
 class SHAPipe    : public Pipe {
@@ -161,7 +167,16 @@ class LCWPipe    : public Pipe {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 10 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a150c; 4-byte store: mov dword ptr [esi], 0x6a150c
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], eax
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], eax
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ecx
+    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], eax
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], eax
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ecx
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], eax
+    unsigned short m_024;  // +0x024 init 0xffff; 2-byte store: mov word ptr [esi + 0x24], 0xffff
 
 };   // vtable 0x6a150c  LCW
 class LZOPipe    : public Pipe {
@@ -170,7 +185,16 @@ class LZOPipe    : public Pipe {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 10 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a1884; 4-byte store: mov dword ptr [esi], 0x6a1884
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], eax
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], eax
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ecx
+    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], eax
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], eax
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], eax
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], eax
+    unsigned short m_024;  // +0x024 init 0xffff; 2-byte store: mov word ptr [esi + 0x24], 0xffff
 
 };   // vtable 0x6a1884  LZO
 class BlowPipe   : public Pipe {
@@ -179,22 +203,9 @@ class BlowPipe   : public Pipe {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
-    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [eax + 0x10], edx
-    unsigned long m_014;  // +0x014 init 0x6a3258; 4-byte store: mov dword ptr [eax + 0x14], 0x6a3258
-    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [eax + 0x18], ecx
-    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [eax + 0x1c], ecx
-    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [eax + 0x20], ecx
-    unsigned char pad_024[0x8];
-    unsigned long m_02c;  // +0x02c /* ? */; 4-byte store: mov dword ptr [eax + 0x2c], ecx
-    unsigned long m_030;  // +0x030 /* ? */; 4-byte store: mov dword ptr [eax + 0x30], edx
-    unsigned long m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [eax + 0x34], esi
-    unsigned long m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [eax + 0x38], ecx
-    unsigned char pad_03c[0x100];
-    unsigned long m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [eax + 0x13c], ecx
-    unsigned long m_140;  // +0x140 /* ? */; 4-byte store: mov dword ptr [eax + 0x140], ecx
-    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a323c; 4-byte store: mov dword ptr [eax], 0x6a323c
+    unsigned long m_00c;  // +0x00c init 0x1; 4-byte store: mov dword ptr [eax + 0xc], ecx
+    // 15 member(s) already declared above; their offsets are recorded in out/members.json
 
 };   // vtable 0x6a3258  Blowfish
 
@@ -210,7 +221,23 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 17 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a323c; 4-byte store: mov dword ptr [eax], 0x6a323c
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    unsigned long m_00c;  // +0x00c init 0x1; 4-byte store: mov dword ptr [eax + 0xc], ecx
+    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [eax + 0x10], edx
+    unsigned long m_014;  // +0x014 init 0x6a3258; 4-byte store: mov dword ptr [eax + 0x14], 0x6a3258
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [eax + 0x18], ecx
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [eax + 0x1c], ecx
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [eax + 0x20], ecx
+    unsigned char pad_024[0x8];
+    unsigned long m_02c;  // +0x02c /* ? */; 4-byte store: mov dword ptr [eax + 0x2c], ecx
+    unsigned long m_030;  // +0x030 /* ? */; 4-byte store: mov dword ptr [eax + 0x30], edx
+    unsigned long m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [eax + 0x34], esi
+    unsigned long m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [eax + 0x38], ecx
+    unsigned char pad_03c[0x100];
+    unsigned long m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [eax + 0x13c], ecx
+    unsigned long m_140;  // +0x140 /* ? */; 4-byte store: mov dword ptr [eax + 0x140], ecx
 
 };
 
@@ -233,7 +260,10 @@ class FileStraw   : public Straw {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69ad0c; 4-byte store: mov dword ptr [esi], 0x69ad0c
+    unsigned char pad_004[0x8];
+    unsigned long m_00c;  // +0x00c zero-initialised; 4-byte store: mov dword ptr [esi + 0xc], 0
+    unsigned char m_010;  // +0x010 zero-initialised; 1-byte store: mov byte ptr [esi + 0x10], 0
 
 };  // vtable 0x69ad0c
 class SHAStraw    : public Straw {
@@ -274,7 +304,15 @@ class LCWStraw    : public Straw {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 9 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a1524; 4-byte store: mov dword ptr [esi], 0x6a1524
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ebx
+    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], edi
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], edi
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], edi
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ecx
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], eax
 
 };  // vtable 0x6a1524  LCW
 class LZOStraw    : public Straw {
@@ -283,7 +321,15 @@ class LZOStraw    : public Straw {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 9 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a189c; 4-byte store: mov dword ptr [esi], 0x6a189c
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ebx
+    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], edi
+    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], edi
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], edi
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], eax
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], eax
 
 };  // vtable 0x6a189c  LZO
 class BlowStraw   : public Straw {
@@ -292,7 +338,9 @@ class BlowStraw   : public Straw {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a2308; 4-byte store: mov dword ptr [esi], 0x6a2308
+    unsigned char pad_004[0x8];
+    unsigned long m_00c;  // +0x00c zero-initialised; 4-byte store: mov dword ptr [esi + 0xc], 0
 
 };  // vtable 0x6a2308  Blowfish
 class RandomStraw : public Straw {
@@ -301,9 +349,10 @@ class RandomStraw : public Straw {
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69bbdc; 4-byte store: mov dword ptr [esi], 0x69bbdc
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], edi
+    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], edi
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };  // vtable 0x6a3b78  PRNG
 
@@ -319,6 +368,16 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 11 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a3270; 4-byte store: mov dword ptr [esi], 0x6a3270
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], ecx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], ecx
+    unsigned long m_00c;  // +0x00c init 0x1; 4-byte store: mov dword ptr [esi + 0xc], 0
+    unsigned long m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], eax
+    unsigned char pad_014[0x20];
+    unsigned long m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [esi + 0x34], edi
+    unsigned long m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [esi + 0x38], ecx
+    unsigned char pad_03c[0x100];
+    unsigned long m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [esi + 0x13c], ecx
+    unsigned long m_140;  // +0x140 /* ? */; 4-byte store: mov dword ptr [esi + 0x140], ecx
 
 };

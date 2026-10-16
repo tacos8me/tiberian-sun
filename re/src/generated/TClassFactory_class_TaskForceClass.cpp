@@ -8,7 +8,7 @@
 #include "TClassFactory_class_TaskForceClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TaskForceClass::vfunc_0 -- body derived from 7 instructions at 0x005eb240; semantics not reconstructed.
+// TClassFactory_class_TaskForceClass::QueryInterface -- body derived from 7 instructions at 0x005eb240; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005eb249  mov      eax, 0x80004003
 //   0x005eb24e  pop      ebx
 //   0x005eb24f  ret      0xc
-void TClassFactory_class_TaskForceClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_TaskForceClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TaskForceClass::vfunc_1 -- body derived from 5 instructions at 0x005eb2b0; semantics not reconstructed.
+// TClassFactory_class_TaskForceClass::AddRef -- body derived from 5 instructions at 0x005eb2b0; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_TaskForceClass::vfunc_0(int a0, int a1, int a2)
 //   0x005eb2b7  push     eax
 //   0x005eb2b8  call     dword ptr [0x6981a4]
 //   0x005eb2be  ret      4
-void TClassFactory_class_TaskForceClass::vfunc_1(int a0)
+void TClassFactory_class_TaskForceClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TaskForceClass::vfunc_2 -- body derived from 16 instructions at 0x005eb2d0; semantics not reconstructed.
+// TClassFactory_class_TaskForceClass::Release -- body derived from 16 instructions at 0x005eb2d0; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_TaskForceClass::vfunc_1(int a0)
 //   0x005eb2f1  pop      edi
 //   0x005eb2f2  pop      esi
 //   0x005eb2f3  ret      4
-void TClassFactory_class_TaskForceClass::vfunc_2(int a0)
+void TClassFactory_class_TaskForceClass::Release(int a0)
 {
 }
 

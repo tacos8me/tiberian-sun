@@ -19,9 +19,9 @@ class TClassFactory_class_SideClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4988 (5 slots) ----
-    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x005e9740  // __stdcall, returns int
-    virtual void vfunc_1(int a0);  // [1] 0x005e97b0  // __stdcall
-    virtual void vfunc_2(int a0);  // [2] 0x005e97d0  // __stdcall
+    virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x005e9740  // __stdcall, returns int
+    virtual void AddRef(int a0);  // [1] 0x005e97b0  // __stdcall
+    virtual void Release(int a0);  // [2] 0x005e97d0  // __stdcall
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005e9800  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005e9880  // __stdcall, returns int
 

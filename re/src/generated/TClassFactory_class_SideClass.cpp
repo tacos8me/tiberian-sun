@@ -8,7 +8,7 @@
 #include "TClassFactory_class_SideClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_SideClass::vfunc_0 -- body derived from 7 instructions at 0x005e9740; semantics not reconstructed.
+// TClassFactory_class_SideClass::QueryInterface -- body derived from 7 instructions at 0x005e9740; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005e9749  mov      eax, 0x80004003
 //   0x005e974e  pop      ebx
 //   0x005e974f  ret      0xc
-void TClassFactory_class_SideClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_SideClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_SideClass::vfunc_1 -- body derived from 5 instructions at 0x005e97b0; semantics not reconstructed.
+// TClassFactory_class_SideClass::AddRef -- body derived from 5 instructions at 0x005e97b0; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_SideClass::vfunc_0(int a0, int a1, int a2)
 //   0x005e97b7  push     eax
 //   0x005e97b8  call     dword ptr [0x6981a4]
 //   0x005e97be  ret      4
-void TClassFactory_class_SideClass::vfunc_1(int a0)
+void TClassFactory_class_SideClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_SideClass::vfunc_2 -- body derived from 16 instructions at 0x005e97d0; semantics not reconstructed.
+// TClassFactory_class_SideClass::Release -- body derived from 16 instructions at 0x005e97d0; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_SideClass::vfunc_1(int a0)
 //   0x005e97f1  pop      edi
 //   0x005e97f2  pop      esi
 //   0x005e97f3  ret      4
-void TClassFactory_class_SideClass::vfunc_2(int a0)
+void TClassFactory_class_SideClass::Release(int a0)
 {
 }
 

@@ -8,7 +8,7 @@
 #include "TiberianSunClassFactory.h"
 
 // ---------------------------------------------------------------------------
-// TiberianSunClassFactory::vfunc_0 -- body derived from 9 instructions at 0x00419410; semantics not reconstructed.
+// TiberianSunClassFactory::QueryInterface -- body derived from 9 instructions at 0x00419410; semantics not reconstructed.
 // size 20 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -21,29 +21,29 @@
 //   0x0041941b  mov      eax, 0x80004003
 //   0x00419420  pop      esi
 //   0x00419421  ret      0xc
-void TiberianSunClassFactory::vfunc_0(int a0, int a1, int a2)
+void TiberianSunClassFactory::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TiberianSunClassFactory::vfunc_1 -- body derived from 2 instructions at 0x004a9460; semantics not reconstructed.
+// TiberianSunClassFactory::AddRef -- body derived from 2 instructions at 0x004a9460; semantics not reconstructed.
 // size 8 bytes; signature __stdcall nargs=1
 // callees: none
 //
 //   0x004a9460  mov      eax, 1
 //   0x004a9465  ret      4
-void TiberianSunClassFactory::vfunc_1(int a0)
+void TiberianSunClassFactory::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TiberianSunClassFactory::vfunc_2 -- body derived from 2 instructions at 0x004a9470; semantics not reconstructed.
+// TiberianSunClassFactory::Release -- body derived from 2 instructions at 0x004a9470; semantics not reconstructed.
 // size 8 bytes; signature __stdcall nargs=1
 // callees: none
 //
 //   0x004a9470  mov      eax, 1
 //   0x004a9475  ret      4
-void TiberianSunClassFactory::vfunc_2(int a0)
+void TiberianSunClassFactory::Release(int a0)
 {
 }
 

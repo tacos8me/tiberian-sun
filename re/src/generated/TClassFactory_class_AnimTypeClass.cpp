@@ -8,7 +8,7 @@
 #include "TClassFactory_class_AnimTypeClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_AnimTypeClass::vfunc_0 -- body derived from 7 instructions at 0x005ec740; semantics not reconstructed.
+// TClassFactory_class_AnimTypeClass::QueryInterface -- body derived from 7 instructions at 0x005ec740; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005ec749  mov      eax, 0x80004003
 //   0x005ec74e  pop      ebx
 //   0x005ec74f  ret      0xc
-void TClassFactory_class_AnimTypeClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_AnimTypeClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_AnimTypeClass::vfunc_1 -- body derived from 5 instructions at 0x005ec7b0; semantics not reconstructed.
+// TClassFactory_class_AnimTypeClass::AddRef -- body derived from 5 instructions at 0x005ec7b0; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_AnimTypeClass::vfunc_0(int a0, int a1, int a2)
 //   0x005ec7b7  push     eax
 //   0x005ec7b8  call     dword ptr [0x6981a4]
 //   0x005ec7be  ret      4
-void TClassFactory_class_AnimTypeClass::vfunc_1(int a0)
+void TClassFactory_class_AnimTypeClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_AnimTypeClass::vfunc_2 -- body derived from 16 instructions at 0x005ec7d0; semantics not reconstructed.
+// TClassFactory_class_AnimTypeClass::Release -- body derived from 16 instructions at 0x005ec7d0; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_AnimTypeClass::vfunc_1(int a0)
 //   0x005ec7f1  pop      edi
 //   0x005ec7f2  pop      esi
 //   0x005ec7f3  ret      4
-void TClassFactory_class_AnimTypeClass::vfunc_2(int a0)
+void TClassFactory_class_AnimTypeClass::Release(int a0)
 {
 }
 

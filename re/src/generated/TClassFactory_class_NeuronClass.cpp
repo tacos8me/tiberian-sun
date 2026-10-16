@@ -8,7 +8,7 @@
 #include "TClassFactory_class_NeuronClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_NeuronClass::vfunc_0 -- body derived from 7 instructions at 0x005ee6c0; semantics not reconstructed.
+// TClassFactory_class_NeuronClass::QueryInterface -- body derived from 7 instructions at 0x005ee6c0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005ee6c9  mov      eax, 0x80004003
 //   0x005ee6ce  pop      ebx
 //   0x005ee6cf  ret      0xc
-void TClassFactory_class_NeuronClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_NeuronClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_NeuronClass::vfunc_1 -- body derived from 5 instructions at 0x005ee730; semantics not reconstructed.
+// TClassFactory_class_NeuronClass::AddRef -- body derived from 5 instructions at 0x005ee730; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_NeuronClass::vfunc_0(int a0, int a1, int a2)
 //   0x005ee737  push     eax
 //   0x005ee738  call     dword ptr [0x6981a4]
 //   0x005ee73e  ret      4
-void TClassFactory_class_NeuronClass::vfunc_1(int a0)
+void TClassFactory_class_NeuronClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_NeuronClass::vfunc_2 -- body derived from 16 instructions at 0x005ee750; semantics not reconstructed.
+// TClassFactory_class_NeuronClass::Release -- body derived from 16 instructions at 0x005ee750; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_NeuronClass::vfunc_1(int a0)
 //   0x005ee771  pop      edi
 //   0x005ee772  pop      esi
 //   0x005ee773  ret      4
-void TClassFactory_class_NeuronClass::vfunc_2(int a0)
+void TClassFactory_class_NeuronClass::Release(int a0)
 {
 }
 

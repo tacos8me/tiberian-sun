@@ -43,7 +43,7 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
     virtual void vfunc_24(int a0);  // [24] 0x00406010  // __stdcall
-    virtual void vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [25] 0x00597d00  // __thiscall  // refs "ColorList"
+    virtual void Read_INI(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [25] 0x00597d00  // __thiscall  // refs "ColorList"
     virtual void Set_ID(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
     virtual void vfunc_27(int a0, int a1);  // [27] 0x0040f600  // __stdcall
     virtual void vfunc_28();  // [28] 0x00418f40  // __cdecl

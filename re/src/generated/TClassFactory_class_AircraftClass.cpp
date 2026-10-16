@@ -8,7 +8,7 @@
 #include "TClassFactory_class_AircraftClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_AircraftClass::vfunc_0 -- body derived from 7 instructions at 0x005ec2c0; semantics not reconstructed.
+// TClassFactory_class_AircraftClass::QueryInterface -- body derived from 7 instructions at 0x005ec2c0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005ec2c9  mov      eax, 0x80004003
 //   0x005ec2ce  pop      ebx
 //   0x005ec2cf  ret      0xc
-void TClassFactory_class_AircraftClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_AircraftClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_AircraftClass::vfunc_1 -- body derived from 5 instructions at 0x005ec330; semantics not reconstructed.
+// TClassFactory_class_AircraftClass::AddRef -- body derived from 5 instructions at 0x005ec330; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_AircraftClass::vfunc_0(int a0, int a1, int a2)
 //   0x005ec337  push     eax
 //   0x005ec338  call     dword ptr [0x6981a4]
 //   0x005ec33e  ret      4
-void TClassFactory_class_AircraftClass::vfunc_1(int a0)
+void TClassFactory_class_AircraftClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_AircraftClass::vfunc_2 -- body derived from 16 instructions at 0x005ec350; semantics not reconstructed.
+// TClassFactory_class_AircraftClass::Release -- body derived from 16 instructions at 0x005ec350; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_AircraftClass::vfunc_1(int a0)
 //   0x005ec371  pop      edi
 //   0x005ec372  pop      esi
 //   0x005ec373  ret      4
-void TClassFactory_class_AircraftClass::vfunc_2(int a0)
+void TClassFactory_class_AircraftClass::Release(int a0)
 {
 }
 

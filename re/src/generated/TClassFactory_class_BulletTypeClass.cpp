@@ -8,7 +8,7 @@
 #include "TClassFactory_class_BulletTypeClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_BulletTypeClass::vfunc_0 -- body derived from 7 instructions at 0x005eb9c0; semantics not reconstructed.
+// TClassFactory_class_BulletTypeClass::QueryInterface -- body derived from 7 instructions at 0x005eb9c0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005eb9c9  mov      eax, 0x80004003
 //   0x005eb9ce  pop      ebx
 //   0x005eb9cf  ret      0xc
-void TClassFactory_class_BulletTypeClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_BulletTypeClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_BulletTypeClass::vfunc_1 -- body derived from 5 instructions at 0x005eba30; semantics not reconstructed.
+// TClassFactory_class_BulletTypeClass::AddRef -- body derived from 5 instructions at 0x005eba30; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_BulletTypeClass::vfunc_0(int a0, int a1, int a2)
 //   0x005eba37  push     eax
 //   0x005eba38  call     dword ptr [0x6981a4]
 //   0x005eba3e  ret      4
-void TClassFactory_class_BulletTypeClass::vfunc_1(int a0)
+void TClassFactory_class_BulletTypeClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_BulletTypeClass::vfunc_2 -- body derived from 16 instructions at 0x005eba50; semantics not reconstructed.
+// TClassFactory_class_BulletTypeClass::Release -- body derived from 16 instructions at 0x005eba50; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_BulletTypeClass::vfunc_1(int a0)
 //   0x005eba71  pop      edi
 //   0x005eba72  pop      esi
 //   0x005eba73  ret      4
-void TClassFactory_class_BulletTypeClass::vfunc_2(int a0)
+void TClassFactory_class_BulletTypeClass::Release(int a0)
 {
 }
 

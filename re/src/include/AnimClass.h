@@ -31,6 +31,8 @@
 // ============================================================================
 
 #include "ObjectClass.h"
+#include "TechnoClass.h"
+#include "ts_prelude.h"
 #include "StageClass.h"
 
 // StageClass is a real base of AnimClass: RTTI lists "StageClass (mdisp 76)",
@@ -188,50 +190,6 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x699890; 4-byte store: mov dword ptr [esi], 0x699890
-    unsigned char pad_004[0x31];
-    unsigned char m_035;  // +0x035 init 0x1; 1-byte store: mov byte ptr [esi + 0x35], 1
-    unsigned char pad_036[0x16];
-    unsigned long m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [esi + 0x4c], ebx
-    unsigned long m_050;  // +0x050 /* ? */; 4-byte store: mov dword ptr [esi + 0x50], eax
-    unsigned char pad_054[0x4];
-    unsigned long m_058;  // +0x058 /* ? */; 4-byte store: mov dword ptr [esi + 0x58], ebx
-    unsigned long m_05c;  // +0x05c /* ? */; 4-byte store: mov dword ptr [esi + 0x5c], ebx
-    unsigned long m_060;  // +0x060 init 0x1; 4-byte store: mov dword ptr [esi + 0x60], 1
-    unsigned long m_064;  // +0x064 /* ? */; 4-byte store: mov dword ptr [esi + 0x64], ecx
-    unsigned long m_068;  // +0x068 /* ? */; 4-byte store: mov dword ptr [esi + 0x68], ebx
-    unsigned long m_06c;  // +0x06c /* ? */; 4-byte store: mov dword ptr [esi + 0x6c], edi
-    unsigned long m_070;  // +0x070 /* ? */; 4-byte store: mov dword ptr [esi + 0x70], ebx
-    unsigned long m_074;  // +0x074 init 0x3e8; 4-byte store: mov dword ptr [esi + 0x74], 0x3e8
-    unsigned long m_078;  // +0x078 /* ? */; 4-byte store: mov dword ptr [esi + 0x78], edx
-    unsigned long m_07c;  // +0x07c /* ? */; 4-byte store: mov dword ptr [esi + 0x7c], ebx
-    unsigned char pad_080[0xc];
-    unsigned long m_08c;  // +0x08c /* ? */; 4-byte store: mov dword ptr [esi + 0x8c], ebx
-    unsigned char m_090;  // +0x090 /* ? */; 1-byte store: mov byte ptr [esi + 0x90], bl
-    unsigned char pad_091[0x7];
-    unsigned long m_098;  // +0x098 /* ? */; 4-byte store: mov dword ptr [esi + 0x98], ebx
-    unsigned long m_09c;  // +0x09c /* ? */; 4-byte store: mov dword ptr [esi + 0x9c], ebx
-    unsigned long m_0a0;  // +0x0a0 /* ? */; 4-byte store: mov dword ptr [esi + 0xa0], ebx
-    unsigned long m_0a4;  // +0x0a4 /* ? */; 4-byte store: mov dword ptr [esi + 0xa4], ebx
-    unsigned long m_0a8;  // +0x0a8 /* ? */; 4-byte store: mov dword ptr [esi + 0xa8], ebx
-    unsigned long m_0ac;  // +0x0ac /* ? */; 4-byte store: mov dword ptr [esi + 0xac], ebx
-    unsigned char pad_0b0[0x38];
-    unsigned char m_0e8;  // +0x0e8 /* ? */; 1-byte store: mov byte ptr [esi + 0xe8], bl
-    unsigned char pad_0e9[0x3];
-    unsigned long m_0ec;  // +0x0ec /* ? */; 4-byte store: mov dword ptr [esi + 0xec], edx
-    unsigned long m_0f0;  // +0x0f0 /* ? */; 4-byte store: mov dword ptr [esi + 0xf0], ebx
-    unsigned long m_0f4;  // +0x0f4 init 0x3ff00000; 4-byte store: mov dword ptr [esi + 0xf4], 0x3ff00000
-    unsigned long m_0f8;  // +0x0f8 /* ? */; 4-byte store: mov dword ptr [esi + 0xf8], eax
-    unsigned char m_0fc;  // +0x0fc /* ? */; 1-byte store: mov byte ptr [esi + 0xfc], bl
-    unsigned char m_0fd;  // +0x0fd init 0x1; 1-byte store: mov byte ptr [esi + 0xfd], 1
-    unsigned char m_0fe;  // +0x0fe /* ? */; 1-byte store: mov byte ptr [esi + 0xfe], bl
-    unsigned char m_0ff;  // +0x0ff /* ? */; 1-byte store: mov byte ptr [esi + 0xff], bl
-    unsigned char m_100;  // +0x100 /* ? */; 1-byte store: mov byte ptr [esi + 0x100], bl
-    unsigned char m_101;  // +0x101 /* ? */; 1-byte store: mov byte ptr [esi + 0x101], bl
-    unsigned char m_102;  // +0x102 /* ? */; 1-byte store: mov byte ptr [esi + 0x102], bl
-    unsigned char m_103;  // +0x103 /* ? */; 1-byte store: mov byte ptr [esi + 0x103], bl
-    unsigned char m_104;  // +0x104 init 0x1; 1-byte store: mov byte ptr [esi + 0x104], 1
-    unsigned char m_105;  // +0x105 /* ? */; 1-byte store: mov byte ptr [esi + 0x105], bl
-    unsigned char m_106;  // +0x106 /* ? */; 1-byte store: mov byte ptr [esi + 0x106], bl
+    // 45 member(s) already declared above; their offsets are recorded in out/members.json
 
 };

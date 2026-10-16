@@ -18,9 +18,9 @@ class CStreamClass : public IStream, public ILinkStream
 {
 public:
     // ---- vtable 0x0069b91c (15 slots) ----
-    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x0046e1b0  // __stdcall, returns int
-    virtual void vfunc_1(int a0);  // [1] 0x0046e150  // __stdcall
-    virtual void vfunc_2(int a0);  // [2] 0x0046e170  // __stdcall
+    virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x0046e1b0  // __stdcall, returns int
+    virtual void AddRef(int a0);  // [1] 0x0046e150  // __stdcall
+    virtual void Release(int a0);  // [2] 0x0046e170  // __stdcall
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x0046e380  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1, int a2, int a3);  // [4] 0x0046e4f0  // __stdcall, returns int
     virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4);  // [5] 0x0046e620  // __stdcall

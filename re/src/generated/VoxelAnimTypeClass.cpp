@@ -497,7 +497,7 @@ void VoxelAnimTypeClass::vfunc_24(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// VoxelAnimTypeClass::vfunc_25 -- body derived from 64 instructions at 0x00641d80; semantics not reconstructed.
+// VoxelAnimTypeClass::Read_INI -- body derived from 64 instructions at 0x00641d80; semantics not reconstructed.
 // size 221 bytes; signature __thiscall nargs=1
 // callees: 0x004d6960, 0x004d70b0, 0x00572610, 0x00641e5f
 //
@@ -565,7 +565,7 @@ void VoxelAnimTypeClass::vfunc_24(int a0)
 //   0x00641e4f  fmul     qword ptr [0x6a6de8]
 //   0x00641e55  fstp     qword ptr [esi + 0x138]
 //   0x00641e5b  jmp      0x641e5f
-void VoxelAnimTypeClass::vfunc_25(int a0)
+void VoxelAnimTypeClass::Read_INI(int a0)
 {
 }
 

@@ -12,6 +12,7 @@
 // ============================================================================
 
 #include "TechnoTypeClass.h"
+#include "ts_prelude.h"
 
 class InfantryTypeClass : public TechnoTypeClass
 {
@@ -122,47 +123,6 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0348; 4-byte store: mov dword ptr [esi], 0x6a0348
-    unsigned char pad_004[0xc3];
-    unsigned char m_0c7;  // +0x0c7 init 0x1; 1-byte store: mov byte ptr [esi + 0xc7], 1
-    unsigned char pad_0c8[0x2b4];
-    unsigned long m_37c;  // +0x37c init 0x8; 4-byte store: mov dword ptr [esi + 0x37c], 8
-    unsigned char pad_380[0xc3];
-    unsigned char m_443;  // +0x443 /* ? */; 1-byte store: mov byte ptr [esi + 0x443], bl
-    unsigned char pad_444[0x1];
-    unsigned char m_445;  // +0x445 init 0x1; 1-byte store: mov byte ptr [esi + 0x445], 1
-    unsigned char pad_446[0x2];
-    unsigned char m_448;  // +0x448 /* ? */; 1-byte store: mov byte ptr [esi + 0x448], bl
-    unsigned char m_449;  // +0x449 /* ? */; 1-byte store: mov byte ptr [esi + 0x449], bl
-    unsigned char pad_44a[0x26];
-    unsigned long m_470;  // +0x470 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x470], 0xffffffff
-    unsigned long m_474;  // +0x474 init 0x1; 4-byte store: mov dword ptr [esi + 0x474], 1
-    unsigned long m_478;  // +0x478 /* ? */; 4-byte store: mov dword ptr [esi + 0x478], ebx
-    unsigned long FireUp;  // +0x47c (INI key); 4-byte store: mov dword ptr [esi + 0x47c], ebx
-    unsigned long FireProne;  // +0x480 (INI key); 4-byte store: mov dword ptr [esi + 0x480], ebx
-    unsigned long m_484;  // +0x484 init 0x69ad58; 4-byte store: mov dword ptr [esi + 0x484], 0x69ad58
-    unsigned long m_488;  // +0x488 /* ? */; 4-byte store: mov dword ptr [esi + 0x488], ebx
-    unsigned long m_48c;  // +0x48c /* ? */; 4-byte store: mov dword ptr [esi + 0x48c], ebx
-    unsigned char m_490;  // +0x490 init 0x1; 1-byte store: mov byte ptr [esi + 0x490], 1
-    unsigned char m_491;  // +0x491 /* ? */; 1-byte store: mov byte ptr [esi + 0x491], bl
-    unsigned char pad_492[0x2];
-    unsigned long m_494;  // +0x494 /* ? */; 4-byte store: mov dword ptr [esi + 0x494], ebx
-    unsigned long m_498;  // +0x498 init 0xa; 4-byte store: mov dword ptr [esi + 0x498], 0xa
-    unsigned char pad_49c[0x4];
-    unsigned char Cyborg;  // +0x4a0 (INI key); 1-byte store: mov byte ptr [esi + 0x4a0], bl
-    unsigned char m_4a1;  // +0x4a1 /* ? */; 1-byte store: mov byte ptr [esi + 0x4a1], bl
-    unsigned char Crawls;  // +0x4a2 (INI key); 1-byte store: mov byte ptr [esi + 0x4a2], 1
-    unsigned char Infiltrate;  // +0x4a3 (INI key); 1-byte store: mov byte ptr [esi + 0x4a3], bl
-    unsigned char Fraidycat;  // +0x4a4 (INI key); 1-byte store: mov byte ptr [esi + 0x4a4], bl
-    unsigned char m_4a5;  // +0x4a5 /* ? */; 1-byte store: mov byte ptr [esi + 0x4a5], bl
-    unsigned char Civilian;  // +0x4a6 (INI key); 1-byte store: mov byte ptr [esi + 0x4a6], bl
-    unsigned char m_4a7;  // +0x4a7 /* ? */; 1-byte store: mov byte ptr [esi + 0x4a7], bl
-    unsigned char Engineer;  // +0x4a8 (INI key); 1-byte store: mov byte ptr [esi + 0x4a8], bl
-    unsigned char Disguised;  // +0x4a9 (INI key); 1-byte store: mov byte ptr [esi + 0x4a9], bl
-    unsigned char Agent;  // +0x4aa (INI key); 1-byte store: mov byte ptr [esi + 0x4aa], bl
-    unsigned char m_4ab;  // +0x4ab /* ? */; 1-byte store: mov byte ptr [esi + 0x4ab], bl
-    unsigned char VehicleThief;  // +0x4ac (INI key); 1-byte store: mov byte ptr [esi + 0x4ac], bl
-    unsigned char Doggie;  // +0x4ad (INI key); 1-byte store: mov byte ptr [esi + 0x4ad], bl
-    unsigned char JumpJet;  // +0x4ae (INI key); 1-byte store: mov byte ptr [esi + 0x4ae], bl
+    // 42 member(s) already declared above; their offsets are recorded in out/members.json
 
 };

@@ -399,7 +399,7 @@ void TerrainTypeClass::vfunc_24(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// TerrainTypeClass::vfunc_25 -- body derived from 92 instructions at 0x00625280; semantics not reconstructed.
+// TerrainTypeClass::Read_INI -- body derived from 92 instructions at 0x00625280; semantics not reconstructed.
 // size 327 bytes; signature __thiscall nargs=4
 // callees: 0x004486f0, 0x004d70b0, 0x00547660, 0x00572610, 0x006253d8, 0x00683b18
 //
@@ -495,7 +495,7 @@ void TerrainTypeClass::vfunc_24(int a0)
 //   0x006253bc  mov      byte ptr [esp + 0xd], dl
 //   0x006253c0  mov      cx, word ptr [esp + 0xc]
 //   0x006253c5  jmp      0x6253d8
-void TerrainTypeClass::vfunc_25(int a0, int a1, int a2, int a3)
+void TerrainTypeClass::Read_INI(int a0, int a1, int a2, int a3)
 {
 }
 

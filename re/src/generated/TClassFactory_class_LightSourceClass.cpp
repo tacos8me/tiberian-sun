@@ -8,7 +8,7 @@
 #include "TClassFactory_class_LightSourceClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_LightSourceClass::vfunc_0 -- body derived from 7 instructions at 0x005e95c0; semantics not reconstructed.
+// TClassFactory_class_LightSourceClass::QueryInterface -- body derived from 7 instructions at 0x005e95c0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005e95c9  mov      eax, 0x80004003
 //   0x005e95ce  pop      ebx
 //   0x005e95cf  ret      0xc
-void TClassFactory_class_LightSourceClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_LightSourceClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_LightSourceClass::vfunc_1 -- body derived from 5 instructions at 0x005e9630; semantics not reconstructed.
+// TClassFactory_class_LightSourceClass::AddRef -- body derived from 5 instructions at 0x005e9630; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_LightSourceClass::vfunc_0(int a0, int a1, int a2)
 //   0x005e9637  push     eax
 //   0x005e9638  call     dword ptr [0x6981a4]
 //   0x005e963e  ret      4
-void TClassFactory_class_LightSourceClass::vfunc_1(int a0)
+void TClassFactory_class_LightSourceClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_LightSourceClass::vfunc_2 -- body derived from 16 instructions at 0x005e9650; semantics not reconstructed.
+// TClassFactory_class_LightSourceClass::Release -- body derived from 16 instructions at 0x005e9650; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_LightSourceClass::vfunc_1(int a0)
 //   0x005e9671  pop      edi
 //   0x005e9672  pop      esi
 //   0x005e9673  ret      4
-void TClassFactory_class_LightSourceClass::vfunc_2(int a0)
+void TClassFactory_class_LightSourceClass::Release(int a0)
 {
 }
 

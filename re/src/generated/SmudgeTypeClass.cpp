@@ -383,7 +383,7 @@ void SmudgeTypeClass::vfunc_24(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// SmudgeTypeClass::vfunc_25 -- body derived from 51 instructions at 0x005e1960; semantics not reconstructed.
+// SmudgeTypeClass::Read_INI -- body derived from 51 instructions at 0x005e1960; semantics not reconstructed.
 // size 173 bytes; signature __thiscall nargs=3
 // callees: 0x004d60b0, 0x004d70b0, 0x00572610, 0x005e1a33
 //
@@ -438,7 +438,7 @@ void SmudgeTypeClass::vfunc_24(int a0)
 //   0x005e1a08  push     0
 //   0x005e1a0a  push     edx
 //   0x005e1a0b  jmp      0x5e1a33
-void SmudgeTypeClass::vfunc_25(int a0, int a1, int a2)
+void SmudgeTypeClass::Read_INI(int a0, int a1, int a2)
 {
 }
 

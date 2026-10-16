@@ -19,9 +19,9 @@ class TClassFactory_class_EMPulseClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4958 (5 slots) ----
-    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x005e9440  // __stdcall, returns int
-    virtual void vfunc_1(int a0);  // [1] 0x005e94b0  // __stdcall
-    virtual void vfunc_2(int a0);  // [2] 0x005e94d0  // __stdcall
+    virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x005e9440  // __stdcall, returns int
+    virtual void AddRef(int a0);  // [1] 0x005e94b0  // __stdcall
+    virtual void Release(int a0);  // [2] 0x005e94d0  // __stdcall
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005e9500  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005e9580  // __stdcall, returns int
 

@@ -8,7 +8,7 @@
 #include "SwizzleManagerClass.h"
 
 // ---------------------------------------------------------------------------
-// SwizzleManagerClass::vfunc_0 -- body derived from 9 instructions at 0x005f38d0; semantics not reconstructed.
+// SwizzleManagerClass::QueryInterface -- body derived from 9 instructions at 0x005f38d0; semantics not reconstructed.
 // size 20 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -21,29 +21,29 @@
 //   0x005f38db  mov      eax, 0x80004003
 //   0x005f38e0  pop      esi
 //   0x005f38e1  ret      0xc
-void SwizzleManagerClass::vfunc_0(int a0, int a1, int a2)
+void SwizzleManagerClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// SwizzleManagerClass::vfunc_1 -- body derived from 2 instructions at 0x005f3950; semantics not reconstructed.
+// SwizzleManagerClass::AddRef -- body derived from 2 instructions at 0x005f3950; semantics not reconstructed.
 // size 8 bytes; signature __stdcall nargs=1
 // callees: none
 //
 //   0x005f3950  mov      eax, 1
 //   0x005f3955  ret      4
-void SwizzleManagerClass::vfunc_1(int a0)
+void SwizzleManagerClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// SwizzleManagerClass::vfunc_2 -- body derived from 2 instructions at 0x005f3960; semantics not reconstructed.
+// SwizzleManagerClass::Release -- body derived from 2 instructions at 0x005f3960; semantics not reconstructed.
 // size 8 bytes; signature __stdcall nargs=1
 // callees: none
 //
 //   0x005f3960  mov      eax, 1
 //   0x005f3965  ret      4
-void SwizzleManagerClass::vfunc_2(int a0)
+void SwizzleManagerClass::Release(int a0)
 {
 }
 

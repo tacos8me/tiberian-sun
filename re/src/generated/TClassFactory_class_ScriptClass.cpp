@@ -8,7 +8,7 @@
 #include "TClassFactory_class_ScriptClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_ScriptClass::vfunc_0 -- body derived from 7 instructions at 0x005ea940; semantics not reconstructed.
+// TClassFactory_class_ScriptClass::QueryInterface -- body derived from 7 instructions at 0x005ea940; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005ea949  mov      eax, 0x80004003
 //   0x005ea94e  pop      ebx
 //   0x005ea94f  ret      0xc
-void TClassFactory_class_ScriptClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_ScriptClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_ScriptClass::vfunc_1 -- body derived from 5 instructions at 0x005ea9b0; semantics not reconstructed.
+// TClassFactory_class_ScriptClass::AddRef -- body derived from 5 instructions at 0x005ea9b0; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_ScriptClass::vfunc_0(int a0, int a1, int a2)
 //   0x005ea9b7  push     eax
 //   0x005ea9b8  call     dword ptr [0x6981a4]
 //   0x005ea9be  ret      4
-void TClassFactory_class_ScriptClass::vfunc_1(int a0)
+void TClassFactory_class_ScriptClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_ScriptClass::vfunc_2 -- body derived from 16 instructions at 0x005ea9d0; semantics not reconstructed.
+// TClassFactory_class_ScriptClass::Release -- body derived from 16 instructions at 0x005ea9d0; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_ScriptClass::vfunc_1(int a0)
 //   0x005ea9f1  pop      edi
 //   0x005ea9f2  pop      esi
 //   0x005ea9f3  ret      4
-void TClassFactory_class_ScriptClass::vfunc_2(int a0)
+void TClassFactory_class_ScriptClass::Release(int a0)
 {
 }
 

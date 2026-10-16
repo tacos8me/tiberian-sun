@@ -8,7 +8,7 @@
 #include "TClassFactory_class_BuildingLightClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_BuildingLightClass::vfunc_0 -- body derived from 7 instructions at 0x005e9d40; semantics not reconstructed.
+// TClassFactory_class_BuildingLightClass::QueryInterface -- body derived from 7 instructions at 0x005e9d40; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005e9d49  mov      eax, 0x80004003
 //   0x005e9d4e  pop      ebx
 //   0x005e9d4f  ret      0xc
-void TClassFactory_class_BuildingLightClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_BuildingLightClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_BuildingLightClass::vfunc_1 -- body derived from 5 instructions at 0x005e9db0; semantics not reconstructed.
+// TClassFactory_class_BuildingLightClass::AddRef -- body derived from 5 instructions at 0x005e9db0; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_BuildingLightClass::vfunc_0(int a0, int a1, int a2)
 //   0x005e9db7  push     eax
 //   0x005e9db8  call     dword ptr [0x6981a4]
 //   0x005e9dbe  ret      4
-void TClassFactory_class_BuildingLightClass::vfunc_1(int a0)
+void TClassFactory_class_BuildingLightClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_BuildingLightClass::vfunc_2 -- body derived from 16 instructions at 0x005e9dd0; semantics not reconstructed.
+// TClassFactory_class_BuildingLightClass::Release -- body derived from 16 instructions at 0x005e9dd0; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_BuildingLightClass::vfunc_1(int a0)
 //   0x005e9df1  pop      edi
 //   0x005e9df2  pop      esi
 //   0x005e9df3  ret      4
-void TClassFactory_class_BuildingLightClass::vfunc_2(int a0)
+void TClassFactory_class_BuildingLightClass::Release(int a0)
 {
 }
 

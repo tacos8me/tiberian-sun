@@ -513,7 +513,7 @@ void IsometricTileTypeClass::vfunc_24(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_25 -- body derived from 209 instructions at 0x00572610; semantics not reconstructed.
+// IsometricTileTypeClass::Read_INI -- body derived from 209 instructions at 0x00572610; semantics not reconstructed.
 // size 693 bytes; signature __thiscall nargs=1
 // callees: 0x00405f20, 0x004484a0, 0x00448b60, 0x004d60b0, 0x004d6ed0, 0x004d70b0, 0x00547660, 0x005724a0, 0x00647610, 0x00683b18
 //
@@ -726,7 +726,7 @@ void IsometricTileTypeClass::vfunc_24(int a0)
 //   0x005728bb  pop      ebx
 //   0x005728bc  add      esp, 0x1a4
 //   0x005728c2  ret      4
-void IsometricTileTypeClass::vfunc_25(int a0)
+void IsometricTileTypeClass::Read_INI(int a0)
 {
 }
 

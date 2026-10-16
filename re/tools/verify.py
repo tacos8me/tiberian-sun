@@ -536,6 +536,103 @@ def main():
                 f"{bad} emitted member offsets are not in the recovered table "
                 f"({'; '.join(examples)})")
 
+    # 8. declared virtual arity vs recovered signatures (REPORTED, NOT GATED)
+    #
+    # A hand-written header states an arity for every virtual it declares; the
+    # disassembly recovery states the arity the binary's code implies.  Nothing
+    # compared the two until now.  This check does, and reports divergences.
+    #
+    # It is a SIGNAL, not ground truth:
+    #   * nargs in out/signatures.json counts `this` for a COM __stdcall method
+    #     (it is a stack argument) but NOT for a __thiscall method (it is in
+    #     ecx).  The comparison compensates, but a method the recovery
+    #     mislabels __thiscall/__stdcall shifts the expectation by one.
+    #   * a shared stub (0x6829a5, 0x405790, 0x4f9dd0, ...) is cited by many
+    #     slots whose real arities differ, so a citation to a stub cannot match
+    #     every declaration that cites it.
+    #   * declarations whose parameter list spans several lines are skipped,
+    #     because the citation and the parameter list must be on one line.
+    # An earlier independent lane measured 424 matches / 676 divergences with a
+    # slightly narrower parse.  The number moves with the parse, which is why
+    # this is reported rather than gated.
+    #
+    # It does catch real header bugs: DisplayClass.h's TacticalClass::vfunc_4()
+    # declares 0 arguments while 0x4f6a20 is __thiscall with nargs=1.
+    sigp = os.path.join(outdir, "signatures.json")
+    hwdir = os.path.join(os.path.dirname(srcdir.rstrip("/")), "handwritten")
+    if os.path.exists(sigp):
+        sigs = json.load(open(sigp))
+        vdecl = re.compile(
+            r"\bvirtual\s+(?:~?\w[\w:<>,*&\s]*?\s+)?(~?\w+)\s*\(([^)]*)\)")
+        vare = re.compile(r"0x([0-9a-fA-F]{6,8})")
+
+        def param_count(params):
+            """Top-level parameter count of a declared parameter list."""
+            p = params.strip()
+            if p in ("", "void"):
+                return 0
+            depth = 0
+            n = 1
+            for ch in p:
+                if ch in "<([":
+                    depth += 1
+                elif ch in ">)]":
+                    depth -= 1
+                elif ch == "," and depth == 0:
+                    n += 1
+            return n
+
+        compared = match = 0
+        divergences = []
+        for p in sorted(glob.glob(os.path.join(hwdir, "*.h"))):
+            lines = open(p).read().splitlines()
+            for i, line in enumerate(lines):
+                if "virtual" not in line:
+                    continue
+                m = vdecl.search(line)
+                if not m:
+                    continue
+                # The cited VA is in a trailing comment on the declaration, or
+                # in the comment line immediately above it (LocomotionClass.h
+                # cites "// slot N (0xNN) 0xVA" on the preceding line).
+                cited = None
+                cm = re.search(r"//(.*)$", line[m.end():])
+                if cm:
+                    vm = vare.search(cm.group(1))
+                    if vm:
+                        cited = vm.group(1)
+                if cited is None and i > 0:
+                    prev = lines[i - 1].strip()
+                    if prev.startswith("//"):
+                        vm = vare.search(prev)
+                        if vm:
+                            cited = vm.group(1)
+                if cited is None:
+                    continue
+                rec = sigs.get("0x%x" % int(cited, 16))
+                if not rec or rec.get("nargs") is None:
+                    continue  # arity not recovered: nothing to compare
+                nargs = rec["nargs"]
+                declared = param_count(m.group(2))
+                expected = declared + (1 if rec.get("cc") == "__stdcall" else 0)
+                compared += 1
+                if expected == nargs:
+                    match += 1
+                else:
+                    divergences.append(
+                        f"{os.path.basename(p)}:{i+1} {m.group(1)}() declares "
+                        f"{declared} argument(s); {rec.get('cc')} at "
+                        f"0x{int(cited, 16):x} has nargs={nargs}")
+        print(f"[8] declared arity vs recovered signatures: {match}/{compared} "
+              f"match, {len(divergences)} divergence(s) (reported, not gated)")
+        for e in divergences[:8]:
+            print(f"    {e}")
+        if len(divergences) > 8:
+            print(f"    ... and {len(divergences)-8} more")
+    else:
+        print("[8] declared virtual arity vs recovered signatures: skipped "
+              "(out/signatures.json missing)")
+
     print()
     if failures:
         print("VERIFICATION FAILED:")

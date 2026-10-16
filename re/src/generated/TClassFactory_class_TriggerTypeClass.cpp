@@ -8,7 +8,7 @@
 #include "TClassFactory_class_TriggerTypeClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TriggerTypeClass::vfunc_0 -- body derived from 7 instructions at 0x005ea7c0; semantics not reconstructed.
+// TClassFactory_class_TriggerTypeClass::QueryInterface -- body derived from 7 instructions at 0x005ea7c0; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005ea7c9  mov      eax, 0x80004003
 //   0x005ea7ce  pop      ebx
 //   0x005ea7cf  ret      0xc
-void TClassFactory_class_TriggerTypeClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_TriggerTypeClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TriggerTypeClass::vfunc_1 -- body derived from 5 instructions at 0x005ea830; semantics not reconstructed.
+// TClassFactory_class_TriggerTypeClass::AddRef -- body derived from 5 instructions at 0x005ea830; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_TriggerTypeClass::vfunc_0(int a0, int a1, int a2)
 //   0x005ea837  push     eax
 //   0x005ea838  call     dword ptr [0x6981a4]
 //   0x005ea83e  ret      4
-void TClassFactory_class_TriggerTypeClass::vfunc_1(int a0)
+void TClassFactory_class_TriggerTypeClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TriggerTypeClass::vfunc_2 -- body derived from 16 instructions at 0x005ea850; semantics not reconstructed.
+// TClassFactory_class_TriggerTypeClass::Release -- body derived from 16 instructions at 0x005ea850; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_TriggerTypeClass::vfunc_1(int a0)
 //   0x005ea871  pop      edi
 //   0x005ea872  pop      esi
 //   0x005ea873  ret      4
-void TClassFactory_class_TriggerTypeClass::vfunc_2(int a0)
+void TClassFactory_class_TriggerTypeClass::Release(int a0)
 {
 }
 

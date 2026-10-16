@@ -397,7 +397,7 @@ void ParticleSystemTypeClass::vfunc_24(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// ParticleSystemTypeClass::vfunc_25 -- body derived from 237 instructions at 0x00597090; semantics not reconstructed.
+// ParticleSystemTypeClass::Read_INI -- body derived from 237 instructions at 0x00597090; semantics not reconstructed.
 // size 839 bytes; signature __thiscall nargs=1
 // callees: 0x004484a0, 0x004499d0, 0x004d60b0, 0x004d6960, 0x004d6ed0, 0x004d70b0, 0x00572610, 0x005981d0, 0x006849b0
 //
@@ -638,7 +638,7 @@ void ParticleSystemTypeClass::vfunc_24(int a0)
 //   0x005973d1  mov      esp, ebp
 //   0x005973d3  pop      ebp
 //   0x005973d4  ret      4
-void ParticleSystemTypeClass::vfunc_25(int a0)
+void ParticleSystemTypeClass::Read_INI(int a0)
 {
 }
 

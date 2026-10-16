@@ -8,7 +8,7 @@
 #include "ApplicationClass.h"
 
 // ---------------------------------------------------------------------------
-// ApplicationClass::vfunc_0 -- body derived from 11 instructions at 0x00419560; semantics not reconstructed.
+// ApplicationClass::QueryInterface -- body derived from 11 instructions at 0x00419560; semantics not reconstructed.
 // size 22 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -23,29 +23,29 @@
 //   0x0041956d  mov      eax, 0x80004003
 //   0x00419572  pop      ebx
 //   0x00419573  ret      0xc
-void ApplicationClass::vfunc_0(int a0, int a1, int a2)
+void ApplicationClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// ApplicationClass::vfunc_1 -- body derived from 2 instructions at 0x004195e0; semantics not reconstructed.
+// ApplicationClass::AddRef -- body derived from 2 instructions at 0x004195e0; semantics not reconstructed.
 // size 8 bytes; signature __stdcall nargs=1
 // callees: none
 //
 //   0x004195e0  mov      eax, 1
 //   0x004195e5  ret      4
-void ApplicationClass::vfunc_1(int a0)
+void ApplicationClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// ApplicationClass::vfunc_2 -- body derived from 2 instructions at 0x004195f0; semantics not reconstructed.
+// ApplicationClass::Release -- body derived from 2 instructions at 0x004195f0; semantics not reconstructed.
 // size 8 bytes; signature __stdcall nargs=1
 // callees: none
 //
 //   0x004195f0  mov      eax, 1
 //   0x004195f5  ret      4
-void ApplicationClass::vfunc_2(int a0)
+void ApplicationClass::Release(int a0)
 {
 }
 

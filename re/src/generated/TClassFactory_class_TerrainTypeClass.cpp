@@ -8,7 +8,7 @@
 #include "TClassFactory_class_TerrainTypeClass.h"
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TerrainTypeClass::vfunc_0 -- body derived from 7 instructions at 0x005e8b40; semantics not reconstructed.
+// TClassFactory_class_TerrainTypeClass::QueryInterface -- body derived from 7 instructions at 0x005e8b40; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x005e8b49  mov      eax, 0x80004003
 //   0x005e8b4e  pop      ebx
 //   0x005e8b4f  ret      0xc
-void TClassFactory_class_TerrainTypeClass::vfunc_0(int a0, int a1, int a2)
+void TClassFactory_class_TerrainTypeClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TerrainTypeClass::vfunc_1 -- body derived from 5 instructions at 0x005e8bb0; semantics not reconstructed.
+// TClassFactory_class_TerrainTypeClass::AddRef -- body derived from 5 instructions at 0x005e8bb0; semantics not reconstructed.
 // size 17 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -33,12 +33,12 @@ void TClassFactory_class_TerrainTypeClass::vfunc_0(int a0, int a1, int a2)
 //   0x005e8bb7  push     eax
 //   0x005e8bb8  call     dword ptr [0x6981a4]
 //   0x005e8bbe  ret      4
-void TClassFactory_class_TerrainTypeClass::vfunc_1(int a0)
+void TClassFactory_class_TerrainTypeClass::AddRef(int a0)
 {
 }
 
 // ---------------------------------------------------------------------------
-// TClassFactory_class_TerrainTypeClass::vfunc_2 -- body derived from 16 instructions at 0x005e8bd0; semantics not reconstructed.
+// TClassFactory_class_TerrainTypeClass::Release -- body derived from 16 instructions at 0x005e8bd0; semantics not reconstructed.
 // size 38 bytes; signature __stdcall nargs=1
 // callees: 0x0068298c
 //
@@ -58,7 +58,7 @@ void TClassFactory_class_TerrainTypeClass::vfunc_1(int a0)
 //   0x005e8bf1  pop      edi
 //   0x005e8bf2  pop      esi
 //   0x005e8bf3  ret      4
-void TClassFactory_class_TerrainTypeClass::vfunc_2(int a0)
+void TClassFactory_class_TerrainTypeClass::Release(int a0)
 {
 }
 

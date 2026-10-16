@@ -8,6 +8,22 @@
 #include "AbstractClass.h"
 
 // ---------------------------------------------------------------------------
+// AbstractClass::vfunc_0 -- body derived from 7 instructions at 0x00405790; semantics not reconstructed.
+// size 18 bytes; signature __stdcall nargs=3
+// callees: none
+//
+//   0x00405790  mov      eax, dword ptr [esp + 0xc]
+//   0x00405794  push     ebx
+//   0x00405795  test     eax, eax
+//   0x00405797  jne      0x4057a2
+//   0x00405799  mov      eax, 0x80004003
+//   0x0040579e  pop      ebx
+//   0x0040579f  ret      0xc
+HRESULT AbstractClass::vfunc_0()
+{
+}
+
+// ---------------------------------------------------------------------------
 // AbstractClass::Init -- body derived from 2 instructions at 0x00405830; semantics not reconstructed.
 // size 8 bytes; signature __stdcall nargs=1
 // callees: none
@@ -38,7 +54,7 @@ void AbstractClass::Shutdown()
 //   0x006829a7  call     0x6855eb
 //   0x006829ac  pop      ecx
 //   0x006829ad  ret      
-long AbstractClass::QueryInterface(const void*, void**)
+HRESULT AbstractClass::QueryInterface(REFIID riid, void** ppv)
 {
 }
 
@@ -53,7 +69,7 @@ long AbstractClass::QueryInterface(const void*, void**)
 //   0x00405999  test     dl, dl
 //   0x0040599b  sete     al
 //   0x0040599e  ret      4
-unsigned long AbstractClass::AddRef()
+ULONG AbstractClass::AddRef()
 {
 }
 
@@ -66,7 +82,20 @@ unsigned long AbstractClass::AddRef()
 //   0x006829a7  call     0x6855eb
 //   0x006829ac  pop      ecx
 //   0x006829ad  ret      
-unsigned long AbstractClass::Release()
+ULONG AbstractClass::Release()
+{
+}
+
+// ---------------------------------------------------------------------------
+// AbstractClass::vfunc_6 -- body derived from 4 instructions at 0x006829a5; semantics not reconstructed.
+// size 9 bytes; signature __cdecl
+// callees: 0x006855eb
+//
+//   0x006829a5  push     0x19
+//   0x006829a7  call     0x6855eb
+//   0x006829ac  pop      ecx
+//   0x006829ad  ret      
+HRESULT AbstractClass::vfunc_6()
 {
 }
 
@@ -137,7 +166,7 @@ int AbstractClass::Get_RTTI()
 //   0x006829a7  call     0x6855eb
 //   0x006829ac  pop      ecx
 //   0x006829ad  ret      
-long AbstractClass::GetClassID(void* pClassID)
+HRESULT AbstractClass::GetClassID(CLSID* pClassID)
 {
 }
 
@@ -150,7 +179,7 @@ long AbstractClass::GetClassID(void* pClassID)
 //   0x006829a7  call     0x6855eb
 //   0x006829ac  pop      ecx
 //   0x006829ad  ret      
-long AbstractClass::IsDirty()
+HRESULT AbstractClass::IsDirty()
 {
 }
 
@@ -174,7 +203,7 @@ long AbstractClass::IsDirty()
 //   0x0040595e  pop      edi
 //   0x0040595f  pop      esi
 //   0x00405960  ret      4
-long AbstractClass::Load(IStream* pStm)
+HRESULT AbstractClass::Load(IStream* pStm)
 {
 }
 
@@ -185,7 +214,7 @@ long AbstractClass::Load(IStream* pStm)
 //
 //   0x004059d0  or       eax, 0xffffffff
 //   0x004059d3  ret      
-long AbstractClass::Save(IStream* pStm, int fClearDirty)
+HRESULT AbstractClass::Save(IStream* pStm, BOOL fClearDirty)
 {
 }
 
@@ -196,7 +225,7 @@ long AbstractClass::Save(IStream* pStm, int fClearDirty)
 //
 //   0x004059e0  xor      eax, eax
 //   0x004059e2  ret      
-long AbstractClass::GetSizeMax(unsigned long* pcbSize)
+HRESULT AbstractClass::GetSizeMax(ULARGE_INTEGER* pcbSize)
 {
 }
 

@@ -8,7 +8,7 @@
 #include "EnumConnectionsClass.h"
 
 // ---------------------------------------------------------------------------
-// EnumConnectionsClass::vfunc_0 -- body derived from 7 instructions at 0x0046b850; semantics not reconstructed.
+// EnumConnectionsClass::QueryInterface -- body derived from 7 instructions at 0x0046b850; semantics not reconstructed.
 // size 18 bytes; signature __stdcall nargs=3
 // callees: none
 //
@@ -19,12 +19,12 @@
 //   0x0046b859  mov      eax, 0x80004003
 //   0x0046b85e  pop      ebx
 //   0x0046b85f  ret      0xc
-void EnumConnectionsClass::vfunc_0(int a0, int a1, int a2)
+void EnumConnectionsClass::QueryInterface(int a0, int a1, int a2)
 {
 }
 
 // ---------------------------------------------------------------------------
-// EnumConnectionsClass::vfunc_1 -- body derived from 8 instructions at 0x0046b8c0; semantics not reconstructed.
+// EnumConnectionsClass::AddRef -- body derived from 8 instructions at 0x0046b8c0; semantics not reconstructed.
 // size 30 bytes; signature __stdcall nargs=1
 // callees: none
 //
@@ -36,7 +36,70 @@ void EnumConnectionsClass::vfunc_0(int a0, int a1, int a2)
 //   0x0046b8cf  mov      dword ptr [0x7d3104], edx
 //   0x0046b8d5  call     dword ptr [0x6981a4]
 //   0x0046b8db  ret      4
-void EnumConnectionsClass::vfunc_1(int a0)
+void EnumConnectionsClass::AddRef(int a0)
+{
+}
+
+// ---------------------------------------------------------------------------
+// EnumConnectionsClass::Release -- body derived from 54 instructions at 0x0046b8e0; semantics not reconstructed.
+// size 150 bytes; signature __stdcall nargs=1
+// callees: 0x0068298c
+//
+//   0x0046b8e0  mov      edx, dword ptr [0x7d3104]
+//   0x0046b8e6  push     ebp
+//   0x0046b8e7  push     edi
+//   0x0046b8e8  mov      edi, dword ptr [esp + 0xc]
+//   0x0046b8ec  dec      edx
+//   0x0046b8ed  lea      eax, [edi + 0x20]
+//   0x0046b8f0  mov      dword ptr [0x7d3104], edx
+//   0x0046b8f6  push     eax
+//   0x0046b8f7  call     dword ptr [0x6981a8]
+//   0x0046b8fd  mov      ebp, eax
+//   0x0046b8ff  test     ebp, ebp
+//   0x0046b901  jne      0x46b976
+//   0x0046b903  test     edi, edi
+//   0x0046b905  je       0x46b976
+//   0x0046b907  mov      dword ptr [edi], 0x69b830
+//   0x0046b90d  mov      eax, dword ptr [edi + 0x14]
+//   0x0046b910  push     esi
+//   0x0046b911  xor      esi, esi
+//   0x0046b913  test     eax, eax
+//   0x0046b915  jle      0x46b92b
+//   0x0046b917  mov      ecx, dword ptr [edi + 8]
+//   0x0046b91a  mov      eax, dword ptr [ecx + esi*8]
+//   0x0046b91d  push     eax
+//   0x0046b91e  mov      edx, dword ptr [eax]
+//   0x0046b920  call     dword ptr [edx + 8]
+//   0x0046b923  mov      eax, dword ptr [edi + 0x14]
+//   0x0046b926  inc      esi
+//   0x0046b927  cmp      esi, eax
+//   0x0046b929  jl       0x46b917
+//   0x0046b92b  mov      eax, dword ptr [edi + 4]
+//   0x0046b92e  lea      esi, [edi + 4]
+//   0x0046b931  mov      ecx, esi
+//   0x0046b933  call     dword ptr [eax + 0xc]
+//   0x0046b936  mov      eax, dword ptr [esi + 4]
+//   0x0046b939  mov      dword ptr [esi], 0x69b814
+//   0x0046b93f  test     eax, eax
+//   0x0046b941  je       0x46b95a
+//   0x0046b943  mov      cl, byte ptr [esi + 0xd]
+//   0x0046b946  test     cl, cl
+//   0x0046b948  je       0x46b95a
+//   0x0046b94a  push     eax
+//   0x0046b94b  call     0x68298c
+//   0x0046b950  add      esp, 4
+//   0x0046b953  mov      dword ptr [esi + 4], 0
+//   0x0046b95a  push     edi
+//   0x0046b95b  mov      byte ptr [esi + 0xd], 0
+//   0x0046b95f  mov      dword ptr [esi + 8], 0
+//   0x0046b966  call     0x68298c
+//   0x0046b96b  add      esp, 4
+//   0x0046b96e  mov      eax, ebp
+//   0x0046b970  pop      esi
+//   0x0046b971  pop      edi
+//   0x0046b972  pop      ebp
+//   0x0046b973  ret      4
+void EnumConnectionsClass::Release(int a0)
 {
 }
 

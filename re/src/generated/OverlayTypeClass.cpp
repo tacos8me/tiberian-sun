@@ -425,7 +425,7 @@ void OverlayTypeClass::vfunc_24(int a0)
 }
 
 // ---------------------------------------------------------------------------
-// OverlayTypeClass::vfunc_25 -- body derived from 89 instructions at 0x00577090; semantics not reconstructed.
+// OverlayTypeClass::Read_INI -- body derived from 89 instructions at 0x00577090; semantics not reconstructed.
 // size 319 bytes; signature __thiscall nargs=2
 // callees: 0x00418d20, 0x00448c20, 0x004d60b0, 0x004d6ed0, 0x004d70b0, 0x00572610, 0x005771d1
 //
@@ -518,7 +518,7 @@ void OverlayTypeClass::vfunc_24(int a0)
 //   0x005771c4  lea      ecx, [esp + 0x10]
 //   0x005771c8  call     0x418d20
 //   0x005771cd  jmp      0x5771d1
-void OverlayTypeClass::vfunc_25(int a0, int a1)
+void OverlayTypeClass::Read_INI(int a0, int a1)
 {
 }
 
