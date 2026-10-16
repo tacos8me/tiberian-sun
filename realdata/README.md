@@ -1,7 +1,10 @@
 # realdata — shipped game data used to validate the reconstruction
 
-These files are extracted from the retail CD images and are **inputs to
-validation**, not part of the reconstruction. They are ignored by git.
+These files are extracted from the retail CD images. They are **committed**
+(~1 MB total) rather than ignored, deliberately: the validation in
+`tools/e2e_rules.py` is only meaningful if a fresh clone can run it without
+first owning the CD images. The 2.7 GB of raw images and ISO trees stay
+ignored; these are the small derived text files that make the check portable.
 
 | File | Source | What it is |
 |---|---|---|
