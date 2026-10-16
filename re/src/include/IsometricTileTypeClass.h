@@ -61,7 +61,9 @@ public:
     virtual void vfunc_39();  // [39] 0x004ea590  // __thiscall
 
     IsometricTileTypeClass();  // 0x004ea0c0
-    virtual ~IsometricTileTypeClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~IsometricTileTypeClass();
 
     // ---- data members (offsets from ctor 0x004ea2f0) ----
     // Offsets are exact. Each member is declared at the access width

@@ -126,7 +126,9 @@ public:
     virtual void vfunc_104();  // [104] 0x00570360  // __cdecl
 
     VeinholeMonsterClass();  // 0x006431b0
-    virtual ~VeinholeMonsterClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~VeinholeMonsterClass();
 
     // ---- data members (offsets from ctor 0x006431b0) ----
     // Offsets are exact. Each member is declared at the access width

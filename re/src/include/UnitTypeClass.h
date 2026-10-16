@@ -18,7 +18,12 @@ class UnitTypeClass : public TechnoTypeClass
 public:
     // ---- vtable 0x6a6a90 (primary, 45 entries) ----------------------------
     // Slot 6 is the RTTI CompleteObjectLocator pointer (0x6b76a8), not code.
-    virtual ~UnitTypeClass();                                       // [0] 0x405790
+    // Slot 0 is a stub shared with 65 other classes (0x405790), not
+    // the destructor, so the destructor is declared without claiming a
+    // vtable position and slot 0 is named for what it is. Declaring
+    // `virtual ~X()` here made the destructor look like slot 0.
+    ~UnitTypeClass();
+    virtual void  vfunc_0();                        // [0] 0x405790 (shared stub, 66 classes)
     virtual void  Init();                                           // [1] 0x405830
     virtual void  Shutdown();                                       // [2] 0x405840
     virtual long  QueryInterface(const void*, void**);              // [3] 0x63ec50

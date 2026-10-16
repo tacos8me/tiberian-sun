@@ -61,7 +61,9 @@ public:
     virtual void vfunc_40(int a0, int a1, int a2);  // [40] 0x00576f10  // __stdcall
 
     OverlayTypeClass();  // 0x00576bf0
-    virtual ~OverlayTypeClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~OverlayTypeClass();
 
     // ---- data members (offsets from ctor 0x00576bf0) ----
     // Offsets are exact. Each member is declared at the access width

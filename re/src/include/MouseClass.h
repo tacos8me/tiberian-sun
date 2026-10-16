@@ -70,7 +70,9 @@ public:
     virtual void vfunc_50();  // [50] 0x005f4700  // __thiscall
 
     MouseClass();  // 0x00402a60
-    virtual ~MouseClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 9 other classes (0x004b2de0), not the destructor.
+    ~MouseClass();
 
     // ---- data members (offsets from ctor 0x00402b20) ----
     // Offsets are exact. Each member is declared at the access width

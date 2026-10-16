@@ -306,8 +306,23 @@ def _suffix(sz):
     return {1: '8', 2: '16', 4: '32'}.get(sz)
 
 
-def _rmw(dst, helper, src_expr):
+def _read_at(op, width):
+    """Render an operand as a value of `width` bytes.
+
+    An immediate is masked to the operand width first. `cmp cx, -1` compares
+    against the 16-bit 0xffff, and handing 0xffffffff to a u16 parameter is
+    defined but warns; masking says the same thing without the diagnostic, and
+    it is what the instruction means. Everything else reads normally.
+    """
+    if isinstance(op, Imm) and width in (1, 2, 4):
+        return _imm(op.value & ((1 << (width * 8)) - 1))
+    return _read(op)
+
+
+def _rmw(dst, helper, src):
     """dest = helper(dest, src) for both register and memory destinations."""
+    width = _size_of(dst)
+    src_expr = _read_at(src, width)
     if isinstance(dst, Reg):
         return '%s = ts::%s(%s, %s);' % (dst.cpp, helper, dst.cpp, src_expr)
     if isinstance(dst, Mem):
@@ -429,7 +444,7 @@ def _render(mnem, ops, ctx):
         helper = _BINOP[mnem] + _suffix(sz)
         if helper not in _HELPERS:
             raise Unmodelled('%s width %s' % (mnem, sz))
-        return _rmw(dst, helper, _read(src))
+        return _rmw(dst, helper, src)
 
     if mnem in _CMPOP:
         if n != 2:
@@ -439,7 +454,7 @@ def _render(mnem, ops, ctx):
         helper = _CMPOP[mnem] + _suffix(sz)
         if helper not in _HELPERS:
             raise Unmodelled('%s width %s' % (mnem, sz))
-        return 'ts::%s(%s, %s);' % (helper, _read(a), _read(b))
+        return 'ts::%s(%s, %s);' % (helper, _read(a), _read_at(b, sz))
 
     if mnem in _UNOP:
         if n != 1:
@@ -459,7 +474,7 @@ def _render(mnem, ops, ctx):
         helper = _SHIFT[mnem] + _suffix(sz)
         if helper not in _HELPERS:
             raise Unmodelled('%s width %s' % (mnem, sz))
-        return _rmw(dst, helper, _read(cnt))
+        return _rmw(dst, helper, cnt)
 
     if mnem in ('shld', 'shrd'):
         if n != 3:
@@ -606,8 +621,12 @@ def _render(mnem, ops, ctx):
             cond = ' && M.zf'
         elif mnem == 'loopne':
             cond = ' && !M.zf'
-        return ('{ ECX.d = ts::dec32(ECX.d); if (ECX.d != 0%s) goto L_%08x; }'
-                % (cond, ops[0].value))
+        # Through _goto, so a target outside the recovered span becomes a tail
+        # transfer rather than a `goto` to a label that was never emitted. A
+        # `loop` whose target lies before the function start is legal and does
+        # happen; building the `goto` inline made it a compile error.
+        return '{ ECX.d = ts::dec32(ECX.d); %s }' % _goto(
+            ops[0].value, ctx, 'ECX.d != 0%s' % cond)
 
     if mnem.startswith('set') and mnem[3:] in COND:
         if n != 1:
@@ -672,10 +691,15 @@ def _render(mnem, ops, ctx):
     if mnem in ('in', 'out'):
         if n != 2:
             raise Unmodelled('%s arity' % mnem)
-        port, val = (ops[0], ops[1]) if mnem == 'out' else (ops[0], ops[1])
+        # `in al, dx` / `in eax, 0x5f`: the register is the DESTINATION and the
+        # second operand is the port. `out 0x13, al` is the mirror image, with the
+        # port first. Both branches of this used to read the operands the same
+        # way, so every `in` came out as `0x5fu = ts::in_op(EAX.d)` -- an
+        # assignment to an immediate, which is a compile error, and one that only
+        # surfaced once the undeclared functions got bodies.
         if mnem == 'out':
-            return 'ts::out_op(%s, %s);' % (_read(port), _read(val))
-        return '%s = ts::in_op(%s);' % (_read(val), _read(port))
+            return 'ts::out_op(%s, %s);' % (_read(ops[0]), _read(ops[1]))
+        return _write(ops[0], 'ts::in_op(%s)' % _read(ops[1]))
 
     # -- string ops ---------------------------------------------------------
     _STR = {

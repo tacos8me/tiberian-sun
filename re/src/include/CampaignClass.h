@@ -47,7 +47,9 @@ public:
     virtual void Set_ID(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
 
     CampaignClass();  // 0x00446670
-    virtual ~CampaignClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~CampaignClass();
 
     // ---- data members (offsets from ctor 0x00446670) ----
     // Offsets are exact. Each member is declared at the access width

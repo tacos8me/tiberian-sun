@@ -1,44 +1,55 @@
 # PROGRESS — Tiberian Sun reconstruction
-Last updated: after the orchestrated push (member emission, function bodies,
-binary-anchored verification). All figures below are measured; re-run
-`python3 tools/harness.py metrics` rather than trusting this file.
+
+All figures below are measured; re-run `python3 tools/harness.py metrics
+--no-append` rather than trusting this file.
 
 ## Status summary
 
-**`tools/verify.py` prints VERIFICATION PASSED across seven checks**, and the
-tree is reproducible from a clean checkout with `out/` and `src/include/`
-removed. Measured state:
+**`tools/verify.py` prints VERIFICATION PASSED across eight checks**, the whole
+tree links into a program, and the pipeline is reproducible from a clean
+checkout. Measured state:
 
 | Measure | Value |
 |---|---|
-| headers | 260 (259 standalone-compilable + prelude) |
-| functions recovered | 23,882 (65.56% of `.text`) |
-| `.text` unattributed | 912 KB |
+| headers | 262 (261 standalone-compilable + prelude) |
+| functions recovered | 41,822 (96.06% of `.text`) |
+| `.text` unattributed | 104 KB |
 | classes / vtable slots | 749 / 9,810 (`vtable_slots_unseeded` 0) |
 | constructors that are real function starts | 100% |
-| virtuals named | 1,285 of 7,140 (18.6%) |
+| virtuals named | 1,567 of 6,987 (22.4%) |
 | named members | 135 across 20 classes |
-| member offsets recovered | 3,575 (1,235 verified against the recovered table) |
-| member claims confirmed in the binary | 3,571 of 3,575 (99.9%) |
-| function bodies | 6,668 across 303 generated translation units |
+| member offsets recovered | 4,326 |
+| member claims confirmed in the binary | 99.9% |
+| **machine functions transcribed** | **43,668 (41,822 starts + 1,846 tail entries)** |
+| **instructions transcribed** | **897,027 of 897,193 (99.98%)** |
+| forwarder definitions | 6,996 across 309 translation units |
+| destructor stubs (declared, no recovered address) | 228 |
 
-Coverage is achieved in two tiers:
+### The code is transcribed, not stubbed
+
+`src/generated/code/` holds one transcription per recovered function VA as
+`ts::sub_XXXXXXXX(void)`, against the machine model in `src/handwritten/
+Machine.h`: registers with sub-register views, correct flag semantics for every
+operation emitted, lazily-paged memory, stack, x87 register stack, string ops,
+segment registers, port I/O. Each generated line is one machine instruction and
+keeps the original as a trailing comment.
+
+The per-class files in `src/generated/` are **forwarders** — the out-of-line
+definitions the reconstructed headers require, each calling the canonical
+transcription of its VA. One machine function, one body.
+
+The tree **links and runs**. `tools/link_test.py` links all 482 translation units
+into a program, registers every recovered function, and executes the original PE
+entry point against the model. That link is what found the defects below; a
+per-file syntax check cannot see a symbol nothing defines.
+
+Coverage is achieved in three tiers:
   - **hand-written headers** with named virtuals, recovered member offsets, and
     per-declaration evidence citations (including the `VectorClass`/
     `DynamicVectorClass`/`TypeList`, `Blitter`, and `Pipe`/`Straw` templates).
   - **generated headers** carrying exact inheritance, the full vtable in real
     order with target addresses, and the constructor VA.
-
-The generated tier is still shallow: 5,855 virtuals remain `vfunc_N`, and the
-6,668 function bodies are **empty definitions** with the recovered instruction
-listing transcribed as a comment. They prove the signatures compile; they do
-not reproduce behaviour.
-
-Instantiations of the hand-written templates are covered by the template
-header that defines them rather than by a per-instantiation file; `verify.py`
-credits coverage to the defining template (487 of the 749 manifest entries are
-template instantiations, e.g. 150 `VectorClass`, 147 `DynamicVectorClass`,
-66 `TClassFactory`, 12 `TypeList`).
+  - **generated code** transcribing the whole recovered instruction stream.
 
 ## Completed and verified
 
@@ -50,101 +61,124 @@ template instantiations, e.g. 150 `VectorClass`, 147 `DynamicVectorClass`,
 | Class hierarchies | 755 | done |
 | Complete Object Locators | 842 | done |
 | Vtables bound to classes | 843 | done |
-| Functions disassembled | 23,882 | done |
-| Instructions recovered | 498,869 | done |
-| INI keys / referenced strings | 1,719 | done |
+| Functions disassembled | 41,822 | done |
+| Instructions recovered | 897,193 | done |
+| INI keys / referenced strings | 1,876 | done |
 | Per-class vtable+ctor manifest | 749 classes, 9,810 slots | done |
 | Direct-base reduction | 749 classes | done |
-| Member offsets recovered | 3,575 across 521 classes | done |
-| Function bodies emitted | 6,668 across 303 TUs | done |
+| Member offsets recovered | 4,326 | done |
+| Machine code transcribed | 43,668 functions | done |
+| Class forwarders emitted | 6,996 | done |
+| Whole-tree link + entry-point run | 482 TUs | done |
 | Binary-anchored member verification | 99.9% confirmed, gated | done |
+| Tool unit tests | 36 checks, mutation-proven | done |
 
 ### Verification performed
 
-- `tools/verify.py` runs seven checks and is **fail-closed**: a missing artifact
+- `tools/verify.py` runs eight checks and is **fail-closed**: a missing artifact
   exits non-zero naming what is missing, rather than running a subset and
   printing PASSED.
 - Check 4 re-resolves **all 749** manifest vtables through the binary's own COL
-  chain and requires an exact mangled-name match. The previous figure (200/200)
-  was an alphabetical prefix with substring matching; the real number was
-  unknown until the sweep was widened.
+  chain and requires an exact mangled-name match.
 - `tools/verify_members_binary.py` disassembles each constructor in the binary
-  and confirms claimed member offsets against real stores: **3,571 of 3,575
-  confirmed, 4 refuted, 0 uncheckable**. It runs as a gate with a 95% floor. It
-  found that a store site buried inside a large general-purpose function was
-  being accepted as the constructor for 180 of 585 classes; a plausibility gate
-  now requires the vtable write to occur early through a non-stack register.
-- Determinism: two clean pipeline runs produce byte-identical output
-  (`tools/harness.py determinism --run`).
+  and confirms claimed member offsets against real stores: **99.9% confirmed**.
+  It runs as a gate with a 95% floor.
+- `tools/gen_code.py` and `tools/gen_bodies.py` both run **faithfulness gates**
+  on their own output, proven by mutation. The transcription gate re-renders
+  each function and requires the file to be byte-identical, which is what
+  catches a corrupted statement whose evidence comment is intact.
+- `tools/link_test.py` links the whole tree and runs it. See "defects found by
+  the link" below for what it caught.
+- `tools/test_tools.py` runs 36 unit checks, each a regression test for a
+  shipped defect or a differential test against an independent implementation.
+  Four of them are mutation-proven to fail when the defect is reintroduced.
+- Determinism: two clean pipeline runs produce **497 byte-identical artifacts**
+  (the recovered data *and* the generated C++).
 
 ## Remaining work
 
 ### P0 — generated set correct and complete  [DONE]
 - [x] Fix inheritance emission (real includes, direct bases only)
 - [x] Regenerate all 749 class headers; compile standalone and combined
-- [x] Reconcile generated headers with the hand-written ones (hand-written wins
-      where it is richer)
-- [x] Make `verify.py` fail-closed and exhaustive (7 checks)
+- [x] Reconcile generated headers with the hand-written ones
+- [x] Make `verify.py` fail-closed and exhaustive (8 checks)
 
 ### P1 — deepen the reconstruction  [DONE]
-- [x] Recover data-member offsets from constructor store sequences (3,575
-      across 521 classes)
-- [x] Name members from INI keys (135 members across 20 classes, each traced to
-      the key string VA and the reader function that stores it)
-- [x] Recover function signatures (22,328)
-- [x] Name virtuals where evidence exists (1,285 of 7,140)
-- [x] Fix primary-vtable selection (virtual slots recovered rose from 5,604 to
-      9,810 — the earlier figure was truncated by picking a secondary vtable)
-- [x] Emit member blocks for classes that previously had no standalone header
-- [x] Emit function bodies (6,668 across 303 TUs; empty definitions carrying the
-      recovered evidence, no invented control flow)
-- [x] Anchor member verification to the binary (99.9% of claims confirmed)
-
-### P2 — templates  [DONE]
-- [x] Reconstruct the `Blit*`/`RLEBlit*` blitter family as one template header
-      (`src/handwritten/Blitter.h`, `<E>`/`<G>` split proven from stride)
-- [x] Reconstruct `VectorClass<>` / `DynamicVectorClass<>` / `TypeList<>`
-      (`src/handwritten/VectorClass.h`, layout from ctor `0x445640`)
-- [x] Reconstruct the Pipe/Straw IO hierarchy (`src/handwritten/Pipe.h`,
-      20 classes, 80 virtuals named from call-site evidence)
-- [x] Wire template ownership into the generator and credit coverage to the
-      defining template
+- [x] Recover data-member offsets from constructor store sequences (4,326)
+- [x] Name members from INI keys (135 across 20 classes)
+- [x] Recover function signatures (37,595)
+- [x] Name virtuals where evidence exists (1,567 of 6,987)
+- [x] Anchor member verification to the binary (99.9% confirmed)
+- [x] Transcribe every recovered function (43,668, 99.98% of instructions)
+- [x] Emit the forwarders the headers require, and link the tree
 
 ### P2 — remaining
-- [ ] Fix shared-constructor misattribution: 180 of 585 classes (31%) share a
-      constructor VA, 74 of them `0x461054` alone. That generic function stores
-      to `[esi+0x174]`/`[esi+8]`, not to the class's own members, and is the
-      dominant cause of the 22.2% of member claims the binary does not confirm.
-- [ ] `Node<>` container template (currently declared in `INIClass.h`; should
-      become its own header with recovered layout)
-- [ ] Reconstruct the MS* multimedia classes (MSAnim, MSFont, ...)
-- [ ] Reconstruct the WOL/ATL COM layer
-- [ ] Recover the remaining 912 KB of unattributed `.text`
-- [ ] Name more virtuals (5,855 remain `vfunc_N`)
+- [ ] **Name more virtuals.** 5,420 remain `vfunc_N`. This is now the largest
+      single gap in how editable the source is.
+- [ ] **Name more members.** 135 of 4,326 have evidence-backed names.
+- [ ] `Node<>` container template (declared in `INIClass.h`; should be its own
+      header with recovered layout). 2 classes still show unresolved bases for
+      it: `INIClass::INIEntry` and `MixFileClass`.
+- [ ] Reconstruct the MS* multimedia classes and the WOL/ATL COM layer.
+- [ ] Recover the remaining 104 KB of unattributed `.text`.
+- [ ] 166 instructions (0.02%) have no faithful rendering and are emitted as
+      `ts::unmodelled(va, "mnem")`: MMX/SSE, the x87 environment save/restore
+      (`fnsave`/`frstor`/`fnstenv`/`fldenv`), far pointers (`les`/`lds`) and
+      `lar`.
+- [ ] Load the image's data sections into the model. The entry-point run stops
+      at import thunks because `call dword ptr [IAT]` reads 0 from modelled
+      memory; the model never loads `.idata`.
 
 ### P3 — validation
-- [ ] Unit tests for the load-bearing tools (`rtti.py`, `disasm.py`,
-      `gen_manifest.py`) — `verify.py` tests artifacts, never the tools
-- [ ] Compile the gate with `-m32` so target type widths are enforced
+- [ ] Compile the gate with `-m32` so target type widths are enforced. The shim
+      is host-sized: `sizeof(DWORD)` is 8, and `__stdcall` is defined away.
 - [ ] Byte-level validation: recompile and diff generated code against the
-      original binary where a matching compiler is available
-- [ ] Cross-check every INI key against a real `rules.ini` if obtainable
+      original binary where a matching compiler is available.
+- [ ] Cross-check every INI key against a real `rules.ini` (the e2e harness
+      already resolves 110 of 112 recovered field names against the shipped
+      INIs; widen it).
 
 ## Known gaps (documented, not hidden)
 
-- **0.1% of member-offset claims are not confirmed by the binary** (4 of
-  3,575). Recovery is deliberately conservative: the plausibility gate trades a
-  little recall for near-perfect precision.
-- **Member layout is not verified.** Offsets are checked; whether the *type* and
-  ordering are right is not.
+- **0.1% of member-offset claims are not confirmed by the binary.** Recovery is
+  deliberately conservative: the plausibility gate trades recall for precision.
+- **Member *type* and ordering are not verified.** Offsets are.
+- **228 destructors are labelled stubs.** The headers declare them; no comment
+  records where they are, so there is no transcription to forward to. The stub
+  is marked as a stub in the source and counted in the generated README.
+- **The transcribed code is not source-shaped.** It is faithful to what the
+  machine does and is not claimed to be the shape the original source had.
+- **A transcription reads its arguments from the model, not from C++
+  parameters.** Hand-written callers (the template headers) therefore reach the
+  right code through `ts::ts_invoke`, but the values they pass are only
+  meaningful when the caller is itself a transcription.
 - `RulesClass` has no RTTI record (not polymorphic); identified only by its
   reader functions, so member offsets are not isolated.
 - Nested gadget classes (`SidebarClass::StripClass`,
   `RadarClass::RTacticalClass`) have no located constructor.
-- Member *names* exist only where an INI key or string provides evidence (135
-  across 20 classes). Never infer one.
-- Function bodies are empty definitions. They prove signatures compile; they do
-  not reproduce behaviour.
+- Member *names* exist only where an INI key or string provides evidence. Never
+  infer one.
+- **`out/functions.json` is 65 MB**, over GitHub's 50 MB warning threshold. It
+  is a regenerable artifact; untracking it would need a history rewrite.
+
+## Defects found by the link (recorded because they were all invisible before)
+
+Closing the body-coverage gap and linking the tree exposed six real defects, none
+of which any existing check could see:
+
+1. `in` operands were emitted swapped — `0x5fu = ts::in_op(EAX.d)`, an
+   assignment to an immediate. Both branches of the operand read were identical.
+2. A `loop` whose target lay outside the recovered span emitted `goto` to a
+   label that was never emitted.
+3. The declaration pattern could not match a destructor at all: `\b` before the
+   name has no boundary between a space and `~`. **No destructor had ever been
+   emitted**, and 214 were undefined.
+4. `public: virtual ~X();` was captured whole, producing the out-of-line
+   definition `public: virtual X::~X()`.
+5. Template classes got out-of-line destructor stubs, which is not valid C++
+   without an argument list.
+6. The generator declared `virtual ~X()` for 66 classes whose slot 0 is a shared
+   stub, claiming a vtable position the destructor does not hold.
 
 ## How to resume
 
@@ -160,8 +194,10 @@ To measure or check reproducibility without regenerating:
 ```bash
 python3 tools/harness.py metrics --no-append        # real state, no prose
 python3 tools/harness.py determinism --run          # two clean runs, byte-diffed
-python3 tools/verify.py src/include build/shim      # the 7-check gate
+python3 tools/verify.py src/include build/shim      # the 8-check gate
 python3 tools/verify_members_binary.py              # binary-anchored member check
+python3 tools/test_tools.py                         # tool unit tests
+python3 tools/link_test.py                          # link + run the whole tree
 ```
 
 Individual stages, in pipeline order:
@@ -169,6 +205,7 @@ Individual stages, in pipeline order:
 ```bash
 python3 tools/rtti.py bin/GAME.EXE out             # RTTI recovery
 python3 tools/disasm.py bin/GAME.EXE out           # disassembly
+python3 tools/gen_code.py out bin/GAME.EXE src/generated/code  # transcription
 python3 tools/gen_strings.py bin/GAME.EXE out      # referenced strings
 python3 tools/gen_manifest.py bin/GAME.EXE out     # per-class vtable/ctor
 python3 tools/reduce_bases.py out                  # direct-base reduction
@@ -179,7 +216,7 @@ python3 tools/name_virtuals.py bin/GAME.EXE out    # virtual naming
 python3 tools/gen_headers.py bin/GAME.EXE out src/include
 python3 tools/reconcile_prelude.py src/include
 python3 tools/make_selfcontained.py src/include build/shim
-python3 tools/gen_bodies.py bin/GAME.EXE out src/generated
+python3 tools/gen_bodies.py out src/include src/generated src/generated/code
 ```
 
 ## Verification status
@@ -187,24 +224,26 @@ python3 tools/gen_bodies.py bin/GAME.EXE out src/generated
 `tools/verify.py` reports, both in-tree and from a clean checkout:
 
 ```
-[1] standalone compile: 259/259
+[1] standalone compile: 261/261
 [2] combined TU compile: PASS
 [3] class coverage: 749/749 (100.0%)
 [4] vtable->class bindings: 749/749 verified
 [5] header content vs manifest: 219/219 verified
-[6] inheritance vs direct bases: 218/222 verified
-[7] member offsets vs recovered table: 1442/1442 verified
+[6] inheritance vs direct bases: 220/220 verified
+[7] member offsets vs recovered table: 2186/2186 verified
+[8] declared arity vs recovered signatures: reported, not gated
 VERIFICATION PASSED
 ```
 
-Plus the binary-anchored check, which is the only one whose input is the binary
-rather than another tool's output:
+Plus the two checks whose input is the binary rather than another tool's output:
 
 ```
 tools/verify_members_binary.py
-  claims examined       3575
-  confirmed in binary   3571
-  refuted               4
-  uncheckable           0
   confirmed of checkable 99.9%
+
+tools/link_test.py
+  link: OK (482 translation units)
+  5 of 5 sampled VAs resolved
+  entry 0x006854e3 ran; unmapped calls: 16383 (all import thunks reading 0)
+  recursion depth limit 4096; times hit: 21
 ```

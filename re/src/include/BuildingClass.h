@@ -242,7 +242,9 @@ public:
     virtual void vfunc_220();  // [220] 0x004355e0  // __cdecl, returns int
 
     BuildingClass();  // 0x00425530
-    virtual ~BuildingClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~BuildingClass();
 
     // ---- data members (offsets from ctor 0x00425530) ----
     // Offsets are exact. Each member is declared at the access width

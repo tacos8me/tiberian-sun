@@ -320,6 +320,22 @@ def insert_member_block(src, class_name, block):
 
 
 
+def shared_slot0_map(manifest):
+    """slot-0 addresses that more than one class points at.
+
+    A vtable slot 0 shared between classes is a stub, not a destructor: 66 of
+    the 749 classes point at 0x405790. Emitting `virtual ~X()` for each of them
+    claims a slot position the destructor does not hold, which is what the
+    headers did until this map existed.
+    """
+    counts = {}
+    for e in manifest:
+        ents = e.get("entries") or []
+        if ents:
+            counts[ents[0]] = counts.get(ents[0], 0) + 1
+    return {va: n for va, n in counts.items() if n > 1}
+
+
 def main():
     bindir = sys.argv[1] if len(sys.argv) > 1 else "bin/GAME.EXE"
     outdir = sys.argv[2] if len(sys.argv) > 2 else "out"
@@ -327,6 +343,7 @@ def main():
 
     bin_ = Bin(bindir)
     manifest = json.load(open(os.path.join(outdir, "class_manifest.json")))
+    shared_slot0 = shared_slot0_map(manifest)
     direct = json.load(open(os.path.join(outdir, "direct_bases.json")))
     fns = {f["va"]: f for f in json.load(open(os.path.join(outdir, "functions.json")))["functions"]}
     members_path = os.path.join(outdir, "members.json")
@@ -810,9 +827,16 @@ def main():
                 bits.append(f"returns {sg['ret']}")
             cctag = ("  // " + ", ".join(bits)) if bits else ""
             if vn and vn.startswith("~"):
-                # The destructor is emitted explicitly below; skip it here to
-                # avoid a duplicate declaration.
-                continue
+                # A destructor named in slot 0 is normally the destructor, and
+                # the declaration below covers it, so the slot is skipped.
+                #
+                # But slot 0 is a SHARED STUB for 66 of the 749 classes -- they
+                # all point at 0x405790 -- and a shared address is not 66
+                # destructors. Skipping it there silently threw the slot away
+                # and left `virtual ~X()` claiming a vtable position it does
+                # not hold. Emit the slot under its own name instead.
+                if e not in shared_slot0:
+                    continue
             elif vn:
                 L.append(f"    virtual {ret} {vn}({args});  // [{i}] 0x{e:08x}{cctag}{tag}")
             else:
@@ -820,7 +844,19 @@ def main():
         L.append("")
         if m["ctors"]:
             L.append(f"    {ident}();  // 0x{m['ctors'][0]:08x}")
-        L.append(f"    virtual ~{ident}();")
+        # The destructor's address is recorded in the manifest's ctor/entry
+        # data, not as a slot, so it is declared without claiming one. Where
+        # slot 0 is a shared stub, say so, because `virtual ~X()` on its own
+        # reads as "this is slot 0" and here that is not true.
+        if m["entries"] and m["entries"][0] in shared_slot0:
+            L.append("    // The destructor is declared non-virtual here: slot 0 "
+                     "holds a stub")
+            L.append("    // shared with %d other classes (0x%08x), not the "
+                     "destructor." %
+                     (shared_slot0[m["entries"][0]], m["entries"][0]))
+            L.append(f"    ~{ident}();")
+        else:
+            L.append(f"    virtual ~{ident}();")
 
         # ---- data members recovered from the constructor ----
         L.extend(member_block(m["class"], members, member_names,

@@ -20,7 +20,12 @@ class BuildingTypeClass : public TechnoTypeClass
 public:
     // ---- vtable 0x69a758 (primary, 46 entries) ----------------------------
     // Slot 6 is the RTTI CompleteObjectLocator pointer (0x6aa510), not code.
-    virtual ~BuildingTypeClass();                                   // [0] 0x405790
+    // Slot 0 is a stub shared with 65 other classes (0x405790), not
+    // the destructor, so the destructor is declared without claiming a
+    // vtable position and slot 0 is named for what it is. Declaring
+    // `virtual ~X()` here made the destructor look like slot 0.
+    ~BuildingTypeClass();
+    virtual void  vfunc_0();                        // [0] 0x405790 (shared stub, 66 classes)
     virtual void  Init();                                           // [1] 0x405830
     virtual void  Shutdown();                                       // [2] 0x405840
     virtual long  QueryInterface(const void*, void**);              // [3] 0x441830

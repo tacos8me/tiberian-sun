@@ -8,6 +8,16 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
+
+# A nested out/out is what you get from running a stage with the output
+# directory given as `out` while already inside out/. It happened once and left
+# 40MB of stale, wrong artifacts committed for months, because nothing looked at
+# them. Fail loudly instead.
+if [ -d out/out ]; then
+  echo "error: stray out/out/ directory -- a stage was run from the wrong cwd" >&2
+  echo "       remove it (rm -rf out/out) and re-run" >&2
+  exit 1
+fi
 BIN=bin/GAME.EXE
 OUT=out
 SRC=src/include
@@ -24,11 +34,23 @@ if [ "${1:-}" != "--verify-only" ]; then
   find "$SRC" -maxdepth 1 -name '*.h' -delete
   cp src/handwritten/*.h "$SRC"/ 2>/dev/null || true
   echo "== 0/10 clean generated tree =="
+  # Test the tools, not just their output. verify.py checks artifacts; these
+  # check the code that produces them, and every one is a regression test for a
+  # defect that shipped.
+  echo "== 0b/10 tool unit tests =="
+  python3 tools/test_tools.py
+
   echo "== 1/10 RTTI recovery =="
   python3 tools/rtti.py "$BIN" "$OUT"
 
   echo "== 2/10 disassembly =="
   python3 tools/disasm.py "$BIN" "$OUT"
+
+  echo "== 2b/10 machine code transcription =="
+  # One canonical transcription per recovered function VA, plus a registration
+  # unit so ts_call() dispatches. Independent of the headers: it is the code,
+  # not the declarations.
+  python3 tools/gen_code.py "$OUT" "$BIN" src/generated/code
 
   echo "== 3/10 referenced strings =="
   python3 tools/gen_strings.py "$BIN" "$OUT"
@@ -100,23 +122,21 @@ PY
 # recovered signature for. Must run AFTER the headers are final, since the
 # emitted definitions copy the header declarations verbatim.
 echo "== function bodies =="
-python3 tools/gen_bodies.py "$OUT" "$SRC" src/generated
+python3 tools/gen_bodies.py "$OUT" "$SRC" src/generated src/generated/code
 # Prove every generated TU compiles standalone against the reconstructed tree.
-python3 - <<'PY'
-import glob, subprocess, sys
-bad = []
-tus = sorted(glob.glob("src/generated/*.cpp"))
-for p in tus:
-    r = subprocess.run(["g++", "-std=c++03", "-fsyntax-only",
-                        "-Isrc/include", "-Ibuild/shim", p],
-                       capture_output=True)
-    if r.returncode != 0:
-        bad.append(p)
-print(f"generated bodies compile: {len(tus)-len(bad)}/{len(tus)}")
-if bad:
-    print("FAILED:", ", ".join(bad[:10]))
-    sys.exit(1)
-PY
+# bodies_all.cpp is a concatenation of the others, so it is left out of the
+# per-file sweep and never compiled twice.
+python3 tools/check_compile.py "generated bodies" "src/generated/*.cpp" \
+        --exclude bodies_all.cpp
+
+echo "== machine code TUs =="
+python3 tools/check_compile.py "transcription TUs" "src/generated/code/*.cpp"
+
+echo "== link the whole tree =="
+# A per-file syntax check cannot see a forwarder that names a symbol nothing
+# defines; only a link can. This links every transcription and every forwarder
+# into one program, then runs the original entry point against the model.
+python3 tools/link_test.py
 
 echo
 echo "== verification =="

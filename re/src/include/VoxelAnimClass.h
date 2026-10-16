@@ -126,7 +126,9 @@ public:
     virtual void vfunc_104();  // [104] 0x00570360  // __cdecl
 
     VoxelAnimClass();  // 0x00640070
-    virtual ~VoxelAnimClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~VoxelAnimClass();
 
     // ---- data members (offsets from ctor 0x00640070) ----
     // Offsets are exact. Each member is declared at the access width

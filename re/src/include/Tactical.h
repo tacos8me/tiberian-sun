@@ -45,7 +45,9 @@ public:
     virtual void vfunc_24(int a0, int a1, int a2, int a3);  // [24] 0x005fcf50  // __thiscall
 
     Tactical();  // 0x005f4b30
-    virtual ~Tactical();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~Tactical();
 
     // ---- data members (offsets from ctor 0x005f4b30) ----
     // Offsets are exact. Each member is declared at the access width

@@ -196,7 +196,13 @@ def cmd_determinism(run):
             print(f"run {i} FAILED (exit {r.returncode})")
             print(r.stderr.decode(errors="replace")[-2000:])
             return 1
-        results.append(_hash_tree(os.path.join(d, "out")))
+        # The generated C++ is a pipeline product too. Hashing only out/ would
+        # have called the pipeline deterministic while the 172 transcription
+        # TUs and 309 forwarder TUs went unchecked.
+        h = dict(_hash_tree(os.path.join(d, "out")))
+        for k, v in _hash_tree(os.path.join(d, "src", "generated")).items():
+            h["src/generated/" + os.path.basename(k)] = v
+        results.append(h)
 
     a, b = results
     # out/metrics.jsonl is an append-only history, not a pipeline product.

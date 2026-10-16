@@ -125,7 +125,9 @@ public:
     virtual void vfunc_104();  // [104] 0x00570360  // __cdecl
 
     SmudgeClass();  // 0x005e0d80
-    virtual ~SmudgeClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~SmudgeClass();
 
     // ---- data members (offsets from ctor 0x005e0d80) ----
     // Offsets are exact. Each member is declared at the access width

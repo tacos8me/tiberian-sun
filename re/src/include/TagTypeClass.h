@@ -48,7 +48,9 @@ public:
     virtual void vfunc_26(int a0);  // [26] 0x00604470  // __thiscall
 
     TagTypeClass();  // 0x00603ee0
-    virtual ~TagTypeClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~TagTypeClass();
 
     // ---- data members (offsets from ctor 0x00604000) ----
     // Offsets are exact. Each member is declared at the access width

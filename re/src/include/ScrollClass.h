@@ -72,7 +72,9 @@ public:
     virtual void vfunc_50();  // [50] 0x005f4700  // __thiscall
 
     ScrollClass();  // 0x005cf020
-    virtual ~ScrollClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 9 other classes (0x004b2de0), not the destructor.
+    ~ScrollClass();
 
     // ---- data members (offsets from ctor 0x005cf020) ----
     // Offsets are exact. Each member is declared at the access width

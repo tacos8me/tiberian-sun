@@ -258,7 +258,9 @@ public:
     virtual void vfunc_236(int a0, int a1, int a2);  // [236] 0x004cf920  // __thiscall
 
     InfantryClass();  // 0x004cb520
-    virtual ~InfantryClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~InfantryClass();
 
     // ---- data members (offsets from ctor 0x004cb520) ----
     // Offsets are exact. Each member is declared at the access width

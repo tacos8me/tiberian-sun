@@ -32,9 +32,15 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
 - `gen_manifest.py` — per-class vtable, constructor and base set
 - `gen_members.py` / `name_members.py` — member offsets, and names from INI keys
 - `gen_signatures.py` / `name_virtuals.py` — calling conventions and virtual names
-- `gen_headers.py` / `gen_bodies.py` — header and `.cpp` body emission
-- `verify.py` — the 7-check fail-closed gate
+- `gen_headers.py` — header emission
+- `gen_code.py` — the canonical transcription of every recovered function into
+  `src/generated/code/`, against the machine model in `src/handwritten/Machine.h`
+- `gen_bodies.py` — the declaration-shaped forwarders the headers require
+- `emit_x86.py` — the operand grammar and per-mnemonic rendering both use
+- `verify.py` — the 8-check fail-closed gate
 - `verify_members_binary.py` — re-derives member offsets from the binary's own code
+- `link_test.py` — links the whole tree into a program and runs it
+- `test_tools.py` — unit tests for the tools themselves
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
   (`determinism`)
 
@@ -71,8 +77,20 @@ Locomotion classes: DriveLocomotionClass, FlyLocomotionClass, WalkLocomotionClas
 JumpjetLocomotionClass, HoverLocomotionClass, MechLocomotionClass,
 TeleportLocomotionClass, TunnelLocomotionClass, DropPodLocomotionClass.
 
+## The machine model
+
+`src/handwritten/Machine.h` models the x86 machine the recovered code ran on:
+registers with sub-register views, flag semantics for every operation emitted,
+lazily-paged memory, the stack, the x87 register stack, string ops, segment
+registers and port I/O. Transcribed bodies read their arguments from this model,
+**not** from their C++ parameter lists — the parameter list is the reconstructed
+interface, the model is where the values actually are. Hand-written callers reach
+recovered code through `ts::ts_invoke`; generated forwarders call the
+transcription by name and read the result from `ts::ret_eax()`.
+
 ## Output conventions
 - Reconstructed headers go in `re/src/include/`
+- Generated code goes in `re/src/generated/` — never hand-edit it
 - Reconstructed sources go in `re/src/`
 - Every reconstructed declaration must cite its evidence (RTTI name, vtable VA,
   INI key, or string VA) in a comment.

@@ -6,20 +6,27 @@ The retail PC release of **Command & Conquer: Tiberian Sun** (Westwood Studios,
 1999) has been disassembled and reconstructed into a compilable C++ class
 declaration tree.
 
-**Verification status: `tools/verify.py` prints `VERIFICATION PASSED` with seven
-checks.** 259 of the 260 headers under `src/include/` compile standalone
+**Verification status: `tools/verify.py` prints `VERIFICATION PASSED` with eight
+checks.** 261 of the 262 headers under `src/include/` compile standalone
 (`g++ -std=c++03 -fsyntax-only`; `ts_prelude.h` is the shared prelude and is
 included rather than compiled on its own), and the combined translation unit
 `build/tu_all.cpp` compiles. Every vtable→class binding in the class manifest
 was re-verified by re-reading the binary's own RTTI Complete Object Locator
 chain.
 
+The recovered **machine code is transcribed**, not stubbed: 43,668 functions,
+897,027 of 897,193 instructions (99.98%), rendered against the machine model in
+`src/handwritten/Machine.h`. The whole tree — 482 translation units — **links
+into a program**, and that program runs the original PE entry point against the
+model.
+
 **What that does *not* mean is stated under [Verification](#verification)
-below.** In short: the gate proves the declaration tree compiles and that the
-manifest's vtable bindings match the binary. It does not prove the disassembly
-is correct, it does not verify data-member layout anywhere, and there are still
-**zero `.cpp` function bodies** — the project reproduces *structure*, not
-*behaviour*.
+below.** In short: the gate proves the declaration tree compiles, that the
+manifest's vtable bindings match the binary, and that the tree links. It does
+not prove the disassembly is correct, it does not verify data-member *types* or
+ordering, and the transcription is **not source-shaped** — it is faithful to
+what the machine does and is not claimed to be the shape the original source
+had. Roughly a fifth of the virtuals and 3% of the members are named.
 
 ## Input
 
@@ -129,18 +136,21 @@ re/
   out/classes.json          755 classes, 1291 edges, 842 locators, 843 vtables
   out/hierarchy.txt         readable class hierarchy
   out/vtables.txt           vtable -> class map (843 entries)
-  out/functions.json        23,129 functions with instructions, callees, refs
-  out/ini_keys.json         1,719 referenced strings -> referencing functions
+  out/functions.json        41,822 functions with instructions, callees, refs
+  out/ini_keys.json         1,876 referenced strings -> referencing functions
   out/class_manifest.json   749 classes, 9,810 virtual slots
-  out/members.json          4,634 member-offset records
-  out/signatures.json       21,649 signatures
-  src/include/*.h           260 headers (259 standalone-compilable + prelude)
-  src/handwritten/          45 hand-written, evidence-backed headers
+  out/members.json          member-offset records
+  out/signatures.json       37,595 signatures
+  src/include/*.h           262 headers (261 standalone-compilable + prelude)
+  src/generated/code/       43,668 machine-code transcriptions + registration
+  src/generated/*.cpp       6,996 forwarders across 309 translation units
+  src/handwritten/          hand-written, evidence-backed headers
   src/include/SCHEMA.md     1374-row INI key -> class -> type table
   src/include/INDEX.md      core hierarchy index
   src/include/LOCOMOTION_INDEX.md
   src/include/MAP_INDEX.md
-  build/tu_all.cpp          combined compile test (includes, no bodies)
+  build/tu_all.cpp          combined compile test
+  build/ts_link_test.cpp    links the whole tree and runs the entry point
   build/shim/               minimal windows.h + shared prelude
 ```
 
@@ -151,20 +161,20 @@ a header under `src/include/`.
 
 ## Verification
 
-`python3 tools/verify.py src/include build/shim` runs seven checks and is
+`python3 tools/verify.py src/include build/shim` runs eight checks and is
 fail-closed: a missing artifact under `out/` makes it exit non-zero naming what
 is missing, rather than running a subset and printing `VERIFICATION PASSED`.
 Current output:
 
 ```
-[1] standalone compile: 259/259
+[1] standalone compile: 261/261
 [2] combined TU compile: PASS
 [3] class coverage: 749/749 (100.0%)
 [4] vtable->class bindings: 749/749 verified
 [5] header content vs manifest: 219/219 verified
-[6] inheritance vs direct bases: 218/222 verified
-    (4 hand-written headers diverge; reported, not gated)
-[7] member offsets vs recovered table: 10/10 verified (6 classes emit offsets)
+[6] inheritance vs direct bases: 220/220 verified
+[7] member offsets vs recovered table: 2186/2186 verified
+[8] declared arity vs recovered signatures: reported, not gated
 VERIFICATION PASSED
 ```
 
@@ -197,13 +207,16 @@ same limitation.
   the same constructor scan. Member offsets are exact where recovered and
   their provenance is recorded, but nothing cross-checks them against the
   binary's access patterns.
-- **Behaviour is not reproduced.** `build/tu_all.cpp` is 262 lines of
-  `#include` plus `int main() { return 0; }`. There are **zero** `.cpp`
-  function bodies. The tree proves the declarations are self-consistent, not
-  that any recovered function does what the original did.
-- Check 6 reports 4 hand-written headers whose base clauses diverge from
-  `out/direct_bases.json`. These are legitimate (hand-written headers omit
-  transitively-implied bases), so they are reported and not gated.
+- **The declaration tree alone does not reproduce behaviour** — but it is no
+  longer alone. `src/generated/code/` transcribes the whole recovered
+  instruction stream and `tools/link_test.py` links and runs it; what the
+  declaration tree proves on its own is that the declarations are
+  self-consistent.
+- **A link is the only check that can see an undefined symbol.** The tree did
+  not link for months because every check compiled one file at a time. Adding
+  the link found six defects, including one that had prevented every destructor
+  in the project from ever being emitted.
+- Check 6 now reports 220/220; the four divergences were resolved.
 
 Evidence density in the reconstructed headers: **9,657** address citations,
 **473** quoted INI-key citations, **384** RTTI citations. **239** distinct
@@ -220,14 +233,19 @@ grep -rhoF '/* ? */'            src/include/*.h | wc -l   # 1002
 
 ## Known gaps
 
-- **No function bodies.** Zero `.cpp` files exist. Bodies are recommended to
-  land only after boundary recovery is trustworthy, since every boundary bug
-  would be baked into every regenerated body.
-- **Member layout is unverified** (see Verification). 4,634 member-offset
-  records are recovered but only 10 reach a header through a verified check;
-  2,544 records across 394 classes are computed and discarded because those
-  classes have no standalone header.
-- **~877 INI keys are unmapped.** 1,719 referenced strings are recovered but
+- **The transcription is not source-shaped.** 43,668 functions are transcribed
+  faithfully against a machine model, but a transcription is not a
+  reconstruction: it is what the machine does, not the shape the original
+  source had. 166 instructions (0.02%) have no faithful rendering and are
+  emitted as `ts::unmodelled(va, "mnem")`.
+- **228 destructors are labelled stubs.** The headers declare them; no comment
+  records where they are, so there is no transcription to forward to.
+- **The entry-point run stops at import thunks.** The model never loads the
+  image's data sections, so `call dword ptr [IAT]` reads 0. 16,383 of the entry
+  point's calls are this.
+- **Member layout is only partly verified.** Offsets are confirmed against real
+  stores at 99.9%; member *types* and ordering are not.
+- **~1,741 INI keys are unmapped.** 1,876 referenced strings are recovered but
   only 135 members across 20 classes are named from them.
 - **`RulesClass` has no RTTI record** (it is not polymorphic); it is identified
   only by its reader functions, so its member offsets are not isolated.
@@ -239,9 +257,10 @@ grep -rhoF '/* ? */'            src/include/*.h | wc -l   # 1002
   offsets are not isolated.
 - **Member offsets are exact where recovered; names only where an INI key or
   string provides evidence.** Do not infer a name.
-- **`out/out/` is a stray committed duplicate** of `out/` from an earlier
-  mistyped invocation; it is not produced by any pipeline stage and can be
-  deleted.
+- **`out/functions.json` is 65 MB**, over GitHub's 50 MB warning threshold. It
+  is a regenerable artifact; untracking it would need a history rewrite. (The
+  stray `out/out/` duplicate that sat in the repo for months has been removed,
+  and `tools/pipeline.sh` now fails loudly if it reappears.)
 
 ## Reproducing
 

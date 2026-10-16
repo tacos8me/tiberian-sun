@@ -67,8 +67,12 @@ re/
 | `tools/make_selfcontained.py` | add missing includes per header |
 | `tools/verify.py` | full verification gate (8 checks, fail-closed) |
 | `tools/harness.py` | measure real state (`metrics`) and prove reproducibility (`determinism`) |
-| `tools/gen_bodies.py` | transcribe recovered instruction streams into `.cpp` member definitions, de-duplicated by function VA, with a mutation-proven faithfulness gate (`--check`) |
-| `tools/emit_x86.py` | the operand grammar and per-mnemonic rendering used by `gen_bodies.py`; the only place that knows the disassembler's operand text |
+| `tools/gen_code.py` | the canonical transcription of every recovered function, plus the registration unit and tail entries; mutation-proven faithfulness gate (`--check`) |
+| `tools/gen_bodies.py` | the declaration-shaped forwarders the reconstructed headers require, de-duplicated by function VA, gated to name a defined transcription |
+| `tools/emit_x86.py` | the operand grammar and per-mnemonic rendering used by both generators; the only place that knows the disassembler's operand text |
+| `tools/link_test.py` | link the whole tree into a program and run it; the only check that can see an undefined symbol |
+| `tools/check_compile.py` | compile a set of generated TUs standalone and fail if any does |
+| `tools/test_tools.py` | unit tests for the load-bearing tools; every one is a regression test for a shipped defect |
 | `tools/verify_members_binary.py` | re-derive member offsets from the binary's own code; the only member check not trusting `out/` |
 | `tools/extract_realdata.py` | extract the shipped INI control files from `TIBSUN.MIX` with disjoint byte ranges |
 | `tools/e2e_rules.py` | drive the reconstructed model with real shipped data and check recovered field names against it |
@@ -101,11 +105,15 @@ cd re
 ./tools/pipeline.sh            # regenerate everything, then verify
 python3 tools/verify.py src/include build/shim
 python3 tools/verify_members_binary.py   # offsets re-derived from the binary
+python3 tools/test_tools.py              # unit tests for the tools themselves
+python3 tools/link_test.py               # link the whole tree and run it
 python3 tools/harness.py metrics --no-append   # real measured state
 python3 tools/harness.py determinism --run     # two clean runs, byte-diffed
 ```
 
-A change is not done until `VERIFICATION PASSED` is printed.
+The pipeline runs all of these. A change is not done until `VERIFICATION
+PASSED` is printed, every generated translation unit compiles, and the tree
+links.
 
 Every header must also compile standalone:
 
@@ -208,36 +216,50 @@ apart. Read this before quoting any single number.
 |---|---|---|
 | Binary recovery | **~96%** | 41,822 functions, 96.06% of `.text` attributed; 104 KB left |
 | Structural reconstruction | **~95%** | 749/749 classes, 9,810 vtable slots, 0 unseeded, every constructor a real entry point |
-| Verification | **strong but bounded** | 8 checks, fail-closed, 2 anchored to the binary, determinism proven |
-| **Code transcription** | **9% of the binary** | 2,845 of 41,822 functions have a body; the other 38,977 have no declaration to hang one on |
-| **Semantics** | **~20%** | 22% of virtuals named, ~3% of members named |
+| **Code transcription** | **~100%** | 43,668 functions, 897,027 of 897,193 instructions (99.98%) |
+| Verification | **strong but bounded** | 8 checks, fail-closed, 2 anchored to the binary, whole-tree link, determinism over 497 artifacts |
+| **Semantics** | **~20%** | 22.4% of virtuals named, ~3% of members named |
+| **Behaviour** | **partial** | the tree links and the original entry point runs against the model; it stops at import thunks |
 
-So: *the binary is nearly explained, and a ninth of its instructions are now
-transcribed, but the source is still only a fifth named.* If "complete
+So: *the binary is nearly explained, its instructions are transcribed, and the
+tree links and runs — but the source is still only a fifth named.* If "complete
 decompilation" means compilable, documented, change-ready source that reproduces
-the game, the honest figure is **~40%**.
+the game, the honest figure is **~55%**. The binding constraint has moved from
+"is the code there" to "is it named and is it source-shaped".
 
-**The bodies are now transcriptions, not stubs.** `tools/gen_bodies.py` renders
-each recovered instruction stream into C++ against the `ts::` machine model in
+**The whole recovered instruction stream is transcribed.** `tools/gen_code.py`
+renders each recovered function into C++ against the `ts::` machine model in
 `src/handwritten/Machine.h` — registers, flags, memory and control flow are
 modelled, so the generated code does what the machine does. Each generated line
-is one machine instruction and keeps the original as a trailing comment.
+is one machine instruction and keeps the original as a trailing comment. It emits
+one canonical `ts::sub_XXXXXXXX(void)` per function VA, plus 1,846 **tail
+entries**: addresses a cross-function branch targets that are not function
+starts, which were previously dispatch gaps. The per-class files in
+`src/generated/` are **forwarders** that call those, so one machine function has
+one body.
 
-Two honest limits on that number, both stated in `src/generated/README.md`:
+`tools/link_test.py` links all 482 translation units into a program, registers
+every recovered function, and executes the original PE entry point against the
+model. **That link is not decoration**: a per-file syntax check cannot see a
+forwarder naming a symbol nothing defines, and the tree did not link for months
+because no check looked.
 
-- A body is only emitted for a member function a reconstructed header
-  **declares**. The 100% figure is 100% *of the declared set* — 2,845 functions,
-  76,227 instructions, 9.00% of the binary. The other 38,977 functions are
-  recovered but undeclared, so nothing is emitted for them yet. Closing that gap
-  is a header-declaration problem, not a transcription problem.
-- 162 instructions (0.02% of the binary) have no faithful rendering and are
-  emitted as `ts::unmodelled(va, "mnem")` rather than approximated. They are
-  MMX/SSE, the x87 environment save/restore (`fnsave`/`frstor`/`fnstenv`/
-  `fldenv`), far pointers (`les`/`lds`) and `lar`. The count and the mnemonics
-  are listed in the generated README.
+Honest limits, all stated in `src/generated/README.md`:
+
+- 166 instructions (0.02%) have no faithful rendering and are emitted as
+  `ts::unmodelled(va, "mnem")` rather than approximated: MMX/SSE, the x87
+  environment save/restore (`fnsave`/`frstor`/`fnstenv`/`fldenv`), far pointers
+  (`les`/`lds`) and `lar`.
+- 228 destructors are **labelled stubs**. The headers declare them; no comment
+  records where they are, so there is no transcription to forward to.
+- The entry-point run stops at import thunks, because the model never loads the
+  image's data sections and `call dword ptr [IAT]` therefore reads 0.
 
 It is **not** source-shaped decompilation: the generated code is faithful to what
 the machine does and is not claimed to be the shape the original source had.
+A transcription reads its arguments from the model, not from C++ parameters, so
+hand-written callers reach the right code through `ts::ts_invoke` but the values
+they pass are only meaningful when the caller is itself a transcription.
 
 **Done and verified.** RTTI recovery (788 type descriptors, 755 hierarchies,
 843 vtables), disassembly (41,822 functions, 96.06% of `.text`,
@@ -313,8 +335,14 @@ keep in mind:
   ground truth. It already caught a real case (`DisplayClass.h`'s
   `TacticalClass::vfunc_4()` declared with 0 arguments where `0x4f6a20` is
   `__thiscall nargs=1`).
-- `tools/gen_bodies.py` runs a **faithfulness gate** on its own output with two
-  independent checks: every instruction of every transcribed function must appear
+- **The whole tree is linked, not just compiled.** `tools/link_test.py` links
+  every transcription and every forwarder into one program, registers the
+  recovered functions, and runs the original PE entry point against the model.
+  A per-file syntax check cannot see a forwarder naming a symbol nothing
+  defines; the tree did not link for months and nothing noticed. If you add a
+  generator, add it to the link — that is where the defects are.
+- `tools/gen_code.py` and `tools/gen_bodies.py` run **faithfulness gates** on
+  their own output. The transcription gate has two independent checks: every instruction of every transcribed function must appear
   exactly once, in order, with matching operands; and the generated code must be
   byte-identical to what re-rendering the recovered instructions would produce.
   The second check exists because the first cannot see a corrupted *statement* —
@@ -325,6 +353,25 @@ keep in mind:
   three exit 1. Semantic equivalence with the original cannot be proven here
   (there is no MSVC 6 toolchain, only g++), so faithful rendering is the strongest
   claim available — and it is checkable.
+- **Test the tools, not only their output.** `tools/verify.py` checks artifacts;
+  a tool can be wrong in a way that produces self-consistent output and nothing
+  notices. `tools/test_tools.py` holds 36 checks, each a regression test for a
+  defect that shipped or a differential test against an independent
+  implementation, and four of them are mutation-proven to fail when the defect
+  is reintroduced. If a test cannot fail, it is not worth the runtime.
+- **A gate that has never failed is not a gate.** Every gate in this repo is now
+  proven by reintroducing the defect it is meant to catch and confirming it
+  fails. When you add one, break the thing on purpose and watch it fail — the
+  two-check transcription gate was written because a mutation showed the
+  record-only check could not see a corrupted statement.
+- **Closing a coverage gap finds bugs in code that was already there.** Extending
+  the transcription from 2,845 functions to all 41,822 exposed six defects in the
+  emitter and generator, including one that had prevented every destructor from
+  ever being emitted. Widening scope is a test, not just more output.
+- **Do not leave `__pycache__` behind.** A stale `.pyc` silently shadowed an
+  edited tool during development of the tests above: the source said one thing,
+  the imported module said another, and the mutation checks "passed" against the
+  old code. `tools/test_tools.py` sets `sys.dont_write_bytecode = True`.
 
 Member **offsets** are the one piece of layout that IS verified against the
 binary: `tools/verify_members_binary.py` disassembles each constructor and

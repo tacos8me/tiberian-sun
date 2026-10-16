@@ -66,6 +66,18 @@ struct Machine {
     const char *fault_why;
     unsigned long unmodelled_insns;
     unsigned long unmapped_calls;
+    // Recursion depth of ts_call. A transcription that does not terminate would
+    // otherwise recurse until the host stack runs out, which presents as a
+    // segfault with no explanation; the depth is bounded instead and the
+    // truncation is counted.
+    unsigned long call_depth;
+    unsigned long call_depth_limit;
+    unsigned long depth_exceeded;
+    // The first few call targets that were not registered. A count alone does
+    // not say whether they are Windows imports (expected: the model has no
+    // kernel32) or recovered functions that went missing (a defect).
+    u32 unmapped_sample[16];
+    unsigned unmapped_sample_n;
     u16 fpu_status;
     // Segment registers and the interrupt-enable flag. This model is flat, so
     // segments never affect an address, but the recovered code does push, pop
@@ -78,6 +90,17 @@ struct Machine {
 // The machine is a function-local static so this header stays header-only and
 // every translation unit shares one instance.
 inline Machine &mach() { static Machine m; return m; }
+
+// The value a transcribed function leaves in EAX.
+//
+// A transcription returns through the machine model rather than through a C++
+// return statement: the body is `void(void)` and the result is what the machine
+// has in EAX when the recovered span ends. A caller that has a declared return
+// type -- the forwarders in src/generated/, which exist because the headers
+// declare those signatures -- reads it from here. Written as a function rather
+// than as `EAX` because the register aliases below are macros over mach(), so
+// `ts::EAX` would expand to `ts::ts::mach().r[0]`.
+inline u32 ret_eax() { return mach().r[0].d; }
 
 // Register aliases. Macros rather than references so generated code reads like
 // the instruction stream it came from.
@@ -124,6 +147,10 @@ inline void reset() {
     m.steps = 0; m.step_limit = 0;
     m.faulted = false; m.fault_why = 0;
     m.unmodelled_insns = 0;
+    m.call_depth = 0;
+    m.depth_exceeded = 0;
+    m.unmapped_sample_n = 0;
+    if (m.call_depth_limit == 0) m.call_depth_limit = 4096;
 }
 
 inline void fault(const char *why) {
@@ -352,7 +379,12 @@ typedef void (*Fn)(void);
 typedef void (*Fn)(void);
 
 struct FnTable {
-    enum { SLOTS = 4096 };
+    // Sized for the whole recovered binary: 41,822 functions are registered by
+    // the generated tree, so a table smaller than that silently drops entries
+    // (ts_register gives up when it finds no free slot) and calls stop
+    // dispatching. 2^17 slots keeps the load factor near a third, which is
+    // where linear probing stays cheap.
+    enum { SLOTS = 131072 };
     u32 key[SLOTS];
     Fn  val[SLOTS];
     FnTable() { for (int i = 0; i < SLOTS; ++i) { key[i] = 0xffffffffu; val[i] = 0; } }
@@ -387,13 +419,43 @@ inline Fn ts_lookup(u32 va) {
 // not guessed at. The registry exists so that step can be added without touching
 // a single generated line.
 inline void ts_call(u32 va) {
+    Machine &m = mach();
     Fn f = ts_lookup(va);
-    if (f) f();
-    else mach().unmapped_calls++;
+    if (!f) {
+        if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
+        m.unmapped_calls++;
+        return;
+    }
+    // Bound the depth. A recovered loop whose modelled condition never changes
+    // state would recurse forever, and "ran out of host stack" is a worse
+    // diagnostic than "depth exceeded at VA X".
+    // Lazily defaulted: reset() is not necessarily called before the first
+    // dispatch, and a limit of 0 would cut every call off at the root.
+    if (m.call_depth_limit == 0) m.call_depth_limit = 4096;
+    if (m.call_depth >= m.call_depth_limit) { m.depth_exceeded++; return; }
+    m.call_depth++;
+    f();
+    m.call_depth--;
 }
 // A `call` pushes its return address before transferring, so the modelled stack
 // stays the shape the callee's transcription expects.
 inline void ts_call_at(u32 target, u32 ret) { push32(ret); ts_call(target); }
+
+// Invoke a recovered function from hand-written code.
+//
+// The generated forwarders call their transcription by name, but the
+// hand-written template headers (VectorClass.h and friends) declare members
+// whose bodies are recovered machine code and cannot name a generated symbol
+// without depending on the generated tree. They go through the dispatch table
+// instead, with a return address pushed so the callee's `ret` has something to
+// pop and the modelled stack stays balanced.
+//
+// This runs the recovered body. It does NOT convert C++ arguments into the
+// model: a transcription reads its arguments from the modelled stack, so a
+// hand-written caller reaches the right code but the values it passes are only
+// meaningful if the caller is itself a transcription. That limitation is
+// inherent to a machine model, and it is why the generated forwarders exist.
+inline void ts_invoke(u32 va) { push32(0u); ts_call(va); }
 // An indirect `call dword ptr [eax+0x2c]`: the target is read first, for the same
 // reason the multiply operands are.
 inline void ts_call_ptr(u32 target, u32 ret) { push32(ret); ts_call(target); }

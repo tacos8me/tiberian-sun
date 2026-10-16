@@ -157,10 +157,14 @@ byte-identical src/handwritten/. Check 7 is now 2186/2186 across 248 classes.
 `UnboundLocalError: prelude_owned` (appended to ~line 610, bound ~line 840) --
 it crashed whenever run with an already-reconciled ts_prelude.h present. Fixed.
 
-### [ ] The slot-0 mislabel exists in ~66 more headers
-0x405790 is a shared E_POINTER stub labelled `virtual ~X(); // [0]` in ~66
-generated and hand-written headers. Only AbstractClass was fixed. Same for the
-comparable per-class stubs.
+### [x] The slot-0 mislabel exists in ~66 more headers
+0x405790 is a shared E_POINTER stub labelled `virtual ~X(); // [0]` in 66
+generated and 14 hand-written headers. Fixed at the source: gen_headers.py now
+computes which slot-0 addresses are shared by more than one class and, for
+those, emits the destructor without claiming a vtable position and names slot 0
+for what it is. The hand-written headers were fixed the same way. The 14
+destructors that had been forwarding to the stub are now labelled stubs
+instead of pointing at the wrong address.
 
 ### [ ] Decrypt the encrypted MIX header (deferred, low value)
 tools/mix.py now reads the headerless TD/RA1 variant correctly (SETUP.MIX: 61
@@ -175,8 +179,25 @@ Roughly 95% of it is real code, not padding. Jump tables, SEH handlers and
 *Done when:* unattributed bytes approach padding-only and the residual is
 reported with its padding fraction.
 
+### [ ] Load the image's data sections into the machine model
+`tools/link_test.py` runs the original PE entry point against the model and it
+stops at the first import: `call dword ptr [IAT]` reads 0, because the model's
+lazily-paged memory starts empty and nothing ever copies `.idata`/`.rdata` in.
+16,383 of the entry point's calls are this. Loading the sections would let the
+import table resolve to real addresses and make the run far more meaningful.
+*Done when:* the entry-point run reports no call target of 0x00000000.
+
+### [ ] 166 instructions have no faithful rendering
+Emitted as `ts::unmodelled(va, "mnem")` rather than approximated: MMX/SSE
+(`movq`, `psrlw`, `movd`, `pxor`, `packuswb`, `punpcklbw`, `punpckhwd`,
+`psrad`, `pmulhw`), the x87 environment save/restore (`fnsave`, `frstor`,
+`fnstenv`, `fldenv`), far pointers (`les`, `lds`) and `lar`. MMX/SSE is the
+largest group and would need 64-bit register state in the model.
+*Done when:* the count reaches zero, or every remaining mnemonic is argued for
+in the generated README.
+
 ### [ ] Name more virtuals
-5,855 of 7,140 remain `vfunc_N` (18.6% named). Existing rules cover 12.4% of
+5,420 of 6,987 remain `vfunc_N` (22.4% named). Existing rules cover a fifth of
 manifest slots; further progress needs new evidence rules, not better plumbing.
 Candidate rules: unique string-literal reference, callee-set match against a
 named base virtual, slot index against a known MSVC base layout.
@@ -184,7 +205,7 @@ named base virtual, slot index against a known MSVC base layout.
 concrete signal it keyed on. Do not loosen a rule to raise the ratio.
 
 ### [ ] Mine the unused `rules.ini` keys
-1,719 strings recovered; only 135 members named across 20 classes. The
+1,876 strings recovered; only 135 members named across 20 classes. The
 reader-trace mechanism in `name_members.py` works and is proven.
 *Done when:* distinct named members rise substantially, each citing key VA and
 reader VA.
@@ -200,12 +221,13 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 
 ## P3 — verification and validation
 
-### [ ] Unit tests for the load-bearing tools
-No test directory exists. `verify.py` and the binary verifier test artifacts,
-never the tools. Add golden-count assertions for `rtti.py`, `disasm.py` and
-`gen_manifest.py` so a silent recovery regression fails a test rather than only
-changing a number.
-*Done when:* a deliberate off-by-one in `rtti.py` fails a test.
+### [x] Unit tests for the load-bearing tools
+`tools/test_tools.py`: 36 checks. Not golden-count assertions -- every one is a
+regression test for a defect that actually shipped, or a differential test
+against an independent implementation. Four are proven to fail when the defect
+is reintroduced (mutating `gen_bodies.DECL`, swapping the `in` operands,
+removing the `loop` tail handling, removing the immediate mask each produce
+failures naming the right check). Wired into the pipeline as stage 0b.
 
 ### [ ] Compile the gate with `-m32`
 The shim is host-sized: on this LP64 host `sizeof(DWORD)` is 8 and `sizeof(GUID)`

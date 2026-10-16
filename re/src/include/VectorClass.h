@@ -47,6 +47,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "Machine.h"   // ts::ts_invoke / ts::ret_eax, for the member definitions below
 
 // --------------------------------------------------------------------------
 // VectorClass<T>
@@ -158,3 +159,171 @@ public:
     unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], ecx
 
 };
+
+// ==========================================================================
+// Member definitions
+//
+// These members are declared above but were never defined, so nothing that
+// instantiated a VectorClass<T> could link. Each definition invokes the
+// recovered machine code for that member through the machine model's dispatch
+// table; the address is the one this header's own evidence block records, and
+// the full transcription of each is in src/generated/code/.
+//
+// Why not write the C++ out? Because these methods tail-jump. vfunc_4's span
+// ends in a branch to 0x44543e, vfunc_5's to 0x44547c, operator='s to 0x4453ee
+// -- the recorded span is not the whole method, and hand-translating a partial
+// span is how you get plausible-looking wrong code. Invoking the recovered body
+// is faithful to the whole thing, tail jumps included.
+//
+// The arguments are NOT converted into the model: a transcription reads its
+// arguments from the modelled stack. A hand-written caller therefore reaches
+// the right code, but the values it passes are only meaningful when the caller
+// is itself a transcription. See ts_invoke in Machine.h.
+// ==========================================================================
+
+template <class T>
+inline VectorClass<T>::VectorClass(int count, T *data)
+{
+    (void)count; (void)data;   // the recovered body reads these from the model
+    ts::ts_invoke(0x00445640u);
+}
+
+template <class T>
+inline VectorClass<T>::~VectorClass() { ts::ts_invoke(0x00445570u); }
+
+template <class T>
+inline bool VectorClass<T>::operator==(const VectorClass<T> &that) const
+{
+    (void)that;
+    ts::ts_invoke(0x00445310u);
+    return ts::ret_eax() != 0;
+}
+
+template <class T>
+inline VectorClass<T> &VectorClass<T>::operator=(const VectorClass<T> &that)
+{
+    (void)that;
+    ts::ts_invoke(0x00445350u);
+    return *this;
+}
+
+template <class T>
+inline void VectorClass<T>::Clear() { ts::ts_invoke(0x004452a0u); }
+
+// /* ? */ predicate over m_bIsActive: returns 0 when the flag is clear and
+// otherwise continues in shared code at 0x44543e, which scans m_pData for the
+// first element matching the one passed in. Recorded as the recovered span
+// reaches it, not as a named operation.
+template <class T>
+inline bool VectorClass<T>::vfunc_4() const
+{
+    ts::ts_invoke(0x00445430u);
+    return ts::ret_eax() != 0;
+}
+
+// /* ? */ returns (arg - m_pData) / sizeof(T), i.e. the index of the element
+// passed in; the recovered tail at 0x44547c computes exactly that.
+template <class T>
+inline bool VectorClass<T>::vfunc_5() const
+{
+    ts::ts_invoke(0x00445470u);
+    return ts::ret_eax() != 0;
+}
+
+template <class T>
+inline DynamicVectorClass<T>::DynamicVectorClass(int count, T *data)
+{
+    (void)count; (void)data;
+    ts::ts_invoke(0x0049c0f0u);
+}
+
+template <class T>
+inline DynamicVectorClass<T>::~DynamicVectorClass()
+{
+    ts::ts_invoke(0x004455c0u);
+}
+
+template <class T>
+inline bool
+DynamicVectorClass<T>::operator==(const DynamicVectorClass<T> &that) const
+{
+    (void)that;
+    ts::ts_invoke(0x00445310u);
+    return ts::ret_eax() != 0;
+}
+
+template <class T>
+inline DynamicVectorClass<T> &
+DynamicVectorClass<T>::operator=(const DynamicVectorClass<T> &that)
+{
+    (void)that;
+    ts::ts_invoke(0x00445490u);
+    return *this;
+}
+
+template <class T>
+inline void DynamicVectorClass<T>::Clear() { ts::ts_invoke(0x004452a0u); }
+
+// Linear scan over m_nCapacity comparing the first word of each element;
+// returns the index or -1.
+template <class T>
+inline int DynamicVectorClass<T>::Find(const T &item) const
+{
+    (void)item;
+    ts::ts_invoke(0x00445540u);
+    return (int)ts::ret_eax();
+}
+
+template <class T>
+inline bool DynamicVectorClass<T>::vfunc_5() const
+{
+    ts::ts_invoke(0x00445470u);
+    return ts::ret_eax() != 0;
+}
+
+template <class T>
+inline TypeList<T>::TypeList(int count, T *data)
+{
+    (void)count; (void)data;
+    ts::ts_invoke(0x00449400u);
+}
+
+template <class T>
+inline TypeList<T>::~TypeList() { ts::ts_invoke(0x0044ad70u); }
+
+template <class T>
+inline bool TypeList<T>::operator==(const TypeList<T> &that) const
+{
+    (void)that;
+    ts::ts_invoke(0x0044af30u);
+    return ts::ret_eax() != 0;
+}
+
+template <class T>
+inline TypeList<T> &TypeList<T>::operator=(const TypeList<T> &that)
+{
+    (void)that;
+    ts::ts_invoke(0x0044b0b0u);
+    return *this;
+}
+
+template <class T>
+inline void TypeList<T>::Clear() { ts::ts_invoke(0x0044ac70u); }
+
+template <class T>
+inline int TypeList<T>::Find(const T &item) const
+{
+    (void)item;
+    ts::ts_invoke(0x0044b160u);
+    return (int)ts::ret_eax();
+}
+
+// 0x44b1a0 is a shared tail entry: it is inside the function at 0x44b190, and
+// the vtable points straight at it. It is transcribed as its own body for
+// exactly that reason -- see tail_entries in tools/gen_code.py.
+template <class T>
+inline bool TypeList<T>::vfunc_5() const
+{
+    ts::ts_invoke(0x0044b1a0u);
+    return ts::ret_eax() != 0;
+}

@@ -1,42 +1,50 @@
 #!/usr/bin/env python3
-"""
-Generate the first .cpp function bodies for the reconstructed tree.
+"""Emit the out-of-line member definitions the reconstructed headers declare.
 
 WHAT THIS EMITS
 ---------------
 One translation unit per class, under src/generated/, containing out-of-line
 definitions for the member functions that the reconstructed header for that
-class DECLARES and for which the binary provides both a function record and a
-recovered signature. The definition's signature is copied verbatim from the
-header declaration, so the emitted TU compiles against the reconstructed
-headers by construction.
+class declares and that the binary supplies a function record for. The
+definition's signature is copied verbatim from the header declaration, so the
+emitted TU compiles against the reconstructed tree by construction.
 
-WHAT A BODY HONESTLY IS
------------------------
-The recovered evidence per function is: an entry VA, a size, an instruction
-listing (mnemonic, operand text, encoding bytes) and a calling convention.
-There is no register liveness, no stack frame description and no local type
-information, so inventing source-shaped C++ expressions would be guesswork.
+WHAT A BODY IS
+--------------
+A forwarder. The transcription of the machine code lives in
+src/generated/code/, one canonical `ts::sub_XXXXXXXX(void)` per recovered
+function VA, gated there by tools/gen_code.py. This file's job is to give every
+*declaring name* a definition so the tree links, and to name the VA that the
+definition is:
 
-Instead the instruction stream is TRANSCRIBED against the ts:: machine model in
-Machine.h -- registers, flags, memory and control flow are modelled, so the
-generated code does what the machine does. Each generated line is one machine
-instruction and carries the original instruction as a trailing comment, so the
-file can be read against the recovered listing line for line. It is not claimed
-to be the shape the original source had.
+    // AbstractClass::QueryInterface -- the body is the canonical transcription
+    // of 4 instructions at 0x006829a5, in src/generated/code/.
+    HRESULT AbstractClass::QueryInterface()
+    {
+        ts::sub_006829a5();
+        return (HRESULT)(size_t)ts::EAX.d;
+    }
 
-The evidence comment also carries the recovered provenance inline -- the VA,
-size, instruction count, callees, and the complete instruction listing. That is
-a faithful low-level transcription of the original, not a reconstruction of its
-high-level semantics, and it is labelled as such.
+Two properties this buys, both of which the previous shape lacked:
+
+  * exactly one transcription per machine function. Before, an inherited
+    virtual a class does not override was transcribed once per declaring class;
+    the de-duplication by VA fixed the duplication, and moving the code to the
+    VA-indexed tree means there is no second copy to keep in step.
+  * the return value is read out of the machine model, which is where the
+    callee left it, rather than reconstructed from a signature the binary does
+    not actually carry.
+
+The signature is void(void) for the same reason as in gen_code.py: a
+transcribed body reads its arguments from the machine model, not from C++
+parameters. A `ret` pops the return address off the modelled stack, which is
+what ts_call_at pushed.
 
 WHAT IS SKIPPED
 ---------------
   * declarations with no target-VA comment (the DECL pattern requires one)
   * pure virtuals ("= 0") and inline bodies, excluded by that same pattern
   * functions with no record in out/functions.json
-  * functions with no entry in out/signatures.json (per the task contract: a
-    signature is only usable when signatures.json has one)
   * target VAs outside .text (import thunks, RTTI stubs, jump-table entries)
   * a nested class whose flattened ident owns its own header, e.g.
     RadarClass::RTacticalClass is emitted from RadarClass_RTacticalClass.h
@@ -52,27 +60,70 @@ import os
 import re
 import sys
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import emit_x86
-
 OUTDIR = "out"
 GENDIR = "src/generated"
+CODEDIR = "src/generated/code"
 
 # A class/struct definition that opens a body we can parse member declarations
 # from. Templates are excluded: their member functions are defined by the
 # template header itself, not out of line here.
+#
+# Group 1 captures an optional `template<...>` prefix, group 2 the class name.
+# A template class is skipped entirely: its members are defined by the template
+# header that declares it (src/handwritten/VectorClass.h and friends), and an
+# out-of-line `DynamicVectorClass::~DynamicVectorClass()` with no argument list
+# is not a valid definition at all.
 CLASS_OPEN = re.compile(
-    r"^[ \t]*(?:class|struct)\s+(\w+)\s*(?::[^{;]*)?\{", re.M)
+    r"^[ \t]*(template\s*<[^>]*>\s*)?(?:class|struct)\s+(\w+)\s*"
+    r"(?::[^{;]*)?\{", re.M)
 
 # A single-line member-function declaration carrying a target-VA comment.
 # Group 1: declaration text without 'virtual', trailing ';' or comment.
 # Group 2: the target VA.
+#
+# The word boundary is on the plain-identifier branch only. With `\b` in front
+# of the whole alternation a destructor could never match -- there is no word
+# boundary between a space and '~' -- so for the life of this tool every
+# destructor in every header was skipped, which is why the tree did not link.
+#
+# An access specifier is consumed before the declaration. It is inside the
+# declaration's character class (': ' is a legal part of 'Class::method'), so
+# without an explicit prefix `public: virtual ~X();` was captured whole and the
+# out-of-line definition came out as `public: virtual X::~X()`, which is not a
+# declaration at all.
 DECL = re.compile(
-    r"^[ \t]*(virtual\s+)?"
-    r"((?:[\w:*&<>,\[\]\s]|\bconst\b)*?\b(?:~\w+|\w+)\s*\([^;{}()]*\))"
+    r"^[ \t]*(?:(?:public|private|protected)[ \t]*:[ \t]*)?(virtual\s+)?"
+    r"((?:[\w:*&<>,\[\]\s]|\bconst\b)*?(?:~\w+|\b\w+)\s*\([^;{}()]*\))"
     r"\s*(const)?\s*;"
-    r"[ \t]*//[^\n]*?(0x[0-9a-fA-F]{4,8})",
+    r"(?:[ \t]*//[^\n]*?(0x[0-9a-fA-F]{4,8}))?",
     re.M)
+
+# A vtable-block comment line: "// [3] Next       0x591f40". The hand-written
+# headers record the recovered slot addresses in a block above the declarations
+# rather than on each declaration, so a declaration like `virtual int
+# GetSize();` has no target VA of its own even though the address is right there
+# in the file. Reading the block is what turns these from stubs into real
+# forwarders.
+#
+# The name is `\S+` rather than `\w+` so `operator==` is captured whole, and the
+# address is optional so a slot the header marks "/* ? */" still records its
+# NUMBER -- which is what lets the manifest supply the address instead.
+SLOT_VA = re.compile(
+    r"^[ \t]*//[ \t]*\[(\d+)\][ \t]+~?(\S+)"
+    r"(?:[ \t]+(0x[0-9a-fA-F]{4,8}))?", re.M)
+
+# A destructor declaration with NO target-VA comment.
+#
+# 227 of the 326 destructor declarations in the reconstructed headers are in
+# this state: the header declares the destructor because the compiler needs it
+# (a vtable names it, a constructor calls it) but no comment records where it
+# is. There is therefore no transcription to forward to. These are emitted as
+# explicitly labelled stubs -- not as transcriptions, and not with a guessed VA
+# -- because the alternative is a tree that does not link. The count is
+# reported in the README rather than hidden.
+DTOR_NO_VA = re.compile(
+    r"^[ \t]*(?:(?:public|private|protected)[ \t]*:[ \t]*)?(virtual\s+)?"
+    r"(~\w+)\s*\(\s*\)\s*;(?![^\n]*0x)", re.M)
 
 # .text bounds for the target binary (PE section table, see CONTEXT.md).
 TEXT_LO = 0x401000
@@ -93,8 +144,10 @@ def parse_class_bodies(src):
     # Collect every class open with its nesting depth and enclosing scope.
     opens = []
     for m in CLASS_OPEN.finditer(src):
+        if m.group(1):
+            continue  # a template: its header defines its members
         depth = src.count("{", 0, m.start()) - src.count("}", 0, m.start())
-        opens.append((m.start(), m.end(), m.group(1), depth))
+        opens.append((m.start(), m.end(), m.group(2), depth))
     # Determine, for each open, the chain of enclosing class names by looking
     # at the class opens whose bodies contain it.
     for start, end, name, depth in opens:
@@ -168,7 +221,8 @@ def decls_in_body(body):
         # stripped text must still contain this declaration.
         if raw.split("(")[0].strip().split()[-1] not in text:
             continue
-        results.append((raw, m.group(3) or "", int(m.group(4), 16)))
+        results.append((raw, m.group(3) or "",
+                        int(m.group(4), 16) if m.group(4) else None))
     return results
 
 
@@ -182,6 +236,13 @@ def split_ret_name(decl):
     for cc in ("__stdcall", "__cdecl", "__thiscall", "__fastcall"):
         head = head.replace(" " + cc, "").replace(cc + " ", "")
     head = head.strip()
+    # Defensive: the DECL pattern already drops these, but a declaration reached
+    # through a different path must not turn `public: virtual` into a return
+    # type, which is how `return (virtual)(size_t)...` got emitted.
+    for kw in ("public:", "private:", "protected:", "virtual", "explicit",
+               "inline", "static"):
+        if head.startswith(kw):
+            head = head[len(kw):].strip()
     if head.startswith("~"):
         return "", head
     bits = head.rsplit(" ", 1)
@@ -190,36 +251,49 @@ def split_ret_name(decl):
     return bits[0].strip(), bits[1].strip()
 
 
+def defined_in_code_tree(codedir):
+    """The set of VAs the canonical code tree defines.
+
+    A forwarder that names a VA the tree does not define is a link error, so
+    the gate checks it against the actual generated files rather than against
+    functions.json.
+    """
+    defined = set()
+    if not os.path.isdir(codedir):
+        return defined
+    pat = re.compile(r"^void (sub_[0-9a-f]{8})\(void\)$", re.M)
+    for p in glob.glob(os.path.join(codedir, "code_*.cpp")):
+        for m in pat.finditer(open(p).read()):
+            defined.add(int(m.group(1)[4:], 16))
+    return defined
+
+
 def main():
     outdir = sys.argv[1] if len(sys.argv) > 1 else OUTDIR
     srcdir = sys.argv[2] if len(sys.argv) > 2 else "src/include"
     gendir = sys.argv[3] if len(sys.argv) > 3 else GENDIR
-    # The target image. An indirect jump's destination lives in a switch table in
-    # the image rather than in the instruction stream, so resolving one needs the
-    # real bytes. Without the image those jumps are recorded, not guessed at.
-    image = None
-    for cand in (os.path.join(os.path.dirname(os.path.abspath(outdir)),
-                              "bin", "GAME.EXE"),
-                 os.path.join("bin", "GAME.EXE")):
-        if os.path.exists(cand):
-            image = emit_x86.PEImage(cand)
-            break
-    if image is None:
-        print("gen_bodies: WARNING bin/GAME.EXE not found; indirect jumps will "
-              "be recorded rather than resolved")
+    codedir = sys.argv[4] if len(sys.argv) > 4 else CODEDIR
+    check_only = "--check" in sys.argv
 
-    totals = {"modelled": 0, "unmodelled": 0, "unmod": {}}
     fns = {f["va"]: f for f in
            json.load(open(os.path.join(outdir, "functions.json")))["functions"]}
-    sigs = json.load(open(os.path.join(outdir, "signatures.json")))
-    # The whole-binary denominator, so the transcription percentage in the README
-    # cannot be read as "the whole binary is done".
-    all_fns = len(fns)
-    all_insns = sum(len(f.get("insns") or []) for f in fns.values())
+    # class ident -> vtable slot targets, for declarations whose header records
+    # a slot but no address.
+    manifest = {}
+    try:
+        for e in json.load(open(os.path.join(outdir, "class_manifest.json"))):
+            manifest[e["ident"]] = e.get("entries") or []
+    except (OSError, ValueError, KeyError):
+        pass
+    defined = defined_in_code_tree(codedir)
+    if not defined:
+        print("gen_bodies: WARNING no canonical code tree at %s; forwarders "
+              "would name symbols nothing defines" % codedir)
 
-    skip = {"no_function_record": 0, "no_signature": 0, "not_in_text": 0,
-            "duplicate": 0, "nested_class_covered": 0}
+    skip = {"no_function_record": 0, "not_in_text": 0, "duplicate": 0,
+            "nested_class_covered": 0, "not_in_code_tree": 0}
     emitted = 0
+    stubbed = 0
     files = []
     seen = set()
 
@@ -243,12 +317,35 @@ def main():
             if cname != simple and flat in toplevel_idents:
                 skip["nested_class_covered"] += 1
                 continue
+            # name -> slot number, and name -> address when the header records
+            # one. A declaration with neither falls back to the manifest, whose
+            # `entries` are the vtable targets read out of the binary.
+            slot_no = {}
+            slot_va = {}
+            for m in SLOT_VA.finditer(body):
+                slot_no.setdefault(m.group(2), int(m.group(1)))
+                if m.group(3):
+                    slot_va.setdefault(m.group(2), int(m.group(3), 16))
             defs = []
+            no_va = []
             for decl, cqual, va in decls_in_body(body):
                 ret, name = split_ret_name(decl)
                 if not name or not name.lstrip("~").replace("_", "").isalnum():
                     continue
                 params = decl[decl.find("("):]
+                if va is None:
+                    # No trailing VA: fall back to the vtable block, then to the
+                    # manifest entry for that slot. The header marks some slots
+                    # "/* ? */" and leaves the address out; the manifest has it.
+                    bare = name.lstrip("~")
+                    va = slot_va.get(bare)
+                    if va is None and bare in slot_no:
+                        ent = manifest.get(cname.split("::")[-1])
+                        if ent and slot_no[bare] < len(ent):
+                            va = ent[slot_no[bare]]
+                if va is None:
+                    no_va.append((ret, name, params, cqual))
+                    continue
                 if va not in fns:
                     # Distinguish "no function record" from a VA we never saw.
                     skip["no_function_record"] += 1
@@ -256,8 +353,8 @@ def main():
                 if not (TEXT_LO <= va < TEXT_HI):
                     skip["not_in_text"] += 1
                     continue
-                if hex(va) not in sigs:
-                    skip["no_signature"] += 1
+                if va not in defined:
+                    skip["not_in_code_tree"] += 1
                     continue
                 key = (cname, name, params)
                 if key in seen:
@@ -265,115 +362,118 @@ def main():
                     continue
                 seen.add(key)
                 defs.append((ret, name, params, cqual, va))
-            if not defs:
+            # Destructors the header declares with no target VA. Skip any the
+            # DECL pass already emitted (it matches the ones that do carry one).
+            # Destructors the header declares with no address anywhere. These
+            # get a labelled stub: the compiler needs the definition (a vtable
+            # names it, a constructor calls it) and there is nothing to forward
+            # to. Anything with an address has already been handled above.
+            have = {name for _, name, _, _, _ in defs}
+            stubs = []
+            for m in DTOR_NO_VA.finditer(body):
+                dname = m.group(2)
+                if dname in have:
+                    continue
+                have.add(dname)
+                stubs.append(dname)
+            if not defs and not stubs:
                 continue
             fname = flat
-            files.append((cname, fname, base, defs))
+            files.append((cname, fname, base, defs, stubs))
             emitted += len(defs)
+            stubbed += len(stubs)
 
-    # --check runs the faithfulness gate against an EXISTING tree without
-    # regenerating it, so the gate can be exercised on deliberately corrupted
-    # output (which is how its own mutation self-test works).
-    check_only = "--check" in sys.argv
     if not check_only:
         if not os.path.isdir(gendir):
             os.makedirs(gendir)
         # Regenerate: clear only the .cpp files this tool owns.
         for old in glob.glob(os.path.join(gendir, "*.cpp")):
             os.remove(old)
-    # De-duplicate by function VA. The previous version emitted one full body per
-    # DECLARING CLASS, so an inherited virtual a class does not override was
-    # transcribed once per declaring class: 6,668 banners for 2,842 distinct
-    # functions, one function rendered 159 times. Every declaring name must still
-    # get a definition so the tree links, so the FIRST declarer carries the full
-    # transcription and the rest become aliases that name it.
+
+    # De-duplicate by function VA. An inherited virtual a class does not
+    # override is declared by every class that inherits it, so one machine
+    # function can have many declaring names. Every name must still get a
+    # definition or the tree does not link, so the first declarer carries the
+    # forwarder and the rest become aliases that name it.
     canonical = {}
     distinct = 0
-    for cname, fname, header, defs in files:
+    for cname, fname, header, defs, stubs in files:
         lines = []
-        lines.append("// %s.cpp -- mechanically generated by tools/gen_bodies.py" %
-                     fname)
+        lines.append("// %s.cpp -- mechanically generated by tools/gen_bodies.py"
+                     % fname)
         lines.append("// DO NOT EDIT: regenerate with ./tools/pipeline.sh.")
         lines.append("//")
-        lines.append("// Each body below is a TRANSCRIPTION of the recovered instruction")
-        lines.append("// stream against the ts:: machine model in Machine.h. Registers,")
-        lines.append("// flags, memory and control flow are modelled, not approximated;")
-        lines.append("// each line is one machine instruction and keeps the original as a")
-        lines.append("// trailing comment. Nothing is invented: the binary provides an")
-        lines.append("// instruction listing, a size and a callee set, and nothing else.")
+        lines.append("// Out-of-line definitions for the member functions this "
+                     "class's header")
+        lines.append("// declares. Each one FORWARDS to the canonical "
+                     "transcription of that")
+        lines.append("// machine function, which lives in src/generated/code/ "
+                     "as")
+        lines.append("// ts::sub_XXXXXXXX(void) and is gated there. The "
+                     "transcription is not")
+        lines.append("// repeated here: one machine function, one body.")
         lines.append("//")
-        lines.append("// A body marked ALIAS defines the same machine code as another")
-        lines.append("// declaration; the code is transcribed once, at the canonical")
+        lines.append("// The return value is read out of the machine model, "
+                     "which is where the")
+        lines.append("// callee left it. A body reads its arguments from the "
+                     "model too, not from")
+        lines.append("// the C++ parameter list -- see tools/gen_code.py.")
+        lines.append("//")
+        lines.append("// A body marked ALIAS defines the same machine code as "
+                     "another")
+        lines.append("// declaration; the forwarder is written once, at the "
+                     "canonical")
         lines.append("// declaration named on the alias line.")
         lines.append('#include "%s"' % header)
-        lines.append('#include "Machine.h"   // ts:: machine model the bodies below run on')
+        lines.append('#include "code/recovered.h"   // declarations of the '
+                     'canonical')
+        lines.append('// transcriptions each body below forwards to.')
+        lines.append('#include "Machine.h"   // ts:: machine model, for ts::EAX')
         lines.append("")
         for ret, name, params, cqual, va in defs:
             f = fns[va]
-            sig = sigs[hex(va)]
+            sig = "ts::sub::sub_%08x" % va
             ret_s = (ret + " ") if ret else ""
             cq = (" " + cqual) if cqual else ""
+            returns = ret.strip() not in ("", "void")
             if va in canonical:
                 lines.append("// %s::%s -- ALIAS of %s (same machine code at "
-                             "0x%08x); transcribed once." %
-                             (cname, name, canonical[va], va))
-                lines.append("%s%s::%s%s" % (ret_s, cname, name, params + cq))
-                lines.append("{")
-                lines.append("}")
-                lines.append("")
-                continue
-            canonical[va] = "%s::%s" % (cname, name)
-            distinct += 1
-            lines.append("// ---------------------------------------------------------------------------")
-            lines.append("// %s::%s -- transcription of %d instructions at 0x%08x." %
-                         (cname, name, f["ninsn"], va))
-            lines.append("// size %d bytes; signature %s%s" %
-                         (f["size"], sig.get("cc") or "?",
-                          (" nargs=%s" % sig["nargs"]) if sig.get("nargs") is not None else ""))
-            if f.get("callees"):
-                lines.append("// callees: " +
-                             ", ".join("0x%08x" % c for c in f["callees"]))
+                             "0x%08x); the"
+                             % (cname, name, canonical[va], va))
+                lines.append("// forwarder is written once, at that "
+                             "declaration.")
             else:
-                lines.append("// callees: none")
-            lines.append("//")
-            lines.append("// Rendered against the ts:: machine model (Machine.h): registers,")
-            lines.append("// flags, memory and control flow are modelled, not approximated.")
-            lines.append("// Each line below is one machine instruction and keeps the original")
-            lines.append("// instruction as a trailing comment. This is a transcription, not")
-            lines.append("// source-shaped decompilation: it is faithful to what the machine")
-            lines.append("// does, and is not claimed to be the shape the original source had.")
-            lines.append("//")
+                canonical[va] = "%s::%s" % (cname, name)
+                distinct += 1
+                lines.append("// -----------------------------------------------------------"
+                             "--------------")
+                lines.append("// %s::%s -- the body is the canonical transcription of"
+                             % (cname, name))
+                lines.append("// %d instructions at 0x%08x, in src/generated/code/."
+                             % (f["ninsn"], va))
+                lines.append("// size %d bytes; %s" %
+                             (f["size"],
+                              ("callees: " + ", ".join("0x%08x" % c
+                                                       for c in f["callees"]))
+                              if f.get("callees") else "callees: none"))
+                lines.append("//")
             lines.append("%s%s::%s%s" % (ret_s, cname, name, params + cq))
             lines.append("{")
-            items, st = emit_x86.transcribe(
-                f.get("insns", []), image, va, f.get("end") or va + f["size"],
-                ret_type=ret)
-            for kind, cpp, rec in items:
-                if kind == "label":
-                    lines.append("    %s:;" % cpp)
-                    continue
-                # A rendering may be a block (an indirect jump's dispatch), in
-                # which case only the first line carries the evidence record so
-                # the gate still sees each instruction exactly once.
-                first, _, rest = cpp.partition("\n")
-                lines.append("    %s   //   %s" % (first, rec))
-                for extra in rest.split("\n"):
-                    if extra:
-                        lines.append("    " + extra)
-            totals["modelled"] += st["modelled"]
-            totals["unmodelled"] += st["unmodelled"]
-            for k, v in st["unmodelled_by_mnemonic"].items():
-                totals["unmod"][k] = totals["unmod"].get(k, 0) + v
-            # A recovered span can end without a `ret` (control falls through
-            # into the next function, which the linker's ordering makes legal).
-            # A value-returning definition still needs a path that returns.
-            # Only when the span does not already end in a `ret`: otherwise the
-            # line is dead and just noise.
-            ends_in_ret = bool(items) and items[-1][0] == "stmt" and \
-                "return" in items[-1][1]
-            if ret and ret.strip() not in ("", "void") and not ends_in_ret:
-                lines.append("    return (%s)(size_t)EAX.d;   // fall-through: the "
-                             "recovered span ends without a ret" % ret.strip())
+            lines.append("    %s();" % sig)
+            if returns:
+                lines.append("    return (%s)(size_t)ts::ret_eax();" % ret.strip())
+            lines.append("}")
+            lines.append("")
+        for dname in stubs:
+            lines.append("// %s::%s -- the header declares this destructor but no"
+                         % (cname, dname))
+            lines.append("// comment names a target VA, so there is no recovered "
+                         "function to")
+            lines.append("// forward to. This is a STUB, not a transcription: it "
+                         "exists so the")
+            lines.append("// tree links. Counted in README.md.")
+            lines.append("%s::%s()" % (cname, dname))
+            lines.append("{")
             lines.append("}")
             lines.append("")
         if not check_only:
@@ -388,177 +488,92 @@ def main():
             fh.write("// Combined translation unit for every generated body "
                      "file.\n")
             fh.write("// Regenerated by tools/gen_bodies.py.\n")
-            for cname, fname, header, defs in files:
+            for cname, fname, header, defs, stubs in files:
                 fh.write('#include "%s.cpp"\n' % fname)
 
     readme = os.path.join(gendir, "README.md")
     if not check_only:
-      with open(readme, "w") as fh:
-        fh.write("# src/generated — mechanically derived function bodies\n\n")
-        fh.write("Generated by `tools/gen_bodies.py`. Do not edit by hand; "
-                 "regenerate with `./tools/pipeline.sh`.\n\n")
-        fh.write("Each `.cpp` defines the member functions that its class's "
-                 "reconstructed header declares and that the binary supplies "
-                 "both a function record and a recovered signature for. The "
-                 "signature is copied verbatim from the header declaration, so "
-                 "the file compiles against the reconstructed tree.\n\n")
-        fh.write("A body is a TRANSCRIPTION of the recovered instruction stream "
-                 "against the ts:: machine model in `Machine.h`. Registers, "
-                 "flags, memory and control flow are modelled rather than "
-                 "approximated, so the generated code does what the machine "
-                 "does. Each generated line is one machine instruction and "
-                 "carries the original instruction as a trailing comment, so a "
-                 "file can be read against the recovered listing line for line.\n\n")
-        fh.write("This is not source-shaped decompilation. It is not claimed to "
-                 "be the shape the original source had; it is claimed to be "
-                 "faithful to what the machine does.\n\n")
-        fh.write("## Transcription coverage\n\n")
-        fh.write("| item | count |\n|---|---|\n")
-        tot = totals["modelled"] + totals["unmodelled"]
-        fh.write("| instructions modelled | %d of %d (%.2f%%) |\n" %
-                 (totals["modelled"], tot,
-                  100.0 * totals["modelled"] / tot if tot else 0.0))
-        fh.write("| instructions NOT modelled | %d |\n" % totals["unmodelled"])
-        fh.write("\nThis 100% means every instruction of every function that got "
-                 "a body is rendered. It does NOT mean the whole binary is "
-                 "transcribed: a body is only emitted for a member function that "
-                 "a reconstructed header DECLARES. The denominator is therefore "
-                 "the declared set, not the binary.\n\n")
-        fh.write("| scope | functions | instructions |\n|---|---|---|\n")
-        fh.write("| transcribed here | %d | %d |\n" % (distinct, tot))
-        fh.write("| the whole binary | %d | %d |\n" % (all_fns, all_insns))
-        fh.write("| not yet transcribed (no declaration) | %d | %d |\n" %
-                 (all_fns - distinct, all_insns - tot))
-        if all_insns:
-            fh.write("\nSo %.2f%% of the binary's instructions have a "
-                     "transcribed body.\n\n" % (100.0 * tot / all_insns))
-        if totals["unmod"]:
-            fh.write("\nUnmodelled instructions by mnemonic. Each is emitted as "
-                     "`ts::unmodelled(va, \"mnem\")` rather than silently "
-                     "dropped or approximated:\n\n")
-            fh.write("| mnemonic | count |\n|---|---|\n")
-            for k in sorted(totals["unmod"], key=lambda x: -totals["unmod"][x]):
-                fh.write("| `%s` | %d |\n" % (k, totals["unmod"][k]))
+        with open(readme, "w") as fh:
+            fh.write("# src/generated -- member definitions and machine code\n\n")
+            fh.write("Generated by `tools/gen_bodies.py` and "
+                     "`tools/gen_code.py`. Do not edit by hand; regenerate "
+                     "with `./tools/pipeline.sh`.\n\n")
+            fh.write("## What is in here\n\n")
+            fh.write("`code/` holds the **machine code**: one transcription per "
+                     "recovered function VA, `ts::sub_XXXXXXXX(void)`, plus a "
+                     "registration unit so `ts_call()` reaches it. That is the "
+                     "faithful artifact and the one the gate checks.\n\n")
+            fh.write("The per-class `.cpp` files here hold **forwarders**: the "
+                     "out-of-line definitions the reconstructed headers "
+                     "require, each calling the canonical transcription of its "
+                     "VA. They are declaration-shaped, so they compile against "
+                     "the reconstructed tree; the code is not repeated in "
+                     "them.\n\n")
+            fh.write("## Coverage\n\n")
+            fh.write("| scope | functions |\n|---|---|\n")
+            fh.write("| recovered from the binary | %d |\n" % len(fns))
+            fh.write("| transcribed in `code/` | %d |\n" % len(defined))
+            fh.write("| forwarders emitted (every declaring name) | %d |\n"
+                     % emitted)
+            fh.write("| distinct machine functions among those | %d |\n"
+                     % distinct)
+            fh.write("| alias definitions (same machine code) | %d |\n"
+                     % (emitted - distinct))
+            fh.write("| destructor stubs (declared, no recovered VA) | %d |\n"
+                     % stubbed)
+            for k in sorted(skip):
+                fh.write("| skipped: %s | %d |\n" % (k, skip[k]))
             fh.write("\n")
-        fh.write("## Totals\n\n")
-        fh.write("| item | count |\n|---|---|\n")
-        fh.write("| class translation units | %d |\n" % len(files))
-        fh.write("| member definitions (every declaring name) | %d |\n" % emitted)
-        fh.write("| DISTINCT functions transcribed | %d |\n" % distinct)
-        fh.write("| alias definitions (same machine code) | %d |\n" % (emitted - distinct))
-        for k in sorted(skip):
-            fh.write("| skipped: %s | %d |\n" % (k, skip[k]))
+            if defined:
+                fh.write("%.2f%% of the recovered functions have a "
+                         "transcription; the rest are the ones\n"
+                         "the headers do not declare, and they are transcribed "
+                         "in `code/`\nregardless -- see "
+                         "`code/` and `tools/gen_code.py`.\n\n"
+                         % (100.0 * distinct / len(fns)))
+            fh.write("Every transcription is one machine instruction per "
+                     "generated line, with the\noriginal instruction kept as a "
+                     "trailing comment, so a file can be read against\n"
+                     "the recovered listing line for line.\n\n")
+            fh.write("This is not source-shaped decompilation. It is not "
+                     "claimed to be the shape the\noriginal source had; it is "
+                     "claimed to be faithful to what the machine does.\n")
 
-    tot = totals["modelled"] + totals["unmodelled"]
-    print("gen_bodies: transcription coverage %d/%d instructions (%.2f%%), "
-          "%d unmodelled" %
-          (totals["modelled"], tot,
-           100.0 * totals["modelled"] / tot if tot else 0.0, totals["unmodelled"]))
-    if totals["unmod"]:
-        top = sorted(totals["unmod"], key=lambda x: -totals["unmod"][x])[:8]
-        print("gen_bodies: unmodelled by mnemonic: " +
-              ", ".join("%s=%d" % (k, totals["unmod"][k]) for k in top))
-    print("gen_bodies: %d translation units, %d member definitions, "
-          "%d DISTINCT functions transcribed (%d aliases)" %
-          (len(files), emitted, distinct, emitted - distinct))
-    print("skipped:", json.dumps(skip, sort_keys=True))
-    print("wrote", gendir)
+    print("gen_bodies: %d class translation units, %d forwarders, %d DISTINCT "
+          "machine functions (%d aliases), %d destructor stubs" %
+          (len(files), emitted, distinct, emitted - distinct, stubbed))
+    print("skipped: " + json.dumps(skip, sort_keys=True))
 
     # ------------------------------------------------------------------
-    # Faithfulness gate.
-    #
-    # Semantic equivalence with the original cannot be proven here: there is no
-    # MSVC 6 toolchain, only g++. So the only claim a transcription may make is
-    # that it renders the recovered instruction stream faithfully -- and that
-    # claim has to be checkable rather than asserted in prose.
-    #
-    # The gate re-reads the generated files and asserts, for every transcribed
-    # function, that its instructions appear exactly once, in order, with
-    # matching bytes. A dropped or reordered instruction fails it.
+    # Gate: every forwarder must name a VA the canonical code tree actually
+    # defines. A missing symbol is a link error, and the point of this file is
+    # that the tree links.
     # ------------------------------------------------------------------
     bad = []
     checked = 0
-    for cname, fname, header, defs in files:
+    for cname, fname, header, defs, stubs in files:
         path = os.path.join(gendir, fname + ".cpp")
         try:
             text = open(path).read()
         except OSError:
+            bad.append("%s.cpp: missing" % fname)
             continue
         for ret, name, params, cqual, va in defs:
-            if canonical.get(va) != "%s::%s" % (cname, name):
-                continue  # alias: the code is checked at its canonical site
-            f = fns[va]
-            want = ["0x%08x  %-8s %s" % (i["va"], i["mnem"], i.get("op", ""))
-                    for i in f.get("insns", [])]
-            # Extract THIS function's own listing, from its banner to the next
-            # banner. Searching the whole file for the records as a subsequence
-            # matched instructions belonging to other functions and reported
-            # false failures.
-            banner = ("// %s::%s -- transcription of %d instructions at 0x%08x"
-                      % (cname, name, f["ninsn"], va))
-            start = text.find(banner)
+            sym = "ts::sub::sub_%08x()" % va
+            if sym not in text:
+                bad.append("%s::%s: no call to %s" % (cname, name, sym))
+                continue
+            if va not in defined:
+                bad.append("%s::%s: %s is not defined in the code tree"
+                           % (cname, name, sym))
+                continue
             checked += 1
-            if start < 0:
-                bad.append("0x%08x (%s::%s): banner not found" % (va, cname, name))
-                continue
-            # Split on the NEXT banner rather than a hardcoded rule width: the
-            # separator's dash count is not worth duplicating, and getting it
-            # wrong silently swallows the following function's instructions.
-            nxtm = re.search(r"^// \S+::\S+ -- (?:transcription of|ALIAS of)",
-                             text[start + len(banner):], re.M)
-            block = (text[start:start + len(banner) + nxtm.start()]
-                     if nxtm else text[start:])
-            # The record trails the generated statement (`CODE;   //   0x...`),
-            # so the match must not be anchored to the start of the line. It must
-            # still be a comment, which is what distinguishes evidence from the
-            # generated code itself.
-            got = re.findall(r"//   (0x[0-9a-f]{8}  \S+[^\n]*)$", block, re.M)
-            if got != want:
-                same = sum(1 for a, b in zip(got, want) if a == b)
-                bad.append("0x%08x (%s::%s): %d/%d records match"
-                           % (va, cname, name, same, len(want)))
-                continue
-            # Round-trip. The record check above proves the evidence is complete
-            # and in order; it does NOT prove the code matches the evidence,
-            # because a corrupted statement leaves its comment untouched. So
-            # re-render the function and require the file to be exactly what the
-            # generator would produce. This is the check that catches a mutated
-            # operand, a dropped statement or a swapped label.
-            exp_items, _st = emit_x86.transcribe(
-                f.get("insns", []), image, va, f.get("end") or va + f["size"],
-                ret_type=ret)
-            exp_body = []
-            for kind, cpp, rec in exp_items:
-                if kind == "label":
-                    exp_body.append("    %s:;" % cpp)
-                    continue
-                first, _, rest = cpp.partition("\n")
-                exp_body.append("    %s   //   %s" % (first, rec))
-                for extra in rest.split("\n"):
-                    if extra:
-                        exp_body.append("    " + extra)
-            ends_in_ret = bool(exp_items) and exp_items[-1][0] == "stmt" and \
-                "return" in exp_items[-1][1]
-            if ret and ret.strip() not in ("", "void") and not ends_in_ret:
-                exp_body.append("    return (%s)(size_t)EAX.d;   // fall-through: "
-                                "the recovered span ends without a ret" % ret.strip())
-            got_body = [l for l in block.split("\n")
-                        if l.startswith("    ") and l.strip()]
-            if got_body != exp_body:
-                where = "end of body"
-                for i, (a, b) in enumerate(zip(got_body, exp_body)):
-                    if a != b:
-                        where = "line %d" % i
-                        break
-                bad.append("0x%08x (%s::%s): code does not match the recovered "
-                           "instructions at %s" % (va, cname, name, where))
-
     if bad:
-        print("gen_bodies FAITHFULNESS GATE FAILED for %d function(s): %s"
-              % (len(bad), "; ".join(bad[:5])))
+        print("gen_bodies GATE FAILED for %d definition(s): %s" %
+              (len(bad), "; ".join(bad[:5])))
         return 1
-    print("gen_bodies faithfulness gate: %d distinct function(s) verified "
-          "instruction-for-instruction" % checked)
+    print("gen_bodies gate: %d forwarder(s) verified to name a defined "
+          "transcription" % checked)
     return 0
 
 

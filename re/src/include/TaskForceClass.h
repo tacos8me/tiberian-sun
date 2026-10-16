@@ -47,7 +47,9 @@ public:
     virtual void vfunc_26(int a0, int a1, int a2);  // [26] 0x00606990  // __thiscall
 
     TaskForceClass();  // 0x006062d0
-    virtual ~TaskForceClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~TaskForceClass();
 
     // ---- data members (offsets from ctor 0x006062d0) ----
     // Offsets are exact. Each member is declared at the access width

@@ -47,7 +47,9 @@ public:
     virtual void vfunc_26(int a0, int a1, int a2, int a3);  // [26] 0x005ce660  // __thiscall
 
     ScriptTypeClass();  // 0x004239a0
-    virtual ~ScriptTypeClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~ScriptTypeClass();
 
     // ---- data members (offsets from ctor 0x005ce540) ----
     // Offsets are exact. Each member is declared at the access width

@@ -44,7 +44,9 @@ public:
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
 
     TubeClass();  // 0x0062e710
-    virtual ~TubeClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~TubeClass();
 
     // ---- data members (offsets from ctor 0x0062e710) ----
     // Offsets are exact. Each member is declared at the access width

@@ -60,7 +60,9 @@ public:
     virtual void vfunc_39();  // [39] 0x0040f620  // __cdecl
 
     ParticleTypeClass();  // 0x005979c0
-    virtual ~ParticleTypeClass();
+    // The destructor is declared non-virtual here: slot 0 holds a stub
+    // shared with 66 other classes (0x00405790), not the destructor.
+    ~ParticleTypeClass();
 
     // ---- data members (offsets from ctor 0x005979c0) ----
     // Offsets are exact. Each member is declared at the access width
