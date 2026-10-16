@@ -64,50 +64,16 @@ public:
     // ---- data members (offsets from ctor 0x00417870) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_128;  // /* ? */
-    unsigned char pad_12c[0x4];
-    unsigned long m_130;  // /* ? */
-    unsigned long m_134;  // /* ? */
-    unsigned long m_138;  // init 0x1
-    unsigned long m_13c;  // /* ? */
-    unsigned long m_140;  // /* ? */
-    unsigned long m_144;  // /* ? */
-    unsigned long m_148;  // /* ? */
-    unsigned long m_14c;  // /* ? */
-    unsigned long m_150;  // /* ? */
-    unsigned long m_154;  // /* ? */
-    unsigned long m_158;  // /* ? */
-    unsigned long m_15c;  // /* ? */
-    unsigned long m_160;  // /* ? */
-    unsigned long m_164;  // /* ? */
-    unsigned long m_168;  // /* ? */
-    unsigned long m_16c;  // /* ? */
-    unsigned long m_170;  // /* ? */
-    unsigned long m_174;  // /* ? */
-    unsigned long m_178;  // /* ? */
-    unsigned long m_17c;  // /* ? */
-    unsigned long m_180;  // /* ? */
-    unsigned long m_184;  // /* ? */
-    unsigned long m_188;  // /* ? */
-    unsigned long m_18c;  // /* ? */
-    unsigned long m_190;  // /* ? */
-    unsigned long m_194;  // /* ? */
-    unsigned long m_198;  // init 0xa0000000
-    unsigned long m_19c;  // init 0x3fe99999
-    unsigned long m_1a0;  // /* ? */
-    unsigned long m_1a4;  // /* ? */
-    unsigned long m_1a8;  // /* ? */
-    unsigned long m_1ac;  // /* ? */
-    unsigned long m_1b0;  // /* ? */
-    unsigned long m_1b4;  // init 0x402e0000
-    unsigned long m_1b8;  // /* ? */
-    unsigned long m_1bc;  // /* ? */
-    unsigned long m_1c0;  // /* ? */
-    unsigned long m_1c4;  // /* ? */
-    unsigned long m_1c8;  // /* ? */
-    unsigned long m_1cc;  // /* ? */
-    unsigned long m_1d0;  // /* ? */
-    // 12 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x699ad8
+    unsigned char pad_004[0xc4];
+    unsigned long m_0c8;  // init 0x1
+    unsigned long m_0cc;  // init 0x1
+    unsigned char pad_0d0[0x54];
+    unsigned long m_124;  // /* ? */
+    unsigned long m_1d4;  // /* ? */
+    unsigned long m_1d8;  // /* ? */
+    unsigned long m_1dc;  // /* ? */
+    // 46 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

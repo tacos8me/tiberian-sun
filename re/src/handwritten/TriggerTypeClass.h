@@ -77,7 +77,16 @@ public:
     // ---- data members (offsets from ctor 0x0062d4f0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 10 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a63dc
+    unsigned long m_004;  // init 0x6a63c0
+    unsigned char pad_008[0x58];
+    unsigned long m_060;  // init 0xffffffff
+    unsigned long m_064;  // /* ? */
+    unsigned long m_068;  // /* ? */
+    unsigned long m_06c;  // /* ? */
+    unsigned long m_070;  // /* ? */
+    unsigned long m_074;  // /* ? */
+    unsigned long m_078;  // /* ? */
 
 };
 
@@ -126,30 +135,9 @@ public:
     // ---- data members (offsets from ctor 0x0040f930) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_008[0x58];
-    unsigned long m_060;  // /* ? */
-    unsigned long m_064;  // /* ? */
-    unsigned long m_068;  // /* ? */
-    unsigned long m_06c;  // /* ? */
-    unsigned long m_070;  // /* ? */
-    unsigned long m_074;  // /* ? */
-    unsigned long m_078;  // /* ? */
-    unsigned char pad_07c[0x4];
-    unsigned long m_080;  // /* ? */
-    unsigned long m_084;  // /* ? */
-    unsigned long m_088;  // /* ? */
-    unsigned long m_08c;  // /* ? */
-    unsigned long m_090;  // /* ? */
-    unsigned long m_094;  // /* ? */
-    unsigned long m_098;  // /* ? */
-    unsigned long m_09c;  // /* ? */
-    unsigned long m_0a0;  // /* ? */
-    unsigned long m_0a4;  // /* ? */
-    unsigned long m_0a8;  // /* ? */
-    unsigned char pad_0ac[0x20];
-    unsigned long m_0cc;  // /* ? */
-    unsigned long m_0d0;  // /* ? */
-    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x699250
+    unsigned long m_004;  // init 0x699234
+    // 23 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

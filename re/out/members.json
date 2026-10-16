@@ -201,7 +201,7 @@
  },
  "class AbstractTypeClass": {
   "ident": "AbstractTypeClass",
-  "ctor": 4218192,
+  "ctor": 4218512,
   "members": [
    {
     "off": 0,
@@ -212,11 +212,6 @@
     "off": 4,
     "kind": "imm",
     "value": 6916812
-   },
-   {
-    "off": 45,
-    "kind": "zero",
-    "value": 0
    }
   ]
  },
@@ -1050,138 +1045,6 @@
    }
   ]
  },
- "class Base64Pipe": {
-  "ident": "Base64Pipe",
-  "ctor": 5069418,
-  "members": [
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "imm",
-    "value": 6947904
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "imm",
-    "value": 6929388
-   },
-   {
-    "off": 64,
-    "kind": "imm",
-    "value": 6929412
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 84,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class Base64Straw": {
-  "ident": "Base64Straw",
-  "ctor": 5069072,
-  "members": [
-   {
-    "off": 20,
-    "kind": "imm",
-    "value": 6929356
-   },
-   {
-    "off": 24,
-    "kind": "imm",
-    "value": 6929372
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "imm",
-    "value": 6947888
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class BaseClass": {
   "ident": "BaseClass",
   "ctor": 4319424,
@@ -1253,33 +1116,6 @@
    }
   ]
  },
- "class BlitPlain<E>": {
-  "ident": "BlitPlain_E",
-  "ctor": 6773228,
-  "members": [
-   {
-    "off": 108,
-    "kind": "imm",
-    "value": 6978596
-   }
-  ]
- },
- "class BlitPlain<G>": {
-  "ident": "BlitPlain_G",
-  "ctor": 6773556,
-  "members": [
-   {
-    "off": 56,
-    "kind": "imm",
-    "value": 6978580
-   },
-   {
-    "off": 72,
-    "kind": "imm",
-    "value": 6978596
-   }
-  ]
- },
  "class BlitPlainXlat<E>": {
   "ident": "BlitPlainXlat_E",
   "ctor": 4590576,
@@ -1324,7 +1160,7 @@
  },
  "class BlitPlainXlatAlpha<G>": {
   "ident": "BlitPlainXlatAlpha_G",
-  "ctor": 4591700,
+  "ctor": 4627920,
   "members": [
    {
     "off": 0,
@@ -1332,19 +1168,9 @@
     "value": 6927700
    },
    {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -1366,89 +1192,6 @@
     "off": 8,
     "kind": "reg",
     "value": null
-   }
-  ]
- },
- "class BlitPlainXlatZReadWrite<G>": {
-  "ident": "BlitPlainXlatZReadWrite_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTrans<E>": {
-  "ident": "BlitTrans_E",
-  "ctor": 6773008,
-  "members": [
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 120,
-    "kind": "imm",
-    "value": 6978628
-   }
-  ]
- },
- "class BlitTrans<G>": {
-  "ident": "BlitTrans_G",
-  "ctor": 6773203,
-  "members": [
-   {
-    "off": 96,
-    "kind": "imm",
-    "value": 6978612
-   },
-   {
-    "off": 108,
-    "kind": "imm",
-    "value": 6978596
    }
   ]
  },
@@ -1494,27 +1237,6 @@
    }
   ]
  },
- "class BlitTransDarkenZReadWrite<G>": {
-  "ident": "BlitTransDarkenZReadWrite_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class BlitTransLucent25<G>": {
   "ident": "BlitTransLucent25_G",
   "ctor": 4591700,
@@ -1538,152 +1260,70 @@
  },
  "class BlitTransLucent25Alpha<G>": {
   "ident": "BlitTransLucent25Alpha_G",
-  "ctor": 4591700,
+  "ctor": 4628240,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927620
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransLucent25AlphaZRead<G>": {
   "ident": "BlitTransLucent25AlphaZRead_G",
-  "ctor": 4591700,
+  "ctor": 4628720,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927460
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransLucent25AlphaZReadWarp<G>": {
   "ident": "BlitTransLucent25AlphaZReadWarp_G",
-  "ctor": 4591700,
+  "ctor": 4628912,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927412
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransLucent25AlphaZReadWrite<G>": {
   "ident": "BlitTransLucent25AlphaZReadWrite_G",
-  "ctor": 4591700,
+  "ctor": 4629232,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927332
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransLucent25ZRead<G>": {
   "ident": "BlitTransLucent25ZRead_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTransLucent25ZReadWarp<G>": {
-  "ident": "BlitTransLucent25ZReadWarp_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTransLucent25ZReadWrite<G>": {
-  "ident": "BlitTransLucent25ZReadWrite_G",
   "ctor": 4591700,
   "members": [
    {
@@ -1726,105 +1366,65 @@
  },
  "class BlitTransLucent50Alpha<G>": {
   "ident": "BlitTransLucent50Alpha_G",
-  "ctor": 4591700,
+  "ctor": 4628176,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927636
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransLucent50AlphaZRead<G>": {
   "ident": "BlitTransLucent50AlphaZRead_G",
-  "ctor": 4591700,
+  "ctor": 4628656,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927476
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransLucent50AlphaZReadWarp<G>": {
   "ident": "BlitTransLucent50AlphaZReadWarp_G",
-  "ctor": 4591700,
+  "ctor": 4628848,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927428
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransLucent50AlphaZReadWrite<G>": {
   "ident": "BlitTransLucent50AlphaZReadWrite_G",
-  "ctor": 4591700,
+  "ctor": 4629168,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927348
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -1870,27 +1470,6 @@
    }
   ]
  },
- "class BlitTransLucent50ZReadWrite<G>": {
-  "ident": "BlitTransLucent50ZReadWrite_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class BlitTransLucent75<G>": {
   "ident": "BlitTransLucent75_G",
   "ctor": 4591700,
@@ -1914,105 +1493,65 @@
  },
  "class BlitTransLucent75Alpha<G>": {
   "ident": "BlitTransLucent75Alpha_G",
-  "ctor": 4591700,
+  "ctor": 4628112,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927652
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransLucent75AlphaZRead<G>": {
   "ident": "BlitTransLucent75AlphaZRead_G",
-  "ctor": 4591700,
+  "ctor": 4628592,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927492
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransLucent75AlphaZReadWarp<G>": {
   "ident": "BlitTransLucent75AlphaZReadWarp_G",
-  "ctor": 4591700,
+  "ctor": 4628784,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927444
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransLucent75AlphaZReadWrite<G>": {
   "ident": "BlitTransLucent75AlphaZReadWrite_G",
-  "ctor": 4591700,
+  "ctor": 4629104,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927364
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -2039,27 +1578,6 @@
  },
  "class BlitTransLucent75ZReadWarp<G>": {
   "ident": "BlitTransLucent75ZReadWarp_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTransLucent75ZReadWrite<G>": {
-  "ident": "BlitTransLucent75ZReadWrite_G",
   "ctor": 4591700,
   "members": [
    {
@@ -2165,147 +1683,54 @@
  },
  "class BlitTransXlatAlpha<G>": {
   "ident": "BlitTransXlatAlpha_G",
-  "ctor": 4591700,
+  "ctor": 4627984,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927684
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransXlatAlphaZRead<G>": {
   "ident": "BlitTransXlatAlphaZRead_G",
-  "ctor": 4591700,
+  "ctor": 4628464,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927524
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransXlatAlphaZReadWrite<G>": {
   "ident": "BlitTransXlatAlphaZReadWrite_G",
-  "ctor": 4591700,
+  "ctor": 4628976,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927396
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTransXlatMultWriteAlpha<G>": {
-  "ident": "BlitTransXlatMultWriteAlpha_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTransXlatWriteAlpha<G>": {
-  "ident": "BlitTransXlatWriteAlpha_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransXlatZRead<G>": {
   "ident": "BlitTransXlatZRead_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTransXlatZReadWrite<G>": {
-  "ident": "BlitTransXlatZReadWrite_G",
   "ctor": 4591700,
   "members": [
    {
@@ -2369,168 +1794,54 @@
  },
  "class BlitTransZRemapXlatAlpha<G>": {
   "ident": "BlitTransZRemapXlatAlpha_G",
-  "ctor": 4591700,
+  "ctor": 4628048,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
+    "value": 6927668
    },
    {
     "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransZRemapXlatAlphaZRead<G>": {
   "ident": "BlitTransZRemapXlatAlphaZRead_G",
-  "ctor": 4591700,
+  "ctor": 4628528,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
+    "value": 6927508
    },
    {
     "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransZRemapXlatAlphaZReadWrite<G>": {
   "ident": "BlitTransZRemapXlatAlphaZReadWrite_G",
-  "ctor": 4591700,
+  "ctor": 4629040,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
+    "value": 6927380
    },
    {
     "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class BlitTransZRemapXlatZRead<G>": {
   "ident": "BlitTransZRemapXlatZRead_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTransZRemapXlatZReadWrite<G>": {
-  "ident": "BlitTransZRemapXlatZReadWrite_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTranslucent50NonzeroAlpha<G>": {
-  "ident": "BlitTranslucent50NonzeroAlpha_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTranslucent50ZeroAlpha<G>": {
-  "ident": "BlitTranslucent50ZeroAlpha_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BlitTranslucentWriteAlpha<G>": {
-  "ident": "BlitTranslucentWriteAlpha_G",
   "ctor": 4591700,
   "members": [
    {
@@ -2579,27 +1890,17 @@
  },
  "class BlowStraw": {
   "ident": "BlowStraw",
-  "ctor": 5534690,
+  "ctor": 5536656,
   "members": [
    {
-    "off": 56,
-    "kind": "imm",
-    "value": 6921160
-   },
-   {
-    "off": 152,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 176,
+    "off": 0,
     "kind": "imm",
     "value": 6955784
    },
    {
-    "off": 188,
-    "kind": "reg",
-    "value": null
+    "off": 12,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -2740,138 +2041,6 @@
    },
    {
     "off": 76,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BufferPipe": {
-  "ident": "BufferPipe",
-  "ctor": 4680896,
-  "members": [
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 22,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 26,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "imm",
-    "value": 6929388
-   },
-   {
-    "off": 56,
-    "kind": "imm",
-    "value": 6929412
-   },
-   {
-    "off": 60,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 80,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class BufferStraw": {
-  "ident": "BufferStraw",
-  "ctor": 4679549,
-  "members": [
-   {
-    "off": 16,
-    "kind": "imm",
-    "value": 6916952
-   },
-   {
-    "off": 24,
-    "kind": "imm",
-    "value": 6917096
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 2
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "imm",
-    "value": 6929356
-   },
-   {
-    "off": 68,
-    "kind": "imm",
-    "value": 6929372
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 84,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
     "kind": "reg",
     "value": null
    }
@@ -3849,15 +3018,15 @@
  },
  "class CCFileClass": {
   "ident": "CCFileClass",
-  "ctor": 4296328,
+  "ctor": 4296944,
   "members": [
    {
-    "off": 4,
+    "off": 0,
     "kind": "imm",
     "value": 6921160
    },
    {
-    "off": 100,
+    "off": 96,
     "kind": "zero",
     "value": 0
    }
@@ -3936,30 +3105,14 @@
    }
   ]
  },
- "class CD": {
-  "ident": "CD",
-  "ctor": 4486192,
-  "members": [
-   {
-    "off": 4,
-    "kind": "imm",
-    "value": 6925328
-   }
-  ]
- },
  "class CDFileClass": {
   "ident": "CDFileClass",
-  "ctor": 4296328,
+  "ctor": 4296864,
   "members": [
    {
-    "off": 4,
+    "off": 0,
     "kind": "imm",
-    "value": 6921160
-   },
-   {
-    "off": 100,
-    "kind": "zero",
-    "value": 0
+    "value": 6921088
    }
   ]
  },
@@ -4021,67 +3174,6 @@
     "off": 36,
     "kind": "imm",
     "value": 65535
-   }
-  ]
- },
- "class CacheStraw": {
-  "ident": "CacheStraw",
-  "ctor": 5064528,
-  "members": [
-   {
-    "off": 19,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 27,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "imm",
-    "value": 6929372
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 92,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 632,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 1152,
-    "kind": "reg",
-    "value": null
    }
   ]
  },
@@ -5327,17 +4419,12 @@
  },
  "class DynamicVectorClass<AbstractClass*>": {
   "ident": "DynamicVectorClass_AbstractClass",
-  "ctor": 4474920,
+  "ctor": 4833520,
   "members": [
    {
-    "off": 12,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 14,
-    "kind": "reg",
-    "value": null
+    "off": 0,
+    "kind": "imm",
+    "value": 6924888
    },
    {
     "off": 16,
@@ -5346,93 +4433,8 @@
    },
    {
     "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "imm",
-    "value": 6924888
-   },
-   {
-    "off": 60,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 64,
     "kind": "imm",
     "value": 10
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 152,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 164,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 168,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 172,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 176,
-    "kind": "reg",
-    "value": null
    }
   ]
  },
@@ -5462,389 +4464,37 @@
   "ctor": 4987344,
   "members": [
    {
-    "off": 12,
+    "off": 0,
+    "kind": "imm",
+    "value": 6944072
+   },
+   {
+    "off": 4,
     "kind": "reg",
     "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    },
    {
     "off": 16,
-    "kind": "imm",
-    "value": 6944044
-   },
-   {
-    "off": 32,
     "kind": "reg",
     "value": null
-   },
-   {
-    "off": 36,
-    "kind": "imm",
-    "value": 10
-   }
-  ]
- },
- "class DynamicVectorClass<ButtonFadeEffect*>": {
-  "ident": "DynamicVectorClass_ButtonFadeEffect",
-  "ctor": 4723249,
-  "members": [
-   {
-    "off": 19,
-    "kind": "zero",
-    "value": 0
    },
    {
     "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 27,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 35,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 43,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 67,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 71,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 73,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 74,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 75,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 80,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 117,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 140,
-    "kind": "imm",
-    "value": 6937908
-   },
-   {
-    "off": 156,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 164,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 168,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 172,
-    "kind": "imm",
-    "value": 6937936
-   },
-   {
-    "off": 176,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 188,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 192,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 196,
-    "kind": "imm",
-    "value": 6937964
-   },
-   {
-    "off": 212,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 216,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 220,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 236,
-    "kind": "imm",
-    "value": 5
-   },
-   {
-    "off": 248,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 252,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 264,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 276,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 280,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 284,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 288,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 292,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 304,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 312,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 320,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 324,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 328,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 332,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 372,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 376,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 380,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 392,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 400,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 404,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 408,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 412,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 492,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 496,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 624,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 628,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 648,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 652,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 664,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 688,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class DynamicVectorClass<CCINIClass*>": {
-  "ident": "DynamicVectorClass_CCINIClass",
-  "ctor": 5085952,
-  "members": [
-   {
-    "off": 19,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 20,
-    "kind": "imm",
-    "value": 6947972
-   },
-   {
-    "off": 27,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 140,
     "kind": "reg",
     "value": null
    }
@@ -5852,439 +4502,12 @@
  },
  "class DynamicVectorClass<CellClass*>": {
   "ident": "DynamicVectorClass_CellClass",
-  "ctor": 5727616,
+  "ctor": 6627824,
   "members": [
    {
-    "off": 12,
+    "off": 0,
     "kind": "imm",
-    "value": 6958356
-   },
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 25,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class DynamicVectorClass<CrossDissolveEffect*>": {
-  "ident": "DynamicVectorClass_CrossDissolveEffect",
-  "ctor": 4723249,
-  "members": [
-   {
-    "off": 19,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 27,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 35,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 43,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 67,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 71,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 73,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 74,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 75,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 80,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 117,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 140,
-    "kind": "imm",
-    "value": 6937908
-   },
-   {
-    "off": 156,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 164,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 168,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 172,
-    "kind": "imm",
-    "value": 6937936
-   },
-   {
-    "off": 176,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 188,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 192,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 196,
-    "kind": "imm",
-    "value": 6937964
-   },
-   {
-    "off": 212,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 216,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 220,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 236,
-    "kind": "imm",
-    "value": 5
-   },
-   {
-    "off": 248,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 252,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 264,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 276,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 280,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 284,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 288,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 292,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 304,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 312,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 320,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 324,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 328,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 332,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 372,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 376,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 380,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 392,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 400,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 404,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 408,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 412,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 492,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 496,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 624,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 628,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 648,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 652,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 664,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 688,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class DynamicVectorClass<D&*>": {
-  "ident": "DynamicVectorClass_D",
-  "ctor": 5481744,
-  "members": [
-   {
-    "off": 14,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 15,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "imm",
-    "value": 6954840
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 70,
-    "kind": "reg",
-    "value": null
+    "value": 6976224
    },
    {
     "off": 76,
@@ -6297,104 +4520,109 @@
     "value": null
    },
    {
-    "off": 84,
+    "off": 204,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 88,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 92,
+    "off": 208,
     "kind": "imm",
-    "value": 1072693248
+    "value": 100
    },
    {
-    "off": 100,
+    "off": 216,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 104,
+    "off": 220,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 108,
+    "off": 224,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 112,
+    "off": 228,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 116,
+    "off": 232,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 120,
+    "off": 236,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 124,
+    "off": 288,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 128,
+    "off": 292,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 132,
+    "off": 296,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 136,
+    "off": 332,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 140,
+    "off": 336,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 144,
+    "off": 340,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 148,
+    "off": 368,
+    "kind": "imm",
+    "value": 6953576
+   },
+   {
+    "off": 372,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 152,
+    "off": 376,
+    "kind": "imm",
+    "value": 5
+   },
+   {
+    "off": 380,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 156,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 168,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 176,
+    "off": 381,
     "kind": "zero",
     "value": 0
+   },
+   {
+    "off": 384,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 388,
+    "kind": "imm",
+    "value": 10
    }
   ]
  },
@@ -6482,7 +4710,7 @@
  },
  "class DynamicVectorClass<G&*>": {
   "ident": "DynamicVectorClass_G",
-  "ctor": 5152960,
+  "ctor": 5153520,
   "members": [
    {
     "off": 0,
@@ -6493,56 +4721,6 @@
     "off": 4,
     "kind": "imm",
     "value": 6951612
-   },
-   {
-    "off": 200,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 201,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 202,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 203,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 204,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 206,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 292,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 296,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 300,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 304,
-    "kind": "reg",
-    "value": null
    },
    {
     "off": 308,
@@ -6578,172 +4756,6 @@
     "off": 328,
     "kind": "imm",
     "value": 10
-   },
-   {
-    "off": 332,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 336,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 340,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 344,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 348,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 352,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 356,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 360,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 364,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 368,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 369,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 370,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 371,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 372,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 376,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 380,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 384,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 388,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 389,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 405,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 406,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 408,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class DynamicVectorClass<G>": {
-  "ident": "DynamicVectorClass_G",
-  "ctor": 4312790,
-  "members": [
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "imm",
-    "value": 6921612
-   },
-   {
-    "off": 36,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 45,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 48,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 52,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 56,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 61,
-    "kind": "zero",
-    "value": 0
    }
   ]
  },
@@ -6835,197 +4847,6 @@
    },
    {
     "off": 20,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class DynamicVectorClass<InfantryTypeClass*>": {
-  "ident": "DynamicVectorClass_InfantryTypeClass",
-  "ctor": 6049968,
-  "members": [
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 31,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 6923908
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 53,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 56,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 60,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 66,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "imm",
-    "value": 6921728
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "imm",
-    "value": 6944156
-   },
-   {
-    "off": 81,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 84,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 92,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 105,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 120,
-    "kind": "imm",
-    "value": 6921728
-   },
-   {
-    "off": 124,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 128,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 133,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 144,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 152,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 156,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 160,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 164,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 176,
     "kind": "reg",
     "value": null
    }
@@ -7276,223 +5097,6 @@
    }
   ]
  },
- "class DynamicVectorClass<MapRegionClass*>": {
-  "ident": "DynamicVectorClass_MapRegionClass",
-  "ctor": 5394169,
-  "members": [
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 6921672
-   },
-   {
-    "off": 56,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 60,
-    "kind": "imm",
-    "value": 100000
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 80,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 124,
-    "kind": "imm",
-    "value": 6954408
-   },
-   {
-    "off": 128,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 132,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 137,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 140,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 144,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 152,
-    "kind": "imm",
-    "value": 6921672
-   },
-   {
-    "off": 168,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 172,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class DynamicVectorClass<MapSelection*>": {
-  "ident": "DynamicVectorClass_MapSelection",
-  "ctor": 5612224,
-  "members": [
-   {
-    "off": 0,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 84,
-    "kind": "imm",
-    "value": 6956484
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 92,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 96,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 97,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class DynamicVectorClass<MapStage*>": {
   "ident": "DynamicVectorClass_MapStage",
   "ctor": 5609920,
@@ -7576,123 +5180,42 @@
  },
  "class DynamicVectorClass<MyButton*>": {
   "ident": "DynamicVectorClass_MyButton",
-  "ctor": 5931200,
+  "ctor": 5931536,
   "members": [
    {
-    "off": 14,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1116,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1144,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1152,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1156,
+    "off": 0,
     "kind": "imm",
     "value": 6961760
    },
    {
-    "off": 1160,
+    "off": 4,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 1164,
+    "off": 8,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 1168,
+    "off": 12,
     "kind": "imm",
     "value": 1
    },
    {
-    "off": 1169,
+    "off": 13,
     "kind": "reg",
     "value": null
-   },
-   {
-    "off": 1172,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1176,
-    "kind": "imm",
-    "value": 10
-   }
-  ]
- },
- "class DynamicVectorClass<ObjectClass*>": {
-  "ident": "DynamicVectorClass_ObjectClass",
-  "ctor": 4541378,
-  "members": [
-   {
-    "off": 8,
-    "kind": "imm",
-    "value": 6915888
    },
    {
     "off": 16,
-    "kind": "imm",
-    "value": 6925980
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 29,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
+    "kind": "imm",
+    "value": 10
    }
   ]
  },
@@ -7800,481 +5323,24 @@
    }
   ]
  },
- "class DynamicVectorClass<TeamClass*>": {
-  "ident": "DynamicVectorClass_TeamClass",
-  "ctor": 5220102,
-  "members": [
-   {
-    "off": 16,
-    "kind": "imm",
-    "value": 6943456
-   },
-   {
-    "off": 32,
-    "kind": "imm",
-    "value": 6943428
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 45,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class DynamicVectorClass<TechnoClass*>": {
-  "ident": "DynamicVectorClass_TechnoClass",
-  "ctor": 4389021,
-  "members": [
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 6923908
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 53,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "imm",
-    "value": 16384
-   }
-  ]
- },
  "class DynamicVectorClass<TechnoTypeClass*>": {
   "ident": "DynamicVectorClass_TechnoTypeClass",
-  "ctor": 4722113,
+  "ctor": 6062915,
   "members": [
    {
-    "off": 19,
+    "off": 0,
+    "kind": "imm",
+    "value": 6937964
+   },
+   {
+    "off": 16,
     "kind": "zero",
     "value": 0
    },
    {
     "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 27,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 35,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 43,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 46,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 67,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 71,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 73,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 74,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 75,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 76,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 80,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 116,
-    "kind": "imm",
-    "value": 6937964
-   },
-   {
-    "off": 117,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 132,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 136,
     "kind": "imm",
     "value": 10
-   },
-   {
-    "off": 140,
-    "kind": "imm",
-    "value": 6937908
-   },
-   {
-    "off": 156,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 164,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 168,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 172,
-    "kind": "imm",
-    "value": 6937936
-   },
-   {
-    "off": 176,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 188,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 192,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 196,
-    "kind": "imm",
-    "value": 6937964
-   },
-   {
-    "off": 212,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 216,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 220,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 236,
-    "kind": "imm",
-    "value": 5
-   },
-   {
-    "off": 240,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 244,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 248,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 252,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 264,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 272,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 276,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 280,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 284,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 288,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 292,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 304,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 312,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 320,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 324,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 328,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 332,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 372,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 376,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 380,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 392,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 400,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 404,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 408,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 412,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 492,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 496,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 624,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 628,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 664,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 688,
-    "kind": "reg",
-    "value": null
    }
   ]
  },
@@ -8390,197 +5456,6 @@
    }
   ]
  },
- "class DynamicVectorClass<UnitTypeClass*>": {
-  "ident": "DynamicVectorClass_UnitTypeClass",
-  "ctor": 6049968,
-  "members": [
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 31,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 6923908
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 53,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 56,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 60,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 66,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "imm",
-    "value": 6921728
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "imm",
-    "value": 6944156
-   },
-   {
-    "off": 81,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 84,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 92,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 105,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 120,
-    "kind": "imm",
-    "value": 6921728
-   },
-   {
-    "off": 124,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 128,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 133,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 144,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 152,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 156,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 160,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 164,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 176,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class DynamicVectorClass<W4DiskID>": {
   "ident": "DynamicVectorClass_W4DiskID",
   "ctor": 6121155,
@@ -8602,322 +5477,24 @@
    }
   ]
  },
- "class DynamicVectorClass<W4PassabilityType>": {
-  "ident": "DynamicVectorClass_W4PassabilityType",
-  "ctor": 5273920,
-  "members": [
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "imm",
-    "value": 2
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "imm",
-    "value": 6953856
-   },
-   {
-    "off": 80,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 84,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 89,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 92,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 96,
-    "kind": "imm",
-    "value": 300
-   }
-  ]
- },
- "class DynamicVectorClass<_DDSURFACEDESC*>": {
-  "ident": "DynamicVectorClass_DDSURFACEDESC",
-  "ctor": 4652160,
-  "members": [
-   {
-    "off": 12,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "imm",
-    "value": 6928732
-   },
-   {
-    "off": 32,
-    "kind": "imm",
-    "value": 6928760
-   },
-   {
-    "off": 48,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 52,
-    "kind": "imm",
-    "value": 10
-   }
-  ]
- },
- "class DynamicVectorClass<_N>": {
-  "ident": "DynamicVectorClass_N",
-  "ctor": 4977248,
-  "members": [
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 30,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 34,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 6945600
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 80,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 84,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 116,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 128,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 132,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class DynamicVectorClass<articleSystemTypeClass**>": {
   "ident": "DynamicVectorClass_articleSystemTypeClass",
-  "ctor": 6369757,
+  "ctor": 6431587,
   "members": [
    {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
+    "off": 0,
     "kind": "imm",
     "value": 6970200
    },
    {
-    "off": 60,
-    "kind": "reg",
-    "value": null
+    "off": 16,
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
+    "off": 20,
     "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 69,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "reg",
-    "value": null
+    "value": 10
    }
   ]
  },
@@ -8960,288 +5537,6 @@
     "off": 20,
     "kind": "imm",
     "value": 10
-   }
-  ]
- },
- "class DynamicVectorClass<class DistributionObject<AITriggerTypeClass*>, DiscreteDistributionClass<class AITriggerTypeClass>>": {
-  "ident": "DynamicVectorClass_class_DistributionObject_AITriggerTypeClass_DiscreteDistributionClass_class_AITriggerTypeClass",
-  "ctor": 6343648,
-  "members": [
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 36,
-    "kind": "imm",
-    "value": 6945516
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 53,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 64,
-    "kind": "imm",
-    "value": 6969084
-   },
-   {
-    "off": 80,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 84,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class DynamicVectorClass<class DistributionObject<BuildingTypeClass*>, DiscreteDistributionClass<class BuildingTypeClass>>": {
-  "ident": "DynamicVectorClass_class_DistributionObject_BuildingTypeClass_DiscreteDistributionClass_class_BuildingTypeClass",
-  "ctor": 4985625,
-  "members": [
-   {
-    "off": 19,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 22,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 81,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 92,
-    "kind": "imm",
-    "value": 6921672
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 105,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 124,
-    "kind": "imm",
-    "value": 6945664
-   },
-   {
-    "off": 128,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 132,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 137,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 140,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 144,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 156,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 160,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 176,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 180,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 184,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 189,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 200,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 204,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 208,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 213,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 224,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 228,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 232,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 237,
-    "kind": "zero",
-    "value": 0
    }
   ]
  },
@@ -9646,8 +5941,13 @@
  },
  "class DynamicVectorClass<struct SubzoneConnectionStruct>": {
   "ident": "DynamicVectorClass_struct_SubzoneConnectionStruct",
-  "ctor": 5352026,
+  "ctor": 5376312,
   "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6953884
+   },
    {
     "off": 16,
     "kind": "reg",
@@ -9655,113 +5955,8 @@
    },
    {
     "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 38,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "imm",
-    "value": 6953884
-   },
-   {
-    "off": 92,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 96,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 101,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 104,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 108,
     "kind": "imm",
     "value": 10
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 116,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 120,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 128,
-    "kind": "reg",
-    "value": null
    }
   ]
  },
@@ -9871,102 +6066,22 @@
  },
  "class DynamicVectorClass<uildingTypeClass*>": {
   "ident": "DynamicVectorClass_uildingTypeClass",
-  "ctor": 4977248,
+  "ctor": 6004275,
   "members": [
    {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 30,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 34,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
+    "off": 0,
     "kind": "imm",
     "value": 6945600
    },
    {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 80,
+    "off": 16,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 84,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 116,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 128,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 132,
-    "kind": "reg",
-    "value": null
+    "off": 20,
+    "kind": "imm",
+    "value": 10
    }
   ]
  },
@@ -10173,163 +6288,43 @@
  },
  "class FilePipe": {
   "ident": "FilePipe",
-  "ctor": 4488576,
+  "ctor": 6767024,
   "members": [
    {
-    "off": 12,
+    "off": 0,
     "kind": "imm",
     "value": 6925596
    },
    {
+    "off": 12,
+    "kind": "zero",
+    "value": 0
+   },
+   {
     "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "imm",
-    "value": 6925556
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "imm",
-    "value": 1732584193
-   },
-   {
-    "off": 76,
-    "kind": "imm",
-    "value": 4023233417
-   },
-   {
-    "off": 80,
-    "kind": "imm",
-    "value": 2562383102
-   },
-   {
-    "off": 84,
-    "kind": "imm",
-    "value": 271733878
-   },
-   {
-    "off": 88,
-    "kind": "imm",
-    "value": 3285377520
-   },
-   {
-    "off": 92,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class FileStraw": {
   "ident": "FileStraw",
-  "ctor": 4488000,
+  "ctor": 6767392,
   "members": [
    {
-    "off": 20,
+    "off": 0,
     "kind": "imm",
     "value": 6925580
    },
    {
-    "off": 24,
-    "kind": "reg",
-    "value": null
+    "off": 12,
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "imm",
-    "value": 1732584193
-   },
-   {
-    "off": 80,
-    "kind": "imm",
-    "value": 4023233417
-   },
-   {
-    "off": 84,
-    "kind": "imm",
-    "value": 2562383102
-   },
-   {
-    "off": 88,
-    "kind": "imm",
-    "value": 271733878
-   },
-   {
-    "off": 92,
-    "kind": "imm",
-    "value": 3285377520
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
+    "off": 16,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -11567,7 +7562,7 @@
  },
  "class IsometricTileTypeClass": {
   "ident": "IsometricTileTypeClass",
-  "ctor": 5152960,
+  "ctor": 5153520,
   "members": [
    {
     "off": 0,
@@ -11578,56 +7573,6 @@
     "off": 4,
     "kind": "imm",
     "value": 6951612
-   },
-   {
-    "off": 200,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 201,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 202,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 203,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 204,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 206,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 292,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 296,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 300,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 304,
-    "kind": "reg",
-    "value": null
    },
    {
     "off": 308,
@@ -11663,116 +7608,6 @@
     "off": 328,
     "kind": "imm",
     "value": 10
-   },
-   {
-    "off": 332,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 336,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 340,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 344,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 348,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 352,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 356,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 360,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 364,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 368,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 369,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 370,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 371,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 372,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 376,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 380,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 384,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 388,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 389,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 405,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 406,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 408,
-    "kind": "reg",
-    "value": null
    }
   ]
  },
@@ -12560,57 +8395,12 @@
  },
  "class MSVQAnim": {
   "ident": "MSVQAnim",
-  "ctor": 5605904,
+  "ctor": 5606432,
   "members": [
    {
     "off": 0,
     "kind": "imm",
     "value": 6956256
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
    }
   ]
  },
@@ -12774,32 +8564,6 @@
     "off": 104,
     "kind": "imm",
     "value": 4294967295
-   }
-  ]
- },
- "class MapSelect": {
-  "ident": "MapSelect",
-  "ctor": 5508912,
-  "members": [
-   {
-    "off": 20,
-    "kind": "imm",
-    "value": 6954924
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 224,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 232,
-    "kind": "reg",
-    "value": null
    }
   ]
  },
@@ -13070,12 +8834,17 @@
  },
  "class MultiScore": {
   "ident": "MultiScore",
-  "ctor": 5590912,
+  "ctor": 5591056,
   "members": [
    {
-    "off": 4,
+    "off": 0,
     "kind": "imm",
     "value": 6956100
+   },
+   {
+    "off": 72,
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 76,
@@ -13094,11 +8863,6 @@
    },
    {
     "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 92,
     "kind": "reg",
     "value": null
    }
@@ -13333,7 +9097,7 @@
  },
  "class ObjectTypeClass": {
   "ident": "ObjectTypeClass",
-  "ctor": 5706272,
+  "ctor": 5706768,
   "members": [
    {
     "off": 0,
@@ -13346,147 +9110,7 @@
     "value": 6957684
    },
    {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 97,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 98,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
     "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 116,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 120,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 124,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 128,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 132,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 136,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 140,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 144,
-    "kind": "imm",
-    "value": 4294967295
-   },
-   {
-    "off": 173,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 198,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 199,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 200,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 201,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 202,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 203,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 204,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 205,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 206,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 207,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 208,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 209,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 210,
     "kind": "reg",
     "value": null
    },
@@ -14413,55 +10037,20 @@
  },
  "class Pipe": {
   "ident": "Pipe",
-  "ctor": 4680896,
+  "ctor": 5840640,
   "members": [
    {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 22,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 26,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "imm",
-    "value": 6929388
-   },
-   {
-    "off": 56,
+    "off": 0,
     "kind": "imm",
     "value": 6929412
    },
    {
-    "off": 60,
+    "off": 4,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 80,
+    "off": 8,
     "kind": "reg",
     "value": null
    }
@@ -14595,113 +10184,19 @@
    }
   ]
  },
- "class RLEBlitTransDarken<G>": {
-  "ident": "RLEBlitTransDarken_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransDarkenZRead<G>": {
-  "ident": "RLEBlitTransDarkenZRead_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransDarkenZReadWrite<G>": {
-  "ident": "RLEBlitTransDarkenZReadWrite_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransLucent25<G>": {
-  "ident": "RLEBlitTransLucent25_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class RLEBlitTransLucent25Alpha<G>": {
   "ident": "RLEBlitTransLucent25Alpha_G",
-  "ctor": 4591700,
+  "ctor": 4630224,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927020
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -14753,113 +10248,19 @@
    }
   ]
  },
- "class RLEBlitTransLucent25ZRead<G>": {
-  "ident": "RLEBlitTransLucent25ZRead_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransLucent25ZReadWarp<G>": {
-  "ident": "RLEBlitTransLucent25ZReadWarp_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransLucent25ZReadWrite<G>": {
-  "ident": "RLEBlitTransLucent25ZReadWrite_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransLucent50<G>": {
-  "ident": "RLEBlitTransLucent50_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class RLEBlitTransLucent50Alpha<G>": {
   "ident": "RLEBlitTransLucent50Alpha_G",
-  "ctor": 4591700,
+  "ctor": 4630160,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927032
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -14911,113 +10312,19 @@
    }
   ]
  },
- "class RLEBlitTransLucent50ZRead<G>": {
-  "ident": "RLEBlitTransLucent50ZRead_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransLucent50ZReadWarp<G>": {
-  "ident": "RLEBlitTransLucent50ZReadWarp_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransLucent50ZReadWrite<G>": {
-  "ident": "RLEBlitTransLucent50ZReadWrite_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransLucent75<G>": {
-  "ident": "RLEBlitTransLucent75_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class RLEBlitTransLucent75Alpha<G>": {
   "ident": "RLEBlitTransLucent75Alpha_G",
-  "ctor": 4591700,
+  "ctor": 4630096,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927044
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -15066,69 +10373,6 @@
     "off": 8,
     "kind": "zero",
     "value": 0
-   }
-  ]
- },
- "class RLEBlitTransLucent75ZRead<G>": {
-  "ident": "RLEBlitTransLucent75ZRead_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransLucent75ZReadWarp<G>": {
-  "ident": "RLEBlitTransLucent75ZReadWarp_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransLucent75ZReadWrite<G>": {
-  "ident": "RLEBlitTransLucent75ZReadWrite_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
    }
   ]
  },
@@ -15279,50 +10523,19 @@
    }
   ]
  },
- "class RLEBlitTransXlat<G>": {
-  "ident": "RLEBlitTransXlat_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class RLEBlitTransXlatAlpha<G>": {
   "ident": "RLEBlitTransXlatAlpha_G",
-  "ctor": 4591700,
+  "ctor": 4629968,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
+    "value": 6927068
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -15379,27 +10592,6 @@
    }
   ]
  },
- "class RLEBlitTransXlatZRead<G>": {
-  "ident": "RLEBlitTransXlatZRead_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class RLEBlitTransXlatZReadWrite<E>": {
   "ident": "RLEBlitTransXlatZReadWrite_E",
   "ctor": 4591414,
@@ -15408,27 +10600,6 @@
     "off": 0,
     "kind": "imm",
     "value": 6928136
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransXlatZReadWrite<G>": {
-  "ident": "RLEBlitTransXlatZReadWrite_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
    },
    {
     "off": 4,
@@ -15463,50 +10634,19 @@
    }
   ]
  },
- "class RLEBlitTransZRemapXlat<G>": {
-  "ident": "RLEBlitTransZRemapXlat_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class RLEBlitTransZRemapXlatAlpha<G>": {
   "ident": "RLEBlitTransZRemapXlatAlpha_G",
-  "ctor": 4591700,
+  "ctor": 4630032,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6927700
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
+    "value": 6927056
    },
    {
     "off": 12,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -15563,27 +10703,6 @@
    }
   ]
  },
- "class RLEBlitTransZRemapXlatZRead<G>": {
-  "ident": "RLEBlitTransZRemapXlatZRead_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
  "class RLEBlitTransZRemapXlatZReadWrite<E>": {
   "ident": "RLEBlitTransZRemapXlatZReadWrite_E",
   "ctor": 4591453,
@@ -15592,27 +10711,6 @@
     "off": 0,
     "kind": "imm",
     "value": 6928124
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class RLEBlitTransZRemapXlatZReadWrite<G>": {
-  "ident": "RLEBlitTransZRemapXlatZReadWrite_G",
-  "ctor": 4591700,
-  "members": [
-   {
-    "off": 0,
-    "kind": "imm",
-    "value": 6928084
    },
    {
     "off": 4,
@@ -15996,128 +11094,6 @@
    },
    {
     "off": 1136,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class SHAPipe": {
-  "ident": "SHAPipe",
-  "ctor": 4488126,
-  "members": [
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "imm",
-    "value": 1732584193
-   },
-   {
-    "off": 80,
-    "kind": "imm",
-    "value": 4023233417
-   },
-   {
-    "off": 84,
-    "kind": "imm",
-    "value": 2562383102
-   },
-   {
-    "off": 88,
-    "kind": "imm",
-    "value": 271733878
-   },
-   {
-    "off": 92,
-    "kind": "imm",
-    "value": 3285377520
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   }
-  ]
- },
- "class SHAStraw": {
-  "ident": "SHAStraw",
-  "ctor": 5535696,
-  "members": [
-   {
-    "off": 15,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 16,
-    "kind": "imm",
-    "value": 6925580
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "imm",
-    "value": 6921160
-   },
-   {
-    "off": 132,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 176,
-    "kind": "imm",
-    "value": 6929372
-   },
-   {
-    "off": 180,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 184,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 188,
     "kind": "reg",
     "value": null
    }
@@ -16968,75 +11944,20 @@
  },
  "class Straw": {
   "ident": "Straw",
-  "ctor": 4679549,
+  "ctor": 6229984,
   "members": [
    {
-    "off": 16,
-    "kind": "imm",
-    "value": 6916952
-   },
-   {
-    "off": 24,
-    "kind": "imm",
-    "value": 6917096
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 2
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "imm",
-    "value": 6929356
-   },
-   {
-    "off": 68,
+    "off": 0,
     "kind": "imm",
     "value": 6929372
    },
    {
-    "off": 72,
+    "off": 4,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 76,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 84,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
+    "off": 8,
     "kind": "reg",
     "value": null
    }
@@ -17110,7 +12031,7 @@
  },
  "class SuperWeaponTypeClass": {
   "ident": "SuperWeaponTypeClass",
-  "ctor": 6237152,
+  "ctor": 6237392,
   "members": [
    {
     "off": 0,
@@ -17118,74 +12039,14 @@
     "value": 6967320
    },
    {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 116,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 120,
+    "off": 4,
     "kind": "imm",
-    "value": 4500
-   },
-   {
-    "off": 124,
-    "kind": "reg",
-    "value": null
+    "value": 6967292
    },
    {
     "off": 128,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 132,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 136,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 165,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 166,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 167,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -17627,7 +12488,7 @@
  },
  "class TagTypeClass": {
   "ident": "TagTypeClass",
-  "ctor": 6307552,
+  "ctor": 6307840,
   "members": [
    {
     "off": 0,
@@ -17640,19 +12501,9 @@
     "value": 6968472
    },
    {
-    "off": 96,
-    "kind": "imm",
-    "value": 4294967295
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
     "off": 104,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -19455,44 +14306,39 @@
   "ctor": 4494336,
   "members": [
    {
-    "off": 8,
+    "off": 0,
     "kind": "imm",
-    "value": 6925628
+    "value": 6925656
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 13,
     "kind": "reg",
     "value": null
    },
    {
     "off": 16,
-    "kind": "imm",
-    "value": 6925656
-   },
-   {
-    "off": 21,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 24,
+    "off": 20,
     "kind": "reg",
     "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 564,
-    "kind": "imm",
-    "value": 6925628
    }
   ]
  },
@@ -19509,25 +14355,20 @@
  },
  "class TypeList<TeamTypeClass*>": {
   "ident": "TypeList_TeamTypeClass",
-  "ctor": 4940439,
+  "ctor": 6344830,
   "members": [
+   {
+    "off": 0,
+    "kind": "imm",
+    "value": 6945516
+   },
    {
     "off": 16,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "imm",
-    "value": 6945516
-   },
-   {
-    "off": 60,
+    "off": 20,
     "kind": "reg",
     "value": null
    }
@@ -19538,7 +14379,27 @@
   "ctor": 4496256,
   "members": [
    {
+    "off": 0,
+    "kind": "imm",
+    "value": 6925712
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
     "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 13,
     "kind": "reg",
     "value": null
    },
@@ -19549,31 +14410,6 @@
    },
    {
     "off": 20,
-    "kind": "imm",
-    "value": 6925712
-   },
-   {
-    "off": 25,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 568,
     "kind": "reg",
     "value": null
    }
@@ -19931,9 +14767,29 @@
   "ctor": 4497840,
   "members": [
    {
-    "off": 15,
+    "off": 0,
+    "kind": "imm",
+    "value": 6925768
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
     "kind": "imm",
     "value": 1
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 16,
@@ -19941,57 +14797,7 @@
     "value": null
    },
    {
-    "off": 17,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 18,
-    "kind": "reg",
-    "value": null
-   },
-   {
     "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 22,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "imm",
-    "value": 6925768
-   },
-   {
-    "off": 33,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 576,
     "kind": "reg",
     "value": null
    }
@@ -20010,12 +14816,42 @@
  },
  "class TypeList<ircraftTypeClass&*>": {
   "ident": "TypeList_ircraftTypeClass",
-  "ctor": 5946400,
+  "ctor": 6003408,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6962304
+    "value": 6962164
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
    }
   ]
  },
@@ -20032,12 +14868,42 @@
  },
  "class TypeList<struct nitTypeClass*>": {
   "ident": "TypeList_struct_nitTypeClass",
-  "ctor": 5946400,
+  "ctor": 6003200,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6962304
+    "value": 6962192
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 13,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 16,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
    }
   ]
  },
@@ -20378,67 +15244,27 @@
  },
  "class VectorClass<AbstractClass*>": {
   "ident": "VectorClass_AbstractClass",
-  "ctor": 4475915,
+  "ctor": 4478320,
   "members": [
    {
-    "off": 12,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
+    "off": 0,
     "kind": "imm",
     "value": 6924860
    },
    {
-    "off": 68,
-    "kind": "reg",
-    "value": null
+    "off": 4,
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 88,
-    "kind": "reg",
-    "value": null
+    "off": 8,
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 152,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 164,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 168,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 172,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 176,
-    "kind": "reg",
-    "value": null
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -20782,108 +15608,53 @@
  },
  "class VectorClass<ButtonFadeEffect*>": {
   "ident": "VectorClass_ButtonFadeEffect",
-  "ctor": 4731634,
+  "ctor": 4734720,
   "members": [
    {
-    "off": 116,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 120,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 124,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 129,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 140,
-    "kind": "imm",
-    "value": 6937868
-   },
-   {
-    "off": 144,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 153,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 172,
+    "off": 0,
     "kind": "imm",
     "value": 6937840
    },
    {
-    "off": 176,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 180,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 185,
+    "off": 4,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 196,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 200,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 204,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 209,
+    "off": 8,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 780,
-    "kind": "imm",
-    "value": 6921160
-   },
-   {
-    "off": 876,
-    "kind": "reg",
-    "value": null
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class VectorClass<CCINIClass*>": {
   "ident": "VectorClass_CCINIClass",
-  "ctor": 5086617,
+  "ctor": 5125952,
   "members": [
    {
-    "off": 20,
+    "off": 0,
     "kind": "imm",
     "value": 6947944
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -21029,108 +15800,53 @@
  },
  "class VectorClass<CrossDissolveEffect*>": {
   "ident": "VectorClass_CrossDissolveEffect",
-  "ctor": 4731634,
+  "ctor": 4734880,
   "members": [
    {
-    "off": 116,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 120,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 124,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 129,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 140,
+    "off": 0,
     "kind": "imm",
     "value": 6937868
    },
    {
-    "off": 144,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 153,
+    "off": 4,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 172,
-    "kind": "imm",
-    "value": 6937840
-   },
-   {
-    "off": 176,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 180,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 185,
+    "off": 8,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 196,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 200,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 204,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 209,
+    "off": 13,
     "kind": "zero",
     "value": 0
-   },
-   {
-    "off": 780,
-    "kind": "imm",
-    "value": 6921160
-   },
-   {
-    "off": 876,
-    "kind": "reg",
-    "value": null
    }
   ]
  },
  "class VectorClass<D&*>": {
   "ident": "VectorClass_D",
-  "ctor": 5482962,
+  "ctor": 5507744,
   "members": [
    {
-    "off": 36,
+    "off": 0,
     "kind": "imm",
     "value": 6954812
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -21476,55 +16192,25 @@
  },
  "class VectorClass<G>": {
   "ident": "VectorClass_G",
-  "ctor": 4312790,
+  "ctor": 4316512,
   "members": [
    {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
+    "off": 0,
     "kind": "imm",
-    "value": 6921612
+    "value": 6921584
    },
    {
-    "off": 36,
+    "off": 4,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 45,
+    "off": 8,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 48,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 52,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 56,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 61,
+    "off": 13,
     "kind": "zero",
     "value": 0
    }
@@ -21561,44 +16247,39 @@
   "ctor": 4494336,
   "members": [
    {
-    "off": 8,
+    "off": 0,
     "kind": "imm",
-    "value": 6925628
+    "value": 6925656
+   },
+   {
+    "off": 4,
+    "kind": "reg",
+    "value": null
+   },
+   {
+    "off": 8,
+    "kind": "reg",
+    "value": null
    },
    {
     "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 13,
     "kind": "reg",
     "value": null
    },
    {
     "off": 16,
-    "kind": "imm",
-    "value": 6925656
-   },
-   {
-    "off": 21,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 24,
+    "off": 20,
     "kind": "reg",
     "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 564,
-    "kind": "imm",
-    "value": 6925628
    }
   ]
  },
@@ -22065,7 +16746,7 @@
  },
  "class VectorClass<MSSfx*>": {
   "ident": "VectorClass_MSSfx",
-  "ctor": 5620160,
+  "ctor": 5625040,
   "members": [
    {
     "off": 0,
@@ -22074,18 +16755,18 @@
    },
    {
     "off": 4,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    },
    {
     "off": 8,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    },
    {
     "off": 13,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -22223,142 +16904,27 @@
  },
  "class VectorClass<MapRegionClass*>": {
   "ident": "VectorClass_MapRegionClass",
-  "ctor": 5394169,
+  "ctor": 5507584,
   "members": [
    {
-    "off": 20,
-    "kind": "reg",
-    "value": null
+    "off": 0,
+    "kind": "imm",
+    "value": 6954436
    },
    {
-    "off": 24,
+    "off": 4,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 6921672
-   },
-   {
-    "off": 56,
+    "off": 8,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 60,
-    "kind": "imm",
-    "value": 100000
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 80,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 124,
-    "kind": "imm",
-    "value": 6954408
-   },
-   {
-    "off": 128,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 132,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 137,
+    "off": 13,
     "kind": "zero",
     "value": 0
-   },
-   {
-    "off": 140,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 144,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 152,
-    "kind": "imm",
-    "value": 6921672
-   },
-   {
-    "off": 168,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 172,
-    "kind": "reg",
-    "value": null
    }
   ]
  },
@@ -22548,77 +17114,32 @@
  },
  "class VectorClass<MyButton*>": {
   "ident": "VectorClass_MyButton",
-  "ctor": 5931200,
+  "ctor": 5931632,
   "members": [
    {
-    "off": 14,
-    "kind": "reg",
-    "value": null
+    "off": 0,
+    "kind": "imm",
+    "value": 6961788
    },
    {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1116,
-    "kind": "reg",
-    "value": null
+    "off": 1140,
+    "kind": "imm",
+    "value": 6961732
    },
    {
     "off": 1144,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    },
    {
     "off": 1148,
-    "kind": "reg",
-    "value": null
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 1152,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1156,
-    "kind": "imm",
-    "value": 6961760
-   },
-   {
-    "off": 1160,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1164,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1168,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 1169,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1172,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1176,
-    "kind": "imm",
-    "value": 10
+    "off": 1153,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -23445,72 +17966,27 @@
  },
  "class VectorClass<TechnoClass*>": {
   "ident": "VectorClass_TechnoClass",
-  "ctor": 4389021,
+  "ctor": 4434496,
   "members": [
    {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
+    "off": 0,
     "kind": "imm",
-    "value": 6923908
+    "value": 6923880
    },
    {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 53,
+    "off": 4,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 56,
-    "kind": "reg",
-    "value": null
+    "off": 8,
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 60,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "imm",
-    "value": 16384
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -23984,72 +18460,27 @@
  },
  "class VectorClass<W4PassabilityType>": {
   "ident": "VectorClass_W4PassabilityType",
-  "ctor": 5274348,
+  "ctor": 5383872,
   "members": [
    {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "imm",
-    "value": 2
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 80,
+    "off": 0,
     "kind": "imm",
     "value": 6953828
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -24215,42 +18646,27 @@
  },
  "class VectorClass<_DDSURFACEDESC*>": {
   "ident": "VectorClass_DDSURFACEDESC",
-  "ctor": 4652160,
+  "ctor": 4653312,
   "members": [
    {
-    "off": 12,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
+    "off": 0,
     "kind": "imm",
     "value": 6928732
    },
    {
-    "off": 32,
-    "kind": "imm",
-    "value": 6928760
-   },
-   {
-    "off": 48,
+    "off": 4,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 52,
-    "kind": "imm",
-    "value": 10
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -24282,12 +18698,27 @@
  },
  "class VectorClass<articleSystemTypeClass**>": {
   "ident": "VectorClass_articleSystemTypeClass",
-  "ctor": 6370878,
+  "ctor": 6415632,
   "members": [
    {
-    "off": 56,
+    "off": 0,
     "kind": "imm",
     "value": 6970172
+   },
+   {
+    "off": 4,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -24360,251 +18791,51 @@
  },
  "class VectorClass<class DistributionObject<AITriggerTypeClass*>, DiscreteDistributionClass<class AITriggerTypeClass>>": {
   "ident": "VectorClass_class_DistributionObject_AITriggerTypeClass_DiscreteDistributionClass_class_AITriggerTypeClass",
-  "ctor": 6344396,
+  "ctor": 6349568,
   "members": [
    {
-    "off": 36,
+    "off": 0,
     "kind": "imm",
-    "value": 6945544
+    "value": 6969056
    },
    {
-    "off": 40,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 53,
+    "off": 4,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 64,
-    "kind": "imm",
-    "value": 6969056
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
  "class VectorClass<class DistributionObject<BuildingTypeClass*>, DiscreteDistributionClass<class BuildingTypeClass>>": {
   "ident": "VectorClass_class_DistributionObject_BuildingTypeClass_DiscreteDistributionClass_class_BuildingTypeClass",
-  "ctor": 4985625,
+  "ctor": 5007696,
   "members": [
    {
-    "off": 19,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 20,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 22,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 24,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 68,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 81,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 92,
+    "off": 0,
     "kind": "imm",
-    "value": 6921672
+    "value": 6945636
    },
    {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 105,
+    "off": 4,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 124,
-    "kind": "imm",
-    "value": 6945664
-   },
-   {
-    "off": 128,
+    "off": 8,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 132,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 137,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 140,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 144,
-    "kind": "imm",
-    "value": 10
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 156,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 160,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 176,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 180,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 184,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 189,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 200,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 204,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 208,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 213,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 224,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 228,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 232,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 237,
+    "off": 13,
     "kind": "zero",
     "value": 0
    }
@@ -24612,37 +18843,42 @@
  },
  "class VectorClass<class DistributionObject<CellClass*>, DiscreteDistributionClass<class CellClass>>": {
   "ident": "VectorClass_class_DistributionObject_CellClass_DiscreteDistributionClass_class_CellClass",
-  "ctor": 4863952,
+  "ctor": 4870320,
   "members": [
    {
-    "off": 28,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 30,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
+    "off": 0,
     "kind": "imm",
     "value": 6940428
    },
    {
-    "off": 64,
+    "off": 4,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 76,
+    "off": 8,
     "kind": "reg",
     "value": null
+   },
+   {
+    "off": 12,
+    "kind": "imm",
+    "value": 1
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 16,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 20,
+    "kind": "imm",
+    "value": 10
    }
   ]
  },
@@ -24833,27 +19069,27 @@
  },
  "class VectorClass<class oxelAnimTypeClass*>": {
   "ident": "VectorClass_class_oxelAnimTypeClass",
-  "ctor": 5969606,
+  "ctor": 6003696,
   "members": [
    {
-    "off": 12,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 16,
+    "off": 0,
     "kind": "imm",
     "value": 6962332
    },
    {
-    "off": 24,
-    "kind": "reg",
-    "value": null
+    "off": 4,
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 44,
-    "kind": "reg",
-    "value": null
+    "off": 8,
+    "kind": "zero",
+    "value": 0
+   },
+   {
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -24907,147 +19143,27 @@
  },
  "class VectorClass<struct AngerStruct>": {
   "ident": "VectorClass_struct_AngerStruct",
-  "ctor": 4935936,
+  "ctor": 5007136,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6945304
-   },
-   {
-    "off": 4,
-    "kind": "imm",
-    "value": 6945276
-   },
-   {
-    "off": 20,
-    "kind": "imm",
-    "value": 6945212
-   },
-   {
-    "off": 24,
-    "kind": "imm",
-    "value": 6945172
-   },
-   {
-    "off": 28,
-    "kind": "imm",
-    "value": 6945148
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 6944860
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 53,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "imm",
-    "value": 6922904
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 77,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 296,
-    "kind": "imm",
-    "value": 6944688
-   },
-   {
-    "off": 300,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 304,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 309,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1020,
-    "kind": "imm",
     "value": 6945460
    },
    {
-    "off": 1024,
-    "kind": "reg",
-    "value": null
+    "off": 4,
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 1028,
-    "kind": "reg",
-    "value": null
+    "off": 8,
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 1033,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1044,
-    "kind": "imm",
-    "value": 6945488
-   },
-   {
-    "off": 1048,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1052,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1057,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1268,
-    "kind": "imm",
-    "value": 6921656
-   },
-   {
-    "off": 1488,
-    "kind": "reg",
-    "value": null
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -25354,147 +19470,27 @@
  },
  "class VectorClass<struct ScoutStruct>": {
   "ident": "VectorClass_struct_ScoutStruct",
-  "ctor": 4935936,
+  "ctor": 5007296,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6945304
-   },
-   {
-    "off": 4,
-    "kind": "imm",
-    "value": 6945276
-   },
-   {
-    "off": 20,
-    "kind": "imm",
-    "value": 6945212
-   },
-   {
-    "off": 24,
-    "kind": "imm",
-    "value": 6945172
-   },
-   {
-    "off": 28,
-    "kind": "imm",
-    "value": 6945148
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 40,
-    "kind": "imm",
-    "value": 6944860
-   },
-   {
-    "off": 44,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 48,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 53,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 64,
-    "kind": "imm",
-    "value": 6922904
-   },
-   {
-    "off": 68,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 77,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 296,
-    "kind": "imm",
-    "value": 6944688
-   },
-   {
-    "off": 300,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 304,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 309,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1020,
-    "kind": "imm",
-    "value": 6945460
-   },
-   {
-    "off": 1024,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1028,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1033,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1044,
-    "kind": "imm",
     "value": 6945488
    },
    {
-    "off": 1048,
-    "kind": "reg",
-    "value": null
+    "off": 4,
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 1052,
-    "kind": "reg",
-    "value": null
+    "off": 8,
+    "kind": "zero",
+    "value": 0
    },
    {
-    "off": 1057,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 1268,
-    "kind": "imm",
-    "value": 6921656
-   },
-   {
-    "off": 1488,
-    "kind": "reg",
-    "value": null
+    "off": 13,
+    "kind": "zero",
+    "value": 0
    }
   ]
  },
@@ -25761,85 +19757,25 @@
  },
  "class VectorClass<uildingTypeClass*>": {
   "ident": "VectorClass_uildingTypeClass",
-  "ctor": 4986990,
+  "ctor": 5006976,
   "members": [
    {
-    "off": 68,
+    "off": 0,
     "kind": "imm",
     "value": 6945572
    },
    {
-    "off": 72,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 76,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 81,
+    "off": 4,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 176,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 180,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 184,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 189,
+    "off": 8,
     "kind": "zero",
     "value": 0
    },
    {
-    "off": 200,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 204,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 208,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 213,
-    "kind": "zero",
-    "value": 0
-   },
-   {
-    "off": 224,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 228,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 232,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 237,
+    "off": 13,
     "kind": "zero",
     "value": 0
    }
@@ -26347,7 +20283,7 @@
  },
  "class WarheadTypeClass": {
   "ident": "WarheadTypeClass",
-  "ctor": 6624112,
+  "ctor": 6624528,
   "members": [
    {
     "off": 0,
@@ -26355,29 +20291,9 @@
     "value": 6976048
    },
    {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 144,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 148,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 152,
-    "kind": "reg",
-    "value": null
+    "off": 4,
+    "kind": "imm",
+    "value": 6976020
    },
    {
     "off": 156,
@@ -26396,8 +20312,8 @@
    },
    {
     "off": 168,
-    "kind": "reg",
-    "value": null
+    "kind": "imm",
+    "value": 1
    },
    {
     "off": 169,
@@ -26413,76 +20329,6 @@
     "off": 176,
     "kind": "imm",
     "value": 10
-   },
-   {
-    "off": 184,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 188,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 192,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 196,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 197,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 198,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 199,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 200,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 201,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 202,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 203,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 204,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 205,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 206,
-    "kind": "reg",
-    "value": null
    }
   ]
  },

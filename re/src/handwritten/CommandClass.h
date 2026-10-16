@@ -43,7 +43,7 @@ public:
     // ---- data members (offsets from ctor 0x004e0a00) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0938
 
 };
 
@@ -66,7 +66,7 @@ public:
     // ---- data members (offsets from ctor 0x004deac6) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a04a0
 
 };
 
@@ -84,7 +84,7 @@ public:
     // ---- data members (offsets from ctor 0x004dea55) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a04bc
 
 };
 
@@ -102,7 +102,7 @@ public:
     // ---- data members (offsets from ctor 0x004de9e8) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a04d8
 
 };
 
@@ -120,7 +120,7 @@ public:
     // ---- data members (offsets from ctor 0x004de97b) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a04f4
 
 };
 
@@ -138,7 +138,7 @@ public:
     // ---- data members (offsets from ctor 0x004de90e) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0510
 
 };
 
@@ -156,7 +156,7 @@ public:
     // ---- data members (offsets from ctor 0x004de8a1) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a052c
 
 };
 
@@ -174,7 +174,7 @@ public:
     // ---- data members (offsets from ctor 0x004de834) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0548
 
 };
 
@@ -192,7 +192,7 @@ public:
     // ---- data members (offsets from ctor 0x004de7c7) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0564
 
 };
 
@@ -210,7 +210,7 @@ public:
     // ---- data members (offsets from ctor 0x004de75a) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0580
 
 };
 
@@ -228,7 +228,7 @@ public:
     // ---- data members (offsets from ctor 0x004de6ed) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a059c
 
 };
 
@@ -246,7 +246,7 @@ public:
     // ---- data members (offsets from ctor 0x004de680) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a05b8
 
 };
 
@@ -264,7 +264,7 @@ public:
     // ---- data members (offsets from ctor 0x004de613) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a05d4
 
 };
 
@@ -282,7 +282,7 @@ public:
     // ---- data members (offsets from ctor 0x004de5a6) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a05f0
 
 };
 
@@ -300,7 +300,7 @@ public:
     // ---- data members (offsets from ctor 0x004de539) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a060c
 
 };
 
@@ -318,7 +318,7 @@ public:
     // ---- data members (offsets from ctor 0x004de4cc) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0628
 
 };
 
@@ -336,7 +336,7 @@ public:
     // ---- data members (offsets from ctor 0x004de45f) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0644
 
 };
 
@@ -354,7 +354,7 @@ public:
     // ---- data members (offsets from ctor 0x004de3f2) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0660
 
 };
 
@@ -372,7 +372,7 @@ public:
     // ---- data members (offsets from ctor 0x004de385) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a067c
 
 };
 
@@ -390,7 +390,7 @@ public:
     // ---- data members (offsets from ctor 0x004de318) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0698
 
 };
 
@@ -408,7 +408,7 @@ public:
     // ---- data members (offsets from ctor 0x004de2ab) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a06b4
 
 };
 
@@ -426,7 +426,7 @@ public:
     // ---- data members (offsets from ctor 0x004de23e) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a06d0
 
 };
 
@@ -444,7 +444,7 @@ public:
     // ---- data members (offsets from ctor 0x004de1d1) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a06ec
 
 };
 
@@ -462,7 +462,7 @@ public:
     // ---- data members (offsets from ctor 0x004de164) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0708
 
 };
 
@@ -480,7 +480,7 @@ public:
     // ---- data members (offsets from ctor 0x004de0f7) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0724
 
 };
 
@@ -498,7 +498,7 @@ public:
     // ---- data members (offsets from ctor 0x004de08a) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0740
 
 };
 
@@ -516,7 +516,7 @@ public:
     // ---- data members (offsets from ctor 0x004de01d) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a075c
 
 };
 
@@ -534,7 +534,7 @@ public:
     // ---- data members (offsets from ctor 0x004ddfb0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0778
 
 };
 
@@ -552,7 +552,7 @@ public:
     // ---- data members (offsets from ctor 0x004ddf43) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0794
 
 };
 
@@ -570,7 +570,7 @@ public:
     // ---- data members (offsets from ctor 0x004dded6) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a07b0
 
 };
 
@@ -588,7 +588,7 @@ public:
     // ---- data members (offsets from ctor 0x004dde6a) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a07cc
 
 };
 
@@ -606,7 +606,7 @@ public:
     // ---- data members (offsets from ctor 0x004dddf9) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a07e8
 
 };
 
@@ -624,7 +624,7 @@ public:
     // ---- data members (offsets from ctor 0x004ddd88) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0804
 
 };
 
@@ -642,7 +642,7 @@ public:
     // ---- data members (offsets from ctor 0x004ddd1b) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0820
 
 };
 
@@ -660,7 +660,7 @@ public:
     // ---- data members (offsets from ctor 0x004ddcae) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a083c
 
 };
 
@@ -678,7 +678,7 @@ public:
     // ---- data members (offsets from ctor 0x004ddc41) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0858
 
 };
 
@@ -696,7 +696,7 @@ public:
     // ---- data members (offsets from ctor 0x004ddbd4) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0874
 
 };
 
@@ -714,7 +714,7 @@ public:
     // ---- data members (offsets from ctor 0x004ddb67) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0890
 
 };
 
@@ -732,7 +732,7 @@ public:
     // ---- data members (offsets from ctor 0x004ddafa) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a08ac
 
 };
 
@@ -750,7 +750,7 @@ public:
     // ---- data members (offsets from ctor 0x004dda8d) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a08c8
 
 };
 
@@ -768,7 +768,7 @@ public:
     // ---- data members (offsets from ctor 0x004dda21) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a08e4
 
 };
 
@@ -786,7 +786,7 @@ public:
     // ---- data members (offsets from ctor 0x004dda00) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0900
 
 };
 
@@ -804,7 +804,8 @@ public:
     // ---- data members (offsets from ctor 0x004e08e0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a091c
+    unsigned long m_004;  // /* ? */
 
 };
 
@@ -822,7 +823,8 @@ public:
     // ---- data members (offsets from ctor 0x004e0a50) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0954
+    unsigned long m_004;  // /* ? */
 
 };
 
@@ -840,7 +842,8 @@ public:
     // ---- data members (offsets from ctor 0x004e0c00) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0970
+    unsigned long m_004;  // /* ? */
 
 };
 
@@ -858,7 +861,8 @@ public:
     // ---- data members (offsets from ctor 0x004e0d70) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a098c
+    unsigned long m_004;  // /* ? */
 
 };
 
@@ -876,7 +880,7 @@ public:
     // ---- data members (offsets from ctor 0x004e26c0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a09a8
 
 };
 
@@ -894,7 +898,7 @@ public:
     // ---- data members (offsets from ctor 0x004e2720) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a09c4
 
 };
 
@@ -912,7 +916,7 @@ public:
     // ---- data members (offsets from ctor 0x004e2980) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a09e0
 
 };
 
@@ -930,7 +934,7 @@ public:
     // ---- data members (offsets from ctor 0x004e29e0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a09fc
 
 };
 

@@ -124,10 +124,12 @@ python3 tools/verify.py "$SRC" build/shim
 
 echo
 echo "== binary-anchored member verification =="
-# Report only, not a gate: this is the only check whose input is the binary
-# rather than another tool's output, and it currently confirms ~71%. The floor
-# guards against regression while the remaining refutations are investigated.
-python3 tools/verify_members_binary.py --fail-under 70
+# This is a GATE, not a report. It is one of only two checks whose input is the
+# binary rather than another tool's output, so it is the one that can falsify
+# the member data. The floor is set at 95% because the measured rate is 99.9%
+# (3,571 of 3,575 claims confirmed, 4 refuted); a drop below it means a
+# regression in gen_members.py, not noise.
+python3 tools/verify_members_binary.py --fail-under 95
 
 echo
 echo "== metrics =="

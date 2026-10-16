@@ -81,24 +81,12 @@ public:
     Pipe *NextStage;    // +0x04  next stage in the chain
     Pipe *Prev;    // +0x08  previous stage (set by the next stage's Next())
 
-    // ---- data members (offsets from ctor 0x00476cc0) ----
+    // ---- data members (offsets from ctor 0x00591f00) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_000[0x14];
-    unsigned long m_014;  // /* ? */
-    unsigned char pad_018[0x2];
-    unsigned long m_01a;  // /* ? */
-    unsigned char pad_01e[0x2];
-    unsigned long m_020;  // /* ? */
-    unsigned char pad_024[0x10];
-    unsigned long m_034;  // init 0x69bbec
-    unsigned long m_038;  // init 0x69bc04
-    unsigned long m_03c;  // /* ? */
-    unsigned long m_040;  // /* ? */
-    unsigned char pad_044[0x4];
-    unsigned long m_048;  // /* ? */
-    unsigned char pad_04c[0x4];
-    unsigned long m_050;  // /* ? */
+    unsigned long m_000;  // init 0x69bc04
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
 
 };
 
@@ -122,29 +110,12 @@ public:
     Straw *Next;   // +0x04  next stage in the chain
     Straw *Prev;   // +0x08  previous stage
 
-    // ---- data members (offsets from ctor 0x0047677d) ----
+    // ---- data members (offsets from ctor 0x005f0fe0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_000[0x10];
-    unsigned long m_010;  // init 0x698b58
-    unsigned char pad_014[0x4];
-    unsigned long m_018;  // init 0x698be8
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // /* ? */
-    unsigned long m_028;  // init 0x2
-    unsigned char pad_02c[0x4];
-    unsigned long m_030;  // /* ? */
-    unsigned char pad_034[0x4];
-    unsigned long m_038;  // /* ? */
-    unsigned char pad_03c[0x4];
-    unsigned long m_040;  // init 0x69bbcc
-    unsigned long m_044;  // init 0x69bbdc
-    unsigned long m_048;  // /* ? */
-    unsigned long m_04c;  // /* ? */
-    unsigned char pad_050[0x4];
-    unsigned long m_054;  // /* ? */
-    unsigned long m_058;  // /* ? */
+    unsigned long m_000;  // init 0x69bbdc
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
 
 };
 
@@ -161,10 +132,13 @@ class BufferPipe : public Pipe {
 };   // vtable 0x69bbec
 class FilePipe   : public Pipe {
 
-    // ---- data members (offsets from ctor 0x00447d80) ----
+    // ---- data members (offsets from ctor 0x006741b0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 19 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x69ad1c
+    unsigned char pad_004[0x8];
+    unsigned long m_00c;  // zero-initialised
+    unsigned long m_010;  // zero-initialised
 
 };   // vtable 0x69ad1c
 class SHAPipe    : public Pipe {
@@ -188,7 +162,16 @@ class LCWPipe    : public Pipe {
     // ---- data members (offsets from ctor 0x004f4100) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 10 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a150c
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // init 0xffff
 
 };   // vtable 0x6a150c  LCW
 class LZOPipe    : public Pipe {
@@ -196,7 +179,16 @@ class LZOPipe    : public Pipe {
     // ---- data members (offsets from ctor 0x004fb4e0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 10 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a1884
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // init 0xffff
 
 };   // vtable 0x6a1884  LZO
 class BlowPipe   : public Pipe {
@@ -204,8 +196,9 @@ class BlowPipe   : public Pipe {
     // ---- data members (offsets from ctor 0x00592ff0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_004[0x8];
-    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a3258
+    unsigned long m_00c;  // zero-initialised
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };   // vtable 0x6a3258  Blowfish
 
@@ -255,10 +248,13 @@ class BufferStraw : public Straw {
 };  // vtable 0x69bbcc
 class FileStraw   : public Straw {
 
-    // ---- data members (offsets from ctor 0x00447b40) ----
+    // ---- data members (offsets from ctor 0x00674320) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 18 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x69ad0c
+    unsigned char pad_004[0x8];
+    unsigned long m_00c;  // zero-initialised
+    unsigned long m_010;  // zero-initialised
 
 };  // vtable 0x69ad0c
 class SHAStraw    : public Straw {
@@ -298,7 +294,15 @@ class LCWStraw    : public Straw {
     // ---- data members (offsets from ctor 0x004f44f0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 9 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a1524
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
 
 };  // vtable 0x6a1524  LCW
 class LZOStraw    : public Straw {
@@ -306,15 +310,25 @@ class LZOStraw    : public Straw {
     // ---- data members (offsets from ctor 0x004fb950) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 9 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a189c
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
 
 };  // vtable 0x6a189c  LZO
 class BlowStraw   : public Straw {
 
-    // ---- data members (offsets from ctor 0x005473e2) ----
+    // ---- data members (offsets from ctor 0x00547b90) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 8 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a2308
+    unsigned char pad_004[0x8];
+    unsigned long m_00c;  // zero-initialised
 
 };  // vtable 0x6a2308  Blowfish
 class RandomStraw : public Straw {
@@ -322,8 +336,10 @@ class RandomStraw : public Straw {
     // ---- data members (offsets from ctor 0x005ab990) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_004[0x8];
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a3b78
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };  // vtable 0x6a3b78  PRNG
 
@@ -338,6 +354,16 @@ public:
     // ---- data members (offsets from ctor 0x005930b0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 11 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a3270
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // init 0x1
+    unsigned long m_010;  // /* ? */
+    unsigned char pad_014[0x20];
+    unsigned long m_034;  // /* ? */
+    unsigned long m_038;  // /* ? */
+    unsigned char pad_03c[0x100];
+    unsigned long m_13c;  // /* ? */
+    unsigned long m_140;  // /* ? */
 
 };

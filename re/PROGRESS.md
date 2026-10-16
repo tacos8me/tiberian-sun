@@ -18,8 +18,8 @@ removed. Measured state:
 | constructors that are real function starts | 100% |
 | virtuals named | 1,285 of 7,140 (18.6%) |
 | named members | 135 across 20 classes |
-| member offsets recovered | 4,729 (1,442 verified against the recovered table) |
-| member claims confirmed in the binary | 3,677 of 4,729 (77.8%) |
+| member offsets recovered | 3,575 (1,235 verified against the recovered table) |
+| member claims confirmed in the binary | 3,571 of 3,575 (99.9%) |
 | function bodies | 6,668 across 303 generated translation units |
 
 Coverage is achieved in two tiers:
@@ -55,9 +55,9 @@ template instantiations, e.g. 150 `VectorClass`, 147 `DynamicVectorClass`,
 | INI keys / referenced strings | 1,719 | done |
 | Per-class vtable+ctor manifest | 749 classes, 9,810 slots | done |
 | Direct-base reduction | 749 classes | done |
-| Member offsets recovered | 4,729 across 585 classes | done |
+| Member offsets recovered | 3,575 across 521 classes | done |
 | Function bodies emitted | 6,668 across 303 TUs | done |
-| Binary-anchored member verification | 77.8% confirmed | done |
+| Binary-anchored member verification | 99.9% confirmed, gated | done |
 
 ### Verification performed
 
@@ -69,8 +69,11 @@ template instantiations, e.g. 150 `VectorClass`, 147 `DynamicVectorClass`,
   was an alphabetical prefix with substring matching; the real number was
   unknown until the sweep was widened.
 - `tools/verify_members_binary.py` disassembles each constructor in the binary
-  and confirms claimed member offsets against real stores: **3,677 of 4,729
-  confirmed, 0 uncheckable**. The remaining 22.2% are refuted, not unverified.
+  and confirms claimed member offsets against real stores: **3,571 of 3,575
+  confirmed, 4 refuted, 0 uncheckable**. It runs as a gate with a 95% floor. It
+  found that a store site buried inside a large general-purpose function was
+  being accepted as the constructor for 180 of 585 classes; a plausibility gate
+  now requires the vtable write to occur early through a non-stack register.
 - Determinism: two clean pipeline runs produce byte-identical output
   (`tools/harness.py determinism --run`).
 
@@ -84,8 +87,8 @@ template instantiations, e.g. 150 `VectorClass`, 147 `DynamicVectorClass`,
 - [x] Make `verify.py` fail-closed and exhaustive (7 checks)
 
 ### P1 — deepen the reconstruction  [DONE]
-- [x] Recover data-member offsets from constructor store sequences (4,729
-      across 585 classes)
+- [x] Recover data-member offsets from constructor store sequences (3,575
+      across 521 classes)
 - [x] Name members from INI keys (135 members across 20 classes, each traced to
       the key string VA and the reader function that stores it)
 - [x] Recover function signatures (22,328)
@@ -95,7 +98,7 @@ template instantiations, e.g. 150 `VectorClass`, 147 `DynamicVectorClass`,
 - [x] Emit member blocks for classes that previously had no standalone header
 - [x] Emit function bodies (6,668 across 303 TUs; empty definitions carrying the
       recovered evidence, no invented control flow)
-- [x] Anchor member verification to the binary (77.8% of claims confirmed)
+- [x] Anchor member verification to the binary (99.9% of claims confirmed)
 
 ### P2 — templates  [DONE]
 - [x] Reconstruct the `Blit*`/`RLEBlit*` blitter family as one template header
@@ -129,11 +132,9 @@ template instantiations, e.g. 150 `VectorClass`, 147 `DynamicVectorClass`,
 
 ## Known gaps (documented, not hidden)
 
-- **22.2% of member-offset claims are not confirmed by the binary.** A
-  constructor also initialises base subobjects and temporaries, and those stores
-  are currently attributed to the class's own members. The largest single cause
-  is shared constructors: 180 of 585 classes (31%) share a ctor VA, 74 of them
-  `0x461054` alone. Treat a member offset as likely but not proven.
+- **0.1% of member-offset claims are not confirmed by the binary** (4 of
+  3,575). Recovery is deliberately conservative: the plausibility gate trades a
+  little recall for near-perfect precision.
 - **Member layout is not verified.** Offsets are checked; whether the *type* and
   ordering are right is not.
 - `RulesClass` has no RTTI record (not polymorphic); identified only by its
@@ -201,9 +202,9 @@ rather than another tool's output:
 
 ```
 tools/verify_members_binary.py
-  claims examined       4729
-  confirmed in binary   3677
-  refuted               1052
+  claims examined       3575
+  confirmed in binary   3571
+  refuted               4
   uncheckable           0
-  confirmed of checkable 77.8%
+  confirmed of checkable 99.9%
 ```

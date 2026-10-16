@@ -50,22 +50,11 @@ public:
     SuperWeaponTypeClass();  // 0x00503ec0
     virtual ~SuperWeaponTypeClass();
 
-    // ---- data members (offsets from ctor 0x005f2be0) ----
+    // ---- data members (offsets from ctor 0x005f2cd0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a5018
-    unsigned char pad_004[0x5c];
-    unsigned long m_060;  // /* ? */
-    unsigned long m_064;  // /* ? */
-    unsigned long m_068;  // /* ? */
-    unsigned long m_06c;  // /* ? */
-    unsigned long m_070;  // /* ? */
-    unsigned long m_074;  // /* ? */
-    unsigned long m_078;  // init 0x1194
-    unsigned long m_07c;  // /* ? */
-    unsigned long m_080;  // /* ? */
-    unsigned long m_084;  // /* ? */
-    unsigned long m_088;  // /* ? */
-    unsigned char pad_08c[0x19];
-    unsigned long m_0a5;  // /* ? */
+    unsigned long m_004;  // init 0x6a4ffc
+    unsigned char pad_008[0x78];
+    unsigned long m_080;  // zero-initialised
 };

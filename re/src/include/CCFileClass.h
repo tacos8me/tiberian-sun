@@ -39,11 +39,10 @@ public:
     CCFileClass();  // 0x00418e88
     virtual ~CCFileClass();
 
-    // ---- data members (offsets from ctor 0x00418e88) ----
+    // ---- data members (offsets from ctor 0x004190f0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_000[0x4];
-    unsigned long m_004;  // init 0x699bc8
-    unsigned char pad_008[0x5c];
-    unsigned long m_064;  // zero-initialised
+    unsigned long m_000;  // init 0x699bc8
+    unsigned char pad_004[0x5c];
+    unsigned long m_060;  // zero-initialised
 };

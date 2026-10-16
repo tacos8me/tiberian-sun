@@ -46,8 +46,9 @@ diagnostic.
 
 ### [x] Anchor member verification to the binary
 `tools/verify_members_binary.py` disassembles each constructor and confirms
-claimed offsets against real stores. **3,677 of 4,729 confirmed (77.8%), 0
-uncheckable.** This is one of only two checks whose input is the binary.
+claimed offsets against real stores. **3,571 of 3,575 confirmed (99.9%), 4
+refuted, 0 uncheckable**, enforced as a gate. This is one of only two checks
+whose input is the binary.
 
 ### [x] Fix glob-order nondeterminism
 Ownership of a template name depended on filesystem enumeration order.
@@ -91,15 +92,15 @@ than gated.
 
 ## P2 — the substantive remaining work
 
-### [ ] Fix shared-constructor misattribution in `gen_members.py`
-**Highest-value open item.** 180 of 585 classes (31%) share a constructor VA;
-74 share `0x461054` alone. That generic function stores to
-`[esi+0x174]`/`[esi+8]`, not to the class's own members, so its claims are wrong
-for most instantiations. This is the dominant cause of the 22.2% of member
-claims the binary does not confirm.
-*Done when:* the binary-anchored confirmation rate rises materially above 77.8%
-and the shared-ctor classes stop being attributed to a function that does not
-write their vtable.
+### [x] Fix shared-constructor misattribution in `gen_members.py`
+180 of 585 classes shared a constructor VA, 74 of them `0x461054` alone -- a
+general-purpose function starting mid-flow (`push 0`) that writes through
+`[esi+0x174]`, not through the class's own members. Fixed with a plausibility
+gate: the vtable write must occur early in the function and through a non-stack
+register. Window chosen empirically against the binary-anchored verifier
+(12 -> 1,682 claims/0 false; 40 -> 2,658/2; 100 -> 3,184/2; 200 -> 3,571/4;
+beyond 200 recall flattens). False claims fell from 1,052 to 4 and the check is
+now a gate with a 95% floor.
 
 ### [ ] Recover the remaining 912 KB of unattributed `.text`
 Roughly 95% of it is real code, not padding. Jump tables, SEH handlers and
@@ -160,8 +161,8 @@ Recompile and diff where a matching compiler is available.
   agree with the recovered tables. It does **not** prove the disassembly is
   correct, and only check 4 and the binary member verifier are anchored to the
   binary.
-- **A member offset is likely but not proven**: 22.2% of claims are refuted by
-  the binary.
+- Member offsets are 99.9% confirmed against the binary, but **layout is not
+  verified**: whether the types and ordering are right is unchecked.
 - Member names exist only where an INI key or string provides evidence. Never
   infer one.
 - Function bodies are empty. The project reproduces structure, not behaviour.
