@@ -70,6 +70,12 @@ re/
 Run order is encoded in `tools/pipeline.sh` (10 stages). Do not run stages by
 hand out of order; `out/` artifacts feed forward.
 
+`verify.py`'s coverage check credits a template instantiation to the header that
+defines its template: 487 of the 749 manifest entries are instantiations
+(`VectorClass`, `DynamicVectorClass`, `TClassFactory`, `TypeList`, `Blit*`), and
+the template header legitimately defines them all. This is not a loosened gate —
+do not satisfy it by emitting one header per instantiation.
+
 ## Build / verify
 
 The gate is `tools/verify.py`, which checks standalone compilation of every
@@ -106,10 +112,24 @@ done
 
 ## Subagent notes
 
-- Background/async subagents require `@earendil-works/chord`. It is not part of
-  the default install; `1.1.0` is installed under
-  `pi-coding-agent/node_modules/@earendil-works/chord`. If async children fail
-  with a chord error, run the workflow with `async: false`.
+- Background/async subagents require `@earendil-works/chord`, which is **not** a
+  declared dependency of `@earendil-works/pi-coding-agent` and is not installed
+  by default. It is not resolved from the user-level
+  `~/.pi/agent/npm/node_modules`. Install it into the host package itself:
+
+  ```bash
+  cd "$(npm root -g)/@earendil-works/pi-coding-agent"
+  npm install --no-save @earendil-works/chord@1.1.0
+  ```
+
+  Without it **every** subagent launch fails immediately with
+  `does not provide @earendil-works/chord, @earendil-works/chord/context`, and
+  `async: false` does **not** help — that error is a missing module, not a
+  background-job problem. Verify with
+  `node -e "console.log(require.resolve('@earendil-works/chord/context'))"`
+  from that directory (a bare `require.resolve('@earendil-works/chord')` fails
+  with `ERR_PACKAGE_PATH_NOT_EXPORTED`, which is expected and harmless: the
+  package is ESM-only and exports only subpaths).
 - Give reconstruction agents **tight, bounded scopes** and tell them explicitly
   not to write giant inline heredocs — one agent previously burned its entire
   budget that way and produced nothing.
@@ -117,7 +137,7 @@ done
 
 ## Current status
 
-Last updated at commit `722f807` (P1 closed out, pushed to `origin/main`).
+Last updated at commit `c0755e7` (P2 integration complete, `VERIFICATION PASSED`).
 
 **Done and verified.** RTTI recovery (788 type descriptors, 755 hierarchies,
 843 vtables), disassembly (9,057 functions), full class manifest (749 classes,
@@ -126,10 +146,10 @@ reduction, member offsets (4,634 across 629 classes), member names from INI
 keys (135 across 20 classes), virtual names (1,242 across 624 classes),
 signatures (8,689 functions with calling conventions), and headers for all 749
 classes. The pipeline reproduces all of it from `bin/GAME.EXE` alone and
-`tools/verify.py` passes: 690/690 standalone, combined TU PASS, 749/749
+`tools/verify.py` passes: 259/259 standalone, combined TU PASS, 749/749
 coverage, 200/200 vtable bindings.
 
-**P2, verified but not yet integrated.** Three hand-written template headers
+**P2 templates, recovered and integrated.** Three hand-written template headers
 were added under `src/handwritten/` after recovering the layouts from the
 binary and corroborating them across instantiations:
 
@@ -143,18 +163,23 @@ binary and corroborating them across instantiations:
 - `Pipe.h` — the 20-class Pipe/Straw IO hierarchy with all 80 virtuals named
   from call-site evidence (LCW, LZO, PKZIP, Blowfish, SHA-1, base64).
 
-**P2 integration complete and verified.** `tools/gen_headers.py` now skips
-manifest entries owned by the hand-written headers (536 entries skipped), maps a
-template name to the header that actually defines it (so includes name
-`VectorClass.h`/`INIClass.h`, not a nonexistent `DynamicVectorClass.h`/`Node.h`),
-and forward-declares MSVC-leaked formal template parameters (e.g. the `H` in
-`VectorClass<H>`) instead of inventing a type for them. `tools/verify.py` credits
-class coverage to the template that defines an instantiation rather than
-demanding a file per instantiation, which is what the 487 template-argument
-manifest entries actually require.
+`tools/gen_headers.py` skips manifest entries owned by those headers (536
+entries skipped), maps a template name to the header that actually defines it
+(includes name `VectorClass.h`/`INIClass.h`, not a nonexistent
+`DynamicVectorClass.h`/`Node.h`), and forward-declares MSVC-leaked formal
+template parameters (the `H` in `VectorClass<H>`) instead of inventing a type.
+`tools/verify.py` credits class coverage to the template that defines an
+instantiation rather than demanding a file per instantiation, which is what the
+487 template-argument manifest entries require.
 
-`tools/verify.py` prints `VERIFICATION PASSED`: 259/259 standalone, combined TU
-PASS, 749/749 coverage, 200/200 vtable bindings — reproduced from a clean
-checkout with `out/` and `src/include/` removed.
+**The generated tree is a build artifact of the tools.** A stale
+`src/include/` will fail verification even when every tool is correct; the
+headers must be regenerated, never hand-edited. Run `./tools/pipeline.sh` and
+let it rewrite `src/include/` rather than patching a header in place — a
+hand-patch is lost on the next run.
+
+**Known remaining gaps.** `Node<>` is still declared inside `INIClass.h` rather
+than its own header. The MS* multimedia classes, the WOL/ATL COM layer, and
+`.cpp` stub bodies are not yet reconstructed.
 
 See `PROGRESS.md` for the live work list.
