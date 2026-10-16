@@ -100,13 +100,13 @@ public:
     // 0x698a60/0x698a44 and appear in NO vtable slot, so the destructor is
     // declared non-virtual here and slot 0 is left unnamed.
     ~AbstractClass();                                                // 0x405710 / 0x405730 (not in a slot)
-    virtual HRESULT __stdcall vfunc_0();                             // [0] 0x405790 (shared E_POINTER stub; takes this+2)
+    virtual void  vfunc_0();                                        // [0] 0x405790 (shared E_POINTER stub; takes this+2, returns E_POINTER)
     virtual void  Init();                                           // [1] 0x405830
     virtual void  Shutdown();                                       // [2] 0x405840
     virtual HRESULT __stdcall QueryInterface(REFIID riid, void** ppv); // [3] 0x6829a5 (stub)
     virtual ULONG   __stdcall AddRef();                             // [4] 0x405990
     virtual ULONG   __stdcall Release();                            // [5] 0x6829a5 (stub)
-    virtual HRESULT __stdcall vfunc_6();                            // [6] 0x6829a5 (stub; slot was previously omitted)
+    virtual void  vfunc_6();                                        // [6] 0x6829a5 (stub; slot was previously omitted)
     virtual int   GetType();                                        // [7] 0x405910
     virtual int   Fetch_ID();                                       // [8] 0x405ac0
     virtual void  Set_ID(int id);                                   // [9] 0x4059b0
