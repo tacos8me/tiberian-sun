@@ -65,10 +65,15 @@ re/
 | `tools/gen_headers.py` | header emission from the manifest |
 | `tools/reconcile_prelude.py` | prelude/header base reconciliation |
 | `tools/make_selfcontained.py` | add missing includes per header |
-| `tools/verify.py` | full verification gate |
+| `tools/verify.py` | full verification gate (7 checks, fail-closed) |
+| `tools/harness.py` | measure real state (`metrics`) and prove reproducibility (`determinism`) |
+| `tools/gen_bodies.py` | emit `.cpp` function bodies from recovered evidence |
 
-Run order is encoded in `tools/pipeline.sh` (10 stages). Do not run stages by
-hand out of order; `out/` artifacts feed forward.
+Run order is encoded in `tools/pipeline.sh`. Do not run stages by hand out of
+order; `out/` artifacts feed forward. The stages are: 0 clean tree, 1 RTTI,
+2 disassembly, 3 strings, 4 class manifest, 5 direct bases, 6 members,
+7 member naming, 8 signatures, 8b virtual naming, 9 header generation,
+10 prelude reconciliation, then function bodies, verification and metrics.
 
 `verify.py`'s coverage check credits a template instantiation to the header that
 defines its template: 487 of the 749 manifest entries are instantiations
@@ -133,23 +138,48 @@ done
 - Give reconstruction agents **tight, bounded scopes** and tell them explicitly
   not to write giant inline heredocs — one agent previously burned its entire
   budget that way and produced nothing.
-- Parallel writers must target **disjoint file sets**.
+- Parallel writers must target **disjoint file sets**. Worktree isolation
+  (`isolation: "worktree"`) prevents file collisions but does **not** preserve
+  work: if the workflow times out or a lane is killed, its edits are lost
+  unless the lane committed. When you run a multi-lane workflow, instruct every
+  lane to **commit its own work and report the commit hash** before finishing,
+  and budget for the workflow to hit its wall-clock cap. Recovering five lanes'
+  uncommitted edits from a shared tree by hand cost more than the lanes saved.
+- A lane that changes a *generator* can break the tree in ways no lane owns.
+  Concretely: a lane that taught `gen_headers.py` to emit member blocks for
+  headerless classes created 424 duplicate headers, including a
+  `GScreenClass.h` that redefined a type `ts_prelude.h` already owns. Treat
+  generator changes as high-risk: require the lane to run the full pipeline and
+  `verify.py` before reporting, and re-verify the merged result yourself.
+- Lanes will correctly refuse to document a broken tree. Expect questions like
+  "which state should the docs describe?" — decide the target state explicitly
+  rather than letting a lane guess.
 
 ## Current status
 
-Last updated after the P0 tooling fixes: `VERIFICATION PASSED` with five checks,
-and disassembly coverage roughly doubled.
+Last updated after the orchestrated push that landed member emission, function
+bodies and further coverage work. All figures below are from
+`python3 tools/harness.py metrics`; re-run it rather than trusting this list.
 
 **Done and verified.** RTTI recovery (788 type descriptors, 755 hierarchies,
-843 vtables), disassembly (23,129 functions, 63.7% of `.text` bytes), full class
-manifest (749 classes, 9,810 virtual slots, every class has a located
-constructor that is a **real function entry point**), direct-base reduction,
-member offsets, member names from INI keys (135 across 20 classes), signatures
-(8,689 functions with calling conventions), and headers for all 749 classes with
-1,610 named virtuals. The pipeline reproduces all of it from `bin/GAME.EXE`
-alone and `tools/verify.py` passes **seven** checks: 259/259 standalone, combined
-TU PASS, 749/749 coverage, 749/749 vtable bindings, 219/219 header content,
-218/222 inheritance, 10/10 member offsets.
+843 vtables), disassembly (23,882 functions, 65.56% of `.text` bytes,
+`vtable_slots_unseeded` 0), full class manifest (749 classes, 9,810 virtual
+slots, every class has a located constructor that is a **real function entry
+point** — `ctors_are_function_starts` 100.0%), direct-base reduction, 4,634
+recovered member offsets (2,743 member declarations now emitted), 6,668
+function bodies across 303 generated translation units, member names from INI
+keys (135 across 20 classes), signatures (22,328), and headers for all 749
+classes with 1,285 named virtuals.
+
+The pipeline reproduces all of it from `bin/GAME.EXE` alone and
+`tools/verify.py` passes **seven** checks: 259/259 standalone, combined TU PASS,
+749/749 coverage, 749/749 vtable bindings, 219/219 header content, 218/222
+inheritance, 10/10 member offsets.
+
+**How to measure instead of guessing.** `python3 tools/harness.py metrics`
+prints the real state and appends to `out/metrics.jsonl`;
+`python3 tools/harness.py determinism --run` proves two clean runs are
+byte-identical. Use these before and after any change.
 
 **Read `todo.md` before starting work.** It is the prioritized, evidence-backed
 work list, and it records defects found by the last review that are *not* yet
@@ -163,10 +193,23 @@ the binary's own RTTI COL chain (all 749, exhaustively), that headers cite
 matching vtable evidence, and that generated inheritance and member offsets
 agree with the recovered tables.
 
-It still does **not** prove the disassembly is correct, and check 7 compares
-only the handful of classes that actually emit offsets. Hand-written headers
-are reported separately in check 6, not gated, because they are the
-authoritative richer source and legitimately omit transitively-implied bases.
+It still does **not** prove the disassembly is correct. Two specific gaps to
+keep in mind:
+
+- Only check 4 is anchored to the binary. Checks 5–7 compare the tree against
+  other tools' output (`out/class_manifest.json`, `out/direct_bases.json`,
+  `out/members.json`), so a bug in `gen_manifest.py` would make the manifest and
+  the headers wrong *together* and the checks would still pass.
+- Check 7 is narrower than its name suggests. It reports a small number of
+  classes because it deliberately compares only **generated** headers, while
+  2,743 member declarations are now emitted (many into `src/handwritten/`).
+  Its "N/N verified" figure understates the real state; do not read it as
+  "member layout is verified".
+
+Member **layout** — whether a member really sits at the offset claimed — is not
+verified anywhere. Hand-written headers are reported separately in check 6, not
+gated, because they are the authoritative richer source and legitimately omit
+transitively-implied bases.
 
 **Do not quote `VERIFICATION PASSED` as evidence of correctness beyond that.**
 
