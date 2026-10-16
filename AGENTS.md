@@ -155,6 +155,14 @@ done
 - Lanes will correctly refuse to document a broken tree. Expect questions like
   "which state should the docs describe?" — decide the target state explicitly
   rather than letting a lane guess.
+- **Run long multi-lane workflows with `async: true`, never `async: false`.**
+  A blocking workflow has a 30-minute wall-clock cap; lanes that need longer
+  (anything running `pipeline.sh`, which takes ~10 minutes, plus analysis) are
+  killed mid-edit. Async composites have no parent deadline. Passing
+  `async: false` to make the result available in the same turn cost six lanes'
+  work in one run, even with an explicit "commit early" instruction — the lanes
+  had not reached their first commit when the cap hit. If a same-turn result is
+  genuinely required, cut the lane count and the scope so it fits in 30 minutes.
 
 ## Current status
 
