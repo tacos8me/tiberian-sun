@@ -4,7 +4,7 @@
 //
 // RTTI class   : class MyButton
 // vtable       : 0x006a3a8c  (37 slots)
-// constructor  : 0x005a86f0
+// constructor  : 0x005a8783
 // vtable store : 0x005a8a61  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -56,7 +56,7 @@ public:
     virtual void vfunc_35(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21, int a22, int a23);  // [35] 0x005a90a0  // __thiscall
     virtual void vfunc_36(int a0);  // [36] 0x005a92f0  // __stdcall  // refs "dlgsys"
 
-    MyButton();  // 0x005a86f0
+    MyButton();  // 0x005a8783
     virtual ~MyButton();
 
     // ---- data members (offsets from ctor 0x005a8a30) ----

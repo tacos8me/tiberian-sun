@@ -4,7 +4,7 @@
 //
 // RTTI class   : class CommBufferClass
 // vtable       : 0x0069b094  (1 slots)
-// constructor  : 0x0045d930
+// constructor  : 0x0045d974
 // vtable store : 0x0045d99e  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -20,7 +20,7 @@ public:
     // ---- vtable 0x0069b094 (1 slots) ----
     virtual void vfunc_0(int a0);  // [0] 0x0045ea80  // __thiscall
 
-    CommBufferClass();  // 0x0045d930
+    CommBufferClass();  // 0x0045d974
     virtual ~CommBufferClass();
 
     // ---- data members (offsets from ctor 0x0045d97a) ----

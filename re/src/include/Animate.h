@@ -4,7 +4,7 @@
 //
 // RTTI class   : class Animate
 // vtable       : 0x00699a90  (8 slots)
-// constructor  : 0x00416920
+// constructor  : 0x00416940
 // vtable store : 0x0041697c  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -26,7 +26,7 @@ public:
     virtual void vfunc_6();  // [6] 0x006829a5  // __cdecl
     virtual void vfunc_7();  // [7] 0x006829a5  // __cdecl
 
-    Animate();  // 0x00416920
+    Animate();  // 0x00416940
     virtual ~Animate();
 
     // ---- data members (offsets from ctor 0x00416967) ----

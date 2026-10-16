@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class WalkLocomotionClass>
 // vtable       : 0x006a4d30  (5 slots)
-// constructor  : 0x005ed180
+// constructor  : 0x005ed198
 // vtable store : 0x005ed1bb  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ed280  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ed300  // __stdcall, returns int
 
-    TClassFactory_class_WalkLocomotionClass();  // 0x005ed180
+    TClassFactory_class_WalkLocomotionClass();  // 0x005ed198
     virtual ~TClassFactory_class_WalkLocomotionClass();
 
     // ---- data members (offsets from ctor 0x005ed1a1) ----

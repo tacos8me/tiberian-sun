@@ -4,7 +4,7 @@
 //
 // RTTI class   : class bad_cast
 // vtable       : 0x006a7dd0  (2 slots)
-// constructor  : 0x00683195
+// constructor  : 0x006830da
 // vtable store : 0x006831c1  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -22,6 +22,6 @@ public:
     virtual void vfunc_0(int a0);  // [0] 0x006831cb  // __thiscall
     virtual void vfunc_1();  // [1] 0x006878ac  // __cdecl, returns int
 
-    bad_cast();  // 0x00683195
+    bad_cast();  // 0x006830da
     virtual ~bad_cast();
 };

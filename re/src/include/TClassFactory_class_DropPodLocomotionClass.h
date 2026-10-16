@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class DropPodLocomotionClass>
 // vtable       : 0x006a4d48  (5 slots)
-// constructor  : 0x005ed300
+// constructor  : 0x005ed318
 // vtable store : 0x005ed33b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ed400  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ed480  // __stdcall, returns int
 
-    TClassFactory_class_DropPodLocomotionClass();  // 0x005ed300
+    TClassFactory_class_DropPodLocomotionClass();  // 0x005ed318
     virtual ~TClassFactory_class_DropPodLocomotionClass();
 
     // ---- data members (offsets from ctor 0x005ed321) ----

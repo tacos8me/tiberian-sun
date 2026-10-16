@@ -141,24 +141,34 @@ Last updated after the P0 tooling fixes: `VERIFICATION PASSED` with five checks,
 and disassembly coverage roughly doubled.
 
 **Done and verified.** RTTI recovery (788 type descriptors, 755 hierarchies,
-843 vtables), disassembly (12,784 functions, 49.2% of `.text` bytes), full class
+843 vtables), disassembly (23,129 functions, 63.7% of `.text` bytes), full class
 manifest (749 classes, 9,810 virtual slots, every class has a located
 constructor that is a **real function entry point**), direct-base reduction,
-member offsets (1,887 emitted across 629 classes), member names from INI keys
-(135 across 20 classes), signatures (8,689 functions with calling conventions),
-and headers for all 749 classes. The pipeline reproduces all of it from
-`bin/GAME.EXE` alone and `tools/verify.py` passes: 259/259 standalone, combined
-TU PASS, 749/749 coverage, 200/200 vtable bindings, 219/219 header content.
+member offsets, member names from INI keys (135 across 20 classes), signatures
+(8,689 functions with calling conventions), and headers for all 749 classes with
+1,610 named virtuals. The pipeline reproduces all of it from `bin/GAME.EXE`
+alone and `tools/verify.py` passes **seven** checks: 259/259 standalone, combined
+TU PASS, 749/749 coverage, 749/749 vtable bindings, 219/219 header content,
+218/222 inheritance, 10/10 member offsets.
 
 **Read `todo.md` before starting work.** It is the prioritized, evidence-backed
 work list, and it records defects found by the last review that are *not* yet
 fixed. Do not read the status above as "everything is fine".
 
-**What `VERIFICATION PASSED` does and does not mean.** It means the tree
-compiles and that each header's cited vtable evidence matches the manifest. It
-does **not** yet validate inheritance clauses, member offsets, or member layout,
-and it does not prove the disassembly is correct. Checks 3 and 4 still skip
-silently when `out/` is absent.
+**What `VERIFICATION PASSED` does and does not mean.** The gate is now
+fail-closed: a missing artifact makes it exit non-zero naming what is missing,
+rather than running a subset of checks and printing PASSED. It validates that
+the tree compiles, that every manifest vtable re-resolves to its class through
+the binary's own RTTI COL chain (all 749, exhaustively), that headers cite
+matching vtable evidence, and that generated inheritance and member offsets
+agree with the recovered tables.
+
+It still does **not** prove the disassembly is correct, and check 7 compares
+only the handful of classes that actually emit offsets. Hand-written headers
+are reported separately in check 6, not gated, because they are the
+authoritative richer source and legitimately omit transitively-implied bases.
+
+**Do not quote `VERIFICATION PASSED` as evidence of correctness beyond that.**
 
 **P2 templates, recovered and integrated.** Three hand-written template headers
 were added under `src/handwritten/` after recovering the layouts from the

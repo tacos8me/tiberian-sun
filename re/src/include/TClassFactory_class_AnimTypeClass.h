@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class AnimTypeClass>
 // vtable       : 0x006a4c88  (5 slots)
-// constructor  : 0x005ec700
+// constructor  : 0x005ec718
 // vtable store : 0x005ec73b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ec800  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ec880  // __stdcall, returns int
 
-    TClassFactory_class_AnimTypeClass();  // 0x005ec700
+    TClassFactory_class_AnimTypeClass();  // 0x005ec718
     virtual ~TClassFactory_class_AnimTypeClass();
 
     // ---- data members (offsets from ctor 0x005ec721) ----

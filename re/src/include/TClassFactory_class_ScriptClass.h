@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class ScriptClass>
 // vtable       : 0x006a4aa8  (5 slots)
-// constructor  : 0x005ea900
+// constructor  : 0x005ea918
 // vtable store : 0x005ea93b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005eaa00  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005eaa80  // __stdcall, returns int
 
-    TClassFactory_class_ScriptClass();  // 0x005ea900
+    TClassFactory_class_ScriptClass();  // 0x005ea918
     virtual ~TClassFactory_class_ScriptClass();
 
     // ---- data members (offsets from ctor 0x005ea921) ----

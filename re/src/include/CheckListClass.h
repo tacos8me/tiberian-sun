@@ -4,7 +4,7 @@
 //
 // RTTI class   : class CheckListClass
 // vtable       : 0x0069aeb8  (50 slots)
-// constructor  : 0x0045ab0c
+// constructor  : 0x0045ab54
 // vtable store : 0x0045ac0b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -69,7 +69,7 @@ public:
     virtual void vfunc_48(int a0);  // [48] 0x004f7340  // __thiscall
     virtual void vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [49] 0x0045ae70  // __thiscall
 
-    CheckListClass();  // 0x0045ab0c
+    CheckListClass();  // 0x0045ab54
     virtual ~CheckListClass();
 
     // ---- data members (offsets from ctor 0x0045abc7) ----

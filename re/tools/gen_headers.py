@@ -90,7 +90,18 @@ def main():
     mn_path = os.path.join(outdir, "member_names.json")
     member_names = json.load(open(mn_path)) if os.path.exists(mn_path) else {}
     vn_path = os.path.join(outdir, "virtual_names.json")
-    virtual_names = json.load(open(vn_path)) if os.path.exists(vn_path) else {}
+    # Fail loudly rather than silently defaulting to {}. The silent default is
+    # exactly what hid the fact that no pipeline stage produced this file: a
+    # clean regeneration emitted vfunc_N for all 1,213 recoverable names and
+    # nothing complained.
+    if not os.path.exists(vn_path):
+        sys.stderr.write(
+            "ERROR: %s is missing.\n"
+            "       It is produced by tools/name_virtuals.py (pipeline stage "
+            "8b).\n"
+            "       Refusing to emit headers with no virtual names.\n" % vn_path)
+        sys.exit(1)
+    virtual_names = json.load(open(vn_path))
     sg_path = os.path.join(outdir, "signatures.json")
     signatures = json.load(open(sg_path)) if os.path.exists(sg_path) else {}
 

@@ -4,7 +4,7 @@
 //
 // RTTI class   : class MSFadeAnim
 // vtable       : 0x006a24a8  (6 slots)
-// constructor  : 0x00557ffc
+// constructor  : 0x005580d4
 // vtable store : 0x00558110  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_4(int a0);  // [4] 0x00558120  // __thiscall
     virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5);  // [5] 0x00558500  // __thiscall
 
-    MSFadeAnim();  // 0x00557ffc
+    MSFadeAnim();  // 0x005580d4
     virtual ~MSFadeAnim();
 
     // ---- data members (offsets from ctor 0x005580d4) ----

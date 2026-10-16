@@ -4,7 +4,7 @@
 //
 // RTTI class   : class LinkClass
 // vtable       : 0x0069e7cc  (10 slots)
-// constructor  : 0x004a5960
+// constructor  : 0x004a59af
 // vtable store : 0x004a59c0  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -29,7 +29,7 @@ public:
     virtual void vfunc_8();  // [8] 0x004f6930  // __cdecl, returns int
     virtual void vfunc_9();  // [9] 0x004f6a50  // __thiscall, returns int
 
-    LinkClass();  // 0x004a5960
+    LinkClass();  // 0x004a59af
     virtual ~LinkClass();
 
     // ---- data members (offsets from ctor 0x004a59af) ----

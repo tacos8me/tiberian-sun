@@ -4,7 +4,7 @@
 //
 // RTTI class   : class MSOverlayAnim
 // vtable       : 0x006a24c4  (6 slots)
-// constructor  : 0x0055860b
+// constructor  : 0x0055865d
 // vtable store : 0x0055868d  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_4(int a0, int a1, int a2);  // [4] 0x005586a0  // __thiscall
     virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5);  // [5] 0x005588d0  // __thiscall
 
-    MSOverlayAnim();  // 0x0055860b
+    MSOverlayAnim();  // 0x0055865d
     virtual ~MSOverlayAnim();
 
     // ---- data members (offsets from ctor 0x0055865d) ----

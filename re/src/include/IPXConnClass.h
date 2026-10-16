@@ -4,7 +4,7 @@
 //
 // RTTI class   : class IPXConnClass
 // vtable       : 0x006a0abc  (10 slots)
-// constructor  : 0x004e6d90
+// constructor  : 0x004e6e2a
 // vtable store : 0x004e6e8f  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -29,7 +29,7 @@ public:
     virtual void vfunc_8();  // [8] 0x0045f030  // __thiscall, returns int
     virtual void vfunc_9(int a0, int a1, int a2, int a3, int a4, int a5);  // [9] 0x004e7000
 
-    IPXConnClass();  // 0x004e6d90
+    IPXConnClass();  // 0x004e6e2a
     virtual ~IPXConnClass();
 
     // ---- data members (offsets from ctor 0x004e6e47) ----

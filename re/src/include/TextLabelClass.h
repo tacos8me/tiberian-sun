@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TextLabelClass
 // vtable       : 0x006a65f4  (32 slots)
-// constructor  : 0x00630890
+// constructor  : 0x006308ae
 // vtable store : 0x00630918  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -52,7 +52,7 @@ public:
     virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
     virtual void vfunc_31(int a0);  // [31] 0x00630a10  // __stdcall
 
-    TextLabelClass();  // 0x00630890
+    TextLabelClass();  // 0x006308ae
     virtual ~TextLabelClass();
 
     // ---- data members (offsets from ctor 0x006308c7) ----

@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class IsometricTileTypeClass>
 // vtable       : 0x006a4bc8  (5 slots)
-// constructor  : 0x005ebb00
+// constructor  : 0x005ebb18
 // vtable store : 0x005ebb3b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ebc00  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ebc80  // __stdcall, returns int
 
-    TClassFactory_class_IsometricTileTypeClass();  // 0x005ebb00
+    TClassFactory_class_IsometricTileTypeClass();  // 0x005ebb18
     virtual ~TClassFactory_class_IsometricTileTypeClass();
 
     // ---- data members (offsets from ctor 0x005ebb21) ----

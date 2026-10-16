@@ -5,6 +5,13 @@ was verified, and what "done" means. Ordered by (value × certainty) ÷ risk.
 
 Status legend: `[ ]` open · `[~]` in progress · `[x]` done.
 
+**Latest push (e2e planning council + execution).** The verification gate is now
+fail-closed and seven checks deep; disassembly coverage went 49.2% -> 63.7% of
+`.text` (12,784 -> 23,129 functions) via a gap-recovery pass over already-recorded
+branch targets; and `name_virtuals.py` is wired into the pipeline so the 1,213
+recoverable virtual names survive a clean checkout (named virtuals 903 -> 1,610).
+Everything below is re-measured against the current tree.
+
 ---
 
 ## P0 — correctness of the gate and the tools
@@ -31,7 +38,7 @@ vtable VA and per-slot target addresses against the manifest and fails on
 mismatch. Verified by mutation: a fabricated vtable VA and a fabricated slot VA
 are both caught with precise diagnostics.
 
-### [ ] Correct the "constructor" citations in generated headers
+### [x] Correct the "constructor" citations in generated headers
 **This is the most serious evidence defect found.** `gen_manifest.py` records
 the address of the *vtable-store immediate* (`c7 00 <vtable>`), not the
 enclosing function start, and the header banner labels it `// constructor`.
@@ -56,7 +63,7 @@ results, and only let a header claim a name it actually *defines* (not merely
 forward-declares — `LocomotionClass.h:27` is `class TechnoClass;` yet wins
 ownership of that name).
 
-### [ ] Resolve the orphaned `out/virtual_names.json`
+### [x] Resolve the orphaned `out/virtual_names.json`
 `gen_headers.py` reads it; `name_virtuals.py` writes it; **no pipeline stage
 invokes `name_virtuals.py`**, and the file is untracked and absent from a fresh
 clone. Consequence: every generated header has zero recovered virtual names on a
@@ -117,16 +124,16 @@ function set and are cheap to regenerate — but every boundary bug left in
 
 ## P3 — verification and validation
 
-### [ ] Extend check 5 to inheritance and member offsets
+### [x] Extend check 5 to inheritance and member offsets
 Check 5 currently validates vtable VA and slot targets only. Add: emitted base
 clauses vs `out/direct_bases.json`, and emitted member offsets vs
 `out/members.json`.
 
-### [ ] Make skipped checks fail instead of silently passing
+### [x] Make skipped checks fail instead of silently passing
 With `out/` absent, checks 3 and 4 skip via `os.path.exists` guards and the tool
 still prints `VERIFICATION PASSED` after running only 2 of 5 checks.
 
-### [ ] Replace the `man[:200]` prefix sample with all 749 entries
+### [x] Replace the `man[:200]` prefix sample with all 749 entries
 Check 4 validates an ordered alphabetical prefix of the manifest (26.7%).
 `TechnoClass`, `ObjectClass`, `UnitClass`, `InfantryClass`, `HouseClass` and
 `RulesClass` are all outside it.

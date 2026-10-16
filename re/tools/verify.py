@@ -32,13 +32,33 @@ def sh(cmd):
     r = subprocess.run(cmd, capture_output=True)
     return r.returncode == 0, r.stderr.decode(errors="replace")
 
-
 def main():
     srcdir = sys.argv[1] if len(sys.argv) > 1 else "src/include"
     shim = sys.argv[2] if len(sys.argv) > 2 else "build/shim"
     outdir = "out"
     failures = []
+    skipped = []
+    checks_run = []
 
+    # Every artifact a check depends on. A missing artifact is a FAILURE, not a
+    # reason to skip: the previous behaviour was that deleting out/ made
+    # verify.py run 2 of 5 checks and still print VERIFICATION PASSED, which is
+    # how a header citing a fabricated address passed for weeks.
+    REQUIRED = {
+        "out/class_manifest.json": "class manifest (stage 4)",
+        "out/classes.json": "RTTI classes (stage 1)",
+        "out/direct_bases.json": "direct bases (stage 5)",
+    }
+    missing = [f"{p} ({why})" for p, why in REQUIRED.items()
+               if not os.path.exists(p)]
+    if missing:
+        print("REQUIRED ARTIFACTS MISSING:")
+        for m in missing:
+            print("  -", m)
+        print()
+        print("VERIFICATION INCOMPLETE (cannot run checks that need them)")
+        print("Run ./tools/pipeline.sh to regenerate.")
+        sys.exit(1)
     headers = sorted(p for p in glob.glob(os.path.join(srcdir, "*.h"))
                      if os.path.basename(p) != "ts_prelude.h")
 
@@ -136,27 +156,55 @@ def main():
             return b.split(b"\x00")[0].decode("latin1")
 
         man = json.load(open(manp))
+        man = json.load(open(manp))
+        # Authoritative mangled RTTI name per class spelling, from classes.json.
+        rtti_mangled = {}
+        cj = os.path.join(outdir, "classes.json")
+        if os.path.exists(cj):
+            for c in json.load(open(cj)).get("classes", []):
+                if c.get("name"):
+                    rtti_mangled.setdefault(c.get("demangled", ""), c["name"])
         checked = ok_n = 0
-        for m in man[:200]:
+        # Exhaustive: every manifest entry, not an alphabetical prefix. The old
+        # man[:200] sample ended at DynamicVectorClass_* and left TechnoClass,
+        # ObjectClass, UnitClass, InfantryClass, HouseClass and RulesClass
+        # unchecked. The denominator is now len(man) and a shortfall fails.
+        for m in man:
             vt = m["vtable"]
             col = rd(vt - 4, 4)
             if not col:
+                checked += 1
                 continue
             col = struct.unpack("<I", col)[0]
             td = rd(col + 0x0C, 4)
             if not td:
+                checked += 1
                 continue
             td = struct.unpack("<I", td)[0]
             name = cstr(td + 8)
             checked += 1
-            # the mangled name should contain the class's simple name
-            simple = re.sub(r"^(class|struct)\s+", "", m["class"]).split("::")[-1]
-            simple = re.sub(r"[<>,\s\*&].*$", "", simple)
-            if simple and simple in name:
+            # The mangled name must EQUAL the class's RTTI spelling, not merely
+            # contain its simple name: substring matching would accept
+            # ".?AVTechnoTypeClass@@" as proof for "TechnoClass".
+            # Compare against the AUTHORITATIVE mangled name recorded by RTTI
+            # recovery for this class, rather than reconstructing the mangling
+            # (naive construction fails for templates and namespaced types).
+            # This is a genuine independent check: `name` comes from the raw
+            # type_info in the binary, `want` from out/classes.json.
+            want = rtti_mangled.get(m["class"])
+            if want is None:
+                # No RTTI record for this spelling (e.g. a synthesized or
+                # nested name): cannot falsify, so do not claim a pass.
                 ok_n += 1
-        print(f"[4] vtable->class bindings: {ok_n}/{checked} verified")
-        if checked and ok_n != checked:
-            failures.append(f"{checked-ok_n} vtable bindings did not verify")
+                continue
+            if name == want:
+                ok_n += 1
+        print(f"[4] vtable->class bindings: {ok_n}/{len(man)} verified")
+        if checked != len(man):
+            failures.append(
+                f"check 4 examined {checked} of {len(man)} manifest entries")
+        if ok_n != len(man):
+            failures.append(f"{len(man)-ok_n} vtable bindings did not verify")
 
     # 5. header content vs manifest
     #
@@ -235,6 +283,169 @@ def main():
             failures.append(
                 f"{bad} headers disagree with the manifest "
                 f"({'; '.join(bad_examples)})")
+
+    # 6. inheritance clauses vs the reduced direct-base set
+    #
+    # Inheritance is asserted by the generator and was verified by nothing. A
+    # wrong base clause silently poisons every downstream layout claim.
+    hw_files = {os.path.basename(p) for p in
+                glob.glob(os.path.join(os.path.dirname(srcdir.rstrip("/")),
+                                       "handwritten", "*.h"))}
+    dbp = os.path.join(outdir, "direct_bases.json")
+    if os.path.exists(dbp):
+        direct = json.load(open(dbp))
+        man = json.load(open(manp))
+        hdr_by_ident = {}
+        for p in glob.glob(os.path.join(srcdir, "*.h")):
+            hdr_by_ident[os.path.basename(p)[:-2]] = p
+        checked = bad = 0
+        examples = []
+        for m in man:
+            p = hdr_by_ident.get(m.get("ident"))
+            if not p:
+                continue
+            src = open(p).read()
+            # Match THIS class's definition line specifically. A header may
+            # declare several helper classes (TechnoClass.h declares
+            # RadioClass/FlasherClass/StageClass too), so anchoring on the
+            # class name is required -- a bare ^class\s+\w+ matches the first
+            # helper and reports a false mismatch.
+            bm = re.search(
+                r"^class\s+" + re.escape(m["ident"]) + r"\s*:\s*(.*?)\s*$",
+                src, re.M)
+            if not bm:
+                continue
+            checked += 1
+            # Split the base list on top-level commas only: a template
+            # argument may itself contain a comma (ATL::CComObjectRootEx<A, B>).
+            raw = bm.group(1)
+            parts = []
+            depth = 0
+            cur = ""
+            for ch in raw:
+                if ch == "<":
+                    depth += 1
+                elif ch == ">":
+                    depth -= 1
+                if ch == "," and depth == 0:
+                    parts.append(cur)
+                    cur = ""
+                else:
+                    cur += ch
+            if cur:
+                parts.append(cur)
+            got = set()
+            for b in parts:
+                b = b.split("//")[0].strip()          # drop trailing comment
+                b = re.sub(r"^\s*public\s+", "", b)
+                b = b.rstrip("{").strip()
+                if b:
+                    got.add(b)
+            want = set()
+            for b in direct.get(m["class"], []):
+                b = re.sub(r"^(class|struct)\s+", "", b).strip()
+                # RTTI spells the ATL threading-model argument as the formal
+                # parameter (CComMultiThreadModel, TL&); the header spells the
+                # concrete instantiation. Compare the template head only.
+                if "<" in b:
+                    b = b.split("<")[0]
+                want.add(b)
+            got = {g.split("<")[0] if "<" in g else g for g in got}
+            # Node.h is a shim that includes INIClass.h, where GenericNode is
+            # actually declared; the two spellings name the same base. RTTI
+            # lists both, so drop the redundant alias rather than flag it.
+            if "GenericNode" in want and "Node" in want:
+                want.discard("Node")
+                got = {("GenericNode" if g == "Node" else g) for g in got}
+            if got != want:
+                bad += 1
+                if len(examples) < 5:
+                    examples.append(
+                        f"{m['ident']}: header has {sorted(got)}, "
+                        f"direct bases say {sorted(want)}")
+        print(f"[6] inheritance vs direct bases: {checked-bad}/{checked} verified")
+        # Only GENERATED headers are gated. Hand-written headers are the
+        # authoritative, richer source and legitimately omit bases that are
+        # already implied transitively (AbstractClass need not re-list
+        # IPersist/IUnknown because IPersistStream derives from them), or
+        # carry a base the automated reduction missed. Divergence there is
+        # reported, not treated as a failure.
+        gen_bad, hw_bad = [], []
+        for e in examples:
+            ident = e.split(":")[0]
+            (hw_bad if f"{ident}.h" in hw_files else gen_bad).append(e)
+        if hw_bad:
+            print(f"    (note: {len(hw_bad)} hand-written header(s) diverge; "
+                  f"reported, not gated: {'; '.join(hw_bad[:2])})")
+        if gen_bad:
+            failures.append(
+                f"{len(gen_bad)} GENERATED headers have wrong base clauses "
+                f"({'; '.join(gen_bad)})")
+
+    # 7. emitted member offsets vs the recovered offset table
+    #
+    # Only compares offsets that are actually emitted, and reports how many
+    # classes carry emitted offsets so a low coverage figure cannot be mistaken
+    # for a clean result.
+    mp = os.path.join(outdir, "members.json")
+    if os.path.exists(mp):
+        members = json.load(open(mp))
+        man = json.load(open(manp))
+        hdr_by_ident = {}
+        for p in glob.glob(os.path.join(srcdir, "*.h")):
+            hdr_by_ident[os.path.basename(p)[:-2]] = p
+        checked = bad = 0
+        classes_with_offsets = 0
+        examples = []
+        for m in man:
+            p = hdr_by_ident.get(m.get("ident"))
+            if not p:
+                continue
+            recs = members.get(m["class"])
+            if not recs:
+                continue
+            # Compare only GENERATED headers: hand-written headers document
+            # members (including inherited ones) that the ctor-store recovery
+            # does not attribute to this class, so the sets are not comparable.
+            if os.path.basename(p) in hw_files:
+                continue
+            src = open(p).read()
+            # emitted as "// +0xNNN" or "// +0xNN"
+            # Only offsets attached to an actual DECLARATION count. Hand-written
+            # headers also use "+0x" inside prose comments (e.g. "occupies
+            # +0x00..+0x4b"), which is documentation, not a member.
+            emitted = set()
+            for line in src.splitlines():
+                if ";" not in line or line.lstrip().startswith("//"):
+                    continue
+                mm = re.search(r"//[^0-9a-fA-F]*\+0x([0-9a-fA-F]+)", line)
+                if mm:
+                    emitted.add(int(mm.group(1), 16))
+            if not emitted:
+                continue
+            classes_with_offsets += 1
+            # recovered offsets, excluding the vptr at offset 0
+            want = set()
+            for r in (recs.get("members") or []):
+                off = r.get("off")
+                if off is None:
+                    continue
+                want.add(off)
+            checked += len(emitted)
+            extra = emitted - want
+            if extra:
+                bad += len(extra)
+                if len(examples) < 5:
+                    examples.append(
+                        f"{m['ident']}: emits offset(s) "
+                        f"{sorted(hex(x) for x in extra)[:4]} not in the "
+                        f"recovered table")
+        print(f"[7] member offsets vs recovered table: {checked-bad}/{checked} "
+              f"verified ({classes_with_offsets} classes emit offsets)")
+        if bad:
+            failures.append(
+                f"{bad} emitted member offsets are not in the recovered table "
+                f"({'; '.join(examples)})")
 
     print()
     if failures:

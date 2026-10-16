@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class TEventClass>
 // vtable       : 0x006a4a18  (5 slots)
-// constructor  : 0x005ea000
+// constructor  : 0x005ea018
 // vtable store : 0x005ea03b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ea100  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ea180  // __stdcall, returns int
 
-    TClassFactory_class_TEventClass();  // 0x005ea000
+    TClassFactory_class_TEventClass();  // 0x005ea018
     virtual ~TClassFactory_class_TEventClass();
 
     // ---- data members (offsets from ctor 0x005ea021) ----

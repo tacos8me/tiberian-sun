@@ -4,7 +4,7 @@
 //
 // RTTI class   : class LayerClass
 // vtable       : 0x0069ba60  (9 slots)
-// constructor  : 0x00472000
+// constructor  : 0x00472040
 // vtable store : 0x004722d3  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -29,7 +29,7 @@ public:
     virtual void vfunc_7();  // [7] 0x00402480  // __cdecl
     virtual void vfunc_8();  // [8] 0x00402490  // __cdecl
 
-    LayerClass();  // 0x00472000
+    LayerClass();  // 0x00472040
     virtual ~LayerClass();
 
     // ---- data members (offsets from ctor 0x00472292) ----

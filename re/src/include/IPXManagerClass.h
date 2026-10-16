@@ -4,7 +4,7 @@
 //
 // RTTI class   : class IPXManagerClass
 // vtable       : 0x006a0b34  (17 slots)
-// constructor  : 0x004e7a40
+// constructor  : 0x004e7aa6
 // vtable store : 0x004e7d09  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -37,7 +37,7 @@ public:
     virtual void vfunc_15(int a0, int a1, int a2, int a3, int a4, int a5);  // [15] 0x004e8a50  // __stdcall
     virtual void vfunc_16(int a0, int a1);  // [16] 0x004e8ab0  // __stdcall
 
-    IPXManagerClass();  // 0x004e7a40
+    IPXManagerClass();  // 0x004e7aa6
     virtual ~IPXManagerClass();
 
     // ---- data members (offsets from ctor 0x004e7cf7) ----

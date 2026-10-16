@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class WeaponTypeClass>
 // vtable       : 0x006a4df0  (5 slots)
-// constructor  : 0x005edd80
+// constructor  : 0x005edd98
 // vtable store : 0x005eddbb  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ede80  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005edf00  // __stdcall, returns int
 
-    TClassFactory_class_WeaponTypeClass();  // 0x005edd80
+    TClassFactory_class_WeaponTypeClass();  // 0x005edd98
     virtual ~TClassFactory_class_WeaponTypeClass();
 
     // ---- data members (offsets from ctor 0x005edda1) ----

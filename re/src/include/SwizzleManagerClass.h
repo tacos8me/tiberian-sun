@@ -4,7 +4,7 @@
 //
 // RTTI class   : class SwizzleManagerClass
 // vtable       : 0x006a5090  (10 slots)
-// constructor  : 0x005f3490
+// constructor  : 0x005f3508
 // vtable store : 0x005f356e  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -29,7 +29,7 @@ public:
     virtual void vfunc_8(int a0, int a1, int a2, int a3);  // [8] 0x005f3980  // __stdcall, returns int
     virtual void vfunc_9(int a0, int a1);  // [9] 0x005f38b0  // __stdcall, returns int
 
-    SwizzleManagerClass();  // 0x005f3490
+    SwizzleManagerClass();  // 0x005f3508
     virtual ~SwizzleManagerClass();
 
     // ---- data members (offsets from ctor 0x005f3615) ----

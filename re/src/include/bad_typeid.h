@@ -4,7 +4,7 @@
 //
 // RTTI class   : class bad_typeid
 // vtable       : 0x006a7d4c  (2 slots)
-// constructor  : 0x00682f67
+// constructor  : 0x00682f6c
 // vtable store : 0x00682f92  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -22,6 +22,6 @@ public:
     virtual void vfunc_0(int a0);  // [0] 0x00682f9c  // __thiscall
     virtual void vfunc_1();  // [1] 0x006878ac  // __cdecl, returns int
 
-    bad_typeid();  // 0x00682f67
+    bad_typeid();  // 0x00682f6c
     virtual ~bad_typeid();
 };

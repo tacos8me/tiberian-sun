@@ -82,48 +82,48 @@ public:
     virtual void vfunc_61(int a0, int a1);  // [61] 0x00416840  // __stdcall
     virtual void vfunc_62(int a0, int a1);  // [62] 0x00416850  // __stdcall
     virtual void vfunc_63(int a0, int a1);  // [63] 0x0058d250  // __thiscall
-    virtual void vfunc_64();  // [64] 0x00570990
-    virtual void vfunc_65();  // [65] 0x0056ec20
-    virtual void vfunc_66();  // [66] 0x0056ec30
+    virtual void vfunc_64(int a0, int a1);  // [64] 0x00570990  // __stdcall
+    virtual void vfunc_65();  // [65] 0x0056ec20  // __cdecl
+    virtual void vfunc_66(int a0, int a1);  // [66] 0x0056ec30  // __stdcall
     virtual void vfunc_67(int a0);  // [67] 0x0058d9f0  // __stdcall
     virtual void vfunc_68(int a0);  // [68] 0x0056f000  // __thiscall
     virtual void vfunc_69(int a0);  // [69] 0x0056f160  // __thiscall
-    virtual void vfunc_70();  // [70] 0x0040e690
-    virtual void vfunc_71();  // [71] 0x0056f680
-    virtual void vfunc_72();  // [72] 0x0056ec50
-    virtual void vfunc_73();  // [73] 0x0056ec40
-    virtual void vfunc_74();  // [74] 0x0056ec60
+    virtual void vfunc_70();  // [70] 0x0040e690  // __cdecl
+    virtual void vfunc_71();  // [71] 0x0056f680  // __cdecl
+    virtual void vfunc_72(int a0, int a1, int a2);  // [72] 0x0056ec50  // __stdcall
+    virtual void vfunc_73(int a0, int a1, int a2);  // [73] 0x0056ec40  // __stdcall
+    virtual void vfunc_74(int a0);  // [74] 0x0056ec60  // __stdcall
     virtual void vfunc_75();  // [75] 0x0056ee20  // __thiscall
     virtual void vfunc_76(int a0);  // [76] 0x0056eda0  // __thiscall
-    virtual void vfunc_77();  // [77] 0x0056ec70
-    virtual void vfunc_78();  // [78] 0x0056ec80
+    virtual void vfunc_77(int a0, int a1);  // [77] 0x0056ec70  // __stdcall
+    virtual void vfunc_78(int a0);  // [78] 0x0056ec80  // __stdcall, returns int
     virtual void vfunc_79(int a0, int a1, int a2, int a3, int a4, int a5);  // [79] 0x0056fbe0  // __thiscall, returns int
-    virtual void vfunc_80();  // [80] 0x0056ec90
-    virtual void vfunc_81();  // [81] 0x0056eca0
-    virtual void vfunc_82();  // [82] 0x0056ecb0
-    virtual void vfunc_83();  // [83] 0x0056ecc0
-    virtual void vfunc_84();  // [84] 0x0056ecd0
-    virtual void vfunc_85();  // [85] 0x00416860
-    virtual void vfunc_86();  // [86] 0x00416870
-    virtual void vfunc_87();  // [87] 0x00570240
+    virtual void vfunc_80(int a0, int a1, int a2);  // [80] 0x0056ec90  // __stdcall
+    virtual void vfunc_81();  // [81] 0x0056eca0  // __cdecl
+    virtual void vfunc_82();  // [82] 0x0056ecb0  // __cdecl
+    virtual void vfunc_83();  // [83] 0x0056ecc0  // __cdecl, returns int
+    virtual void vfunc_84();  // [84] 0x0056ecd0  // __cdecl
+    virtual void vfunc_85(int a0);  // [85] 0x00416860  // __stdcall
+    virtual void vfunc_86(int a0);  // [86] 0x00416870  // __stdcall
+    virtual void vfunc_87(int a0, int a1);  // [87] 0x00570240  // __thiscall
     virtual void vfunc_88(int a0, int a1, int a2);  // [88] 0x0056fbc0  // __stdcall, returns int
     virtual void vfunc_89(int a0);  // [89] 0x005700b0  // __stdcall, returns int
-    virtual void vfunc_90();  // [90] 0x0056ece0
-    virtual void vfunc_91();  // [91] 0x0056ecf0
-    virtual void vfunc_92();  // [92] 0x00570e70
+    virtual void vfunc_90(int a0);  // [90] 0x0056ece0  // __stdcall
+    virtual void vfunc_91(int a0);  // [91] 0x0056ecf0  // __stdcall
+    virtual void vfunc_92(int a0, int a1);  // [92] 0x00570e70  // __stdcall
     virtual void vfunc_93(int a0);  // [93] 0x0056ed00  // __thiscall
-    virtual void vfunc_94();  // [94] 0x00416880
-    virtual void vfunc_95();  // [95] 0x00416890
+    virtual void vfunc_94(int a0, int a1, int a2, int a3, int a4);  // [94] 0x00416880  // __stdcall, returns int
+    virtual void vfunc_95(int a0, int a1, int a2, int a3, int a4);  // [95] 0x00416890  // __stdcall, returns int
     virtual void vfunc_96(int a0);  // [96] 0x0040e6a0  // __stdcall
     virtual void vfunc_97(int a0);  // [97] 0x00570cc0  // __stdcall
-    virtual void vfunc_98();  // [98] 0x0040e6c0
-    virtual void vfunc_99();  // [99] 0x00570ce0
+    virtual void vfunc_98(int a0);  // [98] 0x0040e6c0  // __stdcall
+    virtual void vfunc_99();  // [99] 0x00570ce0  // __cdecl
     virtual void vfunc_100(int a0);  // [100] 0x00570d00  // __stdcall
     virtual void vfunc_101(int a0);  // [101] 0x00570d50  // __cdecl
     virtual void vfunc_102();  // [102] 0x00570370  // __thiscall
     virtual void vfunc_103(int a0);  // [103] 0x005703b0  // __thiscall
-    virtual void vfunc_104();  // [104] 0x00570360
-    virtual void vfunc_105();  // [105] 0x0058db20
+    virtual void vfunc_104();  // [104] 0x00570360  // __cdecl
+    virtual void vfunc_105(int a0);  // [105] 0x0058db20  // __thiscall
 
     ParticleClass();  // 0x0058ba30
     virtual ~ParticleClass();

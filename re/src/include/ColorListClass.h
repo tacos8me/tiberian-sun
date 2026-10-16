@@ -4,7 +4,7 @@
 //
 // RTTI class   : class ColorListClass
 // vtable       : 0x0069af84  (53 slots)
-// constructor  : 0x0045b040
+// constructor  : 0x0045b093
 // vtable store : 0x0045b139  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -72,7 +72,7 @@ public:
     virtual void vfunc_51(int a0, int a1);  // [51] 0x0045b1b0  // __thiscall
     virtual void vfunc_52(int a0, int a1);  // [52] 0x0045b320  // __stdcall
 
-    ColorListClass();  // 0x0045b040
+    ColorListClass();  // 0x0045b093
     virtual ~ColorListClass();
 
     // ---- data members (offsets from ctor 0x0045b0b7) ----

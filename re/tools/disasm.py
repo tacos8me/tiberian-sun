@@ -14,6 +14,7 @@ Strategy:
 
 This is the substrate for source reconstruction.
 """
+import bisect
 import json
 import os
 import struct
@@ -68,6 +69,12 @@ class Binary:
     def in_text(self, va):
         t = self.text
         return t["va"] <= va < t["va"] + t["vsize"]
+
+    def in_rdata(self, va):
+        for s in self.sections:
+            if s["name"] == ".rdata":
+                return s["va"] <= va < s["va"] + s["vsize"]
+        return False
 
     def va_of(self, file_off):
         for s in self.sections:
@@ -180,12 +187,21 @@ def main():
             # pointer into .data). Breaking on the first one truncated the
             # scan for 821 of 843 vtables, which is why TechnoClass was left
             # with 146 of 214 slots unseeded.
-            for k in range(0, 256, 4):
+            # Walk the vtable until we leave .rdata/.text. The previous bound of
+            # 256 bytes (64 slots) truncated every class with more than 64
+            # virtuals -- 21 classes, 1,678 slots, and 927 manifest slots
+            # overall ended up with no function record.
+            for k in range(0, 16384, 4):
                 p = bin_.u32(va + k)
                 if p is None:
                     break
                 if bin_.in_text(p):
                     seeds.add(p)
+                elif not bin_.in_rdata(p):
+                    # past the end of this vtable: a code pointer followed by
+                    # data means we have run off the table
+                    if k > 0:
+                        break
     print(f"seeds after vtables: {len(seeds)}")
 
     # --- Disassemble
@@ -251,6 +267,94 @@ def main():
         }
         for c in callees:
             call_edges[start].add(c)
+
+    # --- Gap recovery pass
+    #
+    # The worklist above only follows direct call/jmp targets, so it terminates
+    # with 1,283 KB of .text still unattributed. That residue is real code: only
+    # ~5% of it is int3/nop padding. Two evidence-backed sources are added here,
+    # neither of which invents anything:
+    #   1. recorded branch/call targets that land outside every recovered
+    #      function (measured: 9,321 such targets)
+    #   2. the start of each remaining gap, disassembled and split at
+    #      ret/int3 boundaries
+    def covered(va, ivs, los):
+        i = bisect.bisect_right(los, va) - 1
+        return i >= 0 and ivs[i][0] <= va < ivs[i][1]
+
+    def intervals():
+        iv = sorted((f["va"], f["va"] + f["size"]) for f in funcs.values())
+        merged = []
+        for a, b in iv:
+            if merged and a <= merged[-1][1]:
+                merged[-1][1] = max(merged[-1][1], b)
+            else:
+                merged.append([a, b])
+        return merged, [x[0] for x in merged]
+
+    before = len(funcs)
+    ivs, los = intervals()
+
+    # 1. branch targets already recorded in recovered bodies
+    extra = set()
+    for f in funcs.values():
+        for ins in f["insns"]:
+            if ins["mnem"].startswith("j") or ins["mnem"] == "call":
+                try:
+                    t = int(ins["op"], 16)
+                except ValueError:
+                    continue
+                if bin_.in_text(t) and not covered(t, ivs, los):
+                    extra.add(t)
+    # 2. gap starts
+    text_end = text_va + bin_.text["vsize"]
+    gaps = []
+    prev = text_va
+    for a, b in ivs:
+        if a > prev:
+            gaps.append((prev, a))
+        prev = max(prev, b)
+    if prev < text_end:
+        gaps.append((prev, text_end))
+    for a, b in gaps:
+        if b - a >= 16:
+            extra.add(a)
+
+    added = 0
+    known = set(funcs) | set(extra)
+    for start in sorted(extra):
+        if start in funcs or not bin_.in_text(start):
+            continue
+        off = start - text_va
+        code = text_blob[off:off + 0x4000]
+        insns = []
+        callees = set()
+        end = start
+        for ins in md.disasm(code, start):
+            # Stop at the next known entry point, so a gap body can never
+            # swallow a real function that was seeded by a vtable or a call.
+            if ins.address != start and ins.address in known:
+                break
+            insns.append({"va": ins.address, "mnem": ins.mnemonic,
+                          "op": ins.op_str, "bytes": ins.bytes.hex()})
+            end = ins.address + ins.size
+            if ins.mnemonic in ("call", "jmp") and ins.operands:
+                op = ins.operands[0]
+                if op.type == capstone.x86.X86_OP_IMM and bin_.in_text(op.imm):
+                    callees.add(op.imm)
+            if ins.mnemonic in ("ret", "retn", "int3", "jmp"):
+                break
+            if len(insns) > 20000:
+                break
+        if not insns:
+            continue
+        funcs[start] = {
+            "va": start, "end": end, "size": end - start,
+            "ninsn": len(insns), "callees": sorted(callees), "insns": insns,
+        }
+        added += 1
+    print(f"gap recovery: +{added} functions "
+          f"({before} -> {len(funcs)}); {len(gaps)} gaps considered")
 
     print(f"functions recovered: {len(funcs)}")
 

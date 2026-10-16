@@ -4,7 +4,7 @@
 //
 // RTTI class   : class ListClass
 // vtable       : 0x006a1654  (50 slots)
-// constructor  : 0x004f6a50
+// constructor  : 0x004f6a9e
 // vtable store : 0x004f6b99  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -69,7 +69,7 @@ public:
     virtual void vfunc_48(int a0);  // [48] 0x004f7340  // __thiscall
     virtual void vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5);  // [49] 0x004f75f0  // __thiscall
 
-    ListClass();  // 0x004f6a50
+    ListClass();  // 0x004f6a9e
     virtual ~ListClass();
 
     // ---- data members (offsets from ctor 0x004f6ac7) ----

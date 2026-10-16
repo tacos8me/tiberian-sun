@@ -4,7 +4,7 @@
 //
 // RTTI class   : class VersionClass
 // vtable       : 0x0069f81c  (1 slots)
-// constructor  : 0x004a76e0
+// constructor  : 0x004a771b
 // vtable store : 0x004a9156  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -19,7 +19,7 @@ class VersionClass
 public:
     // ---- vtable 0x0069f81c (1 slots) ----
 
-    VersionClass();  // 0x004a76e0
+    VersionClass();  // 0x004a771b
     virtual ~VersionClass();
 
     // ---- data members (offsets from ctor 0x004a9485) ----

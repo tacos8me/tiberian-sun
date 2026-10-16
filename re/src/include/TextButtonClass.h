@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TextButtonClass
 // vtable       : 0x006a612c  (37 slots)
-// constructor  : 0x00626c90
+// constructor  : 0x00626cd9
 // vtable store : 0x00626d47  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -57,7 +57,7 @@ public:
     virtual void vfunc_35(int a0, int a1);  // [35] 0x00626f30  // __thiscall
     virtual void vfunc_36();  // [36] 0x00627000  // __thiscall
 
-    TextButtonClass();  // 0x00626c90
+    TextButtonClass();  // 0x00626cd9
     virtual ~TextButtonClass();
 
     // ---- data members (offsets from ctor 0x00626cf7) ----

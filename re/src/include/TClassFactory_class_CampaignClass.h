@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class CampaignClass>
 // vtable       : 0x006a49d0  (5 slots)
-// constructor  : 0x005e9b80
+// constructor  : 0x005e9b98
 // vtable store : 0x005e9bbb  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005e9c80  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005e9d00  // __stdcall, returns int
 
-    TClassFactory_class_CampaignClass();  // 0x005e9b80
+    TClassFactory_class_CampaignClass();  // 0x005e9b98
     virtual ~TClassFactory_class_CampaignClass();
 
     // ---- data members (offsets from ctor 0x005e9ba1) ----

@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class ParticleSystemClass>
 // vtable       : 0x006a4e38  (5 slots)
-// constructor  : 0x005ee200
+// constructor  : 0x005ee218
 // vtable store : 0x005ee23b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ee300  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ee380  // __stdcall, returns int
 
-    TClassFactory_class_ParticleSystemClass();  // 0x005ee200
+    TClassFactory_class_ParticleSystemClass();  // 0x005ee218
     virtual ~TClassFactory_class_ParticleSystemClass();
 
     // ---- data members (offsets from ctor 0x005ee221) ----

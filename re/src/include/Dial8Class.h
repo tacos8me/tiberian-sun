@@ -4,7 +4,7 @@
 //
 // RTTI class   : class Dial8Class
 // vtable       : 0x0069b99c  (32 slots)
-// constructor  : 0x00470710
+// constructor  : 0x00470736
 // vtable store : 0x0047078c  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -52,7 +52,7 @@ public:
     virtual void vfunc_30(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
     virtual void vfunc_31(int a0);  // [31] 0x00460600  // __stdcall
 
-    Dial8Class();  // 0x00470710
+    Dial8Class();  // 0x00470736
     virtual ~Dial8Class();
 
     // ---- data members (offsets from ctor 0x00470757) ----

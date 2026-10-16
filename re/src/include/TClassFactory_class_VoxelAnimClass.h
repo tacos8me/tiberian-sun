@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class VoxelAnimClass>
 // vtable       : 0x006a4a48  (5 slots)
-// constructor  : 0x005ea300
+// constructor  : 0x005ea318
 // vtable store : 0x005ea33b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ea400  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ea480  // __stdcall, returns int
 
-    TClassFactory_class_VoxelAnimClass();  // 0x005ea300
+    TClassFactory_class_VoxelAnimClass();  // 0x005ea318
     virtual ~TClassFactory_class_VoxelAnimClass();
 
     // ---- data members (offsets from ctor 0x005ea321) ----

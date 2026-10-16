@@ -4,7 +4,7 @@
 //
 // RTTI class   : class NullModemClass
 // vtable       : 0x006a2814  (16 slots)
-// constructor  : 0x0056c0c0
+// constructor  : 0x0056c0df
 // vtable store : 0x0056c363  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -35,7 +35,7 @@ public:
     virtual void vfunc_14(int a0, int a1, int a2);  // [14] 0x0056e020  // __stdcall
     virtual void vfunc_15(int a0, int a1, int a2, int a3, int a4, int a5);  // [15] 0x0056ccd0  // __stdcall
 
-    NullModemClass();  // 0x0056c0c0
+    NullModemClass();  // 0x0056c0df
     virtual ~NullModemClass();
 
     // ---- data members (offsets from ctor 0x0056c322) ----

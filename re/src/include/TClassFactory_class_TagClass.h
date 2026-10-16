@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class TagClass>
 // vtable       : 0x006a4ad8  (5 slots)
-// constructor  : 0x005eac00
+// constructor  : 0x005eac18
 // vtable store : 0x005eac3b  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ead00  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ead80  // __stdcall, returns int
 
-    TClassFactory_class_TagClass();  // 0x005eac00
+    TClassFactory_class_TagClass();  // 0x005eac18
     virtual ~TClassFactory_class_TagClass();
 
     // ---- data members (offsets from ctor 0x005eac21) ----

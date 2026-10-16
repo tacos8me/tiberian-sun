@@ -4,7 +4,7 @@
 //
 // RTTI class   : class TClassFactory<class WaypointPathClass>
 // vtable       : 0x006a4a00  (5 slots)
-// constructor  : 0x005e9e80
+// constructor  : 0x005e9e98
 // vtable store : 0x005e9ebb  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -25,7 +25,7 @@ public:
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005e9f80  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ea000  // __stdcall, returns int
 
-    TClassFactory_class_WaypointPathClass();  // 0x005e9e80
+    TClassFactory_class_WaypointPathClass();  // 0x005e9e98
     virtual ~TClassFactory_class_WaypointPathClass();
 
     // ---- data members (offsets from ctor 0x005e9ea1) ----

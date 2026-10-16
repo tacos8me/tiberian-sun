@@ -4,7 +4,7 @@
 //
 // RTTI class   : class LogicClass
 // vtable       : 0x00698704  (10 slots)
-// constructor  : 0x004023b0
+// constructor  : 0x004023f9
 // vtable store : 0x00402432  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -29,6 +29,6 @@ public:
     virtual void vfunc_8();  // [8] 0x00402490  // __cdecl
     virtual void vfunc_9(int a0, int a1);  // [9] 0x004fab40  // __stdcall
 
-    LogicClass();  // 0x004023b0
+    LogicClass();  // 0x004023f9
     virtual ~LogicClass();
 };

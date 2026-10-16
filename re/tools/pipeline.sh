@@ -48,6 +48,11 @@ if [ "${1:-}" != "--verify-only" ]; then
   echo "== 8/10 signatures =="
   python3 tools/gen_signatures.py "$BIN" "$OUT"
 
+  echo "== 8b/10 virtual naming =="
+  # name_virtuals.py was previously NOT invoked by any stage, so
+  # out/virtual_names.json survived only by accident and every clean
+  # regeneration emitted vfunc_N for all 1,213 recoverable names.
+  python3 tools/name_virtuals.py "$BIN" "$OUT"
   echo "== 9/10 header generation =="
   # Hand-written headers are the authoritative, richer versions for the classes
   # they cover. Restore them after generation so they always win.
