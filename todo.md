@@ -128,22 +128,34 @@ read an artifact no tool produced. Named virtuals 1,287 -> 1,522 (22.0%) with
 out/virtual_name_evidence.json giving every name its rule and signal.
 MapSeedClass now reports Width/NumPlayers/... instead of "RandomMap" ten times.
 
-### [ ] De-duplicate bodies and add the faithfulness gate (W5, not delivered)
-The "6,668 bodies" figure is 2,842 distinct functions rendered 2.35x. One
-function is emitted 159 times. Re-send: de-duplicate by VA preserving every
-declaring name as an alias, and add a gate asserting every instruction appears
-exactly once, in order, with matching bytes. W5 committed nothing in Round 3.
+### [x] De-duplicate bodies and add the faithfulness gate
+Done directly after W5 failed to commit three times (its large `write` never
+executed). Bodies are keyed on the function VA: the first declarer carries the
+transcription, every other declaring name becomes an explicit ALIAS. The README
+now reports member definitions (6,670), DISTINCT functions (2,845) and aliases
+(3,825) instead of one inflated number.
 
-### [ ] Fix the gen_headers.py member-block 2-cycle
-The machine member block and the "already declared above" comment alternate
-between runs, flipping check 7 between 2032/237 and 1716/241; the comment state
-also LOSES declarations (AircraftTypeClass stops declaring +0x000/+0x37c/+0x435).
-Clean-checkout determinism currently holds (13 artifacts byte-identical), so this
-is latent — it bites when gen_headers.py is re-run outside pipeline order.
+The faithfulness gate is real and PROVEN BY MUTATION: generation asserts every
+instruction appears exactly once, in order, with matching bytes; deleting one
+instruction from AbstractClass.cpp makes `--check` exit 1 naming
+`0x006829a5 (AbstractClass::QueryInterface): 1/4 records match`. Building the
+gate exposed two bugs in the gate itself (`\s+` matching newlines, and a
+non-unique banner where MapSeedClass::Read_INI is declared twice). All 303
+generated TUs compile; the pipeline has `set -euo pipefail`, so it is a hard
+stop.
 
-### [ ] gen_headers.py crashes outside pipeline stage order
-`UnboundLocalError: prelude_owned` (used ~line 610, assigned ~line 840) when
-re-run with an already-reconciled src/include/ts_prelude.h present.
+### [x] Fix the gen_headers.py member-block 2-cycle
+The "already declared in the class body" set was collected from the whole body,
+including the machine block a previous run had appended, so a re-run dropped its
+own members and left only a comment. That deleted ~593 declaration lines across
+43 headers and flipped check 7 between 2032/237 and 1716/241. The set is now
+collected from the body truncated at the machine banner, so only curated
+declarations count. Verified idempotent: two consecutive runs give a
+byte-identical src/handwritten/. Check 7 is now 2186/2186 across 248 classes.
+
+### [x] gen_headers.py crash outside pipeline stage order
+`UnboundLocalError: prelude_owned` (appended to ~line 610, bound ~line 840) --
+it crashed whenever run with an already-reconciled ts_prelude.h present. Fixed.
 
 ### [ ] The slot-0 mislabel exists in ~66 more headers
 0x405790 is a shared E_POINTER stub labelled `virtual ~X(); // [0]` in ~66
