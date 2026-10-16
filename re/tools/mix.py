@@ -36,6 +36,13 @@ Usage:
   python3 tools/mix.py extract <archive> <id> <out>
   python3 tools/mix.py find    <archive> <name>   # match a filename by CRC
   python3 tools/mix.py probe   <archive>          # key-derivation diagnostics
+
+`find` uses the standard Westwood filename hash (CRC32 of the upper-cased
+name). No archive here stores its filenames, so that hash is not verifiable
+from the files alone: `find` can report a name absent either because the file
+is not in the archive or because the archive keys it under a name that is not
+the on-disc filename (SETUP.MIX does exactly that -- none of its 61 entries
+matches the CRC of any loose file next to it on the CD).
 """
 import os
 import struct
