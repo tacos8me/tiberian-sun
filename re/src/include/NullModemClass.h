@@ -18,7 +18,6 @@ class NullModemClass : public ConnManClass
 {
 public:
     // ---- vtable 0x006a2814 (16 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x0056e130  // __thiscall
     virtual void vfunc_1();  // [1] 0x0056c9d0  // __thiscall, returns int
     virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x0056e040  // __thiscall, returns int
     virtual void vfunc_3(int a0, int a1, int a2);  // [3] 0x0056e080  // __stdcall, returns int

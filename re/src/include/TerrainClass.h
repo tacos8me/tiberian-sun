@@ -19,23 +19,22 @@ class TerrainClass : public ObjectClass, public StageClass
 {
 public:
     // ---- vtable 0x006a5dfc (105 slots) ----
-    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x00405790  // __stdcall, returns int
-    virtual void vfunc_1(int a0);  // [1] 0x00405830  // __stdcall, returns int
-    virtual void vfunc_2(int a0);  // [2] 0x00405840  // __stdcall, returns int
+    virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x00405790  // __stdcall, returns int
+    virtual void Init(int a0);  // [1] 0x00405830  // __stdcall, returns int
+    virtual void Shutdown(int a0);  // [2] 0x00405840  // __stdcall, returns int
     virtual void vfunc_3(int a0, int a1);  // [3] 0x00624620  // __stdcall, returns int
-    virtual void vfunc_4(int a0);  // [4] 0x00405990  // __stdcall
+    virtual void Release(int a0);  // [4] 0x00405990  // __stdcall
     virtual void vfunc_5(int a0, int a1);  // [5] 0x006240a0  // __stdcall
     virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x00624220  // __stdcall
-    virtual void vfunc_7(int a0, int a1);  // [7] 0x00405910  // __stdcall, returns int
-    virtual void vfunc_8(int a0);  // [8] 0x00624660  // __thiscall
-    virtual void vfunc_9();  // [9] 0x004059b0  // __cdecl
+    virtual void GetType(int a0, int a1);  // [7] 0x00405910  // __stdcall, returns int
+    virtual void Set_ID();  // [9] 0x004059b0  // __cdecl
     virtual void vfunc_10(int a0, int a1);  // [10] 0x006242d0  // __thiscall
     virtual void vfunc_11();  // [11] 0x00624610  // __cdecl, returns int
     virtual void vfunc_12();  // [12] 0x00624600  // __cdecl, returns int
     virtual void vfunc_13(int a0);  // [13] 0x00624260  // __thiscall
-    virtual void vfunc_14();  // [14] 0x004059d0  // __cdecl
-    virtual void vfunc_15();  // [15] 0x004059e0  // __cdecl, returns int
-    virtual void vfunc_16();  // [16] 0x004059f0  // __cdecl, returns int
+    virtual void Save();  // [14] 0x004059d0  // __cdecl
+    virtual void GetSizeMax();  // [15] 0x004059e0  // __cdecl, returns int
+    virtual void Compute_CRC();  // [16] 0x004059f0  // __cdecl, returns int
     virtual void vfunc_17();  // [17] 0x00570a20  // __cdecl, returns int
     virtual void vfunc_18(int a0);  // [18] 0x00570960  // __stdcall
     virtual void vfunc_19(int a0);  // [19] 0x00405a30  // __stdcall
@@ -83,46 +82,46 @@ public:
     virtual void vfunc_61(int a0, int a1);  // [61] 0x00416840  // __stdcall
     virtual void vfunc_62(int a0, int a1);  // [62] 0x00416850  // __stdcall
     virtual void vfunc_63(int a0, int a1, int a2);  // [63] 0x006234b0  // __thiscall
-    virtual void vfunc_64();  // [64] 0x00623660
+    virtual void vfunc_64(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [64] 0x00623660  // __thiscall
     virtual void vfunc_65();  // [65] 0x0056ec20
     virtual void vfunc_66();  // [66] 0x0056ec30
     virtual void vfunc_67();  // [67] 0x00623320
-    virtual void vfunc_68();  // [68] 0x0056f000
-    virtual void vfunc_69();  // [69] 0x00624430
+    virtual void vfunc_68(int a0);  // [68] 0x0056f000  // __thiscall
+    virtual void vfunc_69(int a0);  // [69] 0x00624430  // __stdcall
     virtual void vfunc_70();  // [70] 0x0040e690
     virtual void vfunc_71();  // [71] 0x0056f680
     virtual void vfunc_72();  // [72] 0x0056ec50
     virtual void vfunc_73();  // [73] 0x0056ec40
     virtual void vfunc_74();  // [74] 0x0056ec60
-    virtual void vfunc_75();  // [75] 0x0056ee20
-    virtual void vfunc_76();  // [76] 0x0056eda0
+    virtual void vfunc_75();  // [75] 0x0056ee20  // __thiscall
+    virtual void vfunc_76(int a0);  // [76] 0x0056eda0  // __thiscall
     virtual void vfunc_77();  // [77] 0x0056ec70
     virtual void vfunc_78();  // [78] 0x0056ec80
-    virtual void vfunc_79();  // [79] 0x00622d50
+    virtual void vfunc_79(int a0, int a1, int a2, int a3, int a4, int a5);  // [79] 0x00622d50  // __thiscall
     virtual void vfunc_80();  // [80] 0x0056ec90
-    virtual void vfunc_81();  // [81] 0x006238b0
-    virtual void vfunc_82();  // [82] 0x00623990
+    virtual void vfunc_81(int a0, int a1);  // [81] 0x006238b0  // __thiscall
+    virtual void vfunc_82(int a0);  // [82] 0x00623990  // __thiscall
     virtual void vfunc_83();  // [83] 0x0056ecc0
     virtual void vfunc_84();  // [84] 0x0056ecd0
     virtual void vfunc_85();  // [85] 0x00416860
     virtual void vfunc_86();  // [86] 0x00416870
     virtual void vfunc_87();  // [87] 0x00570240
-    virtual void vfunc_88();  // [88] 0x0056fbc0
-    virtual void vfunc_89();  // [89] 0x005700b0
+    virtual void vfunc_88(int a0, int a1, int a2);  // [88] 0x0056fbc0  // __stdcall, returns int
+    virtual void vfunc_89(int a0);  // [89] 0x005700b0  // __stdcall, returns int
     virtual void vfunc_90();  // [90] 0x0056ece0
     virtual void vfunc_91();  // [91] 0x0056ecf0
     virtual void vfunc_92();  // [92] 0x00570e70
-    virtual void vfunc_93();  // [93] 0x0056ed00
-    virtual void vfunc_94();  // [94] 0x006237d0
+    virtual void vfunc_93(int a0);  // [93] 0x0056ed00  // __thiscall
+    virtual void vfunc_94(int a0, int a1, int a2, int a3);  // [94] 0x006237d0  // __thiscall
     virtual void vfunc_95();  // [95] 0x00416890
-    virtual void vfunc_96();  // [96] 0x0040e6a0
+    virtual void vfunc_96(int a0);  // [96] 0x0040e6a0  // __stdcall
     virtual void vfunc_97(int a0);  // [97] 0x00570cc0  // __stdcall
     virtual void vfunc_98();  // [98] 0x0040e6c0
     virtual void vfunc_99();  // [99] 0x00570ce0
-    virtual void vfunc_100();  // [100] 0x00570d00
-    virtual void vfunc_101();  // [101] 0x00570d50
-    virtual void vfunc_102();  // [102] 0x00570370
-    virtual void vfunc_103();  // [103] 0x005703b0
+    virtual void vfunc_100(int a0);  // [100] 0x00570d00  // __stdcall
+    virtual void vfunc_101(int a0);  // [101] 0x00570d50  // __cdecl
+    virtual void vfunc_102();  // [102] 0x00570370  // __thiscall
+    virtual void vfunc_103(int a0);  // [103] 0x005703b0  // __thiscall
     virtual void vfunc_104();  // [104] 0x00570360
 
     TerrainClass();  // 0x00622bfe

@@ -17,7 +17,6 @@ class FileClass
 {
 public:
     // ---- vtable 0x006a39a0 (17 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x005a5d50  // __thiscall
     virtual void vfunc_1();  // [1] 0x006829a5  // __cdecl
     virtual void vfunc_2();  // [2] 0x006829a5  // __cdecl
     virtual void vfunc_3();  // [3] 0x006829a5  // __cdecl

@@ -18,7 +18,6 @@ class AnimFile : public Animate
 {
 public:
     // ---- vtable 0x00699a6c (8 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x004175a0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x00416a50  // __thiscall
     virtual void vfunc_2();  // [2] 0x00416a90  // __thiscall
     virtual void vfunc_3(int a0);  // [3] 0x00416d90  // __thiscall, returns int

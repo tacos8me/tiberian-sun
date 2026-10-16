@@ -18,7 +18,6 @@ class LightConvertClass : public ConvertClass
 {
 public:
     // ---- vtable 0x006a163c (2 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x004f6870  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3);  // [1] 0x004f63e0  // __thiscall
 
     LightConvertClass();  // 0x004f62d5

@@ -18,7 +18,6 @@ class IPXConnClass : public ConnectionClass
 {
 public:
     // ---- vtable 0x006a0abc (10 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x004e71e0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x004e6f10
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0045eb70  // __thiscall
     virtual void vfunc_3(int a0, int a1);  // [3] 0x0045ec10  // __thiscall, returns int

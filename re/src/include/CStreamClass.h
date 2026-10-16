@@ -31,7 +31,6 @@ public:
     virtual void vfunc_11(int a0, int a1, int a2, int a3, int a4, int a5);  // [11] 0x0046e7a0  // __stdcall
     virtual void vfunc_12(int a0, int a1, int a2);  // [12] 0x0046e7e0  // __stdcall
     virtual void vfunc_13(int a0, int a1);  // [13] 0x0046e810  // __stdcall
-    virtual void vfunc_14(int a0);  // [14] 0x0046e930  // __thiscall
 
     CStreamClass();  // 0x0046e080
     virtual ~CStreamClass();

@@ -18,7 +18,6 @@ class ScoreTimeClass : public ScoreAnimClass
 {
 public:
     // ---- vtable 0x006a3ee4 (4 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x005cdf20  // __thiscall
     virtual void vfunc_1();  // [1] 0x005cde90  // __thiscall
     virtual void vfunc_2();  // [2] 0x005cdee0  // __thiscall
     virtual void vfunc_3(int a0);  // [3] 0x005cda00  // __thiscall

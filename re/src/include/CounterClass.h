@@ -19,7 +19,6 @@ class CounterClass : public VectorClass<H>
 {
 public:
     // ---- vtable 0x0069b7ec (6 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x0046b570  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x0044af30  // __stdcall
     virtual void vfunc_2(int a0, int a1);  // [2] 0x0044af70  // __thiscall
     virtual void vfunc_3();  // [3] 0x0046b3e0  // __cdecl

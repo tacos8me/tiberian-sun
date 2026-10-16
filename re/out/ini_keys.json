@@ -1,4 +1,18 @@
 {
+ " CACHE.MIX": [
+  5097776,
+  5098138
+ ],
+ " CONQUER.MIX": [
+  5098379
+ ],
+ " LOCAL.MIX": [
+  5098138
+ ],
+ "%-12s  %x": [
+  4581360,
+  4581753
+ ],
  "%.28s %02d": [
   5159877
  ],
@@ -6,16 +20,50 @@
   5139856
  ],
  "%02d": [
-  5159877
+  5159877,
+  6075078
+ ],
+ "%02d/%02d/%04d - %02d:%02d:%02d": [
+  6667984
+ ],
+ "%02ld:%02ld:%02ld": [
+  6080000
  ],
  "%02x": [
   4263142
  ],
+ "%03d": [
+  4320718,
+  4320960,
+  6114240
+ ],
+ "%04d": [
+  5562016
+ ],
  "%08X": [
-  4218192
+  4218192,
+  5677504
+ ],
+ "%3d%%": [
+  6070968
+ ],
+ "%4d  ": [
+  4581360,
+  4581753
+ ],
+ "%4d %2d %-5s  ": [
+  4580784,
+  4581576
+ ],
+ "%c:\\": [
+  4509952,
+  4660432
  ],
  "%d  (%d)": [
   6682880
+ ],
+ "%d%%": [
+  6074899
  ],
  "%d,%d": [
   5075783,
@@ -25,16 +73,21 @@
  "%d,%d,%d": [
   4455261,
   4490400,
+  4490688,
   5076263
  ],
  "%d,%d,%d,%d": [
   5072176,
   5072554
  ],
+ "%d,%d,%d,%d,%d": [
+  6482461
+ ],
  "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%s,%d,%d,%s,%s:": [
   6673584
  ],
  "%d,%d,%d,%d,%d,%d,%d,%s": [
+  6673968,
   6675437
  ],
  "%d,%d,%d,%s": [
@@ -51,10 +104,15 @@
   4778656
  ],
  "%d.%d.%d.%d": [
+  5088528,
   6040199,
   6748400
  ],
+ "%f,%f,%f": [
+  5076791
+ ],
  "%s %s": [
+  6105504,
   6734256,
   6734320
  ],
@@ -62,14 +120,36 @@
   6724960,
   6732128
  ],
+ "%s [%s]": [
+  5541424,
+  5554416
+ ],
  "%s%d": [
   4731952
  ],
  "%s,%d": [
   6059024
  ],
+ "%s,%d,%d": [
+  4320960
+ ],
  "%s,%d,%d,": [
   6673584
+ ],
+ "%s,%d,%d,%d": [
+  6164688
+ ],
+ "%s,%s,%d,%d,%d,%d,%s,%d,%d,%d,%d,%d": [
+  4406628
+ ],
+ "%s,%s,%d,%d,%d,%d,%s,%d,%s,%d,%d,%d,%d,%d": [
+  5050887
+ ],
+ "%s,%s,%d,%d,%d,%d,%s,%s,%d,%d,%d,%d": [
+  4250420
+ ],
+ "%s,%s,%d,%d,%d,%d,%s,%s,%d,%d,%d,%d,%d,%d": [
+  6535598
  ],
  "%s,%s,%s,%d,%d,%d,%d,%d": [
   6479356
@@ -94,10 +174,37 @@
  ],
  "%sBARL": [
   5709121,
-  5709292
+  5709292,
+  5710468,
+  5710679
+ ],
+ "%sTUR": [
+  5710112,
+  5710326
+ ],
+ "%s\\%s": [
+  6183232
+ ],
+ "%s|%s|%x|%d|%d|%d|%d|%s|%d|%d|%s": [
+  6114240
+ ],
+ "%x.%x": [
+  6579559
+ ],
+ "*.%3s": [
+  5213339
+ ],
+ "*.MPR": [
+  6115559
+ ],
+ "*.PKT": [
+  6115219
  ],
  ".AUD": [
   6453552,
+  6581584,
+  6581888,
+  6583428,
   6586560
  ],
  ".HVA": [
@@ -105,7 +212,9 @@
   4452698,
   5708034,
   5708453,
-  5709292
+  5709292,
+  5710326,
+  5710679
  ],
  ".MMT": [
   5160793
@@ -136,7 +245,9 @@
   4452392,
   5707888,
   5708306,
-  5709121
+  5709121,
+  5710112,
+  5710468
  ],
  "0,NONE": [
   5985968
@@ -148,7 +259,10 @@
   6183808
  ],
  "<none>": [
+  4213296,
   4256928,
+  4261040,
+  4263424,
   4274288,
   4293891,
   4294388,
@@ -156,10 +270,13 @@
   4295968,
   4297008,
   4462704,
+  4480880,
   4481664,
+  4492240,
   4492976,
   4587792,
   4587872,
+  5012112,
   5060096,
   5062688,
   5731648,
@@ -167,10 +284,18 @@
   5862976,
   5864974,
   5865936,
+  5866928,
   6056128,
+  6088640,
   6089280,
+  6167424,
+  6238880,
+  6308352,
   6309360,
+  6317616,
   6318704,
+  6346752,
+  6346896,
   6444624,
   6478336,
   6478458,
@@ -186,14 +311,23 @@
  "<program name unknown>": [
   6868047
  ],
+ "<title>Hi there.</title>": [
+  6670960
+ ],
  ">>> %s": [
   6732976
  ],
  "AALimit": [
   5984335
  ],
+ "AARate": [
+  5533674
+ ],
  "AARatio": [
   5984335
+ ],
+ "AFPS": [
+  6224591
  ],
  "AIAlternateProductionCreditCutoff": [
   5972803
@@ -246,6 +380,9 @@
  "AIIonCannonWarFactoryValue": [
   5972803
  ],
+ "AIPL": [
+  6223695
+ ],
  "AITriggerFailureWeightDelta": [
   5977169
  ],
@@ -258,14 +395,29 @@
  "AIUseTurbineUpgradeProbability": [
   5972803
  ],
+ "ATE1": [
+  5688576
+ ],
+ "ATQ0": [
+  5688576
+ ],
+ "ATV1": [
+  5688576
+ ],
  "Accelerates": [
   6423163
  ],
  "Acceleration": [
-  4479904
+  4479904,
+  5987184
  ],
  "AccelerationFactor": [
   6420225
+ ],
+ "Access violation - no RTTI data!": [
+  6827787,
+  6828133,
+  6828437
  ],
  "Accessibility": [
   5428464,
@@ -372,6 +524,9 @@
  "ActiveAnimZAdjust": [
   4455261
  ],
+ "ActsLike": [
+  4966624
+ ],
  "Adjacent": [
   4452944
  ],
@@ -388,11 +543,15 @@
  "AirburstWeapon": [
   4480584
  ],
+ "Aircraft": [
+  5986784
+ ],
  "AircraftFogReveal": [
   5968333
  ],
  "Airspeed": [
-  5010640
+  5010640,
+  5987568
  ],
  "AirstripLimit": [
   5984335
@@ -400,8 +559,25 @@
  "AirstripRatio": [
   5984335
  ],
+ "Allies": [
+  4966873
+ ],
  "AllowBurrowing": [
   5159341
+ ],
+ "AllowFind": [
+  6672672,
+  6675984
+ ],
+ "AllowHiResModes": [
+  5716584
+ ],
+ "AllowModeToggle": [
+  5716584
+ ],
+ "AllowPage": [
+  6672672,
+  6675984
  ],
  "AllowShroudedSubteranneanMoves": [
   5968333
@@ -422,6 +598,9 @@
  ],
  "AllowedToStartInMultiplayer": [
   6423163
+ ],
+ "AllyReveal": [
+  5962868
  ],
  "AlphaImage": [
   5711376
@@ -445,11 +624,23 @@
   6057614,
   6059024
  ],
+ "AmbientChangeRate": [
+  5963090
+ ],
+ "AmbientChangeStep": [
+  5963090
+ ],
  "AmbientDamage": [
   6647104
  ],
  "Ammo": [
   6423163
+ ],
+ "AmmoCrateDamage": [
+  5964640
+ ],
+ "Amphibious": [
+  5986655
  ],
  "Anim": [
   6647104
@@ -487,6 +678,9 @@
  "AnimationRate": [
   6443992
  ],
+ "Animations": [
+  5981264
+ ],
  "Annoyance": [
   6345088,
   6346000
@@ -503,7 +697,8 @@
  ],
  "Armor": [
   5010640,
-  5711376
+  5711376,
+  5987568
  ],
  "Armor: %s": [
   4732848
@@ -513,6 +708,12 @@
  ],
  "Artillary": [
   4453471
+ ],
+ "AtmosphereEntry": [
+  5958966
+ ],
+ "AtomDamage": [
+  5967151
  ],
  "AttachedParticleSystem": [
   6647648
@@ -532,8 +733,17 @@
  "Attempted a typeid of NULL pointer!": [
   6827965
  ],
+ "Audio": [
+  5716584,
+  5717280
+ ],
  "AutoCrush": [
+  5986784,
   6423163
+ ],
+ "AutoScroll": [
+  5715952,
+  5717280
  ],
  "Autocreate": [
   6345088,
@@ -555,8 +765,14 @@
   6345598,
   6346000
  ],
+ "BARGRAPH.AUD": [
+  6069759
+ ],
  "BARRACKS": [
   4499232
+ ],
+ "BASE": [
+  6223515
  ],
  "BATTLE*.INI": [
   5085504
@@ -564,14 +780,57 @@
  "BATTLE.INI": [
   5085663
  ],
+ "BEST01.SHP": [
+  6068972
+ ],
+ "BEST02.SHP": [
+  6068972
+ ],
+ "BESTBOX.AUD": [
+  6069567
+ ],
+ "BIGFONT.SHP": [
+  6084848
+ ],
+ "BLB?": [
+  6226189
+ ],
+ "BLC?": [
+  6227571
+ ],
+ "BLK?": [
+  6227471
+ ],
+ "BLL?": [
+  6227003
+ ],
  "BUILDNGZ.SHP": [
   4449024
+ ],
+ "Back": [
+  6069951
+ ],
+ "BallisticScatter": [
+  5967151
+ ],
+ "BarGraph": [
+  6069759,
+  6078994
  ],
  "BarracksLimit": [
   5984335
  ],
  "BarracksRatio": [
   5984335
+ ],
+ "BarrelDebris": [
+  5957944
+ ],
+ "BarrelExplode": [
+  5957861
+ ],
+ "BarrelParticle": [
+  5958127
  ],
  "BaseBias": [
   5972803
@@ -588,6 +847,9 @@
  "BaseUnit": [
   5971837
  ],
+ "Bases": [
+  5979248
+ ],
  "Basic": [
   5433520,
   6046428,
@@ -596,14 +858,25 @@
   6056679,
   6057114,
   6057466,
-  6057614
+  6057614,
+  6115559
  ],
  "Battles": [
   4483168
  ],
+ "Baud": [
+  6114240
+ ],
  "BehavesLike": [
   5861520,
   5865819
+ ],
+ "BerzerkAllowed": [
+  5967151
+ ],
+ "BestBox": [
+  6069567,
+  6073743
  ],
  "BestLowPowerBuildRateCoefficient": [
   5977169
@@ -624,12 +897,18 @@
  "BlockagePathDelay": [
   5984335
  ],
+ "BlowupSound": [
+  5959919
+ ],
  "Blue": [
   6057614,
   6059024
  ],
  "BlueTint": [
   5433520
+ ],
+ "BombParachute": [
+  5962680
  ],
  "BounceAnim": [
   4293891,
@@ -657,6 +936,12 @@
  "BridgeBottomRight2": [
   5155328
  ],
+ "BridgeDestruction": [
+  5979248
+ ],
+ "BridgeExplosions": [
+  5961737
+ ],
  "BridgeMiddle1": [
   5155328
  ],
@@ -668,6 +953,9 @@
  ],
  "BridgeSet": [
   5155328
+ ],
+ "BridgeStrength": [
+  5967151
  ],
  "BridgeTopLeft1": [
   5155328
@@ -708,6 +996,9 @@
  "BuildDefense": [
   5983272
  ],
+ "BuildDelay": [
+  5987568
+ ],
  "BuildHelipad": [
   5983910
  ],
@@ -726,6 +1017,9 @@
  "BuildRefinery": [
   5982315
  ],
+ "BuildSlowdown": [
+  5987568
+ ],
  "BuildSpeed": [
   5972803
  ],
@@ -733,10 +1027,20 @@
   5982817
  ],
  "BuildTime": [
-  5010640
+  5010640,
+  5987568
  ],
  "BuildWeapons": [
   5983059
+ ],
+ "Buildable": [
+  5986723
+ ],
+ "BuildingDrop": [
+  5959919
+ ],
+ "BuildingSlam": [
+  5959919
  ],
  "Buildup": [
   4455261
@@ -750,14 +1054,65 @@
  "Burst": [
   6647104
  ],
+ "C4Delay": [
+  5967151
+ ],
+ "C4Warhead": [
+  5966525
+ ],
+ "CACHE.MIX": [
+  5097776
+ ],
+ "CASU01.SHP": [
+  6068972
+ ],
+ "CASU02.SHP": [
+  6068972
+ ],
+ "CID?": [
+  6225401
+ ],
+ "CLSID\\": [
+  6183232
+ ],
+ "CMP?": [
+  6225574
+ ],
+ "COL?": [
+  6225710
+ ],
  "CONIN$": [
   6901594
  ],
  "CONOUT$": [
   6901625
  ],
+ "CONQUER.MIX": [
+  5098256
+ ],
+ "CRA?": [
+  6227688
+ ],
+ "CRAT": [
+  6223635
+ ],
+ "CRD?": [
+  6225763
+ ],
+ "CRED": [
+  6223468
+ ],
+ "CURR01.SHP": [
+  6068972
+ ],
  "C_SHADOW.SHP": [
   5155328
+ ],
+ "CallWaitString": [
+  6114240
+ ],
+ "CallWaitStringIndex": [
+  6114240
  ],
  "Cameo": [
   6425107,
@@ -771,6 +1126,9 @@
  ],
  "Capturable": [
   4452944
+ ],
+ "CaptureTheFlag": [
+  5979248
  ],
  "CarriesCrate": [
   6547680
@@ -810,6 +1168,15 @@
  "ChargingVoice": [
   6238132
  ],
+ "Checking hardware region fill capability...": [
+  4649408
+ ],
+ "Checking overlapped blit capability...": [
+  4649558
+ ],
+ "ChuteSound": [
+  5959919
+ ],
  "CivEvac": [
   6057614,
   6059024
@@ -835,6 +1202,9 @@
  "ClearToSandLat": [
   5155328
  ],
+ "ClickMap": [
+  5612508
+ ],
  "CliffBackImpassability": [
   5970595
  ],
@@ -844,6 +1214,9 @@
  "CliffSet": [
   5155328
  ],
+ "Climb": [
+  5987184
+ ],
  "CloakDelay": [
   5972803
  ],
@@ -852,6 +1225,9 @@
  ],
  "CloakRadiusInCells": [
   4453471
+ ],
+ "CloakSound": [
+  5959029
  ],
  "CloakStop": [
   6421219
@@ -871,9 +1247,14 @@
  "Cluster": [
   4479904
  ],
+ "CollapseChance": [
+  5967151
+ ],
  "Color": [
   4479904,
+  4966873,
   5010640,
+  6114240,
   6456640
  ],
  "ColorList": [
@@ -885,26 +1266,43 @@
  "CompEasyBonus": [
   5984335
  ],
+ "Compression": [
+  6114240
+ ],
  "ComputerBaseDefenseResponse": [
   5984335
  ],
  "ConcreteWalls": [
   5984335
  ],
+ "ConditionRed": [
+  5962868
+ ],
  "ConditionRedSparkingProbability": [
   5977169
+ ],
+ "ConditionYellow": [
+  5962868
  ],
  "ConditionYellowSparkingProbability": [
   5977169
  ],
+ "Construction": [
+  5959029
+ ],
  "ConstructionYard": [
   4453471
+ ],
+ "ContentScan": [
+  5986784,
+  5987568
  ],
  "Conventional": [
   6625007
  ],
  "Cost": [
   5010640,
+  5987568,
   6423163
  ],
  "Cost: %d": [
@@ -916,6 +1314,21 @@
  "CrateGoodie": [
   6547680
  ],
+ "CrateImg": [
+  5964175
+ ],
+ "CrateMaximum": [
+  5964237
+ ],
+ "CrateMinimum": [
+  5964237
+ ],
+ "CrateRadius": [
+  5964237
+ ],
+ "CrateRegen": [
+  5964237
+ ],
  "CrateTrigger": [
   5730448
  ],
@@ -926,11 +1339,23 @@
  "CraterLevel": [
   5968333
  ],
+ "Craters": [
+  5965949
+ ],
+ "Crates": [
+  5979248
+ ],
  "Crawls": [
   5060992
  ],
  "CreditReserve": [
   5984335
+ ],
+ "CreditTicks": [
+  5959919
+ ],
+ "Credits": [
+  4966624
  ],
  "Crew": [
   5972741
@@ -940,6 +1365,15 @@
  ],
  "Crewed": [
   6423163
+ ],
+ "CruiseHeight": [
+  5987184
+ ],
+ "CrumbleSound": [
+  5959919
+ ],
+ "Crush": [
+  5967151
  ],
  "CrushSound": [
   5711376
@@ -960,6 +1394,7 @@
   5060992
  ],
  "D:\\Projects\\TSun\\Code\\DSAudio.Cpp": [
+  4735904,
   4737744,
   4738192,
   4738832,
@@ -969,16 +1404,36 @@
   4742688,
   4743584,
   4744448,
-  4746128
+  4744592,
+  4744832,
+  4745104,
+  4746128,
+  4746368,
+  4746592
  ],
  "D:\\Projects\\TSun\\Code\\wwmous.cpp": [
+  6759888,
   6761056,
   6761318,
   6762176,
+  6762400,
   6763007,
   6763426,
+  6763936,
+  6764272,
   6765072,
-  6765232
+  6765232,
+  6765600,
+  6766208
+ ],
+ "DATE": [
+  6225061
+ ],
+ "DPOD.VXL": [
+  5096208
+ ],
+ "DURA": [
+  6223411
  ],
  "Damage": [
   4293102,
@@ -1014,6 +1469,9 @@
  "DeaccelerationFactor": [
   6420225
  ],
+ "DeadBodies": [
+  5961328
+ ],
  "Debris": [
   6456640
  ],
@@ -1022,6 +1480,36 @@
  ],
  "DebrisTypes": [
   6420225
+ ],
+ "DefaultDebrisSmokeSystem": [
+  5967151
+ ],
+ "DefaultFireStreamSystem": [
+  5967151
+ ],
+ "DefaultFirestormExplosionSystem": [
+  5966775
+ ],
+ "DefaultLargeGreySmokeSystem": [
+  5966838
+ ],
+ "DefaultLargeRedSmokeSystem": [
+  5967026
+ ],
+ "DefaultRepairParticleSystem": [
+  5967151
+ ],
+ "DefaultSmallGreySmokeSystem": [
+  5966901
+ ],
+ "DefaultSmallRedSmokeSystem": [
+  5967089
+ ],
+ "DefaultSparkSystem": [
+  5966963
+ ],
+ "DefaultTestParticleSystem": [
+  5967151
  ],
  "DefenseLimit": [
   5984335
@@ -1049,6 +1537,9 @@
  "DemandLoadBuildup": [
   4455261
  ],
+ "DeploySound": [
+  5959919
+ ],
  "DeployTime": [
   6423163
  ],
@@ -1065,7 +1556,16 @@
   4483024,
   5428464,
   5429088,
-  5429808
+  5429808,
+  5612224,
+  6116816
+ ],
+ "DestNet": [
+  5716584,
+  5717280
+ ],
+ "DestroyWalls": [
+  5987568
  ],
  "DestroyableBridges": [
   6172304,
@@ -1075,11 +1575,30 @@
   5155328
  ],
  "DetailLevel": [
-  4293327
+  4293327,
+  5715952,
+  5717280
+ ],
+ "DialMethod": [
+  6114240
+ ],
+ "Difficult": [
+  5987488
+ ],
+ "Difficulty": [
+  5715952,
+  5717280
+ ],
+ "DigSound": [
+  5958604
  ],
  "Digest": [
   4488000,
-  6101702
+  6101702,
+  6115559
+ ],
+ "Direct Draw operation processed without error": [
+  4649296
  ],
  "DirtRoadCurve": [
   5155328
@@ -1111,6 +1630,9 @@
  "DissolveUnfilledTeamDelay": [
   5972803
  ],
+ "DllGetVersion": [
+  4689504
+ ],
  "Dock": [
   6421219
  ],
@@ -1132,17 +1654,29 @@
  "DrawFlat": [
   5730769
  ],
+ "DropPod": [
+  5958415
+ ],
  "DropPodAngle": [
   5969442
  ],
  "DropPodHeight": [
   5969442
  ],
+ "DropPodPuff": [
+  5957779
+ ],
  "DropPodSpeed": [
   5969442
  ],
  "DropPodWeapon": [
   5968333
+ ],
+ "DropZoneAnim": [
+  5962868
+ ],
+ "DropZoneRadius": [
+  5962868
  ],
  "Dropping": [
   4479904
@@ -1169,17 +1703,57 @@
  "Duration": [
   6561424
  ],
+ "ECACHE*.MIX": [
+  5095792
+ ],
+ "EFFICIEN.AUD": [
+  6069663
+ ],
+ "EFIC01.SHP": [
+  6068972
+ ],
+ "ELOCAL*.MIX": [
+  5095792
+ ],
+ "EMBLEM.AUD": [
+  6069471
+ ],
  "EMEffect": [
   6625402
  ],
  "EMPulseCannon": [
   4453471
  ],
+ "EMPulseProjectile": [
+  5957549
+ ],
+ "EMPulseSparkles": [
+  5963090
+ ],
+ "EMPulseWarhead": [
+  5957487
+ ],
  "ERROR": [
   6654651
  ],
  "EWGates": [
   5984335
+ ],
+ "EXPAND%02d.MIX": [
+  5097776
+ ],
+ "EXPAND.DAT": [
+  4794096
+ ],
+ "Easy": [
+  5987488
+ ],
+ "Edge": [
+  4966624
+ ],
+ "Efficiency": [
+  6069663,
+  6070509
  ],
  "Elasticity": [
   4293327,
@@ -1192,12 +1766,19 @@
  "EliteAbilities": [
   6423163
  ],
+ "Emblem": [
+  6069471,
+  6072279
+ ],
  "EndOfGame": [
   6056128,
   6059024
  ],
  "EndStateAI": [
   5864974
+ ],
+ "EnemyHealth": [
+  5963090
  ],
  "EnemyHouseThreatBonus": [
   5977169
@@ -1206,8 +1787,14 @@
   5060992,
   5972553
  ],
+ "ErrorCorrection": [
+  6114240
+ ],
  "ExitCoord": [
   4453471
+ ],
+ "ExpSpread": [
+  5967151
  ],
  "ExpireAnim": [
   4294388,
@@ -1227,14 +1814,33 @@
  "ExplosiveVoxelDebris": [
   5969606
  ],
+ "ExtraAircraftLight": [
+  5963090
+ ],
  "ExtraDamageStage": [
   4455261
+ ],
+ "ExtraInfantryLight": [
+  5963090
  ],
  "ExtraLight": [
   4455261
  ],
+ "ExtraUnitLight": [
+  5963090
+ ],
  "FACTORY": [
   4499232
+ ],
+ "FINI": [
+  6223350
+ ],
+ "FLAG": [
+  6223800
+ ],
+ "FULLFNT3.SHP": [
+  5625408,
+  6084656
  ],
  "Factory": [
   4452944
@@ -1272,8 +1878,14 @@
   6423163,
   6425107
  ],
+ "FirePower": [
+  5987568
+ ],
  "FireProne": [
   5060992
+ ],
+ "FireSupress": [
+  5967151
  ],
  "FireUp": [
   5060992
@@ -1281,8 +1893,23 @@
  "Firepower": [
   5010640
  ],
+ "FirestormActiveAnim": [
+  5962304
+ ],
+ "FirestormAirAnim": [
+  5962429
+ ],
+ "FirestormGroundAnim": [
+  5962492
+ ],
+ "FirestormIdleAnim": [
+  5962366
+ ],
  "FirestormWall": [
   4453471
+ ],
+ "FirestormWarhead": [
+  5966650
  ],
  "FiringFrames": [
   6547680
@@ -1291,8 +1918,17 @@
   6172304,
   6172672
  ],
+ "FlameDamage": [
+  5966367
+ ],
+ "FlameDamage2": [
+  5966462
+ ],
  "Flamer": [
   4292560
+ ],
+ "FlamingInfantry": [
+  5958289
  ],
  "FlashFrameTime": [
   5977169
@@ -1305,12 +1941,21 @@
   5970595,
   6419856
  ],
+ "Float": [
+  5986580
+ ],
  "Floater": [
   4479904
  ],
  "FogOfWar": [
   6172304,
   6172672
+ ],
+ "FogRate": [
+  5963090
+ ],
+ "Foot": [
+  5986377
  ],
  "Foundation": [
   4455261,
@@ -1324,6 +1969,9 @@
  ],
  "FreeBuildup": [
   4455261
+ ],
+ "FreeMCV": [
+  5964048
  ],
  "FreeRadar": [
   6057614,
@@ -1369,6 +2017,19 @@
  "GDIWallDefenseCoefficient": [
   5984335
  ],
+ "GSKU": [
+  6223195
+ ],
+ "GameClosed": [
+  5959029
+ ],
+ "GameForming": [
+  5959029
+ ],
+ "GameSpeed": [
+  5715952,
+  5717280
+ ],
  "GameSpeedBias": [
   5972803
  ],
@@ -1378,17 +2039,39 @@
  "GateCloseDelay": [
   4453471
  ],
+ "GateDown": [
+  5959029
+ ],
  "GateStages": [
   4455261
+ ],
+ "GateUp": [
+  5959029
  ],
  "General": [
   5155328
  ],
+ "GenericBeep": [
+  5959919
+ ],
+ "GenericClick": [
+  5959919
+ ],
  "GetActiveWindow": [
   6888342
  ],
+ "GetDiskFreeSpaceExA": [
+  4587312
+ ],
  "GetLastActivePopup": [
   6888342
+ ],
+ "Graph": [
+  5597728,
+  5599728
+ ],
+ "Gravity": [
+  5963090
  ],
  "Green": [
   6057614,
@@ -1406,7 +2089,8 @@
   6059024
  ],
  "Groundspeed": [
-  5010640
+  5010640,
+  5987568
  ],
  "Group": [
   6318288,
@@ -1423,12 +2107,28 @@
  "GrowthRate": [
   5972803
  ],
+ "GuardArea": [
+  5986784
+ ],
  "GuardRange": [
   6419856
  ],
  "GuardSlower": [
   6345088,
   6346000
+ ],
+ "GuardSound": [
+  5959919
+ ],
+ "HALLFAME.DAT": [
+  6074449,
+  6075757
+ ],
+ "HRV?": [
+  6227805
+ ],
+ "HSBuilding": [
+  5957024
  ],
  "HalfDamageSmokeLocation": [
   6547680
@@ -1439,7 +2139,11 @@
  "HalfDamageSmokeLocation2": [
   4452944
  ],
+ "Handle": [
+  6114240
+ ],
  "Harvester": [
+  5986784,
   6547680
  ],
  "HarvesterDumpRate": [
@@ -1464,6 +2168,9 @@
  "HasStupidGuardMode": [
   4453471
  ],
+ "HealCrateSound": [
+  5964237
+ ],
  "Height": [
   4453471,
   5428464,
@@ -1482,6 +2189,9 @@
  "HelipadRatio": [
   5984335
  ],
+ "Hey!": [
+  4661248
+ ],
  "High": [
   4479904,
   5730448
@@ -1493,12 +2203,25 @@
   6057614,
   6059024
  ],
+ "HomingScatter": [
+  5967151
+ ],
  "Hospital": [
   4453471
+ ],
+ "Hotkey": [
+  5108704,
+  5109093
  ],
  "House": [
   6345088,
   6346000
+ ],
+ "Houses": [
+  4966496
+ ],
+ "Hover": [
+  5986272
  ],
  "HoverAcceleration": [
   5969606
@@ -1542,6 +2265,27 @@
  "ICBMLauncher": [
   4453471
  ],
+ "IDNO": [
+  6223104
+ ],
+ "IMAGEHLP.DLL": [
+  4790320
+ ],
+ "INB?": [
+  6225821
+ ],
+ "INK?": [
+  6227103
+ ],
+ "INL?": [
+  6226289
+ ],
+ "INTRO": [
+  6685728
+ ],
+ "IPA?": [
+  6225348
+ ],
  "IRepairRate": [
   5972803
  ],
@@ -1563,6 +2307,9 @@
  "IceBreakingWeight": [
   5970595
  ],
+ "IceCrackSounds": [
+  5963090
+ ],
  "IceCrackingWeight": [
   5970595
  ],
@@ -1570,8 +2317,17 @@
   6057614,
   6059024
  ],
+ "IceGrowthRate": [
+  5963090
+ ],
  "IceShoreSet": [
   5155328
+ ],
+ "IceSolidifyFrameTime": [
+  5963090
+ ],
+ "IdleActionFrequency": [
+  5963090
  ],
  "IgnoreGlobalAITriggers": [
   6056679,
@@ -1598,6 +2354,12 @@
  "Inaccuate": [
   4479904
  ],
+ "Incoming": [
+  5967151
+ ],
+ "IncomingMessage": [
+  5959029
+ ],
  "Inert": [
   6172304,
   6172672
@@ -1608,11 +2370,20 @@
  "InfantryBaseMult": [
   5984335
  ],
+ "InfantryExplode": [
+  5958904
+ ],
  "InfantryReserve": [
   5984335
  ],
  "Infiltrate": [
   5060992
+ ],
+ "InitStringIndex": [
+  6114240
+ ],
+ "InitStrings": [
+  6114240
  ],
  "InitTime": [
   6046428,
@@ -1621,6 +2392,9 @@
  "InitialVeteran": [
   6172304,
   6172672
+ ],
+ "InprocServer32": [
+  6183232
  ],
  "Insignificant": [
   5711376
@@ -1642,9 +2416,21 @@
   6057614,
   6059024
  ],
+ "IonBeam": [
+  5958841
+ ],
+ "IonBlast": [
+  5958778
+ ],
  "IonBlue": [
   6057614,
   6059024
+ ],
+ "IonCannonDamage": [
+  5964640
+ ],
+ "IonCannonWarhead": [
+  5966587
  ],
  "IonGreen": [
   6057614,
@@ -1733,6 +2519,14 @@
  "IsRailgun": [
   6647648
  ],
+ "IsScoreRepeat": [
+  5716584,
+  5717280
+ ],
+ "IsScoreShuffle": [
+  5716584,
+  5717280
+ ],
  "IsSonic": [
   6647104
  ],
@@ -1763,10 +2557,30 @@
   5730769
  ],
  "Joe_Bostic": [
+  6668144,
   6668224
  ],
  "JumpJet": [
   5060992
+ ],
+ "KERNEL32.DLL": [
+  4587312
+ ],
+ "KEYBOARD.INI": [
+  5108704
+ ],
+ "LCN?": [
+  6225629
+ ],
+ "LOCAL.MIX": [
+  5098138
+ ],
+ "LOGO01.SHP": [
+  6068972
+ ],
+ "LV%d": [
+  6663719,
+  6664350
  ],
  "Land": [
   5730448
@@ -1774,8 +2588,18 @@
  "Landable": [
   4256512
  ],
+ "LangFilter": [
+  6672672,
+  6675984
+ ],
  "Language.dll": [
   4647888
+ ],
+ "Language: %s ": [
+  4648448
+ ],
+ "LargeFire": [
+  5962805
  ],
  "LargeVisceroid": [
   5968176,
@@ -1811,6 +2635,9 @@
  ],
  "LegalTarget": [
   5711376
+ ],
+ "Length": [
+  6452048
  ],
  "LeptonsPerSightIncrease": [
   5972803
@@ -1850,9 +2677,16 @@
  "LightningRod": [
   6422512
  ],
+ "LightningSound": [
+  5959919
+ ],
  "Loadable": [
   6345088,
   6346000
+ ],
+ "LobMusic": [
+  6672672,
+  6675984
  ],
  "Lob_18_": [
   6684416,
@@ -1868,6 +2702,7 @@
  ],
  "LocalSize": [
   4679549,
+  4680896,
   5433520
  ],
  "Locomotor": [
@@ -1890,18 +2725,37 @@
   6056128,
   6059024
  ],
+ "MAPSEL.INI": [
+  5610176
+ ],
  "MCVDeploy": [
   6172304,
   6172672
  ],
+ "MEMO": [
+  6224756
+ ],
+ "MISSIONS.PKT": [
+  6114960,
+  6115219
+ ],
  "MMRampBase": [
   5155328
+ ],
+ "MUTANT": [
+  6000992
  ],
  "ManualControl": [
   6238422
  ],
  "ManualReload": [
   6422512
+ ],
+ "MapCheck.txt": [
+  5372960
+ ],
+ "MapVQ": [
+  5612508
  ],
  "MarbleMadness": [
   5159341
@@ -1912,11 +2766,20 @@
  "MaxDC": [
   5864704
  ],
+ "MaxDamage": [
+  5967151
+ ],
  "MaxDebris": [
   6420225
  ],
  "MaxEC": [
   5864704
+ ],
+ "MaxIQLevels": [
+  5986784
+ ],
+ "MaxMoney": [
+  5979248
  ],
  "MaxVeinholeGrowth": [
   5977169
@@ -1946,6 +2809,12 @@
  "MessageBoxA": [
   6888342
  ],
+ "MessageDelay": [
+  5963090
+ ],
+ "MetallicDebris": [
+  5961532
+ ],
  "Meteorites": [
   6172304,
   6172672
@@ -1958,6 +2827,12 @@
  ],
  "MinAngularVelocity": [
   6561152
+ ],
+ "MinDamage": [
+  5967151
+ ],
+ "MinPlayers": [
+  6116816
  ],
  "MinProductionSpeed": [
   5968333
@@ -1984,11 +2859,20 @@
  "MissileSpeedVar": [
   5968333
  ],
+ "ModemName": [
+  6114240
+ ],
+ "Money": [
+  5979248
+ ],
  "MonorailSlopes": [
   5155328
  ],
  "Morphable": [
   5159341
+ ],
+ "MoveFlash": [
+  5962554
  ],
  "MoveToShroud": [
   6419856
@@ -2001,6 +2885,16 @@
  ],
  "MovementZone": [
   6425107
+ ],
+ "MovieTime": [
+  5963090
+ ],
+ "MultiMaps": [
+  6114960,
+  6115219
+ ],
+ "MultiPlayer": [
+  6114240
  ],
  "Multiplay": [
   5010640
@@ -2024,6 +2918,9 @@
  "MyEffectivenessCoefficientDefault": [
   5977169
  ],
+ "NAM?": [
+  6225298
+ ],
  "NODBarracks": [
   4453471
  ],
@@ -2034,16 +2931,29 @@
   4218656,
   4218800,
   6056128,
-  6059024
+  6059024,
+  6115559,
+  6452048
  ],
  "Name: %s": [
   4732432
+ ],
+ "NamedCivilians": [
+  5963090
  ],
  "NaturalParticleLocation": [
   6422929
  ],
  "NaturalParticleSystem": [
   6422803
+ ],
+ "NetCard": [
+  5716584,
+  5717280
+ ],
+ "Network": [
+  5716584,
+  5717280
  ],
  "NewINIFormat": [
   6056128,
@@ -2066,8 +2976,12 @@
   6056128,
   6059024
  ],
+ "No Digest": [
+  6115559
+ ],
  "No Name": [
-  5159341
+  5159341,
+  6115559
  ],
  "No digest here mate. Nope.": [
   6101702
@@ -2077,6 +2991,9 @@
  ],
  "NoMovingFire": [
   6547680
+ ],
+ "NoThreat": [
+  5533383
  ],
  "NoUseTileLandType": [
   5730769
@@ -2102,11 +3019,19 @@
  "NodRegularPower": [
   5971524
  ],
+ "NodeCount": [
+  4320624,
+  4320960
+ ],
  "Nominal": [
   6423163
  ],
  "NonMarbleMadness": [
   5159341
+ ],
+ "Normal": [
+  5987488,
+  6452048
  ],
  "NormalZAdjust": [
   4455261
@@ -2120,8 +3045,23 @@
  "Not available": [
   4880096
  ],
+ "NotInsertable": [
+  6183232
+ ],
+ "Note": [
+  4649296
+ ],
+ "NukeDown": [
+  5957424
+ ],
+ "NukeProjectile": [
+  5957361
+ ],
  "NukeSilo": [
   4453471
+ ],
+ "NukeWarhead": [
+  5957251
  ],
  "NumLoopFrames": [
   5864974
@@ -2130,12 +3070,19 @@
   5428464,
   5429088
  ],
+ "OOSY": [
+  6223289
+ ],
  "Official": [
   6046428,
-  6059024
+  6059024,
+  6115559
  ],
  "OnAgeCheck": [
   6738208
+ ],
+ "OnFire": [
+  5961942
  ],
  "OnTransOnly": [
   6345088,
@@ -2152,11 +3099,32 @@
   6345598,
   6346000
  ],
+ "Options": [
+  5715952,
+  5717280
+ ],
+ "OptionsChanged": [
+  5959029
+ ],
+ "OverlayDataPack": [
+  5725003,
+  5725824
+ ],
+ "OverlayPack": [
+  5724720,
+  5725824
+ ],
+ "Overlays": [
+  5612508
+ ],
  "Overrides": [
   5730448
  ],
  "Owner": [
   6423163
+ ],
+ "PATH": [
+  6110512
  ],
  "PBarrelLength": [
   6425107
@@ -2164,14 +3132,42 @@
  "PBarrelThickness": [
   6425107
  ],
+ "PLB?": [
+  6226089
+ ],
+ "PLK?": [
+  6227371
+ ],
+ "PLL?": [
+  6226903
+ ],
+ "PLRS": [
+  6224343
+ ],
+ "PNGR": [
+  6224047
+ ],
+ "PNGS": [
+  6224000
+ ],
  "POWER": [
   4499232
  ],
+ "PROC": [
+  6224701
+ ],
  "PROGBAR2.SHP": [
-  5430800
+  5430800,
+  6098064
  ],
  "PadAircraft": [
   5972097
+ ],
+ "Parachute": [
+  5962617
+ ],
+ "Paralyzed": [
+  5533506
  ],
  "Paranoid": [
   5984335
@@ -2184,6 +3180,12 @@
  ],
  "ParticleCap": [
   5861520
+ ],
+ "ParticleSystems": [
+  5981712
+ ],
+ "Particles": [
+  5981600
  ],
  "ParticlesPerCoord": [
   5861520
@@ -2216,6 +3218,16 @@
   6056679,
   6059024
  ],
+ "PercentBuilt": [
+  4320624,
+  4320960
+ ],
+ "PhoneBook": [
+  6114240
+ ],
+ "PhoneIndex": [
+  6114240
+ ],
  "PhysicalSize": [
   6420225
  ],
@@ -2246,8 +3258,35 @@
   6057614,
   6059024
  ],
+ "PlayerAutoCrush": [
+  5967151
+ ],
+ "PlayerControl": [
+  4966624
+ ],
+ "PlayerJoined": [
+  5959029
+ ],
+ "PlayerLeft": [
+  5959029
+ ],
+ "PlayerReturnFire": [
+  5967151
+ ],
+ "PlayerScatter": [
+  5967151
+ ],
+ "Please insert disk %d": [
+  4661248
+ ],
  "Points": [
   6423163
+ ],
+ "Port": [
+  6114240
+ ],
+ "PoseDir": [
+  5957779
  ],
  "PositionPerturbationCoefficient": [
   5861520
@@ -2340,6 +3379,9 @@
  "PrerequisiteTech": [
   5968333
  ],
+ "Preview.bin": [
+  5677051
+ ],
  "Primary": [
   6420863
  ],
@@ -2351,7 +3393,14 @@
  ],
  "Priority": [
   6345088,
-  6346000
+  6346000,
+  6581888
+ ],
+ "PrivateKey": [
+  5077408
+ ],
+ "Production": [
+  5986784
  ],
  "ProductionAnim": [
   4455261
@@ -2371,6 +3420,9 @@
  "ProductionAnimZAdjust": [
   4455261
  ],
+ "ProgID": [
+  6183232
+ ],
  "Projectile": [
   6648254
  ],
@@ -2380,8 +3432,26 @@
  "Proximity": [
   4479904
  ],
+ "PublicKey": [
+  5077408,
+  5077648
+ ],
  "RADAR": [
   4499232
+ ],
+ "RIGHT": [
+  5715952
+ ],
+ "RING": [
+  5691472,
+  5691617
+ ],
+ "RULE*.INI": [
+  5085952
+ ],
+ "RULES.INI": [
+  5086117,
+  5086324
  ],
  "Radar": [
   4452944
@@ -2413,6 +3483,12 @@
  "RadarInvisible": [
   5711376
  ],
+ "RadarOff": [
+  5959919
+ ],
+ "RadarOn": [
+  5959919
+ ],
  "RadarVisible": [
   6423163
  ],
@@ -2422,6 +3498,9 @@
  "Radius": [
   5864974
  ],
+ "RailgunDamageRadius": [
+  5964640
+ ],
  "RampBase": [
   5155328
  ],
@@ -2430,8 +3509,18 @@
  ],
  "RandMap.Sed": [
   5429808,
+  5555296,
+  5555776,
+  5555963,
+  5560944,
+  5676400,
   6101584,
   6730977
+ ],
+ "RandMap.img": [
+  5424880,
+  5555512,
+  5556349
  ],
  "RandomLoopDelay": [
   4293327
@@ -2451,7 +3540,8 @@
   4479904
  ],
  "Rate": [
-  4292560
+  4292560,
+  5533629
  ],
  "RechargeTime": [
   6238422
@@ -2461,6 +3551,9 @@
  ],
  "Recoilless": [
   4453471
+ ],
+ "Recruitable": [
+  5533465
  ],
  "Recruiter": [
   6345088,
@@ -2498,11 +3591,17 @@
  "RepairBay": [
   5970595
  ],
+ "RepairDelay": [
+  5987568
+ ],
  "RepairPercent": [
   5972803
  ],
  "RepairRate": [
   5972803
+ ],
+ "RepairSell": [
+  5986784
  ],
  "RepairStep": [
   5972803
@@ -2510,12 +3609,18 @@
  "Repairable": [
   6423163
  ],
+ "Repeat": [
+  6452048
+ ],
  "Report": [
   4292560,
   6647104
  ],
  "RequiredForRMG": [
   5159341
+ ],
+ "Retaliate": [
+  5533547
  ],
  "RevealByHeight": [
   5968333
@@ -2557,6 +3662,9 @@
  "RunningFrames": [
   4293891
  ],
+ "SAVE%04lX.%3s": [
+  5212832
+ ],
  "SAVEGAME.NET": [
   5214656
  ],
@@ -2566,14 +3674,47 @@
  "SBarrelThickness": [
   6425107
  ],
+ "SCEN": [
+  6223955
+ ],
+ "SCOLD8.AUD": [
+  6069951
+ ],
+ "SCORE": [
+  6068512
+ ],
  "SCRN%04d.pcx": [
   5121904
+ ],
+ "SHAD": [
+  6223742
+ ],
+ "SID?": [
+  6225454
+ ],
+ "SIDEFNT3.PAL": [
+  5625408,
+  6068512
  ],
  "SLOP01Z.%s": [
   5155328
  ],
+ "SPED": [
+  6224928
+ ],
  "SPEECH%02d.MIX": [
   5112384
+ ],
+ "SPID": [
+  6224374
+ ],
+ "SUN.HLP": [
+  6663376
+ ],
+ "SUN.INI": [
+  5717280,
+  6114240,
+  6672672
  ],
  "SYNC%01d.TXT": [
   5888736
@@ -2581,21 +3722,77 @@
  "SandTile": [
   5155328
  ],
+ "SavourDelay": [
+  5963090
+ ],
  "Saw game completion due to player defeat": [
   4952011
  ],
+ "Scatter": [
+  5533588,
+  5986784
+ ],
+ "ScatterSound": [
+  5959919
+ ],
  "Scenario": [
-  4483024
+  4483024,
+  5612224,
+  6452048
+ ],
+ "ScoldSound": [
+  5959919
  ],
  "Scorch": [
   4292560
  ],
+ "Scorches": [
+  5964640
+ ],
+ "Scorches1": [
+  5965019
+ ],
+ "Scorches2": [
+  5965270
+ ],
+ "Scorches3": [
+  5965505
+ ],
+ "Scorches4": [
+  5965739
+ ],
+ "ScoreVolume": [
+  5716584,
+  5717280
+ ],
  "ScrapVoxelDebris": [
   5970532
+ ],
+ "ScreenHeight": [
+  5715952,
+  5717280
+ ],
+ "ScreenWidth": [
+  5715952,
+  5717280
  ],
  "Script": [
   6345598,
   6346000
+ ],
+ "ScriptTypes": [
+  6088640
+ ],
+ "ScrollMethod": [
+  5715952,
+  5717280
+ ],
+ "ScrollMultiplier": [
+  5959029
+ ],
+ "ScrollRate": [
+  5715952,
+  5717280
  ],
  "Secondary": [
   6421093
@@ -2616,6 +3813,12 @@
  "SelfHealing": [
   6423163
  ],
+ "SellBack": [
+  5986784
+ ],
+ "SellSound": [
+  5959029
+ ],
  "SensorArray": [
   4453471
  ],
@@ -2628,6 +3831,12 @@
  "Sequence": [
   5060208
  ],
+ "Serial": [
+  5642640
+ ],
+ "SerialDefaults": [
+  6114240
+ ],
  "SetName": [
   5159341
  ],
@@ -2637,11 +3846,17 @@
  "ShadowCaster": [
   5159341
  ],
+ "ShadowGrow": [
+  5979248
+ ],
  "ShadowIndex": [
   6425107
  ],
  "ShadowTiles": [
   5159341
+ ],
+ "ShakeScreen": [
+  5959029
  ],
  "ShareBarrelData": [
   6561611
@@ -2664,8 +3879,25 @@
  "ShouldUseCellDrawer": [
   4294879
  ],
+ "ShowAll": [
+  6672672,
+  6675984
+ ],
+ "ShroudGrow": [
+  5959029
+ ],
+ "ShroudRate": [
+  5963090
+ ],
  "Side": [
-  5010640
+  4966873,
+  5010640,
+  6114240,
+  6452048
+ ],
+ "SidebarCameoText": [
+  5715952,
+  5717280
  ],
  "SidebarImage": [
   6238528
@@ -2676,9 +3908,15 @@
  "SiloDamage": [
   4453471
  ],
+ "SilverCrate": [
+  5964500
+ ],
  "Size": [
   4678544,
-  5433520
+  4680896,
+  5433520,
+  5853856,
+  5854448
  ],
  "SkipMapSelect": [
   6056679,
@@ -2700,6 +3938,9 @@
  "SlowdownDistance": [
   6420225
  ],
+ "SmallFire": [
+  5962742
+ ],
  "SmallVisceroid": [
   5968276,
   6547680
@@ -2707,8 +3948,30 @@
  "SmartAI": [
   5010640
  ],
+ "Smoke": [
+  5962146,
+  5962241
+ ],
  "SnowOccupationBits": [
   6443992
+ ],
+ "Socket": [
+  5716584,
+  5717280
+ ],
+ "SoloCrateMoney": [
+  5964500
+ ],
+ "SoundLatency": [
+  5716584,
+  5717280
+ ],
+ "SoundList": [
+  6583248
+ ],
+ "SoundVolume": [
+  5716584,
+  5717280
  ],
  "SparkSpawnFrames": [
   5861520
@@ -2745,6 +4008,9 @@
  ],
  "SpawnsTiberium": [
   6443648
+ ],
+ "SpeakDelay": [
+  5963090
  ],
  "SpecialAnim": [
   4455261
@@ -2828,6 +4094,7 @@
   4455261
  ],
  "Speed": [
+  5987184,
   6423163,
   6647104
  ],
@@ -2839,6 +4106,9 @@
  ],
  "SpiralRadius": [
   5861520
+ ],
+ "SplashList": [
+  5966154
  ],
  "SpotlightAcceleration": [
   5977169
@@ -2894,6 +4164,9 @@
  "Sticky": [
   4292560
  ],
+ "StopSound": [
+  5959919
+ ],
  "Storage": [
   6421219
  ],
@@ -2903,6 +4176,10 @@
  "Strength": [
   5711376,
   5730448
+ ],
+ "StretchMovies": [
+  5715952,
+  5717280
  ],
  "Suffix": [
   5010640
@@ -2916,6 +4193,9 @@
  ],
  "SuperWeapon2": [
   4453471
+ ],
+ "SuperWeapons": [
+  5986784
  ],
  "Supress": [
   6647104
@@ -2938,18 +4218,66 @@
  "SuspendVoice": [
   6238132
  ],
+ "SystemError": [
+  5959029
+ ],
+ "System\\CurrentControlSet\\Services\\Class\\Modem": [
+  5562016
+ ],
  "TECH": [
-  4499232
+  4499232,
+  6223908
+ ],
+ "TEXT1.AUD": [
+  6083376
+ ],
+ "TEXT2.AUD": [
+  6083376
+ ],
+ "TEXT3.AUD": [
+  6083376
+ ],
+ "TIBR": [
+  6223575
+ ],
+ "TIBSUN.MIX": [
+  5097776
+ ],
+ "TID?": [
+  6225507
  ],
  "TILE": [
   5159341
  ],
+ "TIME": [
+  6224543
+ ],
+ "TIME01.SHP": [
+  6068972
+ ],
  "TREE%d%d": [
   5474240
  ],
+ "TRNY": [
+  6223242
+ ],
+ "TRUCKA": [
+  6338896
+ ],
+ "TRUCKB": [
+  6338784
+ ],
  "TS%d": [
+  4660680,
   6584944,
   6585017
+ ],
+ "TV%d": [
+  6663535,
+  6664123
+ ],
+ "TYPE.AUD": [
+  6069855
  ],
  "TargetDistanceCoefficient": [
   6425107
@@ -2978,9 +4306,16 @@
  "TargetStrengthCoefficientDefault": [
   5977169
  ],
+ "Targets": [
+  5612508
+ ],
  "TaskForce": [
   6345888,
   6346000
+ ],
+ "TaskForces": [
+  6317616,
+  6318064
  ],
  "TeamAddSelect_%d": [
   5114912
@@ -2997,8 +4332,14 @@
  "TeamSelect_%d": [
   5114480
  ],
+ "TeamTypes": [
+  6346896,
+  6347152
+ ],
  "TechLevel": [
+  4966624,
   5433520,
+  5979248,
   6345088,
   6346000,
   6423163
@@ -3012,15 +4353,25 @@
  "TerrainPalette": [
   4455261
  ],
+ "TeslaCharge": [
+  5959919
+ ],
  "TeslaLimit": [
   5984335
  ],
  "TeslaRatio": [
   5984335
  ],
+ "TeslaZap": [
+  5959919
+ ],
+ "Text%d": [
+  5612508
+ ],
  "Theater": [
   4292560,
   4678544,
+  4680896,
   5433520,
   5711376,
   6046547
@@ -3028,6 +4379,9 @@
  "Theme": [
   6056128,
   6059024
+ ],
+ "Themes": [
+  6452256
  ],
  "Thief": [
   5060992
@@ -3037,6 +4391,9 @@
  ],
  "ThreatPosed": [
   6423163
+ ],
+ "Tiberian Sun": [
+  6668352
  ],
  "Tiberium": [
   5428464,
@@ -3051,7 +4408,11 @@
   6057614,
   6059024
  ],
+ "TiberiumExplosionDamage": [
+  5964640
+ ],
  "TiberiumExplosive": [
+  5967151,
   6172304,
   6172672
  ],
@@ -3059,6 +4420,7 @@
   5984335
  ],
  "TiberiumGrows": [
+  5979248,
   6172304,
   6172672
  ],
@@ -3090,8 +4452,14 @@
   6172304,
   6172672
  ],
+ "TiberiumStrength": [
+  5964640
+ ],
  "TiberiumTransmogrify": [
   5972803
+ ],
+ "Tiberiums": [
+  6457312
  ],
  "TickTank": [
   4453471
@@ -3133,6 +4501,9 @@
   6056128,
   6059024
  ],
+ "TimerWarning": [
+  5963090
+ ],
  "TireVoxelDebris": [
   5970372
  ],
@@ -3154,8 +4525,15 @@
  "TooBigToFitUnderBridge": [
   6547680
  ],
+ "ToolTips": [
+  5715952,
+  5717280
+ ],
  "TotalAITeamCap": [
   5972803
+ ],
+ "Track": [
+  5986445
  ],
  "TrackTunnels": [
   5155328
@@ -3207,11 +4585,17 @@
   6345598,
   6346000
  ],
+ "TreeFire": [
+  5959919
+ ],
  "TreeFlammability": [
   5968333
  ],
  "TreeStrength": [
   5977169
+ ],
+ "TreeTargeting": [
+  5967151
  ],
  "TruckCrate": [
   6056679,
@@ -3224,7 +4608,11 @@
   5155328
  ],
  "TurboBoost": [
+  5967151,
   6647648
+ ],
+ "TurnRate": [
+  5987184
  ],
  "Turret": [
   6422512
@@ -3260,10 +4648,27 @@
   6422512
  ],
  "Type": [
+  6069855,
+  6081399,
   6238132
  ],
  "TypeImmune": [
   6419856
+ ],
+ "Typelib": [
+  6183232
+ ],
+ "UNB?": [
+  6225989
+ ],
+ "UNIT": [
+  6223861
+ ],
+ "UNK?": [
+  6227271
+ ],
+ "UNL?": [
+  6226803
  ],
  "URepairRate": [
   5972803
@@ -3274,11 +4679,24 @@
  "UnderDoorAnim": [
   4451318
  ],
+ "UnitActionLines": [
+  5715952,
+  5717280
+ ],
+ "UnitCount": [
+  5979248
+ ],
+ "UnitCrateType": [
+  5964237
+ ],
  "UnitReload": [
   4453471
  ],
  "UnitRepair": [
   4453471
+ ],
+ "UnloadingHarvester": [
+  5957680
  ],
  "Unsellable": [
   4452944
@@ -3311,6 +4729,20 @@
  "VEINHOLE.%s": [
   6570112
  ],
+ "VERS": [
+  6224983
+ ],
+ "VERSION.TXT": [
+  6578288,
+  6578800,
+  6578992,
+  6579168,
+  6579337,
+  6579616
+ ],
+ "VIDM": [
+  6224829
+ ],
  "Value": [
   6456640
  ],
@@ -3325,12 +4757,18 @@
  "VehicleThief": [
   5060992
  ],
+ "VeinAttack": [
+  5958352
+ ],
  "VeinDamage": [
   5977169
  ],
  "VeinGrowthEnabled": [
   6057614,
   6059024
+ ],
+ "VeinGrowthRate": [
+  5963090
  ],
  "Veinhole": [
   6625402
@@ -3347,6 +4785,9 @@
  "VeinholeTypeClass": [
   5977169
  ],
+ "VeinholeWarhead": [
+  5966713
+ ],
  "Velocity": [
   5864974
  ],
@@ -3355,6 +4796,9 @@
  ],
  "Verses": [
   6625402
+ ],
+ "VersionIndependentProgID": [
+  6183232
  ],
  "VeryHigh": [
   4479904
@@ -3387,6 +4831,11 @@
  "VeteranSpeed": [
   5969606
  ],
+ "Video": [
+  5715952,
+  5716584,
+  5717280
+ ],
  "Visceroids": [
   6172304,
   6172672
@@ -3409,14 +4858,52 @@
  "VoiceMove": [
   6421219
  ],
+ "VoiceOver": [
+  5612508
+ ],
  "VoiceSelect": [
   6421219
+ ],
+ "VoiceVolume": [
+  5716584,
+  5717280
+ ],
+ "Volume": [
+  6581888
  ],
  "Voxel": [
   5711376
  ],
+ "VoxelAnims": [
+  5981376
+ ],
  "VoxelIndex": [
   6561611
+ ],
+ "WIPE.AUD": [
+  6068972
+ ],
+ "WOnline": [
+  6672672,
+  6675984
+ ],
+ "WW.TiberianSun": [
+  6183232
+ ],
+ "WW.TiberianSun.1": [
+  6183232
+ ],
+ "WW.TiberianSun.1\\CLSID": [
+  6183232
+ ],
+ "WW.TiberianSun\\CLSID": [
+  6183232
+ ],
+ "WW.TiberianSun\\CurVer": [
+  6183232
+ ],
+ "Wake": [
+  5958230
  ],
  "WalkFrames": [
   6547680
@@ -3449,6 +4936,10 @@
   5864704,
   6562107,
   6647648
+ ],
+ "Warheads": [
+  5956176,
+  5981488
  ],
  "Water": [
   4678544
@@ -3486,6 +4977,9 @@
   6345598,
   6346000
  ],
+ "WaypointAnimationSpeed": [
+  5957861
+ ],
  "Waypoints": [
   6062048
  ],
@@ -3504,6 +4998,9 @@
  ],
  "Weight": [
   6420225
+ ],
+ "Wheel": [
+  5986513
  ],
  "WheeledDownhill": [
   5970595
@@ -3526,8 +5023,24 @@
  "WindEffect": [
   5864974
  ],
+ "Wipe": [
+  6068972,
+  6070161
+ ],
+ "WobbleDeviation": [
+  5987184
+ ],
+ "WobblesPerSecond": [
+  5987184
+ ],
  "Wood": [
   6625007
+ ],
+ "WoodCrate": [
+  5964500
+ ],
+ "WoodCrateImg": [
+  5964048
  ],
  "WorstLowPowerBuildRateCoefficient": [
   5977169
@@ -3565,22 +5078,49 @@
  "ZVelocityRange": [
   5864974
  ],
+ "Zombie": [
+  5533424
+ ],
  "ZoomInFactor": [
   5968333
  ],
  "[%s]": [
   6680882
  ],
+ "[%s] %s": [
+  5538928,
+  5540991,
+  5545668,
+  5545799,
+  5552484,
+  5554015,
+  5558916,
+  5559047
+ ],
  "[%s] : %s": [
   6732064
+ ],
+ "[Map]": [
+  5855424
+ ],
+ "[open] %s": [
+  6670960
+ ],
+ "\\StringFileInfo\\%04X%04X\\FileVersion": [
+  4648448
+ ],
+ "\\StringFileInfo\\%04X%04X\\InternalName": [
+  4648448
  ],
  "\\StringFileInfo\\%04X%04X\\ProductVersion": [
   6579936
  ],
  "\\VarFileInfo\\Translation": [
+  4648448,
   6579936
  ],
  "\\\\.\\vwin32": [
+  4511200,
   4511504,
   4511792
  ],
@@ -3605,17 +5145,24 @@
  "b%ce_ri%d.pcx": [
   5935264
  ],
+ "badcount.txt": [
+  5879408
+ ],
  "bar_ll.pcx": [
-  5790176
+  5790176,
+  5803281
  ],
  "bar_lr.pcx": [
-  5790176
+  5790176,
+  5803281
  ],
  "bar_ul.pcx": [
-  5790176
+  5790176,
+  5803281
  ],
  "bar_ur.pcx": [
-  5790176
+  5790176,
+  5803281
  ],
  "bde_li24.pcx": [
   5790176
@@ -3634,6 +5181,12 @@
  ],
  "bde_ri30.pcx": [
   5790176
+ ],
+ "bits_a.pcx": [
+  5802592
+ ],
+ "bits_i.pcx": [
+  5802592
  ],
  "bst_chkd.pcx": [
   5790176
@@ -3699,7 +5252,8 @@
   6555751
  ],
  "dbak6440.pcx": [
-  5790176
+  5790176,
+  5803281
  ],
  "dlgsys": [
   5935856
@@ -3719,17 +5273,23 @@
  "e+000": [
   6838665
  ],
+ "except.txt": [
+  4793712
+ ],
  "gdii.pcx": [
   5790176
  ],
  "leftbar.pcx": [
-  5790176
+  5790176,
+  5803281
  ],
  "nodi.pcx": [
   5790176
  ],
  "none": [
+  4213296,
   4256928,
+  4263424,
   4293891,
   4294388,
   4294580,
@@ -3737,13 +5297,22 @@
   4297008,
   4462704,
   4481664,
+  5012112,
   5060096,
   5062688,
   5731648,
   5862976,
+  5866928,
+  6088640,
   6089280,
+  6167424,
+  6238880,
+  6308352,
   6309360,
+  6317616,
   6318704,
+  6346752,
+  6346896,
   6444624,
   6480304,
   6480848,
@@ -3754,10 +5323,12 @@
   6649584
  ],
  "rPos": [
+  6397392,
   6555751
  ],
  "rightbar.pcx": [
-  5790176
+  5790176,
+  5803281
  ],
  "sb_psh_d.pcx": [
   5790176
@@ -3887,6 +5458,9 @@
  ],
  "wolclan.pcx": [
   5790176
+ ],
+ "woldata.key": [
+  5642640
  ],
  "wolhost.pcx": [
   5790176

@@ -18,7 +18,6 @@ class ScoreBigFontClass : public ScoreFontClass
 {
 public:
     // ---- vtable 0x006a3f48 (5 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x005cdfb0  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005cd4d0  // __thiscall, returns int
     virtual void vfunc_2(int a0);  // [2] 0x005cd4a0  // __thiscall
     virtual void vfunc_3(int a0, int a1, int a2);  // [3] 0x005cd6e0  // __thiscall

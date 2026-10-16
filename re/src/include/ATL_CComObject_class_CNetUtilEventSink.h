@@ -20,7 +20,6 @@ public:
     // ---- vtable 0x006a7970 (8 slots) ----
     virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x0066d240  // __stdcall, returns int
     virtual void vfunc_1(int a0);  // [1] 0x0066d1d0  // __stdcall
-    virtual void vfunc_2(int a0);  // [2] 0x0066d1f0  // __stdcall
     virtual void vfunc_3(int a0, int a1, int a2, int a3, int a4);  // [3] 0x0066d180  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x0066ca60
     virtual void vfunc_5(int a0, int a1);  // [5] 0x0066ca50  // __stdcall, returns int

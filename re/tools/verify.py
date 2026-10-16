@@ -7,7 +7,13 @@ Checks:
   2. the combined translation unit compiles
   3. class coverage: every class in the manifest has a header or definition
   4. vtable->class bindings re-resolve correctly through the RTTI COL chain
-  5. inheritance in emitted headers matches the reduced direct-base set
+  5. header content vs manifest: the vtable VA and per-slot target addresses
+     cited in each header match the manifest
+
+Note: checks 1-4 prove the tree compiles and that the MANIFEST agrees with the
+binary. Only check 5 reads what a header actually CLAIMS, so it is the only
+check that can fail when a header is wrong about the binary. It does not
+validate inheritance or member offsets yet.
 
 Exits non-zero if any check fails.
 """
@@ -151,6 +157,84 @@ def main():
         print(f"[4] vtable->class bindings: {ok_n}/{checked} verified")
         if checked and ok_n != checked:
             failures.append(f"{checked-ok_n} vtable bindings did not verify")
+
+    # 5. header content vs manifest
+    #
+    # Checks [1]-[4] only prove the headers PARSE and that the manifest agrees
+    # with the binary. None of them reads a header's cited evidence, so a header
+    # could cite a fabricated vtable address and still pass. This check closes
+    # that hole by comparing what each header CLAIMS against the manifest: the
+    # cited vtable VA and the cited per-slot target addresses.
+    if os.path.exists(manp):
+        man = json.load(open(manp))
+        hdr_by_ident = {}
+        for p in glob.glob(os.path.join(srcdir, "*.h")):
+            hdr_by_ident[os.path.basename(p)[:-2]] = p
+        # Every vtable RTTI attributes to a class, so a header citing a
+        # secondary (non-primary) vtable is accepted rather than flagged.
+        vts_by_class = {}
+        cj = os.path.join(outdir, "classes.json")
+        if os.path.exists(cj):
+            for v in json.load(open(cj)).get("vtables", []):
+                vts_by_class.setdefault(v.get("class", ""), set()).add(
+                    v["vtable_va"])
+        checked = bad = 0
+        bad_examples = []
+        for m in man:
+            ident = m.get("ident")
+            p = hdr_by_ident.get(ident)
+            if not p:
+                continue  # instantiation or nested class: owned by another header
+            src = open(p).read()
+            # cited vtable VA in the header banner
+            vm = re.search(r"//\s*vtable\s*:\s*0x([0-9a-fA-F]+)", src)
+            if not vm:
+                continue
+            checked += 1
+            cited = int(vm.group(1), 16)
+            # A class may legitimately own several vtables (MSVC emits one per
+            # base subobject; RTTI records them with a nonzero `offset`). The
+            # header is free to cite any of them, so accept the cited VA when
+            # RTTI attributes it to this class, not only when it is the primary.
+            known = vts_by_class.get(m["class"], set())
+            if known:
+                if cited not in known:
+                    bad += 1
+                    if len(bad_examples) < 5:
+                        bad_examples.append(
+                            f"{ident}: header cites vtable 0x{cited:08x}, "
+                            f"which RTTI does not attribute to this class "
+                            f"(known: "
+                            f"{', '.join(hex(v) for v in sorted(known)[:4])})")
+                    continue
+            elif cited != m["vtable"]:
+                bad += 1
+                if len(bad_examples) < 5:
+                    bad_examples.append(
+                        f"{ident}: header cites vtable 0x{cited:08x}, "
+                        f"manifest has 0x{m['vtable']:08x}")
+                continue
+            # Slot targets are only comparable when the header cites the
+            # PRIMARY vtable, since the manifest's `entries` describe that one.
+            if cited != m["vtable"]:
+                continue
+            # cited per-slot targets, e.g. "// [3] 0x00405790"
+            cited_slots = {}
+            for sm in re.finditer(r"//\s*\[(\d+)\]\s*0x([0-9a-fA-F]+)", src):
+                cited_slots[int(sm.group(1))] = int(sm.group(2), 16)
+            for idx, va in cited_slots.items():
+                if idx < len(m["entries"]) and m["entries"][idx] != va:
+                    bad += 1
+                    if len(bad_examples) < 5:
+                        bad_examples.append(
+                            f"{ident}: slot [{idx}] cites 0x{va:08x}, "
+                            f"manifest has 0x{m['entries'][idx]:08x}")
+                    break
+        print(f"[5] header content vs manifest: {checked-bad}/{checked} verified")
+        if bad:
+            failures.append(
+                f"{bad} headers disagree with the manifest "
+                f"({'; '.join(bad_examples)})")
 
     print()
     if failures:

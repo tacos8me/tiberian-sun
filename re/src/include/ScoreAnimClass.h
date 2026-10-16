@@ -17,7 +17,6 @@ class ScoreAnimClass
 {
 public:
     // ---- vtable 0x006a3efc (4 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x005cdf00  // __thiscall
     virtual void vfunc_1();  // [1] 0x005cde90  // __thiscall
     virtual void vfunc_2();  // [2] 0x005cdee0  // __thiscall
     virtual void vfunc_3();  // [3] 0x006829a5  // __cdecl

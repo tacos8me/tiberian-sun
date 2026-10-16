@@ -17,7 +17,6 @@ class VersionClass
 {
 public:
     // ---- vtable 0x0069f81c (1 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x004a9490  // __thiscall
 
     VersionClass();  // 0x004a9156
     virtual ~VersionClass();

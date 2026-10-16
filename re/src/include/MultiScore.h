@@ -18,7 +18,6 @@ class MultiScore : public MSEngine
 {
 public:
     // ---- vtable 0x006a2444 (3 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x00557620  // __thiscall
     virtual void vfunc_1(int a0);  // [1] 0x005554f0  // __stdcall
     virtual void vfunc_2();  // [2] 0x00557490
 

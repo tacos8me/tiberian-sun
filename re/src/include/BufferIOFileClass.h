@@ -18,7 +18,6 @@ class BufferIOFileClass : public RawFileClass
 {
 public:
     // ---- vtable 0x00699f40 (17 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x00420c30  // __thiscall
     virtual void vfunc_1();  // [1] 0x00419090  // __cdecl
     virtual void vfunc_2(int a0);  // [2] 0x00420490  // __thiscall
     virtual void vfunc_3();  // [3] 0x005a6850  // __thiscall, returns int

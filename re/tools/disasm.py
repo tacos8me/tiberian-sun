@@ -108,15 +108,45 @@ def find_prologues(bin_):
     starts = set()
     # push ebp; mov ebp, esp
     pats = [
-        b"\x55\x8b\xec",
+        b"\x55\x8b\xec",         # push ebp; mov ebp, esp
         b"\x55\x8b\x6c\x24",     # push ebp; mov ebp,[esp+x]
         b"\x6a\xff\x68",         # push -1; push imm32 (SEH frame)
         b"\x83\xec",             # sub esp, imm8
         b"\x81\xec",             # sub esp, imm32
+        # Frame-less __thiscall entry points. MSVC omits the frame entirely for
+        # small member functions, so these begin by saving registers and
+        # immediately loading `this` from ECX. Missing them left 109 of
+        # TechnoClass's 214 vtable slots with no function record.
+        b"\x56\x8b\xf1",         # push esi; mov esi, ecx
+        b"\x57\x8b\xf9",         # push edi; mov edi, ecx
+        b"\x53\x8b\xd9",         # push ebx; mov ebx, ecx
+        b"\x51\x56\x8b\xf1",     # push ecx; push esi; mov esi, ecx
+        b"\x56\x57\x8b\xf9",     # push esi; push edi; mov edi, ecx
+        b"\x8b\x44\x24\x04",     # mov eax, [esp+4]   (__stdcall, no frame)
+        b"\x8b\x4c\x24\x04",     # mov ecx, [esp+4]
+        b"\x8b\x54\x24\x04",     # mov edx, [esp+4]
     ]
-    for i in range(len(blob) - 4):
-        if blob[i] == 0x55 and blob[i + 1] == 0x8b and blob[i + 2] == 0xec:
-            starts.add(t["va"] + i)
+    # Scan for EVERY pattern in pats. Previously only the hardcoded 55 8b ec
+    # sequence was matched and the pats list above was dead code, which left
+    # 2,415 `83 ec` and 298 `81 ec` prologues unseeded.
+    #
+    # A bare `83 ec`/`81 ec` also occurs as `sub esp, N` inside an existing
+    # body, so a candidate is only accepted as a function start when the byte
+    # before it is a boundary (ret, int3 or nop padding, or a jmp).
+    BOUNDARY_TAIL = (b"\xc3", b"\xc2", b"\xcc", b"\x90", b"\xeb", b"\xe9")
+    for i in range(len(blob) - 6):
+        if not any(blob.startswith(p, i) for p in pats):
+            continue
+        # 55 8b ec is unambiguous and was already trusted; the sub-esp forms
+        # need a boundary check to avoid seeding mid-function.
+        if not blob.startswith(b"\x55\x8b\xec", i):
+            if i == 0:
+                pass
+            elif blob[i - 1:i] not in BOUNDARY_TAIL:
+                if not (blob[i - 2:i] in (b"\xcc\xcc", b"\x90\x90")
+                        or blob[i - 3:i] in (b"\xcc\xcc\xcc", b"\x90\x90\x90")):
+                    continue
+        starts.add(t["va"] + i)
     return starts
 
 
@@ -145,11 +175,17 @@ def main():
         d = json.load(open(vt_path))
         for v in d.get("vtables", []):
             va = v["vtable_va"]
+            # `continue`, not `break`: a vtable may legitimately contain a
+            # non-.text entry (a pure-virtual stub, an import thunk, or a
+            # pointer into .data). Breaking on the first one truncated the
+            # scan for 821 of 843 vtables, which is why TechnoClass was left
+            # with 146 of 214 slots unseeded.
             for k in range(0, 256, 4):
                 p = bin_.u32(va + k)
-                if p is None or not bin_.in_text(p):
+                if p is None:
                     break
-                seeds.add(p)
+                if bin_.in_text(p):
+                    seeds.add(p)
     print(f"seeds after vtables: {len(seeds)}")
 
     # --- Disassemble

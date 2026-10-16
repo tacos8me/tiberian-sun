@@ -18,22 +18,21 @@ class TiberiumClass : public AbstractTypeClass
 {
 public:
     // ---- vtable 0x006a6248 (27 slots) ----
-    virtual void vfunc_0(int a0, int a1, int a2);  // [0] 0x00405790  // __stdcall, returns int
-    virtual void vfunc_1(int a0);  // [1] 0x00405830  // __stdcall, returns int
-    virtual void vfunc_2(int a0);  // [2] 0x00405840  // __stdcall, returns int
+    virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x00405790  // __stdcall, returns int
+    virtual void Init(int a0);  // [1] 0x00405830  // __stdcall, returns int
+    virtual void Shutdown(int a0);  // [2] 0x00405840  // __stdcall, returns int
     virtual void vfunc_3(int a0, int a1);  // [3] 0x00628900  // __stdcall, returns int
-    virtual void vfunc_4(int a0);  // [4] 0x00405990  // __stdcall
-    virtual void vfunc_5(int a0, int a1, int a2, int a3);  // [5] 0x00628940
+    virtual void Release(int a0);  // [4] 0x00405990  // __stdcall
     virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x00628b80  // __stdcall
     virtual void vfunc_7(int a0, int a1);  // [7] 0x00628b50  // __stdcall, returns int
     virtual void vfunc_8(int a0);  // [8] 0x0062a100  // __thiscall
-    virtual void vfunc_9();  // [9] 0x004059b0  // __cdecl
+    virtual void Set_ID();  // [9] 0x004059b0  // __cdecl
     virtual void vfunc_10(int a0, int a1);  // [10] 0x00628bf0  // __stdcall
     virtual void vfunc_11();  // [11] 0x0062a0e0  // __cdecl, returns int
     virtual void vfunc_12();  // [12] 0x0062a0d0  // __cdecl, returns int
     virtual void vfunc_13(int a0);  // [13] 0x00628890  // __thiscall
-    virtual void vfunc_14();  // [14] 0x004059d0  // __cdecl
-    virtual void vfunc_15();  // [15] 0x004059e0  // __cdecl, returns int
+    virtual void Save();  // [14] 0x004059d0  // __cdecl
+    virtual void GetSizeMax();  // [15] 0x004059e0  // __cdecl, returns int
     virtual void vfunc_16();  // [16] 0x0062a0f0  // __cdecl
     virtual void vfunc_17();  // [17] 0x00405970  // __cdecl
     virtual void vfunc_18(int a0);  // [18] 0x00405a00  // __stdcall
@@ -44,7 +43,7 @@ public:
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
     virtual void vfunc_24(int a0);  // [24] 0x00406010  // __stdcall
     virtual void vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [25] 0x00628540  // __thiscall  // refs "Spread"
-    virtual void vfunc_26(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
+    virtual void Set_ID(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
 
     TiberiumClass();  // 0x006282b3
     virtual ~TiberiumClass();
