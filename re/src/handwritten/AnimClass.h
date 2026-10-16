@@ -179,4 +179,45 @@ public:
     //
     // The stream ctor 0x415860 clears +0x70; the copy ctor 0x413700 clears
     // +0x64 and +0x68.
+
+    // ---- data members (offsets from ctor 0x00412f30) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x699890
+    unsigned char pad_004[0x31];
+    unsigned long m_035;  // init 0x1
+    unsigned char pad_039[0x13];
+    unsigned long m_04c;  // /* ? */
+    unsigned long m_050;  // /* ? */
+    unsigned char pad_054[0x4];
+    unsigned long m_058;  // /* ? */
+    unsigned long m_05c;  // /* ? */
+    unsigned long m_060;  // init 0x1
+    unsigned long m_064;  // /* ? */
+    unsigned long m_068;  // /* ? */
+    unsigned long m_06c;  // /* ? */
+    unsigned long m_070;  // /* ? */
+    unsigned long m_074;  // init 0x3e8
+    unsigned long m_078;  // /* ? */
+    unsigned long m_07c;  // /* ? */
+    unsigned char pad_080[0xc];
+    unsigned long m_08c;  // /* ? */
+    unsigned long m_090;  // /* ? */
+    unsigned char pad_094[0x4];
+    unsigned long m_098;  // /* ? */
+    unsigned long m_09c;  // /* ? */
+    unsigned long m_0a0;  // /* ? */
+    unsigned long m_0a4;  // /* ? */
+    unsigned long m_0a8;  // /* ? */
+    unsigned long m_0ac;  // /* ? */
+    unsigned char pad_0b0[0x38];
+    unsigned long m_0e8;  // /* ? */
+    unsigned long m_0ec;  // /* ? */
+    unsigned long m_0f0;  // /* ? */
+    unsigned long m_0f4;  // init 0x3ff00000
+    unsigned long m_0f8;  // /* ? */
+    unsigned long m_0fc;  // /* ? */
+    unsigned long m_100;  // /* ? */
+    unsigned long m_104;  // init 0x1
+
 };

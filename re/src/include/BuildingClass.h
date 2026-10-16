@@ -244,26 +244,16 @@ public:
     BuildingClass();  // 0x00425530
     virtual ~BuildingClass();
 
-    // ---- data members (offsets from ctor 0x0042564e) ----
+    // ---- data members (offsets from ctor 0x00425530) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69a2d0
-    unsigned char pad_004[0x280];
-    unsigned long m_284;  // /* ? */
-    unsigned long m_288;  // /* ? */
-    unsigned long m_28c;  // /* ? */
-    unsigned char pad_290[0x28];
+    unsigned long m_004;  // init 0x69a2b4
+    unsigned char pad_008[0x2b0];
     unsigned long m_2b8;  // /* ? */
-    unsigned char pad_2bc[0x24];
-    unsigned long m_2e0;  // /* ? */
-    unsigned char pad_2e4[0x8];
-    unsigned long m_2ec;  // /* ? */
-    unsigned long m_2f0;  // /* ? */
-    unsigned long m_2f4;  // /* ? */
-    unsigned long m_2f8;  // /* ? */
-    unsigned long m_2fc;  // /* ? */
-    unsigned long m_300;  // /* ? */
-    unsigned long m_304;  // /* ? */
-    unsigned long m_308;  // /* ? */
-    unsigned long m_30c;  // /* ? */
+    unsigned long m_2bc;  // /* ? */
+    unsigned char pad_2c0[0x4];
+    unsigned long m_2c4;  // /* ? */
+    unsigned long m_2c8;  // /* ? */
+    unsigned long m_2cc;  // init 0x1
 };

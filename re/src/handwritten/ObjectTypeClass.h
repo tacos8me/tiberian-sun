@@ -57,13 +57,10 @@ public:
     char  m_Name[25];       // +0x14  /* ? */ INI "Name" (25-byte inline buffer)
     bool  m_NameSet;        // +0x2d  /* ? */
 
-    // ---- data members (offsets from ctor 0x00405d42) ----
+    // ---- data members (offsets from ctor 0x00405d50) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x698ae8
-    unsigned long m_004;  // init 0x698acc
-    unsigned char pad_008[0x25];
-    unsigned long m_02d;  // zero-initialised
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -134,4 +131,52 @@ public:
     int   m_Voxel;              // +0x98  /* ? */ INI "Voxel"
     // +0x9c..+0x120: further fields initialised by the ctor; names not yet
     // pinned to individual INI keys.  /* ? */
+
+    // ---- data members (offsets from ctor 0x00571220) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a2a90
+    unsigned long m_004;  // init 0x6a2a74
+    unsigned char pad_008[0x58];
+    unsigned long m_060;  // /* ? */
+    unsigned long m_064;  // /* ? */
+    unsigned long Strength;  // +0x068 (INI key)
+    unsigned long m_06c;  // /* ? */
+    unsigned long m_070;  // /* ? */
+    unsigned long m_074;  // /* ? */
+    unsigned long m_078;  // /* ? */
+    unsigned long m_07c;  // /* ? */
+    unsigned long m_080;  // /* ? */
+    unsigned long m_084;  // /* ? */
+    unsigned long m_088;  // /* ? */
+    unsigned long m_08c;  // /* ? */
+    unsigned long m_090;  // init 0xffffffff
+    unsigned char pad_094[0x19];
+    unsigned long m_0ad;  // /* ? */
+    unsigned char pad_0b1[0x15];
+    unsigned long m_0c6;  // /* ? */
+    unsigned long LegalTarget;  // +0x0ca (INI key)
+    unsigned long m_0ce;  // /* ? */
+    unsigned long m_0d2;  // /* ? */
+    unsigned char pad_0d6[0x2];
+    unsigned long m_0d8;  // /* ? */
+    unsigned long m_0dc;  // /* ? */
+    unsigned long m_0e0;  // /* ? */
+    unsigned long m_0e4;  // /* ? */
+    unsigned long m_0e8;  // /* ? */
+    unsigned long m_0ec;  // /* ? */
+    unsigned long m_0f0;  // /* ? */
+    unsigned long m_0f4;  // /* ? */
+    unsigned long m_0f8;  // /* ? */
+    unsigned long m_0fc;  // /* ? */
+    unsigned long m_100;  // /* ? */
+    unsigned long m_104;  // /* ? */
+    unsigned long m_108;  // /* ? */
+    unsigned long m_10c;  // /* ? */
+    unsigned long m_110;  // /* ? */
+    unsigned long m_114;  // /* ? */
+    unsigned long m_118;  // /* ? */
+    unsigned long m_11c;  // /* ? */
+    unsigned long m_120;  // /* ? */
+
 };

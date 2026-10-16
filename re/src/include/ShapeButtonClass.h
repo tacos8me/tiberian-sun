@@ -56,17 +56,19 @@ public:
     ShapeButtonClass();  // 0x0047efcf
     virtual ~ShapeButtonClass();
 
-    // ---- data members (offsets from ctor 0x0047f172) ----
+    // ---- data members (offsets from ctor 0x005d7a10) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69d930
-    unsigned char pad_004[0x28];
-    unsigned long m_02c;  // /* ? */
+    unsigned long m_000;  // init 0x69d8a8
+    unsigned char pad_004[0x10];
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned char pad_01c[0x14];
     unsigned long m_030;  // /* ? */
     unsigned long m_034;  // /* ? */
     unsigned long m_038;  // /* ? */
     unsigned long m_03c;  // /* ? */
     unsigned long m_040;  // /* ? */
-    unsigned long m_044;  // /* ? */
-    unsigned long m_048;  // /* ? */
+    unsigned char pad_044[0x1];
+    unsigned long m_045;  // /* ? */
 };

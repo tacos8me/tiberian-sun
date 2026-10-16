@@ -179,4 +179,15 @@ public:
     //
     // The stream ctor 0x501a40 additionally initialises +0x1194 and +0x1198
     // and installs vtable 0x699dc8 at +0x1184 (a different vector type).
+
+    // ---- data members (offsets from ctor 0x00501930) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a19f0
+    unsigned char pad_004[0x160];
+    unsigned long m_164;  // init 0x6a1a68
+    unsigned long m_168;  // /* ? */
+    unsigned long m_16c;  // /* ? */
+    unsigned long m_170;  // init 0x1
+
 };

@@ -48,22 +48,16 @@ public:
     FoggedObjectClass();  // 0x00499840
     virtual ~FoggedObjectClass();
 
-    // ---- data members (offsets from ctor 0x0049993b) ----
+    // ---- data members (offsets from ctor 0x00499840) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69e218
     unsigned long m_004;  // init 0x69e1fc
-    unsigned char pad_008[0xc];
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // init 0x14
-    unsigned char pad_024[0x10];
-    unsigned long m_034;  // /* ? */
-    unsigned char pad_038[0x8];
-    unsigned long m_040;  // /* ? */
-    unsigned long m_044;  // init 0xffffffff
-    unsigned long m_048;  // /* ? */
-    unsigned char pad_04c[0x18];
-    unsigned long m_064;  // init 0x1
+    unsigned char pad_008[0x44];
+    unsigned long m_04c;  // init 0x69e280
+    unsigned long m_050;  // /* ? */
+    unsigned long m_054;  // /* ? */
+    unsigned long m_058;  // init 0x1
+    unsigned long m_05c;  // /* ? */
+    unsigned long m_060;  // init 0xa
 };

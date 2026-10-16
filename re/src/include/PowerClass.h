@@ -74,7 +74,7 @@ public:
     PowerClass();  // 0x00593aa0
     virtual ~PowerClass();
 
-    // ---- data members (offsets from ctor 0x00593aa6) ----
+    // ---- data members (offsets from ctor 0x00593aa0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a328c

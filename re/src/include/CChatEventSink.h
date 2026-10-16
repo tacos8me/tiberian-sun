@@ -55,7 +55,7 @@ public:
     CChatEventSink();  // 0x006693d0
     virtual ~CChatEventSink();
 
-    // ---- data members (offsets from ctor 0x006693c8) ----
+    // ---- data members (offsets from ctor 0x006693d0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a78bc

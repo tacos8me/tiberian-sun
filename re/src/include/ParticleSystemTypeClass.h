@@ -62,9 +62,42 @@ public:
     ParticleSystemTypeClass();  // 0x00596e90
     virtual ~ParticleSystemTypeClass();
 
-    // ---- data members (offsets from ctor 0x00596ffe) ----
+    // ---- data members (offsets from ctor 0x00596e90) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a33a8
-    unsigned long m_004;  // init 0x6a338c
+    unsigned char pad_004[0xc9];
+    unsigned long m_0cd;  // init 0x1
+    unsigned char pad_0d1[0x53];
+    unsigned long HoldsWhat;  // +0x124 (INI key)
+    unsigned long m_128;  // /* ? */
+    unsigned long SpawnFrames;  // +0x12c (INI key)
+    unsigned long m_130;  // /* ? */
+    unsigned long ParticleCap;  // +0x134 (INI key)
+    unsigned long SpawnRadius;  // +0x138 (INI key)
+    unsigned long m_13c;  // /* ? */
+    unsigned long m_140;  // /* ? */
+    unsigned long m_144;  // /* ? */
+    unsigned long Lifetime;  // +0x148 (INI key)
+    unsigned long m_14c;  // /* ? */
+    unsigned long m_150;  // /* ? */
+    unsigned long m_154;  // /* ? */
+    unsigned long m_158;  // /* ? */
+    unsigned long m_15c;  // init 0x3fb99999
+    unsigned long m_160;  // /* ? */
+    unsigned long m_164;  // init 0x3f999999
+    unsigned long m_168;  // /* ? */
+    unsigned long m_16c;  // init 0x40390000
+    unsigned long m_170;  // /* ? */
+    unsigned long m_174;  // /* ? */
+    unsigned long m_178;  // /* ? */
+    unsigned long m_17c;  // /* ? */
+    unsigned long m_180;  // /* ? */
+    unsigned long m_184;  // /* ? */
+    unsigned long m_188;  // /* ? */
+    unsigned long m_18c;  // /* ? */
+    unsigned long m_190;  // /* ? */
+    unsigned long LightSize;  // +0x194 (INI key)
+    unsigned long m_198;  // /* ? */
+    unsigned long m_19c;  // /* ? */
 };

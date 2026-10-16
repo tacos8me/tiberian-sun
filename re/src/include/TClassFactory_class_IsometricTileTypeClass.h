@@ -27,10 +27,4 @@ public:
 
     TClassFactory_class_IsometricTileTypeClass();  // 0x005ebb18
     virtual ~TClassFactory_class_IsometricTileTypeClass();
-
-    // ---- data members (offsets from ctor 0x005ebb21) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4bc8
-    unsigned long m_004;  // zero-initialised
 };

@@ -56,7 +56,7 @@ public:
     ATL_CComObject_class_CChatEventSink();  // 0x0065fc40
     virtual ~ATL_CComObject_class_CChatEventSink();
 
-    // ---- data members (offsets from ctor 0x0065fc37) ----
+    // ---- data members (offsets from ctor 0x0065fc40) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a7834

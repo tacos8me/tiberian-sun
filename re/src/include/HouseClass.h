@@ -158,4 +158,19 @@ public:
     // +0x358..+0x3c8: embedded VectorClass/DynamicVectorClass sub-objects
     //   constructed in place (lea ecx,[esi+0x358] .. [esi+0x3c8]).  /* ? */
     // +0x4ec, +0x514, +0x52c: further embedded containers.  /* ? */
+
+    // ---- data members (offsets from ctor 0x004b3940) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69fa18
+    unsigned long m_004;  // init 0x69f9fc
+    unsigned char pad_008[0xc];
+    unsigned long m_014;  // init 0x69f9bc
+    unsigned long m_018;  // init 0x69f994
+    unsigned long m_01c;  // init 0x69f97c
+    unsigned char pad_020[0x134];
+    unsigned long m_154;  // /* ? */
+    unsigned char pad_158[0x4];
+    unsigned long m_15c;  // /* ? */
+
 };

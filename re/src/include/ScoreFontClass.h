@@ -27,7 +27,7 @@ public:
     ScoreFontClass();  // 0x005cd250
     virtual ~ScoreFontClass();
 
-    // ---- data members (offsets from ctor 0x005cd24c) ----
+    // ---- data members (offsets from ctor 0x005cd250) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a3f18

@@ -46,7 +46,7 @@ public:
     TubeClass();  // 0x0062e710
     virtual ~TubeClass();
 
-    // ---- data members (offsets from ctor 0x0062e707) ----
+    // ---- data members (offsets from ctor 0x0062e710) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a6470

@@ -27,10 +27,4 @@ public:
 
     TClassFactory_class_TagTypeClass();  // 0x005ead98
     virtual ~TClassFactory_class_TagTypeClass();
-
-    // ---- data members (offsets from ctor 0x005eada1) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4af0
-    unsigned long m_004;  // zero-initialised
 };

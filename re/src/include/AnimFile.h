@@ -30,11 +30,14 @@ public:
     AnimFile();  // 0x00416940
     virtual ~AnimFile();
 
-    // ---- data members (offsets from ctor 0x004169b0) ----
+    // ---- data members (offsets from ctor 0x004175a0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x699a6c
-    unsigned char pad_004[0xe10];
-    unsigned long m_e14;  // /* ? */
-    unsigned long m_e18;  // /* ? */
+    unsigned char pad_004[0x80];
+    unsigned long m_084;  // /* ? */
+    unsigned long m_088;  // /* ? */
+    unsigned char pad_08c[0xd80];
+    unsigned long m_e0c;  // /* ? */
+    unsigned long m_e10;  // /* ? */
 };

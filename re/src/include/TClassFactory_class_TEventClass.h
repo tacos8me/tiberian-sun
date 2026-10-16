@@ -27,10 +27,4 @@ public:
 
     TClassFactory_class_TEventClass();  // 0x005ea018
     virtual ~TClassFactory_class_TEventClass();
-
-    // ---- data members (offsets from ctor 0x005ea021) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4a18
-    unsigned long m_004;  // zero-initialised
 };

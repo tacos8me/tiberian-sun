@@ -23,19 +23,8 @@ public:
     CommBufferClass();  // 0x0045d974
     virtual ~CommBufferClass();
 
-    // ---- data members (offsets from ctor 0x0045d97a) ----
+    // ---- data members (offsets from ctor 0x0045da90) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69b094
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    unsigned char pad_014[0x10];
-    unsigned long m_024;  // /* ? */
-    unsigned char pad_028[0x8];
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // /* ? */
-    unsigned char pad_038[0x8];
-    unsigned long m_040;  // /* ? */
 };

@@ -40,26 +40,13 @@ public:
     IPXManagerClass();  // 0x004e7aa6
     virtual ~IPXManagerClass();
 
-    // ---- data members (offsets from ctor 0x004e7cf7) ----
+    // ---- data members (offsets from ctor 0x004e7df0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a0b34
-    unsigned long m_004;  // init 0x1
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned long m_01c;  // /* ? */
-    unsigned char pad_020[0x1c];
+    unsigned char pad_004[0x1];
+    unsigned long m_005;  // /* ? */
+    unsigned char pad_009[0x33];
     unsigned long m_03c;  // /* ? */
     unsigned long m_040;  // /* ? */
-    unsigned long m_044;  // /* ? */
-    unsigned long m_048;  // init 0x2
-    unsigned long m_04c;  // /* ? */
-    unsigned long m_050;  // init 0x3c
-    unsigned char pad_054[0x30];
-    unsigned long m_084;  // /* ? */
-    unsigned long m_088;  // /* ? */
-    unsigned long m_08c;  // /* ? */
 };

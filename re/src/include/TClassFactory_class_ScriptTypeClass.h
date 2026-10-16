@@ -27,10 +27,4 @@ public:
 
     TClassFactory_class_ScriptTypeClass();  // 0x005eaa98
     virtual ~TClassFactory_class_ScriptTypeClass();
-
-    // ---- data members (offsets from ctor 0x005eaaa1) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4ac0
-    unsigned long m_004;  // zero-initialised
 };

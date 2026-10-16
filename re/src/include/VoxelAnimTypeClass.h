@@ -62,12 +62,41 @@ public:
     VoxelAnimTypeClass();  // 0x00641ad0
     virtual ~VoxelAnimTypeClass();
 
-    // ---- data members (offsets from ctor 0x00641cab) ----
+    // ---- data members (offsets from ctor 0x00641ad0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a6d48
-    unsigned long m_004;  // init 0x6a6d2c
-    unsigned char pad_008[0x6c];
-    unsigned long m_074;  // /* ? */
-    unsigned long m_078;  // /* ? */
+    unsigned char pad_004[0xc4];
+    unsigned long m_0c8;  // /* ? */
+    unsigned long m_0cc;  // /* ? */
+    unsigned char pad_0d0[0x54];
+    unsigned long Normalized;  // +0x124 (INI key)
+    unsigned long m_128;  // /* ? */
+    unsigned long m_12c;  // init 0x1e
+    unsigned long m_130;  // init 0xa0000000
+    unsigned long m_134;  // init 0x3fe99999
+    unsigned long m_138;  // /* ? */
+    unsigned long m_13c;  // /* ? */
+    unsigned long m_140;  // init 0x1ce64946
+    unsigned long m_144;  // init 0x3fc656ed
+    unsigned long m_148;  // /* ? */
+    unsigned long m_14c;  // init 0x400c0000
+    unsigned long m_150;  // /* ? */
+    unsigned long m_154;  // init 0x40140000
+    unsigned long m_158;  // /* ? */
+    unsigned long m_15c;  // init 0x402e0000
+    unsigned long m_160;  // /* ? */
+    unsigned long m_164;  // /* ? */
+    unsigned long m_168;  // /* ? */
+    unsigned long m_16c;  // /* ? */
+    unsigned long m_170;  // /* ? */
+    unsigned long m_174;  // /* ? */
+    unsigned long m_178;  // /* ? */
+    unsigned long m_17c;  // /* ? */
+    unsigned long m_180;  // /* ? */
+    unsigned long m_184;  // /* ? */
+    unsigned long m_188;  // /* ? */
+    unsigned long m_18c;  // /* ? */
+    unsigned long m_190;  // /* ? */
+    unsigned long IsTiberium;  // +0x194 (INI key)
 };

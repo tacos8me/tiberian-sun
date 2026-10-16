@@ -63,7 +63,7 @@ public:
     IsometricTileTypeClass();  // 0x004ea0c0
     virtual ~IsometricTileTypeClass();
 
-    // ---- data members (offsets from ctor 0x004ea0b9) ----
+    // ---- data members (offsets from ctor 0x004ea0c0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a12d8

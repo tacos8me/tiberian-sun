@@ -37,24 +37,10 @@ public:
     virtual void    __stdcall Slot32();                                 // 0x4f12f0
     virtual void    __stdcall Slot39();                                 // 0x4f19f0
 
-    // ---- data members (offsets from ctor 0x004f0417) ----
+    // ---- data members (offsets from ctor 0x004f0bb0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a1484
-    unsigned long m_004;  // init 0x6a13bc
-    unsigned char pad_008[0x18];
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // /* ? */
-    unsigned char pad_028[0x18];
-    unsigned long m_040;  // /* ? */
-    unsigned long m_044;  // /* ? */
-    unsigned long m_048;  // /* ? */
-    unsigned long m_04c;  // /* ? */
-    unsigned long m_050;  // /* ? */
-    unsigned char pad_054[0x4];
-    unsigned long m_058;  // /* ? */
-    unsigned long m_05c;  // /* ? */
-    unsigned long m_060;  // /* ? */
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

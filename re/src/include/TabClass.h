@@ -74,7 +74,7 @@ public:
     TabClass();  // 0x00550270
     virtual ~TabClass();
 
-    // ---- data members (offsets from ctor 0x00550261) ----
+    // ---- data members (offsets from ctor 0x00550270) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a234c

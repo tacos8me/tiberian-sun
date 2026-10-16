@@ -71,4 +71,17 @@ public:
     bool  m_Carryall;           // +0x475 ctor: mov byte ptr [esi+0x475], bl (0)  INI "Carryall"
     bool  m_Rotors;             // +0x476 ctor: mov byte ptr [esi+0x476], bl (0)  INI "Rotors"
     bool  m_CustomRotor;        // +0x477 ctor: mov byte ptr [esi+0x477], bl (0)  INI "CustomRotor"
+
+    // ---- data members (offsets from ctor 0x0040f040) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x699168
+    unsigned char pad_004[0x378];
+    unsigned long m_37c;  // init 0x20
+    unsigned char pad_380[0xb5];
+    unsigned long m_435;  // /* ? */
+    unsigned char pad_439[0x37];
+    unsigned long m_470;  // init 0xffffffff
+    unsigned long m_474;  // /* ? */
+
 };

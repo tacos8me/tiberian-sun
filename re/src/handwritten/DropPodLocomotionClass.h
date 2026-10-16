@@ -50,16 +50,10 @@ public:
     virtual HRESULT __stdcall Piggyback_Available();                    // 0x480280
     virtual bool    __stdcall Is_Piggybacking();                        // 0x480460
 
-    // ---- data members (offsets from ctor 0x0047f857) ----
+    // ---- data members (offsets from ctor 0x0047f860) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69db40
-    unsigned long m_004;  // init 0x69da78
-    unsigned char pad_008[0xc];
-    unsigned long m_014;  // init 0x69da54
-    unsigned long m_018;  // /* ? */
-    unsigned char pad_01c[0xc];
-    unsigned long m_028;  // /* ? */
+    // 7 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

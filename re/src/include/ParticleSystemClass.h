@@ -128,11 +128,12 @@ public:
     ParticleSystemClass();  // 0x0058df60
     virtual ~ParticleSystemClass();
 
-    // ---- data members (offsets from ctor 0x0058dff0) ----
+    // ---- data members (offsets from ctor 0x0058df60) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a3084
-    unsigned char pad_004[0x4c];
+    unsigned char pad_004[0x48];
+    unsigned long m_04c;  // /* ? */
     unsigned long m_050;  // /* ? */
     unsigned long m_054;  // /* ? */
     unsigned long m_058;  // /* ? */
@@ -140,6 +141,9 @@ public:
     unsigned long m_07c;  // /* ? */
     unsigned long m_080;  // /* ? */
     unsigned long m_084;  // /* ? */
-    unsigned char pad_088[0x10];
+    unsigned char pad_088[0x4];
+    unsigned long m_08c;  // /* ? */
+    unsigned long m_090;  // /* ? */
+    unsigned long m_094;  // init 0x1d
     unsigned long m_098;  // /* ? */
 };

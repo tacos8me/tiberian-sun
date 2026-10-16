@@ -127,19 +127,32 @@ public:
     WaveClass();  // 0x006521f0
     virtual ~WaveClass();
 
-    // ---- data members (offsets from ctor 0x00652224) ----
+    // ---- data members (offsets from ctor 0x006521f0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a72e0
-    unsigned char pad_004[0xd4];
+    unsigned char pad_004[0x48];
+    unsigned long m_04c;  // /* ? */
+    unsigned long m_050;  // /* ? */
+    unsigned char pad_054[0x78];
+    unsigned long m_0cc;  // /* ? */
+    unsigned long m_0d0;  // init 0x64
+    unsigned char pad_0d4[0x4];
     unsigned long m_0d8;  // /* ? */
-    unsigned long m_0dc;  // init 0x3ff00000
-    unsigned char pad_0e0[0x48];
+    unsigned long m_0dc;  // /* ? */
+    unsigned long m_0e0;  // /* ? */
+    unsigned long m_0e4;  // /* ? */
+    unsigned long m_0e8;  // /* ? */
+    unsigned long m_0ec;  // /* ? */
+    unsigned char pad_0f0[0x30];
+    unsigned long m_120;  // /* ? */
+    unsigned long m_124;  // /* ? */
     unsigned long m_128;  // /* ? */
     unsigned char pad_12c[0x20];
     unsigned long m_14c;  // /* ? */
-    unsigned long m_150;  // init 0xa0
-    unsigned char pad_154[0x1c];
+    unsigned long m_150;  // /* ? */
+    unsigned long m_154;  // /* ? */
+    unsigned char pad_158[0x18];
     unsigned long m_170;  // init 0x6a1a68
     unsigned long m_174;  // /* ? */
     unsigned long m_178;  // init 0x5

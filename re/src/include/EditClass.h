@@ -60,18 +60,8 @@ public:
     EditClass();  // 0x0047efcf
     virtual ~EditClass();
 
-    // ---- data members (offsets from ctor 0x0047f172) ----
+    // ---- data members (offsets from ctor 0x0048cae0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69d9b4
-    unsigned char pad_004[0x28];
-    unsigned long m_02c;  // /* ? */
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // /* ? */
-    unsigned long m_038;  // /* ? */
-    unsigned long m_03c;  // /* ? */
-    unsigned long m_040;  // /* ? */
-    unsigned long m_044;  // /* ? */
-    unsigned long m_048;  // /* ? */
-    unsigned long m_04c;  // /* ? */
 };

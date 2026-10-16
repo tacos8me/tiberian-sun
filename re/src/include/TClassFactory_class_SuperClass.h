@@ -27,10 +27,4 @@ public:
 
     TClassFactory_class_SuperClass();  // 0x005e8f98
     virtual ~TClassFactory_class_SuperClass();
-
-    // ---- data members (offsets from ctor 0x005e8fa1) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4910
-    unsigned long m_004;  // zero-initialised
 };

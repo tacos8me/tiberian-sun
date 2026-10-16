@@ -27,10 +27,4 @@ public:
 
     TClassFactory_class_DropPodLocomotionClass();  // 0x005ed318
     virtual ~TClassFactory_class_DropPodLocomotionClass();
-
-    // ---- data members (offsets from ctor 0x005ed321) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4d48
-    unsigned long m_004;  // zero-initialised
 };

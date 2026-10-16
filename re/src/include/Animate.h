@@ -29,16 +29,8 @@ public:
     Animate();  // 0x00416940
     virtual ~Animate();
 
-    // ---- data members (offsets from ctor 0x00416967) ----
+    // ---- data members (offsets from ctor 0x00417570) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x699a90
-    unsigned char pad_004[0x80];
-    unsigned long m_084;  // /* ? */
-    unsigned long m_088;  // /* ? */
-    unsigned char pad_08c[0xd80];
-    unsigned long m_e0c;  // /* ? */
-    unsigned long m_e10;  // /* ? */
-    unsigned long m_e14;  // /* ? */
-    unsigned long m_e18;  // /* ? */
 };

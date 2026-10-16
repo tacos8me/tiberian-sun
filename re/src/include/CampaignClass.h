@@ -49,7 +49,7 @@ public:
     CampaignClass();  // 0x00446670
     virtual ~CampaignClass();
 
-    // ---- data members (offsets from ctor 0x00446662) ----
+    // ---- data members (offsets from ctor 0x00446670) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69ab60

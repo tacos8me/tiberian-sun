@@ -259,7 +259,7 @@ public:
     AircraftClass();  // 0x00407d60
     virtual ~AircraftClass();
 
-    // ---- data members (offsets from ctor 0x00407d54) ----
+    // ---- data members (offsets from ctor 0x00407d60) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x698d50

@@ -14,6 +14,7 @@ Method:
 
 Output: out/members.json
 """
+import bisect
 import capstone
 import json
 import os
@@ -24,7 +25,8 @@ IB = 0x400000
 
 
 class Bin:
-    def __init__(self, path):
+    def __init__(self, path, outdir="out"):
+        self.outdir = outdir
         self.data = open(path, "rb").read()
         import pefile
         pe = pefile.PE(path, fast_load=True)
@@ -52,6 +54,27 @@ class Bin:
             if raw <= off < raw + rs:
                 return vs + (off - raw)
         return None
+
+
+def enclosing_fn(bin_, site):
+    """Entry point of the recovered function containing `site`, or None.
+
+    Uses the authoritative set from out/functions.json rather than a byte
+    heuristic, so a store site is always attributed to the function that
+    actually contains it.
+    """
+    starts = getattr(bin_, "_fn_starts", None)
+    if starts is None:
+        starts = []
+        p = os.path.join(getattr(bin_, "outdir", "out"), "functions.json")
+        if os.path.exists(p):
+            with open(p) as f:
+                starts = sorted(x["va"] for x in json.load(f)["functions"])
+        bin_._fn_starts = starts
+    if not starts:
+        return None
+    i = bisect.bisect_right(starts, site) - 1
+    return starts[i] if i >= 0 else None
 
 
 def find_function_start(bin_, site, back=0x600):
@@ -125,7 +148,15 @@ def recover(bin_, vtva):
         return None, []
 
     for site in sites:
-        ctor = find_function_start(bin_, site)
+        # Prefer the authoritative recovered function start that CONTAINS this
+        # store site. find_function_start() below is a backward-scan heuristic
+        # that accepts only frame-based prologues (55 8B EC) and can land on a
+        # different function; measured against out/functions.json it produced a
+        # VA that was not a function start for 97% of classes, which
+        # misattributed member claims to the wrong constructor.
+        ctor = enclosing_fn(bin_, site)
+        if ctor is None:
+            ctor = find_function_start(bin_, site)
         if ctor is None:
             continue
         insns = disasm_func(bin_, ctor)
@@ -183,7 +214,7 @@ def main():
     bindir = sys.argv[1] if len(sys.argv) > 1 else "bin/GAME.EXE"
     outdir = sys.argv[2] if len(sys.argv) > 2 else "out"
 
-    bin_ = Bin(bindir)
+    bin_ = Bin(bindir, outdir)
     man = json.load(open(os.path.join(outdir, "class_manifest.json")))
 
     result = {}

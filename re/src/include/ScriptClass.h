@@ -46,7 +46,7 @@ public:
     ScriptClass();  // 0x005ce2a0
     virtual ~ScriptClass();
 
-    // ---- data members (offsets from ctor 0x005ce297) ----
+    // ---- data members (offsets from ctor 0x005ce2a0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a3f88

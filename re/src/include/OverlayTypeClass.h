@@ -63,7 +63,7 @@ public:
     OverlayTypeClass();  // 0x00576bf0
     virtual ~OverlayTypeClass();
 
-    // ---- data members (offsets from ctor 0x00576be2) ----
+    // ---- data members (offsets from ctor 0x00576bf0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a2d58

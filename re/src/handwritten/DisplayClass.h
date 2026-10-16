@@ -153,4 +153,31 @@ public:
     //
     // +0x00  vftable (0x69bb08)
     // +0x04  MapClass / GScreenClass base members (see MapClass.h)
+
+    // ---- data members (offsets from ctor 0x004723a0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69bb08
+    unsigned char pad_004[0x1198];
+    unsigned long m_119c;  // /* ? */
+    unsigned long m_11a0;  // /* ? */
+    unsigned long m_11a4;  // /* ? */
+    unsigned long m_11a8;  // /* ? */
+    unsigned long m_11ac;  // /* ? */
+    unsigned long m_11b0;  // /* ? */
+    unsigned long m_11b4;  // /* ? */
+    unsigned long m_11b8;  // /* ? */
+    unsigned long m_11bc;  // /* ? */
+    unsigned long m_11c0;  // /* ? */
+    unsigned long m_11c4;  // /* ? */
+    unsigned long m_11c8;  // /* ? */
+    unsigned long m_11cc;  // /* ? */
+    unsigned long m_11d0;  // /* ? */
+    unsigned long m_11d4;  // /* ? */
+    unsigned long m_11d8;  // /* ? */
+    unsigned long m_11dc;  // /* ? */
+    unsigned long m_11e0;  // /* ? */
+    unsigned long m_11e4;  // /* ? */
+    unsigned long m_11e8;  // /* ? */
+
 };

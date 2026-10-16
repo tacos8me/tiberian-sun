@@ -54,16 +54,4 @@ public:
 
     TextLabelClass();  // 0x006308ae
     virtual ~TextLabelClass();
-
-    // ---- data members (offsets from ctor 0x006308c7) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a65f4
-    unsigned char pad_004[0x20];
-    unsigned long m_024;  // zero-initialised
-    unsigned long m_028;  // zero-initialised
-    unsigned long m_02c;  // /* ? */
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // /* ? */
-    unsigned long m_038;  // init 0xffffffff
 };

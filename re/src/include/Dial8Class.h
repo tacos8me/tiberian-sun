@@ -54,47 +54,4 @@ public:
 
     Dial8Class();  // 0x00470736
     virtual ~Dial8Class();
-
-    // ---- data members (offsets from ctor 0x00470757) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b99c
-    unsigned char pad_004[0x28];
-    unsigned long m_02c;  // /* ? */
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // /* ? */
-    unsigned long m_038;  // /* ? */
-    unsigned long m_03c;  // /* ? */
-    unsigned long m_040;  // /* ? */
-    unsigned long m_044;  // /* ? */
-    unsigned long m_048;  // /* ? */
-    unsigned long m_04c;  // /* ? */
-    unsigned long m_050;  // /* ? */
-    unsigned long m_054;  // /* ? */
-    unsigned long m_058;  // /* ? */
-    unsigned long m_05c;  // /* ? */
-    unsigned long m_060;  // /* ? */
-    unsigned long m_064;  // /* ? */
-    unsigned long m_068;  // /* ? */
-    unsigned long m_06c;  // /* ? */
-    unsigned long m_070;  // /* ? */
-    unsigned long m_074;  // /* ? */
-    unsigned long m_078;  // /* ? */
-    unsigned long m_07c;  // /* ? */
-    unsigned long m_080;  // /* ? */
-    unsigned long m_084;  // /* ? */
-    unsigned long m_088;  // /* ? */
-    unsigned long m_08c;  // /* ? */
-    unsigned long m_090;  // /* ? */
-    unsigned long m_094;  // /* ? */
-    unsigned long m_098;  // /* ? */
-    unsigned long m_09c;  // /* ? */
-    unsigned long m_0a0;  // /* ? */
-    unsigned long m_0a4;  // /* ? */
-    unsigned long m_0a8;  // /* ? */
-    unsigned long m_0ac;  // /* ? */
-    unsigned long m_0b0;  // /* ? */
-    unsigned long m_0b4;  // /* ? */
-    unsigned long m_0b8;  // /* ? */
-    unsigned long m_0bc;  // /* ? */
 };

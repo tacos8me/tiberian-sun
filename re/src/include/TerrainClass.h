@@ -128,7 +128,7 @@ public:
     TerrainClass();  // 0x00622bf0
     virtual ~TerrainClass();
 
-    // ---- data members (offsets from ctor 0x00622be7) ----
+    // ---- data members (offsets from ctor 0x00622bf0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a5dfc

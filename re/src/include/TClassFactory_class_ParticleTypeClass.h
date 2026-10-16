@@ -27,10 +27,4 @@ public:
 
     TClassFactory_class_ParticleTypeClass();  // 0x005ee098
     virtual ~TClassFactory_class_ParticleTypeClass();
-
-    // ---- data members (offsets from ctor 0x005ee0a1) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4e20
-    unsigned long m_004;  // zero-initialised
 };

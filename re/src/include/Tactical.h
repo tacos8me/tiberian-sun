@@ -47,9 +47,60 @@ public:
     Tactical();  // 0x005f4b30
     virtual ~Tactical();
 
-    // ---- data members (offsets from ctor 0x005f4d3b) ----
+    // ---- data members (offsets from ctor 0x005f4b30) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a5298
     unsigned long m_004;  // init 0x6a527c
+    unsigned char pad_008[0xc];
+    unsigned long m_014;  // /* ? */
+    unsigned char pad_018[0x3c];
+    unsigned long m_054;  // init 0xffffffff
+    unsigned long m_058;  // /* ? */
+    unsigned long m_05c;  // /* ? */
+    unsigned long m_060;  // /* ? */
+    unsigned long m_064;  // /* ? */
+    unsigned long m_068;  // /* ? */
+    unsigned char pad_06c[0x4];
+    unsigned long m_070;  // /* ? */
+    unsigned long m_074;  // init 0x3ff00000
+    unsigned long m_078;  // /* ? */
+    unsigned long m_07c;  // /* ? */
+    unsigned long m_080;  // /* ? */
+    unsigned long m_084;  // /* ? */
+    unsigned long m_088;  // /* ? */
+    unsigned long m_08c;  // /* ? */
+    unsigned long m_090;  // /* ? */
+    unsigned long m_094;  // /* ? */
+    unsigned char pad_098[0xc80];
+    unsigned long m_d18;  // /* ? */
+    unsigned long m_d1c;  // /* ? */
+    unsigned long m_d20;  // /* ? */
+    unsigned long m_d24;  // /* ? */
+    unsigned long m_d28;  // /* ? */
+    unsigned long m_d2c;  // /* ? */
+    unsigned long m_d30;  // init 0x1
+    unsigned long m_d34;  // /* ? */
+    unsigned char pad_d38[0xc];
+    unsigned long m_d44;  // /* ? */
+    unsigned long m_d48;  // /* ? */
+    unsigned long m_d4c;  // /* ? */
+    unsigned long m_d50;  // /* ? */
+    unsigned long m_d54;  // /* ? */
+    unsigned long m_d58;  // /* ? */
+    unsigned char pad_d5c[0x4];
+    unsigned long m_d60;  // /* ? */
+    unsigned char pad_d64[0x30];
+    unsigned long m_d94;  // init 0x40aaaaa4
+    unsigned long m_d98;  // /* ? */
+    unsigned long m_d9c;  // /* ? */
+    unsigned long m_da0;  // /* ? */
+    unsigned long m_da4;  // init 0xc0aaaaa4
+    unsigned long m_da8;  // /* ? */
+    unsigned long m_dac;  // /* ? */
+    unsigned long m_db0;  // /* ? */
+    unsigned long m_db4;  // /* ? */
+    unsigned long m_db8;  // /* ? */
+    unsigned long m_dbc;  // init 0x3f800000
+    unsigned long m_dc0;  // /* ? */
 };

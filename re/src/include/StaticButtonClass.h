@@ -56,14 +56,8 @@ public:
     StaticButtonClass();  // 0x005eeea3
     virtual ~StaticButtonClass();
 
-    // ---- data members (offsets from ctor 0x005eeed7) ----
+    // ---- data members (offsets from ctor 0x005eefc0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a4ec8
-    unsigned char pad_004[0x10];
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned char pad_01c[0x14];
-    unsigned long m_030;  // zero-initialised
-    unsigned long m_034;  // /* ? */
 };

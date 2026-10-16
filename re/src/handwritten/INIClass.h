@@ -31,12 +31,10 @@ public:
     GenericNode* Next;   // /* ? */ list link
     GenericNode* Prev;   // /* ? */
 
-    // ---- data members (offsets from ctor 0x0040395a) ----
+    // ---- data members (offsets from ctor 0x00403960) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6988c4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -45,16 +43,10 @@ template <class T, class Key> class Node : public GenericNode
 public:
     T    Item;           // /* ? */ payload (INISection* / INIEntry*)
 
-    // ---- data members (offsets from ctor 0x004d6b4b) ----
+    // ---- data members (offsets from ctor 0x004d6bc7) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0418
-    unsigned long m_004;  // /* ? */
-    unsigned char pad_008[0x4];
-    unsigned long m_00c;  // /* ? */
-    unsigned long m_010;  // /* ? */
-    unsigned char pad_014[0x28];
-    unsigned long m_03c;  // /* ? */
+    // 7 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -122,16 +114,10 @@ private:
     // node helpers 0x4D8440 / 0x4D86B0 which walk `this + 0x1C`.
     void*       m_sectionList;   // /* ? */ offset 0x1C per 0x4D6B50/0x4D72B0
 
-    // ---- data members (offsets from ctor 0x004d4427) ----
+    // ---- data members (offsets from ctor 0x004d4430) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0400
-    unsigned char pad_004[0x18];
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // /* ? */
-    unsigned long m_028;  // /* ? */
-    unsigned long m_02c;  // /* ? */
+    // 7 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

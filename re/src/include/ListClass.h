@@ -72,33 +72,18 @@ public:
     ListClass();  // 0x004f6a9e
     virtual ~ListClass();
 
-    // ---- data members (offsets from ctor 0x004f6ac7) ----
+    // ---- data members (offsets from ctor 0x004f6ea0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a1654
-    unsigned char pad_004[0x28];
-    unsigned long m_02c;  // /* ? */
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // init 0x6a1720
+    unsigned char pad_004[0x10];
+    unsigned long m_014;  // /* ? */
+    unsigned char pad_018[0x1c];
+    unsigned long m_034;  // init 0x6a173c
     unsigned long m_038;  // /* ? */
     unsigned long m_03c;  // /* ? */
-    unsigned long m_040;  // init 0x1
-    unsigned long m_044;  // /* ? */
-    unsigned long m_048;  // init 0xa
-    unsigned long m_04c;  // /* ? */
-    unsigned long m_050;  // /* ? */
-    unsigned long m_054;  // zero-initialised
-    unsigned char pad_058[0xc];
-    unsigned long m_064;  // /* ? */
-    unsigned char pad_068[0x48];
-    unsigned long m_0b0;  // /* ? */
-    unsigned long m_0b4;  // /* ? */
-    unsigned char pad_0b8[0x44];
-    unsigned long m_0fc;  // /* ? */
-    unsigned long m_100;  // /* ? */
-    unsigned long m_104;  // /* ? */
-    unsigned long m_108;  // /* ? */
-    unsigned char pad_10c[0x38];
-    unsigned long m_144;  // /* ? */
-    unsigned long m_148;  // /* ? */
+    unsigned char pad_040[0x1];
+    unsigned long m_041;  // /* ? */
+    unsigned char pad_045[0xf];
+    unsigned long m_054;  // /* ? */
 };

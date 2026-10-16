@@ -25,7 +25,7 @@ public:
     RestateMission();  // 0x005a80c0
     virtual ~RestateMission();
 
-    // ---- data members (offsets from ctor 0x005a820c) ----
+    // ---- data members (offsets from ctor 0x005a8210) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a3a7c

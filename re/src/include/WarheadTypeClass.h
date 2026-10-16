@@ -64,18 +64,24 @@ public:
     int   LaserOuterColor;       // /* ? */ INI "LaserOuterColor"
     int   LaserOuterSpread;      // /* ? */ INI "LaserOuterSpread"
 
-    // ---- data members (offsets from ctor 0x00651501) ----
+    // ---- data members (offsets from ctor 0x00651370) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a7230
-    unsigned long m_004;  // init 0x6a7214
-    unsigned char pad_008[0x94];
-    unsigned long m_09c;  // init 0x6a3c48
-    unsigned long m_0a0;  // /* ? */
-    unsigned long m_0a4;  // /* ? */
-    unsigned long m_0a8;  // init 0x1
-    unsigned long m_0ac;  // /* ? */
-    unsigned long m_0b0;  // init 0xa
+    unsigned char pad_004[0x5c];
+    unsigned long m_060;  // /* ? */
+    unsigned long m_064;  // /* ? */
+    unsigned char pad_068[0x28];
+    unsigned long m_090;  // /* ? */
+    unsigned long m_094;  // /* ? */
+    unsigned long m_098;  // /* ? */
+    unsigned char pad_0b4[0x4];
+    unsigned long m_0b8;  // /* ? */
+    unsigned long m_0bc;  // /* ? */
+    unsigned long m_0c0;  // /* ? */
+    unsigned long m_0c4;  // /* ? */
+    unsigned long m_0c8;  // /* ? */
+    unsigned long m_0cc;  // /* ? */
+    // 7 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

@@ -39,7 +39,7 @@ public:
     CDFileClass();  // 0x00418e88
     virtual ~CDFileClass();
 
-    // ---- data members (offsets from ctor 0x00418dcb) ----
+    // ---- data members (offsets from ctor 0x00418e88) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned char pad_000[0x4];

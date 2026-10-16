@@ -39,4 +39,34 @@ public:
 
     WWMouseClass();  // 0x006727c0
     virtual ~WWMouseClass();
+
+    // ---- data members (offsets from ctor 0x006727c0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a7bcc
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    unsigned long m_00c;  // /* ? */
+    unsigned long m_010;  // /* ? */
+    unsigned long m_014;  // /* ? */
+    unsigned long m_018;  // /* ? */
+    unsigned long m_01c;  // /* ? */
+    unsigned long m_020;  // /* ? */
+    unsigned long m_024;  // /* ? */
+    unsigned char pad_028[0x10];
+    unsigned long m_038;  // /* ? */
+    unsigned long m_03c;  // /* ? */
+    unsigned long m_040;  // /* ? */
+    unsigned long m_044;  // /* ? */
+    unsigned char pad_048[0xc];
+    unsigned long m_054;  // /* ? */
+    unsigned long m_058;  // /* ? */
+    unsigned char pad_05c[0xc];
+    unsigned long m_068;  // /* ? */
+    unsigned long m_06c;  // /* ? */
+    unsigned char pad_070[0xc];
+    unsigned long m_07c;  // /* ? */
+    unsigned char pad_080[0xc];
+    unsigned long m_08c;  // /* ? */
+    unsigned long m_090;  // /* ? */
 };

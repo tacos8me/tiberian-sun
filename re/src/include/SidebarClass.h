@@ -187,4 +187,21 @@ public:
     //
     // The object is at least 0x1514 bytes; the exact StripClass array layout
     // between +0x18 and +0x1508 is not resolved here /* ? */.
+
+    // ---- data members (offsets from ctor 0x005d8760) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x6a4480
+    unsigned char pad_004[0x1540];
+    unsigned long m_1544;  // init 0x18
+    unsigned long m_1548;  // /* ? */
+    unsigned long m_154c;  // /* ? */
+    unsigned char pad_1550[0x3c8];
+    unsigned long m_1918;  // init 0x5c
+    unsigned long m_191c;  // /* ? */
+    unsigned long m_1920;  // /* ? */
+    unsigned char pad_1924[0x3b0];
+    unsigned long m_1cd4;  // /* ? */
+    unsigned long m_1cd8;  // /* ? */
+
 };

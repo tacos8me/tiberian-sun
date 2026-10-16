@@ -59,10 +59,8 @@ public:
     MyButton();  // 0x005a8783
     virtual ~MyButton();
 
-    // ---- data members (offsets from ctor 0x005a8a30) ----
+    // ---- data members (offsets from ctor 0x005a9360) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a3a8c
-    unsigned char pad_004[0x3c];
-    unsigned long m_040;  // /* ? */
 };

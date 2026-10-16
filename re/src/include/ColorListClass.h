@@ -75,17 +75,10 @@ public:
     ColorListClass();  // 0x0045b093
     virtual ~ColorListClass();
 
-    // ---- data members (offsets from ctor 0x0045b0b7) ----
+    // ---- data members (offsets from ctor 0x0045b8e0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69af84
-    unsigned char pad_004[0x148];
-    unsigned long m_14c;  // init 0x69b05c
-    unsigned long m_150;  // /* ? */
-    unsigned long m_154;  // /* ? */
-    unsigned long m_158;  // /* ? */
-    unsigned long m_15c;  // /* ? */
-    unsigned long m_160;  // init 0xa
-    unsigned long m_164;  // /* ? */
+    unsigned char pad_004[0x164];
     unsigned long m_168;  // /* ? */
 };

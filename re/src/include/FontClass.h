@@ -30,7 +30,7 @@ public:
     FontClass();  // 0x00672570
     virtual ~FontClass();
 
-    // ---- data members (offsets from ctor 0x00672569) ----
+    // ---- data members (offsets from ctor 0x00672570) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a7b5c

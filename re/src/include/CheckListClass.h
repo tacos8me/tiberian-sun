@@ -72,10 +72,8 @@ public:
     CheckListClass();  // 0x0045ab54
     virtual ~CheckListClass();
 
-    // ---- data members (offsets from ctor 0x0045abc7) ----
+    // ---- data members (offsets from ctor 0x0045ac20) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69aeb8
-    unsigned char pad_004[0x148];
-    unsigned long m_14c;  // zero-initialised
 };

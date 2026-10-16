@@ -39,18 +39,10 @@ private:
     // on top of the INIClass section list.
     char  m_filename[260];   // /* ? */
 
-    // ---- data members (offsets from ctor 0x004d993c) ----
+    // ---- data members (offsets from ctor 0x004d9940) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6988bc
-    unsigned char pad_004[0x18];
-    unsigned long m_01c;  // /* ? */
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // /* ? */
-    unsigned long m_028;  // /* ? */
-    unsigned long m_02c;  // /* ? */
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // /* ? */
+    // 9 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

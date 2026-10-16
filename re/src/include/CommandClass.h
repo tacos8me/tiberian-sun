@@ -40,10 +40,10 @@ public:
     virtual const char* Get_Description();   // 0x4e0ac0 (string id 0x1c)
     virtual const char* Get_UI_Description();// 0x4e0ad0 (string id 0x22)
 
-    // ---- data members (offsets from ctor 0x004e09f9) ----
+    // ---- data members (offsets from ctor 0x004e0a00) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0938
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -63,10 +63,10 @@ public:
     virtual const char* Get_Description();   // 0x4e0f60
     virtual const char* Get_UI_Description();// 0x4e0f70
 
-    // ---- data members (offsets from ctor 0x004dea56) ----
+    // ---- data members (offsets from ctor 0x004deac6) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a04bc
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -81,10 +81,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1020
     virtual const char* Get_UI_Description();// 0x4e1030
 
-    // ---- data members (offsets from ctor 0x004dea56) ----
+    // ---- data members (offsets from ctor 0x004dea55) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a04bc
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -99,10 +99,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1200
     virtual const char* Get_UI_Description();// 0x4e1210
 
-    // ---- data members (offsets from ctor 0x004de9e9) ----
+    // ---- data members (offsets from ctor 0x004de9e8) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a04d8
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -117,10 +117,10 @@ public:
     virtual const char* Get_Description();   // 0x4e10e0
     virtual const char* Get_UI_Description();// 0x4e10f0
 
-    // ---- data members (offsets from ctor 0x004de97c) ----
+    // ---- data members (offsets from ctor 0x004de97b) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a04f4
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -135,10 +135,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1380
     virtual const char* Get_UI_Description();// 0x4e1390
 
-    // ---- data members (offsets from ctor 0x004de90f) ----
+    // ---- data members (offsets from ctor 0x004de90e) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0510
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -153,10 +153,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1470
     virtual const char* Get_UI_Description();// 0x4e1480
 
-    // ---- data members (offsets from ctor 0x004de8a2) ----
+    // ---- data members (offsets from ctor 0x004de8a1) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a052c
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -171,10 +171,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1580
     virtual const char* Get_UI_Description();// 0x4e1590
 
-    // ---- data members (offsets from ctor 0x004de835) ----
+    // ---- data members (offsets from ctor 0x004de834) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0548
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -189,10 +189,10 @@ public:
     virtual const char* Get_Description();   // 0x4e15e0
     virtual const char* Get_UI_Description();// 0x4e15f0
 
-    // ---- data members (offsets from ctor 0x004de7c8) ----
+    // ---- data members (offsets from ctor 0x004de7c7) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0564
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -207,10 +207,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1880
     virtual const char* Get_UI_Description();// 0x4e1890
 
-    // ---- data members (offsets from ctor 0x004de75b) ----
+    // ---- data members (offsets from ctor 0x004de75a) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0580
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -225,10 +225,10 @@ public:
     virtual const char* Get_Description();   // 0x4e19b0
     virtual const char* Get_UI_Description();// 0x4e19c0
 
-    // ---- data members (offsets from ctor 0x004de6ee) ----
+    // ---- data members (offsets from ctor 0x004de6ed) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a059c
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -243,10 +243,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1a10
     virtual const char* Get_UI_Description();// 0x4e1a20
 
-    // ---- data members (offsets from ctor 0x004de681) ----
+    // ---- data members (offsets from ctor 0x004de680) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a05b8
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -261,10 +261,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1a60
     virtual const char* Get_UI_Description();// 0x4e1a70
 
-    // ---- data members (offsets from ctor 0x004de614) ----
+    // ---- data members (offsets from ctor 0x004de613) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a05d4
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -279,10 +279,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1ab0
     virtual const char* Get_UI_Description();// 0x4e1ac0
 
-    // ---- data members (offsets from ctor 0x004de5a7) ----
+    // ---- data members (offsets from ctor 0x004de5a6) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a05f0
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -297,10 +297,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1bd0
     virtual const char* Get_UI_Description();// 0x4e1be0
 
-    // ---- data members (offsets from ctor 0x004de53a) ----
+    // ---- data members (offsets from ctor 0x004de539) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a060c
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -315,10 +315,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1b00
     virtual const char* Get_UI_Description();// 0x4e1b10
 
-    // ---- data members (offsets from ctor 0x004de4cd) ----
+    // ---- data members (offsets from ctor 0x004de4cc) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0628
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -333,10 +333,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1f90
     virtual const char* Get_UI_Description();// 0x4e1fa0
 
-    // ---- data members (offsets from ctor 0x004de460) ----
+    // ---- data members (offsets from ctor 0x004de45f) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0644
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -351,10 +351,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1f40
     virtual const char* Get_UI_Description();// 0x4e1f50
 
-    // ---- data members (offsets from ctor 0x004de3f3) ----
+    // ---- data members (offsets from ctor 0x004de3f2) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0660
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -369,10 +369,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1ef0
     virtual const char* Get_UI_Description();// 0x4e1f00
 
-    // ---- data members (offsets from ctor 0x004de386) ----
+    // ---- data members (offsets from ctor 0x004de385) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a067c
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -387,10 +387,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1db0
     virtual const char* Get_UI_Description();// 0x4e1dc0
 
-    // ---- data members (offsets from ctor 0x004de319) ----
+    // ---- data members (offsets from ctor 0x004de318) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0698
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -405,10 +405,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1d60
     virtual const char* Get_UI_Description();// 0x4e1d70
 
-    // ---- data members (offsets from ctor 0x004de2ac) ----
+    // ---- data members (offsets from ctor 0x004de2ab) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a06b4
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -423,10 +423,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1d10
     virtual const char* Get_UI_Description();// 0x4e1d20
 
-    // ---- data members (offsets from ctor 0x004de23f) ----
+    // ---- data members (offsets from ctor 0x004de23e) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a06d0
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -441,10 +441,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1ea0
     virtual const char* Get_UI_Description();// 0x4e1eb0
 
-    // ---- data members (offsets from ctor 0x004de1d2) ----
+    // ---- data members (offsets from ctor 0x004de1d1) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a06ec
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -459,10 +459,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1e50
     virtual const char* Get_UI_Description();// 0x4e1e60
 
-    // ---- data members (offsets from ctor 0x004de165) ----
+    // ---- data members (offsets from ctor 0x004de164) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0708
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -477,10 +477,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1e00
     virtual const char* Get_UI_Description();// 0x4e1e10
 
-    // ---- data members (offsets from ctor 0x004de0f8) ----
+    // ---- data members (offsets from ctor 0x004de0f7) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0724
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -495,10 +495,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1cc0
     virtual const char* Get_UI_Description();// 0x4e1cd0
 
-    // ---- data members (offsets from ctor 0x004de08b) ----
+    // ---- data members (offsets from ctor 0x004de08a) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0740
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -513,10 +513,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1c70
     virtual const char* Get_UI_Description();// 0x4e1c80
 
-    // ---- data members (offsets from ctor 0x004de01e) ----
+    // ---- data members (offsets from ctor 0x004de01d) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a075c
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -531,10 +531,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1c20
     virtual const char* Get_UI_Description();// 0x4e1c30
 
-    // ---- data members (offsets from ctor 0x004ddfb1) ----
+    // ---- data members (offsets from ctor 0x004ddfb0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0778
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -549,10 +549,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2150
     virtual const char* Get_UI_Description();// 0x4e2160
 
-    // ---- data members (offsets from ctor 0x004ddf44) ----
+    // ---- data members (offsets from ctor 0x004ddf43) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0794
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -567,10 +567,10 @@ public:
     virtual const char* Get_Description();   // 0x4e20f0
     virtual const char* Get_UI_Description();// 0x4e2100
 
-    // ---- data members (offsets from ctor 0x004dded7) ----
+    // ---- data members (offsets from ctor 0x004dded6) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a07b0
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -585,10 +585,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2090
     virtual const char* Get_UI_Description();// 0x4e20a0
 
-    // ---- data members (offsets from ctor 0x004dde6b) ----
+    // ---- data members (offsets from ctor 0x004dde6a) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a07cc
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -603,10 +603,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2030
     virtual const char* Get_UI_Description();// 0x4e2040
 
-    // ---- data members (offsets from ctor 0x004dddfa) ----
+    // ---- data members (offsets from ctor 0x004dddf9) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a07e8
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -621,10 +621,10 @@ public:
     virtual const char* Get_Description();   // 0x4e1fe0
     virtual const char* Get_UI_Description();// 0x4e1ff0
 
-    // ---- data members (offsets from ctor 0x004ddd89) ----
+    // ---- data members (offsets from ctor 0x004ddd88) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0804
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -639,10 +639,10 @@ public:
     virtual const char* Get_Description();   // 0x4e25e0
     virtual const char* Get_UI_Description();// 0x4e25f0
 
-    // ---- data members (offsets from ctor 0x004ddd1c) ----
+    // ---- data members (offsets from ctor 0x004ddd1b) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0820
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -657,10 +657,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2550
     virtual const char* Get_UI_Description();// 0x4e2560
 
-    // ---- data members (offsets from ctor 0x004ddcaf) ----
+    // ---- data members (offsets from ctor 0x004ddcae) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a083c
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -675,10 +675,10 @@ public:
     virtual const char* Get_Description();   // 0x4e24c0
     virtual const char* Get_UI_Description();// 0x4e24d0
 
-    // ---- data members (offsets from ctor 0x004ddc42) ----
+    // ---- data members (offsets from ctor 0x004ddc41) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0858
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -693,10 +693,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2430
     virtual const char* Get_UI_Description();// 0x4e2440
 
-    // ---- data members (offsets from ctor 0x004ddbd5) ----
+    // ---- data members (offsets from ctor 0x004ddbd4) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0874
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -711,10 +711,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2390
     virtual const char* Get_UI_Description();// 0x4e23a0
 
-    // ---- data members (offsets from ctor 0x004ddb68) ----
+    // ---- data members (offsets from ctor 0x004ddb67) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0890
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -729,10 +729,10 @@ public:
     virtual const char* Get_Description();   // 0x4e22f0
     virtual const char* Get_UI_Description();// 0x4e2300
 
-    // ---- data members (offsets from ctor 0x004ddafb) ----
+    // ---- data members (offsets from ctor 0x004ddafa) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a08ac
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -747,10 +747,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2250
     virtual const char* Get_UI_Description();// 0x4e2260
 
-    // ---- data members (offsets from ctor 0x004dda8e) ----
+    // ---- data members (offsets from ctor 0x004dda8d) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a08c8
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -765,10 +765,10 @@ public:
     virtual const char* Get_Description();   // 0x4e21b0
     virtual const char* Get_UI_Description();// 0x4e21c0
 
-    // ---- data members (offsets from ctor 0x004dda22) ----
+    // ---- data members (offsets from ctor 0x004dda21) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a08e4
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -783,10 +783,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2670
     virtual const char* Get_UI_Description();// 0x4e2680
 
-    // ---- data members (offsets from ctor 0x004dd9fa) ----
+    // ---- data members (offsets from ctor 0x004dda00) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a0900
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -801,11 +801,10 @@ public:
     virtual const char* Get_Description();   // 0x4e0960 (string id 0x20)
     virtual const char* Get_UI_Description();// 0x4e0990
 
-    // ---- data members (offsets from ctor 0x004e08d7) ----
+    // ---- data members (offsets from ctor 0x004e08e0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a091c
-    unsigned long m_004;  // /* ? */
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -819,6 +818,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e0ac0 (string id 0x1c)
     virtual const char* Get_Description();   // 0x4e0ad0 (string id 0x22)
     virtual const char* Get_UI_Description();// 0x4e0b00
+
+    // ---- data members (offsets from ctor 0x004e0a50) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+
 };
 
 // vtable 0x6a0970, COL 0x6b1548
@@ -831,6 +836,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e0c70 (string id 0x1c)
     virtual const char* Get_Description();   // 0x4e0c80 (string id 0x24)
     virtual const char* Get_UI_Description();// 0x4e0cb0
+
+    // ---- data members (offsets from ctor 0x004e0c00) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+
 };
 
 // vtable 0x6a098c, COL 0x6b1598
@@ -843,6 +854,12 @@ public:
     virtual const char* Get_UI_Name();       // 0x4e0de0 (string id 0x1c)
     virtual const char* Get_Description();   // 0x4e0df0 (string id 0x26)
     virtual const char* Get_UI_Description();// 0x4e0e20
+
+    // ---- data members (offsets from ctor 0x004e0d70) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+
 };
 
 // vtable 0x6a09a8, COL 0x6b15e8
@@ -856,10 +873,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2700 (string id 0x88)
     virtual const char* Get_UI_Description();// 0x4e2710
 
-    // ---- data members (offsets from ctor 0x004e26b7) ----
+    // ---- data members (offsets from ctor 0x004e26c0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a09a8
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -874,10 +891,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2760 (string id 0x8d)
     virtual const char* Get_UI_Description();// 0x4e2770 ("SCRN%04d.pcx")
 
-    // ---- data members (offsets from ctor 0x004e271f) ----
+    // ---- data members (offsets from ctor 0x004e2720) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a09c4
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -892,10 +909,10 @@ public:
     virtual const char* Get_Description();   // 0x4e29c0 (string id 0x17d)
     virtual const char* Get_UI_Description();// 0x4e29d0
 
-    // ---- data members (offsets from ctor 0x004e2971) ----
+    // ---- data members (offsets from ctor 0x004e2980) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a09e0
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -910,10 +927,10 @@ public:
     virtual const char* Get_Description();   // 0x4e2a20 (string id 0x17b)
     virtual const char* Get_UI_Description();// 0x4e2a30
 
-    // ---- data members (offsets from ctor 0x004e29df) ----
+    // ---- data members (offsets from ctor 0x004e29e0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a09fc
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

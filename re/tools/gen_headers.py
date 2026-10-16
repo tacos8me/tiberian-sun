@@ -160,16 +160,33 @@ def class_body_span(src, class_name):
 
 
 def insert_member_block(src, class_name, block):
-    """Insert a member block at the end of `class_name`'s body.
+    """Replace or insert the machine-generated member block for `class_name`.
 
     Returns the new source, or None when the class body cannot be found.
     Appending to the owning header (rather than emitting a nested class body)
     keeps every header compiling standalone, which verify.py check 1 requires.
+
+    Any block written by a PREVIOUS run is removed first. Without this a rerun
+    accumulates: when the recovery improves and no longer produces an offset,
+    the stale declaration stays behind and verify.py check 7 correctly reports
+    it as an emitted offset with no corresponding recovered entry.
     """
     span = class_body_span(src, class_name)
     if not span:
         return None
-    _, end = span
+    start, end = span
+    body = src[start:end]
+    banner = "// ---- data members (offsets from ctor"
+    if banner in body:
+        # Excise the previous machine block: from its banner to the closing
+        # brace, keeping any curated text that preceded it.
+        cut = body.index(banner)
+        body = body[:cut].rstrip() + "\n"
+        src = src[:start] + body + src[end:]
+        span = class_body_span(src, class_name)
+        if not span:
+            return None
+        _, end = span
     # Back up over the trailing whitespace/newline before '}' so the inserted
     # block lands on its own lines and the closing brace stays put.
     at = end
@@ -790,9 +807,12 @@ def main():
                                  f"(no class {simple} in file)")
             continue
         body = src[span[0]:span[1]]
-        if "// ---- data members" in body:
-            skipped_already += 1
-            continue
+        # NOTE: do NOT skip when a banner is already present. A block written
+        # by a previous run must be REPLACED, not kept: when the recovery
+        # improves and stops producing an offset, the stale declaration would
+        # otherwise survive and verify.py check 7 would (correctly) report an
+        # emitted offset with no recovered entry. insert_member_block excises
+        # the old block first, so re-running is idempotent.
         block = member_block(m["class"], members, member_names)
         if not block:
             continue

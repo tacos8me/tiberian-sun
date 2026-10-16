@@ -27,10 +27,4 @@ public:
 
     TClassFactory_class_LightSourceClass();  // 0x005e9598
     virtual ~TClassFactory_class_LightSourceClass();
-
-    // ---- data members (offsets from ctor 0x005e95a1) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4970
-    unsigned long m_004;  // zero-initialised
 };

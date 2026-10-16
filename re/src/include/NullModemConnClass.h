@@ -32,11 +32,8 @@ public:
     NullModemConnClass();  // 0x0056a1fd
     virtual ~NullModemConnClass();
 
-    // ---- data members (offsets from ctor 0x0056a29c) ----
+    // ---- data members (offsets from ctor 0x0056a2f0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a27d4
-    unsigned char pad_004[0x34];
-    unsigned long m_038;  // init 0xffffffff
-    unsigned long m_03c;  // /* ? */
 };

@@ -75,10 +75,10 @@ public:
     virtual void Blit();
     virtual void vfunc_2();
 
-    // ---- data members (offsets from ctor 0x00469869) ----
+    // ---- data members (offsets from ctor 0x00469870) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7c4
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -95,10 +95,10 @@ public:
     // [1] Blit         /* ? */
     virtual void Blit();
 
-    // ---- data members (offsets from ctor 0x0046a32b) ----
+    // ---- data members (offsets from ctor 0x00469950) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7d4
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -113,766 +113,795 @@ public:
 // --- opaque ---
 template <class T> class BlitPlain : public Blitter {
 
-    // ---- data members (offsets from ctor 0x00675f68) ----
+    // ---- data members (offsets from ctor 0x006759ec) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_000[0x14];
-    unsigned long m_014;  // init 0x6a7c24
+    unsigned long m_06c;  // init 0x6a7c24
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
+
 };              // E,G
 template <class T> class BlitPlainXlat : public Blitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460bf0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };          // E,G
 template <class T> class BlitPlainXlatAlpha : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 };     // G
-template <class T> class BlitPlainXlatZRead : public Blitter {};     // G
+template <class T> class BlitPlainXlatZRead : public Blitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+};     // G
 template <class T> class BlitPlainXlatZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };// G
 
 // --- transparent ---
 template <class T> class BlitTrans : public Blitter {
 
-    // ---- data members (offsets from ctor 0x00675901) ----
+    // ---- data members (offsets from ctor 0x00675910) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned char pad_000[0x10];
-    unsigned long m_010;  // /* ? */
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned char pad_01c[0x4];
-    unsigned long m_020;  // /* ? */
-    unsigned long m_024;  // /* ? */
-    unsigned long m_028;  // /* ? */
-    unsigned long m_02c;  // /* ? */
-    unsigned char pad_030[0x48];
-    unsigned long m_078;  // init 0x6a7c44
+    // 11 member(s) already declared above; their offsets are recorded in out/members.json
+
 };              // E,G
-template <class T> class BlitTransDarken : public Blitter {};        // G
+template <class T> class BlitTransDarken : public Blitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+};        // G
 template <class T> class BlitTransDarkenZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };   // G
 template <class T> class BlitTransDarkenZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransRemapDest : public Blitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460c72) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };     // E
 template <class T> class BlitTransRemapXlat : public Blitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460c96) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };     // E
 template <class T> class BlitTransXlat : public Blitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460c21) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };          // E,G
 template <class T> class BlitTransXlatAlpha : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 };     // G
 template <class T> class BlitTransXlatAlphaZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004616b7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 };// G
 template <class T> class BlitTransXlatAlphaZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004616b7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransXlatMultWriteAlpha : public Blitter {
 
-    // ---- data members (offsets from ctor 0x0046150c) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b4f4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };  // G
 template <class T> class BlitTransXlatWriteAlpha : public Blitter {
 
-    // ---- data members (offsets from ctor 0x0046150c) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b4f4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };// G
-template <class T> class BlitTransXlatZRead : public Blitter {};     // G
+template <class T> class BlitTransXlatZRead : public Blitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+};     // G
 template <class T> class BlitTransXlatZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };// G
 template <class T> class BlitTransZRemapXlat : public Blitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460c45) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };    // E,G
 template <class T> class BlitTransZRemapXlatAlpha : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransZRemapXlatAlphaZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004616b7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransZRemapXlatAlphaZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004619c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b414
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransZRemapXlatZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransZRemapXlatZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 
 // --- translucent ---
-template <class T> class BlitTransLucent25 : public Blitter {};      // G
-template <class T> class BlitTransLucent25Alpha : public Blitter {
+template <class T> class BlitTransLucent25 : public Blitter {
 
-    // ---- data members (offsets from ctor 0x0046150c) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b524
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+};      // G
+template <class T> class BlitTransLucent25Alpha : public Blitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent25AlphaZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004616b7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent25AlphaZReadWarp : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004616b7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent25AlphaZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004619c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b414
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent25ZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent25ZReadWarp : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent25ZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
-template <class T> class BlitTransLucent50 : public Blitter {};      // G
+template <class T> class BlitTransLucent50 : public Blitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+};      // G
 template <class T> class BlitTransLucent50Alpha : public Blitter {
 
-    // ---- data members (offsets from ctor 0x0046150c) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b524
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent50AlphaZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004616b7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent50AlphaZReadWarp : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004616b7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent50AlphaZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004619c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b414
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent50ZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent50ZReadWarp : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent50ZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
-template <class T> class BlitTransLucent75 : public Blitter {};      // G
+template <class T> class BlitTransLucent75 : public Blitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+};      // G
 template <class T> class BlitTransLucent75Alpha : public Blitter {
 
-    // ---- data members (offsets from ctor 0x0046150c) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b524
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent75AlphaZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004616b7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent75AlphaZReadWarp : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004616b7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b554
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent75AlphaZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004619c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b414
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent75ZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent75ZReadWarp : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTransLucent75ZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004611c7) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b644
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 
 // --- alpha-only variants ---
 template <class T> class BlitTranslucent50NonzeroAlpha : public Blitter {
 
-    // ---- data members (offsets from ctor 0x0046150c) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b4f4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class BlitTranslucent50ZeroAlpha : public Blitter {
 
-    // ---- data members (offsets from ctor 0x0046150c) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b4f4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };    // G
 template <class T> class BlitTranslucentWriteAlpha : public Blitter {
 
-    // ---- data members (offsets from ctor 0x0046150c) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b4f4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };     // G
 
 // --- run-length encoded ---
 template <class T> class RLEBlitTransDarken : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00461b37) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b3c0
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };  // G
-template <class T> class RLEBlitTransDarkenZRead : public RLEBlitter {}; // G
-template <class T> class RLEBlitTransDarkenZReadWrite : public RLEBlitter {}; // G
+template <class T> class RLEBlitTransDarkenZRead : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
+template <class T> class RLEBlitTransDarkenZReadWrite : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
 template <class T> class RLEBlitTransLucent25 : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00461b37) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b3c0
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent25Alpha : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a6cb) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b2ac
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    unsigned long m_004;  // /* ? */
+    unsigned long m_00c;  // /* ? */
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent25AlphaZRead : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a80b) ----
+    // ---- data members (offsets from ctor 0x0046a810) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b270
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent25AlphaZReadWarp : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a8cb) ----
+    // ---- data members (offsets from ctor 0x0046a8d0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b24c
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent25AlphaZReadWrite : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x004623c0) ----
+    // ---- data members (offsets from ctor 0x0046aa10) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b210
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
-template <class T> class RLEBlitTransLucent25ZRead : public RLEBlitter {}; // G
-template <class T> class RLEBlitTransLucent25ZReadWarp : public RLEBlitter {}; // G
-template <class T> class RLEBlitTransLucent25ZReadWrite : public RLEBlitter {}; // G
+template <class T> class RLEBlitTransLucent25ZRead : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
+template <class T> class RLEBlitTransLucent25ZReadWarp : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
+template <class T> class RLEBlitTransLucent25ZReadWrite : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
 template <class T> class RLEBlitTransLucent50 : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00461b37) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b3c0
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent50Alpha : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a68b) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b2b8
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    unsigned long m_004;  // /* ? */
+    unsigned long m_00c;  // /* ? */
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent50AlphaZRead : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a7cb) ----
+    // ---- data members (offsets from ctor 0x0046a7d0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b27c
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent50AlphaZReadWarp : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a88b) ----
+    // ---- data members (offsets from ctor 0x0046a890) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b258
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent50AlphaZReadWrite : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00462380) ----
+    // ---- data members (offsets from ctor 0x0046a9d0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b21c
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
-    unsigned long m_00c;  // /* ? */
+    unsigned char pad_004[0x4];
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
-template <class T> class RLEBlitTransLucent50ZRead : public RLEBlitter {}; // G
-template <class T> class RLEBlitTransLucent50ZReadWarp : public RLEBlitter {}; // G
-template <class T> class RLEBlitTransLucent50ZReadWrite : public RLEBlitter {}; // G
+template <class T> class RLEBlitTransLucent50ZRead : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
+template <class T> class RLEBlitTransLucent50ZReadWarp : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
+template <class T> class RLEBlitTransLucent50ZReadWrite : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
 template <class T> class RLEBlitTransLucent75 : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00461b37) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b3c0
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent75Alpha : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a64b) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b2c4
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    unsigned long m_004;  // /* ? */
+    unsigned long m_00c;  // /* ? */
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent75AlphaZRead : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a78b) ----
+    // ---- data members (offsets from ctor 0x0046a790) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b288
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent75AlphaZReadWarp : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a84b) ----
+    // ---- data members (offsets from ctor 0x0046a850) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b264
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransLucent75AlphaZReadWrite : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a98b) ----
+    // ---- data members (offsets from ctor 0x0046a990) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b228
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
-template <class T> class RLEBlitTransLucent75ZRead : public RLEBlitter {}; // G
-template <class T> class RLEBlitTransLucent75ZReadWarp : public RLEBlitter {}; // G
-template <class T> class RLEBlitTransLucent75ZReadWrite : public RLEBlitter {}; // G
+template <class T> class RLEBlitTransLucent75ZRead : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
+template <class T> class RLEBlitTransLucent75ZReadWarp : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
+template <class T> class RLEBlitTransLucent75ZReadWrite : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
 template <class T> class RLEBlitTransRemapDest : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460d71) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E
 template <class T> class RLEBlitTransRemapDestZRead : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460e7f) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E
 template <class T> class RLEBlitTransRemapDestZReadWrite : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460f8d) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E
 template <class T> class RLEBlitTransRemapXlat : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460d98) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E
 template <class T> class RLEBlitTransRemapXlatZRead : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460ea6) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E
 template <class T> class RLEBlitTransRemapXlatZReadWrite : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460fb4) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E
 template <class T> class RLEBlitTransXlat : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460d1d) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 };    // E,G
-template <class T> class RLEBlitTransXlatAlpha : public RLEBlitter {}; // G
+template <class T> class RLEBlitTransXlatAlpha : public RLEBlitter {
+
+    // ---- data members (offsets from ctor 0x00461054) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+
+}; // G
 template <class T> class RLEBlitTransXlatAlphaZRead : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a70b) ----
+    // ---- data members (offsets from ctor 0x0046a710) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b2a0
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransXlatAlphaZReadWrite : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a90b) ----
+    // ---- data members (offsets from ctor 0x0046a910) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b240
-    unsigned char pad_004[0x4];
-    unsigned long m_008;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransXlatZRead : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460e28) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E,G
 template <class T> class RLEBlitTransXlatZReadWrite : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460f36) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E,G
 template <class T> class RLEBlitTransZRemapXlat : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460d41) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E,G
 template <class T> class RLEBlitTransZRemapXlatAlpha : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a60b) ----
+    // ---- data members (offsets from ctor 0x00461054) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b2d0
-    unsigned char pad_004[0x8];
-    unsigned long m_00c;  // zero-initialised
+    unsigned long m_004;  // /* ? */
+    unsigned long m_008;  // /* ? */
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransZRemapXlatAlphaZRead : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a74b) ----
+    // ---- data members (offsets from ctor 0x0046a750) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b294
-    unsigned char pad_004[0x8];
-    unsigned long m_00c;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransZRemapXlatAlphaZReadWrite : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x0046a94b) ----
+    // ---- data members (offsets from ctor 0x0046a950) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b234
-    unsigned char pad_004[0x8];
-    unsigned long m_00c;  // zero-initialised
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // G
 template <class T> class RLEBlitTransZRemapXlatZRead : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460e4f) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E,G
 template <class T> class RLEBlitTransZRemapXlatZReadWrite : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460be1) ----
+    // ---- data members (offsets from ctor 0x00460f5d) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x69b7b4
-    unsigned long m_004;  // /* ? */
-    unsigned long m_008;  // /* ? */
+    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+
 }; // E,G

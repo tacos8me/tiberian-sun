@@ -53,7 +53,7 @@ public:
     GadgetClass();  // 0x004a5960
     virtual ~GadgetClass();
 
-    // ---- data members (offsets from ctor 0x004a595a) ----
+    // ---- data members (offsets from ctor 0x004a5960) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69e74c

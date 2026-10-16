@@ -59,16 +59,4 @@ public:
 
     TextButtonClass();  // 0x00626cd9
     virtual ~TextButtonClass();
-
-    // ---- data members (offsets from ctor 0x00626cf7) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a612c
-    unsigned char pad_004[0x10];
-    unsigned long m_014;  // /* ? */
-    unsigned long m_018;  // /* ? */
-    unsigned char pad_01c[0x14];
-    unsigned long m_030;  // /* ? */
-    unsigned long m_034;  // /* ? */
-    unsigned long m_038;  // /* ? */
 };

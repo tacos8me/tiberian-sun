@@ -28,7 +28,7 @@ public:
     MSPrintAnim();  // 0x00558f20
     virtual ~MSPrintAnim();
 
-    // ---- data members (offsets from ctor 0x00558f13) ----
+    // ---- data members (offsets from ctor 0x00558f20) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a2470

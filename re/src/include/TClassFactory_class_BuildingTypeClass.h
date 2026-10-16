@@ -27,10 +27,4 @@ public:
 
     TClassFactory_class_BuildingTypeClass();  // 0x005eb518
     virtual ~TClassFactory_class_BuildingTypeClass();
-
-    // ---- data members (offsets from ctor 0x005eb521) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a4b68
-    unsigned long m_004;  // zero-initialised
 };

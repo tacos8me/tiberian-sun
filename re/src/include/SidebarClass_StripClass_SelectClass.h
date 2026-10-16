@@ -54,12 +54,4 @@ public:
 
     SidebarClass_StripClass_SelectClass();  // 0x005d825f
     virtual ~SidebarClass_StripClass_SelectClass();
-
-    // ---- data members (offsets from ctor 0x005dbd81) ----
-    // Offsets are exact; names are not yet recovered, so members
-    // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a43fc
-    unsigned char pad_004[0x28];
-    unsigned long m_02c;  // zero-initialised
-    unsigned long m_030;  // zero-initialised
 };

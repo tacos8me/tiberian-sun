@@ -25,7 +25,7 @@ public:
     BaseClass();  // 0x0041e8c0
     virtual ~BaseClass();
 
-    // ---- data members (offsets from ctor 0x0041e8b5) ----
+    // ---- data members (offsets from ctor 0x0041e8c0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x699db8

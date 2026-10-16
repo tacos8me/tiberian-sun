@@ -66,13 +66,8 @@ public:
     DropListClass();  // 0x0047eb9a
     virtual ~DropListClass();
 
-    // ---- data members (offsets from ctor 0x0047ebb7) ----
+    // ---- data members (offsets from ctor 0x0047f370) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x69d7f4
-    unsigned char pad_004[0x14];
-    unsigned long m_018;  // /* ? */
-    unsigned char pad_01c[0x2c];
-    unsigned long m_048;  // zero-initialised
-    unsigned long m_04c;  // /* ? */
 };

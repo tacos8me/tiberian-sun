@@ -35,16 +35,11 @@ public:
     IPXGlobalConnClass();  // 0x004e7204
     virtual ~IPXGlobalConnClass();
 
-    // ---- data members (offsets from ctor 0x004e7452) ----
+    // ---- data members (offsets from ctor 0x004e7a40) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a0af4
-    unsigned char pad_004[0x74];
-    unsigned long m_078;  // /* ? */
-    unsigned char pad_07c[0x8];
-    unsigned long m_084;  // /* ? */
-    unsigned long m_088;  // /* ? */
-    unsigned long m_08c;  // /* ? */
-    unsigned long m_090;  // /* ? */
-    unsigned long m_094;  // /* ? */
+    unsigned char pad_004[0x84];
+    unsigned long m_088;  // zero-initialised
+    unsigned long m_08c;  // zero-initialised
 };

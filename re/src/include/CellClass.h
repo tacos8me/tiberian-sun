@@ -88,4 +88,15 @@ public:
     //
     // The stream ctor 0x456900 additionally clears +0x10, +0x24, +0x38;
     // the copy ctor 0x45a7e0 clears +0x18, +0x24, +0x70.
+
+    // ---- data members (offsets from ctor 0x0044e8b0) ----
+    // Offsets are exact; names are not yet recovered, so members
+    // are emitted as byte blobs at their real displacements.
+    unsigned long m_000;  // init 0x69ae20
+    unsigned long m_004;  // init 0x69ae04
+    unsigned char pad_008[0x1c];
+    unsigned long m_024;  // /* ? */
+    unsigned char pad_028[0x10];
+    unsigned long m_038;  // /* ? */
+
 };

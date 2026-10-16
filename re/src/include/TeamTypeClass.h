@@ -66,11 +66,31 @@ public:
     virtual void Slot25();                   // 0x60d180 (ReadINI part 1)
     virtual void Slot26();                   // 0x60d510 (ReadINI part 2)
 
-    // ---- data members (offsets from ctor 0x0060ca99) ----
+    // ---- data members (offsets from ctor 0x0060c950) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a5670
-    unsigned long m_004;  // init 0x6a5654
+    unsigned char pad_008[0x58];
+    unsigned long m_060;  // init 0xffffffff
+    unsigned long m_064;  // init 0xffffffff
+    unsigned long m_068;  // /* ? */
+    unsigned long Loadable;  // +0x06c (INI key)
+    unsigned long m_070;  // /* ? */
+    unsigned long Whiner;  // +0x074 (INI key)
+    unsigned long Droppod;  // +0x078 (INI key)
+    unsigned long m_07c;  // init 0x7
+    unsigned long Max;  // +0x080 (INI key)
+    unsigned long m_084;  // /* ? */
+    unsigned long m_088;  // /* ? */
+    unsigned long m_08c;  // /* ? */
+    unsigned long m_090;  // /* ? */
+    unsigned long m_094;  // init 0xffffffff
+    unsigned long m_098;  // /* ? */
+    unsigned long m_09c;  // /* ? */
+    unsigned long m_0a0;  // /* ? */
+    unsigned long m_0a4;  // /* ? */
+    unsigned long m_0a8;  // /* ? */
+    unsigned long m_0ac;  // /* ? */
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

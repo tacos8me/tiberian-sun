@@ -32,11 +32,8 @@ public:
     IPXConnClass();  // 0x004e6e2a
     virtual ~IPXConnClass();
 
-    // ---- data members (offsets from ctor 0x004e6e47) ----
+    // ---- data members (offsets from ctor 0x004e71e0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
     unsigned long m_000;  // init 0x6a0abc
-    unsigned char pad_004[0x44];
-    unsigned long m_048;  // zero-initialised
-    unsigned long m_04c;  // /* ? */
 };
