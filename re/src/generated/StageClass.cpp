@@ -5,7 +5,7 @@
 // evidence transcribed as a comment. No control flow or
 // expression is invented: the binary provides only an
 // instruction listing, a size and a callee set.
-#include "TechnoClass.h"
+#include "StageClass.h"
 
 // ---------------------------------------------------------------------------
 // StageClass::vfunc_1 -- body derived from 26 instructions at 0x0061e2b0; semantics not reconstructed.

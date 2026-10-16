@@ -338,9 +338,13 @@ def main():
             # RadioClass/FlasherClass/StageClass too), so anchoring on the
             # class name is required -- a bare ^class\s+\w+ matches the first
             # helper and reports a false mismatch.
+            # Match THIS class's definition specifically, and capture the WHOLE
+            # base clause -- it may span several lines (HouseClass.h declares
+            # four bases over four lines). Stopping at the first newline reads
+            # only "public AbstractClass," and reports the rest as missing.
             bm = re.search(
-                r"^class\s+" + re.escape(m["ident"]) + r"\s*:\s*(.*?)\s*$",
-                src, re.M)
+                r"^class\s+" + re.escape(m["ident"]) + r"\s*:\s*(.*?)\s*\{",
+                src, re.M | re.S)
             if not bm:
                 continue
             checked += 1

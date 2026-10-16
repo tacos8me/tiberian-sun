@@ -139,6 +139,7 @@
 #include "SliderClass.h"
 #include "SmudgeClass.h"
 #include "SmudgeTypeClass.h"
+#include "StageClass.h"
 #include "StaticButtonClass.h"
 #include "SuperClass.h"
 #include "SuperWeaponTypeClass.h"

@@ -17,6 +17,7 @@
 // ============================================================================
 
 #include "ObjectClass.h"
+#include "StageClass.h"
 
 // ---------------------------------------------------------------------------
 // RadioClass / MissionClass — intermediate bases of TechnoClass.
@@ -34,7 +35,17 @@ public:
     // ---- data members (offsets from ctor 0x00546710) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 11 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a20f0
+    unsigned long m_004;  // init 0x6a20d4
+    unsigned char pad_008[0x44];
+    unsigned long m_04c;  // /* ? */
+    unsigned long m_050;  // /* ? */
+    unsigned long m_054;  // /* ? */
+    unsigned long m_058;  // /* ? */
+    unsigned long m_05c;  // /* ? */
+    unsigned long m_060;  // /* ? */
+    unsigned char pad_064[0x4];
+    unsigned long m_068;  // /* ? */
 
 };
 
@@ -48,15 +59,23 @@ public:
     // ---- data members (offsets from ctor 0x005a5710) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 7 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a3738
+    unsigned long m_004;  // init 0x6a371c
+    unsigned char pad_008[0x64];
+    unsigned long m_06c;  // /* ? */
+    unsigned long m_070;  // /* ? */
+    unsigned long m_074;  // /* ? */
+    unsigned long m_078;  // zero-initialised
 
 };
 
 // ---------------------------------------------------------------------------
-// FlasherClass / StageClass — mix-in bases embedded at fixed displacements.
-// Evidence: RTTI base entries "FlasherClass (mdisp=124)" and
-//   "StageClass (mdisp=132)" in TechnoClass's base list.
-// Declared here because their own headers are outside this task's file set.
+// FlasherClass — mix-in base embedded at a fixed displacement.
+// Evidence: RTTI base entry "FlasherClass (mdisp=124)" in TechnoClass's base
+// list. Declared here because it has no header of its own yet.
+// StageClass (mdisp=132) is the other mix-in base; it now lives in
+// StageClass.h, because AnimClass, TerrainClass and FactoryClass also derive
+// from it and could not previously name it.
 // ---------------------------------------------------------------------------
 class FlasherClass
 {
@@ -69,16 +88,9 @@ public:
     virtual void vfunc_5();                                         // [5] 0x61e410
 };
 
-class StageClass
-{
-public:
-    virtual ~StageClass();                                          // [0] 0x61e560
-    virtual void vfunc_1();                                         // [1] 0x61e2b0
-    virtual void vfunc_2();                                         // [2] 0x61e430
-    virtual void vfunc_3();                                         // [3] 0x61e260
-    virtual void vfunc_4();                                         // [4] 0x61e4e0
-    virtual void vfunc_5();                                         // [5] 0x61e290
-};
+// StageClass now has its own header (src/handwritten/StageClass.h) because
+// other classes — AnimClass, TerrainClass, FactoryClass — also derive from it
+// and previously could not name it. Included above.
 
 class TechnoClass : public RadioClass, public FlasherClass, public StageClass
 {
@@ -242,80 +254,6 @@ public:
     // ---- data members (offsets from ctor 0x0060e7b0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a57e0
-    unsigned long m_004;  // init 0x6a57c4
-    unsigned char pad_008[0x74];
-    unsigned long m_07c;  // /* ? */
-    unsigned long m_080;  // /* ? */
-    unsigned long m_084;  // /* ? */
-    unsigned long m_088;  // /* ? */
-    unsigned char pad_08c[0x4];
-    unsigned long m_090;  // /* ? */
-    unsigned long m_094;  // /* ? */
-    unsigned long m_098;  // init 0x1
-    unsigned long m_09c;  // /* ? */
-    unsigned long m_0a0;  // /* ? */
-    unsigned long m_0a4;  // /* ? */
-    unsigned char pad_0a8[0x8];
-    unsigned long m_0b0;  // /* ? */
-    unsigned long m_0b4;  // /* ? */
-    unsigned long m_0b8;  // /* ? */
-    unsigned long m_0bc;  // /* ? */
-    unsigned long m_0c0;  // /* ? */
-    unsigned char pad_0c4[0x4];
-    unsigned long m_0c8;  // /* ? */
-    unsigned long m_0cc;  // /* ? */
-    unsigned char pad_0d0[0x4];
-    unsigned long m_0d4;  // /* ? */
-    unsigned long m_0d8;  // /* ? */
-    unsigned long m_0dc;  // /* ? */
-    unsigned long m_0e0;  // /* ? */
-    unsigned long m_0e4;  // /* ? */
-    unsigned long m_0e8;  // /* ? */
-    unsigned long m_0ec;  // /* ? */
-    unsigned long m_0f0;  // /* ? */
-    unsigned long m_0f4;  // /* ? */
-    unsigned long m_0f8;  // /* ? */
-    unsigned char pad_0fc[0x4];
-    unsigned long m_100;  // /* ? */
-    unsigned long m_104;  // /* ? */
-    unsigned long m_108;  // init 0x1
-    unsigned long m_10c;  // /* ? */
-    unsigned char pad_110[0x4];
-    unsigned long m_114;  // /* ? */
-    unsigned long m_118;  // /* ? */
-    unsigned long m_11c;  // /* ? */
-    unsigned long m_120;  // /* ? */
-    unsigned long m_124;  // /* ? */
-    unsigned long m_128;  // /* ? */
-    unsigned char pad_12c[0x4];
-    unsigned long m_130;  // /* ? */
-    unsigned long m_134;  // /* ? */
-    unsigned long m_138;  // /* ? */
-    unsigned long m_13c;  // /* ? */
-    unsigned long m_140;  // /* ? */
-    unsigned long m_144;  // /* ? */
-    unsigned long m_148;  // /* ? */
-    unsigned long m_14c;  // /* ? */
-    unsigned long m_150;  // /* ? */
-    unsigned long m_154;  // /* ? */
-    unsigned long m_158;  // /* ? */
-    unsigned long m_15c;  // /* ? */
-    unsigned long m_160;  // /* ? */
-    unsigned long m_164;  // /* ? */
-    unsigned char pad_168[0x78];
-    unsigned long m_1e0;  // /* ? */
-    unsigned long m_1e4;  // /* ? */
-    unsigned char pad_1e8[0x4];
-    unsigned long m_1ec;  // /* ? */
-    unsigned long m_1f0;  // /* ? */
-    unsigned long m_1f4;  // /* ? */
-    unsigned long m_1f8;  // /* ? */
-    unsigned long m_1fc;  // /* ? */
-    unsigned long m_200;  // /* ? */
-    unsigned long m_204;  // /* ? */
-    unsigned long m_208;  // /* ? */
-    unsigned long m_20c;  // /* ? */
-    unsigned long m_210;  // /* ? */
+    // 75 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
