@@ -48,7 +48,6 @@ const char* PageUserCommandClass::Get_Description()
 {
     ECX.d = 0x17du;   //   0x004e29c0  mov      ecx, 0x17d
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e29c5  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -68,5 +67,4 @@ const char* PageUserCommandClass::Get_UI_Description()
     ts::cmp32(ts::ld32(8064312), 0x4u);   //   0x004e29d0  cmp      dword ptr [0x7b0d38], 4
     if (!M.zf) { ts::ts_call(0x4e29deu); return (const char*)(size_t)EAX.d; }   //   0x004e29d7  jne      0x4e29de
     ts::ts_call(0x599be0u); return (const char*)(size_t)EAX.d;   //   0x004e29d9  jmp      0x599be0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

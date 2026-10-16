@@ -36,7 +36,6 @@ const char* CommandClass::Get_Name()
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x004e0a83  add      esp, 0xc
     EAX.d = 0x7b32d8u;   //   0x004e0a86  mov      eax, 0x7b32d8
     return (const char*)(size_t)EAX.d;   //   0x004e0a8b  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -63,7 +62,6 @@ const char* CommandClass::Get_UI_Name()
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x004e0aa9  add      esp, 0xc
     EAX.d = 0x7b32d8u;   //   0x004e0aac  mov      eax, 0x7b32d8
     return (const char*)(size_t)EAX.d;   //   0x004e0ab1  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -90,5 +88,4 @@ const char* CommandClass::Get_UI_Description()
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x004e0ae9  add      esp, 0xc
     EAX.d = 0x7b32d8u;   //   0x004e0aec  mov      eax, 0x7b32d8
     return (const char*)(size_t)EAX.d;   //   0x004e0af1  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

@@ -48,7 +48,6 @@ const char* SidebarPageUpCommandClass::Get_Description()
 {
     ECX.d = 0x76u;   //   0x004e1d10  mov      ecx, 0x76
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e1d15  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -70,5 +69,4 @@ const char* SidebarPageUpCommandClass::Get_UI_Description()
     ECX.d = 0x710d28u;   //   0x004e1d24  mov      ecx, 0x710d28
     ts::ts_call_at(0x5d9520u, 0x4e1d2eu);   //   0x004e1d29  call     0x5d9520
     return (const char*)(size_t)EAX.d;   //   0x004e1d2e  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

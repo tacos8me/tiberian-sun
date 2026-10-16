@@ -59,5 +59,4 @@ const char* FollowCommandClass::Get_UI_Description()
     ECX.d = 0x710d28u;   //   0x004e269f  mov      ecx, 0x710d28
     ts::ts_call_at(0x478860u, 0x4e26a9u);   //   0x004e26a4  call     0x478860
     return (const char*)(size_t)EAX.d;   //   0x004e26a9  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

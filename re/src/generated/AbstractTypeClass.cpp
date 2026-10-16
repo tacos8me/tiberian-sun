@@ -89,7 +89,6 @@ long AbstractTypeClass::Read_INI(void* ini, const char* section)
     ESI.d = ts::pop32();   //   0x00406093  pop      esi
     ECX.d = ts::pop32();   //   0x00406094  pop      ecx
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00406095  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // AbstractTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
@@ -143,7 +142,6 @@ long AbstractTypeClass::Load(IStream* pStm)
     EDI.d = ts::pop32();   //   0x00406004  pop      edi
     ESI.d = ts::pop32();   //   0x00406005  pop      esi
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00406006  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // AbstractTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.

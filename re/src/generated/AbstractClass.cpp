@@ -91,7 +91,6 @@ HRESULT AbstractClass::QueryInterface(REFIID riid, void** ppv)
     ts::ts_call_at(0x6855ebu, 0x6829acu);   //   0x006829a7  call     0x6855eb
     ECX.d = ts::pop32();   //   0x006829ac  pop      ecx
     return (HRESULT)(size_t)EAX.d;   //   0x006829ad  ret      
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -114,7 +113,6 @@ ULONG AbstractClass::AddRef()
     ts::test8(DL, DL);   //   0x00405999  test     dl, dl
     AL = (M.zf) ? 1u : 0u;   //   0x0040599b  sete     al
     return (ULONG)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0040599e  ret      4
-    return (ULONG)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // AbstractClass::Release -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
@@ -148,7 +146,6 @@ int AbstractClass::GetType()
     EAX.d = 0x80004003u;   //   0x00405919  mov      eax, 0x80004003
     ESI.d = ts::pop32();   //   0x0040591e  pop      esi
     return (int)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0040591f  ret      8
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -179,7 +176,6 @@ int AbstractClass::Fetch_ID()
     EAX.d = ESI.d;   //   0x00405ae1  mov      eax, esi
     ESI.d = ts::pop32();   //   0x00405ae3  pop      esi
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00405ae4  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -214,7 +210,6 @@ void AbstractClass::Set_ID(int id)
 int AbstractClass::Get_RTTI()
 {
     return (int)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004059c0  ret      8
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // AbstractClass::GetClassID -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
@@ -256,7 +251,6 @@ HRESULT AbstractClass::Load(IStream* pStm)
     EDI.d = ts::pop32();   //   0x0040595e  pop      edi
     ESI.d = ts::pop32();   //   0x0040595f  pop      esi
     return (HRESULT)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00405960  ret      4
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -275,7 +269,6 @@ HRESULT AbstractClass::Save(IStream* pStm, BOOL fClearDirty)
 {
     EAX.d = ts::or32(EAX.d, 0xffffffffu);   //   0x004059d0  or       eax, 0xffffffff
     return (HRESULT)(size_t)EAX.d;   //   0x004059d3  ret      
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -294,7 +287,6 @@ HRESULT AbstractClass::GetSizeMax(ULARGE_INTEGER* pcbSize)
 {
     EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004059e0  xor      eax, eax
     return (HRESULT)(size_t)EAX.d;   //   0x004059e2  ret      
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -494,7 +486,6 @@ void AbstractClass::vfunc_23()
 int AbstractClass::GetType_2()
 {
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00406010  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -538,7 +529,6 @@ int AbstractClass::Fetch_ID_2()
     if (!M.zf) { ts::ts_call(0x405f65u); return (int)(size_t)EAX.d; }   //   0x00405f5d  jne      0x405f65
     ts::st8(ESP.d + 0x10, CL);   //   0x00405f5f  mov      byte ptr [esp + 0x10], cl
     ts::ts_call(0x405f7eu); return (int)(size_t)EAX.d;   //   0x00405f63  jmp      0x405f7e
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -607,7 +597,6 @@ int AbstractClass::Get_RTTI_2()
     EAX.d = ESI.d;   //   0x00406a52  mov      eax, esi
     ESI.d = ts::pop32();   //   0x00406a54  pop      esi
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00406a55  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

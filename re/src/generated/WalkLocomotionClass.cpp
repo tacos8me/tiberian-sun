@@ -92,7 +92,6 @@ bool WalkLocomotionClass::Is_Moving()
     EAX.d = ts::ld32(ESP.d + 0x4);   //   0x0064f190  mov      eax, dword ptr [esp + 4]
     AL = ts::ld8(EAX.d + 0x2c);   //   0x0064f194  mov      al, byte ptr [eax + 0x2c]
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0064f197  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -193,7 +192,6 @@ bool WalkLocomotionClass::Is_Ok_To_End()
     ts::ts_call_ptr(ts::ld32(EAX.d + 0x10), 0x64f2edu);   //   0x0064f2ea  call     dword ptr [eax + 0x10]
     ESI.d = ts::pop32();   //   0x0064f2ed  pop      esi
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0064f2ee  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -549,7 +547,6 @@ bool WalkLocomotionClass::Slot40()
     EBX.d = ts::pop32();   //   0x00650fc6  pop      ebx
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x00650fc7  add      esp, 0xc
     return (bool)(size_t)ts::ret_pop_val(0x10u, EAX.d);   //   0x00650fca  ret      0x10
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -609,7 +606,6 @@ HRESULT WalkLocomotionClass::Begin_Piggyback(TechnoClass* pPassenger)
     if (!M.zf) { ts::ts_call(0x650d30u); return (HRESULT)(size_t)EAX.d; }   //   0x00650d26  jne      0x650d30
     EAX.d = 0x80004003u;   //   0x00650d28  mov      eax, 0x80004003
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00650d2d  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -631,7 +627,6 @@ HRESULT WalkLocomotionClass::End_Piggyback(TechnoClass* pPassenger)
     if (!M.zf) { ts::ts_call(0x650d80u); return (HRESULT)(size_t)EAX.d; }   //   0x00650d76  jne      0x650d80
     EAX.d = 0x80004003u;   //   0x00650d78  mov      eax, 0x80004003
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00650d7d  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -665,7 +660,6 @@ bool WalkLocomotionClass::Is_Ok_To_End_Piggyback()
     AL = 0x1u;   //   0x00650dd1  mov      al, 1
     ESI.d = ts::pop32();   //   0x00650dd3  pop      esi
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00650dd4  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -691,7 +685,6 @@ HRESULT WalkLocomotionClass::Piggyback_Available()
     EAX.d = 0x80004003u;   //   0x00650deb  mov      eax, 0x80004003
     EBP.d = ts::pop32();   //   0x00650df0  pop      ebp
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00650df1  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -714,5 +707,4 @@ bool WalkLocomotionClass::Is_Piggybacking()
     ts::test32(EDX.d, EDX.d);   //   0x00651019  test     edx, edx
     AL = (!M.zf) ? 1u : 0u;   //   0x0065101b  setne    al
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0065101e  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

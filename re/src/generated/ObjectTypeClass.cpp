@@ -197,7 +197,6 @@ long ObjectTypeClass::Read_INI(void* ini, const char* section)
     EBX.d = ts::pop32();   //   0x00572b67  pop      ebx
     ESP.d = ts::add32(ESP.d, 0x104u);   //   0x00572b68  add      esp, 0x104
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00572b6e  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

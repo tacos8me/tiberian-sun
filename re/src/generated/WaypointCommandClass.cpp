@@ -48,7 +48,6 @@ const char* WaypointCommandClass::Get_Description()
 {
     ECX.d = 0x88u;   //   0x004e2700  mov      ecx, 0x88
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e2705  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -70,5 +69,4 @@ const char* WaypointCommandClass::Get_UI_Description()
     ECX.d = 0x710d28u;   //   0x004e2714  mov      ecx, 0x710d28
     ts::ts_call_at(0x475d00u, 0x4e271eu);   //   0x004e2719  call     0x475d00
     return (const char*)(size_t)EAX.d;   //   0x004e271e  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

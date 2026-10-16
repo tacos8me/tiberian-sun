@@ -69,7 +69,6 @@ long HouseTypeClass::QueryInterface(const void*, void**)
     if (!M.zf) { ts::ts_call(0x4c7a60u); return (long)(size_t)EAX.d; }   //   0x004c7a56  jne      0x4c7a60
     EAX.d = 0x80004003u;   //   0x004c7a58  mov      eax, 0x80004003
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004c7a5d  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -88,7 +87,6 @@ unsigned long HouseTypeClass::AddRef()
 {
     EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004c7890  xor      eax, eax
     return (unsigned long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004c7892  ret      4
-    return (unsigned long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -116,7 +114,6 @@ long HouseTypeClass::Read_INI(void* ini, const char* section)
     ESI.d = ts::pop32();   //   0x004c78b1  pop      esi
     ECX.d = ts::pop32();   //   0x004c78b2  pop      ecx
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004c78b3  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -250,7 +247,6 @@ long HouseTypeClass::GetClassID(void* pClassID)
 {
     EAX.d = 0xeu;   //   0x004c7b20  mov      eax, 0xe
     return (long)(size_t)EAX.d;   //   0x004c7b25  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -269,7 +265,6 @@ long HouseTypeClass::IsDirty()
 {
     EAX.d = 0xb8u;   //   0x004c7b30  mov      eax, 0xb8
     return (long)(size_t)EAX.d;   //   0x004c7b35  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -370,7 +365,6 @@ long HouseTypeClass::Load(IStream* pStm)
     ESI.d = ts::pop32();   //   0x004c787f  pop      esi
     EBX.d = ts::pop32();   //   0x004c7880  pop      ebx
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004c7881  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // HouseTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
@@ -688,7 +682,6 @@ long HouseTypeClass::Read_INI_2(void* ini, const char* section)
     ESP.d = EBP.d;   //   0x004c7778  mov      esp, ebp
     EBP.d = ts::pop32();   //   0x004c777a  pop      ebp
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004c777b  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // HouseTypeClass::Fetch_ID_2 -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); transcribed once.

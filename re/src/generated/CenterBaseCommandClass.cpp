@@ -48,7 +48,6 @@ const char* CenterBaseCommandClass::Get_Description()
 {
     ECX.d = 0x60u;   //   0x004e15e0  mov      ecx, 0x60
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e15e5  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -116,5 +115,4 @@ const char* CenterBaseCommandClass::Get_UI_Description()
     ts::test8(AL, AL);   //   0x004e16af  test     al, al
     if (!M.zf) { ts::ts_call(0x4e170bu); return (const char*)(size_t)EAX.d; }   //   0x004e16b1  jne      0x4e170b
     ts::ts_call(0x4e16fdu); return (const char*)(size_t)EAX.d;   //   0x004e16b3  jmp      0x4e16fd
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

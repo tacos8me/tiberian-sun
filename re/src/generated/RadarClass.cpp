@@ -110,7 +110,6 @@ unsigned long RadarClass::AddRef()
     EBP.d = ts::pop32();   //   0x005a4ef1  pop      ebp
     EBX.d = ts::pop32();   //   0x005a4ef2  pop      ebx
     return (unsigned long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x005a4ef3  ret      4
-    return (unsigned long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

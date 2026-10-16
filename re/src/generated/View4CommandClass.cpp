@@ -68,5 +68,4 @@ const char* View4CommandClass::Get_UI_Description()
     ts::ts_call_at(0x5f7ee0u, 0x4e23fbu);   //   0x004e23f6  call     0x5f7ee0
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x004e23fb  add      esp, 0xc
     return (const char*)(size_t)EAX.d;   //   0x004e23fe  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

@@ -110,7 +110,6 @@ bool DriveLocomotionClass::Is_Moving()
     ESI.d = ts::pop32();   //   0x00479cf0  pop      esi
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x00479cf1  add      esp, 0xc
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00479cf4  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -227,7 +226,6 @@ int DriveLocomotionClass::Get_Status()
 {
     EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x0047e630  xor      eax, eax
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0047e632  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -248,7 +246,6 @@ int DriveLocomotionClass::Get_Status_2()
     ts::push32(EAX.d);   //   0x0047e644  push     eax
     ts::ts_call_at(0x4f9e40u, 0x47e64au);   //   0x0047e645  call     0x4f9e40
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0047e64a  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -342,7 +339,6 @@ bool DriveLocomotionClass::Is_Ok_To_End()
     if (M.zf) { ts::ts_call(0x47aa69u); return (bool)(size_t)EAX.d; }   //   0x0047a604  je       0x47aa69
     ts::push32(0x1u);   //   0x0047a60a  push     1
     ts::ts_call(0x47aa56u); return (bool)(size_t)EAX.d;   //   0x0047a60c  jmp      0x47aa56
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -888,7 +884,6 @@ bool DriveLocomotionClass::Slot40()
     EBX.d = ts::pop32();   //   0x0047e838  pop      ebx
     ESP.d = ts::add32(ESP.d, 0x24u);   //   0x0047e839  add      esp, 0x24
     return (bool)(size_t)ts::ret_pop_val(0x10u, EAX.d);   //   0x0047e83c  ret      0x10
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -922,7 +917,6 @@ bool DriveLocomotionClass::Slot41()
     if (M.zf) { ts::ts_call(0x47e8fbu); return (bool)(size_t)EAX.d; }   //   0x0047e8f3  je       0x47e8fb
     ESI.d = (ts::u32)(ts::i32)(ts::i8)ts::ld8(ECX.d + 0x1);   //   0x0047e8f5  movsx    esi, byte ptr [ecx + 1]
     ts::ts_call(0x47e8feu); return (bool)(size_t)EAX.d;   //   0x0047e8f9  jmp      0x47e8fe
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -980,7 +974,6 @@ int DriveLocomotionClass::Slot46()
     EAX.d = ts::ld32(ESP.d + 0x4);   //   0x0047e9c0  mov      eax, dword ptr [esp + 4]
     EAX.d = ts::ld32(EAX.d + 0x54);   //   0x0047e9c4  mov      eax, dword ptr [eax + 0x54]
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0047e9c7  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1000,7 +993,6 @@ int DriveLocomotionClass::Slot47()
     EAX.d = ts::ld32(ESP.d + 0x4);   //   0x0047e9d0  mov      eax, dword ptr [esp + 4]
     EAX.d = ts::ld32(EAX.d + 0x58);   //   0x0047e9d4  mov      eax, dword ptr [eax + 0x58]
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0047e9d7  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1020,7 +1012,6 @@ int DriveLocomotionClass::Slot48()
     EAX.d = ts::ld32(ESP.d + 0x4);   //   0x0047e9e0  mov      eax, dword ptr [esp + 4]
     EAX.d = ts::ld32(EAX.d + 0x44);   //   0x0047e9e4  mov      eax, dword ptr [eax + 0x44]
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0047e9e7  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1042,7 +1033,6 @@ HRESULT DriveLocomotionClass::Begin_Piggyback(TechnoClass* pPassenger)
     if (!M.zf) { ts::ts_call(0x479a40u); return (HRESULT)(size_t)EAX.d; }   //   0x00479a36  jne      0x479a40
     EAX.d = 0x80004003u;   //   0x00479a38  mov      eax, 0x80004003
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00479a3d  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1064,7 +1054,6 @@ HRESULT DriveLocomotionClass::End_Piggyback(TechnoClass* pPassenger)
     if (!M.zf) { ts::ts_call(0x479a90u); return (HRESULT)(size_t)EAX.d; }   //   0x00479a86  jne      0x479a90
     EAX.d = 0x80004003u;   //   0x00479a88  mov      eax, 0x80004003
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00479a8d  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1098,7 +1087,6 @@ bool DriveLocomotionClass::Is_Ok_To_End_Piggyback()
     AL = 0x1u;   //   0x00479ae1  mov      al, 1
     ESI.d = ts::pop32();   //   0x00479ae3  pop      esi
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00479ae4  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1124,7 +1112,6 @@ HRESULT DriveLocomotionClass::Piggyback_Available()
     EAX.d = 0x80004003u;   //   0x0047976b  mov      eax, 0x80004003
     EBP.d = ts::pop32();   //   0x00479770  pop      ebp
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00479771  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1147,5 +1134,4 @@ bool DriveLocomotionClass::Is_Piggybacking()
     ts::test32(EDX.d, EDX.d);   //   0x0047ea89  test     edx, edx
     AL = (!M.zf) ? 1u : 0u;   //   0x0047ea8b  setne    al
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0047ea8e  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

@@ -91,7 +91,6 @@ long DisplayClass::QueryInterface(const void*, void**)
     EAX.d = ts::and32(EAX.d, 0x1u);   //   0x00502051  and      eax, 1
     ECX.d = ts::pop32();   //   0x00502054  pop      ecx
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00502055  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -120,7 +119,6 @@ unsigned long DisplayClass::AddRef()
     EAX.d = ESI.d;   //   0x00478938  mov      eax, esi
     ESI.d = ts::pop32();   //   0x0047893a  pop      esi
     return (unsigned long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0047893b  ret      4
-    return (unsigned long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

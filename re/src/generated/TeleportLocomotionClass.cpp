@@ -75,7 +75,6 @@ bool TeleportLocomotionClass::Is_Moving()
     L_006227ab:;
     AL = 0x1u;   //   0x006227ab  mov      al, 1
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x006227ad  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -165,7 +164,6 @@ bool TeleportLocomotionClass::Is_Ok_To_End()
     AL = ts::xor8(AL, AL);   //   0x006228ea  xor      al, al
     ESI.d = ts::pop32();   //   0x006228ec  pop      esi
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x006228ed  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

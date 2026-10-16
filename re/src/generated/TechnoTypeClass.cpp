@@ -594,7 +594,6 @@ long TechnoTypeClass::Read_INI(void* ini, const char* section)
     EBX.d = ts::pop32();   //   0x0062196f  pop      ebx
     ESP.d = ts::add32(ESP.d, 0x210u);   //   0x00621970  add      esp, 0x210
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00621976  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1278,7 +1277,6 @@ long TechnoTypeClass::Load(IStream* pStm)
     EDI.d = ts::pop32();   //   0x00622123  pop      edi
     ESI.d = ts::pop32();   //   0x00622124  pop      esi
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00622125  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // TechnoTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
@@ -1440,7 +1438,6 @@ long TechnoTypeClass::Read_INI_2(void* ini, const char* section)
     ts::f_arith_mem(2, (long double)ts::ld_f64(6970560), false);   //   0x0061f6c0  fmul     qword ptr [0x6a5cc0]
     ts::st_f64(EBX.d + 0x228, (double)ts::f_pop());   //   0x0061f6c6  fstp     qword ptr [ebx + 0x228]
     ts::ts_call(0x61f6d0u); return (long)(size_t)EAX.d;   //   0x0061f6cc  jmp      0x61f6d0
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // TechnoTypeClass::Fetch_ID_2 -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); transcribed once.

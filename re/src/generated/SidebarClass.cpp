@@ -55,7 +55,6 @@ unsigned long SidebarClass::AddRef()
     EAX.d = ESI.d;   //   0x005dcd68  mov      eax, esi
     ESI.d = ts::pop32();   //   0x005dcd6a  pop      esi
     return (unsigned long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x005dcd6b  ret      4
-    return (unsigned long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

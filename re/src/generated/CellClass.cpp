@@ -43,7 +43,6 @@ long CellClass::QueryInterface(const void*, void**)
     if (!M.zf) { ts::ts_call(0x457ee0u); return (long)(size_t)EAX.d; }   //   0x00457ed6  jne      0x457ee0
     EAX.d = 0x80004003u;   //   0x00457ed8  mov      eax, 0x80004003
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00457edd  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // CellClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
@@ -105,7 +104,6 @@ long CellClass::Load(IStream* pStm)
     ts::st32(EDI.d + 0x14, 0xau);   //   0x00456969  mov      dword ptr [edi + 0x14], 0xa
     ts::st32(EDI.d + 0x10, EBX.d);   //   0x00456970  mov      dword ptr [edi + 0x10], ebx
     ts::ts_call(0x456977u); return (long)(size_t)EAX.d;   //   0x00456973  jmp      0x456977
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -175,7 +173,6 @@ long CellClass::Save(IStream* pStm, int fClearDirty)
     ESI.d = ts::pop32();   //   0x00456b1a  pop      esi
     EBX.d = ts::pop32();   //   0x00456b1b  pop      ebx
     return (long)(size_t)ts::ret_pop_val(0xcu, EAX.d);   //   0x00456b1c  ret      0xc
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // CellClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
@@ -238,7 +235,6 @@ long CellClass::GetClassID(void* pClassID)
     EAX.d = ESI.d;   //   0x0045a85a  mov      eax, esi
     ESI.d = ts::pop32();   //   0x0045a85c  pop      esi
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0045a85d  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // CellClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
@@ -267,7 +263,6 @@ long CellClass::IsDirty()
 {
     EAX.d = 0xbu;   //   0x0045a7c0  mov      eax, 0xb
     return (long)(size_t)EAX.d;   //   0x0045a7c5  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -286,7 +281,6 @@ long CellClass::GetSizeMax(unsigned long* pcbSize)
 {
     EAX.d = 0xa8u;   //   0x0045a7d0  mov      eax, 0xa8
     return (long)(size_t)EAX.d;   //   0x0045a7d5  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // CellClass::Compute_CRC -- ALIAS of AbstractClass::Load (same machine code at 0x00405940); transcribed once.

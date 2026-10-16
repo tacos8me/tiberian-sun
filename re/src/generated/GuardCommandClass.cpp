@@ -105,5 +105,4 @@ const char* GuardCommandClass::Get_UI_Description()
     EBP.d = ts::pop32();   //   0x004e1437  pop      ebp
     L_004e1438:;
     return (const char*)(size_t)EAX.d;   //   0x004e1438  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

@@ -116,5 +116,4 @@ const char* SelectTeamCommandClass::Get_UI_Description()
     ts::st8(7109830, 0x0u);   //   0x004e0bc9  mov      byte ptr [0x6c7cc6], 0
     EBP.d = ts::pop32();   //   0x004e0bd0  pop      ebp
     ts::ts_call(0x61d960u); return (const char*)(size_t)EAX.d;   //   0x004e0bd1  jmp      0x61d960
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

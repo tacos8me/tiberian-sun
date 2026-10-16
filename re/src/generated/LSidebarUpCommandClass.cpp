@@ -48,7 +48,6 @@ const char* LSidebarUpCommandClass::Get_Description()
 {
     ECX.d = 0x72u;   //   0x004e1c70  mov      ecx, 0x72
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e1c75  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -70,5 +69,4 @@ const char* LSidebarUpCommandClass::Get_UI_Description()
     ECX.d = 0x710d28u;   //   0x004e1c84  mov      ecx, 0x710d28
     ts::ts_call_at(0x5d92c0u, 0x4e1c8eu);   //   0x004e1c89  call     0x5d92c0
     return (const char*)(size_t)EAX.d;   //   0x004e1c8e  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

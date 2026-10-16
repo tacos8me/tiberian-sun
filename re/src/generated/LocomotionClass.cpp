@@ -53,7 +53,6 @@ HRESULT LocomotionClass::QueryInterface(REFIID riid, void** ppv)
     if (!M.zf) { ts::ts_call(0x4f9c60u); return (HRESULT)(size_t)EAX.d; }   //   0x004f9c56  jne      0x4f9c60
     EAX.d = 0x80004003u;   //   0x004f9c58  mov      eax, 0x80004003
     return (HRESULT)(size_t)ts::ret_pop_val(0xcu, EAX.d);   //   0x004f9c5d  ret      0xc
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -78,7 +77,6 @@ ULONG LocomotionClass::AddRef()
     ts::st32(8204548, EDX.d);   //   0x004f9bff  mov      dword ptr [0x7d3104], edx
     ts::ts_call_ptr(ts::ld32(6914468), 0x4f9c0bu);   //   0x004f9c05  call     dword ptr [0x6981a4]
     return (ULONG)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004f9c0b  ret      4
-    return (ULONG)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -118,7 +116,6 @@ ULONG LocomotionClass::Release()
     EDI.d = ts::pop32();   //   0x004f9c42  pop      edi
     ESI.d = ts::pop32();   //   0x004f9c43  pop      esi
     return (ULONG)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004f9c44  ret      4
-    return (ULONG)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // LocomotionClass::GetClassID -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
@@ -146,7 +143,6 @@ HRESULT LocomotionClass::IsDirty()
     ts::test8(DL, DL);   //   0x0047e9f9  test     dl, dl
     AL = (M.zf) ? 1u : 0u;   //   0x0047e9fb  sete     al
     return (HRESULT)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0047e9fe  ret      4
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // LocomotionClass::Load -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.
@@ -177,7 +173,6 @@ HRESULT LocomotionClass::Save(IStream* pStm, BOOL fClearDirty)
     EAX.d = 0x80004003u;   //   0x004f9d0b  mov      eax, 0x80004003
     ESI.d = ts::pop32();   //   0x004f9d10  pop      esi
     return (HRESULT)(size_t)ts::ret_pop_val(0xcu, EAX.d);   //   0x004f9d11  ret      0xc
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -201,7 +196,6 @@ HRESULT LocomotionClass::GetSizeMax(ULARGE_INTEGER* pcbSize)
     EAX.d = 0x80004003u;   //   0x004f9dd9  mov      eax, 0x80004003
     ESI.d = ts::pop32();   //   0x004f9dde  pop      esi
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004f9ddf  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // LocomotionClass::Slot8 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); transcribed once.

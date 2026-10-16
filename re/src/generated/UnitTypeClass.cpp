@@ -43,7 +43,6 @@ long UnitTypeClass::QueryInterface(const void*, void**)
     if (!M.zf) { ts::ts_call(0x63ec60u); return (long)(size_t)EAX.d; }   //   0x0063ec56  jne      0x63ec60
     EAX.d = 0x80004003u;   //   0x0063ec58  mov      eax, 0x80004003
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0063ec5d  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // UnitTypeClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
@@ -108,7 +107,6 @@ long UnitTypeClass::Read_INI(void* ini, const char* section)
     ESI.d = ts::pop32();   //   0x0063edb0  pop      esi
     ESP.d = ts::add32(ESP.d, 0x108u);   //   0x0063edb1  add      esp, 0x108
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0063edb7  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -229,7 +227,6 @@ long UnitTypeClass::GetClassID(void* pClassID)
 {
     EAX.d = 0x28u;   //   0x0063ee80  mov      eax, 0x28
     return (long)(size_t)EAX.d;   //   0x0063ee85  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -248,7 +245,6 @@ long UnitTypeClass::IsDirty()
 {
     EAX.d = 0x4b8u;   //   0x0063ee70  mov      eax, 0x4b8
     return (long)(size_t)EAX.d;   //   0x0063ee75  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -314,7 +310,6 @@ long UnitTypeClass::Load(IStream* pStm)
     EDI.d = ts::pop32();   //   0x0063ed2a  pop      edi
     ESI.d = ts::pop32();   //   0x0063ed2b  pop      esi
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0063ed2c  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // UnitTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
@@ -605,7 +600,6 @@ long UnitTypeClass::Read_INI_2(void* ini, const char* section)
     EBX.d = ts::pop32();   //   0x0063ebaf  pop      ebx
     ESP.d = ts::add32(ESP.d, 0x130u);   //   0x0063ebb0  add      esp, 0x130
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0063ebb6  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // UnitTypeClass::Fetch_ID_2 -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); transcribed once.
@@ -659,7 +653,6 @@ int UnitTypeClass::Get_RTTI_2()
     ts::st32(EDX.d + 0x8, ECX.d);   //   0x0063ec28  mov      dword ptr [edx + 8], ecx
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x0063ec2b  add      esp, 0xc
     return (int)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0063ec2e  ret      8
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // UnitTypeClass::vfunc_29 -- ALIAS of AircraftTypeClass::vfunc_29 (same machine code at 0x0061f470); transcribed once.

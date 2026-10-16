@@ -43,7 +43,6 @@ long InfantryTypeClass::QueryInterface(const void*, void**)
     if (!M.zf) { ts::ts_call(0x4d3ff0u); return (long)(size_t)EAX.d; }   //   0x004d3fe6  jne      0x4d3ff0
     EAX.d = 0x80004003u;   //   0x004d3fe8  mov      eax, 0x80004003
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004d3fed  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // InfantryTypeClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
@@ -176,7 +175,6 @@ long InfantryTypeClass::Read_INI(void* ini, const char* section)
     EBX.d = ts::pop32();   //   0x004d3f3d  pop      ebx
     ESP.d = ts::add32(ESP.d, 0x8u);   //   0x004d3f3e  add      esp, 8
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004d3f41  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -360,7 +358,6 @@ long InfantryTypeClass::GetClassID(void* pClassID)
 {
     EAX.d = 0x10u;   //   0x004d40b0  mov      eax, 0x10
     return (long)(size_t)EAX.d;   //   0x004d40b5  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -379,7 +376,6 @@ long InfantryTypeClass::IsDirty()
 {
     EAX.d = 0x4b0u;   //   0x004d40c0  mov      eax, 0x4b0
     return (long)(size_t)EAX.d;   //   0x004d40c5  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -474,7 +470,6 @@ long InfantryTypeClass::Load(IStream* pStm)
     EDI.d = ts::pop32();   //   0x004d3e11  pop      edi
     ESI.d = ts::pop32();   //   0x004d3e12  pop      esi
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004d3e13  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // InfantryTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
@@ -760,7 +755,6 @@ long InfantryTypeClass::Read_INI_2(void* ini, const char* section)
     EBX.d = ts::pop32();   //   0x004d3c3a  pop      ebx
     ESP.d = ts::add32(ESP.d, 0x1cu);   //   0x004d3c3b  add      esp, 0x1c
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004d3c3e  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // InfantryTypeClass::Fetch_ID_2 -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); transcribed once.
@@ -814,7 +808,6 @@ int InfantryTypeClass::Get_RTTI_2()
     ts::st32(EDX.d + 0x8, ECX.d);   //   0x004d3cf8  mov      dword ptr [edx + 8], ecx
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x004d3cfb  add      esp, 0xc
     return (int)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004d3cfe  ret      8
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // InfantryTypeClass::vfunc_29 -- ALIAS of AircraftTypeClass::vfunc_29 (same machine code at 0x0061f470); transcribed once.

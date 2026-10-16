@@ -96,7 +96,6 @@ long BulletClass::QueryInterface(const void*, void**)
     if (!M.zf) { ts::ts_call(0x4451b0u); return (long)(size_t)EAX.d; }   //   0x004451a6  jne      0x4451b0
     EAX.d = 0x80004003u;   //   0x004451a8  mov      eax, 0x80004003
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004451ad  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // BulletClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
@@ -167,7 +166,6 @@ long BulletClass::Load(IStream* pStm)
     ESI.d = ts::pop32();   //   0x00444ecc  pop      esi
     EBX.d = ts::pop32();   //   0x00444ecd  pop      ebx
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00444ece  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -192,7 +190,6 @@ long BulletClass::Save(IStream* pStm, int fClearDirty)
     ts::push32(EDX.d);   //   0x00444eee  push     edx
     ts::ts_call_at(0x405850u, 0x444ef4u);   //   0x00444eef  call     0x405850
     return (long)(size_t)ts::ret_pop_val(0xcu, EAX.d);   //   0x00444ef4  ret      0xc
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // BulletClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
@@ -265,7 +262,6 @@ long BulletClass::GetClassID(void* pClassID)
     ESI.d = ts::pop32();   //   0x00445298  pop      esi
     ECX.d = ts::pop32();   //   0x00445299  pop      ecx
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0044529a  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // BulletClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
@@ -312,7 +308,6 @@ int BulletClass::Get_RTTI()
     EDI.d = ts::pop32();   //   0x00444045  pop      edi
     ESI.d = ts::pop32();   //   0x00444046  pop      esi
     return (int)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00444047  ret      8
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -331,7 +326,6 @@ long BulletClass::IsDirty()
 {
     EAX.d = 0x8u;   //   0x00445190  mov      eax, 8
     return (long)(size_t)EAX.d;   //   0x00445195  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -350,7 +344,6 @@ long BulletClass::GetSizeMax(unsigned long* pcbSize)
 {
     EAX.d = 0xc8u;   //   0x00445180  mov      eax, 0xc8
     return (long)(size_t)EAX.d;   //   0x00445185  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

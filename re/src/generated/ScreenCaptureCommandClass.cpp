@@ -48,7 +48,6 @@ const char* ScreenCaptureCommandClass::Get_Description()
 {
     ECX.d = 0x8du;   //   0x004e2760  mov      ecx, 0x8d
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e2765  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -206,5 +205,4 @@ const char* ScreenCaptureCommandClass::Get_UI_Description()
     ESI.d = ts::pop32();   //   0x004e2969  pop      esi
     ESP.d = ts::add32(ESP.d, 0x188u);   //   0x004e296a  add      esp, 0x188
     return (const char*)(size_t)EAX.d;   //   0x004e2970  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

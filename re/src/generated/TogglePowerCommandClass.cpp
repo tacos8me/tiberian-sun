@@ -48,7 +48,6 @@ const char* TogglePowerCommandClass::Get_Description()
 {
     ECX.d = 0x6au;   //   0x004e1ab0  mov      ecx, 0x6a
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e1ab5  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -69,5 +68,4 @@ const char* TogglePowerCommandClass::Get_UI_Description()
     ECX.d = 0x710d28u;   //   0x004e1ac2  mov      ecx, 0x710d28
     ts::ts_call_at(0x475e10u, 0x4e1accu);   //   0x004e1ac7  call     0x475e10
     return (const char*)(size_t)EAX.d;   //   0x004e1acc  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

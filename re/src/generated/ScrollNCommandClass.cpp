@@ -48,7 +48,6 @@ const char* ScrollNCommandClass::Get_Description()
 {
     ECX.d = 0x161u;   //   0x004e2030  mov      ecx, 0x161
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e2035  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -75,5 +74,4 @@ const char* ScrollNCommandClass::Get_UI_Description()
     ts::ts_call_at(0x473260u, 0x4e205cu);   //   0x004e2057  call     0x473260
     ECX.d = ts::pop32();   //   0x004e205c  pop      ecx
     return (const char*)(size_t)EAX.d;   //   0x004e205d  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

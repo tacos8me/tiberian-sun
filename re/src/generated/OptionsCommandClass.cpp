@@ -48,7 +48,6 @@ const char* OptionsCommandClass::Get_Description()
 {
     ECX.d = 0x15fu;   //   0x004e1fe0  mov      ecx, 0x15f
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e1fe5  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -66,5 +65,4 @@ const char* OptionsCommandClass::Get_Description()
 const char* OptionsCommandClass::Get_UI_Description()
 {
     ts::ts_call(0x599b50u); return (const char*)(size_t)EAX.d;   //   0x004e1ff0  jmp      0x599b50
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

@@ -48,7 +48,6 @@ const char* SelectViewCommandClass::Get_Description()
 {
     ECX.d = 0x64u;   //   0x004e19b0  mov      ecx, 0x64
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e19b5  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -70,5 +69,4 @@ const char* SelectViewCommandClass::Get_UI_Description()
     ts::push32(0x714bf0u);   //   0x004e19c8  push     0x714bf0
     ts::ts_call_at(0x5fbbd0u, 0x4e19d2u);   //   0x004e19cd  call     0x5fbbd0
     return (const char*)(size_t)EAX.d;   //   0x004e19d2  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

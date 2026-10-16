@@ -71,7 +71,6 @@ bool TunnelLocomotionClass::Is_Moving()
     ts::test32(ECX.d, ECX.d);   //   0x0062f1a7  test     ecx, ecx
     AL = (!M.zf) ? 1u : 0u;   //   0x0062f1a9  setne    al
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0062f1ac  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -144,7 +143,6 @@ int TunnelLocomotionClass::Do_Turn()
     EAX.d = 0x7u;   //   0x00630748  mov      eax, 7
     ECX.d = ts::pop32();   //   0x0063074d  pop      ecx
     return (int)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0063074e  ret      8
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -175,7 +173,6 @@ bool TunnelLocomotionClass::Is_Turning()
     if (M.zf) { ts::ts_call(0x630704u); return (bool)(size_t)EAX.d; }   //   0x006306fd  je       0x630704
     AL = ts::xor8(AL, AL);   //   0x006306ff  xor      al, al
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00630701  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -283,7 +280,6 @@ int TunnelLocomotionClass::Is_Not_Moving()
     AL = (!M.zf) ? 1u : 0u;   //   0x0062f8f2  setne    al
     EAX.d = ts::add32(EAX.d, 0x4u);   //   0x0062f8f5  add      eax, 4
     return (int)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0062f8f8  ret      8
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -343,7 +339,6 @@ int TunnelLocomotionClass::Get_Status()
     ts::st32(ESP.d + 0x8, EDX.d);   //   0x00630553  mov      dword ptr [esp + 8], edx
     ts::st32(ESP.d + 0xc, 0x3ff00000u);   //   0x00630557  mov      dword ptr [esp + 0xc], 0x3ff00000
     ts::ts_call(0x630592u); return (int)(size_t)EAX.d;   //   0x0063055f  jmp      0x630592
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -375,7 +370,6 @@ int TunnelLocomotionClass::Get_Status_2()
     ts::push32(ECX.d);   //   0x006306c0  push     ecx
     ts::ts_call_at(0x4f9e40u, 0x6306c6u);   //   0x006306c1  call     0x4f9e40
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x006306c6  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -415,7 +409,6 @@ bool TunnelLocomotionClass::Is_Ok_To_End()
     ts::cmp32(ECX.d, 0x6u);   //   0x0062f596  cmp      ecx, 6
     if ((!M.cf && !M.zf)) { ts::ts_call(0x62f82cu); return (bool)(size_t)EAX.d; }   //   0x0062f599  ja       0x62f82c
     ts::jmp_indirect(ts::ld32(ECX.d * 4 + 0x62f8b8)); return (bool)(size_t)EAX.d;   //   0x0062f59f  jmp      dword ptr [ecx*4 + 0x62f8b8]
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -640,7 +633,6 @@ int TunnelLocomotionClass::Slot35()
     L_0063085b:;
     ESI.d = ts::pop32();   //   0x0063085b  pop      esi
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0063085c  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -665,5 +657,4 @@ bool TunnelLocomotionClass::Slot38()
     if (M.zf) { ts::ts_call(0x630876u); return (bool)(size_t)EAX.d; }   //   0x0063086f  je       0x630876
     EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x00630871  xor      eax, eax
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00630873  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

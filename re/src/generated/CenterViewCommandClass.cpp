@@ -56,5 +56,4 @@ const char* CenterViewCommandClass::Get_UI_Description()
     ts::ts_call_at(0x4b2e90u, 0x4e15afu);   //   0x004e15aa  call     0x4b2e90
     L_004e15af:;
     return (const char*)(size_t)EAX.d;   //   0x004e15af  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

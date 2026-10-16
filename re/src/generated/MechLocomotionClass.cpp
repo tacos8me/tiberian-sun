@@ -62,7 +62,6 @@ bool MechLocomotionClass::Is_Moving()
     EAX.d = ts::ld32(ESP.d + 0x4);   //   0x00543a50  mov      eax, dword ptr [esp + 4]
     AL = ts::ld8(EAX.d + 0x28);   //   0x00543a54  mov      al, byte ptr [eax + 0x28]
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00543a57  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -161,7 +160,6 @@ bool MechLocomotionClass::Is_Ok_To_End()
     ts::ts_call_ptr(ts::ld32(EAX.d + 0x10), 0x543b45u);   //   0x00543b42  call     dword ptr [eax + 0x10]
     ESI.d = ts::pop32();   //   0x00543b45  pop      esi
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00543b46  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -465,5 +463,4 @@ bool MechLocomotionClass::Slot40()
     EBX.d = ts::pop32();   //   0x00545536  pop      ebx
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x00545537  add      esp, 0xc
     return (bool)(size_t)ts::ret_pop_val(0x10u, EAX.d);   //   0x0054553a  ret      0x10
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

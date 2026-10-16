@@ -111,5 +111,4 @@ const char* AllianceCommandClass::Get_UI_Description()
     L_004e196f:;
     ESP.d = ts::add32(ESP.d, 0x34u);   //   0x004e196f  add      esp, 0x34
     return (const char*)(size_t)EAX.d;   //   0x004e1972  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

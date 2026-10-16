@@ -62,7 +62,6 @@ const char* CenterTeamCommandClass::Get_Name()
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x004e0dc9  add      esp, 0xc
     EAX.d = 0x7b32d8u;   //   0x004e0dcc  mov      eax, 0x7b32d8
     return (const char*)(size_t)EAX.d;   //   0x004e0dd1  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -89,7 +88,6 @@ const char* CenterTeamCommandClass::Get_Description()
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x004e0e09  add      esp, 0xc
     EAX.d = 0x7b32d8u;   //   0x004e0e0c  mov      eax, 0x7b32d8
     return (const char*)(size_t)EAX.d;   //   0x004e0e11  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -184,5 +182,4 @@ const char* CenterTeamCommandClass::Get_UI_Description()
     ts::st8(7109830, 0x1u);   //   0x004e0eff  mov      byte ptr [0x6c7cc6], 1
     EBP.d = ts::pop32();   //   0x004e0f06  pop      ebp
     return (const char*)(size_t)EAX.d;   //   0x004e0f07  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

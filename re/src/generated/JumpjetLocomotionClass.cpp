@@ -62,7 +62,6 @@ bool JumpjetLocomotionClass::Is_Moving()
     EAX.d = ts::ld32(ESP.d + 0x4);   //   0x004f04b0  mov      eax, dword ptr [esp + 4]
     AL = ts::ld8(EAX.d + 0x1c);   //   0x004f04b4  mov      al, byte ptr [eax + 0x1c]
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004f04b7  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -197,7 +196,6 @@ bool JumpjetLocomotionClass::Is_Ok_To_End()
     ts::cmp32(EAX.d, 0x5u);   //   0x004f0598  cmp      eax, 5
     if ((!M.cf && !M.zf)) { ts::ts_call(0x4f0632u); return (bool)(size_t)EAX.d; }   //   0x004f059b  ja       0x4f0632
     ts::jmp_indirect(ts::ld32(EAX.d * 4 + 0x4f0708)); return (bool)(size_t)EAX.d;   //   0x004f05a1  jmp      dword ptr [eax*4 + 0x4f0708]
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

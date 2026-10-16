@@ -118,5 +118,4 @@ const char* StopCommandClass::Get_UI_Description()
     L_004e11c6:;
     ESP.d = ts::add32(ESP.d, 0x3cu);   //   0x004e11c6  add      esp, 0x3c
     return (const char*)(size_t)EAX.d;   //   0x004e11c9  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

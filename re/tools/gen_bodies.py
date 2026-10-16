@@ -367,7 +367,11 @@ def main():
             # A recovered span can end without a `ret` (control falls through
             # into the next function, which the linker's ordering makes legal).
             # A value-returning definition still needs a path that returns.
-            if ret and ret.strip() not in ("", "void"):
+            # Only when the span does not already end in a `ret`: otherwise the
+            # line is dead and just noise.
+            ends_in_ret = bool(items) and items[-1][0] == "stmt" and \
+                "return" in items[-1][1]
+            if ret and ret.strip() not in ("", "void") and not ends_in_ret:
                 lines.append("    return (%s)(size_t)EAX.d;   // fall-through: the "
                              "recovered span ends without a ret" % ret.strip())
             lines.append("}")
@@ -533,7 +537,9 @@ def main():
                 for extra in rest.split("\n"):
                     if extra:
                         exp_body.append("    " + extra)
-            if ret and ret.strip() not in ("", "void"):
+            ends_in_ret = bool(exp_items) and exp_items[-1][0] == "stmt" and \
+                "return" in exp_items[-1][1]
+            if ret and ret.strip() not in ("", "void") and not ends_in_ret:
                 exp_body.append("    return (%s)(size_t)EAX.d;   // fall-through: "
                                 "the recovered span ends without a ret" % ret.strip())
             got_body = [l for l in block.split("\n")

@@ -48,7 +48,6 @@ const char* SetView3CommandClass::Get_Description()
 {
     ECX.d = 0x175u;   //   0x004e2550  mov      ecx, 0x175
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e2555  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -85,5 +84,4 @@ const char* SetView3CommandClass::Get_UI_Description()
     ts::st32(EAX.d + 0x1d74, EDX.d);   //   0x004e259c  mov      dword ptr [eax + 0x1d74], edx
     ESP.d = ts::add32(ESP.d, 0x10u);   //   0x004e25a2  add      esp, 0x10
     return (const char*)(size_t)EAX.d;   //   0x004e25a5  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

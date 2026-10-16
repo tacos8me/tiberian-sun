@@ -43,7 +43,6 @@ long AircraftTypeClass::QueryInterface(const void*, void**)
     if (!M.zf) { ts::ts_call(0x40f470u); return (long)(size_t)EAX.d; }   //   0x0040f466  jne      0x40f470
     EAX.d = 0x80004003u;   //   0x0040f468  mov      eax, 0x80004003
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0040f46d  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // AircraftTypeClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
@@ -90,7 +89,6 @@ long AircraftTypeClass::Read_INI(void* ini, const char* section)
     L_0040f431:;
     ESI.d = ts::pop32();   //   0x0040f431  pop      esi
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0040f432  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -268,7 +266,6 @@ long AircraftTypeClass::GetClassID(void* pClassID)
 {
     EAX.d = 0x3u;   //   0x0040f630  mov      eax, 3
     return (long)(size_t)EAX.d;   //   0x0040f635  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -287,7 +284,6 @@ long AircraftTypeClass::IsDirty()
 {
     EAX.d = 0x478u;   //   0x0040f640  mov      eax, 0x478
     return (long)(size_t)EAX.d;   //   0x0040f645  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -329,7 +325,6 @@ long AircraftTypeClass::Load(IStream* pStm)
     EDI.d = ts::pop32();   //   0x0040f3e6  pop      edi
     ESI.d = ts::pop32();   //   0x0040f3e7  pop      esi
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0040f3e8  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // AircraftTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.
@@ -458,7 +453,6 @@ long AircraftTypeClass::Read_INI_2(void* ini, const char* section)
     AL = 0x1u;   //   0x0040f390  mov      al, 1
     EBX.d = ts::pop32();   //   0x0040f392  pop      ebx
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0040f393  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // AircraftTypeClass::Fetch_ID_2 -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); transcribed once.
@@ -492,7 +486,6 @@ int AircraftTypeClass::Get_RTTI_2()
     ECX.d = ts::ld32(ECX.d + 0x8);   //   0x0040f616  mov      ecx, dword ptr [ecx + 8]
     ts::st32(EDX.d + 0x8, ECX.d);   //   0x0040f619  mov      dword ptr [edx + 8], ecx
     return (int)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0040f61c  ret      8
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

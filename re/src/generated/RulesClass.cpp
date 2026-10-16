@@ -569,7 +569,6 @@ bool RulesClass::ReadGeneral(CCINIClass& ini)
     ESP.d = EBP.d;   //   0x005b3c5d  mov      esp, ebp
     EBP.d = ts::pop32();   //   0x005b3c5f  pop      ebp
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x005b3c60  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1005,7 +1004,6 @@ bool RulesClass::ReadAI(CCINIClass& ini)
     ESP.d = EBP.d;   //   0x005b569d  mov      esp, ebp
     EBP.d = ts::pop32();   //   0x005b569f  pop      ebp
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x005b56a0  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1340,7 +1338,6 @@ bool RulesClass::ReadPower(CCINIClass& ini)
     ECX.d = ESP.d + 0x48;   //   0x005b1615  lea      ecx, [esp + 0x48]
     ts::ts_call_at(0x6576f0u, 0x5b161eu);   //   0x005b1619  call     0x6576f0
     ts::ts_call(0x5b1622u); return (bool)(size_t)EAX.d;   //   0x005b161e  jmp      0x5b1622
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1559,7 +1556,6 @@ bool RulesClass::ReadLand(CCINIClass& ini)
     ts::st32(ESP.d + 0x10, 0x6a3c9cu);   //   0x005b19a5  mov      dword ptr [esp + 0x10], 0x6a3c9c
     ts::ts_call_at(0x5ba000u, 0x5b19b2u);   //   0x005b19ad  call     0x5ba000
     ts::ts_call(0x5b19c4u); return (bool)(size_t)EAX.d;   //   0x005b19b2  jmp      0x5b19c4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -2048,7 +2044,6 @@ bool RulesClass::ReadAudio(CCINIClass& ini)
     ESP.d = EBP.d;   //   0x005c7aa3  mov      esp, ebp
     EBP.d = ts::pop32();   //   0x005c7aa5  pop      ebp
     return (bool)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x005c7aa6  ret      8
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -3026,7 +3021,6 @@ bool RulesClass::ReadVisual(CCINIClass& ini)
     L_004eb99d:;
     EAX.d = ts::ld32(ESP.d + 0x34);   //   0x004eb99d  mov      eax, dword ptr [esp + 0x34]
     ts::ts_call(0x4eb9adu); return (bool)(size_t)EAX.d;   //   0x004eb9a1  jmp      0x4eb9ad
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -4911,7 +4905,6 @@ bool RulesClass::ReadBuilding(CCINIClass& ini)
     EBP.d = ts::pop32();   //   0x00441307  pop      ebp
     ESP.d = ts::add32(ESP.d, 0x318u);   //   0x00441308  add      esp, 0x318
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0044130e  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -5352,7 +5345,6 @@ bool RulesClass::ReadInfantry(CCINIClass& ini)
     EDX.d = ts::ld32(EAX.d + 0x894);   //   0x00620874  mov      edx, dword ptr [eax + 0x894]
     ts::st32(ESP.d + 0x14, EDX.d);   //   0x0062087a  mov      dword ptr [esp + 0x14], edx
     ts::ts_call(0x620894u); return (bool)(size_t)EAX.d;   //   0x0062087e  jmp      0x620894
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -5621,7 +5613,6 @@ bool RulesClass::ReadUnit(CCINIClass& ini)
     ESP.d = EBP.d;   //   0x00620dbf  mov      esp, ebp
     EBP.d = ts::pop32();   //   0x00620dc1  pop      ebp
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00620dc2  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -5814,5 +5805,4 @@ bool RulesClass::ReadAircraft(CCINIClass& ini)
     ts::st32(ESP.d + 0x28, 0x6a3c9cu);   //   0x0061f960  mov      dword ptr [esp + 0x28], 0x6a3c9c
     ts::ts_call_at(0x5ba000u, 0x61f96du);   //   0x0061f968  call     0x5ba000
     ts::ts_call(0x61f97fu); return (bool)(size_t)EAX.d;   //   0x0061f96d  jmp      0x61f97f
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

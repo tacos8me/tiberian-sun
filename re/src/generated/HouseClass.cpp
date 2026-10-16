@@ -69,7 +69,6 @@ long HouseClass::QueryInterface(const void*, void**)
     if (!M.zf) { ts::ts_call(0x4be9e0u); return (long)(size_t)EAX.d; }   //   0x004be9d6  jne      0x4be9e0
     EAX.d = 0x80004003u;   //   0x004be9d8  mov      eax, 0x80004003
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004be9dd  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // HouseClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
@@ -1150,7 +1149,6 @@ long HouseClass::GetClassID(void* pClassID)
 {
     EAX.d = 0xdu;   //   0x004c51b0  mov      eax, 0xd
     return (long)(size_t)EAX.d;   //   0x004c51b5  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1169,7 +1167,6 @@ long HouseClass::IsDirty()
 {
     EAX.d = 0x10e50u;   //   0x004bea10  mov      eax, 0x10e50
     return (long)(size_t)EAX.d;   //   0x004bea15  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1297,7 +1294,6 @@ long HouseClass::Load(IStream* pStm)
     if ((M.sf == M.of)) { ts::ts_call(0x4bdf6du); return (long)(size_t)EAX.d; }   //   0x004bdf67  jge      0x4bdf6d
     EAX.d = ts::sub32(EAX.d, ECX.d);   //   0x004bdf69  sub      eax, ecx
     ts::ts_call(0x4bdf6fu); return (long)(size_t)EAX.d;   //   0x004bdf6b  jmp      0x4bdf6f
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // HouseClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); transcribed once.

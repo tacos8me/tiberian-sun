@@ -149,5 +149,4 @@ const char* DeployCommandClass::Get_UI_Description()
     L_004e1343:;
     ESP.d = ts::add32(ESP.d, 0x3cu);   //   0x004e1343  add      esp, 0x3c
     return (const char*)(size_t)EAX.d;   //   0x004e1346  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

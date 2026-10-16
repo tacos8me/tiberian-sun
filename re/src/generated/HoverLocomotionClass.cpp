@@ -95,7 +95,6 @@ HRESULT HoverLocomotionClass::Init(TechnoClass* pOwner)
     EBX.d = ts::pop32();   //   0x004c7f46  pop      ebx
     ESP.d = ts::add32(ESP.d, 0x18u);   //   0x004c7f47  add      esp, 0x18
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004c7f4a  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -136,7 +135,6 @@ bool HoverLocomotionClass::Is_Moving()
     EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004c8acb  xor      eax, eax
     ESI.d = ts::pop32();   //   0x004c8acd  pop      esi
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004c8ace  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -597,7 +595,6 @@ bool HoverLocomotionClass::Is_Ok_To_End()
     ESP.d = EBP.d;   //   0x004c85c8  mov      esp, ebp
     EBP.d = ts::pop32();   //   0x004c85ca  pop      ebp
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004c85cb  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -853,7 +850,6 @@ bool HoverLocomotionClass::Get_Moving_Flag()
     AL = ts::xor8(AL, AL);   //   0x004caa1e  xor      al, al
     ESI.d = ts::pop32();   //   0x004caa20  pop      esi
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004caa21  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -891,7 +887,6 @@ bool HoverLocomotionClass::Slot25()
     ESI.d = ts::pop32();   //   0x004caa64  pop      esi
     ESP.d = ts::add32(ESP.d, 0x2cu);   //   0x004caa65  add      esp, 0x2c
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004caa68  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1023,7 +1018,6 @@ bool HoverLocomotionClass::Slot26()
     EBX.d = ts::pop32();   //   0x004cacdd  pop      ebx
     ESP.d = ts::add32(ESP.d, 0x10u);   //   0x004cacde  add      esp, 0x10
     return (bool)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004cace1  ret      8
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1070,7 +1064,6 @@ bool HoverLocomotionClass::Slot27()
     AL = 0x1u;   //   0x004cad81  mov      al, 1
     ESI.d = ts::pop32();   //   0x004cad83  pop      esi
     return (bool)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004cad84  ret      8
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -1235,5 +1228,4 @@ bool HoverLocomotionClass::Slot40()
     EBX.d = ts::pop32();   //   0x004cb006  pop      ebx
     ESP.d = ts::add32(ESP.d, 0xcu);   //   0x004cb007  add      esp, 0xc
     return (bool)(size_t)ts::ret_pop_val(0x10u, EAX.d);   //   0x004cb00a  ret      0x10
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

@@ -71,7 +71,6 @@ bool FlyLocomotionClass::Is_Moving()
     if (M.zf) { ts::ts_call(0x495796u); return (bool)(size_t)EAX.d; }   //   0x0049578f  je       0x495796
     EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x00495791  xor      eax, eax
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00495793  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -311,7 +310,6 @@ bool FlyLocomotionClass::Is_Moving_Now()
     EBX.d = ts::pop32();   //   0x00498e12  pop      ebx
     ESP.d = ts::add32(ESP.d, 0x74u);   //   0x00498e13  add      esp, 0x74
     return (bool)(size_t)ts::ret_pop_val(0xcu, EAX.d);   //   0x00498e16  ret      0xc
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -375,7 +373,6 @@ int FlyLocomotionClass::Get_Speed()
     ts::st32(EAX.d, ECX.d);   //   0x00498c68  mov      dword ptr [eax], ecx
     ts::st32(EAX.d + 0x4, EDX.d);   //   0x00498c6a  mov      dword ptr [eax + 4], edx
     return (int)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00498c6d  ret      8
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -471,7 +468,6 @@ bool FlyLocomotionClass::Is_Ok_To_End()
     ESI.d = ts::pop32();   //   0x004958f9  pop      esi
     EBX.d = ts::pop32();   //   0x004958fa  pop      ebx
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004958fb  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -834,7 +830,6 @@ bool FlyLocomotionClass::Get_Moving_Flag()
     ts::push32(EAX.d);   //   0x00498fa4  push     eax
     ts::ts_call_at(0x4f9bd0u, 0x498faau);   //   0x00498fa5  call     0x4f9bd0
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00498faa  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -861,7 +856,6 @@ bool FlyLocomotionClass::Slot25()
     CL = (M.zf) ? 1u : 0u;   //   0x00498fc9  sete     cl
     AL = CL;   //   0x00498fcc  mov      al, cl
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00498fce  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -962,7 +956,6 @@ int FlyLocomotionClass::Slot36()
     if (M.zf) { ts::ts_call(0x499073u); return (int)(size_t)EAX.d; }   //   0x00499069  je       0x499073
     EAX.d = 0x1u;   //   0x0049906b  mov      eax, 1
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x00499070  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

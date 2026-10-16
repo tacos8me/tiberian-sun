@@ -48,7 +48,6 @@ const char* ToggleSellCommandClass::Get_Description()
 {
     ECX.d = 0x68u;   //   0x004e1a60  mov      ecx, 0x68
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e1a65  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -69,5 +68,4 @@ const char* ToggleSellCommandClass::Get_UI_Description()
     ECX.d = 0x710d28u;   //   0x004e1a72  mov      ecx, 0x710d28
     ts::ts_call_at(0x475c60u, 0x4e1a7cu);   //   0x004e1a77  call     0x475c60
     return (const char*)(size_t)EAX.d;   //   0x004e1a7c  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

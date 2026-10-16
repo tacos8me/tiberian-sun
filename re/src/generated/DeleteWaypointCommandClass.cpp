@@ -104,5 +104,4 @@ const char* DeleteWaypointCommandClass::Get_UI_Description()
     L_004e2aee:;
     ESP.d = ts::add32(ESP.d, 0x8u);   //   0x004e2aee  add      esp, 8
     return (const char*)(size_t)EAX.d;   //   0x004e2af1  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

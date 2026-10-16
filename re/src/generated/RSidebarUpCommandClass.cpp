@@ -48,7 +48,6 @@ const char* RSidebarUpCommandClass::Get_Description()
 {
     ECX.d = 0x74u;   //   0x004e1cc0  mov      ecx, 0x74
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e1cc5  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -70,5 +69,4 @@ const char* RSidebarUpCommandClass::Get_UI_Description()
     ECX.d = 0x710d28u;   //   0x004e1cd4  mov      ecx, 0x710d28
     ts::ts_call_at(0x5d92c0u, 0x4e1cdeu);   //   0x004e1cd9  call     0x5d92c0
     return (const char*)(size_t)EAX.d;   //   0x004e1cde  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

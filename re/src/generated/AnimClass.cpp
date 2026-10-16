@@ -43,7 +43,6 @@ long AnimClass::QueryInterface(const void*, void**)
     if (!M.zf) { ts::ts_call(0x4168c0u); return (long)(size_t)EAX.d; }   //   0x004168b6  jne      0x4168c0
     EAX.d = 0x80004003u;   //   0x004168b8  mov      eax, 0x80004003
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004168bd  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // AnimClass::AddRef -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); transcribed once.
@@ -98,7 +97,6 @@ long AnimClass::Load(IStream* pStm)
     EDI.d = ts::pop32();   //   0x004158b9  pop      edi
     ESI.d = ts::pop32();   //   0x004158ba  pop      esi
     return (long)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004158bb  ret      8
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -123,7 +121,6 @@ long AnimClass::Save(IStream* pStm, int fClearDirty)
     ts::push32(EDX.d);   //   0x004158ce  push     edx
     ts::ts_call_at(0x405850u, 0x4158d4u);   //   0x004158cf  call     0x405850
     return (long)(size_t)ts::ret_pop_val(0xcu, EAX.d);   //   0x004158d4  ret      0xc
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // AnimClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); transcribed once.
@@ -157,7 +154,6 @@ long AnimClass::GetClassID(void* pClassID)
     EAX.d = ESI.d;   //   0x00416918  mov      eax, esi
     ESI.d = ts::pop32();   //   0x0041691a  pop      esi
     return (long)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0041691b  ret      4
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // AnimClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); transcribed once.
@@ -206,7 +202,6 @@ int AnimClass::Get_RTTI()
     EDI.d = ts::pop32();   //   0x00415789  pop      edi
     ESI.d = ts::pop32();   //   0x0041578a  pop      esi
     return (int)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0041578b  ret      8
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -225,7 +220,6 @@ long AnimClass::IsDirty()
 {
     EAX.d = 0x4u;   //   0x004168f0  mov      eax, 4
     return (long)(size_t)EAX.d;   //   0x004168f5  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -244,7 +238,6 @@ long AnimClass::GetSizeMax(unsigned long* pcbSize)
 {
     EAX.d = 0x108u;   //   0x004168a0  mov      eax, 0x108
     return (long)(size_t)EAX.d;   //   0x004168a5  ret      
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------

@@ -48,7 +48,6 @@ const char* ToggleRadarCommandClass::Get_Description()
 {
     ECX.d = 0x6eu;   //   0x004e1bd0  mov      ecx, 0x6e
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e1bd5  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -67,5 +66,4 @@ const char* ToggleRadarCommandClass::Get_UI_Description()
 {
     ECX.d = 0x710d28u;   //   0x004e1be0  mov      ecx, 0x710d28
     ts::ts_call(0x5dc450u); return (const char*)(size_t)EAX.d;   //   0x004e1be5  jmp      0x5dc450
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

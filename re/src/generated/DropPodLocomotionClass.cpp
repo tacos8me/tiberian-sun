@@ -91,7 +91,6 @@ bool DropPodLocomotionClass::Is_Moving()
 {
     AL = 0x1u;   //   0x0047f8e0  mov      al, 1
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0047f8e2  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -191,7 +190,6 @@ bool DropPodLocomotionClass::Is_Ok_To_End()
     ESP.d = ts::add32(ESP.d, 0x8u);   //   0x0047f9bb  add      esp, 8
     ts::f_arith_mem(0, (long double)(ts::i32)ts::ld32(ESP.d + 0x28), false);   //   0x0047f9be  fiadd    dword ptr [esp + 0x28]
     ts::ts_call(0x47f9f2u); return (bool)(size_t)EAX.d;   //   0x0047f9c2  jmp      0x47f9f2
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -384,7 +382,6 @@ int DropPodLocomotionClass::Slot34()
     ts::test8(DL, DL);   //   0x00480399  test     dl, dl
     AL = (!M.zf) ? 1u : 0u;   //   0x0048039b  setne    al
     return (int)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0048039e  ret      4
-    return (int)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -406,7 +403,6 @@ HRESULT DropPodLocomotionClass::Begin_Piggyback(TechnoClass* pPassenger)
     if (!M.zf) { ts::ts_call(0x480160u); return (HRESULT)(size_t)EAX.d; }   //   0x00480156  jne      0x480160
     EAX.d = 0x80004003u;   //   0x00480158  mov      eax, 0x80004003
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x0048015d  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -428,7 +424,6 @@ HRESULT DropPodLocomotionClass::End_Piggyback(TechnoClass* pPassenger)
     if (!M.zf) { ts::ts_call(0x4801b0u); return (HRESULT)(size_t)EAX.d; }   //   0x004801a6  jne      0x4801b0
     EAX.d = 0x80004003u;   //   0x004801a8  mov      eax, 0x80004003
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x004801ad  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -459,7 +454,6 @@ bool DropPodLocomotionClass::Is_Ok_To_End_Piggyback()
     AL = 0x1u;   //   0x004801fa  mov      al, 1
     ESI.d = ts::pop32();   //   0x004801fc  pop      esi
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x004801fd  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -485,7 +479,6 @@ HRESULT DropPodLocomotionClass::Piggyback_Available()
     EAX.d = 0x80004003u;   //   0x0048028b  mov      eax, 0x80004003
     EBP.d = ts::pop32();   //   0x00480290  pop      ebp
     return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);   //   0x00480291  ret      8
-    return (HRESULT)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -508,5 +501,4 @@ bool DropPodLocomotionClass::Is_Piggybacking()
     ts::test32(EDX.d, EDX.d);   //   0x00480469  test     edx, edx
     AL = (!M.zf) ? 1u : 0u;   //   0x0048046b  setne    al
     return (bool)(size_t)ts::ret_pop_val(0x4u, EAX.d);   //   0x0048046e  ret      4
-    return (bool)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

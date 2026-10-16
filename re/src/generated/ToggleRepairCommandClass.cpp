@@ -48,7 +48,6 @@ const char* ToggleRepairCommandClass::Get_Description()
 {
     ECX.d = 0x66u;   //   0x004e1a10  mov      ecx, 0x66
     ts::ts_call(0x46ebd0u); return (const char*)(size_t)EAX.d;   //   0x004e1a15  jmp      0x46ebd0
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // ---------------------------------------------------------------------------
@@ -69,5 +68,4 @@ const char* ToggleRepairCommandClass::Get_UI_Description()
     ECX.d = 0x710d28u;   //   0x004e1a22  mov      ecx, 0x710d28
     ts::ts_call_at(0x475eb0u, 0x4e1a2cu);   //   0x004e1a27  call     0x475eb0
     return (const char*)(size_t)EAX.d;   //   0x004e1a2c  ret      
-    return (const char*)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }

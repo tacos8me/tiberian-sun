@@ -297,7 +297,6 @@ long TechnoClass::Load(IStream* pStm)
     if ((M.sf == M.of)) { ts::ts_call(0x61cd65u); return (long)(size_t)EAX.d; }   //   0x0061cd5f  jge      0x61cd65
     EAX.d = ts::sub32(EAX.d, ECX.d);   //   0x0061cd61  sub      eax, ecx
     ts::ts_call(0x61cd67u); return (long)(size_t)EAX.d;   //   0x0061cd63  jmp      0x61cd67
-    return (long)(size_t)EAX.d;   // fall-through: the recovered span ends without a ret
 }
 
 // TechnoClass::Save -- ALIAS of AircraftClass::vfunc_14 (same machine code at 0x00612db0); transcribed once.
