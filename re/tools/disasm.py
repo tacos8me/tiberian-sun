@@ -9,7 +9,6 @@ Strategy:
        - all import thunk targets
        - MSVC prologue patterns
   2. Linear-sweep disassemble each function with capstone.
-  2. Linear-sweep disassemble each function with capstone.
   3. Extend the worklist to a fixpoint: every body feeds back its direct
      call/jmp targets, every branch target (conditional jumps included) and the
      in-.text entries of any switch table it dispatches through, and the start
@@ -201,55 +200,70 @@ def find_prologues(bin_):
 JUMP_TABLE_MAX = 4096  # dwords; the largest real table in this binary is < 600
 
 
-def _scan_body(bin_, md, va, limit=0x4000):
-    """Disassemble at most `limit` bytes starting at va and return (insns, code).
 
-    The scan stops at a terminating instruction (ret/int3/jmp) so it does not
-    run off the end of the function into unrelated bytes.
+
+def read_jump_table(bin_, base):
+    """In-.text entries of the switch table at `base`.
+
+    The table ends at the first dword that is not a .text VA, which is where the
+    next table or the rodata begins. Do NOT keep reading past it: table
+    0x663f24 legitimately ends after 7 entries.
     """
-    sec = bin_.section_of(va)
-    if sec is None:
-        return []
-    off = sec["raw"] + (va - sec["va"])
-    code = bin_.data[off:off + limit]
-    insns = []
-    for ins in md.disasm(code, va):
-        insns.append(ins)
-        if ins.mnemonic in ("ret", "retn", "int3", "jmp"):
+    targets = []
+    for k in range(JUMP_TABLE_MAX):
+        p = bin_.u32(base + k * 4)
+        if p is None or not bin_.in_text(p):
             break
-    return insns
+        targets.append(p)
+    return targets
 
 
-def find_jump_tables_from_seeds(bin_, md, seeds):
-    """Read every `jmp dword ptr [reg*4 + imm]` dispatch table reachable from the
-    seed set and return (in-.text targets, table base VAs).
+def jump_table_base(ins):
+    """Table base VA of a `jmp dword ptr [reg*4 + imm]` dispatch, else None.
 
-    The tables themselves live in .rdata (some in .data); only the entries are
-    code addresses. The scan is run over the seed set before the worklist so
-    that switch targets are known when disassembly begins.
+    MSVC emits `jmp dword ptr [reg*4 + table]` for a switch over a dense integer
+    range. The table holds 4-byte absolute code VAs; the selector bound is not
+    recovered here because the table's end is unambiguous -- the first dword
+    that is not a .text VA.
+    """
+    if ins.mnemonic != "jmp" or "*4" not in ins.op_str:
+        return None
+    imm = None
+    for tok in ins.op_str.replace("[", " ").replace("]", " ").split():
+        if tok.startswith("0x"):
+            try:
+                imm = int(tok, 16)
+            except ValueError:
+                continue
+    return imm
+
+
+def push_imm_targets(bin_, insns):
+    """VAs a body loads with `push <imm32>` where a `call` follows within a few
+    instructions.
+
+    This is how the binary registers atexit/onexit callbacks and how it passes
+    function pointers to CRT helpers: `push <fn>; ... ; call <helper>`. The
+    pushed immediate is a code address the original compiler emitted, so it is a
+    function entry point even when no direct `call <fn>` exists.
     """
     targets = set()
-    tables = set()
-    for va in sorted(seeds):
-        for ins in _scan_body(bin_, md, va):
-            if ins.mnemonic != "jmp" or "*4" not in ins.op_str:
-                continue
-            imm = None
-            for tok in ins.op_str.replace("[", " ").replace("]", " ").split():
-                if tok.startswith("0x"):
-                    try:
-                        imm = int(tok, 16)
-                    except ValueError:
-                        continue
-            if imm is not None:
-                tables.add(imm)
-    for base in sorted(tables):
-        for k in range(JUMP_TABLE_MAX):
-            p = bin_.u32(base + k * 4)
-            if p is None or not bin_.in_text(p):
+    for idx, ins in enumerate(insns):
+        if ins.mnemonic != "push" or not ins.op_str.startswith("0x"):
+            continue
+        try:
+            imm = int(ins.op_str, 16)
+        except ValueError:
+            continue
+        if not bin_.in_text(imm):
+            continue
+        for k in range(idx + 1, min(idx + 4, len(insns))):
+            if insns[k].mnemonic == "call":
+                targets.add(imm)
                 break
-            targets.add(p)
-    return targets, tables
+            if insns[k].mnemonic in ("ret", "retn", "jmp", "int3"):
+                break
+    return targets
 
 
 def find_seh_handlers(bin_):
@@ -273,34 +287,67 @@ def find_seh_handlers(bin_):
     return handlers
 
 
-def find_push_imm_targets_from_seeds(bin_, md, seeds):
-    """Return VAs that a scanned body loads with `push <imm32>` where a `call`
-    follows within a few instructions.
+class CoveredText:
+    """Merged .text intervals of recovered bodies, for the overlap gate.
 
-    This is how the binary registers atexit/onexit callbacks and how it passes
-    function pointers to CRT helpers: `push <fn>; ... ; call <helper>`. The
-    pushed immediate is a code address the original compiler emitted, so it is
-    a function entry point even when no direct `call <fn>` exists.
+    Bodies are added as they are recovered and the intervals are kept merged, so
+    a single bisect answers "does va sit strictly inside an already-recovered
+    function body?" -- the question the safety gate asks of every new start.
+    Non-.text bodies are never added: their VAs are numerically inside the .text
+    range (e.g. 0x0060f590) and would otherwise split real .text gaps.
     """
-    targets = set()
-    for va in sorted(seeds):
-        insns = _scan_body(bin_, md, va)
-        for idx, ins in enumerate(insns):
-            if ins.mnemonic != "push" or not ins.op_str.startswith("0x"):
-                continue
-            try:
-                imm = int(ins.op_str, 16)
-            except ValueError:
-                continue
-            if not bin_.in_text(imm):
-                continue
-            for k in range(idx + 1, min(idx + 4, len(insns))):
-                if insns[k].mnemonic == "call":
-                    targets.add(imm)
-                    break
-                if insns[k].mnemonic in ("ret", "retn", "jmp", "int3"):
-                    break
-    return targets
+
+    def __init__(self):
+        self.ivs = []
+        self.los = []
+
+    def add(self, a, b):
+        if b <= a:
+            return
+        i = bisect.bisect_left(self.los, a)
+        lo, hi = a, b
+        if i > 0 and self.ivs[i - 1][1] >= a:
+            i -= 1
+            lo = min(lo, self.ivs[i][0])
+            hi = max(hi, self.ivs[i][1])
+        j = i
+        while j < len(self.ivs) and self.ivs[j][0] <= hi:
+            hi = max(hi, self.ivs[j][1])
+            j += 1
+        self.ivs[i:j] = [[lo, hi]]
+        self.los[i:j] = [lo]
+
+    def contains_strict(self, va):
+        i = bisect.bisect_right(self.los, va) - 1
+        return i >= 0 and va < self.ivs[i][1]
+
+
+def text_intervals(funcs, bin_):
+    """Merged .text intervals of the recovered .text functions."""
+    iv = sorted((f["va"], f["va"] + f["size"]) for f in funcs.values()
+                if bin_.in_text(f["va"]))
+    merged = []
+    for a, b in iv:
+        if merged and a <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], b)
+        else:
+            merged.append([a, b])
+    return merged
+
+
+def strip_leading_padding(bin_, va, limit):
+    """Advance past leading 0x00/0x90/0xcc padding before seeding a gap start.
+
+    A gap usually opens with the previous function's alignment padding; seeding
+    the raw gap start disassembles a run of nops (1,598 of 1,884 candidate
+    starts begin `90 90`) instead of the function that follows it.
+    """
+    while va < limit:
+        b = bin_.read(va, 1)
+        if not b or b[0] not in (0x00, 0x90, 0xcc):
+            break
+        va += 1
+    return va
 
 
 def main():
@@ -311,7 +358,6 @@ def main():
     print(f"imports: {len(iat)}")
 
     t = bin_.text
-    text_blob = bin_.data[t["raw"]:t["raw"] + t["rawsize"]]
     text_va = t["va"]
     text_end = t["va"] + t["vsize"]
 
@@ -363,124 +409,93 @@ def main():
                         break
     print(f"seeds after vtables: {len(seeds)}")
 
-    # --- Additional evidence-backed seed sources ----------------------------
-    #
-    # Each source below is a real code address the compiler emitted: the
-    # destination of a table read, a SEH handler immediate, or a callback
-    # passed to a CRT helper. None is an inference.
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
     md.detail = True
 
-    # 1. Switch dispatch tables. `jmp dword ptr [reg*4 + imm]` reads a table of
-    #    absolute code VAs from .rdata; every entry is a basic-block entry point
-    #    that no direct call/jmp reaches.
-    jump_targets, jump_tables = find_jump_tables_from_seeds(bin_, md, seeds)
-    print(f"jump tables: {len(jump_tables)} tables, "
-          f"{len(jump_targets)} in-.text targets")
-
-    # 2. SEH handler immediates (`push -1; push <handler>`).
+    # 1. SEH handler immediates (`push -1; push <handler>`).
     seh_handlers = find_seh_handlers(bin_)
     seh_in_text = {h for h in seh_handlers if bin_.in_text(h)}
 
-    # 3. Code pointers passed to CRT helpers (`push <fn>; call <helper>`). This
-    #    scan also needs bodies; run it over the seed set.
-    push_targets = find_push_imm_targets_from_seeds(bin_, md, seeds)
-
-    # --- Merge the new seeds under the overlap safety rule ------------------
-    #
-    # CRITICAL: a new seed must never sit strictly inside an existing function
-    # body unless it is the target of a recorded jmp/call (a legitimate shared
-    # tail). There are ~193 such shared tails in this binary; a naive overlap
-    # rule would delete them, and an ungated new seed would let one body swallow
-    # another. The prologue/vtable seeds are already trusted entry points, so
-    # the gate below applies only to the new sources.
-    def _in_trusted_body(va, trusted_starts):
-        """True if va lies strictly inside the body of a trusted seed.
-
-        Bodies are measured by disassembling from each trusted start to its
-        first terminating instruction, then merged. A seed that equals a
-        trusted start, or falls outside every such body, is admissible.
-        """
-        i = bisect.bisect_right(trusted_starts, va) - 1
-        if i < 0:
-            return False
-        return trusted_starts[i] < va < _body_end[trusted_starts[i]]
-
-    _body_end = {}
-    for s in seeds:
-        insns = _scan_body(bin_, md, s)
-        if insns:
-            _body_end[s] = insns[-1].address + insns[-1].size
-
-    trusted = sorted(_body_end)
-    accepted = {"jump": 0, "seh": 0, "push": 0, "vtable": 0}
-    rejected = {"jump": 0, "seh": 0, "push": 0, "vtable": 0}
-
-    # Branch/call targets are legitimate shared tails even when they land inside
-    # a trusted body; collect them so the gate can admit those.
-    branch_targets = set()
-    for s in seeds:
-        for ins in _scan_body(bin_, md, s):
-            if ins.mnemonic in ("call", "jmp") or ins.mnemonic.startswith("j"):
-                if ins.operands and ins.operands[0].type == capstone.x86.X86_OP_IMM:
-                    branch_targets.add(ins.operands[0].imm)
-
-    for label, cands in (("jump", jump_targets),
-                         ("seh", seh_in_text),
-                         ("push", push_targets)):
-        for va in sorted(cands):
-            if va in seeds:
-                continue
-            if _in_trusted_body(va, trusted) and va not in branch_targets:
-                rejected[label] += 1
-                continue
-            seeds.add(va)
-            accepted[label] += 1
-
-    # Code named by a vtable entry but living outside .text. Admitted only when
-    # a vtable slot holds the address AND the bytes there look like a function
-    # prologue. No blanket scan of .data/.rdata is performed, and a vtable's
-    # trailing zero dword (which is not code) is rejected by the byte test.
+    # 2. Code named by a vtable entry but living outside .text. Admitted only
+    #    when a vtable slot holds the address AND the bytes there look like a
+    #    function prologue. No blanket scan of .data/.rdata is performed, and a
+    #    vtable's trailing zero dword (which is not code) is rejected by the
+    #    byte test.
+    ext_seeds = set()
+    ext_rejected = 0
     for va in sorted(vtable_code):
         if va in seeds:
             continue
         if bin_.section_of(va) is None or not looks_like_code_start(bin_, va):
-            rejected["vtable"] += 1
+            ext_rejected += 1
             continue
-        seeds.add(va)
-        accepted["vtable"] += 1
+        ext_seeds.add(va)
 
-    print(f"new seeds: jump={accepted['jump']} seh={accepted['seh']} "
-          f"push={accepted['push']} vtable={accepted['vtable']}")
-    print(f"rejected (inside a trusted body, not a branch target): "
-          f"jump={rejected['jump']} seh={rejected['seh']} push={rejected['push']}")
-
-    # --- Disassemble
-    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
-    md.detail = True
-
-    # Precompute the full seed set so a function body can stop when it runs
-    # into the start of another known function.
-    all_seeds = set(seeds)
+    # --- Fixpoint worklist --------------------------------------------------
+    #
+    # Every body disassembled from any start feeds its successors back into the
+    # worklist: direct call/jmp targets, conditional branch targets, the in-.text
+    # entries of any switch table it dispatches through, and code pointers it
+    # pushes to a CRT helper. The outer loop then seeds the remaining
+    # unattributed gaps (after stripping their leading padding) and runs again,
+    # until no gap yields a new body. Nothing here invents a start: each VA is
+    # the target of a real branch, the destination of a real table read, or the
+    # first non-padding byte of a gap.
+    #
+    # SAFETY: a start is admitted only when it is not strictly inside an
+    # already-recovered body, unless a recorded direct call/jmp reaches it (a
+    # legitimate shared tail). Intra-body control flow -- a forward conditional
+    # jump to the next basic block, say -- must not split the body containing
+    # it. Accepted and rejected counts are printed per source.
     funcs = {}
-    worklist = deque(sorted(seeds))
     seen = set()
     call_edges = defaultdict(set)
+    admitted = set(seeds) | ext_seeds
+    direct_branch_targets = set()
+    seen_tables = set()
+    accepted = defaultdict(int)
+    rejected = defaultdict(int)
 
-    while worklist:
-        start = worklist.popleft()
-        if start in seen or bin_.section_of(start) is None:
-            continue
-        seen.add(start)
+    worklist = deque((s, "seed") for s in sorted(seeds))
+    for s in sorted(ext_seeds):
+        worklist.append((s, "vtable"))
+    for s in sorted(seh_in_text):
+        worklist.append((s, "seh"))
+
+    covered = CoveredText()
+
+    def _queue(va, source):
+        if not bin_.section_of(va):
+            return
+        if source != "vtable" and not bin_.in_text(va):
+            return
+        if va in seen:
+            return
+        admitted.add(va)
+        worklist.append((va, source))
+
+    def _gate(va, source):
+        if source in ("seed", "call", "jmp"):
+            return True
+        if va in direct_branch_targets:
+            return True
+        return not covered.contains_strict(va)
+
+    def _recover(start):
+        """Linear-sweep disassemble one body and return its candidates."""
         sec = bin_.section_of(start)
         off = sec["raw"] + (start - sec["va"])
         code = bin_.data[off:off + 0x4000]
         insns = []
+        raw = []
         callees = set()
+        cond = set()
+        tables = []
         end = start
         for ins in md.disasm(code, start):
-            # Stop if we have reached the start of a different known function.
-            if ins.address != start and ins.address in all_seeds:
+            # Stop at the start of any other known function so a body can never
+            # swallow a real entry point.
+            if ins.address != start and ins.address in admitted:
                 break
             insns.append({
                 "va": ins.address,
@@ -488,131 +503,128 @@ def main():
                 "op": ins.op_str,
                 "bytes": ins.bytes.hex(),
             })
+            raw.append(ins)
             end = ins.address + ins.size
-            # direct call/jmp targets
             if ins.mnemonic in ("call", "jmp") and ins.operands:
                 op = ins.operands[0]
                 if op.type == capstone.x86.X86_OP_IMM:
                     tgt = op.imm
                     if bin_.in_text(tgt):
                         callees.add(tgt)
-                        if tgt not in seen:
-                            worklist.append(tgt)
-            # Terminating instructions end the function.
-            if ins.mnemonic in ("ret", "retn"):
-                break
-            if ins.mnemonic == "int3":
-                break
-            if ins.mnemonic == "jmp":
-                # unconditional tail jump ends the body
-                break
-            if len(insns) > 20000:
-                break
-        funcs[start] = {
-            "va": start,
-            "end": end,
-            "size": end - start,
-            "ninsn": len(insns),
-            "callees": sorted(callees),
-            "insns": insns,
-        }
-        for c in callees:
-            call_edges[start].add(c)
-
-    # --- Gap recovery pass
-    #
-    # The worklist above only follows direct call/jmp targets, so it terminates
-    # with 1,283 KB of .text still unattributed. That residue is real code: only
-    # ~5% of it is int3/nop padding. Two evidence-backed sources are added here,
-    # neither of which invents anything:
-    #   1. recorded branch/call targets that land outside every recovered
-    #      function (measured: 9,321 such targets)
-    #   2. the start of each remaining gap, disassembled and split at
-    #      ret/int3 boundaries
-    def covered(va, ivs, los):
-        i = bisect.bisect_right(los, va) - 1
-        return i >= 0 and ivs[i][0] <= va < ivs[i][1]
-
-    def intervals():
-        # Gap recovery is a .text-only concern: the merged intervals must not
-        # include .data-resident functions (e.g. 0x0060f590), whose VAs are
-        # numerically inside the .text range and would otherwise split real
-        # .text gaps into spurious fragments.
-        iv = sorted((f["va"], f["va"] + f["size"]) for f in funcs.values()
-                    if bin_.in_text(f["va"]))
-        merged = []
-        for a, b in iv:
-            if merged and a <= merged[-1][1]:
-                merged[-1][1] = max(merged[-1][1], b)
-            else:
-                merged.append([a, b])
-        return merged, [x[0] for x in merged]
-
-    before = len(funcs)
-    ivs, los = intervals()
-
-    # 1. branch targets already recorded in recovered bodies
-    extra = set()
-    for f in funcs.values():
-        for ins in f["insns"]:
-            if ins["mnem"].startswith("j") or ins["mnem"] == "call":
-                try:
-                    t = int(ins["op"], 16)
-                except ValueError:
-                    continue
-                if bin_.in_text(t) and not covered(t, ivs, los):
-                    extra.add(t)
-    # 2. gap starts
-    text_end = text_va + bin_.text["vsize"]
-    gaps = []
-    prev = text_va
-    for a, b in ivs:
-        if a > prev:
-            gaps.append((prev, a))
-        prev = max(prev, b)
-    if prev < text_end:
-        gaps.append((prev, text_end))
-    for a, b in gaps:
-        if b - a >= 16:
-            extra.add(a)
-
-    added = 0
-    known = set(funcs) | set(extra)
-    for start in sorted(extra):
-        if start in funcs or not bin_.in_text(start):
-            continue
-        off = start - text_va
-        code = text_blob[off:off + 0x4000]
-        insns = []
-        callees = set()
-        end = start
-        for ins in md.disasm(code, start):
-            # Stop at the next known entry point, so a gap body can never
-            # swallow a real function that was seeded by a vtable or a call.
-            if ins.address != start and ins.address in known:
-                break
-            insns.append({"va": ins.address, "mnem": ins.mnemonic,
-                          "op": ins.op_str, "bytes": ins.bytes.hex()})
-            end = ins.address + ins.size
-            if ins.mnemonic in ("call", "jmp") and ins.operands:
+                if ins.mnemonic == "jmp":
+                    base = jump_table_base(ins)
+                    if base is not None:
+                        tables.append(base)
+            elif ins.mnemonic.startswith("j") and ins.operands:
                 op = ins.operands[0]
-                if op.type == capstone.x86.X86_OP_IMM and bin_.in_text(op.imm):
-                    callees.add(op.imm)
+                if op.type == capstone.x86.X86_OP_IMM:
+                    cond.add(op.imm)
             if ins.mnemonic in ("ret", "retn", "int3", "jmp"):
                 break
             if len(insns) > 20000:
                 break
-        if not insns:
-            continue
-        funcs[start] = {
-            "va": start, "end": end, "size": end - start,
-            "ninsn": len(insns), "callees": sorted(callees), "insns": insns,
-        }
-        added += 1
-    print(f"gap recovery: +{added} functions "
-          f"({before} -> {len(funcs)}); {len(gaps)} gaps considered")
+        return insns, raw, callees, cond, tables, end
 
+    gap_tried = set()
+    gap_rounds = 0
+    while True:
+        while worklist:
+            start, source = worklist.popleft()
+            if start in seen:
+                continue
+            if not _gate(start, source):
+                rejected[source] += 1
+                continue
+            if not bin_.section_of(start):
+                continue
+            if source == "vtable" and not looks_like_code_start(bin_, start):
+                rejected[source] += 1
+                continue
+            seen.add(start)
+            accepted[source] += 1
+            insns, raw, callees, cond, tables, end = _recover(start)
+            if not insns:
+                continue
+            funcs[start] = {
+                "va": start,
+                "end": end,
+                "size": end - start,
+                "ninsn": len(insns),
+                "callees": sorted(callees),
+                "insns": insns,
+            }
+            if bin_.in_text(start):
+                covered.add(start, end)
+            for c in callees:
+                call_edges[start].add(c)
+                direct_branch_targets.add(c)
+                _queue(c, "call")
+            for c in cond:
+                _queue(c, "branch")
+            for base in tables:
+                if base in seen_tables:
+                    continue
+                seen_tables.add(base)
+                for tgt in read_jump_table(bin_, base):
+                    _queue(tgt, "table")
+            for tgt in push_imm_targets(bin_, raw):
+                _queue(tgt, "push")
+
+        # --- Gap seeding: the remaining unattributed bytes.
+        ivs = text_intervals(funcs, bin_)
+        gaps = []
+        prev = text_va
+        for a, b in ivs:
+            if a > prev:
+                gaps.append((prev, a))
+            prev = max(prev, b)
+        if prev < text_end:
+            gaps.append((prev, text_end))
+        progressed = False
+        for a, b in gaps:
+            if b - a < 16:
+                continue
+            s = strip_leading_padding(bin_, a, b)
+            if s >= b or s in seen or s in gap_tried:
+                continue
+            gap_tried.add(s)
+            admitted.add(s)
+            worklist.append((s, "gap"))
+            progressed = True
+        if not progressed:
+            break
+        gap_rounds += 1
+
+    print(f"jump tables: {len(seen_tables)} tables; "
+          f"gap rounds: {gap_rounds}")
+    srcs = sorted(set(accepted) | set(rejected))
+    print("seed admission accepted/rejected: " + " ".join(
+        f"{s}={accepted[s]}/{rejected[s]}" for s in srcs))
+    print(f"rejected = strictly inside a recovered body and not a recorded "
+          f"call/jmp target; {ext_rejected} non-.text vtable pointers rejected "
+          f"by the prologue byte test")
     print(f"functions recovered: {len(funcs)}")
+
+    # --- Remaining unattributed .text, and how much of it is padding --------
+    ivs = text_intervals(funcs, bin_)
+    uncovered = 0
+    padding = 0
+    prev = text_va
+    for a, b in ivs:
+        if a > prev:
+            blob = bin_.data[t["raw"] + (prev - text_va):
+                             t["raw"] + (a - text_va)]
+            uncovered += len(blob)
+            padding += sum(1 for x in blob if x in (0x00, 0x90, 0xcc))
+        prev = max(prev, b)
+    if prev < text_end:
+        blob = bin_.data[t["raw"] + (prev - text_va):
+                         t["raw"] + (text_end - text_va)]
+        uncovered += len(blob)
+        padding += sum(1 for x in blob if x in (0x00, 0x90, 0xcc))
+    pct = round(100.0 * padding / uncovered, 1) if uncovered else 0.0
+    print(f"unattributed .text: {uncovered} bytes ({uncovered // 1024} KB), "
+          f"padding {pct}%")
 
     # --- Resolve string references per function
     for va, f in funcs.items():
