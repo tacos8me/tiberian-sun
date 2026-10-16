@@ -31,10 +31,11 @@ class IPiggyback;
 // ---------------------------------------------------------------------------
 // IPersistStream
 // COM persistence interface.  Recovered from the LocomotionClass IPersistStream
-// vtable at 0x69fe24 (9 slots, 0x00..0x20).  Slot 8 is the RTTI COL pointer.
+// vtable at 0x69fe24 (10 code slots, 0x00..0x24).  Its RTTI COL pointer is at
+// 0x69fe20, immediately BEFORE the vtable, not in a slot.
 // ---------------------------------------------------------------------------
 // IPersistStream is defined by AbstractClass.h (recovered from the real
-// 9-slot vtable at 0x69fe24); reused here rather than redefined.
+// 10-slot vtable at 0x69fe24); reused here rather than redefined.
 
 // ---------------------------------------------------------------------------
 // ILocomotion
@@ -214,7 +215,8 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 2 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x69fe24; 4-byte store: mov dword ptr [esi], 0x69fe24
+    unsigned long m_004;  // +0x004 init 0x69fd5c; 4-byte store: mov dword ptr [esi + 4], 0x69fd5c
 
 };
 
