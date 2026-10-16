@@ -11,8 +11,14 @@ Inputs (all under out/):
 
 Output:
   out/virtual_names.json           - { "<class ident>": { "<slot>": "<name>" } }
-  out/virtual_name_evidence.json   - per-name evidence record:
-                                     { "<class>": { "<slot>": {rule, signal, ...} } }
+  out/virtual_name_evidence.json   - per-name audit trail:
+                                     { "classes": { "<class>": { "<slot>": {
+                                           "name": ..., "rule": ..., "signal": ...,
+                                           "target": "0x..." } } },
+                                       "unattributed_slot_targets": { "<target va>":
+                                           { "slots": N, "size": ..., "ninsn": ...,
+                                             "callees": [...], "strings": [...],
+                                             "instructions": [...] } } }
 
 Method
 ------
@@ -39,6 +45,9 @@ Evidence rules (each cites the concrete signal it keys on):
      deliberately not satisfied by merely mentioning INI key strings: a function
      that reads a handful of keys but does not store parsed values (e.g.
      DisplayClass slot 31, 0x476390) is left unnamed.
+     The field-name universe comes from artifacts the pipeline produces: the
+     per-function referenced strings in out/functions.json intersected with the
+     identifier-shaped names in out/ini_keys.json.  No other artifact is read.
      -> "Read_INI".
 
   R3 Fetch_ID / Set_ID
@@ -64,7 +73,7 @@ Evidence rules (each cites the concrete signal it keys on):
      This rule names a slot from *another* slot's evidence; it is only sound
      because the two slots are the same code address.
 
-  R9 QueryInterface
+  R9 QueryInterface / AddRef / Release
      The slot is slot 0 of the primary vtable and its target has the exact
      MSVC 6 IUnknown::QueryInterface error path: it loads the third argument
      (ppvObject) from [esp+0xc], null-checks it, returns the OLE E_POINTER
@@ -73,8 +82,11 @@ Evidence rules (each cites the concrete signal it keys on):
      so the slot index corroborates the shape.  The rule is derived from
      AbstractClass::QueryInterface (0x405790), whose identity is independently
      established in ABSTRACT_SLOT_NAMES.
-     -> "QueryInterface".
-
+     Slots 1 and 2 of the *same class* are named AddRef and Release once slot 0
+     is shape-verified, because the MS IUnknown ABI fixes their order.  They are
+     named only when that class's slot 0 is shape-verified, and only when the
+     slot was not already named by R6/R5.
+     -> "QueryInterface" / "AddRef" / "Release".
   R10 Write_INI
      The slot target references >= 4 distinct rules.ini field names, calls at
      least one known INI accessor, and calls AbstractClass::Set_ID (0x405fb0) —
@@ -116,13 +128,8 @@ _INI_KEY_RE = re.compile(r"[A-Z][A-Za-z0-9]{2,30}")
 
 # Read the reader store pattern: `call <accessor>` then, within a few
 # instructions, `mov dword ptr [<reg> + <off>], <reg>`.
-_STORE_RE = re.compile(r"^(dword|word|byte) ptr \[([a-z0-9]+) \+ (0x[0-9a-f]+)\], ")
-IB = 0x400000
-# --- well-known addresses established by prior recovery work ----------------
-OP_DELETE = 0x68298c          # CRT operator delete (push arg; call 0x683fa4)
-COM_STUB = 0x6829a5           # shared "not implemented" COM stub
-ABSTRACT_FETCH_ID = 0x405f20  # AbstractClass::Fetch_ID, refs "Name"
-ABSTRACT_SET_ID = 0x405fb0    # AbstractClass::Set_ID, refs "Name"
+_STORE_RE = re.compile(r"^(dword|word|byte) ptr \[([a-z0-9]+) \+ (0x[0-9a-f]+|\d+)\], ")
+_ACCESSOR_OP = {hex(v) for v in INI_ACCESSORS}
 
 # AbstractClass primary vtable (0x698a60) slot -> name, re-derived from the
 # disassembly of each slot target rather than from the hand-written header's
@@ -266,6 +273,20 @@ def is_query_interface(fn):
     return True
 
 
+UNATTRIBUTED_TARGETS = (0x405A80, 0x405A30)
+
+
+def emit(names, evidence, ident, slot, target, name, rule, signal):
+    """Record one name with the rule and concrete signal that produced it."""
+    names[ident][str(slot)] = name
+    evidence[ident][str(slot)] = {
+        "name": name,
+        "rule": rule,
+        "signal": signal,
+        "target": hex(target),
+    }
+
+
 def main():
     bindir = sys.argv[1] if len(sys.argv) > 1 else "bin/GAME.EXE"
     outdir = sys.argv[2] if len(sys.argv) > 2 else "out"
@@ -274,8 +295,10 @@ def main():
     manifest = json.load(open(os.path.join(outdir, "class_manifest.json")))
     classes = json.load(open(os.path.join(outdir, "classes.json")))
     fns = {f["va"]: f for f in json.load(open(os.path.join(outdir, "functions.json")))["functions"]}
-    ini_path = os.path.join(outdir, "ini_functions.json")
-    ini = json.load(open(ini_path)) if os.path.exists(ini_path) else {}
+    # rules.ini field-name universe: the identifier-shaped referenced strings the
+    # string-recovery stage produced.  Derived from artifacts the pipeline writes.
+    ini_universe = {s for s in json.load(open(os.path.join(outdir, "ini_keys.json")))
+                    if _INI_KEY_RE.fullmatch(s)}
 
     # class ident -> primary vtable VA (sub-object offset 0)
     ident_of = {m["class"]: m["ident"] for m in manifest}
@@ -290,18 +313,27 @@ def main():
     # ---- seed the propagation table from AbstractClass ---------------------
     # target VA -> name, for slots whose semantics are already established.
     seed = {}
+    seed_origin = {}
     abs_va = primary.get("AbstractClass")
     if abs_va:
         abs_slots = read_primary_vtable(bin_, abs_va)
         for slot, name in ABSTRACT_SLOT_NAMES.items():
             if slot < len(abs_slots):
                 seed[abs_slots[slot]] = name
+                seed_origin[abs_slots[slot]] = ("AbstractClass", slot)
 
     names = defaultdict(dict)
+    evidence = defaultdict(dict)
     stats = defaultdict(int)
+    unattributed = {hex(va): {"slots": 0} for va in UNATTRIBUTED_TARGETS}
 
     for ident, vt_va in sorted(primary.items()):
         slots = read_primary_vtable(bin_, vt_va)
+        # R9 is a per-class rule: QueryInterface is slot 0, and slots 1/2 are
+        # AddRef/Release only when this class's slot 0 is shape-verified.
+        qi_target = slots[0] if slots else None
+        qi_fn = fns.get(qi_target)
+        qi_verified = qi_fn is not None and is_query_interface(qi_fn)
         for slot, target in enumerate(slots):
             fn = fns.get(target)
             if fn is None:
@@ -317,10 +349,33 @@ def main():
             # this class's destructor even when the code is shared with a base.
             if target in seed:
                 nm = seed[target]
+                src_ident, src_slot = seed_origin[target]
                 if nm.startswith("~"):
                     nm = "~" + ident
-                names[ident][str(slot)] = nm
+                emit(names, evidence, ident, slot, target, nm, "R6",
+                     f"slot target 0x{target:x} is the same code address as "
+                     f"{src_ident} slot {src_slot} ({seed[target]})")
                 stats["propagated"] += 1
+                continue
+
+            # R9: IUnknown QueryInterface (slot 0), and by the MS IUnknown ABI
+            # AddRef/Release (slots 1/2) of a class whose slot 0 is verified.
+            if qi_verified and slot == 0:
+                emit(names, evidence, ident, slot, target, "QueryInterface", "R9",
+                     "loads ppvObject from [esp+0xc]; tests it; returns E_POINTER "
+                     "0x80004003; ret 0xc; slot 0 of the primary vtable")
+                seed[target] = "QueryInterface"
+                seed_origin[target] = (ident, slot)
+                stats["query_interface"] += 1
+                continue
+            if qi_verified and slot in (1, 2):
+                nm = "AddRef" if slot == 1 else "Release"
+                emit(names, evidence, ident, slot, target, nm, "R9",
+                     f"slot 0 target 0x{qi_target:x} verified as QueryInterface "
+                     f"(R9); slot {slot} is IUnknown::{nm} by the MS IUnknown ABI")
+                seed[target] = nm
+                seed_origin[target] = (ident, slot)
+                stats["addref_release"] += 1
                 continue
 
             # R3: Fetch_ID / Set_ID (refs "Name", small)
@@ -332,29 +387,60 @@ def main():
                     nm = "Set_ID"
                 else:
                     nm = "Fetch_ID" if fn["ninsn"] <= 20 else "Set_ID"
-                names[ident][str(slot)] = nm
+                emit(names, evidence, ident, slot, target, nm, "R3",
+                     f'references string "Name"; {fn["size"]} bytes; '
+                     f'{fn["ninsn"]} instructions')
                 seed[target] = nm
+                seed_origin[target] = (ident, slot)
                 stats["name_key"] += 1
                 continue
 
-            # R2: Read_INI (references many INI field names)
-            keys = ini.get(hex(target), {}).get("keys", [])
-            if len(keys) >= 4:
-                names[ident][str(slot)] = "Read_INI"
+            # R2: Read_INI (many INI field names, a known accessor call, and the
+            # reader store pattern that binds parsed values to this object)
+            keys = ini_keys_of(fn) & ini_universe
+            accessors = ini_accessor_calls(fn)
+            stores = reader_store_count(fn)
+            if len(keys) >= 4 and accessors and stores > 0:
+                emit(names, evidence, ident, slot, target, "Read_INI", "R2",
+                     f"{len(keys)} rules.ini field names "
+                     f"({', '.join(sorted(keys)[:4])}, ...); "
+                     f"{len(accessors)} known INI accessor call(s); "
+                     f"{stores} reader store pattern(s)")
                 seed[target] = "Read_INI"
+                seed_origin[target] = (ident, slot)
                 stats["read_ini"] += 1
                 continue
 
             # R1: scalar deleting destructor
             if OP_DELETE in fn["callees"] and writes_vtable_ptr(fn):
                 nm = "~" + ident
-                names[ident][str(slot)] = nm
+                emit(names, evidence, ident, slot, target, nm, "R1",
+                     "calls operator delete 0x68298c and writes a vtable pointer "
+                     "into [ecx]/[esi]/[edi]")
                 seed[target] = nm
+                seed_origin[target] = (ident, slot)
                 stats["destructor"] += 1
                 continue
 
             stats["unnamed"] += 1
-            stats["unnamed"] += 1
+            key = hex(target)
+            if key in unattributed:
+                unattributed[key]["slots"] += 1
+
+    # Slots with no string evidence are left unnamed; record the shape of the
+    # two shared targets so the omission is auditable.
+    for key, rec in unattributed.items():
+        f = fns.get(int(key, 16))
+        if f is None:
+            rec["shape"] = "not present in out/functions.json"
+            continue
+        rec.update({
+            "size": f["size"],
+            "ninsn": f["ninsn"],
+            "callees": f["callees"],
+            "strings": [s["text"] for s in f.get("strings", [])],
+            "instructions": [f'{i["mnem"]} {i["op"]}'.strip() for i in f["insns"][:10]],
+        })
 
     out = {k: v for k, v in sorted(names.items()) if v}
     outpath = os.path.join(outdir, "virtual_names.json")
@@ -362,13 +448,23 @@ def main():
         json.dump(out, fh, indent=1, sort_keys=True)
         fh.write("\n")
 
+    ev = {
+        "classes": {k: {s: v[s] for s in sorted(v, key=int)}
+                    for k, v in sorted(evidence.items()) if v},
+        "unattributed_slot_targets": unattributed,
+    }
+    evpath = os.path.join(outdir, "virtual_name_evidence.json")
+    with open(evpath, "w") as fh:
+        json.dump(ev, fh, indent=1)
+        fh.write("\n")
+
     total = sum(len(v) for v in out.values())
     print(f"wrote {outpath}")
+    print(f"wrote {evpath}")
     print(f"classes affected : {len(out)}")
     print(f"virtuals named   : {total}")
     for k in sorted(stats):
-        print(f"  {k:12s} {stats[k]}")
-
+        print(f"  {k:16s} {stats[k]}")
 
 if __name__ == "__main__":
     main()

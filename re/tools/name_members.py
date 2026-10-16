@@ -11,8 +11,11 @@ The INI readers in this binary follow a consistent shape:
     call <INI accessor>
     mov  [this+OFFSET], <result>
 
-The key string pushed immediately before the accessor call is the name of the
-member at OFFSET. This recovers real member names with real offsets.
+Argument order is (default, key, section): the section is the last pushed string
+(the first argument) and the member name is the key pushed immediately before it.
+When the section is passed in a register, only the key is pushed. The member at
+OFFSET is therefore the key, never the section. This recovers real member names
+with real offsets.
 
 Output: out/member_names.json  { class -> { offset -> {name, key_va, reader_va} } }
 """
@@ -30,6 +33,14 @@ INI_ACCESSORS = {
     0x4D60B0, 0x4D6960, 0x4D6ED0, 0x4D70B0, 0x4D54C0, 0x4D50F0,
     0x4D6030, 0x4D72B0, 0x4D6290, 0x4D4250, 0x4D6B50, 0x4D5D50,
     0x4D6B00, 0x4D7490, 0x4D5C60, 0x4D7070, 0x447F70,
+}
+
+# A call or branch ends the argument-push window: pushes before it belong to
+# another call, so the pending string list must not carry across.
+_BRANCH_MNEMS = {
+    "call", "jmp", "je", "jne", "jz", "jnz", "jg", "jge", "jl", "jle",
+    "ja", "jae", "jb", "jbe", "js", "jns", "jo", "jno", "jp", "jnp",
+    "jecxz", "loop", "ret",
 }
 
 
@@ -112,7 +123,7 @@ def main():
             insns = list(md.disasm(code, f["va"]))
             # track the last key string pushed, and the `this` register
             this_reg = None
-            pending_key = None
+            pending_strs = []
             for i, ins in enumerate(insns):
                 # identify `this`: mov <reg>, ecx near the top
                 if (this_reg is None and ins.mnemonic == "mov"
@@ -121,17 +132,22 @@ def main():
                         and ins.operands[1].type == capstone.x86.X86_OP_REG
                         and ins.reg_name(ins.operands[1].reg) == "ecx"):
                     this_reg = ins.reg_name(ins.operands[0].reg)
-                # remember a pushed key string
+                # remember pushed identifier-like strings in the current call setup
                 if ins.mnemonic == "push" and ins.operands:
                     op = ins.operands[0]
                     if op.type == capstone.x86.X86_OP_IMM:
                         s = bin_.cstr(op.imm)
                         if is_ini_key(s):
-                            pending_key = (s, op.imm)
-                # an accessor call consumes the pending key
+                            pending_strs.append((s, op.imm))
+                # an accessor call consumes the pending strings
                 if ins.mnemonic == "call" and ins.operands:
                     op = ins.operands[0]
                     if op.type == capstone.x86.X86_OP_IMM and op.imm in INI_ACCESSORS:
+                        # Argument order is (default, key, section): the section is
+                        # the last pushed string and the key the one before it.  When
+                        # the section is passed in a register only the key is pushed.
+                        key = (pending_strs[-2] if len(pending_strs) >= 2
+                               else (pending_strs[-1] if pending_strs else None))
                         # the store that follows names the member
                         for j in range(i + 1, min(i + 6, len(insns))):
                             nxt = insns[j]
@@ -146,14 +162,15 @@ def main():
                             off = dst.mem.disp
                             if off < 0 or off > 0x8000:
                                 continue
-                            if pending_key:
+                            if key:
                                 named.setdefault(off, {
-                                    "name": pending_key[0],
-                                    "key_va": pending_key[1],
+                                    "name": key[0],
+                                    "key_va": key[1],
                                     "reader_va": rva,
                                 })
                             break
-                        pending_key = None
+                if ins.mnemonic in _BRANCH_MNEMS:
+                    pending_strs = []
 
         if named:
             result[m["class"]] = {

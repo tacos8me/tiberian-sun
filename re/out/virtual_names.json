@@ -65,6 +65,7 @@
   "14": "Save",
   "15": "GetSizeMax",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~AircraftTypeClass",
@@ -105,6 +106,7 @@
   "14": "Save",
   "15": "GetSizeMax",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~AnimTypeClass",
@@ -112,6 +114,11 @@
  },
  "Animate": {
   "0": "~Animate"
+ },
+ "ApplicationClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
  },
  "BSurface": {
   "0": "~BSurface"
@@ -329,6 +336,7 @@
   "14": "Save",
   "15": "GetSizeMax",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~BuildingTypeClass",
@@ -336,9 +344,11 @@
  },
  "BulletClass": {
   "0": "QueryInterface",
+  "1": "AddRef",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
+  "2": "Release",
   "4": "Release",
   "7": "GetType",
   "8": "~BulletClass",
@@ -351,6 +361,7 @@
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~BulletTypeClass",
@@ -366,7 +377,10 @@
   "0": "~CDFileClass"
  },
  "CStreamClass": {
-  "14": "~CStreamClass"
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "14": "~CStreamClass",
+  "2": "Release"
  },
  "CampaignClass": {
   "0": "QueryInterface",
@@ -443,6 +457,11 @@
  },
  "DeployCommandClass": {
   "0": "~DeployCommandClass"
+ },
+ "DisplayClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
  },
  "DriveLocomotionClass": {
   "8": "~DriveLocomotionClass"
@@ -906,7 +925,9 @@
   "2": "~EnumConnectionPointsClass"
  },
  "EnumConnectionsClass": {
-  "2": "~EnumConnectionsClass"
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
  },
  "FactoryClass": {
   "0": "QueryInterface",
@@ -924,6 +945,9 @@
   "0": "~FileClass"
  },
  "FlyLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release",
   "8": "~FlyLocomotionClass"
  },
  "FoggedObjectClass": {
@@ -953,6 +977,9 @@
   "7": "GetType"
  },
  "GScreenClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release",
   "4": "~GScreenClass"
  },
  "GadgetClass": {
@@ -965,21 +992,31 @@
   "0": "~GuardCommandClass"
  },
  "HouseClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
   "14": "Save",
   "15": "GetSizeMax",
+  "2": "Release",
   "4": "Release",
   "7": "GetType",
   "9": "Set_ID"
  },
  "HouseTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
   "10": "Get_RTTI",
   "14": "Save",
   "15": "GetSizeMax",
+  "2": "Release",
+  "25": "Read_INI",
   "26": "Set_ID",
   "8": "~HouseTypeClass",
   "9": "Set_ID"
  },
  "HoverLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release",
   "8": "~HoverLocomotionClass"
  },
  "INIClass": {
@@ -1009,7 +1046,7 @@
   "14": "Save",
   "15": "GetSizeMax",
   "2": "Shutdown",
-  "25": "~InfantryTypeClass",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~InfantryTypeClass",
@@ -1033,11 +1070,15 @@
   "14": "Save",
   "15": "GetSizeMax",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "9": "Set_ID"
  },
  "JumpjetLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release",
   "8": "~JumpjetLocomotionClass"
  },
  "LCWPipe": {
@@ -1089,6 +1130,11 @@
  "LoadOptionsClass": {
   "0": "~LoadOptionsClass"
  },
+ "LocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
  "LogicClass": {
   "0": "~LogicClass"
  },
@@ -1113,7 +1159,19 @@
  "MSWordAnim": {
   "0": "~MSWordAnim"
  },
+ "MapClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "MapSeedClass": {
+  "1": "Read_INI",
+  "2": "Read_INI"
+ },
  "MechLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release",
   "8": "~MechLocomotionClass"
  },
  "MissionClass": {
@@ -1135,6 +1193,9 @@
   "0": "~Mouse"
  },
  "MouseClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release",
   "29": "~MouseClass",
   "4": "~MouseClass"
  },
@@ -1188,6 +1249,7 @@
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "9": "Set_ID"
@@ -1214,6 +1276,7 @@
   "14": "Save",
   "15": "GetSizeMax",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~OverlayTypeClass",
@@ -1259,6 +1322,7 @@
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~ParticleSystemTypeClass",
@@ -1271,10 +1335,16 @@
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~ParticleTypeClass",
   "9": "Set_ID"
+ },
+ "PowerClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
  },
  "PrevObjectCommandClass": {
   "0": "~PrevObjectCommandClass"
@@ -1451,6 +1521,9 @@
   "0": "~RSidebarUpCommandClass"
  },
  "RadarClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release",
   "4": "~RadarClass"
  },
  "RadioClass": {
@@ -1520,6 +1593,11 @@
   "8": "~ScriptTypeClass",
   "9": "Set_ID"
  },
+ "ScrollClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
  "ScrollECommandClass": {
   "0": "~ScrollECommandClass"
  },
@@ -1565,6 +1643,11 @@
   "8": "~SideClass",
   "9": "Set_ID"
  },
+ "SidebarClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
  "SidebarDownCommandClass": {
   "0": "~SidebarDownCommandClass"
  },
@@ -1596,6 +1679,7 @@
   "14": "Save",
   "15": "GetSizeMax",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~SmudgeTypeClass",
@@ -1635,6 +1719,11 @@
  "Surface": {
   "0": "~Surface"
  },
+ "SwizzleManagerClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
  "TActionClass": {
   "0": "QueryInterface",
   "1": "Init",
@@ -1646,6 +1735,336 @@
   "8": "~TActionClass",
   "9": "Set_ID"
  },
+ "TClassFactory_class_AITriggerTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_AircraftClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_AircraftTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_AlphaShapeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_AnimClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_AnimTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_BuildingClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_BuildingLightClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_BuildingTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_BulletClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_BulletTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_CStreamClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_CampaignClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_CellClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_DriveLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_DropPodLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_EMPulseClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_FactoryClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_FlyLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_FoggedObjectClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_HouseClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_HouseTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_HoverLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_InfantryClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_InfantryTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_IsometricTileTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_JumpjetLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_LightSourceClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_MechLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_NeuronClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_OverlayTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_ParticleClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_ParticleSystemClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_ParticleSystemTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_ParticleTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_ScriptClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_ScriptTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_SideClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_SmudgeTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_SuperClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_SuperWeaponTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TActionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TEventClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_Tactical": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TagClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TagTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TaskForceClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TeamClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TeamTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TeleportLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TerrainClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TerrainTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TiberiumClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TriggerClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TriggerTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TubeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_TunnelLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_UnitClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_UnitTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_VoxelAnimClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_VoxelAnimTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_WalkLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_WarheadTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_WaveClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_WaypointPathClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
+ "TClassFactory_class_WeaponTypeClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
  "TEventClass": {
   "0": "QueryInterface",
   "1": "Init",
@@ -1656,6 +2075,11 @@
   "7": "GetType",
   "8": "~TEventClass",
   "9": "Set_ID"
+ },
+ "TabClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
  },
  "Tactical": {
   "0": "QueryInterface",
@@ -1721,6 +2145,7 @@
   "14": "Save",
   "15": "GetSizeMax",
   "2": "Shutdown",
+  "25": "Read_INI",
   "4": "Release",
   "7": "GetType",
   "8": "~TeamTypeClass",
@@ -1742,9 +2167,15 @@
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "9": "Set_ID"
+ },
+ "TeleportLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
  },
  "TerrainClass": {
   "0": "QueryInterface",
@@ -1765,10 +2196,16 @@
   "14": "Save",
   "15": "GetSizeMax",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~TerrainTypeClass",
   "9": "Set_ID"
+ },
+ "TiberianSunClassFactory": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
  },
  "TiberiumClass": {
   "0": "QueryInterface",
@@ -1828,6 +2265,11 @@
   "8": "~TubeClass",
   "9": "Set_ID"
  },
+ "TunnelLocomotionClass": {
+  "0": "QueryInterface",
+  "1": "AddRef",
+  "2": "Release"
+ },
  "TypeList_H": {
   "0": "~TypeList_H"
  },
@@ -1882,6 +2324,7 @@
   "14": "Save",
   "15": "GetSizeMax",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~UnitTypeClass",
@@ -2373,6 +2816,7 @@
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "8": "~VoxelAnimTypeClass",
@@ -2433,6 +2877,7 @@
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
   "7": "GetType",

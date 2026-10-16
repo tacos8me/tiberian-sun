@@ -348,53 +348,53 @@
   "ident": "MapSeedClass",
   "members": {
    "60": {
-    "name": "RandomMap",
-    "key_va": 7133812,
+    "name": "Time",
+    "key_va": 7133768,
     "reader_va": 5429088
    },
    "64": {
-    "name": "RandomMap",
-    "key_va": 7133812,
+    "name": "WaterAmount",
+    "key_va": 7133716,
     "reader_va": 5429088
    },
    "68": {
-    "name": "RandomMap",
-    "key_va": 7133812,
+    "name": "NumPlayers",
+    "key_va": 7133792,
     "reader_va": 5429088
    },
    "76": {
-    "name": "RandomMap",
-    "key_va": 7133812,
+    "name": "TiberiumLayout",
+    "key_va": 7133700,
     "reader_va": 5429088
    },
    "80": {
-    "name": "RandomMap",
-    "key_va": 7133812,
+    "name": "Vegetation",
+    "key_va": 7133688,
     "reader_va": 5429088
    },
    "84": {
-    "name": "RandomMap",
-    "key_va": 7133812,
+    "name": "UrbanPresence",
+    "key_va": 7133672,
     "reader_va": 5429088
    },
    "88": {
-    "name": "RandomMap",
-    "key_va": 7133812,
+    "name": "Width",
+    "key_va": 7133804,
     "reader_va": 5429088
    },
    "96": {
-    "name": "RandomMap",
-    "key_va": 7133812,
+    "name": "Accessibility",
+    "key_va": 7133728,
     "reader_va": 5429088
    },
    "100": {
-    "name": "RandomMap",
-    "key_va": 7133812,
+    "name": "RegionSize",
+    "key_va": 7133756,
     "reader_va": 5429088
    },
    "104": {
-    "name": "RandomMap",
-    "key_va": 7133812,
+    "name": "Seed",
+    "key_va": 7133784,
     "reader_va": 5429088
    }
   }
