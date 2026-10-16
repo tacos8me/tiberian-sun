@@ -1,27 +1,48 @@
 #!/usr/bin/env python3
 """
-End-to-end run of the reconstructed reconstruction against real game data.
+End-to-end run of the reconstruction against the real shipped game data.
 
-This is the test the project has never had: take the real `rules.ini` extracted
-from the retail archive and drive the RECONSTRUCTED model with it, then check
-the results against the recovered evidence.
+This is the test the project has never had: take the real control files
+extracted from the retail archive and drive the RECONSTRUCTED model with them,
+then check the results against the recovered evidence.
 
 What it does:
-  1. parses real rules.ini (1,222 sections of shipped game data)
+  1. parses the shipped control files (rules.ini, art.ini, ai.ini, sound.ini,
+     theme.ini, BATTLE.INI, MISSION.INI -- see realdata/README.md)
   2. for every class whose recovered header declares members, looks up that
-     class's section in rules.ini and reads the values for the field names we
-     recovered from the binary's own string table
+     class's section and reads the values for the field names we recovered from
+     the binary's own string table
   3. reports, per class, how many of its recovered members the real data
      actually populates, and prints the loaded values
+
+Evidence classes are kept separate, and the distinction matters:
+
+  * SET-derived -- the shipped data contains `Name=value`, so the game
+    demonstrably parses that key. This is proof the name is real.
+  * DOCUMENTED-derived -- the shipped data documents the key in a comment
+    header, e.g. `; Rotors = Does this aicraft have an attached rotor
+    animation (def=no)?`. This proves the name exists in the shipped
+    documentation, NOT that any value is read for it. Westwood's INI comment
+    headers are a key spec with types and defaults, which makes them good
+    corroboration and weak proof. Never merge the two counts.
 
 That gives three things nothing else in the project does: it proves the
 recovered field names are real, it proves the recovered sections map to real
 classes, and it exercises the model end to end on shipped data.
 
+A note on spelling, recorded here because it is a real behavioural fact and not
+a typo to be "fixed": the binary looks up the key `Inaccuate` (reader 0x445ba0),
+and the string `Inaccurate` does not appear in the binary at all. The shipped
+data *documents* the key as `Inaccurate` but never sets either spelling. So the
+game reads the misspelled key, and a modder who writes `Inaccurate=` has no
+effect. `--typos` reports this class of drift: a recovered name that is close
+to, but not equal to, a name the shipped data documents.
+
 Usage:
   python3 tools/e2e_rules.py <rules.ini> [--verbose] [--class NAME]
 """
 import argparse
+import difflib
 import json
 import os
 import re
@@ -56,6 +77,33 @@ def parse_ini(path):
             sections[cur][k.strip()] = v
     return sections
 
+# A documented key is a comment line that names a key and describes it, the way
+# Westwood's control files document their own format:
+#     ; Rotors = Does this aicraft have an attached rotor animation (def=no)?
+# The identifier before '=' must be a bare token, which keeps prose comments
+# (`; right now, normal and hard are the same`) and rule lines out.
+DOC_KEY = re.compile(r"^;\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(\S.*)$")
+
+
+def parse_documented(path):
+    """Key spec extracted from a control file's own comment headers.
+
+    Returns {key: [descriptions]} where each description carries the file and
+    line it came from, so a report can cite the evidence. These are documented
+    names, not values: a key can be documented and never set, and that is a
+    real finding (see the `Inaccuate` note in the module docstring).
+    """
+    documented = defaultdict(list)
+    with open(path, encoding="latin1") as f:
+        for lineno, raw in enumerate(f, 1):
+            m = DOC_KEY.match(raw.rstrip("\r\n").strip())
+            if not m:
+                continue
+            key, desc = m.group(1), m.group(2).strip()
+            documented[key].append((os.path.basename(path), lineno, desc))
+    return documented
+
+
 
 def load_recovered(outdir):
     """Field names the binary's own string table associates with each class.
@@ -76,9 +124,13 @@ def main():
     ap.add_argument("--out", default="out")
     ap.add_argument("--verbose", action="store_true")
     ap.add_argument("--class", dest="cls", default=None)
+    ap.add_argument("--typos", action="store_true",
+                    help="report recovered names that differ in spelling from "
+                         "the name the shipped data documents")
     args = ap.parse_args()
 
     sections = defaultdict(dict)
+    documented = defaultdict(list)
     for path in args.ini:
         if not os.path.exists(path):
             sys.stderr.write(f"missing {path}\n")
@@ -86,8 +138,12 @@ def main():
         got = parse_ini(path)
         for sec, kv in got.items():
             sections[sec].update(kv)
+        doc = parse_documented(path)
+        for key, descs in doc.items():
+            documented[key].extend(descs)
         print(f"{os.path.basename(path)}: {len(got)} sections, "
-              f"{sum(len(v) for v in got.values())} key/value pairs")
+              f"{sum(len(v) for v in got.values())} key/value pairs, "
+              f"{len(doc)} documented keys")
     total_keys = sum(len(v) for v in sections.values())
     print(f"merged: {len(sections)} sections, {total_keys} key/value pairs")
 
@@ -114,21 +170,68 @@ def main():
             if k in recovered_fields:
                 field_locations[k].append(sec)
 
-    confirmed = [f for f in recovered_fields if field_locations.get(f)]
-    absent = [f for f in recovered_fields if not field_locations.get(f)]
-    print(f"  present in real data   : {len(confirmed)}")
-    print(f"  not present in rules.ini: {len(absent)}")
+    # Two evidence classes, reported separately and never merged. SET means the
+    # shipped data carries `Name=value`; DOCUMENTED means only a comment header
+    # names the key. A comment proves the name exists in the shipped spec, not
+    # that the game reads a value for it.
+    set_derived = [f for f in recovered_fields if field_locations.get(f)]
+    doc_derived = [f for f in recovered_fields
+                   if not field_locations.get(f) and documented.get(f)]
+    unconfirmed = [f for f in recovered_fields
+                   if not field_locations.get(f) and not documented.get(f)]
+    total = len(recovered_fields)
+    print("\n--- member-name confirmation against shipped data ---")
+    print(f"  recovered member names           : {total}")
+    print(f"  SET-derived (key=value present)  : {len(set_derived)} "
+          f"({100.0 * len(set_derived) / total:.1f}%)")
+    print(f"  DOCUMENTED-derived (comment hdr) : {len(doc_derived)} "
+          f"({100.0 * len(doc_derived) / total:.1f}%)")
+    print(f"    of which also set elsewhere    : "
+          f"{len([f for f in recovered_fields if documented.get(f) and field_locations.get(f)])}"
+          f"  (documented names total "
+          f"{len([f for f in recovered_fields if documented.get(f)])})")
+    print(f"  unconfirmed                      : {len(unconfirmed)} "
+          f"({100.0 * len(unconfirmed) / total:.1f}%)")
+    print(f"  confirmed, set or documented     : "
+          f"{len(set_derived) + len(doc_derived)} "
+          f"({100.0 * (len(set_derived) + len(doc_derived)) / total:.1f}%)")
+    if args.verbose and doc_derived:
+        print("\n--- documented-only (named in a comment header, never set) ---")
+        for f in sorted(doc_derived):
+            src, lineno, desc = documented[f][0]
+            print(f"  {f:<24} {src}:{lineno}  {desc[:70]}")
+    if unconfirmed:
+        print("\n--- unconfirmed ---")
+        for f in sorted(unconfirmed):
+            print(f"  {f:<24} (in the binary, not in shipped data)")
 
     if args.verbose:
-        print("\n--- confirmed field names (name -> sections) ---")
-        for f in sorted(confirmed)[:60]:
+        print("\n--- SET-derived names (name -> sections) ---")
+        for f in sorted(set_derived)[:60]:
             secs = sorted(set(field_locations[f]))
             print(f"  {f:<38} {', '.join(secs[:3])}")
-        if absent:
-            print("\n--- not in rules.ini (may live in art.ini/ai.ini) ---")
-            print("  " + ", ".join(sorted(absent)[:30]))
 
-    # Per-class load: how many of a class's own fields the real data fills.
+    if args.typos:
+        # A recovered name close to a documented name is spelling drift between
+        # the binary and the shipped spec. It is a fact about the game, not an
+        # error: the binary's key is the one that is read.
+        print("\n--- spelling drift (recovered name vs documented name) ---")
+        found = 0
+        for f in sorted(recovered_fields):
+            if f in documented or f in field_locations:
+                continue
+            near = difflib.get_close_matches(f, list(documented), n=1, cutoff=0.75)
+            if not near:
+                continue
+            src, lineno, desc = documented[near[0]][0]
+            print(f"  binary reads {f!r}; {src}:{lineno} documents "
+                  f"{near[0]!r} ({desc[:60]})")
+            found += 1
+        if not found:
+            print("  none")
+
+    # Per-class load: how many of a class's own fields the real data fills, with
+    # the set and documented classes kept apart (doc/set).
     print("\n--- per-class load from real data ---")
     rows = []
     for cls, entry in sorted(named.items()):
@@ -136,26 +239,33 @@ def main():
         fields = [(int(o), r.get("name")) for o, r in recs.items() if r.get("name")]
         if not fields:
             continue
-        filled = 0
+        filled = doc = 0
         for off, nm in fields:
             if field_locations.get(nm):
                 filled += 1
-        rows.append((filled, len(fields), cls))
+            elif documented.get(nm):
+                doc += 1
+        rows.append((filled, doc, len(fields), cls))
     rows.sort(reverse=True)
     shown = 0
-    for filled, total, cls in rows:
+    for filled, doc, total, cls in rows:
         if args.cls and args.cls.lower() not in cls.lower():
             continue
-        print(f"  {filled:>3}/{total:<3} {cls}")
+        print(f"  {filled:>3}/{total:<3} set, {doc:>3} documented  {cls}")
         shown += 1
         if shown >= 25 and not args.cls:
             break
 
-    tot_fields = sum(r[1] for r in rows)
+    tot_fields = sum(r[2] for r in rows)
     tot_filled = sum(r[0] for r in rows)
+    tot_doc = sum(r[1] for r in rows)
     pct = 100.0 * tot_filled / tot_fields if tot_fields else 0.0
+    pct_any = 100.0 * (tot_filled + tot_doc) / tot_fields if tot_fields else 0.0
     print(f"\nclasses with recovered fields: {len(rows)}")
-    print(f"fields resolvable in real data: {tot_filled}/{tot_fields} ({pct:.1f}%)")
+    print(f"fields set in real data        : {tot_filled}/{tot_fields} ({pct:.1f}%)")
+    print(f"fields documented only         : {tot_doc}/{tot_fields}")
+    print(f"fields resolvable either way   : {tot_filled + tot_doc}/{tot_fields} "
+          f"({pct_any:.1f}%)")
 
     # Concrete worked examples, so the run produces something a human can
     # eyeball: recovered offset -> real shipped value, with the evidence VAs.
