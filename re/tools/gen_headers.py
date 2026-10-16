@@ -162,7 +162,7 @@ def main():
     if not os.path.isdir(hw_dir):
         hw_dir = "src/handwritten"
     if os.path.isdir(hw_dir):
-        for hp in glob.glob(os.path.join(hw_dir, "*.h")):
+        for hp in sorted(glob.glob(os.path.join(hw_dir, "*.h"))):
             hs = open(hp).read()
             for hm in re.finditer(
                     r"^(?:template\s*<[^>]*>\s*)?(?:class|struct)\s+(\w+)",
@@ -185,7 +185,7 @@ def main():
         "Node": "INIClass.h",
     }
     if os.path.isdir(hw_dir):
-        for hp in glob.glob(os.path.join(hw_dir, "*.h")):
+        for hp in sorted(glob.glob(os.path.join(hw_dir, "*.h"))):
             hs = open(hp).read()
             for hm in re.finditer(
                     r"^(?:template\s*<[^>]*>\s*)?(?:class|struct)\s+(\w+)",
@@ -197,7 +197,7 @@ def main():
     # occur inside the template body, so e.g. "VectorClass<H>" has no real H.
     # Such an argument must be forward-declared, not spelled as a template
     # argument of an unknown type.
-    for hp in glob.glob(os.path.join(hw_dir, "*.h")) if os.path.isdir(hw_dir) else []:
+    for hp in (sorted(glob.glob(os.path.join(hw_dir, "*.h"))) if os.path.isdir(hw_dir) else []):
         hs = open(hp).read()
         for hm in re.finditer(
                 r"^(?:template\s*<([^>]*)>)\s*(?:class|struct)\s+(\w+)", hs, re.M):

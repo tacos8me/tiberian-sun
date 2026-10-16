@@ -58,7 +58,7 @@ def main():
 
     # Types defined by any reconstructed header.
     owned = set()
-    for p in glob.glob(os.path.join(SRCDIR, "*.h")):
+    for p in sorted(glob.glob(os.path.join(SRCDIR, "*.h"))):
         if os.path.basename(p) == "ts_prelude.h":
             continue
         s = open(p).read()

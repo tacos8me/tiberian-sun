@@ -98,3 +98,7 @@ PY
 echo
 echo "== verification =="
 python3 tools/verify.py "$SRC" build/shim
+
+echo
+echo "== metrics =="
+python3 tools/harness.py metrics
