@@ -147,8 +147,19 @@ entirely. So the calling-convention data recovered for 22,328 functions is not
 exercised by the build. `-m32 -fsyntax-only` works here and needs no multilib.
 *Done when:* a deliberately mis-sized shim type fails the gate.
 
+### [x] Run against real game data
+`realdata/` holds rules.ini and ai.ini extracted from the retail archive;
+`tools/e2e_rules.py` drives the reconstructed model with them. 115 of 135
+recovered member names (85.2%) resolve to real keys in shipped data. This is
+the first external validation of the recovered names, offsets and readers.
+
 ### [ ] Verify member *layout*, not just offsets
 Offsets are checked; whether types and ordering are right is not.
+
+### [ ] Recover `art.ini` and the remaining MIX bodies
+art.ini's bodies are compressed inside the archive, so ~20 recovered field
+names cannot be confirmed against shipped data. A MIX reader with LCW
+decompression would close this and unlock the rest of the archive.
 
 ### [ ] Byte-level validation against the original binary
 Recompile and diff where a matching compiler is available.

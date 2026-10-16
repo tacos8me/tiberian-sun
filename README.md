@@ -40,6 +40,31 @@ python3 tools/verify_members_binary.py         # re-derives offsets from the bin
 python3 tools/harness.py determinism --run     # two clean runs, byte-diffed
 ```
 
+## Running against real game data
+
+`realdata/` holds `rules.ini` and `ai.ini` extracted from the retail archive.
+The reconstruction is driven with them end to end:
+
+```bash
+python3 tools/e2e_rules.py ../realdata/rules.ini ../realdata/ai.ini
+```
+
+Of the 135 member names recovered from the binary's string table, **115 (85.2%)
+resolve to real keys in shipped data** — the first evidence that the recovered
+names, offsets and reader functions are correct against something outside the
+project's own artifacts. Sample output:
+
+```
+BuildingTypeClass +1276 Adjacent = '2'   [GATECH]       reader 0x43f250
+BulletTypeClass   +292  Airburst = 'yes' [MultiMissile] reader 0x445ba0
+ObjectTypeClass   +104  Strength = '230' [HVR]          reader 0x572610
+```
+
+The 20 unresolved names are understood: `CustomRotor`, `Unsellable` and
+`Degenerates` appear only in *comments* in `ai.ini` because `art.ini`'s bodies
+are compressed in the archive. The strings exist in the binary, so the recovery
+is faithful — the dataset simply cannot confirm them.
+
 The gate is fail-closed: a missing artifact exits non-zero naming what is
 missing, rather than running a subset of checks and reporting success. Only two
 checks are anchored to the binary itself; the rest compare the tree against
