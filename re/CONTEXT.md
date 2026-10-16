@@ -9,17 +9,37 @@
 - Stripped of symbols, but full MSVC RTTI is present.
 
 ## Recovered artifacts (in `re/out/`)
-- `classes.json` — 755 classes, 1291 inheritance edges, 842 object locators, 843 vtables
+
+Counts are approximate and drift as the tools improve; run
+`python3 tools/harness.py metrics --no-append` for the current figures.
+
+- `classes.json` — RTTI classes, inheritance edges, object locators, vtables
 - `hierarchy.txt` — human-readable class hierarchy with base-class displacements
 - `vtables.txt` — vtable VA -> class binding
-- `functions.json` — 9057 functions with full instruction listings, callees, string refs
-- `ini_keys.json` — 1209 strings referenced by code, incl. 988 rules.ini field names
-
+- `functions.json` — recovered functions with full instruction listings,
+  callees and string references
+- `class_manifest.json` — per-class vtable, constructor and base set
+- `members.json` — member offsets recovered from constructor store sequences
+- `signatures.json` — calling conventions and arity
+- `ini_keys.json` — strings referenced by code, including `rules.ini` field names
 ## Tools (in `re/tools/`)
-- `rtti.py` — RTTI recovery (run: `python3 tools/rtti.py bin/GAME.EXE out`)
+
+The full pipeline is `./tools/pipeline.sh`. The main tools:
+
+- `rtti.py` — RTTI recovery
 - `demangle.py` — MSVC RTTI name demangler
 - `disasm.py` — function boundary + call graph recovery
+- `gen_manifest.py` — per-class vtable, constructor and base set
+- `gen_members.py` / `name_members.py` — member offsets, and names from INI keys
+- `gen_signatures.py` / `name_virtuals.py` — calling conventions and virtual names
+- `gen_headers.py` / `gen_bodies.py` — header and `.cpp` body emission
+- `verify.py` — the 7-check fail-closed gate
+- `verify_members_binary.py` — re-derives member offsets from the binary's own code
+- `harness.py` — measures real state (`metrics`) and proves reproducibility
+  (`determinism`)
 
+**Measure, do not trust prose.** `python3 tools/harness.py metrics` reports the
+real state; `python3 tools/verify.py src/include build/shim` is the gate.
 ## Key facts for reconstruction
 1. **RTTI gives exact class names and inheritance.** Use `hierarchy.txt`.
 2. **INI keys are the original struct field names.** e.g. `TiberiumChainReaction`,
