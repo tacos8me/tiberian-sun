@@ -415,6 +415,19 @@ keep in mind:
   the transcription from 2,845 functions to all 41,822 exposed six defects in the
   emitter and generator, including one that had prevented every destructor from
   ever being emitted. Widening scope is a test, not just more output.
+- **Never `git stash push -u -- <path>` to get a clean tree for a test.** `git
+  stash pop` does not restore the index: it unstages the paths it touched and
+  leaves them reverted *in the index*, so the next `git commit` records the
+  previous commit's content for those paths while the working tree holds the new
+  content. This silently shipped a mixed tree twice — once leaving a 40 MB
+  deleted duplicate in the repo, once shipping the pre-change generated files
+  alongside their replacements. To test a clean tree, clone to a temp directory
+  (`git clone --depth 1 file://$PWD /tmp/x`) and run there.
+- **After every commit that touches generated files, read one back out of HEAD**
+  (`git show HEAD:<path> | head`). The pipeline regenerates everything, so a
+  stale committed artifact is invisible to any test that rebuilds — it only
+  shows up when someone reads the repo instead of rebuilding it. `git status`
+  after the push is what caught both incidents above.
 - **Do not leave `__pycache__` behind.** A stale `.pyc` silently shadowed an
   edited tool during development of the tests above: the source said one thing,
   the imported module said another, and the mutation checks "passed" against the
