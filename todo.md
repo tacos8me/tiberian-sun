@@ -153,20 +153,30 @@ exercised by the build. `-m32 -fsyntax-only` works here and needs no multilib.
 recovered member names (85.2%) resolve to real keys in shipped data. This is
 the first external validation of the recovered names, offsets and readers.
 
-### [ ] Declare the base classes two hand-written headers omit
-The corrected base reduction shows these headers document bases in comments but
-do not declare them, so the emitted layout lacks real base subobjects:
+### [x] Declare the base classes two hand-written headers omit
+`AnimClass` omitted `StageClass` (RTTI: mdisp 76) and was fixed: StageClass now
+has its own header, since its definition lived inside `TechnoClass.h`, which no
+other class included. `HouseClass` turned out to be CORRECT -- the checker could
+not read a multi-line base clause. Check 6 is now 220/220 with no divergence.
 
-- `AnimClass` omits `StageClass` (RTTI: mdisp 76, i.e. +0x4c)
-- `HouseClass` omits `IHouse` (mdisp 20), `IPublicHouse` (mdisp 24) and
-  `IConnectionPointContainer` (mdisp 28)
+### [ ] Fix the IPersistStream type inconsistency
+`AbstractClass.h` declares `IPersistStream` with `long`/`unsigned long*`, while
+`ts_prelude.h`, `LocomotionClass.h` and real COM use `HRESULT`/`ULARGE_INTEGER*`.
+Same vtable shape so no layout impact, but it makes
+`LocomotionClass::GetSizeMax` hide the base's and accounts for one of 204
+`-Woverloaded-virtual` warnings.
+*Done when:* one definition exists and the source is type-consistent.
 
-Both were invisible until `reduce_bases.py` was fixed; the old reduction was a
-no-op for these hierarchies so the comparison could not fire. Fixing them
-changes hand-written base clauses, which is a layout decision, so it is
-recorded rather than patched silently.
-*Done when:* both headers declare their real bases and check 6 reports no
-generated/hand-written divergence.
+### [ ] Eliminate the 204 -Woverloaded-virtual warnings
+Every one is `-Woverloaded-virtual`, which fires when a derived class declares a
+virtual with the same NAME but a different signature as a base's. The dominant
+cause is the `vfunc_N` placeholder scheme: slot N of a derived vtable is an
+unrelated function to slot N of a base's, but they share a name, so g++ warns.
+The gate compiles with zero diagnostics at its current warning level, so this is
+latent. Decide whether to fix the naming, add `using Base::vfunc_N;`, or gate at
+a documented warning level -- but do not leave it unexplained.
+*Done when:* the warnings are either gone or the gate states why they are
+expected.
 
 ### [ ] Verify member *layout*, not just offsets
 Offsets are checked; whether types and ordering are right is not.
