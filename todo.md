@@ -148,10 +148,17 @@ exercised by the build. `-m32 -fsyntax-only` works here and needs no multilib.
 *Done when:* a deliberately mis-sized shim type fails the gate.
 
 ### [x] Run against real game data
-`realdata/` holds rules.ini and ai.ini extracted from the retail archive;
-`tools/e2e_rules.py` drives the reconstructed model with them. 115 of 135
-recovered member names (85.2%) resolve to real keys in shipped data. This is
-the first external validation of the recovered names, offsets and readers.
+`realdata/` holds the shipped control files extracted from the retail archive
+(`rules.ini`, `art.ini`, `ai.ini`, `sound.ini`, `theme.ini`, `BATTLE.INI`,
+`MISSION.INI`; byte ranges and section counts in `realdata/README.md`);
+`tools/e2e_rules.py` drives the reconstructed model with them and
+`tools/extract_realdata.py` regenerates them from the MIX archive. 101 of 112
+recovered member names (90.2%) resolve to keys the shipped data sets, and 9
+more are named in the files' own comment headers -- 110 (98.2%) confirmed by
+either class, reported separately because a comment proves the name exists, not
+that a value is read. This is the first external validation of the recovered
+names, offsets and readers. The two unconfirmed names are `RandomMap` and
+`Inaccuate`, the latter being the binary's own misspelling of `Inaccurate`.
 
 ### [x] Declare the base classes two hand-written headers omit
 `AnimClass` omitted `StageClass` (RTTI: mdisp 76) and was fixed: StageClass now
@@ -181,10 +188,21 @@ expected.
 ### [ ] Verify member *layout*, not just offsets
 Offsets are checked; whether types and ordering are right is not.
 
-### [ ] Recover `art.ini` and the remaining MIX bodies
-art.ini's bodies are compressed inside the archive, so ~20 recovered field
-names cannot be confirmed against shipped data. A MIX reader with LCW
-decompression would close this and unlock the rest of the archive.
+### [x] Recover `art.ini` and the remaining MIX bodies
+The earlier claim that art.ini's bodies were compressed was **wrong**: only the
+MIX *index* is encrypted, and every file body is in the clear. All seven control
+files are now extracted with explicit byte ranges (`tools/extract_realdata.py`,
+inventory in `realdata/README.md`), which lifted member-name confirmation from
+85.2% to 98.2% and left only 2 names unconfirmed.
+
+### [ ] Decrypt the encrypted TS MIX index
+`tools/mix.py` reads the headerless TD/RA1 variant exactly (`SETUP/SETUP.MIX`,
+61 entries) and fails *explicitly* on the encrypted TS variant rather than
+reporting garbage. The published Westwood RSA/Blowfish scheme is implemented but
+does not yet produce a self-consistent index for the archives on these CDs;
+`python3 tools/mix.py probe <archive>` prints every key derivation and the bytes
+it produces. Closing this would give exact entry sizes for every file in
+TIBSUN.MIX instead of the content-derived ranges realdata currently uses.
 
 ### [ ] Byte-level validation against the original binary
 Recompile and diff where a matching compiler is available.

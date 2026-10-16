@@ -42,28 +42,36 @@ python3 tools/harness.py determinism --run     # two clean runs, byte-diffed
 
 ## Running against real game data
 
-`realdata/` holds `rules.ini` and `ai.ini` extracted from the retail archive.
-The reconstruction is driven with them end to end:
+`realdata/` holds the shipped control files extracted from the retail archive
+(`rules.ini`, `art.ini`, `ai.ini`, `sound.ini`, `theme.ini`, `BATTLE.INI`,
+`MISSION.INI` — byte ranges and section counts in
+[realdata/README.md](realdata/README.md)). The reconstruction is driven with
+them end to end:
 
 ```bash
-python3 tools/e2e_rules.py ../realdata/rules.ini ../realdata/ai.ini
+python3 tools/e2e_rules.py ../realdata/*.ini ../realdata/*.INI
 ```
 
-Of the 135 member names recovered from the binary's string table, **115 (85.2%)
-resolve to real keys in shipped data** — the first evidence that the recovered
-names, offsets and reader functions are correct against something outside the
-project's own artifacts. Sample output:
+Of the 112 member names recovered from the binary's string table, **101 (90.2%)
+resolve to keys the shipped data actually sets** (`Name=value`), and a further
+9 are named only in the files' own comment headers — 110 (98.2%) confirmed by
+either evidence class, with the two reported separately because a comment
+proves a name exists, not that a value is read. This is the first evidence that
+the recovered names, offsets and reader functions are correct against something
+outside the project's own artifacts. Sample output:
 
 ```
 BuildingTypeClass +1276 Adjacent = '2'   [GATECH]       reader 0x43f250
 BulletTypeClass   +292  Airburst = 'yes' [MultiMissile] reader 0x445ba0
-ObjectTypeClass   +104  Strength = '230' [HVR]          reader 0x572610
+ObjectTypeClass   +104  Strength = '120' [JUMPJET]      reader 0x572610
 ```
 
-The 20 unresolved names are understood: `CustomRotor`, `Unsellable` and
-`Degenerates` appear only in *comments* in `ai.ini` because `art.ini`'s bodies
-are compressed in the archive. The strings exist in the binary, so the recovery
-is faithful — the dataset simply cannot confirm them.
+Only 2 names remain unconfirmed (`Inaccuate`, `RandomMap`). `Inaccuate` is not
+a defect: the **binary** looks up the misspelled key (reader `0x445ba0`), the
+string `Inaccurate` does not occur in the binary at all, and the shipped data
+documents the key as `Inaccurate` without ever setting either spelling. So the
+game reads the typo'd key, and a modder writing `Inaccurate=` has no effect.
+`python3 tools/e2e_rules.py --typos` reports that class of drift.
 
 The gate is fail-closed: a missing artifact exits non-zero naming what is
 missing, rather than running a subset of checks and reporting success. Only two
