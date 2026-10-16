@@ -35,7 +35,9 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    // 3 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6988c4; 4-byte store: mov dword ptr [eax], 0x6988c4
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 };
 
@@ -48,9 +50,11 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [ebx + 8], edi
-    unsigned char pad_010[0x2c];
-    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a0418; 4-byte store: mov dword ptr [ebx], 0x6a0418
+    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [ebx + 4], edi
+    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [ebx + 0xc], eax
+    unsigned long m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [ebx + 0x3c], ecx
+    // 2 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
@@ -122,8 +126,14 @@ private:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned char pad_029[0x3];
-    // 7 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // +0x000 init 0x6a0400; 4-byte store: mov dword ptr [esi], 0x6a0400
+    unsigned char pad_004[0x18];
+    unsigned long m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ebx
+    unsigned long m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], ebx
+    unsigned long m_024;  // +0x024 /* ? */; 4-byte store: mov dword ptr [esi + 0x24], ebx
+    unsigned char m_028;  // +0x028 /* ? */; 1-byte store: mov byte ptr [esi + 0x28], bl
+    unsigned long m_02c;  // +0x02c /* ? */; 4-byte store: mov dword ptr [esi + 0x2c], ebx
+    // 1 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 
