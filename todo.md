@@ -102,7 +102,62 @@ register. Window chosen empirically against the binary-anchored verifier
 beyond 200 recall flattens). False claims fell from 1,052 to 4 and the check is
 now a gate with a 95% floor.
 
-### [ ] Recover the remaining 912 KB of unattributed `.text`
+### [x] Recover the unattributed `.text`
+Done: 65.6% -> **96.06%** coverage, 23,882 -> 41,822 functions, 912 KB -> 104 KB
+unattributed. The tool recorded gap-recovered bodies' callees but never fed them
+back, never followed conditional jumps, and read jump tables only from initial
+seeds. Made the worklist a fixpoint. Verified the 1,019 inner entry points are
+real: 1,004 are branch/call targets, only 15 unreferenced.
+
+### [x] Declare members at the width the constructor stores
+Done. Every member was emitted as a 4-byte `unsigned long`; one written with
+`mov byte ptr [eax+0xc], 1` swallowed every offset inside that span. Check 7 went
+1,235 -> 2,032 offsets across 165 -> 237 classes.
+
+### [x] Fix the IPersistStream type inconsistency and the COM vtable evidence
+Done. AbstractClass.h now matches the binary and the prelude
+(HRESULT/__stdcall/ULARGE_INTEGER*); slot 0 is no longer mislabelled a
+destructor (0x405790 is a shared E_POINTER stub and slot 0 of 66 classes); slot 6
+is declared; LocomotionClass's Load/Save/GetSizeMax citations are corrected.
+verify.py gained check 8, reporting declared-vs-recovered arity (478/1172 match,
+694 divergences) with the `this`-counting caveat documented.
+
+### [x] Wire the dead naming rules
+Done. R9 QueryInterface/AddRef/Release was defined but never called; R2 Read_INI
+read an artifact no tool produced. Named virtuals 1,287 -> 1,522 (22.0%) with
+out/virtual_name_evidence.json giving every name its rule and signal.
+MapSeedClass now reports Width/NumPlayers/... instead of "RandomMap" ten times.
+
+### [ ] De-duplicate bodies and add the faithfulness gate (W5, not delivered)
+The "6,668 bodies" figure is 2,842 distinct functions rendered 2.35x. One
+function is emitted 159 times. Re-send: de-duplicate by VA preserving every
+declaring name as an alias, and add a gate asserting every instruction appears
+exactly once, in order, with matching bytes. W5 committed nothing in Round 3.
+
+### [ ] Fix the gen_headers.py member-block 2-cycle
+The machine member block and the "already declared above" comment alternate
+between runs, flipping check 7 between 2032/237 and 1716/241; the comment state
+also LOSES declarations (AircraftTypeClass stops declaring +0x000/+0x37c/+0x435).
+Clean-checkout determinism currently holds (13 artifacts byte-identical), so this
+is latent — it bites when gen_headers.py is re-run outside pipeline order.
+
+### [ ] gen_headers.py crashes outside pipeline stage order
+`UnboundLocalError: prelude_owned` (used ~line 610, assigned ~line 840) when
+re-run with an already-reconciled src/include/ts_prelude.h present.
+
+### [ ] The slot-0 mislabel exists in ~66 more headers
+0x405790 is a shared E_POINTER stub labelled `virtual ~X(); // [0]` in ~66
+generated and hand-written headers. Only AbstractClass was fixed. Same for the
+comparable per-class stubs.
+
+### [ ] Decrypt the encrypted MIX header (deferred, low value)
+tools/mix.py now reads the headerless TD/RA1 variant correctly (SETUP.MIX: 61
+entries, exact size identity) and fails explicitly on the encrypted TS variant
+rather than reporting garbage. The published Westwood RSA/Blowfish scheme was
+implemented and the search space explored without a self-consistent table.
+Deferred: every INI-based verification works without it.
+
+### [ ] Recover the remaining 104 KB of `.text`
 Roughly 95% of it is real code, not padding. Jump tables, SEH handlers and
 `.data`-resident code are the identified untouched sources.
 *Done when:* unattributed bytes approach padding-only and the residual is
