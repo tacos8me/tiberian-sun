@@ -28,6 +28,34 @@ import sys
 IB = 0x400000
 
 
+def class_body_span(src, class_name):
+    """Character span of `class_name`'s body, or None if not defined here.
+
+    A header may declare many classes (Blitter.h declares one per blitter
+    template), so offsets must be read from the target class's body rather
+    than from the whole file -- otherwise a multi-class header is compared
+    against a single class's recovered table.
+    """
+    pat = re.compile(
+        r"^[ \t]*(?:template\s*<[^;{}]*>\s*)?(?:class|struct)\s+"
+        + re.escape(class_name) + r"\b[^;{}]*\{", re.M)
+    m = pat.search(src)
+    if not m:
+        return None
+    i = src.index("{", m.start())
+    depth = 0
+    j = i
+    while j < len(src):
+        if src[j] == "{":
+            depth += 1
+        elif src[j] == "}":
+            depth -= 1
+            if depth == 0:
+                return (i, j)
+        j += 1
+    return None
+
+
 def sh(cmd):
     r = subprocess.run(cmd, capture_output=True)
     return r.returncode == 0, r.stderr.decode(errors="replace")
@@ -404,23 +432,75 @@ def main():
             recs = members.get(m["class"])
             if not recs:
                 continue
-            # Compare only GENERATED headers: hand-written headers document
-            # members (including inherited ones) that the ctor-store recovery
-            # does not attribute to this class, so the sets are not comparable.
-            if os.path.basename(p) in hw_files:
-                continue
+            # Hand-written headers declare members with curated names and
+            # types (including inherited ones) that the ctor-store recovery
+            # does not attribute to this class, so a set comparison is not
+            # meaningful. But an APPENDED block is machine-generated and
+            # encodes its offset in the identifier (m_0c8, pad_0d0), so those
+            # are checkable and are verified below. Previously this check
+            # skipped hand-written headers entirely, which is why it reported
+            # only 6 classes while 2,743 declarations were emitted.
+            is_hw = os.path.basename(p) in hw_files
             src = open(p).read()
+            # Read offsets from THIS class's body only. A header may define
+            # many classes (Blitter.h defines one per template), and comparing
+            # a whole multi-class file against one class's table produced
+            # hundreds of false mismatches.
+            _simple = m["class"]
+            for _kw in ("class ", "struct "):
+                if _simple.startswith(_kw):
+                    _simple = _simple[len(_kw):]
+            _simple = _simple.strip()
+            _span = class_body_span(src, _simple)
+            if _span is None:
+                _span = class_body_span(src, m["ident"])
+            if _span is not None:
+                src = src[_span[0]:_span[1]]
             # emitted as "// +0xNNN" or "// +0xNN"
             # Only offsets attached to an actual DECLARATION count. Hand-written
             # headers also use "+0x" inside prose comments (e.g. "occupies
             # +0x00..+0x4b"), which is documentation, not a member.
+            # First pass: offsets documented as CURATED hand-written members.
+            # These carry their own ctor evidence and are authoritative; the
+            # automated table is often poorer, so they are reported not gated.
+            curated = set()
+            if is_hw:
+                for line in src.splitlines():
+                    if ";" not in line or line.lstrip().startswith("//"):
+                        continue
+                    # A declaration whose identifier is NOT the machine
+                    # m_<hex> form is curated: it carries a hand-recovered name
+                    # (vptr, NextStage, m_Field474) and its own evidence. The
+                    # recovered table is often poorer than such a header, so
+                    # these are reported, not gated.
+                    if not re.match(r"\s*(?:unsigned\s+long|unsigned\s+char|"
+                                    r"void\s*\*|int|bool)\s+(?:m|vptr)_"
+                                    r"[0-9a-fA-F]{2,4}\b", line):
+                        cm = re.search(r"//[^\n]*?\+0x([0-9a-fA-F]+)", line)
+                        if cm:
+                            curated.add(int(cm.group(1), 16))
             emitted = set()
             for line in src.splitlines():
                 if ";" not in line or line.lstrip().startswith("//"):
                     continue
+                # Generated form: a declaration with an offset comment.
                 mm = re.search(r"//[^0-9a-fA-F]*\+0x([0-9a-fA-F]+)", line)
                 if mm:
                     emitted.add(int(mm.group(1), 16))
+                    continue
+                # Appended-block form: the identifier encodes the offset
+                # (m_0c8, pad_0d0, vptr_000). These blocks are machine
+                # generated even when they live in a hand-written header, so
+                # their offsets are checkable against the recovered table.
+                # `pad_XXX` fills a gap between recovered members; it is not
+                # a member claim, so it is not compared against the table.
+                # `m_XXX` and `vptr_XXX` are claims about real displacements.
+                im = re.match(r"\s*(?:unsigned\s+long|unsigned\s+char|"
+                              r"void\s*\*|int|bool)\s+(m|vptr)_"
+                              r"([0-9a-fA-F]{2,4})\b", line)
+                if im:
+                    emitted.add(int(im.group(2), 16))
+                    continue
             if not emitted:
                 continue
             classes_with_offsets += 1
@@ -431,6 +511,11 @@ def main():
                 if off is None:
                     continue
                 want.add(off)
+            # Curated hand-written offsets are authoritative and often richer
+            # than the recovered table; they are reported, not gated.
+            emitted = emitted - curated
+            if not emitted:
+                continue
             checked += len(emitted)
             extra = emitted - want
             if extra:

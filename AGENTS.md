@@ -174,7 +174,7 @@ classes with 1,285 named virtuals.
 The pipeline reproduces all of it from `bin/GAME.EXE` alone and
 `tools/verify.py` passes **seven** checks: 259/259 standalone, combined TU PASS,
 749/749 coverage, 749/749 vtable bindings, 219/219 header content, 218/222
-inheritance, 10/10 member offsets.
+inheritance, 1351/1351 member offsets across 235 classes.
 
 **How to measure instead of guessing.** `python3 tools/harness.py metrics`
 prints the real state and appends to `out/metrics.jsonl`;
@@ -200,16 +200,19 @@ keep in mind:
   other tools' output (`out/class_manifest.json`, `out/direct_bases.json`,
   `out/members.json`), so a bug in `gen_manifest.py` would make the manifest and
   the headers wrong *together* and the checks would still pass.
-- Check 7 is narrower than its name suggests. It reports a small number of
-  classes because it deliberately compares only **generated** headers, while
-  2,743 member declarations are now emitted (many into `src/handwritten/`).
-  Its "N/N verified" figure understates the real state; do not read it as
-  "member layout is verified".
+- Check 7 now covers **235 classes and 1,351 offsets** (it previously skipped
+  hand-written headers and reported only 6 classes). It verifies the
+  machine-generated `m_<hex>`/`vptr_<hex>` declarations against the recovered
+  table. It deliberately does **not** gate *curated* hand-written names
+  (`vptr`, `NextStage`, `m_Field474`): those carry their own ctor evidence and
+  are often richer than the automated table, so a disagreement is reported
+  rather than treated as an error.
 
-Member **layout** — whether a member really sits at the offset claimed — is not
-verified anywhere. Hand-written headers are reported separately in check 6, not
-gated, because they are the authoritative richer source and legitimately omit
-transitively-implied bases.
+Member **layout** — whether a member really sits at the offset claimed — is
+still not verified against the binary itself; check 7 compares headers against
+`out/members.json`, which is another tool's output. Hand-written inheritance is
+reported separately in check 6, not gated, because those headers are the
+authoritative richer source and legitimately omit transitively-implied bases.
 
 **Do not quote `VERIFICATION PASSED` as evidence of correctness beyond that.**
 
