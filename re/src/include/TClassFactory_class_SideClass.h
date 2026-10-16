@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "SideClass.h"
 
-class TClassFactory_class_SideClass : public IClassFactory, public IUnknown
+class TClassFactory_class_SideClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4988 (5 slots) ----

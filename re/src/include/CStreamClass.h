@@ -14,7 +14,7 @@
 
 #include "ts_prelude.h"
 
-class CStreamClass : public IStream, public ISequentialStream, public IUnknown, public ILinkStream
+class CStreamClass : public IStream, public ILinkStream
 {
 public:
     // ---- vtable 0x0069b91c (15 slots) ----

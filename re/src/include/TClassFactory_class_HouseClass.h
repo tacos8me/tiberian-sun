@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "HouseClass.h"
 
-class TClassFactory_class_HouseClass : public IClassFactory, public IUnknown
+class TClassFactory_class_HouseClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4cb8 (5 slots) ----

@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "TeamTypeClass.h"
 
-class TClassFactory_class_TeamTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_TeamTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4b20 (5 slots) ----

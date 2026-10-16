@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "MechLocomotionClass.h"
 
-class TClassFactory_class_MechLocomotionClass : public IClassFactory, public IUnknown
+class TClassFactory_class_MechLocomotionClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4d90 (5 slots) ----

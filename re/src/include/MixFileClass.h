@@ -13,9 +13,8 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "INIClass.h"
 
-class MixFileClass : public GenericNode
+class MixFileClass
 {
 public:
     // ---- vtable 0x006a2318 (1 slots) ----

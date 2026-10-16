@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "WeaponTypeClass.h"
 
-class TClassFactory_class_WeaponTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_WeaponTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4df0 (5 slots) ----

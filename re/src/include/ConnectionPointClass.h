@@ -14,7 +14,7 @@
 
 #include "ts_prelude.h"
 
-class ConnectionPointClass : public IConnectionPoint, public IUnknown
+class ConnectionPointClass : public IConnectionPoint
 {
 public:
     // ---- vtable 0x0069b86c (8 slots) ----

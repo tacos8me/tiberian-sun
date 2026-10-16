@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 class TiberiumClass;
 
-class TClassFactory_class_TiberiumClass : public IClassFactory, public IUnknown
+class TClassFactory_class_TiberiumClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a49a0 (5 slots) ----

@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "CStreamClass.h"
 
-class TClassFactory_class_CStreamClass : public IClassFactory, public IUnknown
+class TClassFactory_class_CStreamClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4898 (5 slots) ----

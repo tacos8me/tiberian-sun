@@ -121,6 +121,31 @@ public:
     // ---- data members (offsets from ctor 0x004d3200) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 26 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a0348
+    unsigned char pad_004[0xc3];
+    unsigned long m_0c7;  // init 0x1
+    unsigned char pad_0cb[0x2b1];
+    unsigned long m_37c;  // init 0x8
+    unsigned char pad_380[0xc3];
+    unsigned long m_443;  // /* ? */
+    unsigned char pad_447[0x1];
+    unsigned long m_448;  // /* ? */
+    unsigned char pad_44c[0x24];
+    unsigned long m_470;  // init 0xffffffff
+    unsigned long m_474;  // init 0x1
+    unsigned long m_478;  // /* ? */
+    unsigned long FireUp;  // +0x47c (INI key)
+    unsigned long FireProne;  // +0x480 (INI key)
+    unsigned long m_484;  // init 0x69ad58
+    unsigned long m_488;  // /* ? */
+    unsigned long m_48c;  // /* ? */
+    unsigned long m_490;  // init 0x1
+    unsigned long m_494;  // /* ? */
+    unsigned long m_498;  // init 0xa
+    unsigned char pad_49c[0x4];
+    unsigned long Cyborg;  // +0x4a0 (INI key)
+    unsigned long Fraidycat;  // +0x4a4 (INI key)
+    unsigned long Engineer;  // +0x4a8 (INI key)
+    unsigned long VehicleThief;  // +0x4ac (INI key)
 
 };

@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "SuperClass.h"
 
-class TClassFactory_class_SuperClass : public IClassFactory, public IUnknown
+class TClassFactory_class_SuperClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4910 (5 slots) ----

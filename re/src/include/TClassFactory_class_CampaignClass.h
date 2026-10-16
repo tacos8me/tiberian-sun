@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "CampaignClass.h"
 
-class TClassFactory_class_CampaignClass : public IClassFactory, public IUnknown
+class TClassFactory_class_CampaignClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a49d0 (5 slots) ----

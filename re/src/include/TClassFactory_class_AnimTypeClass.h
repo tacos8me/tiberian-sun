@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "AnimTypeClass.h"
 
-class TClassFactory_class_AnimTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_AnimTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4c88 (5 slots) ----

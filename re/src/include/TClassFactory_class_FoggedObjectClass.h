@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "FoggedObjectClass.h"
 
-class TClassFactory_class_FoggedObjectClass : public IClassFactory, public IUnknown
+class TClassFactory_class_FoggedObjectClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4e98 (5 slots) ----

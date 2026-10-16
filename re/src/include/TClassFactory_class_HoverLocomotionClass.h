@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "HoverLocomotionClass.h"
 
-class TClassFactory_class_HoverLocomotionClass : public IClassFactory, public IUnknown
+class TClassFactory_class_HoverLocomotionClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4d00 (5 slots) ----

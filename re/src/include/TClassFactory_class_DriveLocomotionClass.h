@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "DriveLocomotionClass.h"
 
-class TClassFactory_class_DriveLocomotionClass : public IClassFactory, public IUnknown
+class TClassFactory_class_DriveLocomotionClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4cd0 (5 slots) ----

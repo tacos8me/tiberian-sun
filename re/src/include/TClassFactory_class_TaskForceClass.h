@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 class TaskForceClass;
 
-class TClassFactory_class_TaskForceClass : public IClassFactory, public IUnknown
+class TClassFactory_class_TaskForceClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4b38 (5 slots) ----

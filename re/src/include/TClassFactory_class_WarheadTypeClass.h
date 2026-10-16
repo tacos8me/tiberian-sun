@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "WarheadTypeClass.h"
 
-class TClassFactory_class_WarheadTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_WarheadTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4dd8 (5 slots) ----

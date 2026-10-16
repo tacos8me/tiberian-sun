@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "IsometricTileTypeClass.h"
 
-class TClassFactory_class_IsometricTileTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_IsometricTileTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4bc8 (5 slots) ----

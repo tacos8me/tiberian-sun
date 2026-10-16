@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "BulletClass.h"
 
-class TClassFactory_class_BulletClass : public IClassFactory, public IUnknown
+class TClassFactory_class_BulletClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4da8 (5 slots) ----

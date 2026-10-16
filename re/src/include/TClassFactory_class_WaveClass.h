@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 class WaveClass;
 
-class TClassFactory_class_WaveClass : public IClassFactory, public IUnknown
+class TClassFactory_class_WaveClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a48b0 (5 slots) ----

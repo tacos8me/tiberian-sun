@@ -14,7 +14,7 @@
 
 #include "ts_prelude.h"
 
-class SwizzleManagerClass : public ISwizzle, public IUnknown
+class SwizzleManagerClass : public ISwizzle
 {
 public:
     // ---- vtable 0x006a5090 (10 slots) ----

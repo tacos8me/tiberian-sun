@@ -160,6 +160,96 @@ public:
     // ---- data members (offsets from ctor 0x0043dc10) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 91 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x69a758
+    unsigned char pad_004[0x432];
+    unsigned long m_436;  // /* ? */
+    unsigned char pad_43a[0x36];
+    unsigned long m_470;  // /* ? */
+    unsigned long m_474;  // /* ? */
+    unsigned long m_478;  // /* ? */
+    unsigned char pad_47c[0x1c];
+    unsigned long m_498;  // /* ? */
+    unsigned long m_49c;  // /* ? */
+    unsigned long m_4a0;  // init 0x1388
+    unsigned long m_4a4;  // /* ? */
+    unsigned long m_4a8;  // /* ? */
+    unsigned long m_4ac;  // /* ? */
+    unsigned long m_4b0;  // /* ? */
+    unsigned long m_4b4;  // /* ? */
+    unsigned long m_4b8;  // /* ? */
+    unsigned long m_4bc;  // /* ? */
+    unsigned long m_4c0;  // /* ? */
+    unsigned long m_4c4;  // /* ? */
+    unsigned long m_4c8;  // /* ? */
+    unsigned long m_4cc;  // /* ? */
+    unsigned char pad_4d0[0xc];
+    unsigned long m_4dc;  // /* ? */
+    unsigned char pad_4e0[0x14];
+    unsigned long m_4f4;  // /* ? */
+    unsigned long m_4f8;  // /* ? */
+    unsigned long Adjacent;  // +0x4fc (INI key)
+    unsigned long m_500;  // /* ? */
+    unsigned long m_504;  // /* ? */
+    unsigned long m_508;  // /* ? */
+    unsigned long m_50c;  // /* ? */
+    unsigned long m_510;  // /* ? */
+    unsigned long m_514;  // /* ? */
+    unsigned long m_518;  // /* ? */
+    unsigned long m_51c;  // /* ? */
+    unsigned long m_520;  // /* ? */
+    unsigned long m_524;  // /* ? */
+    unsigned long m_528;  // /* ? */
+    unsigned long m_52c;  // /* ? */
+    unsigned long m_530;  // /* ? */
+    unsigned long m_534;  // /* ? */
+    unsigned long m_538;  // /* ? */
+    unsigned long m_53c;  // /* ? */
+    unsigned long m_540;  // /* ? */
+    unsigned long m_544;  // /* ? */
+    unsigned long m_548;  // /* ? */
+    unsigned long m_54c;  // /* ? */
+    unsigned long m_550;  // /* ? */
+    unsigned char pad_554[0xc];
+    unsigned long m_560;  // /* ? */
+    unsigned long m_564;  // /* ? */
+    unsigned long m_568;  // /* ? */
+    unsigned long m_56c;  // /* ? */
+    unsigned long m_570;  // /* ? */
+    unsigned long m_574;  // /* ? */
+    unsigned char pad_578[0x23c];
+    unsigned long m_7b4;  // /* ? */
+    unsigned long m_7b8;  // /* ? */
+    unsigned long m_7bc;  // /* ? */
+    unsigned long m_7c0;  // /* ? */
+    unsigned long m_7c4;  // /* ? */
+    unsigned long m_7c8;  // /* ? */
+    unsigned long m_7cc;  // /* ? */
+    unsigned long m_7d0;  // /* ? */
+    unsigned long m_7d4;  // /* ? */
+    unsigned long m_7d8;  // /* ? */
+    unsigned long m_7dc;  // /* ? */
+    unsigned long m_7e0;  // /* ? */
+    unsigned long m_7e4;  // /* ? */
+    unsigned char pad_7e8[0x10];
+    unsigned long m_7f8;  // /* ? */
+    unsigned long m_7fc;  // /* ? */
+    unsigned long Bib;  // +0x800 (INI key)
+    unsigned long Unsellable;  // +0x804 (INI key)
+    unsigned long m_808;  // /* ? */
+    unsigned long m_80c;  // /* ? */
+    unsigned long m_810;  // /* ? */
+    unsigned long Weeder;  // +0x814 (INI key)
+    unsigned long m_818;  // /* ? */
+    unsigned long m_81c;  // /* ? */
+    unsigned long m_820;  // /* ? */
+    unsigned long m_824;  // /* ? */
+    unsigned long m_828;  // /* ? */
+    unsigned long m_82c;  // /* ? */
+    unsigned long m_830;  // init 0x9
+    unsigned long m_834;  // /* ? */
+    unsigned long m_838;  // /* ? */
+    unsigned long m_83c;  // init 0x1
+    unsigned long m_840;  // /* ? */
+    unsigned long m_844;  // /* ? */
 
 };

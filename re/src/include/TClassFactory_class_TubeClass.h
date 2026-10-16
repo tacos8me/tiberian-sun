@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 class TubeClass;
 
-class TClassFactory_class_TubeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_TubeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a49b8 (5 slots) ----

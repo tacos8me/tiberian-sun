@@ -13,9 +13,8 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "INIClass.h"
 
-class INIClass_INIEntry : public GenericNode
+class INIClass_INIEntry
 {
 public:
     // ---- vtable 0x006a0408 (1 slots) ----

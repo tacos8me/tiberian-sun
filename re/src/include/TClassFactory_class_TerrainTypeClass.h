@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 class TerrainTypeClass;
 
-class TClassFactory_class_TerrainTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_TerrainTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a48c8 (5 slots) ----

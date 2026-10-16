@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 class TagTypeClass;
 
-class TClassFactory_class_TagTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_TagTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4af0 (5 slots) ----

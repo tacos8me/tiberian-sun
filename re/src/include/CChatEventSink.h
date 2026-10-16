@@ -14,7 +14,7 @@
 
 #include "ts_prelude.h"
 
-class CChatEventSink : public ATL::CComObjectRootEx<ATL::CComMultiThreadModel, void>, public ATL::CComObjectRootBase, public WOL::IChatEvent, public IUnknown
+class CChatEventSink : public ATL::CComObjectRootEx<ATL::CComMultiThreadModel, void>, public WOL::IChatEvent
 {
 public:
     // ---- vtable 0x006a78bc (33 slots) ----

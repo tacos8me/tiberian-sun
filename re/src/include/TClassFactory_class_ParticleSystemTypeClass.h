@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "ParticleSystemTypeClass.h"
 
-class TClassFactory_class_ParticleSystemTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_ParticleSystemTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4e50 (5 slots) ----

@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "TriggerTypeClass.h"
 
-class TClassFactory_class_TriggerTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_TriggerTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4a90 (5 slots) ----

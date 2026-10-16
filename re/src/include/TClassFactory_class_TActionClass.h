@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "TActionClass.h"
 
-class TClassFactory_class_TActionClass : public IClassFactory, public IUnknown
+class TClassFactory_class_TActionClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4a60 (5 slots) ----

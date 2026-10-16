@@ -45,10 +45,7 @@
  "class VectorClass<WeaponTypeClass*>": [],
  "class AbstractClass": [
   "class IPersistStream",
-  "class IPersist",
-  "class IUnknown",
-  "class IRTTITypeInfo",
-  "class IUnknown"
+  "class IRTTITypeInfo"
  ],
  "class AbstractTypeClass": [
   "class AbstractClass"
@@ -99,8 +96,7 @@
   "class BufferIOFileClass"
  ],
  "class ApplicationClass": [
-  "class IApplication",
-  "class IUnknown"
+  "class IApplication"
  ],
  "class DynamicVectorClass<I>": [
   "class VectorClass<I>"
@@ -531,31 +527,25 @@
   "class VectorClass<H>"
  ],
  "class EnumConnectionsClass": [
-  "class IEnumConnections",
-  "class IUnknown"
+  "class IEnumConnections"
  ],
  "class VectorClass<struct tagCONNECTDATA>": [],
  "class DynamicVectorClass<struct tagCONNECTDATA>": [
   "class VectorClass<struct tagCONNECTDATA>"
  ],
  "class ConnectionPointClass": [
-  "class IConnectionPoint",
-  "class IUnknown"
+  "class IConnectionPoint"
  ],
  "class VectorClass<IConnectionPoint*>": [],
  "class EnumConnectionPointsClass": [
-  "class IEnumConnectionPoints",
-  "class IUnknown"
+  "class IEnumConnectionPoints"
  ],
  "class DynamicVectorClass<IConnectionPoint*>": [
   "class VectorClass<IConnectionPoint*>"
  ],
  "class CStreamClass": [
   "class IStream",
-  "class ISequentialStream",
-  "class IUnknown",
-  "class ILinkStream",
-  "class IUnknown"
+  "class ILinkStream"
  ],
  "class VectorClass<_DDSURFACEDESC*>": [],
  "class DynamicVectorClass<_DDSURFACEDESC*>": [
@@ -830,8 +820,7 @@
  ],
  "class VectorClass<AbstractTypeClass*>": [],
  "class TiberianSunClassFactory": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class VersionClass": [],
  "class VectorClass<ThemeControl*>": [],
@@ -840,8 +829,7 @@
  ],
  "class VectorClass<TagClass*>": [],
  "class GScreenClass": [
-  "class IGameMap",
-  "class IUnknown"
+  "class IGameMap"
  ],
  "class DynamicVectorClass<BuildChoiceClass*, HouseClass>": [
   "class VectorClass<BuildChoiceClass*, HouseClass>"
@@ -880,10 +868,7 @@
  ],
  "class LocomotionClass": [
   "class IPersistStream",
-  "class IPersist",
-  "class IUnknown",
-  "class ILocomotion",
-  "class IUnknown"
+  "class ILocomotion"
  ],
  "class InfantryClass": [
   "class FootClass"
@@ -902,8 +887,7 @@
   "class Node<INISection*, INIClass>"
  ],
  "class INIClass::INIEntry": [
-  "class Node<INIEntry*, INIClass>",
-  "class GenericNode"
+  "class Node<INIEntry*, INIClass>"
  ],
  "class Base64Straw": [
   "class Straw"
@@ -1194,8 +1178,7 @@
   "class Straw"
  ],
  "class MixFileClass": [
-  "class Node<MixFileClass*>",
-  "class GenericNode"
+  "class Node<MixFileClass*>"
  ],
  "class SHAStraw": [
   "class Straw"
@@ -1480,268 +1463,202 @@
  ],
  "class VectorClass<K>": [],
  "class TClassFactory<class CStreamClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class WaveClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TerrainTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TerrainClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class SuperWeaponTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class SuperClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class Tactical>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class CellClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class EMPulseClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class LightSourceClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class SideClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TiberiumClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TubeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class CampaignClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class BuildingLightClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class WaypointPathClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TEventClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class VoxelAnimTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class VoxelAnimClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TActionClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TriggerClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TriggerTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class ScriptClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class ScriptTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TagClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TagTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TeamClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TeamTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TaskForceClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class UnitTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class BuildingTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class AircraftTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class InfantryTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class BulletTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class IsometricTileTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class OverlayTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class SmudgeTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class UnitClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class BuildingClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class AircraftClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class InfantryClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class AnimClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class AnimTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class HouseTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class HouseClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class DriveLocomotionClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class JumpjetLocomotionClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class HoverLocomotionClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TunnelLocomotionClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class WalkLocomotionClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class DropPodLocomotionClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class FlyLocomotionClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class TeleportLocomotionClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class MechLocomotionClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class BulletClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class FactoryClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class WarheadTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class WeaponTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class ParticleClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class ParticleTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class ParticleSystemClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class ParticleSystemTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class AITriggerTypeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class NeuronClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class FoggedObjectClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class TClassFactory<class AlphaShapeClass>": [
-  "class IClassFactory",
-  "class IUnknown"
+  "class IClassFactory"
  ],
  "class StaticButtonClass": [
   "class GadgetClass"
@@ -1756,8 +1673,7 @@
   "class VectorClass<class SwizzlePointerClass>"
  ],
  "class SwizzleManagerClass": [
-  "class ISwizzle",
-  "class IUnknown"
+  "class ISwizzle"
  ],
  "class VectorClass<class SwizzlePointerClass>": [],
  "class DynamicVectorClass<struct DirtyAreaStruct>": [
@@ -1928,23 +1844,13 @@
  ],
  "class CChatEventSink": [
   "class ATL::CComObjectRootEx<class CComMultiThreadModel, TL&>",
-  "class ATL::CComObjectRootBase",
-  "class WOL::IChatEvent",
-  "class IUnknown"
+  "class WOL::IChatEvent"
  ],
  "class ATL::CComObject<class CDownloadEventSink>": [
-  "class CDownloadEventSink",
-  "class ATL::CComObjectRootEx<class CComMultiThreadModel, TL&>",
-  "class ATL::CComObjectRootBase",
-  "class WOL::IDownloadEvent",
-  "class IUnknown"
+  "class CDownloadEventSink"
  ],
  "class ATL::CComObject<class CNetUtilEventSink>": [
-  "class CNetUtilEventSink",
-  "class ATL::CComObjectRootEx<class CComMultiThreadModel, TL&>",
-  "class ATL::CComObjectRootBase",
-  "class WOL::INetUtilEvent",
-  "class IUnknown"
+  "class CNetUtilEventSink"
  ],
  "class IPXInterfaceClass": [
   "class WinsockInterfaceClass"

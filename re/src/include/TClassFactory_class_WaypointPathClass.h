@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 class WaypointPathClass;
 
-class TClassFactory_class_WaypointPathClass : public IClassFactory, public IUnknown
+class TClassFactory_class_WaypointPathClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4a00 (5 slots) ----

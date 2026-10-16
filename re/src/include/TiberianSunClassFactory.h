@@ -14,7 +14,7 @@
 
 #include "ts_prelude.h"
 
-class TiberianSunClassFactory : public IClassFactory, public IUnknown
+class TiberianSunClassFactory : public IClassFactory
 {
 public:
     // ---- vtable 0x0069f804 (5 slots) ----

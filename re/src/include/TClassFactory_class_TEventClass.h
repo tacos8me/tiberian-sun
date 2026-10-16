@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 class TEventClass;
 
-class TClassFactory_class_TEventClass : public IClassFactory, public IUnknown
+class TClassFactory_class_TEventClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4a18 (5 slots) ----

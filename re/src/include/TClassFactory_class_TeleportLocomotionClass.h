@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "TeleportLocomotionClass.h"
 
-class TClassFactory_class_TeleportLocomotionClass : public IClassFactory, public IUnknown
+class TClassFactory_class_TeleportLocomotionClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4d78 (5 slots) ----

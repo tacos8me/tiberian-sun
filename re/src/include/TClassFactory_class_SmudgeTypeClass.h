@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "SmudgeTypeClass.h"
 
-class TClassFactory_class_SmudgeTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_SmudgeTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4bf8 (5 slots) ----

@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "FlyLocomotionClass.h"
 
-class TClassFactory_class_FlyLocomotionClass : public IClassFactory, public IUnknown
+class TClassFactory_class_FlyLocomotionClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4d60 (5 slots) ----

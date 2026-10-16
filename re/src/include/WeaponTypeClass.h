@@ -62,9 +62,21 @@ public:
     // ---- data members (offsets from ctor 0x00656a90) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    unsigned long m_000;  // init 0x6a75b0
-    unsigned char pad_004[0x5c];
-    // 17 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_068;  // /* ? */
+    unsigned long m_06c;  // /* ? */
+    unsigned long m_070;  // /* ? */
+    unsigned long m_074;  // /* ? */
+    unsigned long ROF;  // +0x078 (INI key)
+    unsigned long m_07c;  // /* ? */
+    unsigned char pad_084[0x38];
+    unsigned long m_0bc;  // /* ? */
+    unsigned long m_0c0;  // /* ? */
+    unsigned long m_0c4;  // /* ? */
+    unsigned long m_0c8;  // /* ? */
+    unsigned long m_0cc;  // /* ? */
+    unsigned long m_0d0;  // /* ? */
+    unsigned long m_0d4;  // /* ? */
+    // 5 member(s) already declared above; their offsets are recorded in out/members.json
 
 };
 

@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "AircraftClass.h"
 
-class TClassFactory_class_AircraftClass : public IClassFactory, public IUnknown
+class TClassFactory_class_AircraftClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4c40 (5 slots) ----

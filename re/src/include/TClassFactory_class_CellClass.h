@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "CellClass.h"
 
-class TClassFactory_class_CellClass : public IClassFactory, public IUnknown
+class TClassFactory_class_CellClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4940 (5 slots) ----

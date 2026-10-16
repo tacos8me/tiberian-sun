@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "OverlayTypeClass.h"
 
-class TClassFactory_class_OverlayTypeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_OverlayTypeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4be0 (5 slots) ----

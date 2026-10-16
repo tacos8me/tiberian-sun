@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "JumpjetLocomotionClass.h"
 
-class TClassFactory_class_JumpjetLocomotionClass : public IClassFactory, public IUnknown
+class TClassFactory_class_JumpjetLocomotionClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4ce8 (5 slots) ----

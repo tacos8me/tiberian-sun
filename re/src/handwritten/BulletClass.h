@@ -155,6 +155,10 @@ public:
     // ---- data members (offsets from ctor 0x004427e0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 5 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x69a84c
+    unsigned long m_004;  // init 0x69a830
+    unsigned char pad_008[0x44];
+    unsigned long m_04c;  // zero-initialised
+    unsigned long m_050;  // zero-initialised
 
 };

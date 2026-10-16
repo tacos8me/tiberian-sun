@@ -14,7 +14,7 @@
 
 #include "ts_prelude.h"
 
-class ApplicationClass : public IApplication, public IUnknown
+class ApplicationClass : public IApplication
 {
 public:
     // ---- vtable 0x00699c2c (11 slots) ----

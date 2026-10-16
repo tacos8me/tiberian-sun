@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "DropPodLocomotionClass.h"
 
-class TClassFactory_class_DropPodLocomotionClass : public IClassFactory, public IUnknown
+class TClassFactory_class_DropPodLocomotionClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4d48 (5 slots) ----

@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "ScriptClass.h"
 
-class TClassFactory_class_ScriptClass : public IClassFactory, public IUnknown
+class TClassFactory_class_ScriptClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4aa8 (5 slots) ----

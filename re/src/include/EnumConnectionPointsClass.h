@@ -14,7 +14,7 @@
 
 #include "ts_prelude.h"
 
-class EnumConnectionPointsClass : public IEnumConnectionPoints, public IUnknown
+class EnumConnectionPointsClass : public IEnumConnectionPoints
 {
 public:
     // ---- vtable 0x0069b8ac (7 slots) ----

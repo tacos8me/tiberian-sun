@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "AlphaShapeClass.h"
 
-class TClassFactory_class_AlphaShapeClass : public IClassFactory, public IUnknown
+class TClassFactory_class_AlphaShapeClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4eb0 (5 slots) ----

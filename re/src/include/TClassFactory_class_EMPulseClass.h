@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "EMPulseClass.h"
 
-class TClassFactory_class_EMPulseClass : public IClassFactory, public IUnknown
+class TClassFactory_class_EMPulseClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4958 (5 slots) ----

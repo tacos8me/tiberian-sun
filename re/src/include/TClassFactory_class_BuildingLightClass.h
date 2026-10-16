@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 #include "BuildingLightClass.h"
 
-class TClassFactory_class_BuildingLightClass : public IClassFactory, public IUnknown
+class TClassFactory_class_BuildingLightClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a49e8 (5 slots) ----

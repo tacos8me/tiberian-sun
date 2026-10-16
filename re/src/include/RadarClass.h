@@ -152,6 +152,50 @@ public:
     // ---- data members (offsets from ctor 0x005a06f0) ----
     // Offsets are exact; names are not yet recovered, so members
     // are emitted as byte blobs at their real displacements.
-    // 45 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_000;  // init 0x6a35fc
+    unsigned char pad_004[0x11e8];
+    unsigned long m_11ec;  // /* ? */
+    unsigned long m_11f0;  // /* ? */
+    unsigned long m_11f4;  // /* ? */
+    unsigned long m_11f8;  // /* ? */
+    unsigned long m_11fc;  // /* ? */
+    unsigned long m_1200;  // /* ? */
+    unsigned long m_1204;  // /* ? */
+    unsigned long m_1208;  // /* ? */
+    unsigned long m_120c;  // /* ? */
+    unsigned long m_1210;  // /* ? */
+    unsigned char pad_1214[0x10];
+    unsigned long m_1224;  // /* ? */
+    unsigned long m_1228;  // /* ? */
+    unsigned char pad_122c[0x18];
+    unsigned long m_1244;  // /* ? */
+    unsigned long m_1248;  // /* ? */
+    unsigned long m_124c;  // /* ? */
+    unsigned long m_1250;  // /* ? */
+    unsigned long m_1254;  // /* ? */
+    unsigned long m_1258;  // /* ? */
+    unsigned long m_125c;  // /* ? */
+    unsigned long m_1260;  // /* ? */
+    unsigned char pad_1264[0x14];
+    unsigned long m_1278;  // init 0x1f4
+    unsigned long m_127c;  // /* ? */
+    unsigned char pad_1280[0x210];
+    unsigned long m_1490;  // /* ? */
+    unsigned long m_1494;  // init 0x1
+    unsigned long m_1498;  // /* ? */
+    unsigned long m_149c;  // /* ? */
+    unsigned long m_14a0;  // /* ? */
+    unsigned long m_14a4;  // /* ? */
+    unsigned char pad_14a8[0xc];
+    unsigned long m_14b4;  // /* ? */
+    unsigned long m_14b8;  // /* ? */
+    unsigned long m_14bc;  // /* ? */
+    unsigned long m_14c0;  // /* ? */
+    unsigned long m_14c4;  // /* ? */
+    unsigned char pad_14c8[0x1c];
+    unsigned long m_14e4;  // /* ? */
+    unsigned long m_14e8;  // /* ? */
+    unsigned char pad_14ec[0x4];
+    unsigned long m_14f0;  // /* ? */
 
 };

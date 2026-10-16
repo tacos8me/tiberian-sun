@@ -15,7 +15,7 @@
 #include "ts_prelude.h"
 class VoxelAnimClass;
 
-class TClassFactory_class_VoxelAnimClass : public IClassFactory, public IUnknown
+class TClassFactory_class_VoxelAnimClass : public IClassFactory
 {
 public:
     // ---- vtable 0x006a4a48 (5 slots) ----
