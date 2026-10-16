@@ -460,6 +460,13 @@ def main():
 
     # Identifiers the prelude will define; used to keep them out of the
     # deferred-member list, since the prelude is regenerated later.
+    #
+    # prelude_owned must be initialised HERE, not further down: it is appended
+    # to from inside the per-class loop below, and leaving the assignment later
+    # raised `UnboundLocalError: prelude_owned` whenever gen_headers.py was run
+    # with an already-reconciled src/include/ts_prelude.h present (i.e. outside
+    # pipeline stage order, which is exactly how a human re-runs it).
+    prelude_owned = []
     prelude_owned_types = set()
     for cand in (os.path.join(srcdir, "ts_prelude.h"),
                  os.path.join(hw_dir, "ts_prelude.h")):
@@ -837,7 +844,8 @@ def main():
     appended_classes = 0
     appended_records = 0
     skipped_already = 0
-    prelude_owned = []
+    # prelude_owned is initialised earlier (it is appended to above); do not
+    # re-bind it here, or those appends are discarded.
     orphan_headers = {}
     seen_blocks = set()
     # Work on a per-file in-memory copy so several classes owned by the same
@@ -958,8 +966,20 @@ def main():
         # without carrying a data-members banner. Re-emitting the same
         # identifier is a redeclaration error, so drop any block line whose
         # declared name is already present in the class body.
+        #
+        # CRITICAL: only CURATED declarations count. A block appended by a
+        # previous run is machine-generated, and counting its own members as
+        # "already declared" makes the next run drop them and leave only a
+        # comment. That is a two-cycle which silently DELETED ~593 declaration
+        # lines across 43 headers (AircraftTypeClass lost +0x000/+0x37c/+0x435)
+        # and flipped check 7 between 2032/237 and 1716/241. So truncate the
+        # body at the machine banner before collecting names.
+        curated_body = body
+        _banner = "// ---- data members (offsets from ctor"
+        if _banner in curated_body:
+            curated_body = curated_body[:curated_body.index(_banner)]
         existing = set()
-        for line in body.splitlines():
+        for line in curated_body.splitlines():
             mm = re.match(r"\s*(?:virtual\s+)?[\w:<>,\s\*&]+?\b(\w+)\s*(?:\[[^\]]*\])?\s*;", line)
             if mm and not line.lstrip().startswith("//"):
                 existing.add(mm.group(1))

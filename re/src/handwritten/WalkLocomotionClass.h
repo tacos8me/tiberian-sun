@@ -61,10 +61,17 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
+    unsigned long m_000;  // +0x000 init 0x6a71e0; 4-byte store: mov dword ptr [esi], 0x6a71e0
+    unsigned long m_004;  // +0x004 init 0x6a7118; 4-byte store: mov dword ptr [esi + 4], 0x6a7118
+    unsigned char pad_008[0xc];
+    unsigned long m_014;  // +0x014 init 0x6a70f4; 4-byte store: mov dword ptr [esi + 0x14], 0x6a70f4
+    unsigned long m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], ecx
+    unsigned char pad_01c[0x14];
+    unsigned char m_030;  // +0x030 /* ? */; 1-byte store: mov byte ptr [esi + 0x30], al
     unsigned char m_031;  // +0x031 /* ? */; 1-byte store: mov byte ptr [esi + 0x31], al
     unsigned char m_032;  // +0x032 /* ? */; 1-byte store: mov byte ptr [esi + 0x32], al
     unsigned char pad_033[0x1];
-    // 8 member(s) already declared above; their offsets are recorded in out/members.json
+    unsigned long m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [esi + 0x34], eax
 
 };
 
