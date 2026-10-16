@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "DropPodLocomotionClass.h"
 
 class TClassFactory_class_DropPodLocomotionClass : public IClassFactory, public IUnknown
 {

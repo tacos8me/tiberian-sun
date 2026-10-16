@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "AlphaShapeClass.h"
 
 class TClassFactory_class_AlphaShapeClass : public IClassFactory, public IUnknown
 {

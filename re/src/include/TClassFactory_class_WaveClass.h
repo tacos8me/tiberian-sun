@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+class WaveClass;
 
 class TClassFactory_class_WaveClass : public IClassFactory, public IUnknown
 {

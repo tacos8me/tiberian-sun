@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "TeleportLocomotionClass.h"
 
 class TClassFactory_class_TeleportLocomotionClass : public IClassFactory, public IUnknown
 {

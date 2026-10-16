@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+class TagTypeClass;
 
 class TClassFactory_class_TagTypeClass : public IClassFactory, public IUnknown
 {

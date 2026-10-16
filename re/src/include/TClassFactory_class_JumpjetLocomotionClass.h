@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "JumpjetLocomotionClass.h"
 
 class TClassFactory_class_JumpjetLocomotionClass : public IClassFactory, public IUnknown
 {

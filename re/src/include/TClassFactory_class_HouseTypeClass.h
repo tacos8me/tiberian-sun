@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "HouseTypeClass.h"
 
 class TClassFactory_class_HouseTypeClass : public IClassFactory, public IUnknown
 {

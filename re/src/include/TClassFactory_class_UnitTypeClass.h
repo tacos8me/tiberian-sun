@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "UnitTypeClass.h"
 
 class TClassFactory_class_UnitTypeClass : public IClassFactory, public IUnknown
 {

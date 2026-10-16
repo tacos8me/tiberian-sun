@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "BulletTypeClass.h"
 
 class TClassFactory_class_BulletTypeClass : public IClassFactory, public IUnknown
 {

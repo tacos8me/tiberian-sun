@@ -18,6 +18,12 @@ if [ ! -f "$BIN" ]; then
 fi
 
 if [ "${1:-}" != "--verify-only" ]; then
+  # Start from a clean generated tree: keep only the hand-written headers and
+  # the prelude, so headers that are no longer generated do not linger.
+  mkdir -p "$SRC"
+  find "$SRC" -maxdepth 1 -name '*.h' -delete
+  cp src/handwritten/*.h "$SRC"/ 2>/dev/null || true
+  echo "== 0/10 clean generated tree =="
   echo "== 1/10 RTTI recovery =="
   python3 tools/rtti.py "$BIN" "$OUT"
 

@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "SuperWeaponTypeClass.h"
 
 class TClassFactory_class_SuperWeaponTypeClass : public IClassFactory, public IUnknown
 {

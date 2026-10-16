@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "FlyLocomotionClass.h"
 
 class TClassFactory_class_FlyLocomotionClass : public IClassFactory, public IUnknown
 {

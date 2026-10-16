@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "ParticleTypeClass.h"
 
 class TClassFactory_class_ParticleTypeClass : public IClassFactory, public IUnknown
 {

@@ -12,9 +12,9 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "DynamicVectorClass_ObjectClass.h"
+#include "DynamicVectorClass.h"
 
-class LayerClass : public DynamicVectorClass_ObjectClass
+class LayerClass : public DynamicVectorClass<ObjectClass*>
 {
 public:
     // ---- vtable 0x0069ba60 (9 slots) ----

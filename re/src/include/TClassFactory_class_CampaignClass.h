@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "CampaignClass.h"
 
 class TClassFactory_class_CampaignClass : public IClassFactory, public IUnknown
 {

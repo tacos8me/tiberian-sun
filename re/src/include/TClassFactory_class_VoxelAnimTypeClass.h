@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+class VoxelAnimTypeClass;
 
 class TClassFactory_class_VoxelAnimTypeClass : public IClassFactory, public IUnknown
 {

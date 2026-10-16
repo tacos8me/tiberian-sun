@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "SideClass.h"
 
 class TClassFactory_class_SideClass : public IClassFactory, public IUnknown
 {

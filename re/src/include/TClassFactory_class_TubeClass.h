@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+class TubeClass;
 
 class TClassFactory_class_TubeClass : public IClassFactory, public IUnknown
 {

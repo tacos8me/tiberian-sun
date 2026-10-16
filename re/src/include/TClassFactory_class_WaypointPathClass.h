@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+class WaypointPathClass;
 
 class TClassFactory_class_WaypointPathClass : public IClassFactory, public IUnknown
 {

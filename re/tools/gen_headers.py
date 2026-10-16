@@ -21,6 +21,9 @@ import struct
 import sys
 from collections import defaultdict
 
+_KEYWORDS = {"class", "struct", "const", "unsigned", "signed", "int",
+             "char", "short", "long", "void", "bool", "float", "double"}
+
 IB = 0x400000
 
 
@@ -93,6 +96,21 @@ def main():
 
     # demangled class name -> ident, for resolving base includes
     ident_of = {m["class"]: m["ident"] for m in manifest}
+    # ident -> authoritative RTTI name. The RTTI name is the correct C++
+    # spelling of the type, so it is used verbatim for base clauses instead of
+    # trying to un-mangle the ident.
+    rtti_by_ident = {m["ident"]: m["class"] for m in manifest}
+    # Nested types: "class INIClass::INISection" -> INISection qualifies as
+    # INIClass::INISection. MSVC's RTTI drops the qualification inside template
+    # arguments, so it has to be restored when spelling a base.
+    nested = {}
+    for m in manifest:
+        c = m["class"]
+        for kw in ("class ", "struct "):
+            if c.startswith(kw):
+                c = c[len(kw):]
+        if "::" in c and "<" not in c:
+            nested[c.split("::")[-1]] = c
     for m in manifest:
         ident_of.setdefault(sanitize(m["class"]), m["ident"])
 
@@ -157,15 +175,18 @@ def main():
         if ident in owned:
             skipped += 1
             continue
-        # Template instantiations of a hand-written type (e.g. Node<...>) are
-        # already defined by that header; skip the generated duplicate. Only
-        # skip when the hand-written set actually defines the base template.
-        if ident.startswith("Node_") and "Node" in owned:
-            skipped += 1
-            continue
-        if ident.startswith("GenericNode") and "GenericNode" in owned:
-            skipped += 1
-            continue
+        # A template instantiation whose template is defined by a hand-written
+        # header is already defined by that header; skip the generated
+        # duplicate. This is decided from the RTTI name, not the mangled ident.
+        _rtti = m.get("class", "")
+        if "<" in _rtti:
+            _tmpl = _rtti.split("<")[0]
+            for _kw in ("class ", "struct "):
+                if _tmpl.startswith(_kw):
+                    _tmpl = _tmpl[len(_kw):]
+            if _tmpl.strip() in owned:
+                skipped += 1
+                continue
 
         # direct bases only, resolved to idents, deduplicated
         bases = []
@@ -199,11 +220,38 @@ def main():
                 continue
             if os.path.exists(os.path.join(srcdir, b + ".h")):
                 L.append(f'#include "{b}.h"')
-            elif b.startswith("Node_") and "Node" in owned:
-                # Node<...> is defined by INIClass.h
-                L.append('#include "INIClass.h"')
-            elif b.startswith("GenericNode") and "GenericNode" in owned:
-                L.append('#include "INIClass.h"')
+                continue
+            # A base that is an instantiation of a hand-written template
+            # (Node<...>, VectorClass<...>, BlitPlain<...>): include the
+            # template's header, since no header exists for the instantiation.
+            _bt = rtti_by_ident.get(b, "")
+            if "<" in _bt:
+                _t = _bt.split("<")[0]
+                for _kw in ("class ", "struct "):
+                    if _t.startswith(_kw):
+                        _t = _t[len(_kw):]
+                _t = _t.strip()
+                if _t in owned:
+                    L.append(f'#include "{_t}.h"')
+        # A template instantiation needs its template arguments declared.
+        # Derive them from the RTTI name, e.g.
+        #   class DynamicVectorClass<AbstractClass*>  ->  AbstractClass.h
+        rtti = m.get("class", "")
+        if "<" in rtti:
+            tail = rtti[rtti.index("<"):]
+            seen = set()
+            for tok in re.findall(r"[A-Za-z_]\w*", tail):
+                if tok in _KEYWORDS or tok in seen:
+                    continue
+                seen.add(tok)
+                if os.path.exists(os.path.join(srcdir, tok + ".h")):
+                    L.append(f'#include "{tok}.h"')
+                elif tok not in owned and tok not in prelude_types:
+                    # The argument has no header of its own (MSVC emits the
+                    # formal parameter name for instantiations inside a
+                    # template, e.g. DynamicVectorClass<D>). Forward-declare it
+                    # so the template-id is well-formed.
+                    L.append(f"class {tok};")
         L.append("")
 
         if bases:
@@ -211,18 +259,22 @@ def main():
             for b in bases:
                 if b in cpp_name:
                     spelled.append(cpp_name[b])
-                elif b.startswith("Node_") and "Node" in owned:
-                    # Node<INISection*, INIClass> -> Node<INISection*, INIClass>
-                    inner = b[len("Node_"):]
-                    parts = inner.split("_")
-                    if len(parts) == 2:
-                        spelled.append(f"Node<{parts[1]}::{parts[0]}, {parts[1]}>")
-                    else:
-                        spelled.append("Node<" + ", ".join(parts) + ">")
-                elif b.startswith("GenericNode") and "GenericNode" in owned:
-                    spelled.append("GenericNode")
-                else:
+                    continue
+                # Use the authoritative RTTI spelling of the base. MSVC drops
+                # the qualification of nested types inside template arguments,
+                # so restore it (Node<INISection*, INIClass> must be written
+                # Node<INIClass::INISection, INIClass>).
+                r = rtti_by_ident.get(b)
+                if not r:
                     spelled.append(b)
+                    continue
+                for _kw in ("class ", "struct "):
+                    if r.startswith(_kw):
+                        r = r[len(_kw):]
+                r = r.strip()
+                for _simple, _qual in nested.items():
+                    r = re.sub(r"\b" + re.escape(_simple) + r"\b", _qual, r)
+                spelled.append(r)
             L.append(f"class {ident} : public " + ", public ".join(spelled))
         else:
             L.append(f"class {ident}")

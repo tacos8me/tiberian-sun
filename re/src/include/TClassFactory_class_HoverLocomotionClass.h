@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "HoverLocomotionClass.h"
 
 class TClassFactory_class_HoverLocomotionClass : public IClassFactory, public IUnknown
 {

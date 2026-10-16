@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "CellClass.h"
 
 class TClassFactory_class_CellClass : public IClassFactory, public IUnknown
 {

@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "WalkLocomotionClass.h"
 
 class TClassFactory_class_WalkLocomotionClass : public IClassFactory, public IUnknown
 {

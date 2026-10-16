@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "AnimClass.h"
 
 class TClassFactory_class_AnimClass : public IClassFactory, public IUnknown
 {

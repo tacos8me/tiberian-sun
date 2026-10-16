@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "MechLocomotionClass.h"
 
 class TClassFactory_class_MechLocomotionClass : public IClassFactory, public IUnknown
 {

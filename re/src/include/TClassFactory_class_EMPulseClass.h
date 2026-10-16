@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "EMPulseClass.h"
 
 class TClassFactory_class_EMPulseClass : public IClassFactory, public IUnknown
 {

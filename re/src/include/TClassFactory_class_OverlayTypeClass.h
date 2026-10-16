@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "OverlayTypeClass.h"
 
 class TClassFactory_class_OverlayTypeClass : public IClassFactory, public IUnknown
 {

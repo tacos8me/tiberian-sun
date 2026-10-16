@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "TriggerClass.h"
 
 class TClassFactory_class_TriggerClass : public IClassFactory, public IUnknown
 {

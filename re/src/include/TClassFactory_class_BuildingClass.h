@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "BuildingClass.h"
 
 class TClassFactory_class_BuildingClass : public IClassFactory, public IUnknown
 {

@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "TunnelLocomotionClass.h"
 
 class TClassFactory_class_TunnelLocomotionClass : public IClassFactory, public IUnknown
 {

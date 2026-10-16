@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "LightSourceClass.h"
 
 class TClassFactory_class_LightSourceClass : public IClassFactory, public IUnknown
 {

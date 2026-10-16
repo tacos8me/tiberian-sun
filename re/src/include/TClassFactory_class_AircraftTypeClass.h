@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "AircraftTypeClass.h"
 
 class TClassFactory_class_AircraftTypeClass : public IClassFactory, public IUnknown
 {

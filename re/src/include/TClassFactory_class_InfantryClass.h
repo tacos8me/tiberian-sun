@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "InfantryClass.h"
 
 class TClassFactory_class_InfantryClass : public IClassFactory, public IUnknown
 {

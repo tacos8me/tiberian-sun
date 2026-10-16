@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "TeamClass.h"
 
 class TClassFactory_class_TeamClass : public IClassFactory, public IUnknown
 {

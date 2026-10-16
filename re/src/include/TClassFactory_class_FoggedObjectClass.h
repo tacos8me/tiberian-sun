@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "FoggedObjectClass.h"
 
 class TClassFactory_class_FoggedObjectClass : public IClassFactory, public IUnknown
 {

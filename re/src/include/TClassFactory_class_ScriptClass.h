@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "ScriptClass.h"
 
 class TClassFactory_class_ScriptClass : public IClassFactory, public IUnknown
 {

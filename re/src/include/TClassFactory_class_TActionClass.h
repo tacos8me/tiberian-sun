@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "TActionClass.h"
 
 class TClassFactory_class_TActionClass : public IClassFactory, public IUnknown
 {

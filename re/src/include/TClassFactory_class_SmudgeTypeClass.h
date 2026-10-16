@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "SmudgeTypeClass.h"
 
 class TClassFactory_class_SmudgeTypeClass : public IClassFactory, public IUnknown
 {

@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "DriveLocomotionClass.h"
 
 class TClassFactory_class_DriveLocomotionClass : public IClassFactory, public IUnknown
 {

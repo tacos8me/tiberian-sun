@@ -12,6 +12,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "WarheadTypeClass.h"
 
 class TClassFactory_class_WarheadTypeClass : public IClassFactory, public IUnknown
 {

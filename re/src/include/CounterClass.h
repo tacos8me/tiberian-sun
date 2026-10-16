@@ -12,9 +12,9 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "VectorClass_H.h"
+#include "VectorClass.h"
 
-class CounterClass : public VectorClass_H
+class CounterClass : public VectorClass<H>
 {
 public:
     // ---- vtable 0x0069b7ec (6 slots) ----
