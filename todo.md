@@ -153,6 +153,21 @@ exercised by the build. `-m32 -fsyntax-only` works here and needs no multilib.
 recovered member names (85.2%) resolve to real keys in shipped data. This is
 the first external validation of the recovered names, offsets and readers.
 
+### [ ] Declare the base classes two hand-written headers omit
+The corrected base reduction shows these headers document bases in comments but
+do not declare them, so the emitted layout lacks real base subobjects:
+
+- `AnimClass` omits `StageClass` (RTTI: mdisp 76, i.e. +0x4c)
+- `HouseClass` omits `IHouse` (mdisp 20), `IPublicHouse` (mdisp 24) and
+  `IConnectionPointContainer` (mdisp 28)
+
+Both were invisible until `reduce_bases.py` was fixed; the old reduction was a
+no-op for these hierarchies so the comparison could not fire. Fixing them
+changes hand-written base clauses, which is a layout decision, so it is
+recorded rather than patched silently.
+*Done when:* both headers declare their real bases and check 6 reports no
+generated/hand-written divergence.
+
 ### [ ] Verify member *layout*, not just offsets
 Offsets are checked; whether types and ordering are right is not.
 
