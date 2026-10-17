@@ -48,9 +48,12 @@ public:
     bool  Inviso;                // 0x12B INI "Inviso"        (0x6BFEB4)
     bool  Proximity;             // 0x12C INI "Proximity"     (0x6BFEAC)
     bool  Ranged;                // 0x12D INI "Ranged"        (0x6BFEA4)
+    unsigned char pad_doc_Inaccuate[0x1];  // holds the gap before Inaccuate, which documents 0x12f (the compiler would put it at 0x12e)
     bool  Inaccuate;             // 0x12F INI "Inaccuate"     (0x6BFE9C)
+    unsigned char pad_doc_Degenerates[0x2];  // holds the gap before Degenerates, which documents 0x132 (the compiler would put it at 0x130)
     bool  Degenerates;           // 0x132 INI "Degenerates"   (0x6BFE94)
     bool  Bouncy;                // 0x133 INI "Bouncy"        (0x6BFE8C)
+    unsigned char pad_doc_Acceleration[0x14];  // holds the gap before Acceleration, which documents 0x148 (the compiler would put it at 0x134)
     double Acceleration;         // 0x148 INI "Acceleration"  (0x6BFE84)
     // /* ? */ "Elasticity", "Color", "Cluster", "Image", "Trailer" are
     //         read by this function; store targets not isolated.
@@ -68,37 +71,15 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0xc4];
-    unsigned char m_0c8;  // +0x0c8 init 0x1; 1-byte store: mov byte ptr [esi + 0xc8], 1
-    unsigned char Selectable;  // +0x0c9 (INI key); 1-byte store: mov byte ptr [esi + 0xc9], bl
-    unsigned char LegalTarget;  // +0x0ca (INI key); 1-byte store: mov byte ptr [esi + 0xca], bl
-    unsigned char m_0cb;  // +0x0cb init 0x1; 1-byte store: mov byte ptr [esi + 0xcb], 1
-    unsigned char Immune;  // +0x0cc (INI key); 1-byte store: mov byte ptr [esi + 0xcc], 1
-    unsigned char m_0cd;  // +0x0cd init 0x1; 1-byte store: mov byte ptr [esi + 0xcd], 1
-    unsigned char m_0ce;  // +0x0ce /* ? */; 1-byte store: mov byte ptr [esi + 0xce], bl
-    unsigned char pad_0cf[0x55];
-    unsigned char m_125;  // +0x125 /* ? */; 1-byte store: mov byte ptr [esi + 0x125], bl
-    unsigned char m_128;  // +0x128 init 0x1; 1-byte store: mov byte ptr [esi + 0x128], 1
-    unsigned char m_12c;  // +0x12c /* ? */; 1-byte store: mov byte ptr [esi + 0x12c], bl
-    unsigned char m_12e;  // +0x12e init 0x1; 1-byte store: mov byte ptr [esi + 0x12e], 1
-    unsigned char m_130;  // +0x130 /* ? */; 1-byte store: mov byte ptr [esi + 0x130], bl
-    unsigned char m_131;  // +0x131 init 0x1; 1-byte store: mov byte ptr [esi + 0x131], 1
-    unsigned char m_133;  // +0x133 /* ? */; 1-byte store: mov byte ptr [esi + 0x133], bl
-    unsigned char m_134;  // +0x134 /* ? */; 1-byte store: mov byte ptr [esi + 0x134], bl
-    unsigned char pad_135[0x3];
-    unsigned int m_138;  // +0x138 init 0x1; 4-byte store: mov dword ptr [esi + 0x138], 1
-    unsigned int m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [esi + 0x13c], ebx
-    unsigned int m_140;  // +0x140 /* ? */; 4-byte store: mov dword ptr [esi + 0x140], ebx
-    unsigned int m_144;  // +0x144 init 0x3fe80000; 4-byte store: mov dword ptr [esi + 0x144], 0x3fe80000
-    unsigned int m_148;  // +0x148 init 0x3; 4-byte store: mov dword ptr [esi + 0x148], 3
-    unsigned int m_14c;  // +0x14c /* ? */; 4-byte store: mov dword ptr [esi + 0x14c], ebx
-    unsigned int m_150;  // +0x150 /* ? */; 4-byte store: mov dword ptr [esi + 0x150], ebx
-    unsigned int ROT;  // +0x154 (INI key); 4-byte store: mov dword ptr [esi + 0x154], ebx
-    unsigned int Arm;  // +0x158 (INI key); 4-byte store: mov dword ptr [esi + 0x158], ebx
-    unsigned char m_15c;  // +0x15c /* ? */; 1-byte store: mov byte ptr [esi + 0x15c], bl
-    unsigned char m_15d;  // +0x15d /* ? */; 1-byte store: mov byte ptr [esi + 0x15d], bl
-    unsigned char m_15e;  // +0x15e /* ? */; 1-byte store: mov byte ptr [esi + 0x15e], bl
-    // 9 member(s) already declared above; their offsets are recorded in out/members.json
+    // The machine block begins at +0x1dd: the compiled end of the
+    // base sub-object region (+0x124) and of the curated block
+    // above. Base evidence: ObjectTypeClass at +0x0 (ends +0x124).
+    // 8 recovered offset(s) below +0x124 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0xc8, +0xc9, +0xca, +0xcb, +0xcc, +0xcd, +0xce
+    // 29 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x124..+0x1dd) and are NOT repeated here:
+    // the curated block wins -- +0x124, +0x125, +0x126, +0x127, +0x128, +0x129, +0x12a, +0x12b ...
 
 };
 

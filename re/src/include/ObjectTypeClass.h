@@ -59,6 +59,7 @@ public:
     virtual int   Get_RTTI_2();                                     // [28] 0x406a30
 
     // Evidence: ctor 0x405d50 writes [ebp+0x14] (name buffer) and [ebp+0x2d].
+    unsigned char pad_doc_m_Name[0x3];  // holds the gap before m_Name, which documents 0x14 (the compiler would put it at 0x11)
     char  m_Name[25];       // +0x14  /* ? */ INI "Name" (25-byte inline buffer)
     bool  m_NameSet;        // +0x2d  /* ? */
 
@@ -67,6 +68,12 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x2e: the compiled end of the
+    // base sub-object region (+0x11) and of the curated block
+    // above. Base evidence: AbstractClass at +0x0 (ends +0x11).
+    // 2 recovered offset(s) below +0x11 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4
 
 };
 
@@ -123,9 +130,11 @@ public:
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x571220 writes these offsets; INI reader 0x572610
     // references the named keys (ini_keys.json, reader VA 0x572610).
+    unsigned char pad_doc_m_IsCrushable[0x32];  // holds the gap before m_IsCrushable, which documents 0x60 (the compiler would put it at 0x2e)
     bool  m_IsCrushable;        // +0x60  /* ? */ INI "Crushable"
     bool  m_IsSelectable;       // +0x61  /* ? */ INI "Selectable"
     bool  m_IsLegalTarget;      // +0x62  /* ? */ INI "LegalTarget"
+    unsigned char pad_doc_m_Strength[0x1];  // holds the gap before m_Strength, which documents 0x64 (the compiler would put it at 0x63)
     int   m_Strength;           // +0x64  INI "Strength"
     int   m_Armor;              // +0x68  INI "Armor"
     int   m_Image;              // +0x6c  /* ? */ INI "Image"
@@ -148,9 +157,16 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_008[0x64];
-    unsigned int m_06c;  // +0x06c /* ? */; 4-byte store: mov dword ptr [esi + 0x6c], eax
-    unsigned char pad_070[0x64];
+    // The machine block begins at +0x9c: the compiled end of the
+    // base sub-object region (+0x2e) and of the curated block
+    // above. Base evidence: AbstractTypeClass at +0x0 (ends +0x2e).
+    // 2 recovered offset(s) below +0x2e lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4
+    // 1 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x2e..+0x9c) and are NOT repeated here:
+    // the curated block wins -- +0x6c
+    unsigned char pad_09c[0x38];
     unsigned int m_0d4;  // +0x0d4 /* ? */; 4-byte store: mov dword ptr [esi + 0xd4], eax
     unsigned int m_0d8;  // +0x0d8 /* ? */; 4-byte store: mov dword ptr [esi + 0xd8], eax
     unsigned int m_0dc;  // +0x0dc /* ? */; 4-byte store: mov dword ptr [esi + 0xdc], eax

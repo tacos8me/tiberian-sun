@@ -59,7 +59,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x28];
+    // The machine block begins at +0x2c: the compiled end of the
+    // base sub-object region. Evidence: ControlClass at +0x0 (ends +0x2c).
+    // 1 recovered offset(s) below +0x2c lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned char m_02c;  // +0x02c /* ? */; 1-byte store: mov byte ptr [edi + 0x2c], al
     unsigned char m_02d;  // +0x02d /* ? */; 1-byte store: mov byte ptr [edi + 0x2d], cl
     unsigned char m_02e;  // +0x02e /* ? */; 1-byte store: mov byte ptr [edi + 0x2e], dl

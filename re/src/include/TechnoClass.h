@@ -42,7 +42,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_008[0x44];
+    // The machine block begins at +0x4c: the compiled end of the
+    // base sub-object region. Evidence: ObjectClass at +0x0 (ends +0x4c).
+    // 2 recovered offset(s) below +0x4c lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4
     unsigned int m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [esi + 0x4c], eax
     unsigned int m_050;  // +0x050 /* ? */; 4-byte store: mov dword ptr [esi + 0x50], eax
     unsigned int m_054;  // +0x054 /* ? */; 4-byte store: mov dword ptr [esi + 0x54], eax
@@ -72,7 +76,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_008[0x64];
+    // The machine block begins at +0x6c: the compiled end of the
+    // base sub-object region. Evidence: MissionClass at +0x0 (ends +0x6c).
+    // 2 recovered offset(s) below +0x6c lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4
     unsigned int m_06c;  // +0x06c /* ? */; 4-byte store: mov dword ptr [esi + 0x6c], eax
     unsigned int m_070;  // +0x070 /* ? */; 4-byte store: mov dword ptr [esi + 0x70], eax
     unsigned int m_074;  // +0x074 /* ? */; 4-byte store: mov dword ptr [esi + 0x74], eax
@@ -182,23 +190,27 @@ public:
 
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x60e7b0 writes these offsets.
-    int   m_TechnoType;         // +0x7c  ctor: mov dword ptr [esi+0x7c], ebx (0)
-    bool  m_IsSelected;         // +0x80  ctor: mov byte ptr [esi+0x80], bl (0)
+    //<UNCOMMENT>    int   m_TechnoType;         // +0x7c  ctor: mov dword ptr [esi+0x7c], ebx (0)  // commented out: it documents 0x7c, which C++ supplies itself (the compiler's own vptr or base sub-object is already there)
+    //<UNCOMMENT>    bool  m_IsSelected;         // +0x80  ctor: mov byte ptr [esi+0x80], bl (0)  // commented out: it documents 0x80, which C++ supplies itself (the compiler's own vptr or base sub-object is already there)
     int   m_Owner;              // +0x84  ctor: mov dword ptr [esi+0x84], ebx (0)
     int   m_Field88;            // +0x88  ctor: mov dword ptr [esi+0x88], eax
+    unsigned char pad_doc_m_Field90[0x4];  // holds the gap before m_Field90, which documents 0x90 (the compiler would put it at 0x8c)
     int   m_Field90;            // +0x90  ctor: mov dword ptr [esi+0x90], ebx (0)
     int   m_Field94;            // +0x94  ctor: mov dword ptr [esi+0x94], ebx (0)
     int   m_Field98;            // +0x98  ctor: mov dword ptr [esi+0x98], 1
     int   m_Field9c;            // +0x9c  ctor: mov dword ptr [esi+0x9c], ebp
     int   m_FieldA0;            // +0xa0  ctor: mov dword ptr [esi+0xa0], ebx (0)
     int   m_FieldA4;            // +0xa4  ctor: mov dword ptr [esi+0xa4], ebx (0)
+    unsigned char pad_doc_m_FieldB0[0x8];  // holds the gap before m_FieldB0, which documents 0xb0 (the compiler would put it at 0xa8)
     int   m_FieldB0;            // +0xb0  ctor: mov dword ptr [esi+0xb0], ebx (0)
     int   m_FieldB4;            // +0xb4  ctor: mov dword ptr [esi+0xb4], eax
     int   m_FieldB8;            // +0xb8  ctor: mov dword ptr [esi+0xb8], ebx (0)
     int   m_FieldBc;            // +0xbc  ctor: mov dword ptr [esi+0xbc], eax
     int   m_FieldC0;            // +0xc0  ctor: mov dword ptr [esi+0xc0], ecx
+    unsigned char pad_doc_m_FieldC8[0x4];  // holds the gap before m_FieldC8, which documents 0xc8 (the compiler would put it at 0xc4)
     int   m_FieldC8;            // +0xc8  ctor: mov dword ptr [esi+0xc8], ebx (0)
     int   m_FieldCc;            // +0xcc  ctor: mov dword ptr [esi+0xcc], edx
+    unsigned char pad_doc_m_FieldD4[0x4];  // holds the gap before m_FieldD4, which documents 0xd4 (the compiler would put it at 0xd0)
     int   m_FieldD4;            // +0xd4  ctor: mov dword ptr [esi+0xd4], ebx (0)
     int   m_FieldD8;            // +0xd8  ctor: mov dword ptr [esi+0xd8], ebx (0)
     int   m_FieldDc;            // +0xdc  ctor: mov dword ptr [esi+0xdc], ebx (0)
@@ -209,16 +221,19 @@ public:
     int   m_FieldF0;            // +0xf0  ctor: mov dword ptr [esi+0xf0], ebx (0)
     int   m_FieldF4;            // +0xf4  ctor: mov dword ptr [esi+0xf4], ebx (0)
     int   m_FieldF8;            // +0xf8  ctor: mov dword ptr [esi+0xf8], eax
+    unsigned char pad_doc_m_Field100[0x4];  // holds the gap before m_Field100, which documents 0x100 (the compiler would put it at 0xfc)
     int   m_Field100;           // +0x100 ctor: mov dword ptr [esi+0x100], ebx (0)
     int   m_Field104;           // +0x104 ctor: mov dword ptr [esi+0x104], ebx (0)
     int   m_Field108;           // +0x108 ctor: mov dword ptr [esi+0x108], 1
     int   m_Field10c;           // +0x10c ctor: mov dword ptr [esi+0x10c], ecx
+    unsigned char pad_doc_m_Field114[0x4];  // holds the gap before m_Field114, which documents 0x114 (the compiler would put it at 0x110)
     int   m_Field114;           // +0x114 ctor: mov dword ptr [esi+0x114], ebx (0)
     int   m_Field118;           // +0x118 ctor: mov dword ptr [esi+0x118], ebx (0)
     int   m_Field11c;           // +0x11c ctor: mov dword ptr [esi+0x11c], ebx (0)
     int   m_Field120;           // +0x120 ctor: mov dword ptr [esi+0x120], ebx (0)
     int   m_Field124;           // +0x124 ctor: mov dword ptr [esi+0x124], ebx (0)
     int   m_Field128;           // +0x128 ctor: mov dword ptr [esi+0x128], edx
+    unsigned char pad_doc_m_Field130[0x4];  // holds the gap before m_Field130, which documents 0x130 (the compiler would put it at 0x12c)
     int   m_Field130;           // +0x130 ctor: mov dword ptr [esi+0x130], ebx (0)
     int   m_Field134;           // +0x134 ctor: mov dword ptr [esi+0x134], ebp
     int   m_Field138;           // +0x138 ctor: mov dword ptr [esi+0x138], ebx (0)
@@ -235,8 +250,10 @@ public:
     int   m_Field164;           // +0x164 ctor: mov dword ptr [esi+0x164], ebp
     // +0x168..+0x1e0: embedded sub-objects (lea ecx,[esi+0x168], +0x178,
     //   +0x198, +0x1b0, +0x1c8) constructed in place.  /* ? */
+    unsigned char pad_doc_m_Field1e0[0x78];  // holds the gap before m_Field1e0, which documents 0x1e0 (the compiler would put it at 0x168)
     int   m_Field1e0;           // +0x1e0 ctor: mov dword ptr [esi+0x1e0], ebx (0)
     int   m_Field1e4;           // +0x1e4 ctor: mov dword ptr [esi+0x1e4], eax
+    unsigned char pad_doc_m_Field1ec[0x4];  // holds the gap before m_Field1ec, which documents 0x1ec (the compiler would put it at 0x1e8)
     int   m_Field1ec;           // +0x1ec ctor: mov dword ptr [esi+0x1ec], ebx (0)
     short m_Field1f0;           // +0x1f0 ctor: mov word ptr [esi+0x1f0], ax
     short m_Field1f2;           // +0x1f2 ctor: mov word ptr [esi+0x1f2], bx (0)
@@ -272,98 +289,14 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_008[0x74];
-    unsigned int m_07c;  // +0x07c /* ? */; 4-byte store: mov dword ptr [esi + 0x7c], ebx
-    unsigned char m_080;  // +0x080 /* ? */; 1-byte store: mov byte ptr [esi + 0x80], bl
-    unsigned char pad_081[0x3];
-    unsigned int m_084;  // +0x084 /* ? */; 4-byte store: mov dword ptr [esi + 0x84], ebx
-    unsigned int m_088;  // +0x088 /* ? */; 4-byte store: mov dword ptr [esi + 0x88], eax
-    unsigned char pad_08c[0x4];
-    unsigned int m_090;  // +0x090 /* ? */; 4-byte store: mov dword ptr [esi + 0x90], ebx
-    unsigned int m_094;  // +0x094 /* ? */; 4-byte store: mov dword ptr [esi + 0x94], ebx
-    unsigned int m_098;  // +0x098 init 0x1; 4-byte store: mov dword ptr [esi + 0x98], 1
-    unsigned int m_09c;  // +0x09c /* ? */; 4-byte store: mov dword ptr [esi + 0x9c], ebp
-    unsigned int m_0a0;  // +0x0a0 /* ? */; 4-byte store: mov dword ptr [esi + 0xa0], ebx
-    unsigned int m_0a4;  // +0x0a4 /* ? */; 4-byte store: mov dword ptr [esi + 0xa4], ebx
-    unsigned char pad_0a8[0x8];
-    unsigned int m_0b0;  // +0x0b0 /* ? */; 4-byte store: mov dword ptr [esi + 0xb0], ebx
-    unsigned int m_0b4;  // +0x0b4 /* ? */; 4-byte store: mov dword ptr [esi + 0xb4], eax
-    unsigned int m_0b8;  // +0x0b8 /* ? */; 4-byte store: mov dword ptr [esi + 0xb8], ebx
-    unsigned int m_0bc;  // +0x0bc /* ? */; 4-byte store: mov dword ptr [esi + 0xbc], eax
-    unsigned int m_0c0;  // +0x0c0 /* ? */; 4-byte store: mov dword ptr [esi + 0xc0], ecx
-    unsigned char pad_0c4[0x4];
-    unsigned int m_0c8;  // +0x0c8 /* ? */; 4-byte store: mov dword ptr [esi + 0xc8], ebx
-    unsigned int m_0cc;  // +0x0cc /* ? */; 4-byte store: mov dword ptr [esi + 0xcc], edx
-    unsigned char pad_0d0[0x4];
-    unsigned int m_0d4;  // +0x0d4 /* ? */; 4-byte store: mov dword ptr [esi + 0xd4], ebx
-    unsigned int m_0d8;  // +0x0d8 /* ? */; 4-byte store: mov dword ptr [esi + 0xd8], ebx
-    unsigned int m_0dc;  // +0x0dc /* ? */; 4-byte store: mov dword ptr [esi + 0xdc], ebx
-    unsigned int m_0e0;  // +0x0e0 /* ? */; 4-byte store: mov dword ptr [esi + 0xe0], ebx
-    unsigned int m_0e4;  // +0x0e4 /* ? */; 4-byte store: mov dword ptr [esi + 0xe4], ebp
-    unsigned int m_0e8;  // +0x0e8 /* ? */; 4-byte store: mov dword ptr [esi + 0xe8], ebx
-    unsigned int m_0ec;  // +0x0ec /* ? */; 4-byte store: mov dword ptr [esi + 0xec], edi
-    unsigned int m_0f0;  // +0x0f0 /* ? */; 4-byte store: mov dword ptr [esi + 0xf0], ebx
-    unsigned int m_0f4;  // +0x0f4 /* ? */; 4-byte store: mov dword ptr [esi + 0xf4], ebx
-    unsigned int m_0f8;  // +0x0f8 /* ? */; 4-byte store: mov dword ptr [esi + 0xf8], eax
-    unsigned char pad_0fc[0x4];
-    unsigned int m_100;  // +0x100 /* ? */; 4-byte store: mov dword ptr [esi + 0x100], ebx
-    unsigned int m_104;  // +0x104 /* ? */; 4-byte store: mov dword ptr [esi + 0x104], ebx
-    unsigned int m_108;  // +0x108 init 0x1; 4-byte store: mov dword ptr [esi + 0x108], 1
-    unsigned int m_10c;  // +0x10c /* ? */; 4-byte store: mov dword ptr [esi + 0x10c], ecx
-    unsigned char pad_110[0x4];
-    unsigned int m_114;  // +0x114 /* ? */; 4-byte store: mov dword ptr [esi + 0x114], ebx
-    unsigned int m_118;  // +0x118 /* ? */; 4-byte store: mov dword ptr [esi + 0x118], ebx
-    unsigned int m_11c;  // +0x11c /* ? */; 4-byte store: mov dword ptr [esi + 0x11c], ebx
-    unsigned int m_120;  // +0x120 /* ? */; 4-byte store: mov dword ptr [esi + 0x120], ebx
-    unsigned int m_124;  // +0x124 /* ? */; 4-byte store: mov dword ptr [esi + 0x124], ebx
-    unsigned int m_128;  // +0x128 /* ? */; 4-byte store: mov dword ptr [esi + 0x128], edx
-    unsigned char pad_12c[0x4];
-    unsigned int m_130;  // +0x130 /* ? */; 4-byte store: mov dword ptr [esi + 0x130], ebx
-    unsigned int m_134;  // +0x134 /* ? */; 4-byte store: mov dword ptr [esi + 0x134], ebp
-    unsigned int m_138;  // +0x138 /* ? */; 4-byte store: mov dword ptr [esi + 0x138], ebx
-    unsigned int m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [esi + 0x13c], edx
-    unsigned int m_140;  // +0x140 /* ? */; 4-byte store: mov dword ptr [esi + 0x140], edx
-    unsigned int m_144;  // +0x144 /* ? */; 4-byte store: mov dword ptr [esi + 0x144], edx
-    unsigned int m_148;  // +0x148 /* ? */; 4-byte store: mov dword ptr [esi + 0x148], edx
-    unsigned int m_14c;  // +0x14c /* ? */; 4-byte store: mov dword ptr [esi + 0x14c], edx
-    unsigned int m_150;  // +0x150 /* ? */; 4-byte store: mov dword ptr [esi + 0x150], ebx
-    unsigned int m_154;  // +0x154 /* ? */; 4-byte store: mov dword ptr [esi + 0x154], ebx
-    unsigned int m_158;  // +0x158 /* ? */; 4-byte store: mov dword ptr [esi + 0x158], ebx
-    unsigned int m_15c;  // +0x15c /* ? */; 4-byte store: mov dword ptr [esi + 0x15c], ebx
-    unsigned int m_160;  // +0x160 /* ? */; 4-byte store: mov dword ptr [esi + 0x160], ebx
-    unsigned int m_164;  // +0x164 /* ? */; 4-byte store: mov dword ptr [esi + 0x164], ebp
-    unsigned char pad_168[0x78];
-    unsigned int m_1e0;  // +0x1e0 /* ? */; 4-byte store: mov dword ptr [esi + 0x1e0], ebx
-    unsigned int m_1e4;  // +0x1e4 /* ? */; 4-byte store: mov dword ptr [esi + 0x1e4], eax
-    unsigned char pad_1e8[0x4];
-    unsigned int m_1ec;  // +0x1ec /* ? */; 4-byte store: mov dword ptr [esi + 0x1ec], ebx
-    unsigned short m_1f0;  // +0x1f0 /* ? */; 2-byte store: mov word ptr [esi + 0x1f0], ax
-    unsigned short m_1f2;  // +0x1f2 /* ? */; 2-byte store: mov word ptr [esi + 0x1f2], bx
-    unsigned char m_1f4;  // +0x1f4 /* ? */; 1-byte store: mov byte ptr [esi + 0x1f4], bl
-    unsigned char m_1f5;  // +0x1f5 /* ? */; 1-byte store: mov byte ptr [esi + 0x1f5], bl
-    unsigned char m_1f6;  // +0x1f6 /* ? */; 1-byte store: mov byte ptr [esi + 0x1f6], bl
-    unsigned char m_1f7;  // +0x1f7 /* ? */; 1-byte store: mov byte ptr [esi + 0x1f7], bl
-    unsigned char m_1f8;  // +0x1f8 /* ? */; 1-byte store: mov byte ptr [esi + 0x1f8], bl
-    unsigned char m_1f9;  // +0x1f9 /* ? */; 1-byte store: mov byte ptr [esi + 0x1f9], bl
-    unsigned char m_1fa;  // +0x1fa /* ? */; 1-byte store: mov byte ptr [esi + 0x1fa], bl
-    unsigned char m_1fb;  // +0x1fb /* ? */; 1-byte store: mov byte ptr [esi + 0x1fb], bl
-    unsigned char m_1fc;  // +0x1fc /* ? */; 1-byte store: mov byte ptr [esi + 0x1fc], bl
-    unsigned char m_1fd;  // +0x1fd /* ? */; 1-byte store: mov byte ptr [esi + 0x1fd], bl
-    unsigned char m_1fe;  // +0x1fe /* ? */; 1-byte store: mov byte ptr [esi + 0x1fe], bl
-    unsigned char m_1ff;  // +0x1ff /* ? */; 1-byte store: mov byte ptr [esi + 0x1ff], bl
-    unsigned char m_200;  // +0x200 /* ? */; 1-byte store: mov byte ptr [esi + 0x200], bl
-    unsigned char m_201;  // +0x201 /* ? */; 1-byte store: mov byte ptr [esi + 0x201], bl
-    unsigned char m_202;  // +0x202 /* ? */; 1-byte store: mov byte ptr [esi + 0x202], bl
-    unsigned char m_203;  // +0x203 /* ? */; 1-byte store: mov byte ptr [esi + 0x203], bl
-    unsigned char m_204;  // +0x204 /* ? */; 1-byte store: mov byte ptr [esi + 0x204], bl
-    unsigned char m_205;  // +0x205 init 0x1; 1-byte store: mov byte ptr [esi + 0x205], 1
-    unsigned char m_206;  // +0x206 init 0x1; 1-byte store: mov byte ptr [esi + 0x206], 1
-    unsigned char m_207;  // +0x207 /* ? */; 1-byte store: mov byte ptr [esi + 0x207], bl
-    unsigned char m_208;  // +0x208 /* ? */; 1-byte store: mov byte ptr [esi + 0x208], bl
-    unsigned char m_209;  // +0x209 /* ? */; 1-byte store: mov byte ptr [esi + 0x209], bl
-    unsigned char m_20a;  // +0x20a /* ? */; 1-byte store: mov byte ptr [esi + 0x20a], bl
-    unsigned char m_20b;  // +0x20b /* ? */; 1-byte store: mov byte ptr [esi + 0x20b], bl
-    unsigned int m_20c;  // +0x20c /* ? */; 4-byte store: mov dword ptr [esi + 0x20c], ebx
-    unsigned int m_210;  // +0x210 /* ? */; 4-byte store: mov dword ptr [esi + 0x210], ebx
+    // The machine block begins at +0x214: the compiled end of the
+    // base sub-object region (+0x84) and of the curated block
+    // above. Base evidence: RadioClass at +0x0 (ends +0x7c), FlasherClass at +0x7c (ends +0x80), StageClass at +0x80 (ends +0x84).
+    // 4 recovered offset(s) below +0x84 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x7c, +0x80
+    // 80 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x84..+0x214) and are NOT repeated here:
+    // the curated block wins -- +0x84, +0x88, +0x90, +0x94, +0x98, +0x9c, +0xa0, +0xa4 ...
 
 };

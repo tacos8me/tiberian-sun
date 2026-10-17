@@ -48,7 +48,12 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x444];
+    // The machine block begins at +0x40: the compiled end of the
+    // base sub-object region. Evidence: WinsockInterfaceClass at +0x0 (ends +0x40).
+    // 1 recovered offset(s) below +0x40 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
+    unsigned char pad_040[0x408];
     unsigned int m_448;  // +0x448 /* ? */; 4-byte store: mov dword ptr [esi + 0x448], edx
     unsigned int m_44c;  // +0x44c /* ? */; 4-byte store: mov dword ptr [esi + 0x44c], eax
     unsigned int m_450;  // +0x450 /* ? */; 4-byte store: mov dword ptr [esi + 0x450], eax

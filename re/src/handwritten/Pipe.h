@@ -74,7 +74,7 @@ public:
     virtual int  Put_Block(void *buffer, int length);
 
     // ---- data members ----
-    void *vptr;    // +0x00  vtable 0x69bc04
+    //<UNCOMMENT>    void *vptr;    // +0x00  vtable 0x69bc04  // commented out: it documents 0x0, which C++ supplies itself (the compiler's own vptr or base sub-object is already there)
     // NOTE: this member cannot be named Next — it would collide with the
     // virtual Next(Pipe*) recovered from vtable 0x69bc04 slot [3]. The virtual
     // name is the evidence-backed one, so the member is named NextStage.
@@ -86,8 +86,15 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
+    // The machine block begins at +0xc: the compiled end of the
+    // base sub-object region (+0x4) and of the curated block
+    // above. Base evidence: no base: the compiler's own vptr occupies +0x0.
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
+    // 2 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x4..+0xc) and are NOT repeated here:
+    // the curated block wins -- +0x4, +0x8
 
 };
 
@@ -107,7 +114,7 @@ public:
     virtual int Get_Block(void *buffer, int length);
 
     // ---- data members ----
-    void  *vptr;   // +0x00  vtable 0x69bbdc
+    //<UNCOMMENT>    void  *vptr;   // +0x00  vtable 0x69bbdc  // commented out: it documents 0x0, which C++ supplies itself (the compiler's own vptr or base sub-object is already there)
     Straw *Next;   // +0x04  next stage in the chain
     Straw *Prev;   // +0x08  previous stage
 
@@ -116,8 +123,15 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
+    // The machine block begins at +0xc: the compiled end of the
+    // base sub-object region (+0x4) and of the curated block
+    // above. Base evidence: no base: the compiler's own vptr occupies +0x0.
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
+    // 2 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x4..+0xc) and are NOT repeated here:
+    // the curated block wins -- +0x4, +0x8
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], edi
     unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], edi
 
@@ -141,7 +155,11 @@ class FilePipe   : public Pipe {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x8];
+    // The machine block begins at +0xc: the compiled end of the
+    // base sub-object region. Evidence: Pipe at +0x0 (ends +0xc).
+    // 1 recovered offset(s) below +0xc lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_00c;  // +0x00c zero-initialised; 4-byte store: mov dword ptr [esi + 0xc], 0
     unsigned char m_010;  // +0x010 zero-initialised; 1-byte store: mov byte ptr [esi + 0x10], 0
 
@@ -169,8 +187,11 @@ class LCWPipe    : public Pipe {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], eax
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], eax
+    // The machine block begins at +0xc: the compiled end of the
+    // base sub-object region. Evidence: Pipe at +0x0 (ends +0xc).
+    // 3 recovered offset(s) below +0xc lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ecx
     unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], eax
     unsigned int m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
@@ -187,8 +208,11 @@ class LZOPipe    : public Pipe {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], eax
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], eax
+    // The machine block begins at +0xc: the compiled end of the
+    // base sub-object region. Evidence: Pipe at +0x0 (ends +0xc).
+    // 3 recovered offset(s) below +0xc lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ecx
     unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], eax
     unsigned int m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
@@ -205,10 +229,14 @@ class BlowPipe   : public Pipe {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // The machine block begins at +0xc: the compiled end of the
+    // base sub-object region. Evidence: Pipe at +0x0 (ends +0xc).
+    // 3 recovered offset(s) below +0xc lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8
     unsigned int m_00c;  // +0x00c init 0x1; 4-byte store: mov dword ptr [eax + 0xc], ecx
     unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [eax + 0x10], edx
+    unsigned char pad_014[0x4];
     unsigned int m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [eax + 0x18], ecx
     unsigned int m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [eax + 0x1c], ecx
     unsigned int m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [eax + 0x20], ecx
@@ -236,10 +264,14 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // The machine block begins at +0xc: the compiled end of the
+    // base sub-object region. Evidence: Pipe at +0x0 (ends +0xc).
+    // 3 recovered offset(s) below +0xc lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8
     unsigned int m_00c;  // +0x00c init 0x1; 4-byte store: mov dword ptr [eax + 0xc], ecx
     unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [eax + 0x10], edx
+    unsigned char pad_014[0x4];
     unsigned int m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [eax + 0x18], ecx
     unsigned int m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [eax + 0x1c], ecx
     unsigned int m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [eax + 0x20], ecx
@@ -274,9 +306,11 @@ class FileStraw   : public Straw {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x8];
-    unsigned int m_00c;  // +0x00c zero-initialised; 4-byte store: mov dword ptr [esi + 0xc], 0
-    unsigned char m_010;  // +0x010 zero-initialised; 1-byte store: mov byte ptr [esi + 0x10], 0
+    // The machine block begins at +0x14: the compiled end of the
+    // base sub-object region. Evidence: Straw at +0x0 (ends +0x14).
+    // 3 recovered offset(s) below +0x14 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0xc, +0x10
 
 };  // vtable 0x69ad0c
 class SHAStraw    : public Straw {
@@ -318,10 +352,11 @@ class LCWStraw    : public Straw {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
-    unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ebx
-    unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], edi
+    // The machine block begins at +0x14: the compiled end of the
+    // base sub-object region. Evidence: Straw at +0x0 (ends +0x14).
+    // 5 recovered offset(s) below +0x14 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8, +0xc, +0x10
     unsigned int m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], edi
     unsigned int m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], edi
     unsigned int m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ecx
@@ -335,10 +370,11 @@ class LZOStraw    : public Straw {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
-    unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ebx
-    unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], edi
+    // The machine block begins at +0x14: the compiled end of the
+    // base sub-object region. Evidence: Straw at +0x0 (ends +0x14).
+    // 5 recovered offset(s) below +0x14 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8, +0xc, +0x10
     unsigned int m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], edi
     unsigned int m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], edi
     unsigned int m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], eax
@@ -352,8 +388,11 @@ class BlowStraw   : public Straw {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x8];
-    unsigned int m_00c;  // +0x00c zero-initialised; 4-byte store: mov dword ptr [esi + 0xc], 0
+    // The machine block begins at +0x14: the compiled end of the
+    // base sub-object region. Evidence: Straw at +0x0 (ends +0x14).
+    // 2 recovered offset(s) below +0x14 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0xc
 
 };  // vtable 0x6a2308  Blowfish
 class RandomStraw : public Straw {
@@ -363,10 +402,11 @@ class RandomStraw : public Straw {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], edi
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], edi
-    unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], edi
-    unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], edi
+    // The machine block begins at +0x14: the compiled end of the
+    // base sub-object region. Evidence: Straw at +0x0 (ends +0x14).
+    // 5 recovered offset(s) below +0x14 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8, +0xc, +0x10
 
 };  // vtable 0x6a3b78  PRNG
 
@@ -383,10 +423,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [esi + 4], ecx
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], ecx
-    unsigned int m_00c;  // +0x00c init 0x1; 4-byte store: mov dword ptr [esi + 0xc], 0
-    unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], eax
+    // The machine block begins at +0x14: the compiled end of the
+    // base sub-object region. Evidence: Straw at +0x0 (ends +0x14).
+    // 5 recovered offset(s) below +0x14 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8, +0xc, +0x10
     unsigned char pad_014[0x20];
     unsigned int m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [esi + 0x34], edi
     unsigned int m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [esi + 0x38], ecx

@@ -58,4 +58,9 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x152c: the compiled end of the
+    // base sub-object region. Evidence: PowerClass at +0x0 (ends +0x152c).
+    // 1 recovered offset(s) below +0x152c lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
 };

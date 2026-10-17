@@ -37,10 +37,9 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_000;  // +0x000 /* ? */; 4-byte store: mov dword ptr [eax], ecx
-    unsigned char m_004;  // +0x004 init 0x1; 1-byte store: mov byte ptr [eax + 4], 1
-    unsigned char m_005;  // +0x005 /* ? */; 1-byte store: mov byte ptr [eax + 5], cl
-    unsigned char pad_006[0x2];
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
-    unsigned int m_00c;  // +0x00c init 0xa; 4-byte store: mov dword ptr [eax + 0xc], 0xa
+    // The machine block begins at +0x17a8: the compiled end of the
+    // base sub-object region. Evidence: DynamicVectorClass_ObjectClass at +0x0 (ends +0x17a8).
+    // 5 recovered offset(s) below +0x17a8 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x5, +0x8, +0xc
 };

@@ -44,15 +44,15 @@ private:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x18];
-    unsigned int m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ebx
-    unsigned int m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], ebx
-    unsigned int m_024;  // +0x024 /* ? */; 4-byte store: mov dword ptr [esi + 0x24], ebx
-    unsigned char m_028;  // +0x028 /* ? */; 1-byte store: mov byte ptr [esi + 0x28], bl
-    unsigned char pad_029[0x3];
-    unsigned int m_02c;  // +0x02c /* ? */; 4-byte store: mov dword ptr [esi + 0x2c], ebx
-    unsigned int m_030;  // +0x030 /* ? */; 4-byte store: mov dword ptr [esi + 0x30], ebx
-    unsigned char m_034;  // +0x034 /* ? */; 1-byte store: mov byte ptr [esi + 0x34], bl
+    // The machine block begins at +0x134: the compiled end of the
+    // base sub-object region (+0x30) and of the curated block
+    // above. Base evidence: INIClass at +0x0 (ends +0x30).
+    // 6 recovered offset(s) below +0x30 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x1c, +0x20, +0x24, +0x28, +0x2c
+    // 2 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x30..+0x134) and are NOT repeated here:
+    // the curated block wins -- +0x30, +0x34
 
 };
 

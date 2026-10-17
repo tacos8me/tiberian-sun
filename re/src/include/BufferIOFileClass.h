@@ -44,14 +44,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 init 0x1; 4-byte store: mov dword ptr [esi + 4], 1
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], ebx
-    unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], eax
-    unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], eax
-    unsigned int m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], ebx
-    unsigned short m_018;  // +0x018 /* ? */; 2-byte store: mov word ptr [esi + 0x18], bx
-    unsigned short m_01a;  // +0x01a /* ? */; 2-byte store: mov word ptr [esi + 0x1a], bx
-    unsigned char m_01c;  // +0x01c /* ? */; 1-byte store: mov byte ptr [esi + 0x1c], bl
+    // The machine block begins at +0x1d: the compiled end of the
+    // base sub-object region. Evidence: RawFileClass at +0x0 (ends +0x1d).
+    // 9 recovered offset(s) below +0x1d lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8, +0xc, +0x10, +0x14, +0x18, +0x1a ...
     unsigned char pad_01d[0x3];
     unsigned char m_020;  // +0x020 /* ? */; 1-byte store: mov byte ptr [esi + 0x20], bl
     unsigned char m_021;  // +0x021 /* ? */; 1-byte store: mov byte ptr [esi + 0x21], bl

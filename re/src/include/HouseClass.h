@@ -135,25 +135,38 @@ public:
 
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x4b5100 writes these offsets.
+    unsigned char pad_doc_m_Field24[0x4];  // holds the gap before m_Field24, which documents 0x24 (the compiler would put it at 0x20)
     int   m_Field24;            // +0x24  ctor: mov dword ptr [esi+0x24], ebx (0)
+    unsigned char pad_doc_m_Field2c[0x4];  // holds the gap before m_Field2c, which documents 0x2c (the compiler would put it at 0x28)
     int   m_Field2c;            // +0x2c  ctor: mov edx, dword ptr [esi+0x2c]
+    unsigned char pad_doc_m_Field128[0xf8];  // holds the gap before m_Field128, which documents 0x128 (the compiler would put it at 0x30)
     int   m_Field128;           // +0x128 ctor: lea ecx, [esi+0x128]
     int   m_Field12c;           // +0x12c ctor: mov ecx, dword ptr [esi+0x12c]
+    unsigned char pad_doc_m_Field138[0x8];  // holds the gap before m_Field138, which documents 0x138 (the compiler would put it at 0x130)
     int   m_Field138;           // +0x138 ctor: mov eax, dword ptr [esi+0x138]
+    unsigned char pad_doc_m_Field3fc[0x2c0];  // holds the gap before m_Field3fc, which documents 0x3fc (the compiler would put it at 0x13c)
     int   m_Field3fc;           // +0x3fc ctor: mov dword ptr [esi+0x3fc], 0x69fab4
     int   m_Field400;           // +0x400 ctor: mov dword ptr [esi+0x400], ebx (0)
     int   m_Field404;           // +0x404 ctor: mov dword ptr [esi+0x404], ebx (0)
+    unsigned char pad_doc_m_Field409[0x1];  // holds the gap before m_Field409, which documents 0x409 (the compiler would put it at 0x408)
     bool  m_Field409;           // +0x409 ctor: mov byte ptr [esi+0x409], bl (0)
+    unsigned char pad_doc_m_Field414[0xa];  // holds the gap before m_Field414, which documents 0x414 (the compiler would put it at 0x40a)
     int   m_Field414;           // +0x414 ctor: mov dword ptr [esi+0x414], 0x69fad0
     int   m_Field418;           // +0x418 ctor: mov dword ptr [esi+0x418], ebx (0)
     int   m_Field41c;           // +0x41c ctor: mov dword ptr [esi+0x41c], ebx (0)
+    unsigned char pad_doc_m_Field421[0x1];  // holds the gap before m_Field421, which documents 0x421 (the compiler would put it at 0x420)
     bool  m_Field421;           // +0x421 ctor: mov byte ptr [esi+0x421], bl (0)
+    unsigned char pad_doc_m_Field4f4[0xd2];  // holds the gap before m_Field4f4, which documents 0x4f4 (the compiler would put it at 0x422)
     int   m_Field4f4;           // +0x4f4 ctor: mov dword ptr [esi+0x4f4], 0x699db8
     int   m_Field4f8;           // +0x4f8 ctor: lea edi, [esi+0x4f8]
+    unsigned char pad_doc_m_Field5d0[0xd4];  // holds the gap before m_Field5d0, which documents 0x5d0 (the compiler would put it at 0x4fc)
     int   m_Field5d0;           // +0x5d0 ctor: mov dword ptr [esi+0x5d0], ebx (0)
+    unsigned char pad_doc_m_Field10e04[0x10830];  // holds the gap before m_Field10e04, which documents 0x10e04 (the compiler would put it at 0x5d4)
     int   m_Field10e04;         // +0x10e04 ctor: lea edi, [esi+0x10e04]
     int   m_Field10e08;         // +0x10e08 ctor: mov ecx, dword ptr [esi+0x10e08]
+    unsigned char pad_doc_m_Field10e14[0x8];  // holds the gap before m_Field10e14, which documents 0x10e14 (the compiler would put it at 0x10e0c)
     int   m_Field10e14;         // +0x10e14 ctor: mov eax, dword ptr [esi+0x10e14]
+    unsigned char pad_doc_m_Field10e1c[0x4];  // holds the gap before m_Field10e1c, which documents 0x10e1c (the compiler would put it at 0x10e18)
     int   m_Field10e1c;         // +0x10e1c ctor: mov dword ptr [esi+0x10e1c], ebx (0)
     // +0x358..+0x3c8: embedded VectorClass/DynamicVectorClass sub-objects
     //   constructed in place (lea ecx,[esi+0x358] .. [esi+0x3c8]).  /* ? */
@@ -164,10 +177,14 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_008[0xc];
-    unsigned char pad_020[0x134];
-    unsigned int m_154;  // +0x154 /* ? */; 4-byte store: mov dword ptr [esi + 0x154], ecx
-    unsigned char pad_158[0x4];
-    unsigned int m_15c;  // +0x15c /* ? */; 4-byte store: mov dword ptr [esi + 0x15c], ebx
+    // The machine block begins at +0x10e20: the compiled end of the
+    // base sub-object region (+0x20) and of the curated block
+    // above. Base evidence: AbstractClass at +0x0 (ends +0x11), IHouse at +0x14 (ends +0x18), IPublicHouse at +0x18 (ends +0x1c), IConnectionPointContainer at +0x1c (ends +0x20).
+    // 5 recovered offset(s) below +0x20 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x14, +0x18, +0x1c
+    // 2 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x20..+0x10e20) and are NOT repeated here:
+    // the curated block wins -- +0x154, +0x15c
 
 };

@@ -33,6 +33,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x15c];
+    // The machine block begins at +0x15c: the compiled end of the
+    // base sub-object region. Evidence: ToolTipManager at +0x0 (ends +0x15c).
+    // 1 recovered offset(s) below +0x15c lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
+    unsigned char pad_15c[0x4];
     unsigned int m_160;  // +0x160 init 0x7; 4-byte store: mov dword ptr [esi + 0x160], 7
 };

@@ -83,6 +83,7 @@ public:
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x61ed9c writes these offsets; INI reader 0x61f590
     // references the named keys (ini_keys.json, reader VA 0x6419856 = 0x61f590).
+    unsigned char pad_doc_m_GuardRange[0x254];  // holds the gap before m_GuardRange, which documents 0x378 (the compiler would put it at 0x124)
     int   m_GuardRange;         // +0x378  INI "GuardRange"
     int   m_WalkRate;           // +0x37c  INI "WalkRate"
     int   m_TypeImmune;         // +0x380  /* ? */ INI "TypeImmune"
@@ -101,23 +102,22 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_008[0xc5];
-    unsigned char m_0cd;  // +0x0cd init 0x1; 1-byte store: mov byte ptr [esi + 0xcd], 1
-    unsigned char pad_0ce[0x2aa];
-    unsigned int m_378;  // +0x378 /* ? */; 4-byte store: mov dword ptr [esi + 0x378], ebx
-    unsigned int m_37c;  // +0x37c /* ? */; 4-byte store: mov dword ptr [esi + 0x37c], ebx
-    unsigned int m_380;  // +0x380 /* ? */; 4-byte store: mov dword ptr [esi + 0x380], ebx
-    unsigned int m_384;  // +0x384 /* ? */; 4-byte store: mov dword ptr [esi + 0x384], ebx
-    unsigned int m_388;  // +0x388 /* ? */; 4-byte store: mov dword ptr [esi + 0x388], ebx
-    unsigned char pad_390[0xc];
-    unsigned int m_39c;  // +0x39c /* ? */; 4-byte store: mov dword ptr [esi + 0x39c], ebx
+    // The machine block begins at +0x3a0: the compiled end of the
+    // base sub-object region (+0x124) and of the curated block
+    // above. Base evidence: ObjectTypeClass at +0x0 (ends +0x124).
+    // 3 recovered offset(s) below +0x124 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0xcd
+    // 7 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x124..+0x3a0) and are NOT repeated here:
+    // the curated block wins -- +0x378, +0x37c, +0x380, +0x384, +0x388, +0x38c, +0x39c
     unsigned int m_3a0;  // +0x3a0 init 0xa; 4-byte store: mov dword ptr [esi + 0x3a0], 0xa
     unsigned char pad_3a4[0x4];
     unsigned int m_3a8;  // +0x3a8 /* ? */; 4-byte store: mov dword ptr [esi + 0x3a8], ebx
     unsigned int m_3ac;  // +0x3ac /* ? */; 4-byte store: mov dword ptr [esi + 0x3ac], ebx
     unsigned int m_3b0;  // +0x3b0 /* ? */; 4-byte store: mov dword ptr [esi + 0x3b0], ebx
     unsigned int m_3b4;  // +0x3b4 /* ? */; 4-byte store: mov dword ptr [esi + 0x3b4], ebx
-    unsigned char pad_3bc[0xc];
+    unsigned char pad_3b8[0x10];
     unsigned int m_3c8;  // +0x3c8 /* ? */; 4-byte store: mov dword ptr [esi + 0x3c8], ebx
     unsigned int m_3cc;  // +0x3cc /* ? */; 4-byte store: mov dword ptr [esi + 0x3cc], eax
     unsigned char pad_3d0[0x4];

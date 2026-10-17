@@ -62,8 +62,9 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], eax
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
-    unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
-    unsigned int m_010;  // +0x010 init 0x2; 4-byte store: mov dword ptr [edi + 0x10], 2
+    // The machine block begins at +0x14: the compiled end of the
+    // base sub-object region. Evidence: XSurface at +0x0 (ends +0x14).
+    // 5 recovered offset(s) below +0x14 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8, +0xc, +0x10
 };

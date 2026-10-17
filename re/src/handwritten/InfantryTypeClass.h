@@ -87,6 +87,7 @@ public:
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x4d3200 writes these offsets; INI reader 0x4d3980
     // references the named keys (ini_keys.json, reader VA 0x5060992 = 0x4d3980).
+    unsigned char pad_doc_m_Field470[0x4];  // holds the gap before m_Field470, which documents 0x470 (the compiler would put it at 0x46c)
     int   m_Field470;           // +0x470 ctor: mov dword ptr [esi+0x470], 0xffffffff
     int   m_Field474;           // +0x474 ctor: mov dword ptr [esi+0x474], 1
     int   m_Field478;           // +0x478 ctor: mov dword ptr [esi+0x478], ebx (0)
@@ -97,8 +98,10 @@ public:
     int   m_Field48c;           // +0x48c ctor: mov dword ptr [esi+0x48c], ebx (0)
     bool  m_Field490;           // +0x490 ctor: mov byte ptr [esi+0x490], 1
     bool  m_Field491;           // +0x491 ctor: mov byte ptr [esi+0x491], bl (0)
+    unsigned char pad_doc_m_Field494[0x2];  // holds the gap before m_Field494, which documents 0x494 (the compiler would put it at 0x492)
     int   m_Field494;           // +0x494 ctor: mov dword ptr [esi+0x494], ebx (0)
     int   m_Field498;           // +0x498 ctor: mov dword ptr [esi+0x498], 0xa
+    unsigned char pad_doc_m_Field4a0[0x4];  // holds the gap before m_Field4a0, which documents 0x4a0 (the compiler would put it at 0x49c)
     bool  m_Field4a0;           // +0x4a0 ctor: mov byte ptr [esi+0x4a0], bl (0)
     bool  m_Field4a1;           // +0x4a1 ctor: mov byte ptr [esi+0x4a1], bl (0)
     bool  m_Field4a2;           // +0x4a2 ctor: mov byte ptr [esi+0x4a2], 1
@@ -128,45 +131,14 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0xc3];
-    unsigned char Crushable;  // +0x0c7 (INI key); 1-byte store: mov byte ptr [esi + 0xc7], 1
-    unsigned char pad_0c8[0x2b4];
-    unsigned int m_37c;  // +0x37c init 0x8; 4-byte store: mov dword ptr [esi + 0x37c], 8
-    unsigned char pad_380[0xc3];
-    unsigned char m_443;  // +0x443 /* ? */; 1-byte store: mov byte ptr [esi + 0x443], bl
-    unsigned char pad_444[0x1];
-    unsigned char m_445;  // +0x445 init 0x1; 1-byte store: mov byte ptr [esi + 0x445], 1
-    unsigned char pad_446[0x2];
-    unsigned char m_448;  // +0x448 /* ? */; 1-byte store: mov byte ptr [esi + 0x448], bl
-    unsigned char m_449;  // +0x449 /* ? */; 1-byte store: mov byte ptr [esi + 0x449], bl
-    unsigned char pad_44a[0x26];
-    unsigned int m_470;  // +0x470 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x470], 0xffffffff
-    unsigned int m_474;  // +0x474 init 0x1; 4-byte store: mov dword ptr [esi + 0x474], 1
-    unsigned int m_478;  // +0x478 /* ? */; 4-byte store: mov dword ptr [esi + 0x478], ebx
-    unsigned int FireUp;  // +0x47c (INI key); 4-byte store: mov dword ptr [esi + 0x47c], ebx
-    unsigned int FireProne;  // +0x480 (INI key); 4-byte store: mov dword ptr [esi + 0x480], ebx
-    unsigned int m_488;  // +0x488 /* ? */; 4-byte store: mov dword ptr [esi + 0x488], ebx
-    unsigned int m_48c;  // +0x48c /* ? */; 4-byte store: mov dword ptr [esi + 0x48c], ebx
-    unsigned char m_490;  // +0x490 init 0x1; 1-byte store: mov byte ptr [esi + 0x490], 1
-    unsigned char m_491;  // +0x491 /* ? */; 1-byte store: mov byte ptr [esi + 0x491], bl
-    unsigned char pad_492[0x2];
-    unsigned int m_494;  // +0x494 /* ? */; 4-byte store: mov dword ptr [esi + 0x494], ebx
-    unsigned int m_498;  // +0x498 init 0xa; 4-byte store: mov dword ptr [esi + 0x498], 0xa
-    unsigned char pad_49c[0x4];
-    unsigned char Cyborg;  // +0x4a0 (INI key); 1-byte store: mov byte ptr [esi + 0x4a0], bl
-    unsigned char m_4a1;  // +0x4a1 /* ? */; 1-byte store: mov byte ptr [esi + 0x4a1], bl
-    unsigned char Crawls;  // +0x4a2 (INI key); 1-byte store: mov byte ptr [esi + 0x4a2], 1
-    unsigned char Infiltrate;  // +0x4a3 (INI key); 1-byte store: mov byte ptr [esi + 0x4a3], bl
-    unsigned char Fraidycat;  // +0x4a4 (INI key); 1-byte store: mov byte ptr [esi + 0x4a4], bl
-    unsigned char m_4a5;  // +0x4a5 /* ? */; 1-byte store: mov byte ptr [esi + 0x4a5], bl
-    unsigned char Civilian;  // +0x4a6 (INI key); 1-byte store: mov byte ptr [esi + 0x4a6], bl
-    unsigned char m_4a7;  // +0x4a7 /* ? */; 1-byte store: mov byte ptr [esi + 0x4a7], bl
-    unsigned char Engineer;  // +0x4a8 (INI key); 1-byte store: mov byte ptr [esi + 0x4a8], bl
-    unsigned char Disguised;  // +0x4a9 (INI key); 1-byte store: mov byte ptr [esi + 0x4a9], bl
-    unsigned char Agent;  // +0x4aa (INI key); 1-byte store: mov byte ptr [esi + 0x4aa], bl
-    unsigned char m_4ab;  // +0x4ab /* ? */; 1-byte store: mov byte ptr [esi + 0x4ab], bl
-    unsigned char VehicleThief;  // +0x4ac (INI key); 1-byte store: mov byte ptr [esi + 0x4ac], bl
-    unsigned char Doggie;  // +0x4ad (INI key); 1-byte store: mov byte ptr [esi + 0x4ad], bl
-    unsigned char JumpJet;  // +0x4ae (INI key); 1-byte store: mov byte ptr [esi + 0x4ae], bl
+    // The machine block begins at +0x4af: the compiled end of the
+    // base sub-object region (+0x46c) and of the curated block
+    // above. Base evidence: TechnoTypeClass at +0x0 (ends +0x46c).
+    // 7 recovered offset(s) below +0x46c lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0xc7, +0x37c, +0x443, +0x445, +0x448, +0x449
+    // 27 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x46c..+0x4af) and are NOT repeated here:
+    // the curated block wins -- +0x470, +0x474, +0x478, +0x47c, +0x480, +0x484, +0x488, +0x48c ...
 
 };

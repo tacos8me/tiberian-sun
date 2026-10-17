@@ -37,6 +37,12 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: ISwizzle at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
+    unsigned char pad_004[0x4];
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [eax + 0xc], ecx
     unsigned char m_010;  // +0x010 init 0x1; 1-byte store: mov byte ptr [eax + 0x10], 1
@@ -44,6 +50,7 @@ public:
     unsigned char pad_012[0x2];
     unsigned int m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [eax + 0x14], ecx
     unsigned int m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [eax + 0x18], edx
+    unsigned char pad_01c[0x4];
     unsigned int m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [eax + 0x20], ecx
     unsigned int m_024;  // +0x024 /* ? */; 4-byte store: mov dword ptr [eax + 0x24], ecx
     unsigned char m_028;  // +0x028 init 0x1; 1-byte store: mov byte ptr [eax + 0x28], 1

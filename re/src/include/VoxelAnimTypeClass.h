@@ -69,15 +69,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0xc4];
-    unsigned char m_0c8;  // +0x0c8 /* ? */; 1-byte store: mov byte ptr [esi + 0xc8], al
-    unsigned char Selectable;  // +0x0c9 (INI key); 1-byte store: mov byte ptr [esi + 0xc9], al
-    unsigned char LegalTarget;  // +0x0ca (INI key); 1-byte store: mov byte ptr [esi + 0xca], bl
-    unsigned char m_0cb;  // +0x0cb /* ? */; 1-byte store: mov byte ptr [esi + 0xcb], al
-    unsigned char Immune;  // +0x0cc (INI key); 1-byte store: mov byte ptr [esi + 0xcc], al
-    unsigned char m_0cd;  // +0x0cd /* ? */; 1-byte store: mov byte ptr [esi + 0xcd], al
-    unsigned char m_0ce;  // +0x0ce /* ? */; 1-byte store: mov byte ptr [esi + 0xce], bl
-    unsigned char pad_0cf[0x55];
+    // The machine block begins at +0x124: the compiled end of the
+    // base sub-object region. Evidence: ObjectTypeClass at +0x0 (ends +0x124).
+    // 8 recovered offset(s) below +0x124 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0xc8, +0xc9, +0xca, +0xcb, +0xcc, +0xcd, +0xce
     unsigned char Normalized;  // +0x124 (INI key); 1-byte store: mov byte ptr [esi + 0x124], bl
     unsigned char m_125;  // +0x125 /* ? */; 1-byte store: mov byte ptr [esi + 0x125], bl
     unsigned char m_126;  // +0x126 /* ? */; 1-byte store: mov byte ptr [esi + 0x126], bl

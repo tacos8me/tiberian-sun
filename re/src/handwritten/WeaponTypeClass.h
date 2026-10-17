@@ -41,13 +41,18 @@ public:
     // Reads the [WeaponTypes] section.  Offsets are the store targets in
     // the reader; the type is the accessor used (S=GetString, I=GetInt,
     // D=GetDouble).
+    unsigned char pad_doc_AmbientDamage[0x32];  // holds the gap before AmbientDamage, which documents 0x60 (the compiler would put it at 0x2e)
     int   AmbientDamage;      // 0x60  INI "AmbientDamage"  (0x6DEE18)
     int   Burst;              // 0x64  INI "Burst"          (0x6DEE00)
+    unsigned char pad_doc_Damage[0x4];  // holds the gap before Damage, which documents 0x6c (the compiler would put it at 0x68)
     int   Damage;             // 0x6C  INI "Damage"         (0x6BFEE4)
     int   Speed;              // 0x70  INI "Speed"          (0x6C3334) GetInt
+    unsigned char pad_doc_Range[0x8];  // holds the gap before Range, which documents 0x7c (the compiler would put it at 0x74)
     double Range;             // 0x7C  INI "Range"          (0x6DEDF8) GetDouble
     double MinimumRange;      // 0x80  INI "MinimumRange"   (0x6DEDE8) GetDouble
+    unsigned char pad_doc_IsSonic[0x44];  // holds the gap before IsSonic, which documents 0xd0 (the compiler would put it at 0x8c)
     bool  IsSonic;            // 0xD0  INI "IsSonic"        (0x6DEE10)
+    unsigned char pad_doc_Supress[0x1];  // holds the gap before Supress, which documents 0xd2 (the compiler would put it at 0xd1)
     bool  Supress;            // 0xD2  INI "Supress"        (0x6DEE08)
     char  Report[64];         // /* ? */ INI "Report"       (0x6BFF6C)
     char  Anim[64];           // /* ? */ INI "Anim"         (0x6BEDC4)
@@ -64,38 +69,19 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x5c];
-    unsigned int m_068;  // +0x068 /* ? */; 4-byte store: mov dword ptr [esi + 0x68], ebx
-    unsigned int m_06c;  // +0x06c /* ? */; 4-byte store: mov dword ptr [esi + 0x6c], ebx
-    unsigned int m_070;  // +0x070 /* ? */; 4-byte store: mov dword ptr [esi + 0x70], ebx
-    unsigned int m_074;  // +0x074 /* ? */; 4-byte store: mov dword ptr [esi + 0x74], ebx
-    unsigned int ROF;  // +0x078 (INI key); 4-byte store: mov dword ptr [esi + 0x78], ebx
-    unsigned int m_07c;  // +0x07c /* ? */; 4-byte store: mov dword ptr [esi + 0x7c], ebx
-    unsigned char pad_084[0x38];
-    unsigned int m_0bc;  // +0x0bc /* ? */; 4-byte store: mov dword ptr [esi + 0xbc], ebx
-    unsigned char m_0c0;  // +0x0c0 /* ? */; 1-byte store: mov byte ptr [esi + 0xc0], bl
-    unsigned char m_0c1;  // +0x0c1 /* ? */; 1-byte store: mov byte ptr [esi + 0xc1], bl
-    unsigned char m_0c2;  // +0x0c2 /* ? */; 1-byte store: mov byte ptr [esi + 0xc2], bl
-    unsigned char m_0c3;  // +0x0c3 /* ? */; 1-byte store: mov byte ptr [esi + 0xc3], bl
-    unsigned char m_0c4;  // +0x0c4 /* ? */; 1-byte store: mov byte ptr [esi + 0xc4], bl
-    unsigned char m_0c5;  // +0x0c5 /* ? */; 1-byte store: mov byte ptr [esi + 0xc5], bl
-    unsigned char m_0c6;  // +0x0c6 /* ? */; 1-byte store: mov byte ptr [esi + 0xc6], bl
-    unsigned char m_0c7;  // +0x0c7 /* ? */; 1-byte store: mov byte ptr [esi + 0xc7], bl
-    unsigned char m_0c8;  // +0x0c8 /* ? */; 1-byte store: mov byte ptr [esi + 0xc8], bl
-    unsigned char UseFireParticles;  // +0x0c9 (INI key); 1-byte store: mov byte ptr [esi + 0xc9], bl
-    unsigned char UseSparkParticles;  // +0x0ca (INI key); 1-byte store: mov byte ptr [esi + 0xca], bl
-    unsigned char m_0cb;  // +0x0cb /* ? */; 1-byte store: mov byte ptr [esi + 0xcb], bl
-    unsigned char Lobber;  // +0x0cc (INI key); 1-byte store: mov byte ptr [esi + 0xcc], bl
-    unsigned char Bright;  // +0x0cd (INI key); 1-byte store: mov byte ptr [esi + 0xcd], bl
-    unsigned char LaserDuration;  // +0x0ce (INI key); 1-byte store: mov byte ptr [esi + 0xce], 0xa
-    unsigned char m_0cf;  // +0x0cf /* ? */; 1-byte store: mov byte ptr [esi + 0xcf], bl
-    unsigned char m_0d0;  // +0x0d0 /* ? */; 1-byte store: mov byte ptr [esi + 0xd0], bl
-    unsigned char m_0d1;  // +0x0d1 /* ? */; 1-byte store: mov byte ptr [esi + 0xd1], bl
-    unsigned char m_0d3;  // +0x0d3 /* ? */; 1-byte store: mov byte ptr [esi + 0xd3], bl
-    unsigned char Charges;  // +0x0d4 (INI key); 1-byte store: mov byte ptr [esi + 0xd4], bl
-    unsigned char IsLaser;  // +0x0d5 (INI key); 1-byte store: mov byte ptr [esi + 0xd5], bl
-    unsigned char m_0d6;  // +0x0d6 /* ? */; 1-byte store: mov byte ptr [esi + 0xd6], bl
-    // 4 member(s) already declared above; their offsets are recorded in out/members.json
+    // The machine block begins at +0x193: the compiled end of the
+    // base sub-object region (+0x2e) and of the curated block
+    // above. Base evidence: AbstractTypeClass at +0x0 (ends +0x2e).
+    // 1 curated declaration(s) do not sit at the offset their comment
+    // documents -- a comment does not move a member -- so the machine
+    // block below is padded from where the compiler actually puts them:
+    // MinimumRange documented +0x80, compiler +0x84
+    // 1 recovered offset(s) below +0x2e lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
+    // 33 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x2e..+0x193) and are NOT repeated here:
+    // the curated block wins -- +0x60, +0x64, +0x68, +0x6c, +0x70, +0x74, +0x78, +0x7c ...
 
 };
 

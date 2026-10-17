@@ -80,6 +80,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: no base: the compiler's own vptr occupies +0x0.
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
 
 };
 
@@ -101,6 +106,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: no base: the compiler's own vptr occupies +0x0.
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
 
 };
 
@@ -129,6 +139,11 @@ template <class T> class BlitPlainXlat : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -140,6 +155,11 @@ template <class T> class BlitPlainXlatAlpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -152,6 +172,11 @@ template <class T> class BlitPlainXlatZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -163,6 +188,11 @@ template <class T> class BlitPlainXlatZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -184,6 +214,11 @@ template <class T> class BlitTransDarken : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -195,6 +230,11 @@ template <class T> class BlitTransDarkenZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -206,6 +246,11 @@ template <class T> class BlitTransDarkenZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -217,6 +262,11 @@ template <class T> class BlitTransRemapDest : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -228,6 +278,11 @@ template <class T> class BlitTransRemapXlat : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -239,6 +294,11 @@ template <class T> class BlitTransXlat : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -250,6 +310,11 @@ template <class T> class BlitTransXlatAlpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -262,6 +327,11 @@ template <class T> class BlitTransXlatAlphaZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -274,6 +344,11 @@ template <class T> class BlitTransXlatAlphaZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -286,6 +361,11 @@ template <class T> class BlitTransXlatMultWriteAlpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -297,6 +377,11 @@ template <class T> class BlitTransXlatWriteAlpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -308,6 +393,11 @@ template <class T> class BlitTransXlatZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -319,6 +409,11 @@ template <class T> class BlitTransXlatZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -330,6 +425,11 @@ template <class T> class BlitTransZRemapXlat : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -341,6 +441,11 @@ template <class T> class BlitTransZRemapXlatAlpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -353,6 +458,11 @@ template <class T> class BlitTransZRemapXlatAlphaZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -365,6 +475,11 @@ template <class T> class BlitTransZRemapXlatAlphaZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -377,6 +492,11 @@ template <class T> class BlitTransZRemapXlatZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -388,6 +508,11 @@ template <class T> class BlitTransZRemapXlatZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -401,6 +526,11 @@ template <class T> class BlitTransLucent25 : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -412,6 +542,11 @@ template <class T> class BlitTransLucent25Alpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -424,6 +559,11 @@ template <class T> class BlitTransLucent25AlphaZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -436,6 +576,11 @@ template <class T> class BlitTransLucent25AlphaZReadWarp : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -448,6 +593,11 @@ template <class T> class BlitTransLucent25AlphaZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -460,6 +610,11 @@ template <class T> class BlitTransLucent25ZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -471,6 +626,11 @@ template <class T> class BlitTransLucent25ZReadWarp : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -482,6 +642,11 @@ template <class T> class BlitTransLucent25ZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -493,6 +658,11 @@ template <class T> class BlitTransLucent50 : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -504,6 +674,11 @@ template <class T> class BlitTransLucent50Alpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -516,6 +691,11 @@ template <class T> class BlitTransLucent50AlphaZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -528,6 +708,11 @@ template <class T> class BlitTransLucent50AlphaZReadWarp : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -540,6 +725,11 @@ template <class T> class BlitTransLucent50AlphaZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -552,6 +742,11 @@ template <class T> class BlitTransLucent50ZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -563,6 +758,11 @@ template <class T> class BlitTransLucent50ZReadWarp : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -574,6 +774,11 @@ template <class T> class BlitTransLucent50ZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -585,6 +790,11 @@ template <class T> class BlitTransLucent75 : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -596,6 +806,11 @@ template <class T> class BlitTransLucent75Alpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -608,6 +823,11 @@ template <class T> class BlitTransLucent75AlphaZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -620,6 +840,11 @@ template <class T> class BlitTransLucent75AlphaZReadWarp : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -632,6 +857,11 @@ template <class T> class BlitTransLucent75AlphaZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -644,6 +874,11 @@ template <class T> class BlitTransLucent75ZRead : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -655,6 +890,11 @@ template <class T> class BlitTransLucent75ZReadWarp : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -666,6 +906,11 @@ template <class T> class BlitTransLucent75ZReadWrite : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -679,6 +924,11 @@ template <class T> class BlitTranslucent50NonzeroAlpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -690,6 +940,11 @@ template <class T> class BlitTranslucent50ZeroAlpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -701,6 +956,11 @@ template <class T> class BlitTranslucentWriteAlpha : public Blitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: Blitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -714,6 +974,11 @@ template <class T> class RLEBlitTransDarken : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -725,6 +990,11 @@ template <class T> class RLEBlitTransDarkenZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -736,6 +1006,11 @@ template <class T> class RLEBlitTransDarkenZReadWrite : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned short m_008;  // +0x008 /* ? */; 2-byte store: mov word ptr [eax + 8], cx
 
@@ -747,6 +1022,11 @@ template <class T> class RLEBlitTransLucent25 : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -758,6 +1038,11 @@ template <class T> class RLEBlitTransLucent25Alpha : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -770,6 +1055,11 @@ template <class T> class RLEBlitTransLucent25AlphaZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -782,6 +1072,11 @@ template <class T> class RLEBlitTransLucent25AlphaZReadWarp : public RLEBlitter 
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -794,6 +1089,11 @@ template <class T> class RLEBlitTransLucent25AlphaZReadWrite : public RLEBlitter
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned short m_00c;  // +0x00c /* ? */; 2-byte store: mov word ptr [edi + 0xc], ax
@@ -806,6 +1106,11 @@ template <class T> class RLEBlitTransLucent25ZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -817,6 +1122,11 @@ template <class T> class RLEBlitTransLucent25ZReadWarp : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -828,6 +1138,11 @@ template <class T> class RLEBlitTransLucent25ZReadWrite : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned short m_008;  // +0x008 /* ? */; 2-byte store: mov word ptr [eax + 8], cx
 
@@ -839,6 +1154,11 @@ template <class T> class RLEBlitTransLucent50 : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -850,6 +1170,11 @@ template <class T> class RLEBlitTransLucent50Alpha : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -862,6 +1187,11 @@ template <class T> class RLEBlitTransLucent50AlphaZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -874,6 +1204,11 @@ template <class T> class RLEBlitTransLucent50AlphaZReadWarp : public RLEBlitter 
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -886,6 +1221,11 @@ template <class T> class RLEBlitTransLucent50AlphaZReadWrite : public RLEBlitter
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned short m_00c;  // +0x00c /* ? */; 2-byte store: mov word ptr [edi + 0xc], ax
@@ -898,6 +1238,11 @@ template <class T> class RLEBlitTransLucent50ZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -909,6 +1254,11 @@ template <class T> class RLEBlitTransLucent50ZReadWarp : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -920,6 +1270,11 @@ template <class T> class RLEBlitTransLucent50ZReadWrite : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned short m_008;  // +0x008 /* ? */; 2-byte store: mov word ptr [eax + 8], cx
 
@@ -931,6 +1286,11 @@ template <class T> class RLEBlitTransLucent75 : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -942,6 +1302,11 @@ template <class T> class RLEBlitTransLucent75Alpha : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -954,6 +1319,11 @@ template <class T> class RLEBlitTransLucent75AlphaZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -966,6 +1336,11 @@ template <class T> class RLEBlitTransLucent75AlphaZReadWarp : public RLEBlitter 
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -978,6 +1353,11 @@ template <class T> class RLEBlitTransLucent75AlphaZReadWrite : public RLEBlitter
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned short m_00c;  // +0x00c /* ? */; 2-byte store: mov word ptr [edi + 0xc], ax
@@ -990,6 +1370,11 @@ template <class T> class RLEBlitTransLucent75ZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1001,6 +1386,11 @@ template <class T> class RLEBlitTransLucent75ZReadWarp : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1012,6 +1402,11 @@ template <class T> class RLEBlitTransLucent75ZReadWrite : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned short m_008;  // +0x008 /* ? */; 2-byte store: mov word ptr [eax + 8], cx
 
@@ -1023,6 +1418,11 @@ template <class T> class RLEBlitTransRemapDest : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1034,6 +1434,11 @@ template <class T> class RLEBlitTransRemapDestZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1045,6 +1450,11 @@ template <class T> class RLEBlitTransRemapDestZReadWrite : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1056,6 +1466,11 @@ template <class T> class RLEBlitTransRemapXlat : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1067,6 +1482,11 @@ template <class T> class RLEBlitTransRemapXlatZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1078,6 +1498,11 @@ template <class T> class RLEBlitTransRemapXlatZReadWrite : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1089,6 +1514,11 @@ template <class T> class RLEBlitTransXlat : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1100,6 +1530,11 @@ template <class T> class RLEBlitTransXlatAlpha : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -1112,6 +1547,11 @@ template <class T> class RLEBlitTransXlatAlphaZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -1124,6 +1564,11 @@ template <class T> class RLEBlitTransXlatAlphaZReadWrite : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ebx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -1136,6 +1581,11 @@ template <class T> class RLEBlitTransXlatZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1147,6 +1597,11 @@ template <class T> class RLEBlitTransXlatZReadWrite : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1158,6 +1613,11 @@ template <class T> class RLEBlitTransZRemapXlat : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1169,6 +1629,11 @@ template <class T> class RLEBlitTransZRemapXlatAlpha : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -1181,6 +1646,11 @@ template <class T> class RLEBlitTransZRemapXlatAlphaZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -1193,6 +1663,11 @@ template <class T> class RLEBlitTransZRemapXlatAlphaZReadWrite : public RLEBlitt
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [edi + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [edi + 8], ecx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [edi + 0xc], ebx
@@ -1205,6 +1680,11 @@ template <class T> class RLEBlitTransZRemapXlatZRead : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
@@ -1216,6 +1696,11 @@ template <class T> class RLEBlitTransZRemapXlatZReadWrite : public RLEBlitter {
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: RLEBlitter at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 

@@ -13,8 +13,8 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "TechnoClass.h"
 #include "ObjectClass.h"
+#include "StageClass.h"
 
 class TerrainClass : public ObjectClass, public StageClass
 {
@@ -135,6 +135,9 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x31];
-    unsigned char m_035;  // +0x035 init 0x1; 1-byte store: mov byte ptr [esi + 0x35], 1
+    // The machine block begins at +0x50: the compiled end of the
+    // base sub-object region. Evidence: ObjectClass at +0x0 (ends +0x4c), StageClass at +0x4c (ends +0x50).
+    // 2 recovered offset(s) below +0x50 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x35
 };

@@ -49,6 +49,7 @@ public:
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x4c7290 writes these offsets; INI reader 0x4c74d0
     // references the named keys (ini_keys.json, reader VA 0x5010640 = 0x4c74d0).
+    unsigned char pad_doc_m_Field60[0x32];  // holds the gap before m_Field60, which documents 0x60 (the compiler would put it at 0x2e)
     int   m_Field60;            // +0x60  ctor: mov dword ptr [esi+0x60], 0xffffffff
     int   m_Field64;            // +0x64  ctor: mov dword ptr [esi+0x64], 0xffffffff
     int   m_Field68;            // +0x68  ctor: mov dword ptr [esi+0x68], 0xffffffff
@@ -68,6 +69,7 @@ public:
     int   m_Fielda0;            // +0xa0  ctor: mov dword ptr [esi+0xa0], ebx (0)
     int   m_Fielda4;            // +0xa4  ctor: mov dword ptr [esi+0xa4], 0x3ff00000
     bool  m_Fielda8;            // +0xa8  ctor: mov byte ptr [esi+0xa8], bl (0)
+    unsigned char pad_doc_m_Fieldac[0x3];  // holds the gap before m_Fieldac, which documents 0xac (the compiler would put it at 0xa9)
     char  m_Fieldac;            // +0xac  ctor: mov byte ptr [esi+0xac], 0x41 ('A')
     bool  m_Fieldad;            // +0xad  ctor: mov byte ptr [esi+0xad], bl (0)
     bool  m_Fieldae;            // +0xae  ctor: mov byte ptr [esi+0xae], bl (0)
@@ -86,31 +88,14 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x5c];
-    unsigned int m_060;  // +0x060 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x60], 0xffffffff
-    unsigned int m_064;  // +0x064 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x64], 0xffffffff
-    unsigned int m_068;  // +0x068 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x68], 0xffffffff
-    unsigned int m_06c;  // +0x06c /* ? */; 4-byte store: mov dword ptr [esi + 0x6c], ebx
-    unsigned int m_070;  // +0x070 /* ? */; 4-byte store: mov dword ptr [esi + 0x70], ebx
-    unsigned int m_074;  // +0x074 /* ? */; 4-byte store: mov dword ptr [esi + 0x74], eax
-    unsigned int m_078;  // +0x078 /* ? */; 4-byte store: mov dword ptr [esi + 0x78], ebx
-    unsigned int m_07c;  // +0x07c /* ? */; 4-byte store: mov dword ptr [esi + 0x7c], eax
-    unsigned int m_080;  // +0x080 /* ? */; 4-byte store: mov dword ptr [esi + 0x80], ebx
-    unsigned int m_084;  // +0x084 /* ? */; 4-byte store: mov dword ptr [esi + 0x84], eax
-    unsigned int m_088;  // +0x088 /* ? */; 4-byte store: mov dword ptr [esi + 0x88], ebx
-    unsigned int m_08c;  // +0x08c /* ? */; 4-byte store: mov dword ptr [esi + 0x8c], eax
-    unsigned int m_090;  // +0x090 /* ? */; 4-byte store: mov dword ptr [esi + 0x90], ebx
-    unsigned int m_094;  // +0x094 /* ? */; 4-byte store: mov dword ptr [esi + 0x94], eax
-    unsigned int m_098;  // +0x098 /* ? */; 4-byte store: mov dword ptr [esi + 0x98], ebx
-    unsigned int m_09c;  // +0x09c /* ? */; 4-byte store: mov dword ptr [esi + 0x9c], eax
-    unsigned int m_0a0;  // +0x0a0 /* ? */; 4-byte store: mov dword ptr [esi + 0xa0], ebx
-    unsigned int m_0a4;  // +0x0a4 /* ? */; 4-byte store: mov dword ptr [esi + 0xa4], eax
-    unsigned char m_0a8;  // +0x0a8 /* ? */; 1-byte store: mov byte ptr [esi + 0xa8], bl
-    unsigned char pad_0a9[0x3];
-    unsigned char m_0ac;  // +0x0ac init 0x41; 1-byte store: mov byte ptr [esi + 0xac], 0x41
-    unsigned char Multiplay;  // +0x0ad (INI key); 1-byte store: mov byte ptr [esi + 0xad], bl
-    unsigned char MultiplayPassive;  // +0x0ae (INI key); 1-byte store: mov byte ptr [esi + 0xae], bl
-    unsigned char m_0af;  // +0x0af init 0x1; 1-byte store: mov byte ptr [esi + 0xaf], 1
-    unsigned char SmartAI;  // +0x0b0 (INI key); 1-byte store: mov byte ptr [esi + 0xb0], bl
+    // The machine block begins at +0xb1: the compiled end of the
+    // base sub-object region (+0x2e) and of the curated block
+    // above. Base evidence: AbstractTypeClass at +0x0 (ends +0x2e).
+    // 1 recovered offset(s) below +0x2e lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
+    // 24 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x2e..+0xb1) and are NOT repeated here:
+    // the curated block wins -- +0x60, +0x64, +0x68, +0x6c, +0x70, +0x74, +0x78, +0x7c ...
 
 };

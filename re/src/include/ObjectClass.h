@@ -97,6 +97,7 @@ public:
 
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x56e420 writes these offsets.
+    unsigned char pad_doc_m_NextObject[0x3];  // holds the gap before m_NextObject, which documents 0x14 (the compiler would put it at 0x11)
     int   m_NextObject;         // +0x14  ctor: mov dword ptr [esi+0x14], ebx (0)
     int   m_PrevObject;         // +0x18  ctor: mov dword ptr [esi+0x18], ebx (0)
     int   m_Type;               // +0x1c  ctor: mov dword ptr [esi+0x1c], ebx (0)
@@ -113,9 +114,11 @@ public:
     bool  m_IsCloaked;          // +0x33  ctor: mov byte ptr [esi+0x33], bl (0)
     bool  m_IsPowered;          // +0x34  ctor: mov byte ptr [esi+0x34], bl (0)
     bool  m_IsSelected3;        // +0x35  ctor: mov byte ptr [esi+0x35], al (1)
+    unsigned char pad_doc_m_ObjectID[0x2];  // holds the gap before m_ObjectID, which documents 0x38 (the compiler would put it at 0x36)
     int   m_ObjectID;           // +0x38  ctor: mov dword ptr [esi+0x38], 0xffffffff
     bool  m_IsDead;             // +0x3c  ctor: mov byte ptr [esi+0x3c], bl (0)
     // +0x40: 12-byte coordinate (3 x int) copied from global 0x7d69f0.
+    unsigned char pad_doc_m_CoordX[0x3];  // holds the gap before m_CoordX, which documents 0x40 (the compiler would put it at 0x3d)
     int   m_CoordX;             // +0x40  ctor: mov dword ptr [esi+0x40], ecx
     int   m_CoordY;             // +0x44  ctor: mov dword ptr [eax+4], edx
     int   m_CoordZ;             // +0x48  ctor: mov dword ptr [eax+8], ecx
@@ -125,27 +128,14 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_008[0xc];
-    unsigned int m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], ebx
-    unsigned int m_018;  // +0x018 /* ? */; 4-byte store: mov dword ptr [esi + 0x18], ebx
-    unsigned int m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ebx
-    unsigned int m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], ebx
-    unsigned int m_024;  // +0x024 /* ? */; 4-byte store: mov dword ptr [esi + 0x24], ebx
-    unsigned int m_028;  // +0x028 init 0xff; 4-byte store: mov dword ptr [esi + 0x28], 0xff
-    unsigned char m_02c;  // +0x02c /* ? */; 1-byte store: mov byte ptr [esi + 0x2c], bl
-    unsigned char m_02d;  // +0x02d /* ? */; 1-byte store: mov byte ptr [esi + 0x2d], bl
-    unsigned char m_02e;  // +0x02e /* ? */; 1-byte store: mov byte ptr [esi + 0x2e], bl
-    unsigned char m_02f;  // +0x02f /* ? */; 1-byte store: mov byte ptr [esi + 0x2f], al
-    unsigned char m_030;  // +0x030 /* ? */; 1-byte store: mov byte ptr [esi + 0x30], bl
-    unsigned char m_031;  // +0x031 /* ? */; 1-byte store: mov byte ptr [esi + 0x31], bl
-    unsigned char m_032;  // +0x032 /* ? */; 1-byte store: mov byte ptr [esi + 0x32], bl
-    unsigned char m_033;  // +0x033 /* ? */; 1-byte store: mov byte ptr [esi + 0x33], bl
-    unsigned char m_034;  // +0x034 /* ? */; 1-byte store: mov byte ptr [esi + 0x34], bl
-    unsigned char m_035;  // +0x035 /* ? */; 1-byte store: mov byte ptr [esi + 0x35], al
-    unsigned char pad_036[0x2];
-    unsigned int m_038;  // +0x038 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x38], 0xffffffff
-    unsigned char m_03c;  // +0x03c /* ? */; 1-byte store: mov byte ptr [esi + 0x3c], bl
-    unsigned char pad_03d[0x3];
-    unsigned int m_040;  // +0x040 /* ? */; 4-byte store: mov dword ptr [esi + 0x40], ecx
+    // The machine block begins at +0x4c: the compiled end of the
+    // base sub-object region (+0x11) and of the curated block
+    // above. Base evidence: AbstractClass at +0x0 (ends +0x11).
+    // 2 recovered offset(s) below +0x11 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4
+    // 19 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x11..+0x4c) and are NOT repeated here:
+    // the curated block wins -- +0x14, +0x18, +0x1c, +0x20, +0x24, +0x28, +0x2c, +0x2d ...
 
 };

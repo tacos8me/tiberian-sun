@@ -185,7 +185,12 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x160];
+    // The machine block begins at +0x4: the compiled end of the
+    // base sub-object region. Evidence: GScreenClass at +0x0 (ends +0x4).
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
+    unsigned char pad_004[0x164];
     unsigned int m_168;  // +0x168 /* ? */; 4-byte store: mov dword ptr [esi + 0x168], ebx
     unsigned int m_16c;  // +0x16c /* ? */; 4-byte store: mov dword ptr [esi + 0x16c], ebx
     unsigned char m_170;  // +0x170 init 0x1; 1-byte store: mov byte ptr [esi + 0x170], 1

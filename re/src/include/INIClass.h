@@ -36,7 +36,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    // The machine block begins at +0x8: the compiled end of the
+    // base sub-object region. Evidence: no base: the compiler's own vptr occupies +0x0.
+    // 2 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x0..+0x8) and are NOT repeated here:
+    // the curated block wins -- +0x0, +0x4
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 };
@@ -51,9 +55,15 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [ebx + 4], edi
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [ebx + 8], edi
-    unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [ebx + 0xc], eax
+    // The machine block begins at +0x10: the compiled end of the
+    // base sub-object region (+0xc) and of the curated block
+    // above. Base evidence: GenericNode at +0x0 (ends +0xc).
+    // 3 recovered offset(s) below +0xc lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8
+    // 1 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0xc..+0x10) and are NOT repeated here:
+    // the curated block wins -- +0xc
     unsigned char pad_010[0x2c];
     unsigned int m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [ebx + 0x3c], ecx
 
@@ -128,7 +138,13 @@ private:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x18];
+    // The machine block begins at +0x8: the compiled end of the
+    // base sub-object region (+0x4) and of the curated block
+    // above. Base evidence: no base: the compiler's own vptr occupies +0x0.
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
+    unsigned char pad_008[0x14];
     unsigned int m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ebx
     unsigned int m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + 0x20], ebx
     unsigned int m_024;  // +0x024 /* ? */; 4-byte store: mov dword ptr [esi + 0x24], ebx

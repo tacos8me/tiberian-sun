@@ -71,6 +71,7 @@ public:
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x40f4a0 writes these offsets; INI reader 0x40f300
     // references the named keys (ini_keys.json, reader VA 0x4256512 = 0x40f300).
+    unsigned char pad_doc_m_Field470[0x4];  // holds the gap before m_Field470, which documents 0x470 (the compiler would put it at 0x46c)
     int   m_Field470;           // +0x470 ctor: mov dword ptr [esi+0x470], 0xffffffff
     bool  m_Landable;           // +0x474 ctor: mov byte ptr [esi+0x474], bl (0)  INI "Landable"
     bool  m_Carryall;           // +0x475 ctor: mov byte ptr [esi+0x475], bl (0)  INI "Carryall"
@@ -82,15 +83,14 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x378];
-    unsigned int m_37c;  // +0x37c init 0x20; 4-byte store: mov dword ptr [esi + 0x37c], 0x20
-    unsigned char pad_380[0xb5];
-    unsigned char MoveToShroud;  // +0x435 (INI key); 1-byte store: mov byte ptr [esi + 0x435], bl
-    unsigned char pad_436[0x3a];
-    unsigned int m_470;  // +0x470 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x470], 0xffffffff
-    unsigned char m_474;  // +0x474 /* ? */; 1-byte store: mov byte ptr [esi + 0x474], bl
-    unsigned char Rotors;  // +0x475 (INI key); 1-byte store: mov byte ptr [esi + 0x475], bl
-    unsigned char CustomRotor;  // +0x476 (INI key); 1-byte store: mov byte ptr [esi + 0x476], bl
-    unsigned char Landable;  // +0x477 (INI key); 1-byte store: mov byte ptr [esi + 0x477], bl
+    // The machine block begins at +0x478: the compiled end of the
+    // base sub-object region (+0x46c) and of the curated block
+    // above. Base evidence: TechnoTypeClass at +0x0 (ends +0x46c).
+    // 3 recovered offset(s) below +0x46c lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x37c, +0x435
+    // 5 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x46c..+0x478) and are NOT repeated here:
+    // the curated block wins -- +0x470, +0x474, +0x475, +0x476, +0x477
 
 };

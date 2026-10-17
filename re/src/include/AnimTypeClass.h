@@ -38,9 +38,11 @@ public:
     // ---- rules.ini reader (0x00417FD0) ---------------------------------
     // Reads the [Animations] section.  Offsets are the store targets in
     // the reader; the type is the accessor used (S=GetString).
-    bool  Theater;               // 0xC6  INI "Theater"              (0x6BFEEC)
-    bool  NewTheater;            // 0xD0  INI "NewTheater"           (0x6BFEE4)
+    //<UNCOMMENT>    bool  Theater;               // 0xC6  INI "Theater"              (0x6BFEEC)  // commented out: it documents 0xc6, which C++ supplies itself (the compiler's own vptr or base sub-object is already there)
+    //<UNCOMMENT>    bool  NewTheater;            // 0xD0  INI "NewTheater"           (0x6BFEE4)  // commented out: it documents 0xd0, which C++ supplies itself (the compiler's own vptr or base sub-object is already there)
+    unsigned char pad_doc_TiberiumChainReaction[0xb3];  // holds the gap before TiberiumChainReaction, which documents 0x1d7 (the compiler would put it at 0x124)
     bool  TiberiumChainReaction; // 0x1D7 INI "TiberiumChainReaction"(0x6BFE14)
+    unsigned char pad_doc_AltPalette[0x8];  // holds the gap before AltPalette, which documents 0x1e0 (the compiler would put it at 0x1d8)
     bool  AltPalette;            // 0x1E0 INI "AltPalette"           (0x6BFE00)
     bool  Normalized;            // 0x1E1 INI "Normalized"           (0x6BFDF4)
     bool  Surface;               // 0x1E2 INI "Surface"              (0x6BFDEC)
@@ -66,72 +68,15 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0xc4];
-    unsigned char m_0c8;  // +0x0c8 init 0x1; 1-byte store: mov byte ptr [esi + 0xc8], 1
-    unsigned char Selectable;  // +0x0c9 (INI key); 1-byte store: mov byte ptr [esi + 0xc9], bl
-    unsigned char LegalTarget;  // +0x0ca (INI key); 1-byte store: mov byte ptr [esi + 0xca], bl
-    unsigned char m_0cb;  // +0x0cb init 0x1; 1-byte store: mov byte ptr [esi + 0xcb], 1
-    unsigned char Immune;  // +0x0cc (INI key); 1-byte store: mov byte ptr [esi + 0xcc], 1
-    unsigned char m_0cd;  // +0x0cd init 0x1; 1-byte store: mov byte ptr [esi + 0xcd], 1
-    unsigned char m_0ce;  // +0x0ce /* ? */; 1-byte store: mov byte ptr [esi + 0xce], bl
-    unsigned char pad_0cf[0x55];
-    unsigned int m_124;  // +0x124 /* ? */; 4-byte store: mov dword ptr [esi + 0x124], edi
-    unsigned int m_128;  // +0x128 /* ? */; 4-byte store: mov dword ptr [esi + 0x128], ebx
-    unsigned char pad_12c[0x4];
-    unsigned int m_130;  // +0x130 /* ? */; 4-byte store: mov dword ptr [esi + 0x130], ebx
-    unsigned int m_134;  // +0x134 /* ? */; 4-byte store: mov dword ptr [esi + 0x134], ebx
-    unsigned int m_138;  // +0x138 init 0x1; 4-byte store: mov dword ptr [esi + 0x138], 1
-    unsigned int m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [esi + 0x13c], ebx
-    unsigned int m_140;  // +0x140 /* ? */; 4-byte store: mov dword ptr [esi + 0x140], ebx
-    unsigned int m_144;  // +0x144 /* ? */; 4-byte store: mov dword ptr [esi + 0x144], ebx
-    unsigned int m_148;  // +0x148 /* ? */; 4-byte store: mov dword ptr [esi + 0x148], ebx
-    unsigned int m_14c;  // +0x14c /* ? */; 4-byte store: mov dword ptr [esi + 0x14c], ebx
-    unsigned int m_150;  // +0x150 /* ? */; 4-byte store: mov dword ptr [esi + 0x150], edi
-    unsigned int m_154;  // +0x154 /* ? */; 4-byte store: mov dword ptr [esi + 0x154], ebx
-    unsigned int m_158;  // +0x158 /* ? */; 4-byte store: mov dword ptr [esi + 0x158], ebx
-    unsigned int m_15c;  // +0x15c /* ? */; 4-byte store: mov dword ptr [esi + 0x15c], ebx
-    unsigned int m_160;  // +0x160 /* ? */; 4-byte store: mov dword ptr [esi + 0x160], ebx
-    unsigned int m_164;  // +0x164 /* ? */; 4-byte store: mov dword ptr [esi + 0x164], ebx
-    unsigned int m_168;  // +0x168 /* ? */; 4-byte store: mov dword ptr [esi + 0x168], ebx
-    unsigned int m_16c;  // +0x16c /* ? */; 4-byte store: mov dword ptr [esi + 0x16c], ebx
-    unsigned int m_170;  // +0x170 /* ? */; 4-byte store: mov dword ptr [esi + 0x170], ebx
-    unsigned int m_174;  // +0x174 /* ? */; 4-byte store: mov dword ptr [esi + 0x174], ebx
-    unsigned int m_178;  // +0x178 /* ? */; 4-byte store: mov dword ptr [esi + 0x178], ebx
-    unsigned int m_17c;  // +0x17c /* ? */; 4-byte store: mov dword ptr [esi + 0x17c], edi
-    unsigned int m_180;  // +0x180 /* ? */; 4-byte store: mov dword ptr [esi + 0x180], edi
-    unsigned int m_184;  // +0x184 /* ? */; 4-byte store: mov dword ptr [esi + 0x184], edi
-    unsigned int m_188;  // +0x188 /* ? */; 4-byte store: mov dword ptr [esi + 0x188], ebx
-    unsigned int m_18c;  // +0x18c /* ? */; 4-byte store: mov dword ptr [esi + 0x18c], ebx
-    unsigned int m_190;  // +0x190 /* ? */; 4-byte store: mov dword ptr [esi + 0x190], ebx
-    unsigned int m_194;  // +0x194 /* ? */; 4-byte store: mov dword ptr [esi + 0x194], ebx
-    unsigned int m_198;  // +0x198 init 0xa0000000; 4-byte store: mov dword ptr [esi + 0x198], 0xa0000000
-    unsigned int m_19c;  // +0x19c init 0x3fe99999; 4-byte store: mov dword ptr [esi + 0x19c], 0x3fe99999
-    unsigned int m_1a0;  // +0x1a0 /* ? */; 4-byte store: mov dword ptr [esi + 0x1a0], ebx
-    unsigned int m_1a4;  // +0x1a4 /* ? */; 4-byte store: mov dword ptr [esi + 0x1a4], eax
-    unsigned int m_1a8;  // +0x1a8 /* ? */; 4-byte store: mov dword ptr [esi + 0x1a8], ebx
-    unsigned int m_1ac;  // +0x1ac /* ? */; 4-byte store: mov dword ptr [esi + 0x1ac], eax
-    unsigned int m_1b0;  // +0x1b0 /* ? */; 4-byte store: mov dword ptr [esi + 0x1b0], ebx
-    unsigned int m_1b4;  // +0x1b4 init 0x402e0000; 4-byte store: mov dword ptr [esi + 0x1b4], 0x402e0000
-    unsigned int m_1b8;  // +0x1b8 /* ? */; 4-byte store: mov dword ptr [esi + 0x1b8], ebx
-    unsigned int m_1bc;  // +0x1bc /* ? */; 4-byte store: mov dword ptr [esi + 0x1bc], ebx
-    unsigned int m_1c0;  // +0x1c0 /* ? */; 4-byte store: mov dword ptr [esi + 0x1c0], ebx
-    unsigned int m_1c4;  // +0x1c4 /* ? */; 4-byte store: mov dword ptr [esi + 0x1c4], ebx
-    unsigned int m_1c8;  // +0x1c8 /* ? */; 4-byte store: mov dword ptr [esi + 0x1c8], ebx
-    unsigned int m_1cc;  // +0x1cc /* ? */; 4-byte store: mov dword ptr [esi + 0x1cc], ebx
-    unsigned int m_1d0;  // +0x1d0 /* ? */; 4-byte store: mov dword ptr [esi + 0x1d0], ebx
-    unsigned char m_1d4;  // +0x1d4 /* ? */; 1-byte store: mov byte ptr [esi + 0x1d4], bl
-    unsigned char m_1d5;  // +0x1d5 /* ? */; 1-byte store: mov byte ptr [esi + 0x1d5], bl
-    unsigned char m_1d6;  // +0x1d6 /* ? */; 1-byte store: mov byte ptr [esi + 0x1d6], bl
-    unsigned char m_1d8;  // +0x1d8 /* ? */; 1-byte store: mov byte ptr [esi + 0x1d8], bl
-    unsigned char m_1d9;  // +0x1d9 /* ? */; 1-byte store: mov byte ptr [esi + 0x1d9], bl
-    unsigned char m_1da;  // +0x1da /* ? */; 1-byte store: mov byte ptr [esi + 0x1da], bl
-    unsigned char m_1db;  // +0x1db init 0x1; 1-byte store: mov byte ptr [esi + 0x1db], 1
-    unsigned char m_1dc;  // +0x1dc /* ? */; 1-byte store: mov byte ptr [esi + 0x1dc], bl
-    unsigned char m_1dd;  // +0x1dd /* ? */; 1-byte store: mov byte ptr [esi + 0x1dd], bl
-    unsigned char m_1de;  // +0x1de /* ? */; 1-byte store: mov byte ptr [esi + 0x1de], bl
-    unsigned char m_1df;  // +0x1df /* ? */; 1-byte store: mov byte ptr [esi + 0x1df], bl
-    unsigned char m_1eb;  // +0x1eb init 0x1; 1-byte store: mov byte ptr [esi + 0x1eb], 1
-    // 12 member(s) already declared above; their offsets are recorded in out/members.json
+    // The machine block begins at +0x230: the compiled end of the
+    // base sub-object region (+0x124) and of the curated block
+    // above. Base evidence: ObjectTypeClass at +0x0 (ends +0x124).
+    // 8 recovered offset(s) below +0x124 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0xc8, +0xc9, +0xca, +0xcb, +0xcc, +0xcd, +0xce
+    // 67 recovered offset(s) are inside the curated hand-written block
+    // above (its span is +0x124..+0x230) and are NOT repeated here:
+    // the curated block wins -- +0x124, +0x128, +0x130, +0x134, +0x138, +0x13c, +0x140, +0x144 ...
 
 };
 

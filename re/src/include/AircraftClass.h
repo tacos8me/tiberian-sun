@@ -263,7 +263,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    unsigned char pad_004[0x344];
+    // The machine block begins at +0x34c: the compiled end of the
+    // base sub-object region. Evidence: FootClass at +0x0 (ends +0x348), IFlyControl at +0x348 (ends +0x34c).
+    // 2 recovered offset(s) below +0x34c lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0, +0x348
     unsigned int m_34c;  // +0x34c /* ? */; 4-byte store: mov dword ptr [esi + 0x34c], ecx
     unsigned char m_350;  // +0x350 zero-initialised; 1-byte store: mov byte ptr [esi + 0x350], 0
     unsigned char m_351;  // +0x351 zero-initialised; 1-byte store: mov byte ptr [esi + 0x351], 0
