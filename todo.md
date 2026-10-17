@@ -20,6 +20,41 @@ the value is current.
 
 ---
 
+## P0 — correctness of the transcription  [REOPENED]
+
+### [~] Spans that do not end on a transfer drop their continuation
+**Found by chasing a boot fault, and it is the largest defect found in the
+generated code.**
+
+`tools/gen_code.py` renders a span as a sequence of instructions. When a span
+ends on a **conditional branch**, the taken branch is rendered as a transfer but
+the **fall-through is dropped** -- the C++ body simply ends. When a span ends on
+a **non-transfer instruction**, the continuation is dropped entirely. Either way
+the body returns with its frame abandoned: the original's `pop/leave/ret` never
+execute, so 4+ frames unwind into a caller with garbage registers and an
+unbalanced stack.
+
+Measured over all 43,497 generated transcriptions: **1,513 spans end on a
+conditional branch and 8,937 end on a non-transfer instruction** -- about 10,450
+spans whose control flow is incomplete.
+
+How it presented: a boot fault at `rep stos` 0x0068d781 with ECX=0x08000004
+dwords. Chain: `calloc(1,0x74)` at 0x68794e -> 0x689c3d -> `_heap_alloc`
+0x688bd0 -> sub_00688c9a, a 6-instruction span ending on `je 0x688cbe`. The
+fall-through was dropped, so 0x688ed4's epilogue never ran and calloc was
+returned into with EAX=EBX=0x20000010 -- the heap header pointer -- which it then
+used as both `dst` and `count` for a 512 MB memset.
+
+**Why the gate passed over it.** The faithfulness gate proves *instruction
+coverage*: every instruction appears exactly once, in order, with matching
+operands, and the rendering round-trips. It does not prove *control-flow
+coverage*. A tree can satisfy it completely while ~10,450 spans have no
+continuation. That is the gap to close.
+
+*Done when:* every span either ends on a transfer or emits a tail continuation to
+a registered VA; the residue is reported as a first-class count; a new check
+fails on a span with neither; and the check is proven by breaking it on purpose.
+
 ## P0 — correctness of the gate and the tools  [COMPLETE]
 
 ### [x] Fix `tools/disasm.py` prologue scan (dead `pats` list)
