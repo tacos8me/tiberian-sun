@@ -66,6 +66,20 @@ def collect():
         m["text_covered_bytes"] = covered
         m["text_coverage_pct"] = round(100.0 * covered / text_size, 2)
         m["text_unattributed_kb"] = round((text_size - covered) / 1024.0)
+        # The residual .text is classified by tools/disasm.py into jump tables,
+        # padding and what is left over. Those bytes are attributed as *data*
+        # and are reported beside the code figure, never added into it: 99.98%
+        # attributed is not 99.98% recovered code, and the two numbers are
+        # printed separately so it cannot be read as if it were.
+        td = _load("out/text_data.json")
+        if td:
+            data = (td["jump_tables_bytes"] + td["switch_index_tables_bytes"]
+                    + td["padding_bytes"])
+            m["text_jump_table_bytes"] = td["jump_tables_bytes"]
+            m["text_padding_bytes"] = td["padding_bytes"]
+            m["text_unclassified_bytes"] = td["unclassified_bytes"]
+            m["text_attributed_pct"] = round(
+                100.0 * (covered + data) / text_size, 2)
         # shared tails: a function entry strictly inside another body
         starts = sorted(f["va"] for f in fns)
         inside = 0

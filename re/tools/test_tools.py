@@ -19,6 +19,7 @@ adding one: if it cannot fail, it is not worth the runtime.
   Machine mul/div         -- differential against 64-bit reference arithmetic
   Machine flags           -- add/sub carry and overflow, against the manual
   Machine stack           -- push/pop balance
+  Machine mmx lanes       -- differential against lane-array reference code
   gen_code tails          -- cross-function tail targets are found
 
 Usage:
@@ -339,6 +340,194 @@ int main() {
     eq("machine-stack", r.stdout.decode().strip(), "0")
 
 
+def test_machine_mmx():
+    """MMX lanes against an independent implementation of the definitions.
+
+    The reference takes the operand apart with memcpy and works on a byte
+    array, so it shares no expression with the shift-based implementation in
+    Machine.h. Every MMX mnemonic the recovered instruction stream uses is
+    covered; a lane operation that is wrong in one saturation or interleave
+    shows up as a non-zero mismatch count.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include <cstring>
+#include "Machine.h"
+
+typedef unsigned long long U64;
+typedef unsigned int U32;
+
+static int ref_sat_u8(int v) { return v < 0 ? 0 : (v > 255 ? 255 : v); }
+static int ref_sat_i16(int v) {
+    return v < -32768 ? -32768 : (v > 32767 ? 32767 : v);
+}
+static void bytes(U64 v, unsigned char *o) { std::memcpy(o, &v, 8); }
+static U64 pack(const unsigned char *b) {
+    U64 v; std::memcpy(&v, b, 8); return v;
+}
+static unsigned ref_word(const unsigned char *b, int i) {
+    return (unsigned)b[2 * i] | ((unsigned)b[2 * i + 1] << 8);
+}
+static unsigned ref_dword(const unsigned char *b, int i) {
+    return ref_word(b, 2 * i) | (ref_word(b, 2 * i + 1) << 16);
+}
+static int ref_sword(const unsigned char *b, int i) {
+    return (short)ref_word(b, i);
+}
+static int ref_sdword(const unsigned char *b, int i) { return (int)ref_dword(b, i); }
+
+static U64 ref_paddusb(U64 a, U64 b) {
+    unsigned char x[8], y[8], r[8];
+    bytes(a, x); bytes(b, y);
+    for (int i = 0; i < 8; ++i) { int s = x[i] + y[i]; r[i] = (unsigned char)(s > 255 ? 255 : s); }
+    return pack(r);
+}
+static U64 ref_packuswb(U64 a, U64 b) {
+    unsigned char x[8], y[8], r[8];
+    bytes(a, x); bytes(b, y);
+    for (int i = 0; i < 4; ++i) {
+        r[i] = (unsigned char)ref_sat_u8(ref_sword(x, i));
+        r[i + 4] = (unsigned char)ref_sat_u8(ref_sword(y, i));
+    }
+    return pack(r);
+}
+static U64 ref_packssdw(U64 a, U64 b) {
+    unsigned char x[8], y[8], r[8];
+    bytes(a, x); bytes(b, y);
+    for (int i = 0; i < 2; ++i) {
+        unsigned sa = (unsigned)(unsigned short)ref_sat_i16(ref_sdword(x, i));
+        unsigned sb = (unsigned)(unsigned short)ref_sat_i16(ref_sdword(y, i));
+        r[2 * i] = (unsigned char)sa; r[2 * i + 1] = (unsigned char)(sa >> 8);
+        r[4 + 2 * i] = (unsigned char)sb; r[5 + 2 * i] = (unsigned char)(sb >> 8);
+    }
+    return pack(r);
+}
+static U64 ref_pmullw(U64 a, U64 b) {
+    unsigned char x[8], y[8], r[8];
+    bytes(a, x); bytes(b, y);
+    for (int i = 0; i < 4; ++i) {
+        unsigned p = ref_word(x, i) * ref_word(y, i);
+        r[2 * i] = (unsigned char)p; r[2 * i + 1] = (unsigned char)(p >> 8);
+    }
+    return pack(r);
+}
+static U64 ref_pmulhw(U64 a, U64 b) {
+    unsigned char x[8], y[8], r[8];
+    bytes(a, x); bytes(b, y);
+    for (int i = 0; i < 4; ++i) {
+        int p = ref_sword(x, i) * ref_sword(y, i);
+        unsigned h = (unsigned)(unsigned short)(p >> 16);
+        r[2 * i] = (unsigned char)h; r[2 * i + 1] = (unsigned char)(h >> 8);
+    }
+    return pack(r);
+}
+static U64 ref_punpcklbw(U64 a, U64 b) {
+    unsigned char x[8], y[8], r[8];
+    bytes(a, x); bytes(b, y);
+    for (int i = 0; i < 4; ++i) { r[2 * i] = x[i]; r[2 * i + 1] = y[i]; }
+    return pack(r);
+}
+static U64 ref_punpckhbw(U64 a, U64 b) {
+    unsigned char x[8], y[8], r[8];
+    bytes(a, x); bytes(b, y);
+    for (int i = 0; i < 4; ++i) { r[2 * i] = x[4 + i]; r[2 * i + 1] = y[4 + i]; }
+    return pack(r);
+}
+static U64 ref_punpcklwd(U64 a, U64 b) {
+    unsigned char x[8], y[8], r[8];
+    bytes(a, x); bytes(b, y);
+    for (int i = 0; i < 2; ++i) {
+        r[4 * i] = x[2 * i]; r[4 * i + 1] = x[2 * i + 1];
+        r[4 * i + 2] = y[2 * i]; r[4 * i + 3] = y[2 * i + 1];
+    }
+    return pack(r);
+}
+static U64 ref_punpckhwd(U64 a, U64 b) {
+    unsigned char x[8], y[8], r[8];
+    bytes(a, x); bytes(b, y);
+    for (int i = 0; i < 2; ++i) {
+        r[4 * i] = x[4 + 2 * i]; r[4 * i + 1] = x[5 + 2 * i];
+        r[4 * i + 2] = y[4 + 2 * i]; r[4 * i + 3] = y[5 + 2 * i];
+    }
+    return pack(r);
+}
+static U64 ref_punpckldq(U64 a, U64 b) {
+    unsigned char x[8], y[8], r[8];
+    bytes(a, x); bytes(b, y);
+    for (int i = 0; i < 4; ++i) { r[i] = x[i]; r[4 + i] = y[i]; }
+    return pack(r);
+}
+static U64 ref_psrlw(U64 a, unsigned n) {
+    unsigned char x[8], r[8];
+    bytes(a, x);
+    for (int i = 0; i < 4; ++i) {
+        unsigned w = (n > 15) ? 0 : (ref_word(x, i) >> n);
+        r[2 * i] = (unsigned char)w; r[2 * i + 1] = (unsigned char)(w >> 8);
+    }
+    return pack(r);
+}
+static U64 ref_psrad(U64 a, unsigned n) {
+    unsigned char x[8], r[8];
+    bytes(a, x);
+    for (int i = 0; i < 2; ++i) {
+        int d = ref_sdword(x, i);
+        unsigned w = (unsigned)(n > 31 ? (d >> 31) : (d >> n));
+        r[4 * i] = (unsigned char)w; r[4 * i + 1] = (unsigned char)(w >> 8);
+        r[4 * i + 2] = (unsigned char)(w >> 16); r[4 * i + 3] = (unsigned char)(w >> 24);
+    }
+    return pack(r);
+}
+
+static unsigned bad = 0;
+static void cmp(const char *what, U64 got, U64 want) {
+    if (got != want) { ++bad; if (bad < 6) std::printf("%s\n", what); }
+}
+
+int main() {
+    const U64 edge[] = { 0ull, 1ull, 0xffffffffffffffffull, 0x8000000000000000ull,
+                         0x7fff80007fff8000ull, 0x0001000100010001ull,
+                         0xff00ff00ff00ff00ull, 0x00ff00ff00ff00ffull };
+    const int ne = (int)(sizeof(edge) / sizeof(edge[0]));
+    U64 s = 0x123456789abcdefull;
+    for (int k = 0; k < 20000; ++k) {
+        U64 a, b;
+        if (k < ne * ne) { a = edge[k / ne]; b = edge[k % ne]; }
+        else {
+            s = s * 6364136223846793005ull + 1442695040888963407ull; a = s;
+            s = s * 6364136223846793005ull + 1442695040888963407ull; b = s;
+        }
+        cmp("pxor", ts::mmx_pxor(a, b), a ^ b);
+        cmp("paddusb", ts::mmx_paddusb(a, b), ref_paddusb(a, b));
+        cmp("packuswb", ts::mmx_packuswb(a, b), ref_packuswb(a, b));
+        cmp("packssdw", ts::mmx_packssdw(a, b), ref_packssdw(a, b));
+        cmp("pmullw", ts::mmx_pmullw(a, b), ref_pmullw(a, b));
+        cmp("pmulhw", ts::mmx_pmulhw(a, b), ref_pmulhw(a, b));
+        cmp("punpcklbw", ts::mmx_punpcklbw(a, b), ref_punpcklbw(a, b));
+        cmp("punpckhbw", ts::mmx_punpckhbw(a, b), ref_punpckhbw(a, b));
+        cmp("punpcklwd", ts::mmx_punpcklwd(a, b), ref_punpcklwd(a, b));
+        cmp("punpckhwd", ts::mmx_punpckhwd(a, b), ref_punpckhwd(a, b));
+        cmp("punpckldq", ts::mmx_punpckldq(a, b), ref_punpckldq(a, b));
+        for (unsigned n = 0; n < 33; ++n) {
+            cmp("psrlw", ts::mmx_psrlw(a, n), ref_psrlw(a, n));
+            cmp("psrad", ts::mmx_psrad(a, n), ref_psrad(a, n));
+        }
+    }
+    std::printf("%u\n", bad);
+    return 0;
+}
+'''
+    open("/tmp/ts_mmx_test.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O1", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_mmx_test",
+                        "/tmp/ts_mmx_test.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("machine-mmx-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_mmx_test"], capture_output=True)
+    eq("machine-mmx", r.stdout.decode().strip(), "0")
+
 def test_machine_depth_guard():
     import subprocess
     src = r'''
@@ -379,7 +568,7 @@ def main():
                test_emit_ret, test_decl_destructor, test_slot_va,
                test_slot0_shared, test_reduce_bases, test_tail_entries,
                test_machine_mul, test_machine_flags, test_machine_stack,
-               test_machine_depth_guard):
+               test_machine_mmx, test_machine_depth_guard):
         try:
             fn()
         except Exception as exc:  # a tool that raises is a failure, not a skip

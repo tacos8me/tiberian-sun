@@ -694,7 +694,7 @@ void sub_00617a3a(void)
 void sub_00617a41(void)
 {
     ECX.d = ECX.d;   //   0x00617a41  lea      ecx, [ecx]
-    ts::unmodelled(0x617a44u, "les");   //   0x00617a44  les      edi, ptr [ecx + 0x61]
+    { ts::u32 a = ECX.d + 0x61; EDI.d = ts::ld32(a); ES = ts::ld16(a + 4); }   //   0x00617a44  les      edi, ptr [ecx + 0x61]
     ts::st8(ECX.d + EDI.d * 2 + 0x61, ts::add8(ts::ld8(ECX.d + EDI.d * 2 + 0x61), BL));   //   0x00617a47  add      byte ptr [ecx + edi*2 + 0x61], bl
     CL = ts::add8(CL, CL);   //   0x00617a4b  add      cl, cl
     if (M.sf) { ts::ts_call(0x617ab0u); return; }   //   0x00617a4d  js       0x617ab0

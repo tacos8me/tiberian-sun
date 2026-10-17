@@ -2947,7 +2947,7 @@ void sub_00681328(void)
     ts::st8(EBX.d, ts::adc8(ts::ld8(EBX.d), DL));   //   0x00681344  adc      byte ptr [ebx], dl
     ts::push32(0x680fb200u);   //   0x00681346  push     0x680fb200
     AL = ts::add8(AL, CL);   //   0x0068134b  add      al, cl
-    ts::unmodelled(0x68134du, "punpckhbw");   //   0x0068134d  punpckhbw mm0, qword ptr [eax]
+    MM0 = ts::mmx_punpckhbw(MM0, ts::ld64(EAX.d));   //   0x0068134d  punpckhbw mm0, qword ptr [eax]
     ts::f_arith_mem(2, (long double)ts::ld_f32(EDI.d), false);   //   0x00681350  fmul     dword ptr [edi]
     ts::push32(0x680fe800u);   //   0x00681352  push     0x680fe800
     ts::st8(EBP.d + 0x53, ts::add8(ts::ld8(EBP.d + 0x53), DL));   //   0x00681357  add      byte ptr [ebp + 0x53], dl

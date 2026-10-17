@@ -773,11 +773,11 @@ void sub_006827bf(void)
     ts::st_f64(ESP.d, (double)ts::f_pop());   //   0x006827ea  fstp     qword ptr [esp]
     ts::st_f64(ESP.d + 0x8, (double)ts::f_pop());   //   0x006827ed  fstp     qword ptr [esp + 8]
     ts::nop();   //   0x006827f1  wait     
-    ts::unmodelled(0x6827f2u, "fnsave");   //   0x006827f2  fnsave   dword ptr [ecx + 8]
+    ts::f_save(ECX.d + 0x8);   //   0x006827f2  fnsave   dword ptr [ecx + 8]
     ts::ts_call_at(0x68621cu, 0x6827fau);   //   0x006827f5  call     0x68621c
     ESP.d = ts::add32(ESP.d, 0x10u);   //   0x006827fa  add      esp, 0x10
     ECX.d = ts::pop32();   //   0x006827fd  pop      ecx
-    ts::unmodelled(0x6827feu, "frstor");   //   0x006827fe  frstor   dword ptr [ecx + 8]
+    ts::f_restore(ECX.d + 0x8);   //   0x006827fe  frstor   dword ptr [ecx + 8]
     ts::f_push((long double)ts::ld_f64(ECX.d));   //   0x00682801  fld      qword ptr [ecx]
     ESP.d = ts::add32(ESP.d, 0x74u);   //   0x00682803  add      esp, 0x74
     ts::test32(EAX.d, EAX.d);   //   0x00682806  test     eax, eax

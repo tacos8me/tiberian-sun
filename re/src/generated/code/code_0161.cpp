@@ -1912,10 +1912,10 @@ void sub_00685e25(void)
     ESP.d = ts::sub32(ESP.d, 0x8u);   //   0x00685e32  sub      esp, 8
     ts::st_f64(ESP.d, (double)ts::f_pop());   //   0x00685e35  fstp     qword ptr [esp]
     ts::nop();   //   0x00685e38  wait     
-    ts::unmodelled(0x685e39u, "fnsave");   //   0x00685e39  fnsave   dword ptr [esi + 8]
+    ts::f_save(ESI.d + 0x8);   //   0x00685e39  fnsave   dword ptr [esi + 8]
     ts::ts_call_at(0x68621cu, 0x685e41u);   //   0x00685e3c  call     0x68621c
     ESP.d = ts::add32(ESP.d, 0x14u);   //   0x00685e41  add      esp, 0x14
-    ts::unmodelled(0x685e44u, "frstor");   //   0x00685e44  frstor   dword ptr [esi + 8]
+    ts::f_restore(ESI.d + 0x8);   //   0x00685e44  frstor   dword ptr [esi + 8]
     ts::f_push((long double)ts::ld_f64(ESI.d));   //   0x00685e47  fld      qword ptr [esi]
     ESP.d = ts::add32(ESP.d, 0x74u);   //   0x00685e49  add      esp, 0x74
     ESI.d = ts::pop32();   //   0x00685e4c  pop      esi

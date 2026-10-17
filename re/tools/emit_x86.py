@@ -48,7 +48,7 @@ for _n, _c in _SEG.items():
 SEGNAMES = set(_SEG)
 
 _SIZE_PREFIX = {'byte': 1, 'word': 2, 'dword': 4, 'qword': 8,
-                'tbyte': 10, 'xword': 10}
+                'xmmword': 16, 'tbyte': 10, 'xword': 10}
 
 _LOAD = {1: 'ld8', 2: 'ld16', 4: 'ld32'}
 _STORE = {1: 'st8', 2: 'st16', 4: 'st32'}
@@ -109,6 +109,21 @@ class St(object):
         self.depth = depth
 
 
+class MMReg(object):
+    """An MMX register operand, mm(i). 64 bits wide, and on the original the low
+    half of x87 register i."""
+
+    def __init__(self, index):
+        self.index = index
+
+
+class XMMReg(object):
+    """An SSE register operand, xmm(i). 128 bits wide."""
+
+    def __init__(self, index):
+        self.index = index
+
+
 class Imm(object):
     def __init__(self, value):
         self.value = value
@@ -167,7 +182,7 @@ def parse_operand(text, default_size=None):
     if not t:
         raise Unmodelled('empty operand')
     size = default_size
-    m = re.match(r'^(?:(byte|word|dword|qword|tbyte|xword)\s+)?ptr\s+(.*)$', t)
+    m = re.match(r'^(?:(byte|word|dword|qword|xmmword|tbyte|xword)\s+)?ptr\s+(.*)$', t)
     if m:
         # A bare `ptr [eax]` (no size word) occurs on `call`/`les`/`lds`, where
         # the width is implied by the operation rather than the operand.
@@ -188,6 +203,12 @@ def parse_operand(text, default_size=None):
         return St(int(m.group(1)))
     if t == 'st':
         return St(0)
+    m = re.match(r'^mm([0-7])$', t)
+    if m:
+        return MMReg(int(m.group(1)))
+    m = re.match(r'^xmm([0-7])$', t)
+    if m:
+        return XMMReg(int(m.group(1)))
     try:
         return Imm(int(t, 0))
     except ValueError:
@@ -656,7 +677,7 @@ def _render(mnem, ops, ctx):
         'cli': 'ts::cli();', 'sti': 'ts::sti();',
         'sahf': 'ts::sahf();', 'lahf': 'ts::lahf();',
         'nop': 'ts::nop();', 'wait': 'ts::nop();', 'fwait': 'ts::nop();',
-        'hlt': 'ts::nop();', 'emms': 'ts::nop();',
+        'hlt': 'ts::nop();', 'emms': 'ts::mmx_emms();',
         'fnclex': 'ts::f_clear();', 'fninit': 'ts::f_clear();',
         'finit': 'ts::f_clear();', 'fclex': 'ts::f_clear();',
         'int3': 'ts::trap(3);', 'int1': 'ts::trap(1);', 'into': 'ts::trap(4);',
@@ -688,6 +709,25 @@ def _render(mnem, ops, ctx):
             raise Unmodelled('arpl width')
         return 'ts::st16(%s, ts::arpl_op(ts::ld16(%s), %s));' % (
             ops[0].addr(), ops[0].addr(), _read(ops[1]))
+    if mnem in ('les', 'lds'):
+        if n != 2 or not isinstance(ops[0], Reg) or ops[0].size != 4 or \
+                not isinstance(ops[1], Mem):
+            raise Unmodelled('%s form' % mnem)
+        # The far pointer is read before anything is written, so a destination
+        # register that also appears in the address still names the old value.
+        return '{ ts::u32 a = %s; %s = ts::ld32(a); %s = ts::ld16(a + 4); }' % (
+            ops[1].addr(), ops[0].cpp, 'ES' if mnem == 'les' else 'DS')
+
+    if mnem == 'lar':
+        if n != 2 or not isinstance(ops[0], Reg) or ops[0].size != 4:
+            raise Unmodelled('lar form')
+        return 'ts::lar_op(%s, %s);' % (ops[0].cpp, _read_at(ops[1], 2))
+
+    if mnem == 'pushaw':
+        if n != 0:
+            raise Unmodelled('pushaw arity')
+        return 'ts::pushaw();'
+
     if mnem in ('in', 'out'):
         if n != 2:
             raise Unmodelled('%s arity' % mnem)
@@ -731,12 +771,110 @@ def _render(mnem, ops, ctx):
     if mnem in _STR:
         return 'ts::%s();' % _STR[mnem]
 
+    # -- MMX and SSE --------------------------------------------------------
+    mm = _mmx(mnem, ops)
+    if mm is not None:
+        return mm
+
     # -- x87 ----------------------------------------------------------------
     x = _x87(mnem, ops)
     if x is not None:
         return x
 
     raise Unmodelled(mnem)
+
+def _mmx_src(op):
+    """A 64-bit MMX source operand.
+
+    A register reads directly. A memory operand is read at its declared width:
+    the interleaves and pmullw have an m32 form, and the instruction definition
+    of that form uses only the low 32 bits of the operand, so a u32 read is
+    faithful and widens to u64.
+    """
+    if isinstance(op, MMReg):
+        return 'MM%d' % op.index
+    if isinstance(op, Mem):
+        if op.size == 8:
+            return 'ts::ld64(%s)' % op.addr()
+        if op.size == 4:
+            return 'ts::ld32(%s)' % op.addr()
+        raise Unmodelled('mmx source width %s' % op.size)
+    raise Unmodelled('mmx source operand')
+
+
+_MMX_BIN = {
+    'pxor': 'mmx_pxor',
+    'paddusb': 'mmx_paddusb',
+    'packuswb': 'mmx_packuswb',
+    'packssdw': 'mmx_packssdw',
+    'pmullw': 'mmx_pmullw',
+    'pmulhw': 'mmx_pmulhw',
+    'punpcklbw': 'mmx_punpcklbw',
+    'punpckhbw': 'mmx_punpckhbw',
+    'punpcklwd': 'mmx_punpcklwd',
+    'punpckhwd': 'mmx_punpckhwd',
+    'punpckldq': 'mmx_punpckldq',
+}
+_MMX_SHIFT = {'psrlw': 'mmx_psrlw', 'psrad': 'mmx_psrad'}
+
+
+def _mmx(mnem, ops):
+    """Render an MMX or SSE instruction, or None if it is neither."""
+    n = len(ops)
+
+    if mnem == 'movq':
+        if n != 2:
+            raise Unmodelled('movq arity')
+        dst, src = ops
+        if isinstance(dst, MMReg):
+            return 'MM%d = %s;' % (dst.index, _mmx_src(src))
+        if isinstance(dst, Mem) and dst.size == 8 and isinstance(src, MMReg):
+            return 'ts::st64(%s, MM%d);' % (dst.addr(), src.index)
+        raise Unmodelled('movq form')
+
+    if mnem == 'movd':
+        if n != 2:
+            raise Unmodelled('movd arity')
+        dst, src = ops
+        if isinstance(dst, Reg) and dst.size == 4 and isinstance(src, MMReg):
+            return '%s = (ts::u32)MM%d;' % (dst.cpp, src.index)
+        if isinstance(dst, MMReg) and isinstance(src, Reg) and src.size == 4:
+            return 'MM%d = (ts::u64)%s;' % (dst.index, src.cpp)
+        if isinstance(dst, MMReg) and isinstance(src, Mem) and src.size == 4:
+            return 'MM%d = (ts::u64)ts::ld32(%s);' % (dst.index, src.addr())
+        if isinstance(dst, Mem) and dst.size == 4 and isinstance(src, MMReg):
+            return 'ts::st32(%s, (ts::u32)MM%d);' % (dst.addr(), src.index)
+        raise Unmodelled('movd form')
+
+    if mnem == 'movups':
+        if n != 2:
+            raise Unmodelled('movups arity')
+        dst, src = ops
+        if isinstance(dst, XMMReg) and isinstance(src, Mem) and src.size == 16:
+            return 'XMM%d = ts::ld128(%s);' % (dst.index, src.addr())
+        if isinstance(dst, Mem) and dst.size == 16 and isinstance(src, XMMReg):
+            return 'ts::st128(%s, XMM%d);' % (dst.addr(), src.index)
+        if isinstance(dst, XMMReg) and isinstance(src, XMMReg):
+            return 'XMM%d = XMM%d;' % (dst.index, src.index)
+        raise Unmodelled('movups form')
+
+    if mnem in _MMX_BIN:
+        if n != 2:
+            raise Unmodelled('%s arity' % mnem)
+        dst, src = ops
+        if not isinstance(dst, MMReg):
+            raise Unmodelled('%s dest' % mnem)
+        return 'MM%d = ts::%s(MM%d, %s);' % (
+            dst.index, _MMX_BIN[mnem], dst.index, _mmx_src(src))
+
+    if mnem in _MMX_SHIFT:
+        if n != 2 or not isinstance(ops[0], MMReg) or not isinstance(ops[1], Imm):
+            raise Unmodelled('%s form' % mnem)
+        return 'MM%d = ts::%s(MM%d, %su);' % (
+            ops[0].index, _MMX_SHIFT[mnem], ops[0].index, ops[1].value)
+
+    return None
+
 
 
 def _goto(target, ctx, cond=None):
@@ -816,6 +954,30 @@ def _indirect_jmp(mem, ctx):
 
 def _x87(mnem, ops):
     n = len(ops)
+
+    if mnem.startswith('fcmov') and mnem[5:] in COND:
+        if n != 2 or not isinstance(ops[0], St) or not isinstance(ops[1], St):
+            raise Unmodelled('%s form' % mnem)
+        if ops[0].depth != 0:
+            raise Unmodelled('%s destination is not st(0)' % mnem)
+        return 'if (%s) ts::f_set(0, ts::f_peek(%d));' % (
+            _cond(mnem[5:]), ops[1].depth)
+
+    # The environment instructions encode no operand size. The disassembler
+    # prints a `dword ptr` prefix for both the 108-byte FNSAVE area and the
+    # 28-byte FNSTENV area, so the size word is ignored here and the address is
+    # what the model's helper uses.
+    _ENV = {'fnsave': 'f_save', 'frstor': 'f_restore',
+            'fnstenv': 'f_stenv', 'fldenv': 'f_ldenv'}
+    if mnem in _ENV:
+        if n != 1 or not isinstance(ops[0], Mem):
+            raise Unmodelled('%s form' % mnem)
+        return 'ts::%s(%s);' % (_ENV[mnem], ops[0].addr())
+
+    if mnem == 'fbld':
+        if n != 1 or not isinstance(ops[0], Mem):
+            raise Unmodelled('fbld form')
+        return 'ts::f_bcd_push(%s);' % ops[0].addr()
 
     def memf(op):
         """(load expression, store format) for a memory x87 operand."""

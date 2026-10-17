@@ -5530,7 +5530,7 @@ void sub_00410304(void)
 {
     ts::push32(ECX.d);   //   0x00410304  push     ecx
     AL = ts::add8(AL, ts::ld8(ECX.d));   //   0x00410305  add      al, byte ptr [ecx]
-    ts::unmodelled(0x410308u, "lar");   //   0x00410308  lar      eax, word ptr [ecx]
+    ts::lar_op(EAX.d, ts::ld16(ECX.d));   //   0x00410308  lar      eax, word ptr [ecx]
     ts::cmp32(EAX.d, ts::ld32(EDX.d));   //   0x0041030c  cmp      eax, dword ptr [edx]
     ECX.d = ts::inc32(ECX.d);   //   0x0041030e  inc      ecx
     ts::st8(1660961026, ts::add8(ts::ld8(1660961026), AH));   //   0x0041030f  add      byte ptr [0x63004102], ah
@@ -5557,7 +5557,7 @@ void sub_00410304(void)
     ts::st8(EDX.d, ts::add8(ts::ld8(EDX.d), 0x41u));   //   0x00410340  add      byte ptr [edx], 0x41
     ts::st8(EAX.d - 0x51ffbefe, ts::add8(ts::ld8(EAX.d - 0x51ffbefe), BL));   //   0x00410343  add      byte ptr [eax - 0x51ffbefe], bl
     AL = ts::add8(AL, ts::ld8(ECX.d));   //   0x00410349  add      al, byte ptr [ecx]
-    ts::unmodelled(0x41034cu, "les");   //   0x0041034c  les      eax, ptr [edx]
+    { ts::u32 a = EDX.d; EAX.d = ts::ld32(a); ES = ts::ld16(a + 4); }   //   0x0041034c  les      eax, ptr [edx]
     ECX.d = ts::inc32(ECX.d);   //   0x0041034e  inc      ecx
     DL = ts::add8(DL, BL);   //   0x0041034f  add      dl, bl
     AL = ts::add8(AL, ts::ld8(ECX.d));   //   0x00410351  add      al, byte ptr [ecx]

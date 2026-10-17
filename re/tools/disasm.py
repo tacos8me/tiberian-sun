@@ -350,6 +350,180 @@ def strip_leading_padding(bin_, va, limit):
     return va
 
 
+# --- Residual .text: jump tables and padding --------------------------------
+#
+# Function discovery leaves about 104 KB of .text unattributed. It is not
+# unknown code: it is the switch tables MSVC emits inline in .text plus the
+# linker's alignment padding between functions. Both are identified from the
+# bytes rather than assumed, and whatever is neither is reported instead of
+# being forced into a category:
+#
+#   * A jump table is a run of dwords that are all .text addresses -- the same
+#     evidence `read_jump_table` uses for a table a `jmp` names, applied by
+#     content so that a table whose dispatcher sits in a body that was never
+#     recovered is still found. The table at 0x683e24 is one of those: no
+#     recovered instruction references it, and the code entry points it names
+#     are the only reason the block at 0x683e44 is not recovered.
+#   * The companion byte array MSVC emits after a switch's target table is the
+#     run of bytes below 0x10 that follows it. Its exact length is not
+#     recoverable from the bytes alone, so the bytes are emitted with the run
+#     and counted apart from the targets.
+#   * Padding is a run of fill bytes (0x00, 0x90, 0xcc) or of the multi-byte
+#     no-op and hot-patch encodings MSVC emits between functions.
+#   * Everything else is listed verbatim in out/text_data.json. In this binary
+#     that is 568 bytes: code fragments shorter than the 16-byte minimum the
+#     gap seeder works at, plus two 53-byte blocks that are the tail of an
+#     unreferenced switch's copy routine.
+#
+# The two figures this produces are kept apart on purpose: the code figure
+# counts recovered function spans, the classified figure counts tables and
+# padding, and neither is allowed to stand in for the other.
+
+_FILL = (0x00, 0x90, 0xcc)
+
+# The multi-byte no-op and hot-patch fill forms MSVC emits: `mov edi,edi` (the
+# 2-byte hot-patch no-op), the `lea`-based long no-ops, and `xchg ax,ax`.
+_NOP_FORMS = [bytes.fromhex(h) for h in (
+    "8bff", "8d4900", "8d642400", "8da42400000000", "8d9b00000000",
+    "8db600000000", "8d8000000000", "8dbf00000000", "6690",
+    "0f1f00", "0f1f4000", "0f1f440000", "0f1f8000000000", "0f1f840000000000")]
+_NOP_FORMS.sort(key=len, reverse=True)
+
+
+def nop_form_len(blob, i):
+    """Length of the no-op/hot-patch encoding at `i`, or 0."""
+    for p in _NOP_FORMS:
+        if blob.startswith(p, i):
+            return len(p)
+    return 0
+
+
+def dword_run(blob, i, bin_):
+    """Number of consecutive dwords at `i` that are all .text addresses."""
+    n = 0
+    while i + 4 * (n + 1) <= len(blob):
+        if not bin_.in_text(struct.unpack_from("<I", blob, i + 4 * n)[0]):
+            break
+        n += 1
+    return n
+
+
+def classify_residual(bin_, funcs):
+    """Attribute every .text byte that no recovered function covers."""
+    t = bin_.text
+    text_va = t["va"]
+    text_end = t["va"] + t["vsize"]
+    ivs = text_intervals(funcs, bin_)
+    gaps = []
+    prev = text_va
+    for a, b in ivs:
+        if a > prev:
+            gaps.append((prev, a))
+        prev = max(prev, b)
+    if prev < text_end:
+        gaps.append((prev, text_end))
+
+    tables = []
+    index_tables = []
+    other = []
+    table_bytes = index_bytes = pad_bytes = other_bytes = pad_runs = 0
+    fill_counts = {}
+    for a, b in gaps:
+        raw = bin_.data[t["raw"] + (a - text_va): t["raw"] + (b - text_va)]
+        n = len(raw)
+        i = 0
+        while i < n:
+            k = dword_run(raw, i, bin_)
+            if k >= 2:
+                tables.append({
+                    "va": a + i,
+                    "size": 4 * k,
+                    "targets": [struct.unpack_from("<I", raw, i + 4 * j)[0]
+                                for j in range(k)]})
+                table_bytes += 4 * k
+                i += 4 * k
+                j = i
+                while j < n and raw[j] < 0x10:
+                    j += 1
+                if j > i:
+                    index_tables.append({"va": a + i, "size": j - i,
+                                         "bytes": raw[i:j].hex()})
+                    index_bytes += j - i
+                    i = j
+                continue
+            if raw[i] in _FILL:
+                j = i
+                while j < n and raw[j] in _FILL:
+                    j += 1
+                key = "fill_%02x" % raw[i]
+                fill_counts[key] = fill_counts.get(key, 0) + (j - i)
+                pad_bytes += j - i
+                pad_runs += 1
+                i = j
+                continue
+            length = nop_form_len(raw, i)
+            if length:
+                key = raw[i:i + length].hex()
+                fill_counts[key] = fill_counts.get(key, 0) + 1
+                pad_bytes += length
+                pad_runs += 1
+                i += length
+                continue
+            # Neither a table nor padding: report the run verbatim.
+            j = i + 1
+            while j < n and raw[j] not in _FILL and not nop_form_len(raw, j) \
+                    and dword_run(raw, j, bin_) < 2:
+                j += 1
+            other.append({"va": a + i, "size": j - i, "bytes": raw[i:j].hex()})
+            other_bytes += j - i
+            i = j
+
+    covered = sum(b - a for a, b in ivs)
+    return {
+        "text": {"va": text_va, "size": text_end - text_va},
+        "code_bytes": covered,
+        "jump_tables": tables,
+        "jump_tables_bytes": table_bytes,
+        "switch_index_tables": index_tables,
+        "switch_index_tables_bytes": index_bytes,
+        "padding": {"bytes": pad_bytes, "runs": pad_runs,
+                    "by_form": fill_counts},
+        "padding_bytes": pad_bytes,
+        "unclassified": other,
+        "unclassified_bytes": other_bytes,
+        "unattributed_bytes": text_end - text_va - covered,
+    }
+
+
+def print_text_attribution(data):
+    """.text attribution: code, classified data, and what is left over.
+
+    The code figure is recovered function spans and nothing else. The
+    classified figure is jump tables plus padding, and it is printed beside the
+    code figure rather than added into it, so "attributed" cannot be read as
+    "recovered code".
+    """
+    total = data["text"]["size"]
+    code = data["code_bytes"]
+    classified = (data["jump_tables_bytes"] + data["switch_index_tables_bytes"]
+                  + data["padding_bytes"])
+    print(f".text attribution: {total} bytes")
+    print(f"  code (recovered function spans)  {code} bytes "
+          f"({100.0 * code / total:.2f}%)")
+    print(f"  jump tables                      {data['jump_tables_bytes']} "
+          f"bytes in {len(data['jump_tables'])} tables")
+    print(f"  switch index tables              "
+          f"{data['switch_index_tables_bytes']} bytes in "
+          f"{len(data['switch_index_tables'])} runs")
+    print(f"  alignment padding                {data['padding_bytes']} bytes "
+          f"in {data['padding']['runs']} runs")
+    print(f"  attributed as code or data       "
+          f"{100.0 * (code + classified) / total:.2f}%")
+    print(f"  unclassified (reported)          {data['unclassified_bytes']} "
+          f"bytes in {len(data['unclassified'])} runs -- see "
+          f"out/text_data.json")
+
+
 def main():
     path = sys.argv[1] if len(sys.argv) > 1 else "bin/GAME.EXE"
     outdir = sys.argv[2] if len(sys.argv) > 2 else "out"
@@ -605,26 +779,9 @@ def main():
           f"by the prologue byte test")
     print(f"functions recovered: {len(funcs)}")
 
-    # --- Remaining unattributed .text, and how much of it is padding --------
-    ivs = text_intervals(funcs, bin_)
-    uncovered = 0
-    padding = 0
-    prev = text_va
-    for a, b in ivs:
-        if a > prev:
-            blob = bin_.data[t["raw"] + (prev - text_va):
-                             t["raw"] + (a - text_va)]
-            uncovered += len(blob)
-            padding += sum(1 for x in blob if x in (0x00, 0x90, 0xcc))
-        prev = max(prev, b)
-    if prev < text_end:
-        blob = bin_.data[t["raw"] + (prev - text_va):
-                         t["raw"] + (text_end - text_va)]
-        uncovered += len(blob)
-        padding += sum(1 for x in blob if x in (0x00, 0x90, 0xcc))
-    pct = round(100.0 * padding / uncovered, 1) if uncovered else 0.0
-    print(f"unattributed .text: {uncovered} bytes ({uncovered // 1024} KB), "
-          f"padding {pct}%")
+    # --- Remaining unattributed .text: jump tables, padding, and what is left
+    data = classify_residual(bin_, funcs)
+    print_text_attribution(data)
 
     # --- Resolve string references per function
     for va, f in funcs.items():
@@ -647,11 +804,14 @@ def main():
             "functions": list(funcs.values()),
             "imports": {hex(k): v for k, v in iat.items()},
         }, fh)
+    with open(os.path.join(outdir, "text_data.json"), "w") as fh:
+        json.dump(data, fh, indent=1, sort_keys=True)
 
     # summary
     total_insn = sum(f["ninsn"] for f in funcs.values())
     print(f"total instructions: {total_insn}")
     print(f"wrote {outdir}/functions.json")
+    print(f"wrote {outdir}/text_data.json")
 
 
 if __name__ == "__main__":

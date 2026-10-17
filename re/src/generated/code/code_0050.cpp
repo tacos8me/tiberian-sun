@@ -7369,7 +7369,7 @@ void sub_004bc41d(void)
 //
 void sub_004bc425(void)
 {
-    ts::unmodelled(0x4bc425u, "les");   //   0x004bc425  les      ecx, ptr [ebx]
+    { ts::u32 a = EBX.d; ECX.d = ts::ld32(a); ES = ts::ld16(a + 4); }   //   0x004bc425  les      ecx, ptr [ebx]
     EAX.d = ts::add32(EAX.d, ESP.d);   //   0x004bc428  add      eax, esp
     EBX.d = ts::dec32(EBX.d);   //   0x004bc42a  dec      ebx
     DH = ts::add8(DH, DH);   //   0x004bc42b  add      dh, dh
@@ -7385,7 +7385,7 @@ void sub_004bc42e(void)
 {
     EBX.d = ts::dec32(EBX.d);   //   0x004bc42e  dec      ebx
     ts::st8(EDX.d, ts::add8(ts::ld8(EDX.d), BL));   //   0x004bc42f  add      byte ptr [edx], bl
-    ts::unmodelled(0x4bc431u, "les");   //   0x004bc431  les      ecx, ptr [ebx]
+    { ts::u32 a = EBX.d; ECX.d = ts::ld32(a); ES = ts::ld16(a + 4); }   //   0x004bc431  les      ecx, ptr [ebx]
     ts::st8(ECX.d, ts::add8(ts::ld8(ECX.d), AL));   //   0x004bc434  add      byte ptr [ecx], al
     ts::st32(ESP.d + EAX.d, ts::add32(ts::ld32(ESP.d + EAX.d), EAX.d));   //   0x004bc436  add      dword ptr [esp + eax], eax
     AL = ts::add8(AL, ts::ld8(EDX.d));   //   0x004bc439  add      al, byte ptr [edx]

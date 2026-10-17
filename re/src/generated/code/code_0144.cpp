@@ -6829,12 +6829,12 @@ void sub_0064ddec(void)
 {
     ts::cmp32(EBP.d, EBX.d);   //   0x0064ddec  cmp      ebp, ebx
     ts::st8(ECX.d, ts::add8(ts::ld8(ECX.d), BH));   //   0x0064ddee  add      byte ptr fs:[ecx], bh
-    ts::unmodelled(0x64ddf1u, "frstor");   //   0x0064ddf1  frstor   dword ptr [eax + eax + 0x39]
-    ts::unmodelled(0x64ddf5u, "frstor");   //   0x0064ddf5  frstor   dword ptr [eax + eax + 0x39]
-    ts::unmodelled(0x64ddf9u, "frstor");   //   0x0064ddf9  frstor   dword ptr [eax + eax + 0x40]
-    ts::unmodelled(0x64ddfdu, "frstor");   //   0x0064ddfd  frstor   dword ptr [eax + eax - 0x1f]
-    ts::unmodelled(0x64de01u, "frstor");   //   0x0064de01  frstor   dword ptr [eax + eax - 0x72]
-    ts::unmodelled(0x64de05u, "frstor");   //   0x0064de05  frstor   dword ptr [eax + eax - 0x70]
+    ts::f_restore(EAX.d + EAX.d + 0x39);   //   0x0064ddf1  frstor   dword ptr [eax + eax + 0x39]
+    ts::f_restore(EAX.d + EAX.d + 0x39);   //   0x0064ddf5  frstor   dword ptr [eax + eax + 0x39]
+    ts::f_restore(EAX.d + EAX.d + 0x40);   //   0x0064ddf9  frstor   dword ptr [eax + eax + 0x40]
+    ts::f_restore(EAX.d + EAX.d - 0x1f);   //   0x0064ddfd  frstor   dword ptr [eax + eax - 0x1f]
+    ts::f_restore(EAX.d + EAX.d - 0x72);   //   0x0064de01  frstor   dword ptr [eax + eax - 0x72]
+    ts::f_restore(EAX.d + EAX.d - 0x70);   //   0x0064de05  frstor   dword ptr [eax + eax - 0x70]
     ts::nop();   //   0x0064de09  nop      
     ts::nop();   //   0x0064de0a  nop      
     ts::nop();   //   0x0064de0b  nop      

@@ -45,9 +45,9 @@ Function discovery is done.
 
 | Item | State |
 |---|---|
-| Functions recovered | 41,822 (96.06% of `.text`) |
-| Unattributed remainder | 104 KB, verified as jump tables + padding |
-| Instructions with no faithful rendering | 166 (0.02%: MMX/SSE, x87 env, far pointers) |
+| Functions recovered | 41,822 (96.06% of `.text` as recovered code) |
+| Residual `.text` | 104 KB, classified: 11 jump tables (256 B) and 356 B of switch index tables, emitted as data in `out/text_data.json`, plus 105,808 B of alignment padding. 554 B in 90 runs are neither and are reported verbatim. |
+| Instructions with no faithful rendering | 0 (the last 166 — MMX/SSE, x87 env, far pointers, `lar`, `fbld`, `fcmovnbe`, `pushaw` — are modelled) |
 | Member offsets refuted by the binary | 4 of 4,326 (`ScoreTimeClass`, `ScorePrintClass`) |
 
 **Do not spend the next round on disassembly.** It is finished.
@@ -204,7 +204,11 @@ member offset at `-m32`.
 *Bounded and mostly mechanical.*
 
 - **1.1** Emit the 104 KB of jump tables as data and classify the padding.
-- **1.2** Implement the 166 unmodelled instructions.
+  **Done:** `tools/disasm.py` classifies the residual into jump tables, switch
+  index tables and padding, reports what is neither, and writes
+  `out/text_data.json`.
+- **1.2** Implement the 166 unmodelled instructions. **Done:** 0 unmodelled;
+  the model additions are in `src/handwritten/Machine.h`.
 - **1.3** Fix the 4 refuted offsets.
 - **1.4** Locate the 228 destructors, or mark each explicitly rather than
   labelling it a stub.
