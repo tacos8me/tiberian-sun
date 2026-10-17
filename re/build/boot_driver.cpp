@@ -140,8 +140,6 @@ struct Bind {
     char dll[64];
     char fn[96];
     char label[168];
-    u32  slot;
-    u32  orig;
     unsigned long hits;
 };
 
@@ -218,8 +216,6 @@ unsigned bind_traced_imports() {
         std::strncpy(b.fn, im.fn, sizeof b.fn - 1);
         b.fn[sizeof b.fn - 1] = 0;
         std::sprintf(b.label, "%s!%s", b.dll, b.fn);
-        b.slot = im.slot;
-        b.orig = target;
         b.hits = 0;
         g_orig[n] = ts::ts_lookup(target);
         u32 va = kWrapperBase + kWrapperStep * n;

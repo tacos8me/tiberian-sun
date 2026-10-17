@@ -64,7 +64,6 @@ import glob
 import json
 import os
 import re
-import shutil
 import subprocess
 import sys
 import time
@@ -96,11 +95,6 @@ def object_path(src):
     return os.path.join(OBJDIR, src.replace("/", "_")[:-4] + ".o")
 
 
-def signature(path):
-    st = os.stat(path)
-    return [st.st_mtime_ns, st.st_size]
-
-
 def dependencies(obj):
     """The headers an object was compiled against, read from its -MMD file.
 
@@ -119,8 +113,12 @@ def dependencies(obj):
     return deps.split()
 
 
-def stale(src, obj):
-    """True when the object is missing or older than anything it was built from."""
+def stale(obj):
+    """True when the object is missing or older than anything it was built from.
+
+    The dependency list includes the .cpp itself, so this one test covers a
+    source edit, a header edit, and a header that was removed.
+    """
     if not os.path.exists(obj):
         return True
     try:
@@ -175,11 +173,8 @@ def build(rebuild):
 
     todo = []
     for src in srcs:
-        sig = signature(src)
-        ent = objects.get(src)
-        obj = ent["obj"] if ent else object_path(src)
-        if (rebuild or not ent or ent.get("sig") != sig
-                or obj != object_path(src) or stale(src, obj)):
+        obj = objects.get(src) or object_path(src)
+        if rebuild or obj != object_path(src) or stale(obj):
             todo.append(src)
 
     if todo:
@@ -191,7 +186,7 @@ def build(rebuild):
                 if rc != 0:
                     failures.append((src, err))
                 else:
-                    objects[src] = {"sig": signature(src), "obj": obj}
+                    objects[src] = obj
         if failures:
             src, err = failures[0]
             print("boot: compile FAILED (%d of %d translation units)"
@@ -203,7 +198,7 @@ def build(rebuild):
         save_manifest(man)
 
     link = ["g++"] + CXXFLAGS + ["-o", BINARY] + \
-           [objects[s]["obj"] for s in srcs]
+           [objects[s] for s in srcs]
     r = subprocess.run(link, capture_output=True)
     if r.returncode != 0:
         print("boot: link FAILED")
