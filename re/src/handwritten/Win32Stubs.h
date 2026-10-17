@@ -829,141 +829,537 @@ TS_RET(SetupComm, 3, 1u)
 // ===========================================================================
 // USER32
 // ===========================================================================
-// The window that is created is fake but consistent: one HWND, one class atom,
-// one wndproc, a 640x480 client area. What matters is that RegisterClassA
-// records the wndproc so DispatchMessageA can CALL IT -- the game's own window
-// procedure is recovered code, and running it is the difference between "a
-// window object exists" and "the program's window code ran".
+// What has to be REAL here is not the window; it is the state a program reads
+// back out of the window system. A window procedure finds its own `this` with
+// GetWindowLongA(hwnd, GWL_USERDATA), posts to itself with PostMessageA, and
+// drives its frame loop with PeekMessageA returning 0 when the queue is empty.
+// A constant returned from any of those makes the program read someone else's
+// value, so this section keeps a window table, a class table and a message
+// queue, and the calls operate on them.
+//
+// The one thing that is genuinely fake is the window itself: nothing is
+// rasterised and no message ever arrives from the operating system. Every
+// message a run sees is one the program posted to itself, which is exactly the
+// set the program can be expected to handle.
 
+enum { MAX_WINDOWS = 32, MAX_CLASSES = 16, MAX_MSGS = 128 };
+
+// The screen this model reports, and the single value every geometry answer is
+// derived from: GetSystemMetrics, GetClientRect, the created window's size and
+// the DirectDraw display mode all agree, because a program that finds them
+// disagreeing takes its "this machine cannot do it" path.
+enum { SCREEN_W = 800, SCREEN_H = 600, SCREEN_BPP = 16 };
+
+// How many times GetMessageA answers an empty queue with WM_NULL before it
+// answers 0. A real GetMessage blocks; this model cannot, and 0 is WM_QUIT, so
+// the loop has to be given something benign to run on and then an honest end.
+enum { IDLE_POLLS = 64 };
+
+struct WinRec {
+    u32 hwnd;        // 0 marks a free slot
+    u32 proc;        // GWL_WNDPROC
+    u32 userdata;    // GWL_USERDATA: where a program stores its `this`
+    u32 style, exstyle, parent, id, atom, shown;
+    i32 x, y, cx, cy;   // window rect, in screen coordinates
+    char text[64];
+};
+inline WinRec *wins() { static WinRec w[MAX_WINDOWS]; return w; }
+
+struct ClassRec { u32 atom; u32 proc; char name[48]; };
+inline ClassRec *classes() { static ClassRec c[MAX_CLASSES]; return c; }
+inline unsigned &class_n() { static unsigned n = 0; return n; }
+
+// The message queue. Circular, fixed, and never full in practice: a program
+// that posts without pumping drops its posts, which is what a real queue's
+// limit does too.
+struct MsgRec { u32 hwnd, msg, wparam, lparam; };
+inline MsgRec *msgs() { static MsgRec m[MAX_MSGS]; return m; }
+inline unsigned &msg_head() { static unsigned h = 0; return h; }
+inline unsigned &msg_tail() { static unsigned t = 0; return t; }
+inline bool &quit_posted() { static bool q = false; return q; }
+inline unsigned &idle_polls() { static unsigned n = 0; return n; }
+
+// The primary window: the first one created. It is what an hwnd of 0 in
+// GetMessageA/PeekMessageA means, and what GetActiveWindow and friends report.
 inline u32 &wnd_handle() { static u32 h = 0; return h; }
 inline u32 &wnd_proc() { static u32 p = 0; return p; }
 inline u32 &paint_dc() { static u32 d = 0; return d; }
 
+inline WinRec *win_find(u32 hwnd) {
+    if (!hwnd) return 0;
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
+        if (wins()[i].hwnd == hwnd) return &wins()[i];
+    return 0;
+}
+
+inline WinRec *win_alloc() {
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
+        if (wins()[i].hwnd == 0) return &wins()[i];
+    return 0;
+}
+
+inline void win_copy(char *dst, unsigned cap, u32 src) {
+    unsigned i = 0;
+    if (src) for (; i + 1u < cap && ld8(src + i); ++i) dst[i] = (char)ld8(src + i);
+    dst[i] = 0;
+}
+
+inline void msg_push(u32 hwnd, u32 msg, u32 wparam, u32 lparam) {
+    unsigned tail = msg_tail();
+    if (tail - msg_head() >= (unsigned)MAX_MSGS) return;   // full: dropped
+    MsgRec &m = msgs()[tail % (unsigned)MAX_MSGS];
+    m.hwnd = hwnd; m.msg = msg; m.wparam = wparam; m.lparam = lparam;
+    msg_tail() = tail + 1u;
+}
+
+// A filter of (first, last) == (0, 0) means every message, which is the form
+// the game's own posts are read back with. Otherwise both bounds must match,
+// and so must hwnd when one is named. `remove` is PeekMessageA's PM_REMOVE:
+// false leaves the message at the head of the queue for the next call.
+inline bool msg_pop(MsgRec *out, u32 hwnd, u32 first, u32 last, bool remove) {
+    unsigned head = msg_head();
+    if (head == msg_tail()) return false;
+    const MsgRec &m = msgs()[head % (unsigned)MAX_MSGS];
+    if (hwnd && m.hwnd != hwnd) return false;
+    if ((first || last) && (m.msg < first || m.msg > last)) return false;
+    if (out) *out = m;
+    if (remove) msg_head() = head + 1u;
+    return true;
+}
+
+// MSG is 28 bytes: hwnd, message, wParam, lParam, time, pt.x, pt.y.
+inline void msg_fill(u32 p, const MsgRec &m) {
+    st32(p + 0u, m.hwnd);
+    st32(p + 4u, m.msg);
+    st32(p + 8u, m.wparam);
+    st32(p + 12u, m.lparam);
+    st32(p + 16u, tick());
+    st32(p + 20u, 0u);
+    st32(p + 24u, 0u);
+}
+
+// Call the program's own window procedure. The game's wndproc is recovered
+// code, so it is entered as a __stdcall callee: arguments right to left, a
+// return address under them, and ESP restored afterwards whatever the callee
+// did with its own frame. Running the program's window code is the difference
+// between "a window object exists" and "the program's window code ran".
+inline u32 call_wndproc(u32 proc, u32 hwnd, u32 msg, u32 wparam, u32 lparam) {
+    if (!proc) return 0u;
+    u32 sp = ESP.d;
+    push32(lparam);
+    push32(wparam);
+    push32(msg);
+    push32(hwnd);
+    ts_call_at(proc, 0x00fed000u);
+    u32 r = EAX.d;
+    ESP.d = sp;
+    return r;
+}
+
 TS_BEGIN(RegisterClassA)
     // WNDCLASSA: +0 style, +4 lpfnWndProc, +8 cbClsExtra, +12 cbWndExtra,
     // +16 hInstance, +20 hIcon, +24 hCursor, +28 hbrBackground, +32 lpszMenuName,
-    // +36 lpszClassName.
-    wnd_proc() = arg(0) ? ld32(arg(0) + 4u) : 0u;
-    static u32 atom = 0;
-    stub_done(1, 0xc000u + (atom++));
+    // +36 lpszClassName. The class name is kept, not just the proc: a program
+    // that registers two classes and creates the second one by name has to get
+    // the second class's procedure.
+    u32 wc = arg(0);
+    u32 atom = 0;
+    unsigned n = class_n();
+    if (wc && n < (unsigned)MAX_CLASSES) {
+        ClassRec &c = classes()[n];
+        c.atom = 0xc000u + n;
+        c.proc = ld32(wc + 4u);
+        win_copy(c.name, sizeof(c.name), ld32(wc + 36u));
+        class_n() = n + 1u;
+        wnd_proc() = c.proc;   // the most recent registration, for an unregistered class
+        atom = c.atom;
+    }
+    stub_done(1, atom);
 TS_END
 
+// The class a CreateWindowExA call names: by name, or by atom when the caller
+// passes MAKEINTATOM (a value below 0x10000).
+inline u32 class_proc(u32 clsname, u32 *atom) {
+    if (clsname && clsname < 0x10000u) {
+        for (unsigned i = 0; i < class_n(); ++i)
+            if (classes()[i].atom == clsname) { *atom = classes()[i].atom; return classes()[i].proc; }
+        return 0u;
+    }
+    if (clsname) {
+        const char *want = ld_cstr(clsname);
+        for (unsigned i = 0; i < class_n(); ++i)
+            if (!std::strcmp(classes()[i].name, want)) { *atom = classes()[i].atom; return classes()[i].proc; }
+    }
+    *atom = 0u;
+    return 0u;
+}
+
 TS_BEGIN(CreateWindowExA)
-    static u32 n = 0;
-    u32 h = 0x00010001u + (n++);
-    wnd_handle() = h;
+    // CreateWindowExA(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y,
+    //                nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam).
+    // The handle is non-zero, distinct per window and stable for the life of
+    // the window -- a program stores it and compares against it for the rest of
+    // the run.
+    static u32 serial = 0;
+    u32 clsname = arg(1), title = arg(2), style = arg(3);
+    i32 x = (i32)arg(4), y = (i32)arg(5);
+    i32 cx = (i32)arg(6), cy = (i32)arg(7);
+    u32 parent = arg(8), id = arg(9);
+    u32 h = 0;
+    WinRec *w = win_alloc();
+    if (w) {
+        u32 atom = 0;
+        u32 proc = class_proc(clsname, &atom);
+        if (!proc) proc = wnd_proc();
+        // CW_USEDEFAULT is a request, not a size.
+        if (cx <= 0 || cx == (i32)0x80000000) cx = (i32)SCREEN_W;
+        if (cy <= 0 || cy == (i32)0x80000000) cy = (i32)SCREEN_H;
+        if (x == (i32)0x80000000) x = 0;
+        if (y == (i32)0x80000000) y = 0;
+        h = 0x00010001u + (serial++);
+        w->hwnd = h;
+        w->proc = proc;
+        w->userdata = 0u;
+        w->style = style;
+        w->exstyle = arg(0);
+        w->parent = parent;
+        w->id = id;
+        w->atom = atom;
+        w->shown = 0u;
+        w->x = x; w->y = y; w->cx = cx; w->cy = cy;
+        win_copy(w->text, sizeof(w->text), title);
+        if (!wnd_handle()) wnd_handle() = h;
+        // Windows sends WM_NCCREATE and then WM_CREATE from inside
+        // CreateWindowEx, and a program that initialises in WM_CREATE expects
+        // it. WM_CREATE carries a CREATESTRUCTA in lParam: 48 bytes, the
+        // pointer the caller passed last and the geometry it asked for.
+        u32 cs = zero_block(48u, 4u);
+        st32(cs + 0u, arg(11));      // lpCreateParams
+        st32(cs + 4u, arg(10));      // hInstance
+        st32(cs + 8u, id);           // hMenu
+        st32(cs + 12u, parent);      // hwndParent
+        st32(cs + 16u, (u32)cy);     // cy
+        st32(cs + 20u, (u32)cx);     // cx
+        st32(cs + 24u, (u32)y);
+        st32(cs + 28u, (u32)x);
+        st32(cs + 32u, style);
+        st32(cs + 36u, title);
+        st32(cs + 40u, clsname);
+        st32(cs + 44u, arg(0));      // dwExStyle
+        call_wndproc(proc, h, 0x0001u, 0u, cs);   // WM_CREATE
+    }
     stub_done(12, h);
 TS_END
 
 TS_BEGIN(GetMessageA)
-    // Three WM_PAINTs then WM_QUIT. Returning WM_QUIT on the first call would
-    // exit the loop before DispatchMessageA ever ran; spinning forever would
-    // never terminate. Three is enough to prove dispatch works.
-    static unsigned seen = 0;
-    u32 msg = arg(1);
-    for (u32 i = 0; i < 28u; ++i) st8(msg + i, 0);
-    if (seen >= 3u) { stub_done(4, 0u); }
-    else {
-        ++seen;
-        st32(msg + 4u, wnd_handle() ? wnd_handle() : 0x00010001u);
-        st32(msg + 8u, 0x000fu);   // WM_PAINT
+    // GetMessageA(MSG*, hwnd, wMsgFilterMin, wMsgFilterMax). It does NOT return
+    // 0 to mean "nothing to do": 0 IS WM_QUIT, and a program that reads it ends
+    // its loop. So an empty queue is answered with a benign WM_NULL for a
+    // bounded number of idle polls and only then with 0, which terminates a run
+    // without telling the loop on its first iteration that the program is over.
+    u32 p = arg(0);
+    MsgRec m;
+    if (msg_pop(&m, arg(1), arg(2), arg(3), true)) {
+        msg_fill(p, m);
+        stub_done(4, m.msg == 0x0012u ? 0u : 1u);   // 0 for WM_QUIT
+    } else if (quit_posted() || idle_polls() >= (unsigned)IDLE_POLLS) {
+        quit_posted() = false;
+        idle_polls() = 0u;
+        stub_done(4, 0u);
+    } else {
+        ++idle_polls();
+        m.hwnd = wnd_handle(); m.msg = 0u; m.wparam = 0u; m.lparam = 0u;
+        msg_fill(p, m);
         stub_done(4, 1u);
     }
 TS_END
 
 TS_BEGIN(PeekMessageA)
-    static unsigned seen = 0;
-    u32 msg = arg(1);
-    if (seen >= 3u) { stub_done(5, 0u); }
-    else {
-        ++seen;
-        for (u32 i = 0; i < 28u; ++i) st8(msg + i, 0);
-        st32(msg + 4u, wnd_handle() ? wnd_handle() : 0x00010001u);
-        st32(msg + 8u, 0x000fu);
+    // PeekMessageA(MSG*, hwnd, min, max, wRemoveMsg). 0 means "no message", and
+    // that is the return value that keeps a game loop running: it says "carry
+    // on with this frame", not "quit".
+    u32 p = arg(0);
+    MsgRec m;
+    if (msg_pop(&m, arg(1), arg(2), arg(3), (arg(4) & 1u) != 0u)) {
+        msg_fill(p, m);
         stub_done(5, 1u);
+    } else {
+        stub_done(5, 0u);
     }
 TS_END
 
-TS_RET(TranslateMessage, 1, 1u)
-TS_RET(PostQuitMessage, 1, 0u)
-TS_RET(DefWindowProcA, 4, 0u)
-TS_RET(PostMessageA, 4, 1u)
-TS_RET(SendMessageA, 4, 0u)
+TS_BEGIN(TranslateMessage)
+    // A WM_KEYDOWN becomes a WM_CHAR for the same window; nothing else is
+    // translated. The return value is whether a message was posted, so a caller
+    // that pumps until TranslateMessage says "no" still terminates.
+    u32 p = arg(0);
+    u32 msg = ld32(p + 4u), r = 0u;
+    if (msg == 0x0100u || msg == 0x0104u) {   // WM_KEYDOWN, WM_SYSKEYDOWN
+        u32 vk = ld32(p + 8u);
+        if (vk >= 0x20u && vk < 0x7fu) {
+            msg_push(ld32(p + 0u), 0x0102u, vk, ld32(p + 12u));   // WM_CHAR
+            r = 1u;
+        }
+    }
+    stub_done(1, r);
+TS_END
+
+TS_BEGIN(PostQuitMessage)
+    // WM_QUIT goes through the queue like any other message, because a program
+    // that pumps with PeekMessageA never sees a return value from GetMessage.
+    msg_push(wnd_handle(), 0x0012u, arg(0), 0u);
+    quit_posted() = true;
+    stub_done(1, 0u);
+TS_END
+
+TS_BEGIN(DefWindowProcA)
+    // The messages that have a defined answer. Everything else returns 0, which
+    // is what DefWindowProc answers for the messages a program is expected to
+    // ignore.
+    u32 hwnd = arg(0), msg = arg(1), r = 0u;
+    if (msg == 0x0081u) {          // WM_NCCREATE
+        r = 1u;
+    } else if (msg == 0x0014u) {   // WM_ERASEBKGND
+        r = 1u;
+    } else if (msg == 0x0020u) {   // WM_SETCURSOR
+        r = 1u;
+    } else if (msg == 0x0010u) {   // WM_CLOSE
+        WinRec *w = win_find(hwnd);
+        if (w) w->hwnd = 0u;
+    } else if (msg == 0x0024u) {   // WM_GETMINMAXINFO
+        u32 p = arg(3);
+        if (p) { st32(p + 8u, SCREEN_W); st32(p + 12u, SCREEN_H); }
+    }
+    stub_done(4, r);
+TS_END
+
+TS_BEGIN(PostMessageA)
+    // A program that posts to itself and pumps is the only source of messages
+    // this model has, so the post has to be remembered.
+    u32 hwnd = arg(0);
+    msg_push(hwnd ? hwnd : wnd_handle(), arg(1), arg(2), arg(3));
+    stub_done(4, 1u);
+TS_END
+
+TS_BEGIN(SendMessageA)
+    // SendMessage is synchronous: the answer is the window procedure's return
+    // value, and a caller that sends a private query reads it.
+    u32 hwnd = arg(0), msg = arg(1), wp = arg(2), lp = arg(3), r = 0u;
+    if (hwnd == 0xffffu) {                    // HWND_BROADCAST
+        for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
+            if (wins()[i].hwnd)
+                r = call_wndproc(wins()[i].proc, wins()[i].hwnd, msg, wp, lp);
+    } else {
+        WinRec *w = win_find(hwnd);
+        u32 proc = w ? w->proc : (hwnd == wnd_handle() ? wnd_proc() : 0u);
+        r = call_wndproc(proc, hwnd, msg, wp, lp);
+    }
+    stub_done(4, r);
+TS_END
+
+TS_BEGIN(CallWindowProcA)
+    // CallWindowProcA(lpPrevWndProc, hWnd, Msg, wParam, lParam) -- the subclass
+    // chain. Without this the game's own window subclassing calls nothing.
+    stub_done(5, call_wndproc(arg(0), arg(1), arg(2), arg(3), arg(4)));
+TS_END
 
 TS_BEGIN(DispatchMessageA)
-    // MSG: +0 hwnd, +4 message, +8 wParam, +12 lParam. The game's wndproc is
-    // recovered code expecting a __stdcall frame, so the arguments go on the
-    // modelled stack in reverse and a return address is pushed for its `ret`.
+    // MSG: +0 hwnd, +4 message, +8 wParam, +12 lParam. The procedure is looked
+    // up through the window the message names, so a message posted to a second
+    // window reaches that window's procedure and not the main one.
     u32 p = arg(0);
-    u32 proc = wnd_proc();
-    if (!proc) { stub_done(1, 0u); }
-    else {
-        push32(ld32(p + 12u));
-        push32(ld32(p + 8u));
-        push32(ld32(p + 4u));
-        push32(ld32(p + 0u));
-        ts_call_at(proc, 0x00fed000u);
-        stub_done(1, 0u);
-    }
+    u32 hwnd = ld32(p + 0u), msg = ld32(p + 4u);
+    WinRec *w = win_find(hwnd);
+    u32 proc = w ? w->proc : wnd_proc();
+    stub_done(1, call_wndproc(proc, hwnd, msg, ld32(p + 8u), ld32(p + 12u)));
 TS_END
 
+// The slot a handle names, or -1. Two callers derive a per-window device
+// context from it, so it lives with the table rather than inside one stub.
+inline unsigned win_index(u32 hwnd) {
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
+        if (wins()[i].hwnd == hwnd) return i;
+    return 0xffffffffu;
+}
+
+// A window's device context: one per window, stable for its life, because a
+// program selects a font or a bitmap into it once and expects the selection to
+// still be there on the next paint.
+inline u32 win_dc(u32 hwnd) {
+    unsigned i = win_index(hwnd);
+    return 0x00030001u + (i == 0xffffffffu ? 0u : i);
+}
+
 TS_BEGIN(GetClientRect)
+    // The client area is the window's own size. A program that asks for it and
+    // gets a different rectangle than the one it created sizes its surfaces and
+    // its back buffers for the wrong area.
     u32 p = arg(1);
-    st32(p, 0u); st32(p + 4u, 0u); st32(p + 8u, 640u); st32(p + 12u, 480u);
+    WinRec *w = win_find(arg(0));
+    st32(p + 0u, 0u);
+    st32(p + 4u, 0u);
+    st32(p + 8u, w ? (u32)w->cx : (u32)SCREEN_W);
+    st32(p + 12u, w ? (u32)w->cy : (u32)SCREEN_H);
     stub_done(2, 1u);
 TS_END
 
 TS_BEGIN(GetWindowRect)
     u32 p = arg(1);
-    st32(p, 0u); st32(p + 4u, 0u); st32(p + 8u, 640u); st32(p + 12u, 480u);
+    WinRec *w = win_find(arg(0));
+    st32(p + 0u, w ? (u32)w->x : 0u);
+    st32(p + 4u, w ? (u32)w->y : 0u);
+    st32(p + 8u, w ? (u32)(w->x + w->cx) : (u32)SCREEN_W);
+    st32(p + 12u, w ? (u32)(w->y + w->cy) : (u32)SCREEN_H);
     stub_done(2, 1u);
 TS_END
 
 TS_BEGIN(BeginPaint)
-    // PAINTSTRUCT is 64 bytes; hdc sits at +0.
-    u32 p = arg(1);
-    for (u32 i = 0; i < 64u; ++i) st8(p + i, 0);
-    if (!paint_dc()) paint_dc() = 0x00030001u;
-    st32(p + 0u, paint_dc());
-    stub_done(2, paint_dc());
+    // PAINTSTRUCT: +0 hdc, +8 fErase, +12 rcPaint. The DC is the window's own,
+    // so a selection made in one paint survives into the next.
+    u32 p = arg(1), hwnd = arg(0);
+    u32 dc = win_dc(hwnd);
+    if (!paint_dc()) paint_dc() = dc;
+    if (p) {
+        for (u32 i = 0; i < 64u; ++i) st8(p + i, 0);
+        st32(p + 0u, dc);
+        st32(p + 8u, 1u);            // fErase: the background is erased
+        WinRec *w = win_find(hwnd);
+        st32(p + 12u, 0u);
+        st32(p + 16u, 0u);
+        st32(p + 20u, w ? (u32)w->cx : (u32)SCREEN_W);
+        st32(p + 24u, w ? (u32)w->cy : (u32)SCREEN_H);
+    }
+    stub_done(2, dc);
 TS_END
 
 TS_BEGIN(EndPaint) stub_done(2, 1u); TS_END
 
 TS_BEGIN(GetDC)
-    static u32 n = 0;
-    stub_done(1, 0x00030001u + (n++));
+    stub_done(1, win_dc(arg(0)));
 TS_END
 TS_RET(ReleaseDC, 2, 1u)
 
-TS_RET(ShowWindow, 2, 0u)
-TS_RET(UpdateWindow, 1, 1u)
+inline bool &in_paint() { static bool b = false; return b; }
+
+TS_BEGIN(ShowWindow)
+    // The previous visibility, which is what ShowWindow returns: a program that
+    // restores the old state after a temporary hide reads it.
+    u32 hwnd = arg(0), cmd = arg(1);
+    WinRec *w = win_find(hwnd);
+    u32 prev = 0u;
+    if (w) {
+        prev = w->shown;
+        w->shown = (cmd == 0u /*SW_HIDE*/) ? 0u : 1u;
+    }
+    stub_done(2, prev);
+TS_END
+
+TS_BEGIN(UpdateWindow)
+    // UpdateWindow sends WM_PAINT now if the window is dirty. The guard keeps a
+    // WM_PAINT handler that invalidates and updates again from recursing: real
+    // Windows coalesces paints, and this is the cheapest faithful form of that.
+    u32 hwnd = arg(0);
+    WinRec *w = win_find(hwnd);
+    if (w && w->proc && !in_paint()) {
+        in_paint() = true;
+        call_wndproc(w->proc, hwnd, 0x000fu, 0u, 0u);   // WM_PAINT
+        in_paint() = false;
+    }
+    stub_done(1, 1u);
+TS_END
+
 TS_RET(InvalidateRect, 3, 1u)
 TS_RET(ValidateRect, 2, 1u)
 TS_RET(RedrawWindow, 5, 1u)
-TS_RET(IsWindow, 1, 1u)
+
+TS_BEGIN(IsWindow) stub_done(1, win_find(arg(0)) ? 1u : 0u); TS_END
 TS_RET(IsWindowEnabled, 1, 1u)
 TS_RET(EnableWindow, 2, 1u)
-TS_RET(DestroyWindow, 1, 1u)
+
+TS_BEGIN(DestroyWindow)
+    u32 hwnd = arg(0);
+    WinRec *w = win_find(hwnd);
+    if (w) {
+        w->hwnd = 0u;
+        if (wnd_handle() == hwnd) wnd_handle() = 0u;
+        stub_done(1, 1u);
+    } else {
+        stub_done(1, 0u);
+    }
+TS_END
+
 TS_RET(CloseWindow, 1, 1u)
 TS_RET(BringWindowToTop, 1, 1u)
-TS_RET(MoveWindow, 6, 1u)
-TS_RET(SetWindowPos, 7, 1u)
-TS_RET(SetActiveWindow, 1, 0x00010001u)
+
+TS_BEGIN(MoveWindow)
+    u32 hwnd = arg(0);
+    WinRec *w = win_find(hwnd);
+    if (w) {
+        w->x = (i32)arg(1); w->y = (i32)arg(2);
+        w->cx = (i32)arg(3); w->cy = (i32)arg(4);
+    }
+    stub_done(6, w ? 1u : 0u);
+TS_END
+
+TS_BEGIN(SetWindowPos)
+    // SWP_NOSIZE 0x0001, SWP_NOMOVE 0x0002.
+    u32 hwnd = arg(0), flags = arg(6);
+    WinRec *w = win_find(hwnd);
+    if (w) {
+        if (!(flags & 0x0002u)) { w->x = (i32)arg(2); w->y = (i32)arg(3); }
+        if (!(flags & 0x0001u)) { w->cx = (i32)arg(4); w->cy = (i32)arg(5); }
+    }
+    stub_done(7, w ? 1u : 0u);
+TS_END
+
+TS_BEGIN(SetActiveWindow)  stub_done(1, wnd_handle()); TS_END
 TS_RET(SetForegroundWindow, 1, 1u)
-TS_RET(GetForegroundWindow, 0, 0x00010001u)
-TS_RET(GetActiveWindow, 0, 0x00010001u)
-TS_RET(GetFocus, 0, 0x00010001u)
-TS_RET(SetFocus, 1, 0x00010001u)
-TS_RET(GetCapture, 0, 0x00010001u)
-TS_RET(SetCapture, 1, 0x00010001u)
+TS_BEGIN(GetForegroundWindow) stub_done(0, wnd_handle()); TS_END
+TS_BEGIN(GetActiveWindow)     stub_done(0, wnd_handle()); TS_END
+TS_BEGIN(GetFocus)            stub_done(0, wnd_handle()); TS_END
+TS_BEGIN(SetFocus)            stub_done(1, wnd_handle()); TS_END
+TS_BEGIN(GetCapture)          stub_done(0, wnd_handle()); TS_END
+TS_BEGIN(SetCapture)          stub_done(1, wnd_handle()); TS_END
 TS_RET(ReleaseCapture, 0, 1u)
-TS_RET(GetTopWindow, 0, 0u)
-TS_RET(GetParent, 1, 0u)
-TS_RET(GetWindow, 2, 0u)
+TS_BEGIN(GetTopWindow) stub_done(0, wnd_handle()); TS_END
+
+TS_BEGIN(GetParent)
+    WinRec *w = win_find(arg(0));
+    stub_done(1, w ? w->parent : 0u);
+TS_END
+
+TS_BEGIN(GetWindow)
+    // GW_OWNER (4) is the only relation this model has.
+    u32 hwnd = arg(0), cmd = arg(1);
+    WinRec *w = win_find(hwnd);
+    stub_done(2, (w && cmd == 4u) ? w->parent : 0u);
+TS_END
+
 TS_RET(ChildWindowFromPoint, 3, 0u)
-TS_RET(WindowFromPoint, 2, 0x00010001u)
-TS_RET(FindWindowA, 2, 0x00010001u)
+TS_BEGIN(WindowFromPoint) stub_done(2, wnd_handle()); TS_END
+
+TS_BEGIN(FindWindowA)
+    // Either argument may be null, which means "any". Returning the first match
+    // is what makes a program that looks for its own window find it.
+    const char *cls = arg(0) ? ld_cstr(arg(0)) : 0;
+    char want[64];
+    win_copy(want, sizeof(want), arg(1));
+    u32 found = 0u;
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS && !found; ++i) {
+        WinRec &w = wins()[i];
+        if (!w.hwnd) continue;
+        if (cls) {
+            bool ok = false;
+            for (unsigned c = 0; c < class_n(); ++c)
+                if (classes()[c].atom == w.atom && !std::strcmp(classes()[c].name, cls)) ok = true;
+            if (!ok) continue;
+        }
+        if (arg(1) && std::strcmp(w.text, want)) continue;
+        found = w.hwnd;
+    }
+    stub_done(2, found);
+TS_END
+
 TS_RET(EnumChildWindows, 3, 1u)
 TS_RET(GetMenu, 1, 0x00060001u)
 TS_RET(GetWindowContextHelpId, 1, 0u)
@@ -980,9 +1376,35 @@ TS_RET(RegisterHotKey, 4, 1u)
 TS_RET(SetTimer, 4, 1u)
 TS_RET(KillTimer, 2, 1u)
 TS_RET(IntersectRect, 3, 1u)
-TS_RET(DrawTextA, 5, 1u)
-TS_RET(AdjustWindowRectEx, 4, 1u)
-TS_RET(SetWindowTextA, 2, 1u)
+
+TS_BEGIN(DrawTextA)
+    // One line of text at the font height GetTextMetricsA reports. A caller
+    // that measures to lay out rows reads the height, not the truth.
+    stub_done(5, 16u);
+TS_END
+
+TS_BEGIN(AdjustWindowRectEx)
+    // The window rect is the client rect grown by the frame, so the two cannot
+    // disagree. A 4-pixel frame and a 19-pixel caption, which is what
+    // GetSystemMetrics reports for SM_CXFRAME and SM_CYCAPTION.
+    u32 p = arg(0);
+    if (p) {
+        i32 l = (i32)ld32(p + 0u), t = (i32)ld32(p + 4u);
+        i32 r = (i32)ld32(p + 8u), b = (i32)ld32(p + 12u);
+        st32(p + 0u, (u32)(l - 4));
+        st32(p + 4u, (u32)(t - 23));
+        st32(p + 8u, (u32)(r + 4));
+        st32(p + 12u, (u32)(b + 4));
+    }
+    stub_done(4, 1u);
+TS_END
+
+TS_BEGIN(SetWindowTextA)
+    WinRec *w = win_find(arg(0));
+    if (w) { win_copy(w->text, sizeof(w->text), arg(1)); stub_done(2, 1u); }
+    else stub_done(2, 0u);
+TS_END
+
 TS_RET(SetDlgItemTextA, 3, 1u)
 TS_RET(GetDlgItemTextA, 4, 0u)
 TS_RET(SendDlgItemMessageA, 5, 0u)
@@ -991,20 +1413,59 @@ TS_RET(IsDialogMessage, 2, 0u)
 TS_RET(GetDlgItem, 2, 0x00010003u)
 TS_RET(GetNextDlgTabItem, 3, 0x00010003u)
 TS_RET(GetDlgCtrlID, 1, 1u)
-TS_RET(MessageBoxA, 4, 1u)          // IDOK
+
+TS_BEGIN(MessageBoxA)
+    // A message box is the program telling a human why it is about to stop.
+    // Nothing here can show one, so the text goes to the run's log -- that log
+    // is the only place the reason survives -- and the answer is IDOK, because
+    // the alternative is a caller that treats the failure as fatal.
+    const char *text = ld_cstr(arg(1));
+    char cap[96];
+    win_copy(cap, sizeof(cap), arg(2));
+    std::printf("win32stubs: MessageBoxA(hwnd 0x%08x) \"%s\" / \"%s\" -> IDOK\n",
+                arg(0), cap, text);
+    stub_done(4, 1u);
+TS_END
+
 TS_RET(MessageBoxIndirectA, 1, 1u)
-TS_RET(DialogBoxParamA, 5, 1u)      // IDOK
+
+TS_BEGIN(DialogBoxParamA)
+    std::printf("win32stubs: DialogBoxParamA(0x%08x, \"%s\") -> IDOK "
+                "(no dialog is created)\n", arg(0), ld_cstr(arg(1)));
+    stub_done(5, 1u);
+TS_END
 TS_RET(DialogBoxIndirectParamA, 5, 1u)
 TS_RET(CreateDialogParamA, 5, 0x00010002u)
 TS_RET(CreateDialogIndirectParamA, 5, 0x00010002u)
 
 TS_BEGIN(SetWindowLongA)
-    if (arg(1) == 0xfffffffcu) wnd_proc() = arg(2);   // GWL_WNDPROC
-    stub_done(3, 0u);
+    // Per window, and the previous value is returned: a subclassing wrapper
+    // saves what it replaced and restores it later, and a game stores its own
+    // `this` in GWL_USERDATA and reads it back inside its window procedure.
+    u32 hwnd = arg(0), idx = arg(1), val = arg(2), prev = 0u;
+    WinRec *w = win_find(hwnd);
+    if (!w && hwnd == wnd_handle()) w = win_find(wnd_handle());
+    if (w) {
+        if (idx == 0xfffffffcu) { prev = w->proc; w->proc = val; wnd_proc() = val; }
+        else if (idx == 0xffffffebu) { prev = w->userdata; w->userdata = val; }
+        else if (idx == 0xfffffff0u) { prev = w->style; w->style = val; }
+        else if (idx == 0xfffffff4u) { prev = w->id; w->id = val; }
+        else if (idx == 0xfffffff8u) { prev = w->parent; w->parent = val; }
+    }
+    stub_done(3, prev);
 TS_END
 
 TS_BEGIN(GetWindowLongA)
-    stub_done(2, arg(1) == 0xfffffffcu ? wnd_proc() : 0u);
+    u32 hwnd = arg(0), idx = arg(1), r = 0u;
+    WinRec *w = win_find(hwnd);
+    if (w) {
+        if (idx == 0xfffffffcu) r = w->proc;
+        else if (idx == 0xffffffebu) r = w->userdata;
+        else if (idx == 0xfffffff0u) r = w->style;
+        else if (idx == 0xfffffff4u) r = w->id;
+        else if (idx == 0xfffffff8u) r = w->parent;
+    }
+    stub_done(2, r);
 TS_END
 
 TS_BEGIN(SetRect)
@@ -1014,35 +1475,153 @@ TS_BEGIN(SetRect)
 TS_END
 
 TS_BEGIN(GetSystemMetrics)
-    u32 i = arg(0);
-    stub_done(1, i == 0u ? 640u : (i == 1u ? 480u : 0u));
+    // The screen this model reports. A program that asks for the desktop size
+    // before creating its window uses this to pick a resolution, so it has to
+    // be the same 800x600 the window and the DirectDraw display mode use.
+    u32 i = arg(0), r = 0u;
+    switch (i) {
+    case 0:  r = SCREEN_W; break;          // SM_CXSCREEN
+    case 1:  r = SCREEN_H; break;          // SM_CYSCREEN
+    case 2:  r = 17u; break;               // SM_CXVSCROLL
+    case 3:  r = 17u; break;               // SM_CYHSCROLL
+    case 4:  r = 19u; break;               // SM_CYCAPTION
+    case 5:  r = 1u; break;                // SM_CXBORDER
+    case 6:  r = 1u; break;                // SM_CYBORDER
+    case 7:  r = 4u; break;                // SM_CXDLGFRAME
+    case 8:  r = 4u; break;                // SM_CYDLGFRAME
+    case 11: r = 32u; break;               // SM_CXICON
+    case 12: r = 32u; break;               // SM_CYICON
+    case 13: r = 32u; break;               // SM_CXCURSOR
+    case 14: r = 32u; break;               // SM_CYCURSOR
+    case 15: r = 19u; break;               // SM_CYMENU
+    case 16: r = SCREEN_W; break;          // SM_CXFULLSCREEN
+    case 17: r = SCREEN_H; break;          // SM_CYFULLSCREEN
+    case 19: r = 1u; break;                // SM_MOUSEPRESENT
+    case 20: r = 17u; break;               // SM_CYVSCROLL
+    case 21: r = 17u; break;               // SM_CXHSCROLL
+    case 28: r = 112u; break;              // SM_CXMIN
+    case 29: r = 27u; break;               // SM_CYMIN
+    case 30: r = 16u; break;               // SM_CXSIZE
+    case 31: r = 16u; break;               // SM_CYSIZE
+    case 32: r = 4u; break;                // SM_CXFRAME
+    case 33: r = 4u; break;                // SM_CYFRAME
+    case 34: r = 112u; break;              // SM_CXMINTRACK
+    case 35: r = 27u; break;               // SM_CYMINTRACK
+    case 36: r = 4u; break;                // SM_CXDOUBLECLK
+    case 37: r = 4u; break;                // SM_CYDOUBLECLK
+    case 38: r = 75u; break;               // SM_CXICONSPACING
+    case 39: r = 75u; break;               // SM_CYICONSPACING
+    case 43: r = 3u; break;                // SM_CMOUSEBUTTONS
+    case 45: r = 2u; break;                // SM_CXEDGE
+    case 46: r = 2u; break;                // SM_CYEDGE
+    case 49: r = 16u; break;               // SM_CXSMICON
+    case 50: r = 16u; break;               // SM_CYSMICON
+    case 67: r = 1u; break;                // SM_CMONITORS
+    case 68: r = 1u; break;                // SM_SAMEDISPLAYFORMAT
+    case 70: r = 2u; break;                // SM_CXDRAG
+    case 71: r = 2u; break;                // SM_CYDRAG
+    default: r = 0u; break;
+    }
+    stub_done(1, r);
 TS_END
 
-TS_BEGIN(LoadCursorA) stub_done(2, 0x00040001u); TS_END
-TS_BEGIN(LoadIconA)   stub_done(2, 0x00050001u); TS_END
-TS_RET(SetCursor, 1, 0x00040001u)
-TS_RET(ShowCursor, 1, 1u)
+TS_BEGIN(LoadCursorA)
+    // A non-zero handle, distinct per resource, so a program that loads the
+    // arrow and then the wait cursor and compares the two sees a difference.
+    u32 res = arg(1);
+    stub_done(2, 0x00040001u + (res & 0xffffu));
+TS_END
+
+TS_BEGIN(LoadIconA)
+    u32 res = arg(1);
+    stub_done(2, 0x00050001u + (res & 0xffffu));
+TS_END
+
+TS_BEGIN(SetCursor)
+    // Returns the PREVIOUS cursor, which is what a program restores after a
+    // temporary change.
+    static u32 cur = 0x00040001u;
+    u32 prev = cur;
+    cur = arg(0) ? arg(0) : 0x00040001u;
+    stub_done(1, prev);
+TS_END
+
+TS_BEGIN(ShowCursor)
+    // Returns the new display count, which a program tests for >= 0.
+    static i32 count = 0;
+    count += (i32)arg(0) ? 1 : -1;
+    stub_done(1, (u32)count);
+TS_END
 
 TS_BEGIN(GetCursorPos)
+    static i32 cx = SCREEN_W / 2, cy = SCREEN_H / 2;
     u32 p = arg(0);
-    st32(p, 320u); st32(p + 4u, 240u);
+    st32(p + 0u, (u32)cx);
+    st32(p + 4u, (u32)cy);
     stub_done(1, 1u);
 TS_END
-TS_RET(SetCursorPos, 2, 1u)
-TS_RET(ClientToScreen, 2, 1u)
-TS_RET(ScreenToClient, 2, 1u)
+
+TS_BEGIN(SetCursorPos)
+    // Remembered, because a program that warps the pointer and then asks where
+    // it is expects its own answer.
+    static i32 cx = SCREEN_W / 2, cy = SCREEN_H / 2;
+    cx = (i32)arg(0);
+    cy = (i32)arg(1);
+    stub_done(2, 1u);
+TS_END
+
+TS_BEGIN(ClientToScreen)
+    u32 p = arg(1);
+    WinRec *w = win_find(arg(0));
+    if (p) {
+        st32(p + 0u, ld32(p + 0u) + (u32)(w ? w->x : 0));
+        st32(p + 4u, ld32(p + 4u) + (u32)(w ? w->y : 0));
+    }
+    stub_done(2, 1u);
+TS_END
+
+TS_BEGIN(ScreenToClient)
+    u32 p = arg(1);
+    WinRec *w = win_find(arg(0));
+    if (p) {
+        st32(p + 0u, ld32(p + 0u) - (u32)(w ? w->x : 0));
+        st32(p + 4u, ld32(p + 4u) - (u32)(w ? w->y : 0));
+    }
+    stub_done(2, 1u);
+TS_END
+
 TS_RET(FillRect, 3, 1u)
 
 TS_BEGIN(GetWindowTextA)
-    u32 buf = arg(1), cch = arg(2);
-    if (cch && buf) c_strncpy(buf, lit("Tiberian Sun"), cch);
-    stub_done(3, 12u);
+    // The text the window was created with, or the last one set on it: a
+    // program that sets its title and reads it back gets its own string.
+    u32 buf = arg(1), cch = arg(2), n = 0;
+    WinRec *w = win_find(arg(0));
+    const char *src = w ? w->text : "";
+    while (src[n]) ++n;
+    if (buf && cch) {
+        u32 i = 0;
+        for (; i + 1u < cch && src[i]; ++i) st8(buf + i, (u8)src[i]);
+        st8(buf + i, 0);
+    }
+    stub_done(3, n);
 TS_END
 
 TS_BEGIN(GetClassNameA)
-    u32 buf = arg(1), cch = arg(2);
-    if (cch && buf) c_strncpy(buf, lit("TiberianSun"), cch);
-    stub_done(3, 11u);
+    // The class this window was created from, which a program compares against
+    // to tell its own windows from a dialog's.
+    u32 buf = arg(1), cch = arg(2), n = 0;
+    const char *name = "";
+    WinRec *w = win_find(arg(0));
+    if (w) for (unsigned i = 0; i < class_n(); ++i)
+        if (classes()[i].atom == w->atom) name = classes()[i].name;
+    while (name[n]) ++n;
+    if (buf && cch) {
+        u32 i = 0;
+        for (; i + 1u < cch && name[i]; ++i) st8(buf + i, (u8)name[i]);
+        st8(buf + i, 0);
+    }
+    stub_done(3, n);
 TS_END
 
 TS_RET(GetKeyNameTextA, 4, 0u)
@@ -1062,54 +1641,65 @@ TS_END
 TS_BEGIN(wsprintfA)
     // wsprintfA is __cdecl and variadic: the caller pops the arguments, so this
     // stub discards only the return address and reads the rest without owning
-    // it. It handles %s %c %d %u %x %X %p %%; anything else is copied through.
+    // it. It formats %[flags][width][l]s %c %d %i %u %x %X %p and %%; a
+    // conversion it does not know is copied through with its flags, so a bad
+    // format is visible in the output rather than silently eating an argument.
     u32 dst = arg(0);
     const char *fmt = ld_cstr(arg(1));
     u32 out = 0, ai = 2;
-    char tmp[32];
+    char field[48];
     for (u32 i = 0; fmt[i]; ++i) {
-        if (fmt[i] != '%') { st8(dst + out, (u8)fmt[i]); ++out; continue; }
+        if (fmt[i] != '%') { st8(dst + out++, (u8)fmt[i]); continue; }
         ++i;
-        if (fmt[i] == '%') { st8(dst + out, '%'); ++out; continue; }
-        bool pad0 = false;
-        while (fmt[i] == '0' || fmt[i] == '-') { pad0 = pad0 || fmt[i] == '0'; ++i; }
-        while (fmt[i] >= '0' && fmt[i] <= '9') ++i;
+        if (fmt[i] == '%') { st8(dst + out++, (u8)'%'); continue; }
+        bool pad0 = false, left = false;
+        for (;; ++i) {
+            if (fmt[i] == '0') pad0 = true;
+            else if (fmt[i] == '-') left = true;
+            else break;
+        }
+        unsigned width = 0;
+        while (fmt[i] >= '0' && fmt[i] <= '9') {
+            width = width * 10u + (unsigned)(fmt[i] - '0');
+            ++i;
+        }
         if (fmt[i] == 'l') ++i;
         char c = fmt[i];
+        unsigned n = 0, head = 0;   // head: characters that precede zero padding
         if (c == 's') {
-            u32 s = arg(ai++);
-            while (ld8(s)) st8(dst + out++, ld8(s++));
+            u32 src = arg(ai++);
+            while (ld8(src) && n + 1u < sizeof(field)) field[n++] = (char)ld8(src++);
         } else if (c == 'c') {
-            st8(dst + out++, (u8)arg(ai++));
-        } else if (c == 'd' || c == 'i' || c == 'u' || c == 'x' || c == 'X') {
-            i32 v = (i32)arg(ai++);
-            u32 base = (c == 'x' || c == 'X') ? 16u : ((c == 'u') ? 10u : 10u);
+            field[n++] = (char)(u8)arg(ai++);
+        } else if (c == 'd' || c == 'i' || c == 'u' || c == 'x' || c == 'X' || c == 'p') {
+            u32 v = arg(ai++);
             bool neg = false;
-            u32 uv;
-            if (v < 0 && c != 'u' && c != 'x' && c != 'X') { neg = true; uv = (u32)(0 - (u32)v); }
-            else uv = (u32)v;
+            if ((c == 'd' || c == 'i') && (i32)v < 0) { neg = true; v = (u32)(0u - v); }
+            u32 base = (c == 'x' || c == 'X' || c == 'p') ? 16u : 10u;
+            bool upper = (c == 'X');
+            char rev[24];
             unsigned k = 0;
             do {
-                u32 dg = uv % base;
-                tmp[k++] = (char)(dg < 10u ? ('0' + dg) : ((c == 'X' ? 'A' : 'a') + dg - 10u));
-                uv /= base;
-            } while (uv && k < sizeof(tmp));
-            if (neg) st8(dst + out++, '-');
-            while (k) st8(dst + out++, (u8)tmp[--k]);
-        } else if (c == 'p') {
-            u32 v = arg(ai++);
-            tmp[0] = '0'; tmp[1] = 'x';
-            unsigned k = 2;
-            for (int b = 7; b >= 0; --b) {
-                u32 dg = (v >> (b * 4)) & 0xfu;
-                tmp[k++] = (char)(dg < 10u ? ('0' + dg) : ('a' + dg - 10u));
-            }
-            for (unsigned j = 0; j < k; ++j) st8(dst + out++, (u8)tmp[j]);
+                u32 dg = v % base;
+                rev[k++] = (char)(dg < 10u ? ('0' + dg)
+                                          : ((upper ? 'A' : 'a') + dg - 10u));
+                v /= base;
+            } while (v && k < sizeof(rev));
+            if (neg) field[n++] = '-';
+            if (c == 'p') { field[n++] = '0'; field[n++] = 'x'; }
+            head = n;
+            while (k) field[n++] = rev[--k];
         } else {
-            st8(dst + out++, (u8)'%');
-            if (c) st8(dst + out++, (u8)c);
+            field[n++] = '%';
+            if (c) field[n++] = c;
+            head = n;
         }
-        (void)pad0;
+        unsigned pad = width > n ? width - n : 0u;
+        if (!left && !pad0) for (unsigned k = 0; k < pad; ++k) st8(dst + out++, (u8)' ');
+        for (unsigned k = 0; k < head; ++k) st8(dst + out++, (u8)field[k]);
+        if (!left && pad0) for (unsigned k = 0; k < pad; ++k) st8(dst + out++, (u8)'0');
+        for (unsigned k = head; k < n; ++k) st8(dst + out++, (u8)field[k]);
+        if (left) for (unsigned k = 0; k < pad; ++k) st8(dst + out++, (u8)' ');
     }
     st8(dst + out, 0);
     stub_done(0, out);
@@ -1124,14 +1714,28 @@ TS_END
 
 inline u32 &gdi_serial() { static u32 n = 0; return n; }
 
+// What is selected into each device context. Without this, SelectObject cannot
+// answer with the object it replaced, and a caller that selects a font, draws,
+// and selects the old one back gets somebody else's object.
+inline u32 *dc_handles() { static u32 h[16]; return h; }
+inline u32 *dc_objects() { static u32 o[16]; return o; }
+
 TS_BEGIN(GetStockObject)
     stub_done(1, 0x00070000u + arg(0));
 TS_END
 TS_BEGIN(SelectObject)
-    static u32 prev = 0x00070001u;
-    u32 r = prev;
-    prev = arg(1);
-    stub_done(2, r);
+    // Per device context. A fresh DC holds a stock object, which is what the
+    // first call reports as the one it replaced.
+    u32 dc = arg(0), obj = arg(1), prev = 0x00070001u;
+    for (unsigned i = 0; i < 16u; ++i) {
+        if (dc_handles()[i] == 0u) { dc_handles()[i] = dc; dc_objects()[i] = prev; }
+        if (dc_handles()[i] == dc) {
+            prev = dc_objects()[i];
+            dc_objects()[i] = obj;
+            break;
+        }
+    }
+    stub_done(2, prev);
 TS_END
 TS_RET(DeleteObject, 1, 1u)
 TS_RET(DeleteDC, 1, 1u)
@@ -1226,13 +1830,18 @@ TS_END
 
 TS_BEGIN(dd_GetDisplayMode)
     // DDSURFACEDESC: +0 dwSize, +4 dwFlags, +8 dwHeight, +12 dwWidth,
-    // +104 ddpfPixelFormat.dwRGBBitCount.
+    // +104 ddpfPixelFormat.dwRGBBitCount. The mode is the screen this model
+    // reports from GetSystemMetrics: a program that asks both and is told
+    // different sizes sizes its surfaces for the wrong screen.
     u32 p = arg(1);
-    for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
-    st32(p + 0u, 108u);
-    st32(p + 8u, 480u);
-    st32(p + 12u, 640u);
-    st32(p + 104u, 16u);
+    if (p) {
+        for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
+        st32(p + 0u, 108u);
+        st32(p + 4u, 0x00000041u);   // DDSD_WIDTH|DDSD_HEIGHT|DDSD_PIXELFORMAT
+        st32(p + 8u, SCREEN_H);
+        st32(p + 12u, SCREEN_W);
+        st32(p + 104u, SCREEN_BPP);
+    }
     stub_done(2, 0u);
 TS_END
 
@@ -1438,9 +2047,15 @@ struct SlotDef { const char *name; u8 nargs; u32 ret; };
 inline SlotDef *slot_defs() { static SlotDef s[512]; return s; }
 inline u32 &slot_next() { static u32 n = 0; return n; }
 
+// Per-slot call counts. A COM method is not an import, so it has no row in the
+// import table; without this the calls a DirectDraw wrapper makes would be
+// counted in total and attributed to nothing.
+inline unsigned long *slot_counts() { static unsigned long c[512]; return c; }
+
 template<unsigned I> void slot_stub() {
     const SlotDef &d = slot_defs()[I];
     note(d.name ? d.name : "com");
+    slot_counts()[I]++;
     stub_done(d.nargs, d.ret);
 }
 
@@ -1514,9 +2129,24 @@ inline Fn *slot_fns() {
     return f;
 }
 
-// Build a fake COM object: an object block whose first dword points at a
-// freshly allocated vtable. Each slot gets its own registered stub VA.
-inline u32 make_com_object(const char *const *names, const u8 *nargs,
+void k_com_QueryInterface();
+
+TS_BEGIN(com_QueryInterface)
+    // QueryInterface(this, riid, ppvObject) for every fake object in the model.
+    // Filling ppvObject is the whole job: a wrapper that asks for an interface,
+    // is told S_OK, and then calls through a ppvObject nobody wrote calls
+    // through garbage. This object answers every interface with itself.
+    u32 out = arg(2);
+    if (out) st32(out, arg(0));
+    stub_done(3, 0u);   // S_OK
+TS_END
+
+// Build a vtable of registered stubs: one SlotDef per slot (so a slot stub
+// knows its own name and argument count) and one registered VA per slot. The
+// vtable is built once per interface SHAPE and shared by every object of that
+// shape, because slot_defs() is a fixed table and a vtable per surface would
+// exhaust it after eleven surfaces.
+inline u32 make_com_vtable(const char *const *names, const u8 *nargs,
                            const Fn *override_fns, unsigned slots) {
     u32 base = slot_next();
     for (unsigned i = 0; i < slots; ++i) {
@@ -1528,11 +2158,19 @@ inline u32 make_com_object(const char *const *names, const u8 *nargs,
     u32 vt = alloc_block(slots * 4u, 4u);
     for (unsigned i = 0; i < slots; ++i) {
         Fn f = override_fns[i] ? override_fns[i] : slot_fns()[base + i];
+        if (i == 0u) f = &k_com_QueryInterface;   // slot 0 is QueryInterface
         u32 va = alloc_stub_va();
         ts_register(va, f);
         st32(vt + i * 4u, va);
     }
     slot_next() = base + slots;
+    return vt;
+}
+
+// A fake COM object: an object block whose first dword points at its vtable.
+inline u32 make_com_object(const char *const *names, const u8 *nargs,
+                           const Fn *override_fns, unsigned slots) {
+    u32 vt = make_com_vtable(names, nargs, override_fns, slots);
     u32 obj = alloc_block(16u, 4u);
     st32(obj, vt);
     return obj;
@@ -1541,7 +2179,6 @@ inline u32 make_com_object(const char *const *names, const u8 *nargs,
 void k_sfs_Lock();
 void k_sfs_GetSurfaceDesc();
 void k_sfs_GetAttachedSurface();
-
 inline u32 make_surface() {
     // IDirectDrawSurface, DirectX 6 slot order. Every slot is a stub; the two
     // that hand back memory are given real bodies because a caller that locks
@@ -1581,7 +2218,13 @@ inline u32 make_surface() {
     over[25] = &k_sfs_Lock;          // Lock
     over[22] = &k_sfs_GetSurfaceDesc;
     over[12] = &k_sfs_GetAttachedSurface;
-    return make_com_object(names, nargs, over, 45);
+    // One vtable, one object per surface: slot_defs() is a fixed table, so the
+    // 45 slot definitions are built once and every surface shares them.
+    static u32 vt = 0;
+    if (!vt) vt = make_com_vtable(names, nargs, over, 45);
+    u32 obj = alloc_block(16u, 4u);
+    st32(obj, vt);
+    return obj;
 }
 
 TS_BEGIN(sfs_GetSurfaceDesc)
@@ -1590,9 +2233,10 @@ TS_BEGIN(sfs_GetSurfaceDesc)
     if (p) {
         for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
         st32(p + 0u, 108u);
-        st32(p + 8u, 480u);
-        st32(p + 12u, 640u);
-        st32(p + 104u, 16u);
+        st32(p + 4u, 0x00000041u);
+        st32(p + 8u, SCREEN_H);
+        st32(p + 12u, SCREEN_W);
+        st32(p + 104u, SCREEN_BPP);
     }
     stub_done(2, 0u);
 TS_END
@@ -1603,15 +2247,16 @@ TS_BEGIN(sfs_Lock)
     // then writes somewhere that exists.
     u32 p = arg(2);
     static u32 buffer = 0;
-    if (!buffer) buffer = zero_block(640u * 480u * 2u, 0x1000u);
+    if (!buffer) buffer = zero_block(SCREEN_W * SCREEN_H * 2u, 0x1000u);
     if (p) {
         for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
         st32(p + 0u, 108u);
-        st32(p + 8u, 480u);
-        st32(p + 12u, 640u);
-        st32(p + 16u, 1280u);        // lPitch = 640 * 2 bytes
-        st32(p + 20u, buffer);       // lpSurface
-        st32(p + 104u, 16u);
+        st32(p + 4u, 0x00000041u);
+        st32(p + 8u, SCREEN_H);
+        st32(p + 12u, SCREEN_W);
+        st32(p + 16u, SCREEN_W * 2u);   // lPitch: the surface's stride in bytes
+        st32(p + 20u, buffer);          // lpSurface
+        st32(p + 104u, SCREEN_BPP);
     }
     stub_done(4, 0u);
 TS_END
@@ -1649,7 +2294,11 @@ inline u32 make_directdraw() {
     over[15] = &k_dd_GetMonitorFrequency;
     over[16] = &k_dd_GetScanLine;
     over[17] = &k_dd_GetVerticalBlankStatus;
-    return make_com_object(names, nargs, over, 23);
+    static u32 vt = 0;
+    if (!vt) vt = make_com_vtable(names, nargs, over, 23);
+    u32 obj = alloc_block(16u, 4u);
+    st32(obj, vt);
+    return obj;
 }
 
 TS_BEGIN(DirectDrawCreate)
@@ -1901,7 +2550,7 @@ inline const ImportDef *imports(unsigned *count) {
 	{ "USER32", "MessageBoxIndirectA", 1, 0x00000000u, &k_MessageBoxIndirectA },
 	{ "USER32", "wsprintfA", 0, 0x00000000u, &k_wsprintfA },
 	{ "USER32", "CreateWindowExA", 12, 0x00000000u, &k_CreateWindowExA },
-	{ "USER32", "CallWindowProcA", 4, 0x00000000u, 0 },
+	{ "USER32", "CallWindowProcA", 5, 0x00000000u, &k_CallWindowProcA },
 	{ "USER32", "GetNextDlgTabItem", 3, 0x00000000u, &k_GetNextDlgTabItem },
 	{ "USER32", "GetUpdateRect", 3, 0x00000000u, &k_GetUpdateRect },
 	{ "USER32", "IntersectRect", 3, 0x00000000u, &k_IntersectRect },
@@ -2057,12 +2706,23 @@ inline u32 find_by_name(const char *fn) {
 }
 
 // A named generic stub. It knows its own row, so the call is named, counted,
-// and pops exactly the arguments the real function owns.
+// and pops exactly the arguments the real function owns. It is correct about
+// the stack and about the return value -- and it is not silent: the FIRST call
+// to each unimplemented import is printed, because "the program asked for
+// something nothing implements" is the most useful line a boot log can carry,
+// and printing every call would bury it under a frame loop.
+inline bool *idx_logged() { static bool b[512]; return b; }
+
 template<unsigned I> void idx_stub() {
     unsigned n = 0;
     const ImportDef *t = imports(&n);
     (void)n;
     note(t[I].fn);
+    if (!idx_logged()[I]) {
+        idx_logged()[I] = true;
+        std::printf("win32stubs: UNIMPLEMENTED %s!%s -> generic stub, "
+                    "returns 0x%08x\n", t[I].dll, t[I].fn, (unsigned)t[I].ret);
+    }
     stub_done(t[I].nargs, t[I].ret);
 }
 
@@ -2162,6 +2822,11 @@ template<unsigned I> void fallback_at() {
     const FallbackDef &d = fallback_defs()[I];
     state().fallbacks++;
     note(d.name[0] ? d.name : "(unnamed import)");
+    // Loud: an import nothing implements is a hole in the model, and the only
+    // moment it is attributable to a name is when it is called.
+    std::printf("win32stubs: NO STUB for import \"%s\" -- the fallback returns "
+                "0 and cannot pop its arguments\n",
+                d.name[0] ? d.name : "(unnamed)");
     stub_done(d.nargs, 0u);   // 0 in EAX: unimplemented, and it says so
 }
 
@@ -2305,6 +2970,17 @@ inline void stub_report() {
     for (unsigned i = 0; i < n; ++i) {
         unsigned long c = w32::counts()[i];
         if (c) std::printf("  %8lu  %s!%s\n", c, t[i].dll, t[i].fn);
+    }
+    // COM methods are not imports, so the ones served by a generic slot stub
+    // are reported from the slot table: a DirectDraw wrapper's Blt, Flip and
+    // Unlock calls land there, and a DirectDraw phase needs to see them by
+    // name. A slot with a hand-written body above counts under that body's
+    // name in the import table's shared bucket instead.
+    unsigned slots = w32::slot_next();
+    for (unsigned i = 0; i < slots; ++i) {
+        unsigned long c = w32::slot_counts()[i];
+        if (c) std::printf("  %8lu  %s (vtable slot %u)\n", c,
+                           w32::slot_defs()[i].name ? w32::slot_defs()[i].name : "com", i);
     }
 }
 

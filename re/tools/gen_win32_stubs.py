@@ -80,7 +80,7 @@ NARGS = {
     "WideCharToMultiByte": 8, "WriteConsoleA": 5, "WriteFile": 5,
     "lstrcat": 2, "lstrcpy": 2, "lstrlen": 1, "lstrlenW": 1,
     # user32
-    "AdjustWindowRectEx": 4, "BringWindowToTop": 1, "CallWindowProcA": 4,
+    "AdjustWindowRectEx": 4, "BringWindowToTop": 1, "CallWindowProcA": 5,
     "CharToOemBuffA": 3, "CharNextA": 1, "CharPrevA": 2,
     "ChildWindowFromPoint": 3, "ClientToScreen": 2, "CloseWindow": 1,
     "CreateDialogIndirectParamA": 5, "CreateDialogParamA": 5,
@@ -322,12 +322,23 @@ inline u32 find_by_name(const char *fn) {
 }
 
 // A named generic stub. It knows its own row, so the call is named, counted,
-// and pops exactly the arguments the real function owns.
+// and pops exactly the arguments the real function owns. It is correct about
+// the stack and about the return value -- and it is not silent: the FIRST call
+// to each unimplemented import is printed, because "the program asked for
+// something nothing implements" is the most useful line a boot log can carry,
+// and printing every call would bury it under a frame loop.
+inline bool *idx_logged() { static bool b[512]; return b; }
+
 template<unsigned I> void idx_stub() {
     unsigned n = 0;
     const ImportDef *t = imports(&n);
     (void)n;
     note(t[I].fn);
+    if (!idx_logged()[I]) {
+        idx_logged()[I] = true;
+        std::printf("win32stubs: UNIMPLEMENTED %s!%s -> generic stub, "
+                    "returns 0x%08x\\n", t[I].dll, t[I].fn, (unsigned)t[I].ret);
+    }
     stub_done(t[I].nargs, t[I].ret);
 }
 """)
@@ -372,6 +383,11 @@ template<unsigned I> void fallback_at() {
     const FallbackDef &d = fallback_defs()[I];
     state().fallbacks++;
     note(d.name[0] ? d.name : "(unnamed import)");
+    // Loud: an import nothing implements is a hole in the model, and the only
+    // moment it is attributable to a name is when it is called.
+    std::printf("win32stubs: NO STUB for import \\"%s\\" -- the fallback returns "
+                "0 and cannot pop its arguments\\n",
+                d.name[0] ? d.name : "(unnamed)");
     stub_done(d.nargs, 0u);   // 0 in EAX: unimplemented, and it says so
 }
 """)
@@ -484,6 +500,17 @@ inline void stub_report() {
     for (unsigned i = 0; i < n; ++i) {
         unsigned long c = w32::counts()[i];
         if (c) std::printf("  %8lu  %s!%s\\n", c, t[i].dll, t[i].fn);
+    }
+    // COM methods are not imports, so the ones served by a generic slot stub
+    // are reported from the slot table: a DirectDraw wrapper's Blt, Flip and
+    // Unlock calls land there, and a DirectDraw phase needs to see them by
+    // name. A slot with a hand-written body above counts under that body's
+    // name in the import table's shared bucket instead.
+    unsigned slots = w32::slot_next();
+    for (unsigned i = 0; i < slots; ++i) {
+        unsigned long c = w32::slot_counts()[i];
+        if (c) std::printf("  %8lu  %s (vtable slot %u)\\n", c,
+                           w32::slot_defs()[i].name ? w32::slot_defs()[i].name : "com", i);
     }
 }
 
