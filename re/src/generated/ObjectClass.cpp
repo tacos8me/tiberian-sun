@@ -98,7 +98,7 @@ void ObjectClass::Set_ID(int id)
     ts::sub::sub_004059b0();
 }
 
-// ObjectClass::vfunc_10 -- ALIAS of IsometricTileClass::vfunc_10 (same machine code at 0x0056fb00); the
+// ObjectClass::vfunc_10 -- ALIAS of IsometricTileClass::Get_RTTI (same machine code at 0x0056fb00); the
 // forwarder is written once, at that declaration.
 void ObjectClass::vfunc_10()
 {
@@ -264,7 +264,7 @@ void ObjectClass::vfunc_32()
     ts::sub::sub_00570ec0();
 }
 
-// ObjectClass::vfunc_33 -- ALIAS of FootClass::vfunc_33 (same machine code at 0x004a4b00); the
+// ObjectClass::vfunc_33 -- ALIAS of FootClass::Get_Type (same machine code at 0x004a4b00); the
 // forwarder is written once, at that declaration.
 void ObjectClass::vfunc_33()
 {

@@ -77,7 +77,7 @@ void ObjectTypeClass::vfunc_6()
     ts::sub::sub_00572b80();
 }
 
-// ObjectTypeClass::vfunc_7 -- ALIAS of IsometricTileTypeClass::vfunc_7 (same machine code at 0x00572ba0); the
+// ObjectTypeClass::vfunc_7 -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
 void ObjectTypeClass::vfunc_7()
 {

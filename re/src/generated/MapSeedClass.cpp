@@ -20,16 +20,6 @@
 #include "Machine.h"   // ts:: machine model, for ts::EAX
 
 // -------------------------------------------------------------------------
-// MapSeedClass::vfunc_0 -- the body is the canonical transcription of
-// 11 instructions at 0x00540230, in src/generated/code/.
-// size 30 bytes; callees: 0x004f8050, 0x0068298c
-//
-void MapSeedClass::vfunc_0(int a0)
-{
-    ts::sub::sub_00540230();
-}
-
-// -------------------------------------------------------------------------
 // MapSeedClass::Read_INI -- the body is the canonical transcription of
 // 162 instructions at 0x0052d760, in src/generated/code/.
 // size 616 bytes; callees: 0x00403960, 0x00403980, 0x00407a60, 0x00420190, 0x00425170, 0x004473c0, 0x0046ebd0, 0x004d4430, 0x004d4700, 0x004d60b0, 0x004d6ed0

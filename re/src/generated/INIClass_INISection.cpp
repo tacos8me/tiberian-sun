@@ -20,16 +20,6 @@
 #include "Machine.h"   // ts:: machine model, for ts::EAX
 
 // -------------------------------------------------------------------------
-// INIClass_INISection::vfunc_0 -- the body is the canonical transcription of
-// 11 instructions at 0x004d7f80, in src/generated/code/.
-// size 30 bytes; callees: 0x004d7c90, 0x0068298c
-//
-void INIClass_INISection::vfunc_0(int a0)
-{
-    ts::sub::sub_004d7f80();
-}
-
-// -------------------------------------------------------------------------
 // INIClass_INISection::INIClass_INISection -- the body is the canonical transcription of
 // 77 instructions at 0x004d4ad0, in src/generated/code/.
 // size 260 bytes; callees: 0x004d4be6, 0x004d7e70, 0x004d8130, 0x005a6be0, 0x00682997, 0x00684170, 0x0068be26

@@ -73,7 +73,7 @@ public:
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
     unsigned char pad_008[0x58];
     unsigned int m_060;  // +0x060 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x60], 0xffffffff
-    unsigned int m_064;  // +0x064 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x64], 0xffffffff
+    unsigned int Group;  // +0x064 (INI key); 4-byte store: mov dword ptr [esi + 0x64], 0xffffffff
     unsigned int m_068;  // +0x068 /* ? */; 4-byte store: mov dword ptr [esi + 0x68], eax
     unsigned char Loadable;  // +0x06c (INI key); 1-byte store: mov byte ptr [esi + 0x6c], bl
     unsigned char Full;  // +0x06d (INI key); 1-byte store: mov byte ptr [esi + 0x6d], bl
@@ -97,17 +97,17 @@ public:
     unsigned int m_088;  // +0x088 /* ? */; 4-byte store: mov dword ptr [esi + 0x88], ebx
     unsigned int m_08c;  // +0x08c /* ? */; 4-byte store: mov dword ptr [esi + 0x8c], ebx
     unsigned int m_090;  // +0x090 /* ? */; 4-byte store: mov dword ptr [esi + 0x90], ebx
-    unsigned int m_094;  // +0x094 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x94], 0xffffffff
+    unsigned int Waypoint;  // +0x094 (INI key); 4-byte store: mov dword ptr [esi + 0x94], 0xffffffff
     unsigned int m_098;  // +0x098 /* ? */; 4-byte store: mov dword ptr [esi + 0x98], ebx
     unsigned int m_09c;  // +0x09c /* ? */; 4-byte store: mov dword ptr [esi + 0x9c], ebx
     unsigned int m_0a0;  // +0x0a0 /* ? */; 4-byte store: mov dword ptr [esi + 0xa0], ebx
     unsigned int m_0a4;  // +0x0a4 /* ? */; 4-byte store: mov dword ptr [esi + 0xa4], ebx
-    unsigned char m_0a8;  // +0x0a8 /* ? */; 1-byte store: mov byte ptr [esi + 0xa8], bl
+    unsigned char AvoidThreats;  // +0x0a8 (INI key); 1-byte store: mov byte ptr [esi + 0xa8], bl
     unsigned char m_0a9;  // +0x0a9 /* ? */; 1-byte store: mov byte ptr [esi + 0xa9], bl
     unsigned char m_0aa;  // +0x0aa /* ? */; 1-byte store: mov byte ptr [esi + 0xaa], bl
-    unsigned char m_0ab;  // +0x0ab /* ? */; 1-byte store: mov byte ptr [esi + 0xab], al
-    unsigned char m_0ac;  // +0x0ac /* ? */; 1-byte store: mov byte ptr [esi + 0xac], bl
-    unsigned char m_0ad;  // +0x0ad /* ? */; 1-byte store: mov byte ptr [esi + 0xad], bl
+    unsigned char AreTeamMembersRecruitable;  // +0x0ab (INI key); 1-byte store: mov byte ptr [esi + 0xab], al
+    unsigned char IsBaseDefense;  // +0x0ac (INI key); 1-byte store: mov byte ptr [esi + 0xac], bl
+    unsigned char OnlyTargetHouseEnemy;  // +0x0ad (INI key); 1-byte store: mov byte ptr [esi + 0xad], bl
 
 };
 

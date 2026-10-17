@@ -81,16 +81,6 @@ void VeinholeMonsterClass::GetType(int a0, int a1)
     ts::sub::sub_00405910();
 }
 
-// -------------------------------------------------------------------------
-// VeinholeMonsterClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x00645c60, in src/generated/code/.
-// size 30 bytes; callees: 0x00643700, 0x0068298c
-//
-void VeinholeMonsterClass::vfunc_8(int a0)
-{
-    ts::sub::sub_00645c60();
-}
-
 // VeinholeMonsterClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
 void VeinholeMonsterClass::Set_ID()
@@ -98,36 +88,36 @@ void VeinholeMonsterClass::Set_ID()
     ts::sub::sub_004059b0();
 }
 
-// VeinholeMonsterClass::vfunc_10 -- ALIAS of IsometricTileClass::vfunc_10 (same machine code at 0x0056fb00); the
+// VeinholeMonsterClass::Get_RTTI -- ALIAS of IsometricTileClass::Get_RTTI (same machine code at 0x0056fb00); the
 // forwarder is written once, at that declaration.
-void VeinholeMonsterClass::vfunc_10(int a0, int a1)
+void VeinholeMonsterClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_0056fb00();
 }
 
 // -------------------------------------------------------------------------
-// VeinholeMonsterClass::vfunc_11 -- the body is the canonical transcription of
+// VeinholeMonsterClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00645c30, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void VeinholeMonsterClass::vfunc_11()
+void VeinholeMonsterClass::What_Am_I()
 {
     ts::sub::sub_00645c30();
 }
 
 // -------------------------------------------------------------------------
-// VeinholeMonsterClass::vfunc_12 -- the body is the canonical transcription of
+// VeinholeMonsterClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00645c40, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void VeinholeMonsterClass::vfunc_12()
+void VeinholeMonsterClass::Get_Heap()
 {
     ts::sub::sub_00645c40();
 }
 
-// VeinholeMonsterClass::vfunc_13 -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
+// VeinholeMonsterClass::Load -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
 // forwarder is written once, at that declaration.
-void VeinholeMonsterClass::vfunc_13(int a0)
+void VeinholeMonsterClass::Load(int a0)
 {
     ts::sub::sub_00570630();
 }
@@ -272,11 +262,11 @@ void VeinholeMonsterClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// VeinholeMonsterClass::vfunc_33 -- the body is the canonical transcription of
+// VeinholeMonsterClass::Get_Type -- the body is the canonical transcription of
 // 3 instructions at 0x00645920, in src/generated/code/.
 // size 12 bytes; callees: none
 //
-void VeinholeMonsterClass::vfunc_33()
+void VeinholeMonsterClass::Get_Type()
 {
     ts::sub::sub_00645920();
 }

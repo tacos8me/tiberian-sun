@@ -82,69 +82,59 @@ void FootClass::GetType(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// FootClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x004a4b40, in src/generated/code/.
-// size 30 bytes; callees: 0x0049c3d0, 0x0068298c
-//
-void FootClass::vfunc_8(int a0)
-{
-    ts::sub::sub_004a4b40();
-}
-
-// -------------------------------------------------------------------------
-// FootClass::vfunc_9 -- the body is the canonical transcription of
+// FootClass::Set_ID -- the body is the canonical transcription of
 // 7 instructions at 0x0060f180, in src/generated/code/.
 // size 26 bytes; callees: none
 //
-void FootClass::vfunc_9()
+void FootClass::Set_ID()
 {
     ts::sub::sub_0060f180();
 }
 
 // -------------------------------------------------------------------------
-// FootClass::vfunc_10 -- the body is the canonical transcription of
+// FootClass::Get_RTTI -- the body is the canonical transcription of
 // 113 instructions at 0x004a0ca0, in src/generated/code/.
 // size 360 bytes; callees: 0x00405980, 0x00459da0, 0x00502060, 0x0061a290, 0x0061cf90
 //
-void FootClass::vfunc_10(int a0, int a1)
+void FootClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_004a0ca0();
 }
 
-// FootClass::vfunc_11 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); the
+// FootClass::What_Am_I -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); the
 // forwarder is written once, at that declaration.
-void FootClass::vfunc_11()
+void FootClass::What_Am_I()
 {
     ts::sub::sub_006829a5();
 }
 
-// FootClass::vfunc_12 -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); the
+// FootClass::Get_Heap -- ALIAS of AbstractClass::QueryInterface (same machine code at 0x006829a5); the
 // forwarder is written once, at that declaration.
-void FootClass::vfunc_12()
+void FootClass::Get_Heap()
 {
     ts::sub::sub_006829a5();
 }
 
 // -------------------------------------------------------------------------
-// FootClass::vfunc_13 -- the body is the canonical transcription of
+// FootClass::Load -- the body is the canonical transcription of
 // 121 instructions at 0x004a23c0, in src/generated/code/.
 // size 368 bytes; callees: 0x0046d660, 0x0046d680, 0x0046d6c0, 0x00494170, 0x004a2532, 0x0061ccf0, 0x0067faf0
 //
-void FootClass::vfunc_13(int a0, int a1, int a2)
+void FootClass::Load(int a0, int a1, int a2)
 {
     ts::sub::sub_004a23c0();
 }
 
-// FootClass::vfunc_14 -- ALIAS of AircraftClass::vfunc_14 (same machine code at 0x00612db0); the
+// FootClass::Save -- ALIAS of AircraftClass::Save (same machine code at 0x00612db0); the
 // forwarder is written once, at that declaration.
-void FootClass::vfunc_14()
+void FootClass::Save()
 {
     ts::sub::sub_00612db0();
 }
 
-// FootClass::vfunc_15 -- ALIAS of AircraftClass::vfunc_15 (same machine code at 0x00612dc0); the
+// FootClass::GetSizeMax -- ALIAS of AircraftClass::GetSizeMax (same machine code at 0x00612dc0); the
 // forwarder is written once, at that declaration.
-void FootClass::vfunc_15()
+void FootClass::GetSizeMax()
 {
     ts::sub::sub_00612dc0();
 }
@@ -281,11 +271,11 @@ void FootClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// FootClass::vfunc_33 -- the body is the canonical transcription of
+// FootClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x004a4b00, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void FootClass::vfunc_33()
+void FootClass::Get_Type()
 {
     ts::sub::sub_004a4b00();
 }

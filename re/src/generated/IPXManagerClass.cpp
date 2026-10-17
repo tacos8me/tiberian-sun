@@ -20,16 +20,6 @@
 #include "Machine.h"   // ts:: machine model, for ts::EAX
 
 // -------------------------------------------------------------------------
-// IPXManagerClass::vfunc_0 -- the body is the canonical transcription of
-// 11 instructions at 0x004e8ac0, in src/generated/code/.
-// size 30 bytes; callees: 0x004e7df0, 0x0068298c
-//
-void IPXManagerClass::vfunc_0(int a0)
-{
-    ts::sub::sub_004e8ac0();
-}
-
-// -------------------------------------------------------------------------
 // IPXManagerClass::vfunc_1 -- the body is the canonical transcription of
 // 50 instructions at 0x004e8510, in src/generated/code/.
 // size 187 bytes; callees: 0x004e6a40, 0x004e853a

@@ -82,18 +82,18 @@ public:
     unsigned char m_0c6;  // +0x0c6 /* ? */; 1-byte store: mov byte ptr [esi + 0xc6], bl
     unsigned char m_0c7;  // +0x0c7 /* ? */; 1-byte store: mov byte ptr [esi + 0xc7], bl
     unsigned char m_0c8;  // +0x0c8 /* ? */; 1-byte store: mov byte ptr [esi + 0xc8], bl
-    unsigned char m_0c9;  // +0x0c9 /* ? */; 1-byte store: mov byte ptr [esi + 0xc9], bl
-    unsigned char m_0ca;  // +0x0ca /* ? */; 1-byte store: mov byte ptr [esi + 0xca], bl
+    unsigned char UseFireParticles;  // +0x0c9 (INI key); 1-byte store: mov byte ptr [esi + 0xc9], bl
+    unsigned char UseSparkParticles;  // +0x0ca (INI key); 1-byte store: mov byte ptr [esi + 0xca], bl
     unsigned char m_0cb;  // +0x0cb /* ? */; 1-byte store: mov byte ptr [esi + 0xcb], bl
-    unsigned char m_0cc;  // +0x0cc /* ? */; 1-byte store: mov byte ptr [esi + 0xcc], bl
-    unsigned char m_0cd;  // +0x0cd /* ? */; 1-byte store: mov byte ptr [esi + 0xcd], bl
-    unsigned char m_0ce;  // +0x0ce init 0xa; 1-byte store: mov byte ptr [esi + 0xce], 0xa
+    unsigned char Lobber;  // +0x0cc (INI key); 1-byte store: mov byte ptr [esi + 0xcc], bl
+    unsigned char Bright;  // +0x0cd (INI key); 1-byte store: mov byte ptr [esi + 0xcd], bl
+    unsigned char LaserDuration;  // +0x0ce (INI key); 1-byte store: mov byte ptr [esi + 0xce], 0xa
     unsigned char m_0cf;  // +0x0cf /* ? */; 1-byte store: mov byte ptr [esi + 0xcf], bl
     unsigned char m_0d0;  // +0x0d0 /* ? */; 1-byte store: mov byte ptr [esi + 0xd0], bl
     unsigned char m_0d1;  // +0x0d1 /* ? */; 1-byte store: mov byte ptr [esi + 0xd1], bl
     unsigned char m_0d3;  // +0x0d3 /* ? */; 1-byte store: mov byte ptr [esi + 0xd3], bl
-    unsigned char m_0d4;  // +0x0d4 /* ? */; 1-byte store: mov byte ptr [esi + 0xd4], bl
-    unsigned char m_0d5;  // +0x0d5 /* ? */; 1-byte store: mov byte ptr [esi + 0xd5], bl
+    unsigned char Charges;  // +0x0d4 (INI key); 1-byte store: mov byte ptr [esi + 0xd4], bl
+    unsigned char IsLaser;  // +0x0d5 (INI key); 1-byte store: mov byte ptr [esi + 0xd5], bl
     unsigned char m_0d6;  // +0x0d6 /* ? */; 1-byte store: mov byte ptr [esi + 0xd6], bl
     // 4 member(s) already declared above; their offsets are recorded in out/members.json
 

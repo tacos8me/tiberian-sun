@@ -99,31 +99,31 @@ void CampaignClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// CampaignClass::vfunc_11 -- the body is the canonical transcription of
+// CampaignClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00446ae0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void CampaignClass::vfunc_11()
+void CampaignClass::What_Am_I()
 {
     ts::sub::sub_00446ae0();
 }
 
 // -------------------------------------------------------------------------
-// CampaignClass::vfunc_12 -- the body is the canonical transcription of
+// CampaignClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00446ad0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void CampaignClass::vfunc_12()
+void CampaignClass::Get_Heap()
 {
     ts::sub::sub_00446ad0();
 }
 
 // -------------------------------------------------------------------------
-// CampaignClass::vfunc_13 -- the body is the canonical transcription of
+// CampaignClass::Load -- the body is the canonical transcription of
 // 25 instructions at 0x00446a20, in src/generated/code/.
 // size 69 bytes; callees: 0x00405fe0, 0x0046d680, 0x0046d6e0
 //
-void CampaignClass::vfunc_13(int a0)
+void CampaignClass::Load(int a0)
 {
     ts::sub::sub_00446a20();
 }
@@ -206,11 +206,11 @@ void CampaignClass::vfunc_24(int a0)
 }
 
 // -------------------------------------------------------------------------
-// CampaignClass::vfunc_25 -- the body is the canonical transcription of
+// CampaignClass::Fetch_ID -- the body is the canonical transcription of
 // 50 instructions at 0x004467d0, in src/generated/code/.
 // size 136 bytes; callees: 0x00405f20, 0x00448e60, 0x004d60b0, 0x004d6ed0, 0x0069426c
 //
-void CampaignClass::vfunc_25(int a0)
+void CampaignClass::Fetch_ID(int a0)
 {
     ts::sub::sub_004467d0();
 }

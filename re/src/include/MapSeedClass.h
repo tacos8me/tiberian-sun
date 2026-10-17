@@ -19,7 +19,6 @@ class MapSeedClass : public LoadOptionsClass
 {
 public:
     // ---- vtable 0x006a1e24 (5 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x00540230  // __thiscall
     virtual void Read_INI(int a0);  // [1] 0x0052d760  // __thiscall  // refs "Description"
     virtual void Read_INI(int a0, int a1);  // [2] 0x0052d4f0  // __thiscall  // refs "Description"
     virtual void vfunc_3(int a0);  // [3] 0x0052da20  // __stdcall

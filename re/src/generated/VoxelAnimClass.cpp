@@ -84,16 +84,6 @@ void VoxelAnimClass::GetType(int a0, int a1)
     ts::sub::sub_00405910();
 }
 
-// -------------------------------------------------------------------------
-// VoxelAnimClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x00641860, in src/generated/code/.
-// size 30 bytes; callees: 0x00640630, 0x0068298c
-//
-void VoxelAnimClass::vfunc_8(int a0)
-{
-    ts::sub::sub_00641860();
-}
-
 // VoxelAnimClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
 void VoxelAnimClass::Set_ID()
@@ -101,39 +91,39 @@ void VoxelAnimClass::Set_ID()
     ts::sub::sub_004059b0();
 }
 
-// VoxelAnimClass::vfunc_10 -- ALIAS of IsometricTileClass::vfunc_10 (same machine code at 0x0056fb00); the
+// VoxelAnimClass::Get_RTTI -- ALIAS of IsometricTileClass::Get_RTTI (same machine code at 0x0056fb00); the
 // forwarder is written once, at that declaration.
-void VoxelAnimClass::vfunc_10(int a0, int a1)
+void VoxelAnimClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_0056fb00();
 }
 
 // -------------------------------------------------------------------------
-// VoxelAnimClass::vfunc_11 -- the body is the canonical transcription of
+// VoxelAnimClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00641830, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void VoxelAnimClass::vfunc_11()
+void VoxelAnimClass::What_Am_I()
 {
     ts::sub::sub_00641830();
 }
 
 // -------------------------------------------------------------------------
-// VoxelAnimClass::vfunc_12 -- the body is the canonical transcription of
+// VoxelAnimClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00641820, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void VoxelAnimClass::vfunc_12()
+void VoxelAnimClass::Get_Heap()
 {
     ts::sub::sub_00641820();
 }
 
 // -------------------------------------------------------------------------
-// VoxelAnimClass::vfunc_13 -- the body is the canonical transcription of
+// VoxelAnimClass::Load -- the body is the canonical transcription of
 // 51 instructions at 0x00641740, in src/generated/code/.
 // size 149 bytes; callees: 0x0046d5d0, 0x0046d680, 0x00570630
 //
-void VoxelAnimClass::vfunc_13(int a0)
+void VoxelAnimClass::Load(int a0)
 {
     ts::sub::sub_00641740();
 }
@@ -278,11 +268,11 @@ void VoxelAnimClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// VoxelAnimClass::vfunc_33 -- the body is the canonical transcription of
+// VoxelAnimClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x00641840, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void VoxelAnimClass::vfunc_33()
+void VoxelAnimClass::Get_Type()
 {
     ts::sub::sub_00641840();
 }

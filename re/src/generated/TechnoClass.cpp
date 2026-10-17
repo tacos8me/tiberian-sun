@@ -91,7 +91,7 @@ void TechnoClass::vfunc_8()
     ts::sub::sub_0061e1d0();
 }
 
-// TechnoClass::vfunc_9 -- ALIAS of FootClass::vfunc_9 (same machine code at 0x0060f180); the
+// TechnoClass::vfunc_9 -- ALIAS of FootClass::Set_ID (same machine code at 0x0060f180); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_9()
 {
@@ -135,7 +135,7 @@ long TechnoClass::Load(IStream* pStm)
     return (long)(size_t)ts::ret_eax();
 }
 
-// TechnoClass::Save -- ALIAS of AircraftClass::vfunc_14 (same machine code at 0x00612db0); the
+// TechnoClass::Save -- ALIAS of AircraftClass::Save (same machine code at 0x00612db0); the
 // forwarder is written once, at that declaration.
 long TechnoClass::Save(IStream* pStm, int fClearDirty)
 {
@@ -143,7 +143,7 @@ long TechnoClass::Save(IStream* pStm, int fClearDirty)
     return (long)(size_t)ts::ret_eax();
 }
 
-// TechnoClass::GetSizeMax -- ALIAS of AircraftClass::vfunc_15 (same machine code at 0x00612dc0); the
+// TechnoClass::GetSizeMax -- ALIAS of AircraftClass::GetSizeMax (same machine code at 0x00612dc0); the
 // forwarder is written once, at that declaration.
 long TechnoClass::GetSizeMax(unsigned long* pcbSize)
 {
@@ -282,7 +282,7 @@ void TechnoClass::vfunc_32()
     ts::sub::sub_0060eb10();
 }
 
-// TechnoClass::vfunc_33 -- ALIAS of FootClass::vfunc_33 (same machine code at 0x004a4b00); the
+// TechnoClass::vfunc_33 -- ALIAS of FootClass::Get_Type (same machine code at 0x004a4b00); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_33()
 {

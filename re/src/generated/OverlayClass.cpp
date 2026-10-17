@@ -91,36 +91,36 @@ void OverlayClass::Set_ID()
     ts::sub::sub_004059b0();
 }
 
-// OverlayClass::vfunc_10 -- ALIAS of IsometricTileClass::vfunc_10 (same machine code at 0x0056fb00); the
+// OverlayClass::Get_RTTI -- ALIAS of IsometricTileClass::Get_RTTI (same machine code at 0x0056fb00); the
 // forwarder is written once, at that declaration.
-void OverlayClass::vfunc_10(int a0, int a1)
+void OverlayClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_0056fb00();
 }
 
 // -------------------------------------------------------------------------
-// OverlayClass::vfunc_11 -- the body is the canonical transcription of
+// OverlayClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x005766e0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void OverlayClass::vfunc_11()
+void OverlayClass::What_Am_I()
 {
     ts::sub::sub_005766e0();
 }
 
 // -------------------------------------------------------------------------
-// OverlayClass::vfunc_12 -- the body is the canonical transcription of
+// OverlayClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00576690, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void OverlayClass::vfunc_12()
+void OverlayClass::Get_Heap()
 {
     ts::sub::sub_00576690();
 }
 
-// OverlayClass::vfunc_13 -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
+// OverlayClass::Load -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
 // forwarder is written once, at that declaration.
-void OverlayClass::vfunc_13(int a0)
+void OverlayClass::Load(int a0)
 {
     ts::sub::sub_00570630();
 }
@@ -259,11 +259,11 @@ void OverlayClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// OverlayClass::vfunc_33 -- the body is the canonical transcription of
+// OverlayClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x00576570, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void OverlayClass::vfunc_33()
+void OverlayClass::Get_Type()
 {
     ts::sub::sub_00576570();
 }

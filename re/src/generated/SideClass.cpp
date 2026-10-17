@@ -99,31 +99,31 @@ void SideClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// SideClass::vfunc_11 -- the body is the canonical transcription of
+// SideClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x005d81a0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SideClass::vfunc_11()
+void SideClass::What_Am_I()
 {
     ts::sub::sub_005d81a0();
 }
 
 // -------------------------------------------------------------------------
-// SideClass::vfunc_12 -- the body is the canonical transcription of
+// SideClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x005d8190, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SideClass::vfunc_12()
+void SideClass::Get_Heap()
 {
     ts::sub::sub_005d8190();
 }
 
 // -------------------------------------------------------------------------
-// SideClass::vfunc_13 -- the body is the canonical transcription of
+// SideClass::Load -- the body is the canonical transcription of
 // 13 instructions at 0x005d7fe0, in src/generated/code/.
 // size 30 bytes; callees: 0x00405fe0, 0x0046d680
 //
-void SideClass::vfunc_13(int a0)
+void SideClass::Load(int a0)
 {
     ts::sub::sub_005d7fe0();
 }

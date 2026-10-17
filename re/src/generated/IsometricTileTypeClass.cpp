@@ -78,23 +78,13 @@ void IsometricTileTypeClass::vfunc_6(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_7 -- the body is the canonical transcription of
+// IsometricTileTypeClass::GetType -- the body is the canonical transcription of
 // 9 instructions at 0x00572ba0, in src/generated/code/.
 // size 24 bytes; callees: 0x00405910
 //
-void IsometricTileTypeClass::vfunc_7(int a0, int a1)
+void IsometricTileTypeClass::GetType(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
-}
-
-// -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x004ef950, in src/generated/code/.
-// size 30 bytes; callees: 0x004ea350, 0x0068298c
-//
-void IsometricTileTypeClass::vfunc_8(int a0)
-{
-    ts::sub::sub_004ef950();
 }
 
 // IsometricTileTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
@@ -105,41 +95,41 @@ void IsometricTileTypeClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_10 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Get_RTTI -- the body is the canonical transcription of
 // 18 instructions at 0x004ef580, in src/generated/code/.
 // size 65 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_10(int a0, int a1)
+void IsometricTileTypeClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_004ef580();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_11 -- the body is the canonical transcription of
+// IsometricTileTypeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x004ef920, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_11()
+void IsometricTileTypeClass::What_Am_I()
 {
     ts::sub::sub_004ef920();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_12 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x004ef930, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_12()
+void IsometricTileTypeClass::Get_Heap()
 {
     ts::sub::sub_004ef930();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_13 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Load -- the body is the canonical transcription of
 // 83 instructions at 0x004ef330, in src/generated/code/.
 // size 271 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680
 //
-void IsometricTileTypeClass::vfunc_13(int a0)
+void IsometricTileTypeClass::Load(int a0)
 {
     ts::sub::sub_004ef330();
 }
@@ -159,11 +149,11 @@ void IsometricTileTypeClass::GetSizeMax()
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_16 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 2 instructions at 0x004ef940, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_16()
+void IsometricTileTypeClass::Compute_CRC()
 {
     ts::sub::sub_004ef940();
 }

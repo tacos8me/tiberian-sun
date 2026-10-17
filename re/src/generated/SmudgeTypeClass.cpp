@@ -77,9 +77,9 @@ void SmudgeTypeClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_005e1b20();
 }
 
-// SmudgeTypeClass::vfunc_7 -- ALIAS of IsometricTileTypeClass::vfunc_7 (same machine code at 0x00572ba0); the
+// SmudgeTypeClass::GetType -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_7(int a0, int a1)
+void SmudgeTypeClass::GetType(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
 }
@@ -99,31 +99,31 @@ void SmudgeTypeClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// SmudgeTypeClass::vfunc_11 -- the body is the canonical transcription of
+// SmudgeTypeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x005e2380, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SmudgeTypeClass::vfunc_11()
+void SmudgeTypeClass::What_Am_I()
 {
     ts::sub::sub_005e2380();
 }
 
 // -------------------------------------------------------------------------
-// SmudgeTypeClass::vfunc_12 -- the body is the canonical transcription of
+// SmudgeTypeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x005e2390, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SmudgeTypeClass::vfunc_12()
+void SmudgeTypeClass::Get_Heap()
 {
     ts::sub::sub_005e2390();
 }
 
 // -------------------------------------------------------------------------
-// SmudgeTypeClass::vfunc_13 -- the body is the canonical transcription of
+// SmudgeTypeClass::Load -- the body is the canonical transcription of
 // 29 instructions at 0x005e1a70, in src/generated/code/.
 // size 89 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680
 //
-void SmudgeTypeClass::vfunc_13(int a0)
+void SmudgeTypeClass::Load(int a0)
 {
     ts::sub::sub_005e1a70();
 }
@@ -143,11 +143,11 @@ void SmudgeTypeClass::GetSizeMax()
 }
 
 // -------------------------------------------------------------------------
-// SmudgeTypeClass::vfunc_16 -- the body is the canonical transcription of
+// SmudgeTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 2 instructions at 0x005e23a0, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void SmudgeTypeClass::vfunc_16()
+void SmudgeTypeClass::Compute_CRC()
 {
     ts::sub::sub_005e23a0();
 }

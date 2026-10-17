@@ -68,23 +68,13 @@ void TiberiumClass::vfunc_6(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::vfunc_7 -- the body is the canonical transcription of
+// TiberiumClass::GetType -- the body is the canonical transcription of
 // 18 instructions at 0x00628b50, in src/generated/code/.
 // size 47 bytes; callees: 0x00405910
 //
-void TiberiumClass::vfunc_7(int a0, int a1)
+void TiberiumClass::GetType(int a0, int a1)
 {
     ts::sub::sub_00628b50();
-}
-
-// -------------------------------------------------------------------------
-// TiberiumClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x0062a100, in src/generated/code/.
-// size 30 bytes; callees: 0x00628380, 0x0068298c
-//
-void TiberiumClass::vfunc_8(int a0)
-{
-    ts::sub::sub_0062a100();
 }
 
 // TiberiumClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
@@ -95,41 +85,41 @@ void TiberiumClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::vfunc_10 -- the body is the canonical transcription of
+// TiberiumClass::Get_RTTI -- the body is the canonical transcription of
 // 35 instructions at 0x00628bf0, in src/generated/code/.
 // size 105 bytes; callees: none
 //
-void TiberiumClass::vfunc_10(int a0, int a1)
+void TiberiumClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_00628bf0();
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::vfunc_11 -- the body is the canonical transcription of
+// TiberiumClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x0062a0e0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TiberiumClass::vfunc_11()
+void TiberiumClass::What_Am_I()
 {
     ts::sub::sub_0062a0e0();
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::vfunc_12 -- the body is the canonical transcription of
+// TiberiumClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x0062a0d0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TiberiumClass::vfunc_12()
+void TiberiumClass::Get_Heap()
 {
     ts::sub::sub_0062a0d0();
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::vfunc_13 -- the body is the canonical transcription of
+// TiberiumClass::Load -- the body is the canonical transcription of
 // 37 instructions at 0x00628890, in src/generated/code/.
 // size 111 bytes; callees: 0x00405fe0, 0x0046d680
 //
-void TiberiumClass::vfunc_13(int a0)
+void TiberiumClass::Load(int a0)
 {
     ts::sub::sub_00628890();
 }
@@ -149,11 +139,11 @@ void TiberiumClass::GetSizeMax()
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::vfunc_16 -- the body is the canonical transcription of
+// TiberiumClass::Compute_CRC -- the body is the canonical transcription of
 // 2 instructions at 0x0062a0f0, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void TiberiumClass::vfunc_16()
+void TiberiumClass::Compute_CRC()
 {
     ts::sub::sub_0062a0f0();
 }
@@ -215,11 +205,11 @@ void TiberiumClass::vfunc_24(int a0)
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::vfunc_25 -- the body is the canonical transcription of
+// TiberiumClass::Fetch_ID -- the body is the canonical transcription of
 // 111 instructions at 0x00628540, in src/generated/code/.
 // size 366 bytes; callees: 0x00405f20, 0x00418d20, 0x004483e0, 0x004d60b0, 0x004d6960, 0x004d6ed0, 0x005ba380, 0x005ba410, 0x005ba520, 0x005bb7d0, 0x006286be, 0x006837ea
 //
-void TiberiumClass::vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void TiberiumClass::Fetch_ID(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_00628540();
 }

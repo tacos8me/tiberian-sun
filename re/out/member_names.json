@@ -2,6 +2,86 @@
  "class AircraftTypeClass": {
   "ident": "AircraftTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
+   "292": {
+    "name": "WalkRate",
+    "key_va": 7191196,
+    "reader_va": 6419856
+   },
+   "780": {
+    "name": "GuardRange",
+    "key_va": 7191148,
+    "reader_va": 6419856
+   },
+   "800": {
+    "name": "FlightLevel",
+    "key_va": 7170304,
+    "reader_va": 6419856
+   },
+   "1076": {
+    "name": "TypeImmune",
+    "key_va": 7191208,
+    "reader_va": 6419856
+   },
+   "1077": {
+    "name": "MoveToShroud",
+    "key_va": 7191180,
+    "reader_va": 6419856
+   },
+   "1084": {
+    "name": "IsTrain",
+    "key_va": 7191172,
+    "reader_va": 6419856
+   },
+   "1089": {
+    "name": "DoubleOwned",
+    "key_va": 7191160,
+    "reader_va": 6419856
+   },
+   "1101": {
+    "name": "Explodes",
+    "key_va": 7154124,
+    "reader_va": 6419856
+   },
    "1141": {
     "name": "Rotors",
     "key_va": 7076428,
@@ -22,15 +102,50 @@
  "class AnimTypeClass": {
   "ident": "AnimTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
    "198": {
     "name": "Theater",
     "key_va": 7077760,
     "reader_va": 4292560
    },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
    "208": {
     "name": "NewTheater",
     "key_va": 7077748,
-    "reader_va": 4292560
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
    },
    "471": {
     "name": "TiberiumChainReaction",
@@ -97,10 +212,170 @@
  "class BuildingTypeClass": {
   "ident": "BuildingTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
+   "292": {
+    "name": "WalkRate",
+    "key_va": 7191196,
+    "reader_va": 6419856
+   },
+   "780": {
+    "name": "GuardRange",
+    "key_va": 7191148,
+    "reader_va": 6419856
+   },
+   "800": {
+    "name": "FlightLevel",
+    "key_va": 7170304,
+    "reader_va": 6419856
+   },
+   "1076": {
+    "name": "TypeImmune",
+    "key_va": 7191208,
+    "reader_va": 6419856
+   },
+   "1077": {
+    "name": "MoveToShroud",
+    "key_va": 7191180,
+    "reader_va": 6419856
+   },
+   "1084": {
+    "name": "IsTrain",
+    "key_va": 7191172,
+    "reader_va": 6419856
+   },
+   "1089": {
+    "name": "DoubleOwned",
+    "key_va": 7191160,
+    "reader_va": 6419856
+   },
+   "1101": {
+    "name": "Explodes",
+    "key_va": 7154124,
+    "reader_va": 6419856
+   },
+   "1184": {
+    "name": "LightVisibility",
+    "key_va": 7082440,
+    "reader_va": 4453471
+   },
+   "1188": {
+    "name": "LightIntensity",
+    "key_va": 7082424,
+    "reader_va": 4453471
+   },
+   "1192": {
+    "name": "LightRedTint",
+    "key_va": 7082408,
+    "reader_va": 4453471
+   },
+   "1196": {
+    "name": "LightGreenTint",
+    "key_va": 7082392,
+    "reader_va": 4453471
+   },
+   "1200": {
+    "name": "LightBlueTint",
+    "key_va": 7082376,
+    "reader_va": 4453471
+   },
+   "1204": {
+    "name": "PrimaryFirePixelOffset",
+    "key_va": 7082004,
+    "reader_va": 4455261
+   },
+   "1212": {
+    "name": "SecondaryFirePixelOffset",
+    "key_va": 7081976,
+    "reader_va": 4455261
+   },
    "1276": {
     "name": "Adjacent",
     "key_va": 7082872,
     "reader_va": 4452944
+   },
+   "1324": {
+    "name": "DoorStages",
+    "key_va": 7082068,
+    "reader_va": 4455261
+   },
+   "1992": {
+    "name": "SpecialZOverlayZAdjust",
+    "key_va": 7081932,
+    "reader_va": 4455261
+   },
+   "2000": {
+    "name": "NormalZAdjust",
+    "key_va": 7081916,
+    "reader_va": 4455261
+   },
+   "2016": {
+    "name": "ZShapePointMove",
+    "key_va": 7081900,
+    "reader_va": 4455261
+   },
+   "2040": {
+    "name": "ExtraLight",
+    "key_va": 7081888,
+    "reader_va": 4455261
+   },
+   "2042": {
+    "name": "TogglePower",
+    "key_va": 7082744,
+    "reader_va": 4453471
+   },
+   "2044": {
+    "name": "IsTemple",
+    "key_va": 7082764,
+    "reader_va": 4453471
+   },
+   "2045": {
+    "name": "IsPlug",
+    "key_va": 7082756,
+    "reader_va": 4453471
+   },
+   "2046": {
+    "name": "HoverPad",
+    "key_va": 7082776,
+    "reader_va": 4453471
    },
    "2047": {
     "name": "BaseNormal",
@@ -137,21 +412,196 @@
     "key_va": 7082896,
     "reader_va": 4452944
    },
+   "2056": {
+    "name": "UnitRepair",
+    "key_va": 7082732,
+    "reader_va": 4453471
+   },
+   "2057": {
+    "name": "UnitReload",
+    "key_va": 7082720,
+    "reader_va": 4453471
+   },
+   "2059": {
+    "name": "DockUnload",
+    "key_va": 7082708,
+    "reader_va": 4453471
+   },
+   "2063": {
+    "name": "Gate",
+    "key_va": 7082700,
+    "reader_va": 4453471
+   },
+   "2064": {
+    "name": "SAM",
+    "key_va": 7082696,
+    "reader_va": 4453471
+   },
+   "2065": {
+    "name": "ConstructionYard",
+    "key_va": 7082676,
+    "reader_va": 4453471
+   },
+   "2066": {
+    "name": "NukeSilo",
+    "key_va": 7082664,
+    "reader_va": 4453471
+   },
+   "2067": {
+    "name": "Refinery",
+    "key_va": 7082652,
+    "reader_va": 4453471
+   },
    "2068": {
     "name": "Weeder",
     "key_va": 7082808,
     "reader_va": 4452944
    },
+   "2069": {
+    "name": "WeaponsFactory",
+    "key_va": 7082636,
+    "reader_va": 4453471
+   },
+   "2070": {
+    "name": "LaserFencePost",
+    "key_va": 7082620,
+    "reader_va": 4453471
+   },
+   "2071": {
+    "name": "LaserFence",
+    "key_va": 7082608,
+    "reader_va": 4453471
+   },
+   "2072": {
+    "name": "FirestormWall",
+    "key_va": 7082592,
+    "reader_va": 4453471
+   },
+   "2073": {
+    "name": "Hospital",
+    "key_va": 7082580,
+    "reader_va": 4453471
+   },
+   "2074": {
+    "name": "Armory",
+    "key_va": 7082572,
+    "reader_va": 4453471
+   },
+   "2075": {
+    "name": "EMPulseCannon",
+    "key_va": 7082532,
+    "reader_va": 4453471
+   },
+   "2076": {
+    "name": "TickTank",
+    "key_va": 7082520,
+    "reader_va": 4453471
+   },
+   "2078": {
+    "name": "CloakGenerator",
+    "key_va": 7082488,
+    "reader_va": 4453471
+   },
+   "2079": {
+    "name": "SensorArray",
+    "key_va": 7082476,
+    "reader_va": 4453471
+   },
    "2082": {
     "name": "Helipad",
     "key_va": 7082800,
     "reader_va": 4452944
+   },
+   "2083": {
+    "name": "GDIBarracks",
+    "key_va": 7082560,
+    "reader_va": 4453471
+   },
+   "2084": {
+    "name": "NODBarracks",
+    "key_va": 7082548,
+    "reader_va": 4453471
+   },
+   "2096": {
+    "name": "GateStages",
+    "key_va": 7082028,
+    "reader_va": 4455261
+   },
+   "2104": {
+    "name": "DamagedDoor",
+    "key_va": 7082056,
+    "reader_va": 4455261
+   },
+   "2105": {
+    "name": "InvisibleInGame",
+    "key_va": 7082344,
+    "reader_va": 4453471
+   },
+   "2108": {
+    "name": "ExtraDamageStage",
+    "key_va": 7081956,
+    "reader_va": 4455261
+   },
+   "2111": {
+    "name": "CloakRadiusInCells",
+    "key_va": 7082456,
+    "reader_va": 4453471
+   },
+   "2113": {
+    "name": "DemandLoadBuildup",
+    "key_va": 7081868,
+    "reader_va": 4455261
+   },
+   "2114": {
+    "name": "FreeBuildup",
+    "key_va": 7081856,
+    "reader_va": 4455261
    }
   }
  },
  "class BulletTypeClass": {
   "ident": "BulletTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
    "292": {
     "name": "Airburst",
     "key_va": 7083292,
@@ -209,6 +659,36 @@
    }
   }
  },
+ "class DisplayClass": {
+  "ident": "DisplayClass",
+  "members": {
+   "18": {
+    "name": "ShadowCaster",
+    "key_va": 7126140,
+    "reader_va": 5159341
+   },
+   "21": {
+    "name": "AllowTiberium",
+    "key_va": 7126208,
+    "reader_va": 5159341
+   },
+   "23": {
+    "name": "Morphable",
+    "key_va": 7126256,
+    "reader_va": 5159341
+   },
+   "152": {
+    "name": "ShadowTiles",
+    "key_va": 7126128,
+    "reader_va": 5159341
+   },
+   "272": {
+    "name": "ToSnowTheater",
+    "key_va": 7126176,
+    "reader_va": 5159341
+   }
+  }
+ },
  "class HouseTypeClass": {
   "ident": "HouseTypeClass",
   "members": {
@@ -232,6 +712,86 @@
  "class InfantryTypeClass": {
   "ident": "InfantryTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
+   "292": {
+    "name": "WalkRate",
+    "key_va": 7191196,
+    "reader_va": 6419856
+   },
+   "780": {
+    "name": "GuardRange",
+    "key_va": 7191148,
+    "reader_va": 6419856
+   },
+   "800": {
+    "name": "FlightLevel",
+    "key_va": 7170304,
+    "reader_va": 6419856
+   },
+   "1076": {
+    "name": "TypeImmune",
+    "key_va": 7191208,
+    "reader_va": 6419856
+   },
+   "1077": {
+    "name": "MoveToShroud",
+    "key_va": 7191180,
+    "reader_va": 6419856
+   },
+   "1084": {
+    "name": "IsTrain",
+    "key_va": 7191172,
+    "reader_va": 6419856
+   },
+   "1089": {
+    "name": "DoubleOwned",
+    "key_va": 7191160,
+    "reader_va": 6419856
+   },
+   "1101": {
+    "name": "Explodes",
+    "key_va": 7154124,
+    "reader_va": 6419856
+   },
    "1148": {
     "name": "FireUp",
     "key_va": 7117252,
@@ -399,6 +959,36 @@
    }
   }
  },
+ "class MouseClass": {
+  "ident": "MouseClass",
+  "members": {
+   "18": {
+    "name": "ShadowCaster",
+    "key_va": 7126140,
+    "reader_va": 5159341
+   },
+   "21": {
+    "name": "AllowTiberium",
+    "key_va": 7126208,
+    "reader_va": 5159341
+   },
+   "23": {
+    "name": "Morphable",
+    "key_va": 7126256,
+    "reader_va": 5159341
+   },
+   "152": {
+    "name": "ShadowTiles",
+    "key_va": 7126128,
+    "reader_va": 5159341
+   },
+   "272": {
+    "name": "ToSnowTheater",
+    "key_va": 7126176,
+    "reader_va": 5159341
+   }
+  }
+ },
  "class ObjectTypeClass": {
   "ident": "ObjectTypeClass",
   "members": {
@@ -447,6 +1037,46 @@
  "class OverlayTypeClass": {
   "ident": "OverlayTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
    "312": {
     "name": "Wall",
     "key_va": 7082816,
@@ -467,16 +1097,81 @@
     "key_va": 7154136,
     "reader_va": 5730448
    },
+   "318": {
+    "name": "IsVeinholeMonster",
+    "key_va": 7154044,
+    "reader_va": 5730769
+   },
+   "319": {
+    "name": "IsVeins",
+    "key_va": 7077356,
+    "reader_va": 5730769
+   },
+   "320": {
+    "name": "DemandLoad",
+    "key_va": 7077448,
+    "reader_va": 5730769
+   },
    "323": {
     "name": "Overrides",
     "key_va": 7154112,
     "reader_va": 5730448
+   },
+   "324": {
+    "name": "DrawFlat",
+    "key_va": 7154016,
+    "reader_va": 5730769
+   },
+   "325": {
+    "name": "IsARock",
+    "key_va": 7154008,
+    "reader_va": 5730769
    }
   }
  },
  "class ParticleSystemTypeClass": {
   "ident": "ParticleSystemTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
    "292": {
     "name": "HoldsWhat",
     "key_va": 7157248,
@@ -517,16 +1212,271 @@
  "class ParticleTypeClass": {
   "ident": "ParticleTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
+   "308": {
+    "name": "YVelocity",
+    "key_va": 7157424,
+    "reader_va": 5864974
+   },
+   "312": {
+    "name": "MinZVelocity",
+    "key_va": 7157408,
+    "reader_va": 5864974
+   },
    "368": {
     "name": "MaxEC",
     "key_va": 7157632,
     "reader_va": 5864704
+   },
+   "380": {
+    "name": "StartFrame",
+    "key_va": 7157620,
+    "reader_va": 5864974
+   },
+   "384": {
+    "name": "NumLoopFrames",
+    "key_va": 7157604,
+    "reader_va": 5864974
+   },
+   "392": {
+    "name": "WindEffect",
+    "key_va": 7157592,
+    "reader_va": 5864974
+   },
+   "404": {
+    "name": "Radius",
+    "key_va": 7157564,
+    "reader_va": 5864974
+   },
+   "409": {
+    "name": "EndStateAI",
+    "key_va": 7157532,
+    "reader_va": 5864974
+   },
+   "411": {
+    "name": "StateAIAdvance",
+    "key_va": 7157500,
+    "reader_va": 5864974
+   },
+   "413": {
+    "name": "Translucent25State",
+    "key_va": 7157460,
+    "reader_va": 5864974
+   },
+   "414": {
+    "name": "Translucent50State",
+    "key_va": 7157480,
+    "reader_va": 5864974
+   },
+   "415": {
+    "name": "Normalized",
+    "key_va": 7077700,
+    "reader_va": 5864974
+   }
+  }
+ },
+ "class PowerClass": {
+  "ident": "PowerClass",
+  "members": {
+   "18": {
+    "name": "ShadowCaster",
+    "key_va": 7126140,
+    "reader_va": 5159341
+   },
+   "21": {
+    "name": "AllowTiberium",
+    "key_va": 7126208,
+    "reader_va": 5159341
+   },
+   "23": {
+    "name": "Morphable",
+    "key_va": 7126256,
+    "reader_va": 5159341
+   },
+   "152": {
+    "name": "ShadowTiles",
+    "key_va": 7126128,
+    "reader_va": 5159341
+   },
+   "272": {
+    "name": "ToSnowTheater",
+    "key_va": 7126176,
+    "reader_va": 5159341
+   }
+  }
+ },
+ "class RadarClass": {
+  "ident": "RadarClass",
+  "members": {
+   "18": {
+    "name": "ShadowCaster",
+    "key_va": 7126140,
+    "reader_va": 5159341
+   },
+   "21": {
+    "name": "AllowTiberium",
+    "key_va": 7126208,
+    "reader_va": 5159341
+   },
+   "23": {
+    "name": "Morphable",
+    "key_va": 7126256,
+    "reader_va": 5159341
+   },
+   "152": {
+    "name": "ShadowTiles",
+    "key_va": 7126128,
+    "reader_va": 5159341
+   },
+   "272": {
+    "name": "ToSnowTheater",
+    "key_va": 7126176,
+    "reader_va": 5159341
+   }
+  }
+ },
+ "class ScrollClass": {
+  "ident": "ScrollClass",
+  "members": {
+   "18": {
+    "name": "ShadowCaster",
+    "key_va": 7126140,
+    "reader_va": 5159341
+   },
+   "21": {
+    "name": "AllowTiberium",
+    "key_va": 7126208,
+    "reader_va": 5159341
+   },
+   "23": {
+    "name": "Morphable",
+    "key_va": 7126256,
+    "reader_va": 5159341
+   },
+   "152": {
+    "name": "ShadowTiles",
+    "key_va": 7126128,
+    "reader_va": 5159341
+   },
+   "272": {
+    "name": "ToSnowTheater",
+    "key_va": 7126176,
+    "reader_va": 5159341
+   }
+  }
+ },
+ "class SidebarClass": {
+  "ident": "SidebarClass",
+  "members": {
+   "18": {
+    "name": "ShadowCaster",
+    "key_va": 7126140,
+    "reader_va": 5159341
+   },
+   "21": {
+    "name": "AllowTiberium",
+    "key_va": 7126208,
+    "reader_va": 5159341
+   },
+   "23": {
+    "name": "Morphable",
+    "key_va": 7126256,
+    "reader_va": 5159341
+   },
+   "152": {
+    "name": "ShadowTiles",
+    "key_va": 7126128,
+    "reader_va": 5159341
+   },
+   "272": {
+    "name": "ToSnowTheater",
+    "key_va": 7126176,
+    "reader_va": 5159341
    }
   }
  },
  "class SmudgeTypeClass": {
   "ident": "SmudgeTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
    "296": {
     "name": "Width",
     "key_va": 7133804,
@@ -544,9 +1494,44 @@
    }
   }
  },
+ "class TabClass": {
+  "ident": "TabClass",
+  "members": {
+   "18": {
+    "name": "ShadowCaster",
+    "key_va": 7126140,
+    "reader_va": 5159341
+   },
+   "21": {
+    "name": "AllowTiberium",
+    "key_va": 7126208,
+    "reader_va": 5159341
+   },
+   "23": {
+    "name": "Morphable",
+    "key_va": 7126256,
+    "reader_va": 5159341
+   },
+   "152": {
+    "name": "ShadowTiles",
+    "key_va": 7126128,
+    "reader_va": 5159341
+   },
+   "272": {
+    "name": "ToSnowTheater",
+    "key_va": 7126176,
+    "reader_va": 5159341
+   }
+  }
+ },
  "class TeamTypeClass": {
   "ident": "TeamTypeClass",
   "members": {
+   "100": {
+    "name": "Group",
+    "key_va": 7188844,
+    "reader_va": 6345598
+   },
    "108": {
     "name": "Loadable",
     "key_va": 7189460,
@@ -601,12 +1586,77 @@
     "name": "Max",
     "key_va": 7189300,
     "reader_va": 6345088
+   },
+   "148": {
+    "name": "Waypoint",
+    "key_va": 7072704,
+    "reader_va": 6345598
+   },
+   "168": {
+    "name": "AvoidThreats",
+    "key_va": 7189284,
+    "reader_va": 6345598
+   },
+   "171": {
+    "name": "AreTeamMembersRecruitable",
+    "key_va": 7189192,
+    "reader_va": 6345598
+   },
+   "172": {
+    "name": "IsBaseDefense",
+    "key_va": 7082188,
+    "reader_va": 6345598
+   },
+   "173": {
+    "name": "OnlyTargetHouseEnemy",
+    "key_va": 7189248,
+    "reader_va": 6345598
    }
   }
  },
  "class TechnoTypeClass": {
   "ident": "TechnoTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
    "292": {
     "name": "WalkRate",
     "key_va": 7191196,
@@ -652,6 +1702,46 @@
  "class TerrainTypeClass": {
   "ident": "TerrainTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
    "320": {
     "name": "WaterBound",
     "key_va": 7082884,
@@ -682,6 +1772,86 @@
  "class UnitTypeClass": {
   "ident": "UnitTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
+   "292": {
+    "name": "WalkRate",
+    "key_va": 7191196,
+    "reader_va": 6419856
+   },
+   "780": {
+    "name": "GuardRange",
+    "key_va": 7191148,
+    "reader_va": 6419856
+   },
+   "800": {
+    "name": "FlightLevel",
+    "key_va": 7170304,
+    "reader_va": 6419856
+   },
+   "1076": {
+    "name": "TypeImmune",
+    "key_va": 7191208,
+    "reader_va": 6419856
+   },
+   "1077": {
+    "name": "MoveToShroud",
+    "key_va": 7191180,
+    "reader_va": 6419856
+   },
+   "1084": {
+    "name": "IsTrain",
+    "key_va": 7191172,
+    "reader_va": 6419856
+   },
+   "1089": {
+    "name": "DoubleOwned",
+    "key_va": 7191160,
+    "reader_va": 6419856
+   },
+   "1101": {
+    "name": "Explodes",
+    "key_va": 7154124,
+    "reader_va": 6419856
+   },
    "1157": {
     "name": "CrateGoodie",
     "key_va": 7192884,
@@ -732,6 +1902,46 @@
  "class VoxelAnimTypeClass": {
   "ident": "VoxelAnimTypeClass",
   "members": {
+   "104": {
+    "name": "Strength",
+    "key_va": 7152592,
+    "reader_va": 5711376
+   },
+   "199": {
+    "name": "Crushable",
+    "key_va": 7152644,
+    "reader_va": 5711376
+   },
+   "201": {
+    "name": "Selectable",
+    "key_va": 7152616,
+    "reader_va": 5711376
+   },
+   "202": {
+    "name": "LegalTarget",
+    "key_va": 7152604,
+    "reader_va": 5711376
+   },
+   "204": {
+    "name": "Immune",
+    "key_va": 7152584,
+    "reader_va": 5711376
+   },
+   "207": {
+    "name": "Voxel",
+    "key_va": 7152508,
+    "reader_va": 5711376
+   },
+   "208": {
+    "name": "NewTheater",
+    "key_va": 7077748,
+    "reader_va": 5711376
+   },
+   "209": {
+    "name": "HasRadialIndicator",
+    "key_va": 7152548,
+    "reader_va": 5711376
+   },
    "292": {
     "name": "Normalized",
     "key_va": 7077700,
@@ -741,6 +1951,46 @@
     "name": "IsTiberium",
     "key_va": 7077472,
     "reader_va": 6561152
+   }
+  }
+ },
+ "class WarheadTypeClass": {
+  "ident": "WarheadTypeClass",
+  "members": {
+   "152": {
+    "name": "DeformThreshhold",
+    "key_va": 7203692,
+    "reader_va": 6625402
+   },
+   "197": {
+    "name": "Wood",
+    "key_va": 7203768,
+    "reader_va": 6625007
+   },
+   "198": {
+    "name": "Tiberium",
+    "key_va": 7072756,
+    "reader_va": 6625007
+   },
+   "201": {
+    "name": "Fire",
+    "key_va": 7156820,
+    "reader_va": 6625007
+   },
+   "202": {
+    "name": "Conventional",
+    "key_va": 7203776,
+    "reader_va": 6625007
+   },
+   "203": {
+    "name": "Rocker",
+    "key_va": 7203752,
+    "reader_va": 6625007
+   },
+   "205": {
+    "name": "EMEffect",
+    "key_va": 7203680,
+    "reader_va": 6625402
    }
   }
  },
@@ -767,10 +2017,45 @@
     "key_va": 7204328,
     "reader_va": 6647104
    },
+   "201": {
+    "name": "UseFireParticles",
+    "key_va": 7204284,
+    "reader_va": 6647648
+   },
+   "202": {
+    "name": "UseSparkParticles",
+    "key_va": 7204264,
+    "reader_va": 6647648
+   },
+   "204": {
+    "name": "Lobber",
+    "key_va": 7204244,
+    "reader_va": 6647648
+   },
+   "205": {
+    "name": "Bright",
+    "key_va": 7203744,
+    "reader_va": 6647648
+   },
+   "206": {
+    "name": "LaserDuration",
+    "key_va": 7204176,
+    "reader_va": 6647648
+   },
    "210": {
     "name": "Supress",
     "key_va": 7204360,
     "reader_va": 6647104
+   },
+   "212": {
+    "name": "Charges",
+    "key_va": 7204304,
+    "reader_va": 6647648
+   },
+   "213": {
+    "name": "IsLaser",
+    "key_va": 7204312,
+    "reader_va": 6647648
    }
   }
  }

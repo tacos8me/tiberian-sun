@@ -84,16 +84,6 @@ void FoggedObjectClass::GetType(int a0, int a1)
     ts::sub::sub_00405910();
 }
 
-// -------------------------------------------------------------------------
-// FoggedObjectClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x0049b810, in src/generated/code/.
-// size 30 bytes; callees: 0x0049a5c0, 0x0068298c
-//
-void FoggedObjectClass::vfunc_8(int a0)
-{
-    ts::sub::sub_0049b810();
-}
-
 // FoggedObjectClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
 void FoggedObjectClass::Set_ID()
@@ -109,31 +99,31 @@ void FoggedObjectClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// FoggedObjectClass::vfunc_11 -- the body is the canonical transcription of
+// FoggedObjectClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x0049b6b0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void FoggedObjectClass::vfunc_11()
+void FoggedObjectClass::What_Am_I()
 {
     ts::sub::sub_0049b6b0();
 }
 
 // -------------------------------------------------------------------------
-// FoggedObjectClass::vfunc_12 -- the body is the canonical transcription of
+// FoggedObjectClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x0049b6c0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void FoggedObjectClass::vfunc_12()
+void FoggedObjectClass::Get_Heap()
 {
     ts::sub::sub_0049b6c0();
 }
 
 // -------------------------------------------------------------------------
-// FoggedObjectClass::vfunc_13 -- the body is the canonical transcription of
+// FoggedObjectClass::Load -- the body is the canonical transcription of
 // 65 instructions at 0x0049b710, in src/generated/code/.
 // size 173 bytes; callees: 0x00405940, 0x0046d680
 //
-void FoggedObjectClass::vfunc_13(int a0)
+void FoggedObjectClass::Load(int a0)
 {
     ts::sub::sub_0049b710();
 }

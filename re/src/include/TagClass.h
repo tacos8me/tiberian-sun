@@ -27,12 +27,11 @@ public:
     virtual void vfunc_5(int a0, int a1);  // [5] 0x00603a90  // __stdcall, returns int
     virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x00603af0  // __stdcall, returns int
     virtual void GetType(int a0, int a1);  // [7] 0x00405910  // __stdcall, returns int
-    virtual void vfunc_8(int a0);  // [8] 0x00603bf0  // __thiscall
     virtual void Set_ID();  // [9] 0x004059b0  // __cdecl
-    virtual void vfunc_10(int a0, int a1);  // [10] 0x00603970  // __thiscall
-    virtual void vfunc_11();  // [11] 0x00603be0  // __cdecl, returns int
-    virtual void vfunc_12();  // [12] 0x00603bd0  // __cdecl, returns int
-    virtual void vfunc_13(int a0);  // [13] 0x00603a40  // __thiscall
+    virtual void Get_RTTI(int a0, int a1);  // [10] 0x00603970  // __thiscall
+    virtual void What_Am_I();  // [11] 0x00603be0  // __cdecl, returns int
+    virtual void Get_Heap();  // [12] 0x00603bd0  // __cdecl, returns int
+    virtual void Load(int a0);  // [13] 0x00603a40  // __thiscall
     virtual void Save();  // [14] 0x004059d0  // __cdecl
     virtual void GetSizeMax();  // [15] 0x004059e0  // __cdecl, returns int
     virtual void Compute_CRC();  // [16] 0x004059f0  // __cdecl, returns int

@@ -77,9 +77,9 @@ void ParticleTypeClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_00598530();
 }
 
-// ParticleTypeClass::vfunc_7 -- ALIAS of IsometricTileTypeClass::vfunc_7 (same machine code at 0x00572ba0); the
+// ParticleTypeClass::GetType -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
-void ParticleTypeClass::vfunc_7(int a0, int a1)
+void ParticleTypeClass::GetType(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
 }
@@ -92,41 +92,41 @@ void ParticleTypeClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// ParticleTypeClass::vfunc_10 -- the body is the canonical transcription of
+// ParticleTypeClass::Get_RTTI -- the body is the canonical transcription of
 // 6 instructions at 0x00598640, in src/generated/code/.
 // size 27 bytes; callees: none
 //
-void ParticleTypeClass::vfunc_10(int a0, int a1)
+void ParticleTypeClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_00598640();
 }
 
 // -------------------------------------------------------------------------
-// ParticleTypeClass::vfunc_11 -- the body is the canonical transcription of
+// ParticleTypeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x005986b0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleTypeClass::vfunc_11()
+void ParticleTypeClass::What_Am_I()
 {
     ts::sub::sub_005986b0();
 }
 
 // -------------------------------------------------------------------------
-// ParticleTypeClass::vfunc_12 -- the body is the canonical transcription of
+// ParticleTypeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x005986a0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleTypeClass::vfunc_12()
+void ParticleTypeClass::Get_Heap()
 {
     ts::sub::sub_005986a0();
 }
 
 // -------------------------------------------------------------------------
-// ParticleTypeClass::vfunc_13 -- the body is the canonical transcription of
+// ParticleTypeClass::Load -- the body is the canonical transcription of
 // 93 instructions at 0x00598280, in src/generated/code/.
 // size 310 bytes; callees: 0x00405fe0, 0x0046d540, 0x0046d5d0, 0x0046d680, 0x0046d6a0, 0x0046d6c0
 //
-void ParticleTypeClass::vfunc_13(int a0)
+void ParticleTypeClass::Load(int a0)
 {
     ts::sub::sub_00598280();
 }

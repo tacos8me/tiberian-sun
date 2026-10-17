@@ -92,41 +92,41 @@ void BuildingLightClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// BuildingLightClass::vfunc_10 -- the body is the canonical transcription of
+// BuildingLightClass::Get_RTTI -- the body is the canonical transcription of
 // 19 instructions at 0x00421f50, in src/generated/code/.
 // size 56 bytes; callees: 0x0056fb00
 //
-void BuildingLightClass::vfunc_10(int a0, int a1)
+void BuildingLightClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_00421f50();
 }
 
 // -------------------------------------------------------------------------
-// BuildingLightClass::vfunc_11 -- the body is the canonical transcription of
+// BuildingLightClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00422630, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingLightClass::vfunc_11()
+void BuildingLightClass::What_Am_I()
 {
     ts::sub::sub_00422630();
 }
 
 // -------------------------------------------------------------------------
-// BuildingLightClass::vfunc_12 -- the body is the canonical transcription of
+// BuildingLightClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00421e60, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingLightClass::vfunc_12()
+void BuildingLightClass::Get_Heap()
 {
     ts::sub::sub_00421e60();
 }
 
 // -------------------------------------------------------------------------
-// BuildingLightClass::vfunc_13 -- the body is the canonical transcription of
+// BuildingLightClass::Load -- the body is the canonical transcription of
 // 73 instructions at 0x00422470, in src/generated/code/.
 // size 193 bytes; callees: 0x0046d5d0, 0x0046d680, 0x0046d6c0, 0x00570630
 //
-void BuildingLightClass::vfunc_13(int a0)
+void BuildingLightClass::Load(int a0)
 {
     ts::sub::sub_00422470();
 }
@@ -271,11 +271,11 @@ void BuildingLightClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// BuildingLightClass::vfunc_33 -- the body is the canonical transcription of
+// BuildingLightClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x00421f30, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void BuildingLightClass::vfunc_33()
+void BuildingLightClass::Get_Type()
 {
     ts::sub::sub_00421f30();
 }

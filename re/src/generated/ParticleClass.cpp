@@ -91,36 +91,36 @@ void ParticleClass::Set_ID()
     ts::sub::sub_004059b0();
 }
 
-// ParticleClass::vfunc_10 -- ALIAS of IsometricTileClass::vfunc_10 (same machine code at 0x0056fb00); the
+// ParticleClass::Get_RTTI -- ALIAS of IsometricTileClass::Get_RTTI (same machine code at 0x0056fb00); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_10(int a0, int a1)
+void ParticleClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_0056fb00();
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::vfunc_11 -- the body is the canonical transcription of
+// ParticleClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x0058dc60, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleClass::vfunc_11()
+void ParticleClass::What_Am_I()
 {
     ts::sub::sub_0058dc60();
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::vfunc_12 -- the body is the canonical transcription of
+// ParticleClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x0058dc50, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleClass::vfunc_12()
+void ParticleClass::Get_Heap()
 {
     ts::sub::sub_0058dc50();
 }
 
-// ParticleClass::vfunc_13 -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
+// ParticleClass::Load -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_13(int a0)
+void ParticleClass::Load(int a0)
 {
     ts::sub::sub_00570630();
 }
@@ -262,11 +262,11 @@ void ParticleClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::vfunc_33 -- the body is the canonical transcription of
+// ParticleClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x0058dc70, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void ParticleClass::vfunc_33()
+void ParticleClass::Get_Type()
 {
     ts::sub::sub_0058dc70();
 }

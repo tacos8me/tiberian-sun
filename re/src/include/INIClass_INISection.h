@@ -21,7 +21,6 @@ class INIClass_INISection : public Node<INIClass::INISection*, INIClass>
 {
 public:
     // ---- vtable 0x006a0410 (1 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x004d7f80  // __thiscall
 
     INIClass_INISection();  // 0x004d4ad0
     virtual ~INIClass_INISection();

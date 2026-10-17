@@ -77,9 +77,9 @@ void OverlayTypeClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_005774e0();
 }
 
-// OverlayTypeClass::vfunc_7 -- ALIAS of IsometricTileTypeClass::vfunc_7 (same machine code at 0x00572ba0); the
+// OverlayTypeClass::GetType -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_7(int a0, int a1)
+void OverlayTypeClass::GetType(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
 }
@@ -99,31 +99,31 @@ void OverlayTypeClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::vfunc_11 -- the body is the canonical transcription of
+// OverlayTypeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00577820, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void OverlayTypeClass::vfunc_11()
+void OverlayTypeClass::What_Am_I()
 {
     ts::sub::sub_00577820();
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::vfunc_12 -- the body is the canonical transcription of
+// OverlayTypeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00577830, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void OverlayTypeClass::vfunc_12()
+void OverlayTypeClass::Get_Heap()
 {
     ts::sub::sub_00577830();
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::vfunc_13 -- the body is the canonical transcription of
+// OverlayTypeClass::Load -- the body is the canonical transcription of
 // 49 instructions at 0x00577350, in src/generated/code/.
 // size 159 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680
 //
-void OverlayTypeClass::vfunc_13(int a0)
+void OverlayTypeClass::Load(int a0)
 {
     ts::sub::sub_00577350();
 }
@@ -143,11 +143,11 @@ void OverlayTypeClass::GetSizeMax()
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::vfunc_16 -- the body is the canonical transcription of
+// OverlayTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 2 instructions at 0x00577840, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void OverlayTypeClass::vfunc_16()
+void OverlayTypeClass::Compute_CRC()
 {
     ts::sub::sub_00577840();
 }

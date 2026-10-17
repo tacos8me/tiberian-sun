@@ -77,9 +77,9 @@ void ParticleSystemTypeClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_005975e0();
 }
 
-// ParticleSystemTypeClass::vfunc_7 -- ALIAS of IsometricTileTypeClass::vfunc_7 (same machine code at 0x00572ba0); the
+// ParticleSystemTypeClass::GetType -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_7(int a0, int a1)
+void ParticleSystemTypeClass::GetType(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
 }
@@ -99,31 +99,31 @@ void ParticleSystemTypeClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemTypeClass::vfunc_11 -- the body is the canonical transcription of
+// ParticleSystemTypeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x005976e0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleSystemTypeClass::vfunc_11()
+void ParticleSystemTypeClass::What_Am_I()
 {
     ts::sub::sub_005976e0();
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemTypeClass::vfunc_12 -- the body is the canonical transcription of
+// ParticleSystemTypeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x005976d0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleSystemTypeClass::vfunc_12()
+void ParticleSystemTypeClass::Get_Heap()
 {
     ts::sub::sub_005976d0();
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemTypeClass::vfunc_13 -- the body is the canonical transcription of
+// ParticleSystemTypeClass::Load -- the body is the canonical transcription of
 // 49 instructions at 0x005974c0, in src/generated/code/.
 // size 159 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680, 0x0046d6a0
 //
-void ParticleSystemTypeClass::vfunc_13(int a0)
+void ParticleSystemTypeClass::Load(int a0)
 {
     ts::sub::sub_005974c0();
 }

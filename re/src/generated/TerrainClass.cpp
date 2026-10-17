@@ -92,41 +92,41 @@ void TerrainClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_10 -- the body is the canonical transcription of
+// TerrainClass::Get_RTTI -- the body is the canonical transcription of
 // 14 instructions at 0x006242d0, in src/generated/code/.
 // size 36 bytes; callees: 0x0056fb00
 //
-void TerrainClass::vfunc_10(int a0, int a1)
+void TerrainClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_006242d0();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_11 -- the body is the canonical transcription of
+// TerrainClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00624610, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TerrainClass::vfunc_11()
+void TerrainClass::What_Am_I()
 {
     ts::sub::sub_00624610();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_12 -- the body is the canonical transcription of
+// TerrainClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00624600, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TerrainClass::vfunc_12()
+void TerrainClass::Get_Heap()
 {
     ts::sub::sub_00624600();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_13 -- the body is the canonical transcription of
+// TerrainClass::Load -- the body is the canonical transcription of
 // 39 instructions at 0x00624260, in src/generated/code/.
 // size 99 bytes; callees: 0x0046d5d0, 0x0046d680, 0x00570630
 //
-void TerrainClass::vfunc_13(int a0)
+void TerrainClass::Load(int a0)
 {
     ts::sub::sub_00624260();
 }
@@ -268,11 +268,11 @@ void TerrainClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_33 -- the body is the canonical transcription of
+// TerrainClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x00624420, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void TerrainClass::vfunc_33()
+void TerrainClass::Get_Type()
 {
     ts::sub::sub_00624420();
 }

@@ -3,10 +3,15 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Fetch_ID",
+  "26": "Set_ID",
   "4": "Release",
   "7": "GetType",
   "8": "~AITriggerTypeClass",
@@ -25,6 +30,8 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
   "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
@@ -39,6 +46,9 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -54,20 +64,37 @@
   "0": "~AddTeamCommandClass"
  },
  "AircraftClass": {
+  "0": "QueryInterface",
+  "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
+  "14": "Save",
+  "15": "GetSizeMax",
   "16": "Compute_CRC",
+  "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
-  "7": "GetType"
+  "7": "GetType",
+  "8": "~AircraftClass",
+  "9": "Set_ID"
  },
  "AircraftTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~AircraftTypeClass",
   "9": "Set_ID"
  },
@@ -77,6 +104,10 @@
  "AlphaShapeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -89,12 +120,18 @@
  "AnimClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
+  "8": "~AnimClass",
   "9": "Set_ID"
  },
  "AnimFile": {
@@ -103,12 +140,18 @@
  "AnimTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~AnimTypeClass",
   "9": "Set_ID"
  },
@@ -312,18 +355,32 @@
  "BuildingClass": {
   "0": "QueryInterface",
   "1": "Init",
-  "16": "Compute_CRC",
-  "2": "Shutdown",
-  "4": "Release",
-  "7": "GetType"
- },
- "BuildingLightClass": {
-  "0": "QueryInterface",
-  "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
+  "4": "Release",
+  "7": "GetType",
+  "8": "~BuildingClass",
+  "9": "Set_ID"
+ },
+ "BuildingLightClass": {
+  "0": "QueryInterface",
+  "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
+  "14": "Save",
+  "15": "GetSizeMax",
+  "16": "Compute_CRC",
+  "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
   "8": "~BuildingLightClass",
@@ -333,23 +390,32 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~BuildingTypeClass",
   "9": "Set_ID"
  },
  "BulletClass": {
   "0": "QueryInterface",
   "1": "AddRef",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Release",
-  "4": "Release",
+  "33": "Get_Type",
   "7": "GetType",
   "8": "~BulletClass",
   "9": "Set_ID"
@@ -357,6 +423,10 @@
  "BulletTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -364,11 +434,15 @@
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~BulletTypeClass",
   "9": "Set_ID"
  },
  "CCFileClass": {
   "0": "~CCFileClass"
+ },
+ "CCINIClass": {
+  "0": "~CCINIClass"
  },
  "CCToolTip": {
   "0": "~CCToolTip"
@@ -386,10 +460,14 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Fetch_ID",
   "26": "Set_ID",
   "4": "Release",
   "7": "GetType",
@@ -400,6 +478,8 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
   "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
@@ -440,6 +520,9 @@
  "ConnectionPointClass": {
   "2": "~ConnectionPointClass"
  },
+ "ControlClass": {
+  "0": "~ControlClass"
+ },
  "ConvertClass": {
   "0": "~ConvertClass"
  },
@@ -458,19 +541,20 @@
  "DeployCommandClass": {
   "0": "~DeployCommandClass"
  },
+ "Dial8Class": {
+  "0": "~Dial8Class"
+ },
  "DisplayClass": {
   "0": "QueryInterface",
   "1": "AddRef",
-  "2": "Release"
+  "2": "Release",
+  "4": "~DisplayClass"
  },
- "DriveLocomotionClass": {
-  "8": "~DriveLocomotionClass"
+ "DisplayClass_TacticalClass": {
+  "0": "~DisplayClass_TacticalClass"
  },
  "DropListClass": {
   "0": "~DropListClass"
- },
- "DropPodLocomotionClass": {
-  "8": "~DropPodLocomotionClass"
  },
  "DynamicVectorClass_AITriggerTypeClass": {
   "0": "~DynamicVectorClass_AITriggerTypeClass"
@@ -912,6 +996,9 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -920,6 +1007,9 @@
   "7": "GetType",
   "8": "~EMPulseClass",
   "9": "Set_ID"
+ },
+ "EditClass": {
+  "0": "~EditClass"
  },
  "EnumConnectionPointsClass": {
   "2": "~EnumConnectionPointsClass"
@@ -932,6 +1022,10 @@
  "FactoryClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -944,22 +1038,20 @@
  "FileClass": {
   "0": "~FileClass"
  },
- "FlyLocomotionClass": {
-  "0": "QueryInterface",
-  "1": "AddRef",
-  "2": "Release",
-  "8": "~FlyLocomotionClass"
- },
  "FoggedObjectClass": {
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
   "4": "Release",
   "7": "GetType",
+  "8": "~FoggedObjectClass",
   "9": "Set_ID"
  },
  "FollowCommandClass": {
@@ -971,10 +1063,19 @@
  "FootClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
+  "14": "Save",
+  "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
-  "7": "GetType"
+  "7": "GetType",
+  "8": "~FootClass",
+  "9": "Set_ID"
  },
  "GScreenClass": {
   "0": "QueryInterface",
@@ -985,6 +1086,9 @@
  "GadgetClass": {
   "0": "~GadgetClass"
  },
+ "GaugeClass": {
+  "0": "~GaugeClass"
+ },
  "GenericNode": {
   "0": "~GenericNode"
  },
@@ -994,30 +1098,34 @@
  "HouseClass": {
   "0": "QueryInterface",
   "1": "AddRef",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Release",
-  "4": "Release",
   "7": "GetType",
+  "8": "~HouseClass",
   "9": "Set_ID"
  },
  "HouseTypeClass": {
   "0": "QueryInterface",
   "1": "AddRef",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Release",
   "25": "Read_INI",
   "26": "Set_ID",
+  "7": "GetType",
   "8": "~HouseTypeClass",
   "9": "Set_ID"
- },
- "HoverLocomotionClass": {
-  "0": "QueryInterface",
-  "1": "AddRef",
-  "2": "Release",
-  "8": "~HoverLocomotionClass"
  },
  "INIClass": {
   "0": "~INIClass"
@@ -1025,40 +1133,68 @@
  "INIClass_INIEntry": {
   "0": "~INIClass_INIEntry"
  },
+ "INIClass_INISection": {
+  "0": "~INIClass_INISection"
+ },
  "IPXConnClass": {
   "0": "~IPXConnClass"
  },
  "IPXGlobalConnClass": {
   "0": "~IPXGlobalConnClass"
  },
+ "IPXInterfaceClass": {
+  "0": "~IPXInterfaceClass"
+ },
+ "IPXManagerClass": {
+  "0": "~IPXManagerClass"
+ },
  "InfantryClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
+  "14": "Save",
+  "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
-  "7": "GetType"
+  "7": "GetType",
+  "8": "~InfantryClass",
+  "9": "Set_ID"
  },
  "InfantryTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~InfantryTypeClass",
   "9": "Set_ID"
  },
  "IsometricTileClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
   "8": "~IsometricTileClass",
@@ -1067,19 +1203,20 @@
  "IsometricTileTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
+  "8": "~IsometricTileTypeClass",
   "9": "Set_ID"
- },
- "JumpjetLocomotionClass": {
-  "0": "QueryInterface",
-  "1": "AddRef",
-  "2": "Release",
-  "8": "~JumpjetLocomotionClass"
  },
  "LCWPipe": {
   "0": "~LCWPipe"
@@ -1115,6 +1252,9 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -1129,11 +1269,6 @@
  },
  "LoadOptionsClass": {
   "0": "~LoadOptionsClass"
- },
- "LocomotionClass": {
-  "0": "QueryInterface",
-  "1": "AddRef",
-  "2": "Release"
  },
  "LogicClass": {
   "0": "~LogicClass"
@@ -1162,25 +1297,24 @@
  "MapClass": {
   "0": "QueryInterface",
   "1": "AddRef",
-  "2": "Release"
+  "2": "Release",
+  "4": "~MapClass"
  },
  "MapSeedClass": {
+  "0": "~MapSeedClass",
   "1": "Read_INI",
   "2": "Read_INI"
- },
- "MechLocomotionClass": {
-  "0": "QueryInterface",
-  "1": "AddRef",
-  "2": "Release",
-  "8": "~MechLocomotionClass"
  },
  "MissionClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
   "8": "~MissionClass",
@@ -1209,6 +1343,9 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -1233,18 +1370,27 @@
  "ObjectClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
+  "8": "~ObjectClass",
   "9": "Set_ID"
  },
  "ObjectTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -1252,6 +1398,8 @@
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
+  "8": "~ObjectTypeClass",
   "9": "Set_ID"
  },
  "OptionsCommandClass": {
@@ -1260,10 +1408,15 @@
  "OverlayClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
   "8": "~OverlayClass",
@@ -1273,12 +1426,17 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~OverlayTypeClass",
   "9": "Set_ID"
  },
@@ -1294,10 +1452,15 @@
  "ParticleClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
   "8": "~ParticleClass",
@@ -1306,18 +1469,27 @@
  "ParticleSystemClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
+  "8": "~ParticleSystemClass",
   "9": "Set_ID"
  },
  "ParticleSystemTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -1325,12 +1497,17 @@
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~ParticleSystemTypeClass",
   "9": "Set_ID"
  },
  "ParticleTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -1338,13 +1515,15 @@
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~ParticleTypeClass",
   "9": "Set_ID"
  },
  "PowerClass": {
   "0": "QueryInterface",
   "1": "AddRef",
-  "2": "Release"
+  "2": "Release",
+  "4": "~PowerClass"
  },
  "PrevObjectCommandClass": {
   "0": "~PrevObjectCommandClass"
@@ -1526,13 +1705,19 @@
   "2": "Release",
   "4": "~RadarClass"
  },
+ "RadarClass_RTacticalClass": {
+  "0": "~RadarClass_RTacticalClass"
+ },
  "RadioClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
   "8": "~RadioClass",
@@ -1572,6 +1757,9 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -1585,9 +1773,15 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Fetch_ID",
+  "26": "Set_ID",
   "4": "Release",
   "7": "GetType",
   "8": "~ScriptTypeClass",
@@ -1596,7 +1790,8 @@
  "ScrollClass": {
   "0": "QueryInterface",
   "1": "AddRef",
-  "2": "Release"
+  "2": "Release",
+  "4": "~ScrollClass"
  },
  "ScrollECommandClass": {
   "0": "~ScrollECommandClass"
@@ -1628,10 +1823,16 @@
  "SetView4CommandClass": {
   "0": "~SetView4CommandClass"
  },
+ "ShapeButtonClass": {
+  "0": "~ShapeButtonClass"
+ },
  "SideClass": {
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -1646,7 +1847,14 @@
  "SidebarClass": {
   "0": "QueryInterface",
   "1": "AddRef",
-  "2": "Release"
+  "2": "Release",
+  "4": "~SidebarClass"
+ },
+ "SidebarClass_SBGadgetClass": {
+  "0": "~SidebarClass_SBGadgetClass"
+ },
+ "SidebarClass_StripClass_SelectClass": {
+  "0": "~SidebarClass_StripClass_SelectClass"
  },
  "SidebarDownCommandClass": {
   "0": "~SidebarDownCommandClass"
@@ -1660,13 +1868,21 @@
  "SidebarUpCommandClass": {
   "0": "~SidebarUpCommandClass"
  },
+ "SliderClass": {
+  "0": "~SliderClass"
+ },
  "SmudgeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
   "8": "~SmudgeClass",
@@ -1676,12 +1892,17 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~SmudgeTypeClass",
   "9": "Set_ID"
  },
@@ -1694,6 +1915,10 @@
  "SuperClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -1707,9 +1932,14 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Fetch_ID",
   "26": "Set_ID",
   "4": "Release",
   "7": "GetType",
@@ -1727,8 +1957,13 @@
  "TActionClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "4": "Release",
   "7": "GetType",
@@ -2068,8 +2303,13 @@
  "TEventClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "4": "Release",
   "7": "GetType",
@@ -2079,11 +2319,15 @@
  "TabClass": {
   "0": "QueryInterface",
   "1": "AddRef",
-  "2": "Release"
+  "2": "Release",
+  "4": "~TabClass"
  },
  "Tactical": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
   "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
@@ -2097,32 +2341,50 @@
  "TagClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
   "4": "Release",
   "7": "GetType",
+  "8": "~TagClass",
   "9": "Set_ID"
  },
  "TagTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Fetch_ID",
+  "26": "Set_ID",
   "4": "Release",
   "7": "GetType",
+  "8": "~TagTypeClass",
   "9": "Set_ID"
  },
  "TaskForceClass": {
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Fetch_ID",
+  "26": "Set_ID",
   "4": "Release",
   "7": "GetType",
   "8": "~TaskForceClass",
@@ -2131,21 +2393,32 @@
  "TeamClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
   "4": "Release",
   "7": "GetType",
+  "8": "~TeamClass",
   "9": "Set_ID"
  },
  "TeamTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "25": "Read_INI",
+  "26": "Write_INI",
   "4": "Release",
   "7": "GetType",
   "8": "~TeamTypeClass",
@@ -2154,15 +2427,25 @@
  "TechnoClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "13": "Load",
+  "14": "Save",
+  "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
-  "7": "GetType"
+  "7": "GetType",
+  "8": "~TechnoClass",
+  "9": "Set_ID"
  },
  "TechnoTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -2170,20 +2453,22 @@
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
+  "8": "~TechnoTypeClass",
   "9": "Set_ID"
- },
- "TeleportLocomotionClass": {
-  "0": "QueryInterface",
-  "1": "AddRef",
-  "2": "Release"
  },
  "TerrainClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
   "8": "~TerrainClass",
@@ -2193,14 +2478,25 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~TerrainTypeClass",
   "9": "Set_ID"
+ },
+ "TextButtonClass": {
+  "0": "~TextButtonClass"
+ },
+ "TextLabelClass": {
+  "0": "~TextLabelClass"
  },
  "TiberianSunClassFactory": {
   "0": "QueryInterface",
@@ -2210,13 +2506,24 @@
  "TiberiumClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Fetch_ID",
   "26": "Set_ID",
   "4": "Release",
   "5": "~TiberiumClass",
+  "7": "GetType",
+  "8": "~TiberiumClass",
   "9": "Set_ID"
+ },
+ "ToggleClass": {
+  "0": "~ToggleClass"
  },
  "TogglePowerCommandClass": {
   "0": "~TogglePowerCommandClass"
@@ -2230,9 +2537,16 @@
  "ToggleSellCommandClass": {
   "0": "~ToggleSellCommandClass"
  },
+ "TriColorGaugeClass": {
+  "0": "~TriColorGaugeClass"
+ },
  "TriggerClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -2245,17 +2559,27 @@
  "TriggerTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Fetch_ID",
   "4": "Release",
   "7": "GetType",
+  "8": "~TriggerTypeClass",
   "9": "Set_ID"
  },
  "TubeClass": {
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -2264,11 +2588,6 @@
   "7": "GetType",
   "8": "~TubeClass",
   "9": "Set_ID"
- },
- "TunnelLocomotionClass": {
-  "0": "QueryInterface",
-  "1": "AddRef",
-  "2": "Release"
  },
  "TypeList_H": {
   "0": "~TypeList_H"
@@ -2312,21 +2631,35 @@
  "UnitClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
+  "14": "Save",
+  "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
-  "7": "GetType"
+  "7": "GetType",
+  "8": "~UnitClass",
+  "9": "Set_ID"
  },
  "UnitTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
+  "16": "Compute_CRC",
   "2": "Shutdown",
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~UnitTypeClass",
   "9": "Set_ID"
  },
@@ -2775,12 +3108,18 @@
  "VeinholeMonsterClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
+  "8": "~VeinholeMonsterClass",
   "9": "Set_ID"
  },
  "VersionClass": {
@@ -2801,17 +3140,27 @@
  "VoxelAnimClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
+  "8": "~VoxelAnimClass",
   "9": "Set_ID"
  },
  "VoxelAnimTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -2819,22 +3168,28 @@
   "25": "Read_INI",
   "26": "Set_ID",
   "4": "Release",
+  "7": "GetType",
   "8": "~VoxelAnimTypeClass",
   "9": "Set_ID"
  },
  "WWFontClass": {
   "0": "~WWFontClass"
  },
- "WalkLocomotionClass": {
-  "8": "~WalkLocomotionClass"
+ "WWMouseClass": {
+  "0": "~WWMouseClass"
  },
  "WarheadTypeClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "25": "Fetch_ID",
   "26": "Set_ID",
   "4": "Release",
   "7": "GetType",
@@ -2844,10 +3199,15 @@
  "WaveClass": {
   "0": "QueryInterface",
   "1": "Init",
+  "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
   "2": "Shutdown",
+  "33": "Get_Type",
   "4": "Release",
   "7": "GetType",
   "8": "~WaveClass",
@@ -2860,6 +3220,9 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",
@@ -2873,6 +3236,9 @@
   "0": "QueryInterface",
   "1": "Init",
   "10": "Get_RTTI",
+  "11": "What_Am_I",
+  "12": "Get_Heap",
+  "13": "Load",
   "14": "Save",
   "15": "GetSizeMax",
   "16": "Compute_CRC",

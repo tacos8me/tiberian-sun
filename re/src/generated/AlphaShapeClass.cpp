@@ -92,41 +92,41 @@ void AlphaShapeClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// AlphaShapeClass::vfunc_10 -- the body is the canonical transcription of
+// AlphaShapeClass::Get_RTTI -- the body is the canonical transcription of
 // 6 instructions at 0x00411ec0, in src/generated/code/.
 // size 18 bytes; callees: none
 //
-void AlphaShapeClass::vfunc_10(int a0, int a1)
+void AlphaShapeClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_00411ec0();
 }
 
 // -------------------------------------------------------------------------
-// AlphaShapeClass::vfunc_11 -- the body is the canonical transcription of
+// AlphaShapeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00411de0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AlphaShapeClass::vfunc_11()
+void AlphaShapeClass::What_Am_I()
 {
     ts::sub::sub_00411de0();
 }
 
 // -------------------------------------------------------------------------
-// AlphaShapeClass::vfunc_12 -- the body is the canonical transcription of
+// AlphaShapeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00411df0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AlphaShapeClass::vfunc_12()
+void AlphaShapeClass::Get_Heap()
 {
     ts::sub::sub_00411df0();
 }
 
 // -------------------------------------------------------------------------
-// AlphaShapeClass::vfunc_13 -- the body is the canonical transcription of
+// AlphaShapeClass::Load -- the body is the canonical transcription of
 // 25 instructions at 0x00411e00, in src/generated/code/.
 // size 63 bytes; callees: 0x00405940, 0x0046d680
 //
-void AlphaShapeClass::vfunc_13(int a0)
+void AlphaShapeClass::Load(int a0)
 {
     ts::sub::sub_00411e00();
 }

@@ -19,7 +19,6 @@ class RadarClass_RTacticalClass : public GadgetClass
 {
 public:
     // ---- vtable 0x006a357c (31 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x005a4e00  // __thiscall
     virtual void vfunc_1();  // [1] 0x004a5b00
     virtual void vfunc_2();  // [2] 0x004a5b10
     virtual void vfunc_3(int a0);  // [3] 0x004f69e0  // __stdcall

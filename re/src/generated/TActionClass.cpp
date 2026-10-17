@@ -92,41 +92,41 @@ void TActionClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::vfunc_10 -- the body is the canonical transcription of
+// TActionClass::Get_RTTI -- the body is the canonical transcription of
 // 21 instructions at 0x005fe060, in src/generated/code/.
 // size 52 bytes; callees: none
 //
-void TActionClass::vfunc_10(int a0, int a1)
+void TActionClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_005fe060();
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::vfunc_11 -- the body is the canonical transcription of
+// TActionClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00602990, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TActionClass::vfunc_11()
+void TActionClass::What_Am_I()
 {
     ts::sub::sub_00602990();
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::vfunc_12 -- the body is the canonical transcription of
+// TActionClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00602980, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TActionClass::vfunc_12()
+void TActionClass::Get_Heap()
 {
     ts::sub::sub_00602980();
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::vfunc_13 -- the body is the canonical transcription of
+// TActionClass::Load -- the body is the canonical transcription of
 // 57 instructions at 0x00602830, in src/generated/code/.
 // size 141 bytes; callees: 0x00405940, 0x0046d680
 //
-void TActionClass::vfunc_13(int a0)
+void TActionClass::Load(int a0)
 {
     ts::sub::sub_00602830();
 }
@@ -146,11 +146,11 @@ void TActionClass::GetSizeMax()
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::vfunc_16 -- the body is the canonical transcription of
+// TActionClass::Compute_CRC -- the body is the canonical transcription of
 // 2 instructions at 0x006029a0, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void TActionClass::vfunc_16()
+void TActionClass::Compute_CRC()
 {
     ts::sub::sub_006029a0();
 }

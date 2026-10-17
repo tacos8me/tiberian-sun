@@ -85,75 +85,65 @@ void InfantryClass::GetType(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x004d2eb0, in src/generated/code/.
-// size 30 bytes; callees: 0x004cb810, 0x0068298c
-//
-void InfantryClass::vfunc_8(int a0)
-{
-    ts::sub::sub_004d2eb0();
-}
-
-// -------------------------------------------------------------------------
-// InfantryClass::vfunc_9 -- the body is the canonical transcription of
+// InfantryClass::Set_ID -- the body is the canonical transcription of
 // 19 instructions at 0x004cb7c0, in src/generated/code/.
 // size 66 bytes; callees: 0x004bb850, 0x0060f180
 //
-void InfantryClass::vfunc_9()
+void InfantryClass::Set_ID()
 {
     ts::sub::sub_004cb7c0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_10 -- the body is the canonical transcription of
+// InfantryClass::Get_RTTI -- the body is the canonical transcription of
 // 14 instructions at 0x004cd470, in src/generated/code/.
 // size 42 bytes; callees: 0x004a0ca0
 //
-void InfantryClass::vfunc_10(int a0, int a1)
+void InfantryClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_004cd470();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_11 -- the body is the canonical transcription of
+// InfantryClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x004d2e80, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void InfantryClass::vfunc_11()
+void InfantryClass::What_Am_I()
 {
     ts::sub::sub_004d2e80();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_12 -- the body is the canonical transcription of
+// InfantryClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x004d2e30, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void InfantryClass::vfunc_12()
+void InfantryClass::Get_Heap()
 {
     ts::sub::sub_004d2e30();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_13 -- the body is the canonical transcription of
+// InfantryClass::Load -- the body is the canonical transcription of
 // 20 instructions at 0x004d2740, in src/generated/code/.
 // size 61 bytes; callees: 0x0046d680, 0x004a23c0, 0x004d277f
 //
-void InfantryClass::vfunc_13(int a0)
+void InfantryClass::Load(int a0)
 {
     ts::sub::sub_004d2740();
 }
 
-// InfantryClass::vfunc_14 -- ALIAS of AircraftClass::vfunc_14 (same machine code at 0x00612db0); the
+// InfantryClass::Save -- ALIAS of AircraftClass::Save (same machine code at 0x00612db0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_14()
+void InfantryClass::Save()
 {
     ts::sub::sub_00612db0();
 }
 
-// InfantryClass::vfunc_15 -- ALIAS of AircraftClass::vfunc_15 (same machine code at 0x00612dc0); the
+// InfantryClass::GetSizeMax -- ALIAS of AircraftClass::GetSizeMax (same machine code at 0x00612dc0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_15()
+void InfantryClass::GetSizeMax()
 {
     ts::sub::sub_00612dc0();
 }
@@ -290,11 +280,11 @@ void InfantryClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_33 -- the body is the canonical transcription of
+// InfantryClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x004d0d40, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void InfantryClass::vfunc_33()
+void InfantryClass::Get_Type()
 {
     ts::sub::sub_004d0d40();
 }

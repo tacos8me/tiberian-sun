@@ -99,31 +99,31 @@ void TubeClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// TubeClass::vfunc_11 -- the body is the canonical transcription of
+// TubeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x0062ede0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TubeClass::vfunc_11()
+void TubeClass::What_Am_I()
 {
     ts::sub::sub_0062ede0();
 }
 
 // -------------------------------------------------------------------------
-// TubeClass::vfunc_12 -- the body is the canonical transcription of
+// TubeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x0062edd0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TubeClass::vfunc_12()
+void TubeClass::Get_Heap()
 {
     ts::sub::sub_0062edd0();
 }
 
 // -------------------------------------------------------------------------
-// TubeClass::vfunc_13 -- the body is the canonical transcription of
+// TubeClass::Load -- the body is the canonical transcription of
 // 46 instructions at 0x0062ed50, in src/generated/code/.
 // size 120 bytes; callees: 0x00405940, 0x0046d660, 0x0046d680
 //
-void TubeClass::vfunc_13(int a0)
+void TubeClass::Load(int a0)
 {
     ts::sub::sub_0062ed50();
 }

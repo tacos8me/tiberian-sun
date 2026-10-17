@@ -92,41 +92,41 @@ void SuperClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// SuperClass::vfunc_10 -- the body is the canonical transcription of
+// SuperClass::Get_RTTI -- the body is the canonical transcription of
 // 13 instructions at 0x005f2790, in src/generated/code/.
 // size 31 bytes; callees: none
 //
-void SuperClass::vfunc_10(int a0, int a1)
+void SuperClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_005f2790();
 }
 
 // -------------------------------------------------------------------------
-// SuperClass::vfunc_11 -- the body is the canonical transcription of
+// SuperClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x005f2820, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SuperClass::vfunc_11()
+void SuperClass::What_Am_I()
 {
     ts::sub::sub_005f2820();
 }
 
 // -------------------------------------------------------------------------
-// SuperClass::vfunc_12 -- the body is the canonical transcription of
+// SuperClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x005f2830, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SuperClass::vfunc_12()
+void SuperClass::Get_Heap()
 {
     ts::sub::sub_005f2830();
 }
 
 // -------------------------------------------------------------------------
-// SuperClass::vfunc_13 -- the body is the canonical transcription of
+// SuperClass::Load -- the body is the canonical transcription of
 // 33 instructions at 0x005f27b0, in src/generated/code/.
 // size 85 bytes; callees: 0x00405940, 0x0046d5d0, 0x0046d680
 //
-void SuperClass::vfunc_13(int a0)
+void SuperClass::Load(int a0)
 {
     ts::sub::sub_005f27b0();
 }

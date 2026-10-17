@@ -3,8 +3,8 @@
   "AITriggerTypeClass": {
    "0": {
     "name": "QueryInterface",
-    "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "rule": "R9",
+    "signal": "loads ppvObject from [esp+0xc]; tests it; returns E_POINTER 0x80004003; ret 0xc; slot 0 of the primary vtable",
     "target": "0x405790"
    },
    "1": {
@@ -49,6 +49,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x3b (59) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x411040"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xd8 (216) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x411050"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x40fb80",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -66,6 +88,26 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "25": {
+    "name": "Fetch_ID",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 25 named Fetch_ID (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x410730",
+    "base": "AbstractTypeClass",
+    "base_slot": 25,
+    "base_name": "Fetch_ID",
+    "mdisp": 0
+   },
+   "26": {
+    "name": "Set_ID",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 26 named Set_ID (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x410c80",
+    "base": "AbstractTypeClass",
+    "base_slot": 26,
+    "base_name": "Set_ID",
+    "mdisp": 0
    }
   },
   "ATL_CComObject_class_CChatEventSink": {
@@ -96,31 +138,31 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
     "name": "Init",
-    "rule": "R6",
-    "signal": "slot target 0x405830 is the same code address as AbstractClass slot 1 (Init)",
+    "rule": "R12",
+    "signal": "returns 1",
     "target": "0x405830"
    },
    "2": {
     "name": "Shutdown",
-    "rule": "R6",
-    "signal": "slot target 0x405840 is the same code address as AbstractClass slot 2 (Shutdown)",
+    "rule": "R12",
+    "signal": "returns 1",
     "target": "0x405840"
    },
    "4": {
     "name": "Release",
-    "rule": "R6",
-    "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
+    "rule": "R12",
+    "signal": "reads [this+0x10], returns !flag",
     "target": "0x405990"
    },
    "7": {
     "name": "GetType",
-    "rule": "R6",
-    "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
+    "rule": "R12",
+    "signal": "2 args, E_POINTER check on the out pointer",
     "target": "0x405910"
    },
    "8": {
@@ -131,38 +173,50 @@
    },
    "9": {
     "name": "Set_ID",
-    "rule": "R6",
-    "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
+    "rule": "R12",
+    "signal": "bare ret",
     "target": "0x4059b0"
    },
    "10": {
     "name": "Get_RTTI",
-    "rule": "R6",
-    "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
+    "rule": "R12",
+    "signal": "ret 8",
     "target": "0x4059c0"
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R7",
+    "signal": "18 direct subclasses (AlphaShapeClass, CellClass, EMPulseClass) independently name slot 11 What_Am_I; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R7",
+    "signal": "18 direct subclasses (AlphaShapeClass, CellClass, EMPulseClass) independently name slot 12 Get_Heap; base slot is the shared virtual they override",
+    "target": "0x6829a5"
    },
    "13": {
     "name": "Load",
-    "rule": "R6",
-    "signal": "slot target 0x405940 is the same code address as AbstractClass slot 13 (Load)",
+    "rule": "R12",
+    "signal": "calls the stream accessors",
     "target": "0x405940"
    },
    "14": {
     "name": "Save",
-    "rule": "R6",
-    "signal": "slot target 0x4059d0 is the same code address as AbstractClass slot 14 (Save)",
+    "rule": "R12",
+    "signal": "returns -1",
     "target": "0x4059d0"
    },
    "15": {
     "name": "GetSizeMax",
-    "rule": "R6",
-    "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
+    "rule": "R12",
+    "signal": "returns 0",
     "target": "0x4059e0"
    },
    "16": {
     "name": "Compute_CRC",
-    "rule": "R6",
-    "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
+    "rule": "R12",
+    "signal": "returns 0",
     "target": "0x4059f0"
    }
   },
@@ -170,7 +224,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -215,6 +269,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R7",
+    "signal": "13 direct subclasses (AITriggerTypeClass, CampaignClass, HouseTypeClass) independently name slot 11 What_Am_I; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R7",
+    "signal": "13 direct subclasses (AITriggerTypeClass, CampaignClass, HouseTypeClass) independently name slot 12 Get_Heap; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x405fe0",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -255,6 +331,36 @@
    }
   },
   "AircraftClass": {
+   "0": {
+    "name": "QueryInterface",
+    "rule": "R13",
+    "signal": "derived slot 0 calls the base class's slot 0 target 0x405790, proving the override; name inherited from FootClass slot 0 (QueryInterface, displacement 0)",
+    "target": "0x408050",
+    "base": "FootClass",
+    "base_slot": 0,
+    "base_name": "QueryInterface",
+    "mdisp": 0
+   },
+   "1": {
+    "name": "Init",
+    "rule": "R13",
+    "signal": "derived slot 1 calls the base class's slot 1 target 0x405830, proving the override; name inherited from FootClass slot 1 (Init, displacement 0)",
+    "target": "0x4080b0",
+    "base": "FootClass",
+    "base_slot": 1,
+    "base_name": "Init",
+    "mdisp": 0
+   },
+   "2": {
+    "name": "Shutdown",
+    "rule": "R13",
+    "signal": "derived slot 2 calls the base class's slot 2 target 0x405840, proving the override; name inherited from FootClass slot 2 (Shutdown, displacement 0)",
+    "target": "0x4080c0",
+    "base": "FootClass",
+    "base_slot": 2,
+    "base_name": "Shutdown",
+    "mdisp": 0
+   },
    "4": {
     "name": "Release",
     "rule": "R6",
@@ -267,18 +373,100 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~AircraftClass",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 8 named ~FootClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x40e940",
+    "base": "FootClass",
+    "base_slot": 8,
+    "base_name": "~FootClass",
+    "mdisp": 0
+   },
+   "9": {
+    "name": "Set_ID",
+    "rule": "R13",
+    "signal": "derived slot 9 calls the base class's slot 9 target 0x60f180, proving the override; name inherited from FootClass slot 9 (Set_ID, displacement 0)",
+    "target": "0x407fb0",
+    "base": "FootClass",
+    "base_slot": 9,
+    "base_name": "Set_ID",
+    "mdisp": 0
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x4a0ca0, proving the override; name inherited from FootClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x40e230",
+    "base": "FootClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x2 (2) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x40e8b0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x370 (880) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x40e8a0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x4a23c0, proving the override; name inherited from FootClass slot 13 (Load, displacement 0)",
+    "target": "0x40e1b0",
+    "base": "FootClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
+   "14": {
+    "name": "Save",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 14 named Save (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612db0",
+    "base": "FootClass",
+    "base_slot": 14,
+    "base_name": "Save",
+    "mdisp": 0
+   },
+   "15": {
+    "name": "GetSizeMax",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 15 named GetSizeMax (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612dc0",
+    "base": "FootClass",
+    "base_slot": 15,
+    "base_name": "GetSizeMax",
+    "mdisp": 0
+   },
    "16": {
     "name": "Compute_CRC",
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x40e930",
+    "base": "FootClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "AircraftTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -299,6 +487,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base TechnoTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x621bf0",
+    "base": "TechnoTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~AircraftTypeClass",
     "rule": "R1",
@@ -317,6 +515,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x3 (3) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x40f630"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x478 (1144) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x40f640"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x621c90, proving the override; name inherited from TechnoTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x40f3a0",
+    "base": "TechnoTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -328,6 +548,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base TechnoTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x40f650",
+    "base": "TechnoTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
    },
    "25": {
     "name": "Read_INI",
@@ -354,7 +584,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -393,6 +623,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x411ec0",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x3e (62) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x411de0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x30 (48) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x411df0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x411e00",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -416,7 +678,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -443,11 +705,53 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~AnimClass",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 8 named ~ObjectClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x416900",
+    "base": "ObjectClass",
+    "base_slot": 8,
+    "base_name": "~ObjectClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x56fb00, proving the override; name inherited from ObjectClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x415740",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x4 (4) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4168f0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x108 (264) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4168a0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x570630, proving the override; name inherited from ObjectClass slot 13 (Load, displacement 0)",
+    "target": "0x4158e0",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -466,6 +770,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4159f0",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "AnimFile": {
@@ -480,7 +794,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -501,6 +815,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x572ba0",
+    "base": "ObjectTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~AnimTypeClass",
     "rule": "R1",
@@ -513,6 +837,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x418db0",
+    "base": "ObjectTypeClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x5 (5) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x418f50"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1f0 (496) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x418f70"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from ObjectTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x418ba0",
+    "base": "ObjectTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -524,6 +880,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x418f60",
+    "base": "ObjectTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
    },
    "25": {
     "name": "Read_INI",
@@ -1074,7 +1440,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -1101,18 +1467,100 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~BuildingClass",
+    "rule": "R11",
+    "signal": "direct base TechnoClass slot 8 named ~TechnoClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x43a230",
+    "base": "TechnoClass",
+    "base_slot": 8,
+    "base_name": "~TechnoClass",
+    "mdisp": 0
+   },
+   "9": {
+    "name": "Set_ID",
+    "rule": "R13",
+    "signal": "derived slot 9 calls the base class's slot 9 target 0x60f180, proving the override; name inherited from TechnoClass slot 9 (Set_ID, displacement 0)",
+    "target": "0x42adc0",
+    "base": "TechnoClass",
+    "base_slot": 9,
+    "base_name": "Set_ID",
+    "mdisp": 0
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x61a290, proving the override; name inherited from TechnoClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x432dd0",
+    "base": "TechnoClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x6 (6) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x43a1c0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x310 (784) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x43a170"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x61ccf0, proving the override; name inherited from TechnoClass slot 13 (Load, displacement 0)",
+    "target": "0x436eb0",
+    "base": "TechnoClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
+   "14": {
+    "name": "Save",
+    "rule": "R11",
+    "signal": "direct base TechnoClass slot 14 named Save (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612db0",
+    "base": "TechnoClass",
+    "base_slot": 14,
+    "base_name": "Save",
+    "mdisp": 0
+   },
+   "15": {
+    "name": "GetSizeMax",
+    "rule": "R11",
+    "signal": "direct base TechnoClass slot 15 named GetSizeMax (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612dc0",
+    "base": "TechnoClass",
+    "base_slot": 15,
+    "base_name": "GetSizeMax",
+    "mdisp": 0
+   },
    "16": {
     "name": "Compute_CRC",
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base TechnoClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x43a1e0",
+    "base": "TechnoClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "BuildingLightClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -1151,6 +1599,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x56fb00, proving the override; name inherited from ObjectClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x421f50",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x13 (19) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x422630"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x88 (136) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x421e60"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x570630, proving the override; name inherited from ObjectClass slot 13 (Load, displacement 0)",
+    "target": "0x422470",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -1168,13 +1648,23 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x421f30",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "BuildingTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -1194,6 +1684,16 @@
     "rule": "R6",
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
+   },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base TechnoTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x621bf0",
+    "base": "TechnoTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
    },
    "8": {
     "name": "~BuildingTypeClass",
@@ -1213,6 +1713,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x7 (7) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4421f0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x858 (2136) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x442200"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x621c90, proving the override; name inherited from TechnoTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x4413f0",
+    "base": "TechnoTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -1224,6 +1746,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base TechnoTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x442210",
+    "base": "TechnoTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
    },
    "25": {
     "name": "Read_INI",
@@ -1242,7 +1774,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -1256,12 +1788,6 @@
     "rule": "R9",
     "signal": "slot 0 target 0x405790 verified as QueryInterface (R9); slot 2 is IUnknown::Release by the MS IUnknown ABI",
     "target": "0x444f20"
-   },
-   "4": {
-    "name": "Release",
-    "rule": "R6",
-    "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
-    "target": "0x405990"
    },
    "7": {
     "name": "GetType",
@@ -1281,6 +1807,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x56fb00, proving the override; name inherited from ObjectClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x444010",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x8 (8) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x445190"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xc8 (200) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x445180"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 13 named Load (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x570630",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -1298,13 +1856,23 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4451f0",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "BulletTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -1325,6 +1893,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x572ba0",
+    "base": "ObjectTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~BulletTypeClass",
     "rule": "R1",
@@ -1336,6 +1914,38 @@
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x446310",
+    "base": "ObjectTypeClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x9 (9) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x446330"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x160 (352) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x446340"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from ObjectTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x446090",
+    "base": "ObjectTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -1374,6 +1984,18 @@
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
     "target": "0x4190f0"
+   }
+  },
+  "CCINIClass": {
+   "0": {
+    "name": "~CCINIClass",
+    "rule": "R11",
+    "signal": "direct base INIClass slot 0 named ~INIClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x403a20",
+    "base": "INIClass",
+    "base_slot": 0,
+    "base_name": "~INIClass",
+    "mdisp": 0
    }
   },
   "CCToolTip": {
@@ -1422,7 +2044,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -1467,6 +2089,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xa (10) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x446ae0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x2e8 (744) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x446ad0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x446a20",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -1485,6 +2129,16 @@
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
    },
+   "25": {
+    "name": "Fetch_ID",
+    "rule": "R13",
+    "signal": "derived slot 25 calls the base class's slot 25 target 0x405f20, proving the override; name inherited from AbstractTypeClass slot 25 (Fetch_ID, displacement 0)",
+    "target": "0x4467d0",
+    "base": "AbstractTypeClass",
+    "base_slot": 25,
+    "base_name": "Fetch_ID",
+    "mdisp": 0
+   },
    "26": {
     "name": "Set_ID",
     "rule": "R6",
@@ -1496,7 +2150,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -1540,6 +2194,18 @@
     "rule": "R6",
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xb (11) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x45a7c0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xa8 (168) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x45a7d0"
    },
    "13": {
     "name": "Load",
@@ -1646,6 +2312,18 @@
     "target": "0x46be10"
    }
   },
+  "ControlClass": {
+   "0": {
+    "name": "~ControlClass",
+    "rule": "R11",
+    "signal": "direct base GadgetClass slot 0 named ~GadgetClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x460660",
+    "base": "GadgetClass",
+    "base_slot": 0,
+    "base_name": "~GadgetClass",
+    "mdisp": 0
+   }
+  },
   "ConvertClass": {
    "0": {
     "name": "~ConvertClass",
@@ -1694,6 +2372,18 @@
     "target": "0x4e2fc0"
    }
   },
+  "Dial8Class": {
+   "0": {
+    "name": "~Dial8Class",
+    "rule": "R11",
+    "signal": "direct base ControlClass slot 0 named ~ControlClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x470d50",
+    "base": "ControlClass",
+    "base_slot": 0,
+    "base_name": "~ControlClass",
+    "mdisp": 0
+   }
+  },
   "DisplayClass": {
    "0": {
     "name": "QueryInterface",
@@ -1712,14 +2402,28 @@
     "rule": "R9",
     "signal": "slot 0 target 0x4b2de0 verified as QueryInterface (R9); slot 2 is IUnknown::Release by the MS IUnknown ABI",
     "target": "0x402ae0"
+   },
+   "4": {
+    "name": "~DisplayClass",
+    "rule": "R11",
+    "signal": "direct base MapClass slot 4 named ~MapClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x478920",
+    "base": "MapClass",
+    "base_slot": 4,
+    "base_name": "~MapClass",
+    "mdisp": 0
    }
   },
-  "DriveLocomotionClass": {
-   "8": {
-    "name": "~DriveLocomotionClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x47eab0"
+  "DisplayClass_TacticalClass": {
+   "0": {
+    "name": "~DisplayClass_TacticalClass",
+    "rule": "R11",
+    "signal": "direct base GadgetClass slot 0 named ~GadgetClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4788e0",
+    "base": "GadgetClass",
+    "base_slot": 0,
+    "base_name": "~GadgetClass",
+    "mdisp": 0
    }
   },
   "DropListClass": {
@@ -1728,14 +2432,6 @@
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
     "target": "0x47f370"
-   }
-  },
-  "DropPodLocomotionClass": {
-   "8": {
-    "name": "~DropPodLocomotionClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x480490"
    }
   },
   "DynamicVectorClass_AITriggerTypeClass": {
@@ -1927,7 +2623,7 @@
     "name": "~DynamicVectorClass_D",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x540af0"
+    "target": "0x4f7a00"
    }
   },
   "DynamicVectorClass_DDSURFACEDESC": {
@@ -1999,7 +2695,7 @@
     "name": "~DynamicVectorClass_G",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4eff20"
+    "target": "0x41ddb0"
    }
   },
   "DynamicVectorClass_GlobalPacketType": {
@@ -2383,7 +3079,7 @@
     "name": "~DynamicVectorClass_SmudgeTypeClass",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x5bb520"
+    "target": "0x4b1930"
    }
   },
   "DynamicVectorClass_SpotLightClass": {
@@ -2463,7 +3159,7 @@
     "name": "~DynamicVectorClass_TeamTypeClass",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4c54c0"
+    "target": "0x4b1750"
    }
   },
   "DynamicVectorClass_TechnoClass": {
@@ -2479,7 +3175,7 @@
     "name": "~DynamicVectorClass_TechnoTypeClass",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4940d0"
+    "target": "0x483eb0"
    }
   },
   "DynamicVectorClass_TerrainClass": {
@@ -2908,7 +3604,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -2953,6 +3649,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x37 (55) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x48f5b0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x24 (36) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x48f5a0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x48f4b0",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -2970,6 +3688,18 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   }
+  },
+  "EditClass": {
+   "0": {
+    "name": "~EditClass",
+    "rule": "R11",
+    "signal": "direct base ControlClass slot 0 named ~ControlClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x47f540",
+    "base": "ControlClass",
+    "base_slot": 0,
+    "base_name": "~ControlClass",
+    "mdisp": 0
    }
   },
   "EnumConnectionPointsClass": {
@@ -3004,7 +3734,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -3043,6 +3773,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x493ad0",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xc (12) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x493c90"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x60 (96) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x493ca0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x493980",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -3070,37 +3832,11 @@
     "target": "0x5a5d50"
    }
   },
-  "FlyLocomotionClass": {
-   "0": {
-    "name": "QueryInterface",
-    "rule": "R9",
-    "signal": "loads ppvObject from [esp+0xc]; tests it; returns E_POINTER 0x80004003; ret 0xc; slot 0 of the primary vtable",
-    "target": "0x4f9c50"
-   },
-   "1": {
-    "name": "AddRef",
-    "rule": "R9",
-    "signal": "slot 0 target 0x4f9c50 verified as QueryInterface (R9); slot 1 is IUnknown::AddRef by the MS IUnknown ABI",
-    "target": "0x4f9bf0"
-   },
-   "2": {
-    "name": "Release",
-    "rule": "R9",
-    "signal": "slot 0 target 0x4f9c50 verified as QueryInterface (R9); slot 2 is IUnknown::Release by the MS IUnknown ABI",
-    "target": "0x4f9c10"
-   },
-   "8": {
-    "name": "~FlyLocomotionClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4993f0"
-   }
-  },
   "FoggedObjectClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -3127,6 +3863,16 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~FoggedObjectClass",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 8 named ~AbstractClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x49b810",
+    "base": "AbstractClass",
+    "base_slot": 8,
+    "base_name": "~AbstractClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
@@ -3138,6 +3884,28 @@
     "rule": "R6",
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x3d (61) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x49b6b0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x68 (104) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x49b6c0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x49b710",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -3178,7 +3946,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -3205,11 +3973,89 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~FootClass",
+    "rule": "R11",
+    "signal": "direct base TechnoClass slot 8 named ~TechnoClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4a4b40",
+    "base": "TechnoClass",
+    "base_slot": 8,
+    "base_name": "~TechnoClass",
+    "mdisp": 0
+   },
+   "9": {
+    "name": "Set_ID",
+    "rule": "R11",
+    "signal": "direct base TechnoClass slot 9 named Set_ID (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x60f180",
+    "base": "TechnoClass",
+    "base_slot": 9,
+    "base_name": "Set_ID",
+    "mdisp": 0
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x61a290, proving the override; name inherited from TechnoClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x4a0ca0",
+    "base": "TechnoClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R7",
+    "signal": "3 direct subclasses (AircraftClass, InfantryClass, UnitClass) independently name slot 11 What_Am_I; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R7",
+    "signal": "3 direct subclasses (AircraftClass, InfantryClass, UnitClass) independently name slot 12 Get_Heap; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x61ccf0, proving the override; name inherited from TechnoClass slot 13 (Load, displacement 0)",
+    "target": "0x4a23c0",
+    "base": "TechnoClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
+   "14": {
+    "name": "Save",
+    "rule": "R11",
+    "signal": "direct base TechnoClass slot 14 named Save (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612db0",
+    "base": "TechnoClass",
+    "base_slot": 14,
+    "base_name": "Save",
+    "mdisp": 0
+   },
+   "15": {
+    "name": "GetSizeMax",
+    "rule": "R11",
+    "signal": "direct base TechnoClass slot 15 named GetSizeMax (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612dc0",
+    "base": "TechnoClass",
+    "base_slot": 15,
+    "base_name": "GetSizeMax",
+    "mdisp": 0
+   },
    "16": {
     "name": "Compute_CRC",
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R6",
+    "signal": "slot target 0x4a4b00 is the same code address as ObjectClass slot 33 (Get_Type)",
+    "target": "0x4a4b00"
    }
   },
   "GScreenClass": {
@@ -3244,6 +4090,18 @@
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
     "target": "0x4a5f20"
+   }
+  },
+  "GaugeClass": {
+   "0": {
+    "name": "~GaugeClass",
+    "rule": "R11",
+    "signal": "direct base ControlClass slot 0 named ~ControlClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4a75c0",
+    "base": "ControlClass",
+    "base_slot": 0,
+    "base_name": "~ControlClass",
+    "mdisp": 0
    }
   },
   "GenericNode": {
@@ -3281,23 +4139,59 @@
     "signal": "slot 0 target 0x4b4a70 verified as QueryInterface (R9); slot 2 is IUnknown::Release by the MS IUnknown ABI",
     "target": "0x4c51a0"
    },
-   "4": {
-    "name": "Release",
-    "rule": "R6",
-    "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
-    "target": "0x405990"
-   },
    "7": {
     "name": "GetType",
     "rule": "R6",
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~HouseClass",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 8 named ~AbstractClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4c51d0",
+    "base": "AbstractClass",
+    "base_slot": 8,
+    "base_name": "~AbstractClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4b8850",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xd (13) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4c51b0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x10e50 (69200) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4bea10"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x4bde10",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -3310,6 +4204,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4c51c0",
+    "base": "AbstractClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
    }
   },
   "HouseTypeClass": {
@@ -3331,6 +4235,16 @@
     "signal": "slot 0 target 0x4c79b0 verified as QueryInterface (R9); slot 2 is IUnknown::Release by the MS IUnknown ABI",
     "target": "0x4c7b60"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4c7980",
+    "base": "AbstractTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~HouseTypeClass",
     "rule": "R1",
@@ -3349,6 +4263,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xe (14) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4c7b20"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xb8 (184) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4c7b30"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x4c7790",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -3361,6 +4297,16 @@
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
    },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4c7b40",
+    "base": "AbstractTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
+   },
    "25": {
     "name": "Read_INI",
     "rule": "R2",
@@ -3372,32 +4318,6 @@
     "rule": "R6",
     "signal": "slot target 0x405fb0 is the same code address as AbstractTypeClass slot 26 (Set_ID)",
     "target": "0x405fb0"
-   }
-  },
-  "HoverLocomotionClass": {
-   "0": {
-    "name": "QueryInterface",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c50 is the same code address as FlyLocomotionClass slot 0 (QueryInterface)",
-    "target": "0x4f9c50"
-   },
-   "1": {
-    "name": "AddRef",
-    "rule": "R6",
-    "signal": "slot target 0x4f9bf0 is the same code address as FlyLocomotionClass slot 1 (AddRef)",
-    "target": "0x4f9bf0"
-   },
-   "2": {
-    "name": "Release",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c10 is the same code address as FlyLocomotionClass slot 2 (Release)",
-    "target": "0x4f9c10"
-   },
-   "8": {
-    "name": "~HoverLocomotionClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4cb030"
    }
   },
   "INIClass": {
@@ -3416,6 +4336,18 @@
     "target": "0x4d7ed0"
    }
   },
+  "INIClass_INISection": {
+   "0": {
+    "name": "~INIClass_INISection",
+    "rule": "R11",
+    "signal": "direct base Node_INISection_INIClass slot 0 named ~Node_INISection_INIClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4d7f80",
+    "base": "Node_INISection_INIClass",
+    "base_slot": 0,
+    "base_name": "~Node_INISection_INIClass",
+    "mdisp": 0
+   }
+  },
   "IPXConnClass": {
    "0": {
     "name": "~IPXConnClass",
@@ -3432,11 +4364,35 @@
     "target": "0x4e7a40"
    }
   },
+  "IPXInterfaceClass": {
+   "0": {
+    "name": "~IPXInterfaceClass",
+    "rule": "R11",
+    "signal": "direct base WinsockInterfaceClass slot 0 named ~WinsockInterfaceClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x66e9d0",
+    "base": "WinsockInterfaceClass",
+    "base_slot": 0,
+    "base_name": "~WinsockInterfaceClass",
+    "mdisp": 0
+   }
+  },
+  "IPXManagerClass": {
+   "0": {
+    "name": "~IPXManagerClass",
+    "rule": "R11",
+    "signal": "direct base ConnManClass slot 0 named ~ConnManClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4e8ac0",
+    "base": "ConnManClass",
+    "base_slot": 0,
+    "base_name": "~ConnManClass",
+    "mdisp": 0
+   }
+  },
   "InfantryClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -3463,18 +4419,100 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~InfantryClass",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 8 named ~FootClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4d2eb0",
+    "base": "FootClass",
+    "base_slot": 8,
+    "base_name": "~FootClass",
+    "mdisp": 0
+   },
+   "9": {
+    "name": "Set_ID",
+    "rule": "R13",
+    "signal": "derived slot 9 calls the base class's slot 9 target 0x60f180, proving the override; name inherited from FootClass slot 9 (Set_ID, displacement 0)",
+    "target": "0x4cb7c0",
+    "base": "FootClass",
+    "base_slot": 9,
+    "base_name": "Set_ID",
+    "mdisp": 0
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x4a0ca0, proving the override; name inherited from FootClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x4cd470",
+    "base": "FootClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xf (15) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4d2e80"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x378 (888) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4d2e30"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x4a23c0, proving the override; name inherited from FootClass slot 13 (Load, displacement 0)",
+    "target": "0x4d2740",
+    "base": "FootClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
+   "14": {
+    "name": "Save",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 14 named Save (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612db0",
+    "base": "FootClass",
+    "base_slot": 14,
+    "base_name": "Save",
+    "mdisp": 0
+   },
+   "15": {
+    "name": "GetSizeMax",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 15 named GetSizeMax (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612dc0",
+    "base": "FootClass",
+    "base_slot": 15,
+    "base_name": "GetSizeMax",
+    "mdisp": 0
+   },
    "16": {
     "name": "Compute_CRC",
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4d0d40",
+    "base": "FootClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "InfantryTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -3495,6 +4533,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base TechnoTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x621bf0",
+    "base": "TechnoTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~InfantryTypeClass",
     "rule": "R1",
@@ -3513,6 +4561,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x10 (16) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4d40b0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x4b0 (1200) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4d40c0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x621c90, proving the override; name inherited from TechnoTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x4d3d10",
+    "base": "TechnoTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -3524,6 +4594,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base TechnoTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4d40d0",
+    "base": "TechnoTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
    },
    "25": {
     "name": "Read_INI",
@@ -3542,7 +4622,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -3581,6 +4661,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x56fb00",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x11 (17) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4e9380"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x50 (80) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4e9370"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 13 named Load (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x570630",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -3598,13 +4710,23 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4e93d0",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "IsometricTileTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -3625,11 +4747,63 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x572ba0",
+    "base": "ObjectTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
+   "8": {
+    "name": "~IsometricTileTypeClass",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 8 named ~ObjectTypeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4ef950",
+    "base": "ObjectTypeClass",
+    "base_slot": 8,
+    "base_name": "~ObjectTypeClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4ef580",
+    "base": "ObjectTypeClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x12 (18) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4ef920"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x19c (412) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4ef930"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from ObjectTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x4ef330",
+    "base": "ObjectTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -3643,6 +4817,16 @@
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
    },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4ef940",
+    "base": "ObjectTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
+   },
    "25": {
     "name": "Read_INI",
     "rule": "R2",
@@ -3654,32 +4838,6 @@
     "rule": "R6",
     "signal": "slot target 0x405fb0 is the same code address as AbstractTypeClass slot 26 (Set_ID)",
     "target": "0x405fb0"
-   }
-  },
-  "JumpjetLocomotionClass": {
-   "0": {
-    "name": "QueryInterface",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c50 is the same code address as FlyLocomotionClass slot 0 (QueryInterface)",
-    "target": "0x4f9c50"
-   },
-   "1": {
-    "name": "AddRef",
-    "rule": "R6",
-    "signal": "slot target 0x4f9bf0 is the same code address as FlyLocomotionClass slot 1 (AddRef)",
-    "target": "0x4f9bf0"
-   },
-   "2": {
-    "name": "Release",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c10 is the same code address as FlyLocomotionClass slot 2 (Release)",
-    "target": "0x4f9c10"
-   },
-   "8": {
-    "name": "~JumpjetLocomotionClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4f1ad0"
    }
   },
   "LCWPipe": {
@@ -3766,7 +4924,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -3811,6 +4969,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x36 (54) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4f55d0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x38 (56) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x4f55c0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x4f54c0",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -3844,26 +5024,6 @@
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
     "target": "0x4f9360"
-   }
-  },
-  "LocomotionClass": {
-   "0": {
-    "name": "QueryInterface",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c50 is the same code address as FlyLocomotionClass slot 0 (QueryInterface)",
-    "target": "0x4f9c50"
-   },
-   "1": {
-    "name": "AddRef",
-    "rule": "R6",
-    "signal": "slot target 0x4f9bf0 is the same code address as FlyLocomotionClass slot 1 (AddRef)",
-    "target": "0x4f9bf0"
-   },
-   "2": {
-    "name": "Release",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c10 is the same code address as FlyLocomotionClass slot 2 (Release)",
-    "target": "0x4f9c10"
    }
   },
   "LogicClass": {
@@ -3948,9 +5108,29 @@
     "rule": "R6",
     "signal": "slot target 0x402ae0 is the same code address as DisplayClass slot 2 (Release)",
     "target": "0x402ae0"
+   },
+   "4": {
+    "name": "~MapClass",
+    "rule": "R11",
+    "signal": "direct base GScreenClass slot 4 named ~GScreenClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x520540",
+    "base": "GScreenClass",
+    "base_slot": 4,
+    "base_name": "~GScreenClass",
+    "mdisp": 0
    }
   },
   "MapSeedClass": {
+   "0": {
+    "name": "~MapSeedClass",
+    "rule": "R11",
+    "signal": "direct base LoadOptionsClass slot 0 named ~LoadOptionsClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x540230",
+    "base": "LoadOptionsClass",
+    "base_slot": 0,
+    "base_name": "~LoadOptionsClass",
+    "mdisp": 0
+   },
    "1": {
     "name": "Read_INI",
     "rule": "R2",
@@ -3964,37 +5144,11 @@
     "target": "0x52d4f0"
    }
   },
-  "MechLocomotionClass": {
-   "0": {
-    "name": "QueryInterface",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c50 is the same code address as FlyLocomotionClass slot 0 (QueryInterface)",
-    "target": "0x4f9c50"
-   },
-   "1": {
-    "name": "AddRef",
-    "rule": "R6",
-    "signal": "slot target 0x4f9bf0 is the same code address as FlyLocomotionClass slot 1 (AddRef)",
-    "target": "0x4f9bf0"
-   },
-   "2": {
-    "name": "Release",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c10 is the same code address as FlyLocomotionClass slot 2 (Release)",
-    "target": "0x4f9c10"
-   },
-   "8": {
-    "name": "~MechLocomotionClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x545560"
-   }
-  },
   "MissionClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -4033,6 +5187,26 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x56fb00",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x570630, proving the override; name inherited from ObjectClass slot 13 (Load, displacement 0)",
+    "target": "0x547090",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -4050,6 +5224,12 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R6",
+    "signal": "slot target 0x4a4b00 is the same code address as ObjectClass slot 33 (Get_Type)",
+    "target": "0x4a4b00"
    }
   },
   "MixFileClass": {
@@ -4120,7 +5300,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -4164,6 +5344,28 @@
     "rule": "R6",
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x3c (60) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x424cd0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x28 (40) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x424ce0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x424900",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -4220,7 +5422,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -4247,11 +5449,53 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~ObjectClass",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 8 named ~AbstractClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x570f10",
+    "base": "AbstractClass",
+    "base_slot": 8,
+    "base_name": "~AbstractClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x56fb00",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R7",
+    "signal": "12 direct subclasses (AnimClass, BuildingLightClass, BulletClass) independently name slot 11 What_Am_I; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R7",
+    "signal": "12 direct subclasses (AnimClass, BuildingLightClass, BulletClass) independently name slot 12 Get_Heap; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x570630",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -4270,13 +5514,19 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R12",
+    "signal": "each subclass returns its type pointer from its own member; the base returns 0",
+    "target": "0x4a4b00"
    }
   },
   "ObjectTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -4297,6 +5547,26 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R13",
+    "signal": "derived slot 7 calls the base class's slot 7 target 0x405910, proving the override; name inherited from AbstractTypeClass slot 7 (GetType, displacement 0)",
+    "target": "0x572ba0",
+    "base": "AbstractTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
+   "8": {
+    "name": "~ObjectTypeClass",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 8 named ~AbstractTypeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x572d10",
+    "base": "AbstractTypeClass",
+    "base_slot": 8,
+    "base_name": "~AbstractTypeClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
@@ -4308,6 +5578,28 @@
     "rule": "R6",
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R7",
+    "signal": "9 direct subclasses (AnimTypeClass, BulletTypeClass, IsometricTileTypeClass) independently name slot 11 What_Am_I; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R7",
+    "signal": "9 direct subclasses (AnimTypeClass, BulletTypeClass, IsometricTileTypeClass) independently name slot 12 Get_Heap; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 13 named Load (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x405fe0",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -4352,7 +5644,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -4391,6 +5683,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x56fb00",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x14 (20) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5766e0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x50 (80) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x576690"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 13 named Load (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x570630",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -4408,13 +5732,23 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x576570",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "OverlayTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -4435,6 +5769,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x572ba0",
+    "base": "ObjectTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~OverlayTypeClass",
     "rule": "R1",
@@ -4453,6 +5797,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x15 (21) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x577820"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x148 (328) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x577830"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from ObjectTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x577350",
+    "base": "ObjectTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -4464,6 +5830,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x577840",
+    "base": "ObjectTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
    },
    "25": {
     "name": "Read_INI",
@@ -4506,7 +5882,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -4545,6 +5921,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x56fb00",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x16 (22) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x58dc60"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xd8 (216) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x58dc50"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 13 named Load (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x570630",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -4562,13 +5970,23 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x58dc70",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "ParticleSystemClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -4595,11 +6013,53 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~ParticleSystemClass",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 8 named ~ObjectClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x590390",
+    "base": "ObjectClass",
+    "base_slot": 8,
+    "base_name": "~ObjectClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x56fb00, proving the override; name inherited from ObjectClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x590020",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x18 (24) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x590370"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x9c (156) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x590360"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x570630, proving the override; name inherited from ObjectClass slot 13 (Load, displacement 0)",
+    "target": "0x590270",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -4618,13 +6078,23 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x590380",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "ParticleSystemTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -4645,6 +6115,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x572ba0",
+    "base": "ObjectTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~ParticleSystemTypeClass",
     "rule": "R1",
@@ -4662,6 +6142,28 @@
     "rule": "R6",
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x19 (25) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5976e0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1a0 (416) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5976d0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from ObjectTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x5974c0",
+    "base": "ObjectTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -4698,7 +6200,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -4719,6 +6221,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x572ba0",
+    "base": "ObjectTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~ParticleTypeClass",
     "rule": "R1",
@@ -4730,6 +6242,38 @@
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x598640",
+    "base": "ObjectTypeClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x17 (23) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5986b0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1a8 (424) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5986a0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from ObjectTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x598280",
+    "base": "ObjectTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -4780,6 +6324,16 @@
     "rule": "R6",
     "signal": "slot target 0x402ae0 is the same code address as DisplayClass slot 2 (Release)",
     "target": "0x402ae0"
+   },
+   "4": {
+    "name": "~PowerClass",
+    "rule": "R11",
+    "signal": "direct base RadarClass slot 4 named ~RadarClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x594870",
+    "base": "RadarClass",
+    "base_slot": 4,
+    "base_name": "~RadarClass",
+    "mdisp": 0
    }
   },
   "PrevObjectCommandClass": {
@@ -5272,11 +6826,23 @@
     "target": "0x5a4e20"
    }
   },
+  "RadarClass_RTacticalClass": {
+   "0": {
+    "name": "~RadarClass_RTacticalClass",
+    "rule": "R11",
+    "signal": "direct base GadgetClass slot 0 named ~GadgetClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5a4e00",
+    "base": "GadgetClass",
+    "base_slot": 0,
+    "base_name": "~GadgetClass",
+    "mdisp": 0
+   }
+  },
   "RadioClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -5315,6 +6881,26 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x56fb00, proving the override; name inherited from MissionClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x5a58c0",
+    "base": "MissionClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x547090, proving the override; name inherited from MissionClass slot 13 (Load, displacement 0)",
+    "target": "0x5a58f0",
+    "base": "MissionClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -5332,6 +6918,12 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R6",
+    "signal": "slot target 0x4a4b00 is the same code address as ObjectClass slot 33 (Get_Type)",
+    "target": "0x4a4b00"
    }
   },
   "RandomStraw": {
@@ -5418,7 +7010,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -5463,6 +7055,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1a (26) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5cec30"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x20 (32) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5cec40"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x5ce3a0",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -5486,7 +7100,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -5531,6 +7145,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1b (27) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5cecd0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1fc (508) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5cece0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x5cec10",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -5542,6 +7178,36 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5cecf0",
+    "base": "AbstractTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
+   },
+   "25": {
+    "name": "Fetch_ID",
+    "rule": "R13",
+    "signal": "derived slot 25 calls the base class's slot 25 target 0x405f20, proving the override; name inherited from AbstractTypeClass slot 25 (Fetch_ID, displacement 0)",
+    "target": "0x5ce700",
+    "base": "AbstractTypeClass",
+    "base_slot": 25,
+    "base_name": "Fetch_ID",
+    "mdisp": 0
+   },
+   "26": {
+    "name": "Set_ID",
+    "rule": "R13",
+    "signal": "derived slot 26 calls the base class's slot 26 target 0x405fb0, proving the override; name inherited from AbstractTypeClass slot 26 (Set_ID, displacement 0)",
+    "target": "0x5ce660",
+    "base": "AbstractTypeClass",
+    "base_slot": 26,
+    "base_name": "Set_ID",
+    "mdisp": 0
    }
   },
   "ScrollClass": {
@@ -5562,6 +7228,16 @@
     "rule": "R6",
     "signal": "slot target 0x402ae0 is the same code address as DisplayClass slot 2 (Release)",
     "target": "0x402ae0"
+   },
+   "4": {
+    "name": "~ScrollClass",
+    "rule": "R11",
+    "signal": "direct base TabClass slot 4 named ~TabClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5d04e0",
+    "base": "TabClass",
+    "base_slot": 4,
+    "base_name": "~TabClass",
+    "mdisp": 0
    }
   },
   "ScrollECommandClass": {
@@ -5644,11 +7320,23 @@
     "target": "0x4e2c00"
    }
   },
+  "ShapeButtonClass": {
+   "0": {
+    "name": "~ShapeButtonClass",
+    "rule": "R11",
+    "signal": "direct base ToggleClass slot 0 named ~ToggleClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x47f560",
+    "base": "ToggleClass",
+    "base_slot": 0,
+    "base_name": "~ToggleClass",
+    "mdisp": 0
+   }
+  },
   "SideClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -5692,6 +7380,28 @@
     "rule": "R6",
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1c (28) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5d81a0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x7c (124) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5d8190"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x5d7fe0",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -5742,6 +7452,40 @@
     "rule": "R6",
     "signal": "slot target 0x402ae0 is the same code address as DisplayClass slot 2 (Release)",
     "target": "0x402ae0"
+   },
+   "4": {
+    "name": "~SidebarClass",
+    "rule": "R11",
+    "signal": "direct base PowerClass slot 4 named ~PowerClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5dcd50",
+    "base": "PowerClass",
+    "base_slot": 4,
+    "base_name": "~PowerClass",
+    "mdisp": 0
+   }
+  },
+  "SidebarClass_SBGadgetClass": {
+   "0": {
+    "name": "~SidebarClass_SBGadgetClass",
+    "rule": "R11",
+    "signal": "direct base GadgetClass slot 0 named ~GadgetClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5dcd00",
+    "base": "GadgetClass",
+    "base_slot": 0,
+    "base_name": "~GadgetClass",
+    "mdisp": 0
+   }
+  },
+  "SidebarClass_StripClass_SelectClass": {
+   "0": {
+    "name": "~SidebarClass_StripClass_SelectClass",
+    "rule": "R11",
+    "signal": "direct base ControlClass slot 0 named ~ControlClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5dcce0",
+    "base": "ControlClass",
+    "base_slot": 0,
+    "base_name": "~ControlClass",
+    "mdisp": 0
    }
   },
   "SidebarDownCommandClass": {
@@ -5776,11 +7520,23 @@
     "target": "0x4e2cc0"
    }
   },
+  "SliderClass": {
+   "0": {
+    "name": "~SliderClass",
+    "rule": "R11",
+    "signal": "direct base GaugeClass slot 0 named ~GaugeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4f7a50",
+    "base": "GaugeClass",
+    "base_slot": 0,
+    "base_name": "~GaugeClass",
+    "mdisp": 0
+   }
+  },
   "SmudgeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -5819,6 +7575,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x56fb00",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1d (29) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5e1230"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x50 (80) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5e1220"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 13 named Load (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x570630",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -5836,13 +7624,23 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5e1210",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "SmudgeTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -5863,6 +7661,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x572ba0",
+    "base": "ObjectTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~SmudgeTypeClass",
     "rule": "R1",
@@ -5881,6 +7689,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1e (30) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5e2380"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x134 (308) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5e2390"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from ObjectTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x5e1a70",
+    "base": "ObjectTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -5892,6 +7722,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5e23a0",
+    "base": "ObjectTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
    },
    "25": {
     "name": "Read_INI",
@@ -5926,7 +7766,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -5965,6 +7805,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5f2790",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x39 (57) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5f2820"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x38 (56) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5f2830"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x5f27b0",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -5988,7 +7860,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -6033,6 +7905,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x20 (32) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5f2e90"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xa8 (168) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5f2ea0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x5f2eb0",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -6044,6 +7938,26 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5f2f50",
+    "base": "AbstractTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
+   },
+   "25": {
+    "name": "Fetch_ID",
+    "rule": "R13",
+    "signal": "derived slot 25 calls the base class's slot 25 target 0x405f20, proving the override; name inherited from AbstractTypeClass slot 25 (Fetch_ID, displacement 0)",
+    "target": "0x5f2f60",
+    "base": "AbstractTypeClass",
+    "base_slot": 25,
+    "base_name": "Fetch_ID",
+    "mdisp": 0
    },
    "26": {
     "name": "Set_ID",
@@ -6084,7 +7998,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -6123,6 +8037,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5fe060",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x2f (47) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x602990"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x44 (68) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x602980"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x602830",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -6134,6 +8080,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x6029a0",
+    "base": "AbstractClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
    }
   },
   "TClassFactory_class_AITriggerTypeClass": {
@@ -7460,7 +9416,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -7499,6 +9455,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x626680",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x30 (48) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x626850"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x28 (40) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x626840"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x6266a0",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -7510,6 +9498,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x626860",
+    "base": "AbstractClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
    }
   },
   "TabClass": {
@@ -7530,13 +9528,23 @@
     "rule": "R6",
     "signal": "slot target 0x402ae0 is the same code address as DisplayClass slot 2 (Release)",
     "target": "0x402ae0"
+   },
+   "4": {
+    "name": "~TabClass",
+    "rule": "R11",
+    "signal": "direct base SidebarClass slot 4 named ~SidebarClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x550290",
+    "base": "SidebarClass",
+    "base_slot": 4,
+    "base_name": "~SidebarClass",
+    "mdisp": 0
    }
   },
   "Tactical": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -7575,6 +9583,28 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x5fbbb0",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x38 (56) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5fd260"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xdc8 (3528) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x5fd270"
+   },
    "13": {
     "name": "Load",
     "rule": "R6",
@@ -7604,7 +9634,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -7631,11 +9661,53 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~TagClass",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 8 named ~AbstractClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x603bf0",
+    "base": "AbstractClass",
+    "base_slot": 8,
+    "base_name": "~AbstractClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x603970",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x2c (44) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x603be0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x28 (40) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x603bd0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x603a40",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -7660,7 +9732,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -7687,11 +9759,53 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~TagTypeClass",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 8 named ~AbstractTypeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x604770",
+    "base": "AbstractTypeClass",
+    "base_slot": 8,
+    "base_name": "~AbstractTypeClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x604180",
+    "base": "AbstractTypeClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x2d (45) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x604740"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x6c (108) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x604750"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x6046b0",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -7704,13 +9818,43 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x604760",
+    "base": "AbstractTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
+   },
+   "25": {
+    "name": "Fetch_ID",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 25 named Fetch_ID (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x6043a0",
+    "base": "AbstractTypeClass",
+    "base_slot": 25,
+    "base_name": "Fetch_ID",
+    "mdisp": 0
+   },
+   "26": {
+    "name": "Set_ID",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 26 named Set_ID (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x604470",
+    "base": "AbstractTypeClass",
+    "base_slot": 26,
+    "base_name": "Set_ID",
+    "mdisp": 0
    }
   },
   "TaskForceClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -7755,6 +9899,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x21 (33) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x606cc0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x9c (156) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x606cd0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x606c60",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -7772,13 +9938,33 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "25": {
+    "name": "Fetch_ID",
+    "rule": "R13",
+    "signal": "derived slot 25 calls the base class's slot 25 target 0x405f20, proving the override; name inherited from AbstractTypeClass slot 25 (Fetch_ID, displacement 0)",
+    "target": "0x6068d0",
+    "base": "AbstractTypeClass",
+    "base_slot": 25,
+    "base_name": "Fetch_ID",
+    "mdisp": 0
+   },
+   "26": {
+    "name": "Set_ID",
+    "rule": "R13",
+    "signal": "derived slot 26 calls the base class's slot 26 target 0x405fb0, proving the override; name inherited from AbstractTypeClass slot 26 (Set_ID, displacement 0)",
+    "target": "0x606990",
+    "base": "AbstractTypeClass",
+    "base_slot": 26,
+    "base_name": "Set_ID",
+    "mdisp": 0
    }
   },
   "TeamClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -7805,11 +9991,53 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~TeamClass",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 8 named ~AbstractClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x60c640",
+    "base": "AbstractClass",
+    "base_slot": 8,
+    "base_name": "~AbstractClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x608dc0",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x22 (34) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x60c630"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x8c (140) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x60c620"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x60a180",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -7834,7 +10062,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -7873,6 +10101,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x60d130",
+    "base": "AbstractTypeClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x23 (35) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x60dda0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xb0 (176) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x60ddb0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x60db50",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -7885,18 +10145,34 @@
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
    },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x60ddc0",
+    "base": "AbstractTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
+   },
    "25": {
     "name": "Read_INI",
     "rule": "R2",
     "signal": "18 rules.ini field names (Aggressive, Annoyance, Autocreate, Droppod, ...); 3 known INI accessor call(s); 6 reader store pattern(s)",
     "target": "0x60d180"
+   },
+   "26": {
+    "name": "Write_INI",
+    "rule": "R10",
+    "signal": "28 rules.ini field names; 3 known INI accessor call(s); calls AbstractClass::Set_ID 0x405fb0",
+    "target": "0x60d510"
    }
   },
   "TechnoClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -7923,18 +10199,84 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~TechnoClass",
+    "rule": "R11",
+    "signal": "direct base RadioClass slot 8 named ~RadioClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x61e1d0",
+    "base": "RadioClass",
+    "base_slot": 8,
+    "base_name": "~RadioClass",
+    "mdisp": 0
+   },
+   "9": {
+    "name": "Set_ID",
+    "rule": "R11",
+    "signal": "direct base RadioClass slot 9 named Set_ID (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x60f180",
+    "base": "RadioClass",
+    "base_slot": 9,
+    "base_name": "Set_ID",
+    "mdisp": 0
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x5a58c0, proving the override; name inherited from RadioClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x61a290",
+    "base": "RadioClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x5a58f0, proving the override; name inherited from RadioClass slot 13 (Load, displacement 0)",
+    "target": "0x61ccf0",
+    "base": "RadioClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
+   "14": {
+    "name": "Save",
+    "rule": "R11",
+    "signal": "direct base RadioClass slot 14 named Save (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612db0",
+    "base": "RadioClass",
+    "base_slot": 14,
+    "base_name": "Save",
+    "mdisp": 0
+   },
+   "15": {
+    "name": "GetSizeMax",
+    "rule": "R11",
+    "signal": "direct base RadioClass slot 15 named GetSizeMax (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612dc0",
+    "base": "RadioClass",
+    "base_slot": 15,
+    "base_name": "GetSizeMax",
+    "mdisp": 0
+   },
    "16": {
     "name": "Compute_CRC",
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R6",
+    "signal": "slot target 0x4a4b00 is the same code address as ObjectClass slot 33 (Get_Type)",
+    "target": "0x4a4b00"
    }
   },
   "TechnoTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -7955,6 +10297,26 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R13",
+    "signal": "derived slot 7 calls the base class's slot 7 target 0x572ba0, proving the override; name inherited from ObjectTypeClass slot 7 (GetType, displacement 0)",
+    "target": "0x621bf0",
+    "base": "ObjectTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
+   "8": {
+    "name": "~TechnoTypeClass",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 8 named ~ObjectTypeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x6221a0",
+    "base": "ObjectTypeClass",
+    "base_slot": 8,
+    "base_name": "~ObjectTypeClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
@@ -7966,6 +10328,28 @@
     "rule": "R6",
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R7",
+    "signal": "4 direct subclasses (AircraftTypeClass, BuildingTypeClass, InfantryTypeClass) independently name slot 11 What_Am_I; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R7",
+    "signal": "4 direct subclasses (AircraftTypeClass, BuildingTypeClass, InfantryTypeClass) independently name slot 12 Get_Heap; base slot is the shared virtual they override",
+    "target": "0x6829a5"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from ObjectTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x621c90",
+    "base": "ObjectTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -7998,31 +10382,11 @@
     "target": "0x405fb0"
    }
   },
-  "TeleportLocomotionClass": {
-   "0": {
-    "name": "QueryInterface",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c50 is the same code address as FlyLocomotionClass slot 0 (QueryInterface)",
-    "target": "0x4f9c50"
-   },
-   "1": {
-    "name": "AddRef",
-    "rule": "R6",
-    "signal": "slot target 0x4f9bf0 is the same code address as FlyLocomotionClass slot 1 (AddRef)",
-    "target": "0x4f9bf0"
-   },
-   "2": {
-    "name": "Release",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c10 is the same code address as FlyLocomotionClass slot 2 (Release)",
-    "target": "0x4f9c10"
-   }
-  },
   "TerrainClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -8061,6 +10425,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x56fb00, proving the override; name inherited from ObjectClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x6242d0",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x24 (36) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x624610"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x7c (124) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x624600"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x570630, proving the override; name inherited from ObjectClass slot 13 (Load, displacement 0)",
+    "target": "0x624260",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -8078,13 +10474,23 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x624420",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "TerrainTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -8105,6 +10511,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x572ba0",
+    "base": "ObjectTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~TerrainTypeClass",
     "rule": "R1",
@@ -8123,6 +10539,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x25 (37) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x6256e0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x14c (332) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x6256f0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from ObjectTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x625500",
+    "base": "ObjectTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -8135,6 +10573,16 @@
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
    },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x625700",
+    "base": "ObjectTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
+   },
    "25": {
     "name": "Read_INI",
     "rule": "R2",
@@ -8146,6 +10594,30 @@
     "rule": "R6",
     "signal": "slot target 0x405fb0 is the same code address as AbstractTypeClass slot 26 (Set_ID)",
     "target": "0x405fb0"
+   }
+  },
+  "TextButtonClass": {
+   "0": {
+    "name": "~TextButtonClass",
+    "rule": "R11",
+    "signal": "direct base ToggleClass slot 0 named ~ToggleClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x6270a0",
+    "base": "ToggleClass",
+    "base_slot": 0,
+    "base_name": "~ToggleClass",
+    "mdisp": 0
+   }
+  },
+  "TextLabelClass": {
+   "0": {
+    "name": "~TextLabelClass",
+    "rule": "R11",
+    "signal": "direct base GadgetClass slot 0 named ~GadgetClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x630a20",
+    "base": "GadgetClass",
+    "base_slot": 0,
+    "base_name": "~GadgetClass",
+    "mdisp": 0
    }
   },
   "TiberianSunClassFactory": {
@@ -8172,7 +10644,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -8199,11 +10671,63 @@
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
     "target": "0x628940"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R13",
+    "signal": "derived slot 7 calls the base class's slot 7 target 0x405910, proving the override; name inherited from AbstractTypeClass slot 7 (GetType, displacement 0)",
+    "target": "0x628b50",
+    "base": "AbstractTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
+   "8": {
+    "name": "~TiberiumClass",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 8 named ~AbstractTypeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x62a100",
+    "base": "AbstractTypeClass",
+    "base_slot": 8,
+    "base_name": "~AbstractTypeClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x628bf0",
+    "base": "AbstractTypeClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x2e (46) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x62a0e0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xf0 (240) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x62a0d0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x628890",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -8217,11 +10741,43 @@
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
    },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x62a0f0",
+    "base": "AbstractTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
+   },
+   "25": {
+    "name": "Fetch_ID",
+    "rule": "R13",
+    "signal": "derived slot 25 calls the base class's slot 25 target 0x405f20, proving the override; name inherited from AbstractTypeClass slot 25 (Fetch_ID, displacement 0)",
+    "target": "0x628540",
+    "base": "AbstractTypeClass",
+    "base_slot": 25,
+    "base_name": "Fetch_ID",
+    "mdisp": 0
+   },
    "26": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x405fb0 is the same code address as AbstractTypeClass slot 26 (Set_ID)",
     "target": "0x405fb0"
+   }
+  },
+  "ToggleClass": {
+   "0": {
+    "name": "~ToggleClass",
+    "rule": "R11",
+    "signal": "direct base ControlClass slot 0 named ~ControlClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x47f580",
+    "base": "ControlClass",
+    "base_slot": 0,
+    "base_name": "~ControlClass",
+    "mdisp": 0
    }
   },
   "TogglePowerCommandClass": {
@@ -8256,11 +10812,23 @@
     "target": "0x4e2ea0"
    }
   },
+  "TriColorGaugeClass": {
+   "0": {
+    "name": "~TriColorGaugeClass",
+    "rule": "R11",
+    "signal": "direct base GaugeClass slot 0 named ~GaugeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4a75e0",
+    "base": "GaugeClass",
+    "base_slot": 0,
+    "base_name": "~GaugeClass",
+    "mdisp": 0
+   }
+  },
   "TriggerClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -8299,6 +10867,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x62cef0",
+    "base": "AbstractClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x26 (38) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x62d170"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x34 (52) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x62d160"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x62cff0",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -8322,7 +10922,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -8349,11 +10949,53 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~TriggerTypeClass",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 8 named ~AbstractTypeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x62e3b0",
+    "base": "AbstractTypeClass",
+    "base_slot": 8,
+    "base_name": "~AbstractTypeClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x62d880",
+    "base": "AbstractTypeClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x27 (39) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x62e380"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x7c (124) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x62e390"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x62e230",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -8366,13 +11008,33 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x62e3a0",
+    "base": "AbstractTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
+   },
+   "25": {
+    "name": "Fetch_ID",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 25 named Fetch_ID (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x62da00",
+    "base": "AbstractTypeClass",
+    "base_slot": 25,
+    "base_name": "Fetch_ID",
+    "mdisp": 0
    }
   },
   "TubeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -8417,6 +11079,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x35 (53) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x62ede0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1b4 (436) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x62edd0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x62ed50",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -8434,26 +11118,6 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
-   }
-  },
-  "TunnelLocomotionClass": {
-   "0": {
-    "name": "QueryInterface",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c50 is the same code address as FlyLocomotionClass slot 0 (QueryInterface)",
-    "target": "0x4f9c50"
-   },
-   "1": {
-    "name": "AddRef",
-    "rule": "R6",
-    "signal": "slot target 0x4f9bf0 is the same code address as FlyLocomotionClass slot 1 (AddRef)",
-    "target": "0x4f9bf0"
-   },
-   "2": {
-    "name": "Release",
-    "rule": "R6",
-    "signal": "slot target 0x4f9c10 is the same code address as FlyLocomotionClass slot 2 (Release)",
-    "target": "0x4f9c10"
    }
   },
   "TypeList_H": {
@@ -8564,7 +11228,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -8591,18 +11255,100 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~UnitClass",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 8 named ~FootClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x63e1f0",
+    "base": "FootClass",
+    "base_slot": 8,
+    "base_name": "~FootClass",
+    "mdisp": 0
+   },
+   "9": {
+    "name": "Set_ID",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 9 named Set_ID (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x60f180",
+    "base": "FootClass",
+    "base_slot": 9,
+    "base_name": "Set_ID",
+    "mdisp": 0
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x4a0ca0, proving the override; name inherited from FootClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x63c6a0",
+    "base": "FootClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1 (1) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x63e180"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x370 (880) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x63e130"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x4a23c0, proving the override; name inherited from FootClass slot 13 (Load, displacement 0)",
+    "target": "0x63c5d0",
+    "base": "FootClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
+   "14": {
+    "name": "Save",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 14 named Save (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612db0",
+    "base": "FootClass",
+    "base_slot": 14,
+    "base_name": "Save",
+    "mdisp": 0
+   },
+   "15": {
+    "name": "GetSizeMax",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 15 named GetSizeMax (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x612dc0",
+    "base": "FootClass",
+    "base_slot": 15,
+    "base_name": "GetSizeMax",
+    "mdisp": 0
+   },
    "16": {
     "name": "Compute_CRC",
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base FootClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x63a090",
+    "base": "FootClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "UnitTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -8623,6 +11369,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base TechnoTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x621bf0",
+    "base": "TechnoTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~UnitTypeClass",
     "rule": "R1",
@@ -8641,6 +11397,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x28 (40) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x63ee80"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x4b8 (1208) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x63ee70"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x621c90, proving the override; name inherited from TechnoTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x63ec90",
+    "base": "TechnoTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -8652,6 +11430,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059e0 is the same code address as AbstractClass slot 15 (GetSizeMax)",
     "target": "0x4059e0"
+   },
+   "16": {
+    "name": "Compute_CRC",
+    "rule": "R11",
+    "signal": "direct base TechnoTypeClass slot 16 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x63ee90",
+    "base": "TechnoTypeClass",
+    "base_slot": 16,
+    "base_name": "Compute_CRC",
+    "mdisp": 0
    },
    "25": {
     "name": "Read_INI",
@@ -8855,7 +11643,7 @@
     "name": "~VectorClass_D",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x540aa0"
+    "target": "0x4f7d20"
    }
   },
   "VectorClass_DDSURFACEDESC": {
@@ -8871,7 +11659,7 @@
     "name": "~VectorClass_E",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x670330"
+    "target": "0x642cf0"
    }
   },
   "VectorClass_EMPulseClass": {
@@ -8927,7 +11715,7 @@
     "name": "~VectorClass_G",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4efed0"
+    "target": "0x41dd60"
    }
   },
   "VectorClass_GlobalPacketType": {
@@ -9319,7 +12107,7 @@
     "name": "~VectorClass_SmudgeTypeClass",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x5bb4d0"
+    "target": "0x4b18e0"
    }
   },
   "VectorClass_SpotLightClass": {
@@ -9399,7 +12187,7 @@
     "name": "~VectorClass_TeamTypeClass",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4c6900"
+    "target": "0x4b1700"
    }
   },
   "VectorClass_TechnoClass": {
@@ -9415,7 +12203,7 @@
     "name": "~VectorClass_TechnoTypeClass",
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x494080"
+    "target": "0x44b8d0"
    }
   },
   "VectorClass_TerrainClass": {
@@ -9852,7 +12640,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -9879,11 +12667,53 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~VeinholeMonsterClass",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 8 named ~ObjectClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x645c60",
+    "base": "ObjectClass",
+    "base_slot": 8,
+    "base_name": "~ObjectClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x56fb00",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x3f (63) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x645c30"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xa4 (164) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x645c40"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 13 named Load (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x570630",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -9902,6 +12732,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x645920",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "VersionClass": {
@@ -9948,7 +12788,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -9975,11 +12815,53 @@
     "signal": "slot target 0x405910 is the same code address as AbstractClass slot 7 (GetType)",
     "target": "0x405910"
    },
+   "8": {
+    "name": "~VoxelAnimClass",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 8 named ~ObjectClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x641860",
+    "base": "ObjectClass",
+    "base_slot": 8,
+    "base_name": "~ObjectClass",
+    "mdisp": 0
+   },
    "9": {
     "name": "Set_ID",
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x56fb00",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x29 (41) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x641830"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xb8 (184) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x641820"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x570630, proving the override; name inherited from ObjectClass slot 13 (Load, displacement 0)",
+    "target": "0x641740",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -9998,13 +12880,23 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x641840",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "VoxelAnimTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -10025,6 +12917,16 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (Release)",
     "target": "0x405990"
    },
+   "7": {
+    "name": "GetType",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 7 named GetType (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x572ba0",
+    "base": "ObjectTypeClass",
+    "base_slot": 7,
+    "base_name": "GetType",
+    "mdisp": 0
+   },
    "8": {
     "name": "~VoxelAnimTypeClass",
     "rule": "R1",
@@ -10036,6 +12938,38 @@
     "rule": "R6",
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
+   },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x642660",
+    "base": "ObjectTypeClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x2a (42) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x642760"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x198 (408) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x642770"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from ObjectTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x642400",
+    "base": "ObjectTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -10076,19 +13010,23 @@
     "target": "0x672570"
    }
   },
-  "WalkLocomotionClass": {
-   "8": {
-    "name": "~WalkLocomotionClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x651050"
+  "WWMouseClass": {
+   "0": {
+    "name": "~WWMouseClass",
+    "rule": "R11",
+    "signal": "direct base Mouse slot 0 named ~Mouse (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x674130",
+    "base": "Mouse",
+    "base_slot": 0,
+    "base_name": "~Mouse",
+    "mdisp": 0
    }
   },
   "WarheadTypeClass": {
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -10127,6 +13065,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 10 named Get_RTTI (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x651dc0",
+    "base": "AbstractTypeClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x32 (50) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x651e80"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xd0 (208) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x651e70"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x651a50",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -10145,6 +13115,16 @@
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
    },
+   "25": {
+    "name": "Fetch_ID",
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 25 named Fetch_ID (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x651670",
+    "base": "AbstractTypeClass",
+    "base_slot": 25,
+    "base_name": "Fetch_ID",
+    "mdisp": 0
+   },
    "26": {
     "name": "Set_ID",
     "rule": "R6",
@@ -10156,7 +13136,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -10195,6 +13175,38 @@
     "signal": "slot target 0x4059b0 is the same code address as AbstractClass slot 9 (Set_ID)",
     "target": "0x4059b0"
    },
+   "10": {
+    "name": "Get_RTTI",
+    "rule": "R13",
+    "signal": "derived slot 10 calls the base class's slot 10 target 0x56fb00, proving the override; name inherited from ObjectClass slot 10 (Get_RTTI, displacement 0)",
+    "target": "0x652f20",
+    "base": "ObjectClass",
+    "base_slot": 10,
+    "base_name": "Get_RTTI",
+    "mdisp": 0
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x2b (43) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x655220"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x1c0 (448) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x653160"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 13 named Load (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x570630",
+    "base": "ObjectClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -10212,6 +13224,16 @@
     "rule": "R6",
     "signal": "slot target 0x4059f0 is the same code address as AbstractClass slot 16 (Compute_CRC)",
     "target": "0x4059f0"
+   },
+   "33": {
+    "name": "Get_Type",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 33 named Get_Type (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x653180",
+    "base": "ObjectClass",
+    "base_slot": 33,
+    "base_name": "Get_Type",
+    "mdisp": 0
    }
   },
   "WaypointCommandClass": {
@@ -10226,7 +13248,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -10271,6 +13293,28 @@
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
    },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x33 (51) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x655e90"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x30 (48) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x655e80"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Load, displacement 0)",
+    "target": "0x655c90",
+    "base": "AbstractClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
+   },
    "14": {
     "name": "Save",
     "rule": "R6",
@@ -10294,7 +13338,7 @@
    "0": {
     "name": "QueryInterface",
     "rule": "R6",
-    "signal": "slot target 0x405790 is the same code address as AbstractClass slot 0 (QueryInterface)",
+    "signal": "slot target 0x405790 is the same code address as AITriggerTypeClass slot 0 (QueryInterface)",
     "target": "0x405790"
    },
    "1": {
@@ -10338,6 +13382,28 @@
     "rule": "R6",
     "signal": "slot target 0x4059c0 is the same code address as AbstractClass slot 10 (Get_RTTI)",
     "target": "0x4059c0"
+   },
+   "11": {
+    "name": "What_Am_I",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0x31 (49) as a small per-class RTTI id; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x6577d0"
+   },
+   "12": {
+    "name": "Get_Heap",
+    "rule": "R15",
+    "signal": "returns the immediate constant 0xd8 (216) as a per-class object size; 60 classes implement this slot and all return distinct constants, so the value identifies the class",
+    "target": "0x6577c0"
+   },
+   "13": {
+    "name": "Load",
+    "rule": "R13",
+    "signal": "derived slot 13 calls the base class's slot 13 target 0x405fe0, proving the override; name inherited from AbstractTypeClass slot 13 (Load, displacement 0)",
+    "target": "0x657320",
+    "base": "AbstractTypeClass",
+    "base_slot": 13,
+    "base_name": "Load",
+    "mdisp": 0
    },
    "14": {
     "name": "Save",
@@ -10397,7 +13463,7 @@
  },
  "unattributed_slot_targets": {
   "0x405a80": {
-   "slots": 68,
+   "slots": 0,
    "size": 45,
    "ninsn": 18,
    "callees": [],
@@ -10416,7 +13482,7 @@
    ]
   },
   "0x405a30": {
-   "slots": 64,
+   "slots": 0,
    "size": 45,
    "ninsn": 18,
    "callees": [],

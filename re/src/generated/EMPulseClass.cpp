@@ -99,31 +99,31 @@ void EMPulseClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// EMPulseClass::vfunc_11 -- the body is the canonical transcription of
+// EMPulseClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x0048f5b0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void EMPulseClass::vfunc_11()
+void EMPulseClass::What_Am_I()
 {
     ts::sub::sub_0048f5b0();
 }
 
 // -------------------------------------------------------------------------
-// EMPulseClass::vfunc_12 -- the body is the canonical transcription of
+// EMPulseClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x0048f5a0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void EMPulseClass::vfunc_12()
+void EMPulseClass::Get_Heap()
 {
     ts::sub::sub_0048f5a0();
 }
 
 // -------------------------------------------------------------------------
-// EMPulseClass::vfunc_13 -- the body is the canonical transcription of
+// EMPulseClass::Load -- the body is the canonical transcription of
 // 29 instructions at 0x0048f4b0, in src/generated/code/.
 // size 76 bytes; callees: 0x00405940, 0x0046d660, 0x0046d680
 //
-void EMPulseClass::vfunc_13(int a0)
+void EMPulseClass::Load(int a0)
 {
     ts::sub::sub_0048f4b0();
 }

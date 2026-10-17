@@ -84,16 +84,6 @@ void TagTypeClass::GetType(int a0, int a1)
     ts::sub::sub_00405910();
 }
 
-// -------------------------------------------------------------------------
-// TagTypeClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x00604770, in src/generated/code/.
-// size 30 bytes; callees: 0x00604000, 0x0068298c
-//
-void TagTypeClass::vfunc_8(int a0)
-{
-    ts::sub::sub_00604770();
-}
-
 // TagTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
 void TagTypeClass::Set_ID()
@@ -102,41 +92,41 @@ void TagTypeClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// TagTypeClass::vfunc_10 -- the body is the canonical transcription of
+// TagTypeClass::Get_RTTI -- the body is the canonical transcription of
 // 7 instructions at 0x00604180, in src/generated/code/.
 // size 20 bytes; callees: none
 //
-void TagTypeClass::vfunc_10(int a0, int a1)
+void TagTypeClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_00604180();
 }
 
 // -------------------------------------------------------------------------
-// TagTypeClass::vfunc_11 -- the body is the canonical transcription of
+// TagTypeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00604740, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TagTypeClass::vfunc_11()
+void TagTypeClass::What_Am_I()
 {
     ts::sub::sub_00604740();
 }
 
 // -------------------------------------------------------------------------
-// TagTypeClass::vfunc_12 -- the body is the canonical transcription of
+// TagTypeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00604750, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TagTypeClass::vfunc_12()
+void TagTypeClass::Get_Heap()
 {
     ts::sub::sub_00604750();
 }
 
 // -------------------------------------------------------------------------
-// TagTypeClass::vfunc_13 -- the body is the canonical transcription of
+// TagTypeClass::Load -- the body is the canonical transcription of
 // 13 instructions at 0x006046b0, in src/generated/code/.
 // size 30 bytes; callees: 0x00405fe0, 0x0046d680
 //
-void TagTypeClass::vfunc_13(int a0)
+void TagTypeClass::Load(int a0)
 {
     ts::sub::sub_006046b0();
 }
@@ -156,11 +146,11 @@ void TagTypeClass::GetSizeMax()
 }
 
 // -------------------------------------------------------------------------
-// TagTypeClass::vfunc_16 -- the body is the canonical transcription of
+// TagTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 2 instructions at 0x00604760, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void TagTypeClass::vfunc_16()
+void TagTypeClass::Compute_CRC()
 {
     ts::sub::sub_00604760();
 }
@@ -222,21 +212,21 @@ void TagTypeClass::vfunc_24(int a0)
 }
 
 // -------------------------------------------------------------------------
-// TagTypeClass::vfunc_25 -- the body is the canonical transcription of
+// TagTypeClass::Fetch_ID -- the body is the canonical transcription of
 // 31 instructions at 0x006043a0, in src/generated/code/.
 // size 108 bytes; callees: 0x004d6ed0, 0x00604421, 0x00683725, 0x006837ea
 //
-void TagTypeClass::vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void TagTypeClass::Fetch_ID(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_006043a0();
 }
 
 // -------------------------------------------------------------------------
-// TagTypeClass::vfunc_26 -- the body is the canonical transcription of
+// TagTypeClass::Set_ID -- the body is the canonical transcription of
 // 20 instructions at 0x00604470, in src/generated/code/.
 // size 56 bytes; callees: 0x006044d7
 //
-void TagTypeClass::vfunc_26(int a0)
+void TagTypeClass::Set_ID(int a0)
 {
     ts::sub::sub_00604470();
 }

@@ -92,38 +92,38 @@ void IsometricTileClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::vfunc_10 -- the body is the canonical transcription of
+// IsometricTileClass::Get_RTTI -- the body is the canonical transcription of
 // 23 instructions at 0x0056fb00, in src/generated/code/.
 // size 59 bytes; callees: none
 //
-void IsometricTileClass::vfunc_10(int a0, int a1)
+void IsometricTileClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_0056fb00();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::vfunc_11 -- the body is the canonical transcription of
+// IsometricTileClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x004e9380, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void IsometricTileClass::vfunc_11()
+void IsometricTileClass::What_Am_I()
 {
     ts::sub::sub_004e9380();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::vfunc_12 -- the body is the canonical transcription of
+// IsometricTileClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x004e9370, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void IsometricTileClass::vfunc_12()
+void IsometricTileClass::Get_Heap()
 {
     ts::sub::sub_004e9370();
 }
 
-// IsometricTileClass::vfunc_13 -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
+// IsometricTileClass::Load -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_13(int a0)
+void IsometricTileClass::Load(int a0)
 {
     ts::sub::sub_00570630();
 }
@@ -265,11 +265,11 @@ void IsometricTileClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::vfunc_33 -- the body is the canonical transcription of
+// IsometricTileClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x004e93d0, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void IsometricTileClass::vfunc_33()
+void IsometricTileClass::Get_Type()
 {
     ts::sub::sub_004e93d0();
 }

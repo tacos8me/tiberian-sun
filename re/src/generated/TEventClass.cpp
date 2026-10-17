@@ -92,41 +92,41 @@ void TEventClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::vfunc_10 -- the body is the canonical transcription of
+// TEventClass::Get_RTTI -- the body is the canonical transcription of
 // 10 instructions at 0x00626680, in src/generated/code/.
 // size 32 bytes; callees: none
 //
-void TEventClass::vfunc_10(int a0, int a1)
+void TEventClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_00626680();
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::vfunc_11 -- the body is the canonical transcription of
+// TEventClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00626850, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TEventClass::vfunc_11()
+void TEventClass::What_Am_I()
 {
     ts::sub::sub_00626850();
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::vfunc_12 -- the body is the canonical transcription of
+// TEventClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00626840, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TEventClass::vfunc_12()
+void TEventClass::Get_Heap()
 {
     ts::sub::sub_00626840();
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::vfunc_13 -- the body is the canonical transcription of
+// TEventClass::Load -- the body is the canonical transcription of
 // 37 instructions at 0x006266a0, in src/generated/code/.
 // size 91 bytes; callees: 0x00405940, 0x0046d680
 //
-void TEventClass::vfunc_13(int a0)
+void TEventClass::Load(int a0)
 {
     ts::sub::sub_006266a0();
 }
@@ -146,11 +146,11 @@ void TEventClass::GetSizeMax()
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::vfunc_16 -- the body is the canonical transcription of
+// TEventClass::Compute_CRC -- the body is the canonical transcription of
 // 2 instructions at 0x00626860, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void TEventClass::vfunc_16()
+void TEventClass::Compute_CRC()
 {
     ts::sub::sub_00626860();
 }

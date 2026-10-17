@@ -99,31 +99,31 @@ void WaypointPathClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// WaypointPathClass::vfunc_11 -- the body is the canonical transcription of
+// WaypointPathClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00655e90, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void WaypointPathClass::vfunc_11()
+void WaypointPathClass::What_Am_I()
 {
     ts::sub::sub_00655e90();
 }
 
 // -------------------------------------------------------------------------
-// WaypointPathClass::vfunc_12 -- the body is the canonical transcription of
+// WaypointPathClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00655e80, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void WaypointPathClass::vfunc_12()
+void WaypointPathClass::Get_Heap()
 {
     ts::sub::sub_00655e80();
 }
 
 // -------------------------------------------------------------------------
-// WaypointPathClass::vfunc_13 -- the body is the canonical transcription of
+// WaypointPathClass::Load -- the body is the canonical transcription of
 // 17 instructions at 0x00655c90, in src/generated/code/.
 // size 41 bytes; callees: 0x00405940, 0x0046d680
 //
-void WaypointPathClass::vfunc_13(int a0)
+void WaypointPathClass::Load(int a0)
 {
     ts::sub::sub_00655c90();
 }
