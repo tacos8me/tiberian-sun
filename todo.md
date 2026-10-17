@@ -651,8 +651,8 @@ canonical figure.
 *The next entry is the real remaining work on this path: the loop is reached,
 but no message is ever delivered to the window procedure.*
 
-### [ ] Deliver queued messages so the game runs frames
-**The current blocker, measured.** The message loop at `0x0055f780` spins on
+### [x] Deliver queued messages so the game runs frames — fixed
+**Was the blocker, measured.** The message loop at `0x0055f780` spun on
 `DAT_007b2e50`:
 
 ```asm
@@ -667,23 +667,31 @@ handler at `0x65bd00`. The model's `PeekMessageA` always returns 0, so no
 `WM_ACTIVATEAPP` is ever delivered, `DispatchMessageA` is never called, and the
 flag never changes.
 
-*Next:* implement a real USER32 message queue in `Win32Stubs.h`:
-- `RegisterClassA` records the `WndProc` for the class (currently discarded).
-- `CreateWindowExA` queues at least `WM_CREATE` and `WM_ACTIVATEAPP` (with
-  `wParam=1`) for the created window.
-- `PeekMessageA`/`GetMessageA` return queued messages (correct `MSG` layout:
-  `hwnd`, `message`, `wParam`, `lParam`, `time`, `pt`), and return 0/block only
-  when the queue is empty.
-- `DispatchMessageA` calls the recorded `WndProc` with the message; `SendMessageA`
-  should do the same synchronously.
-*Done when:* `DispatchMessageA > 0`, `DAT_007b2e50` becomes 1, and the game
-executes frames (the loop stops being a pure `PeekMessage` spin). Then name the
-next blocker.
+**Fixed in `f3011ca`.** `CreateWindowExA` now queues `WM_ACTIVATEAPP`
+(`0x001c`, `wParam=1`) after the synchronous `WM_CREATE`; `RegisterClassA`
+already recorded the WndProc, and the existing `PeekMessageA`/`GetMessageA`/
+`DispatchMessageA`/`SendMessageA` bodies were correct but unreachable because
+nothing was ever queued. A mutation-proven test drives every USER32 stub
+through `ts_call_at` and checks the `MSG` layout, `PM_REMOVE`/`PM_NOREMOVE`,
+WndProc dispatch and the `__stdcall` pop convention.
+
+Measured: the game's WndProc at `0x65ba70` runs, `DAT_007b2e50 = 1` at
+`0x65bd2a`, and the run leaves the spin: `GetMessage=1`, `PeekMessage=3`,
+`DispatchMessage=1`, `CreateWindowExA=1`; **1,882,051 instructions**, coverage
+49,635 / 4,455 functions. The next stop is the Blowfish identity copy (below):
+the TIBSUN.MIX index is read and "decrypted" to ciphertext, so a wrapped
+`operator_new` exhausts the page table at `0x00a006b0`.
 
 **Secondary, not blocking:** the DirectSound warning text is the literal
 `"%s\n\n%s"`, so the `sprintf`-wrapper path (`0x682aae` → `0x68667c`) or
 `LoadStringA` is not producing formatted text. The box renders with the format
-string; fix it when the message path is stable.
+string; fix it when the content path is stable.
+
+**Downstream:** the newly reachable code makes 5 indirect calls with
+`this == NULL` (`ESI=0`) at `0x4b312b`, `0x4b319b`, `0x4b31a4`, `0x487d16`,
+`0x5e7c7e` — teardown of objects whose construction failed after the
+undecryptable index. `boot.py --strict` exits 4 while they remain. They should
+disappear when the index decrypts; if not, they are a separate teardown defect.
 
 ### [ ] Implement the Blowfish cipher the MIX indexes need
 **Measured against the retail binary, and it is not optional.** The object that
@@ -701,6 +709,23 @@ index decrypts to garbage and the failure will look like a corrupt archive
 rather than a missing cipher — exactly the "plausible wrong value" failure this
 project keeps finding.
 
+**The current boot stop, measured** (after `f3011ca`):
+
+```
+step 1881678  IBlowfish::SetKey(56, key=82060323...)   from 0x423404
+step 1881870  ReadFile(8) at MIX offset 84
+step 1881940  IBlowfish::Decrypt(8, ciphertext)        from 0x423469
+step 1882051  HeapAlloc(0xfffea610)                    from 0x68511c
+```
+
+The 56-byte key the game computes with its own RSA code is byte-for-byte the
+key `tools/mix.py` derives from the same 80-byte block (`82060323...`), and
+decrypting the first index block with it yields a valid index (`count=17`,
+body `75,094,416`). The identity copy leaves ciphertext, so the PKStraw read
+returns 0; `FUN_00547290` then reads its 6-byte header from uninitialised stack
+(`count=0xe32c`), and `operator_new(-88560)` wraps to a ~4 GB allocation that
+exhausts the model's page table at `0x00a006b0`.
+
 *Spec:* `re/out/blowfish_oracle.md` (vtable indices and method semantics,
 object layout, the nine-index corroboration, reproduction commands), produced by
 `re/tools/oracle_blowfish.py` and `re/tools/wine_blowfish_trace.sh`. This is
@@ -710,6 +735,23 @@ is not needed in the stub.
 `tools/mix.py` (which already decodes the index independently), with a
 known-answer test in `tools/test_tools.py`; then re-run the boot and confirm the
 game's MIX reads are no longer garbage.
+
+### [ ] The stack-imbalance tracker flags correct `__stdcall` stubs
+**A diagnostic false positive, measured at 2,069 stub calls after `f3011ca`.**
+`ts_call_at` (`src/handwritten/Machine.h`) compares ESP after a call to the ESP
+before it, but a correct `__stdcall` stub ends at `esp_before + 4*nargs`
+because it pops its own arguments. Every correct stub therefore looks like a
+leak, and the real signal is buried. The project's stub-stack probe and the new
+USER32 test's explicit `ESP == caller_ESP + 4*nargs` check are the reliable
+arity gates today.
+
+*Fix:* let the stub record the argument count it popped (a field set from
+`stub_done`, or an expected-delta hook), and compare a stub call against
+`esp_before + 4*nargs`; non-stub calls still require `esp_before`. Keep the
+mutation that proves a wrong arity is caught.
+*Done when:* a boot reports 0 false imbalances, and deliberately changing one
+import's arity still fails the gate. This touches `Machine.h` and `stub_done`
+in `Win32Stubs.h`, so it is sequenced behind the Blowfish change.
 
 ### [x] The unmapped calls — all gone
 **The two in-`.text` targets are gone.** `0x6844df` and `0x46f3f8` disappeared
