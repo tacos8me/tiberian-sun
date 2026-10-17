@@ -68,6 +68,10 @@ class Bin:
                 PTR_RANGES.append((vs, ve))
         self.text = next(s for s in self.secs if s[4] == ".text")
 
+    def in_text(self, va):
+        t = self.text
+        return t[0] <= va < t[1]
+
     def rd(self, va, n):
         for vs, ve, raw, rs, nm in self.secs:
             if vs <= va < ve:
@@ -96,18 +100,60 @@ def wr(ins, op):
     return bool(op.access & capstone.CS_AC_WRITE)
 
 
-def disasm(md, bin_, va, size, cap=3000):
-    code = bin_.rd(va, min(size + 48, 0x4000))
-    if not code:
-        return []
+SIZES = {}   # va -> recorded span size, filled from functions.json
+
+
+def disasm(md, bin_, va, size, cap=4000):
+    """The function's own code, up to and including its epilogue ret.
+
+    Stopping at the FIRST ret (the old behaviour) truncates every function with
+    an early-exit path: 0x40df60 returns early, and its register restores and
+    real epilogue -- which the argument model needs -- lie past that ret.
+
+    Half of the recovered spans (20,744 of 41,822) contain no ret at all: they
+    are fragments ending in a tail `jmp` (9,686) or in a branch into the code
+    that follows.  For those, the epilogue is the tail target's, so the jump is
+    followed up to two hops before giving up and reading a short margin past
+    the span, which is what the previous version always did.
+    """
     out = []
-    for ins in md.disasm(code, va):
-        out.append(ins)
-        if ins.mnemonic in ("ret", "retn"):
+    cur, sz, hops = va, size, 0
+    seen = {va}
+    while True:
+        code = bin_.rd(cur, min(sz, 0x4000))
+        if not code:
             break
+        part = list(md.disasm(code, cur))
+        last_ret = None
+        for i, ins in enumerate(part):
+            if ins.mnemonic in ("ret", "retn"):
+                last_ret = i
+        if last_ret is not None:
+            out.extend(part[:last_ret + 1])
+            return out[:cap]
+        out.extend(part)
         if len(out) > cap:
+            return out[:cap]
+        if not part:
             break
-    return out
+        last = part[-1]
+        if (hops >= 2 or last.mnemonic != "jmp" or not last.operands
+                or last.operands[0].type != capstone.x86.X86_OP_IMM):
+            break
+        tgt = last.operands[0].imm
+        if tgt in seen or not bin_.in_text(tgt):
+            break
+        seen.add(tgt)
+        cur, sz = tgt, SIZES.get(tgt, 0x100)
+        hops += 1
+    # no ret anywhere: read a short margin and stop at the first one
+    code = bin_.rd(va + size, 48)
+    if code:
+        for ins in md.disasm(code, va + size):
+            out.append(ins)
+            if ins.mnemonic in ("ret", "retn"):
+                break
+    return out[:cap]
 
 
 # ---------------------------------------------------------------------------
@@ -197,7 +243,7 @@ def arg_reads(insns, pops):
                     reads[(disp - 8) // 4].append((idx, ins, op))
             elif base == "esp":
                 a = disp - delta
-                if rd(ins, op) and a >= 4 and (a - 4) % 4 == 0 and a not in written:
+                if rd(ins, op) and a >= 4 and (a - 4) % 4 == 0:
                     reads[(a - 4) // 4].append((idx, ins, op))
                 if wr(ins, op):
                     written.add(a)
@@ -650,6 +696,8 @@ def main():
 
     bin_ = Bin(bindir)
     fns = json.load(open(os.path.join(outdir, "functions.json")))["functions"]
+    for f in fns:
+        SIZES[f["va"]] = f["size"]
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
     md.detail = True
 
