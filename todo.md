@@ -927,34 +927,69 @@ exhaustion at `0x00422db9` after 20,000,001 instructions**, depth 28, inside
 CreateWindowExA=1`; coverage **52,833 / 4,641 of 45,947**; **0 unmapped calls,
 0 stack imbalances**; `--strict` exits 0.
 
-### [ ] The game is alive in a dialog-setup loop
-**The current runtime state: no fault, no corruption, and no progress.** At
-200M and 400M instruction budgets the counters scale exactly (`PeekMessage`
-39,443 -> 79,208; import calls 295,852 -> 591,123) while **coverage freezes at
-52,858 instructions / 4,643 functions** — a stable ~200M-instruction cycle.
+### [x] The game is alive in a dialog-setup loop — fixed
+**Was the runtime state: no fault, no corruption, and no progress.** At 200M and
+400M budgets the counters scaled exactly while coverage froze at 52,858 /
+4,643 — a stable ~200M-instruction cycle. The dialog layer was fake:
+`CreateDialogIndirectParamA` was `TS_RET(...,5,0x00010002)` (no window, no
+`WM_INITDIALOG`), `GetDlgItem` returned a constant, and `PeekMessageA` always
+returned 0, so `DispatchMessage` stayed at 1.
 
-The cycle creates a dialog via `CreateDialogIndirectParamA`, then does
-`GetDlgItem`/`EnableWindow`/`ShowWindow`/`SetForegroundWindow` on its controls
-and polls `PeekMessageA`, repeating. The model's dialog layer is fake:
-- `CreateDialogIndirectParamA` is `TS_RET(..., 5, 0x00010002u)`: it creates no
-  window and sends no `WM_INITDIALOG`.
-- `GetDlgItem` always returns the constant `0x00010003`.
-- `PeekMessageA` always returns 0, so `DispatchMessage` stays at 1 for the whole
-  run.
+**Fixed in `f576607` + `c81c1f5`.** `Win32Stubs.h` now reads the module's own
+PE `.rsrc` from disk: `FindResourceA`/`LoadResource`/`LoadStringA` serve
+LANGUAGE.DLL's **60 dialog templates and string table**. `CreateDialogIndirectParamA`
+builds the dialog record and its template controls, sends `WM_INITDIALOG`
+(`wParam=0`, `lParam=dwInitParam`) *before returning*, and queues a scripted
+`WM_COMMAND` for the default button; `GetDlgItem` returns stable per-control
+handles (0 for an undeclared ID); `Set/GetWindowLongA` carry `DWLP_USER`;
+`EnableWindow`/`IsWindowEnabled`/`ShowWindow`/`SetFocus`/`SetForegroundWindow`
+keep state; `DestroyWindow`/`EndDialog` free children; `EnumChildWindows`,
+`Set/GetDlgItemTextA`, `SendDlgItemMessageA`, `GetDlgCtrlID`, `GetClassNameA`
+are real. A CD drive model (`TS_CD` maps `D:` to a host root, `DRIVE_CDROM`,
+label `TS1`) was added, with a `win32-dialog` test (**71 checks**).
 
-So the game re-runs the same dialog setup forever and never receives input. The
-CD check is ruled out: a temporary diagnostic returning `DRIVE_CDROM` from
-`GetDriveTypeA` and label `TS1` from `GetVolumeInformationA` with `TS1.DSK` at
-the root changed nothing (identical call counts), and was reverted.
+**The infinite loop had a second cause:** `SetViewportOrgEx`/`SetWindowOrgEx`
+take **4** arguments, and the stubs popped 3. Two calls leaked 8 bytes inside
+`FUN_00659e90`, whose epilogue restored a stale EBX (`0xff`); `FUN_0057a260`
+uses EBX as its null sentinel on the window-record hash walk and spun forever.
 
-*Next:* implement the dialog/input layer in `Win32Stubs.h`: create a real dialog
-window and control handles, send `WM_INITDIALOG` to the dialog procedure, deliver
-`WM_COMMAND`/`WM_ACTIVATEAPP` through the message queue so `DispatchMessageA`
-runs, and provide a minimal input source (scripted keys/mouse or at least a
-synthesized message). Use the retail oracle (`tools/wine_env.sh`,
-`tools/oracle.py`) to compare the dialog call sequence.
-*Done when:* `DispatchMessageA > 1`, coverage advances past 52,858, the setup
-loop breaks, and the next stop is named.
+Measured: **`DispatchMessage=157`, `GetMessage=157`, `PeekMessage=1,411`**;
+coverage **56,011 / 4,813**; stop `0x0057b6d1` (window-record hash insert);
+0 unmapped, 0 imbalances, `--strict` exits 0. The dialog now shows its real
+shipped text ("Please insert a Tiberian Sun CD into the CD-ROM drive."), and
+what remains is the game's **genuine CD-absence retry**, which dispatches
+messages. The next root cause is the narrow-width flag defect below.
+
+### [ ] Narrow-width flag helpers are wrong
+**The next root cause, proven by the dialog lane.** `Machine.h`'s `f_sub`/
+`f_add`/`f_inc`/`f_dec`/`f_log` derive SF/OF from bit 31, while `cmp8/sub8/
+add8/inc8/dec8/test8` (and the 16-bit forms) pass a zero-extended result. Every
+`JLE`/`JG` on a byte is wrong. Two measured consequences:
+- `FUN_0068667c` (the game's own vsprintf) always takes the `jg` at `0x6866c1`
+  for `%`, so formats are copied literally: `GetDriveTypeA("%c:\")`,
+  `CreateFileA("EXPAND%02d.MIX")`, `MessageBoxA("%s\n\n%s")`.
+- `FUN_004a7600` (GetCDClass) scans `c:`..`z:` with `cmp8(BL,0x7a); jle`; it
+  exits after `c`, so the CD drive list is empty and `Force_CD_Available`
+  re-prompts forever.
+
+Scratch proof: sign-extending the narrow results makes the CD prompt disappear,
+raises coverage **56,011 -> 61,792 / 5,166**, and moves the stop to the VQA movie
+decode loop in `FUN_00679360` (`0x0067961A` at 80M, `PeekMessage=314,392`).
+
+*Fix:* correct SF/OF/ZF/CF/AF/PF for 8/16-bit operations (sign-extend for flag
+derivation or pass the width), add byte/word comparison tests including the
+`0x7f`/`0x80` boundary and the vsprintf `%` case, and fix the generator's
+hard-coded `SetViewportOrgEx`/`SetWindowOrgEx` arity (4, not 3) so a regeneration
+does not restore the wrong table values.
+*Done when:* the flag vectors pass, the CD list scans correctly, and the boot with
+`TS_CD` reaches the next stop (expected the VQA movie decode loop).
+
+### [ ] The VQA movie decode loop
+**Expected next stop after the narrow-flag fix.** The scratch run reaches
+`FUN_00679360` (`0x0067961A`) with `PeekMessage=314,392` at an 80M budget. The
+game is playing/decoding `WWLOGO.VQA`/`STARTUP.VQA`; the model needs whatever
+that loop consumes (VQA decode, frame timing, surface presentation). Scope it
+after the flag fix lands; do not assume the movie path is the same as the menu.
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and
