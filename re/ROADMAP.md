@@ -296,9 +296,10 @@ wrong value is harder to diagnose than one that fails loudly.
 
 The honest measure of progress here is not "does it run" but **how far into the
 game's own code it gets before it needs something we have not modelled**. Today
-that is 237 instructions and 12 import calls. Each fault is a precise, actionable
-finding rather than a wall, because the harness reports the faulting EIP, the
-instruction bytes there, the register file and the ordered import calls.
+that is now a message loop -- `CreateWindowExA=1`, `PeekMessage=137,295` -- rather
+than 237 instructions. Each stop is a precise, actionable finding rather than a
+wall, because the harness reports the faulting EIP, the instruction bytes there,
+the containing function and generated source line, and the ordered import calls.
 
 Two lessons from getting this far, both recorded in AGENTS.md:
 

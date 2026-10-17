@@ -35,7 +35,7 @@ Measured state:
 |---|---|
 | headers | 262 (261 standalone-compilable + prelude) |
 | functions recovered | 41,822 (96.06% of `.text`) |
-| `.text` residual | 104 KB classified (99.98% attributed): 11 jump tables (256 B), 356 B of switch index tables, 105,808 B of alignment padding; 554 B in 90 runs reported unclassified in `out/text_data.json` |
+| `.text` | 43,564 spans, 2,645,082 bytes, **99.99% attributed as code or data**: 11 jump tables (256 B), 356 B of switch index tables, 105,808 B of alignment padding; 554 B in 90 runs reported unclassified in `out/text_data.json`. Recovery is not as closed as it looked -- running the code found ~1,700 more entry points |
 | classes / vtable slots | 749 / 9,810 (`vtable_slots_unseeded` 0) |
 | constructors that are real function starts | 100% |
 | virtuals named | 1,567 of 6,987 (22.4%) |
@@ -97,7 +97,7 @@ Coverage is achieved in three tiers:
 
 ### Verification performed
 
-- `tools/verify.py` runs eight checks and is **fail-closed**: a missing artifact
+- `tools/verify.py` runs **nine** checks in 6 seconds and is **fail-closed**: a missing artifact
   exits non-zero naming what is missing, rather than running a subset and
   printing PASSED.
 - Check 4 re-resolves **all 749** manifest vtables through the binary's own COL
@@ -131,7 +131,7 @@ Coverage is achieved in three tiers:
 - [x] Recover function signatures (37,595)
 - [x] Name virtuals where evidence exists (1,567 of 6,987)
 - [x] Anchor member verification to the binary (99.9% confirmed)
-- [x] Transcribe every recovered function (43,668, 99.98% of instructions)
+- [x] Transcribe every recovered function (46,008 functions, 918,438/918,438 instructions, 100%, 0 unmodelled)
 - [x] Emit the forwarders the headers require, and link the tree
 
 ### P2 — remaining
