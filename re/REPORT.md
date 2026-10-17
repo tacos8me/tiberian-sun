@@ -6,17 +6,19 @@ The retail PC release of **Command & Conquer: Tiberian Sun** (Westwood Studios,
 1999) has been disassembled and reconstructed into a compilable C++ class
 declaration tree.
 
-**Verification status: `tools/verify.py` prints `VERIFICATION PASSED` with eight
-checks.** 261 of the 262 headers under `src/include/` compile standalone
-(`g++ -std=c++03 -fsyntax-only`; `ts_prelude.h` is the shared prelude and is
-included rather than compiled on its own), and the combined translation unit
-`build/tu_all.cpp` compiles. Every vtable→class binding in the class manifest
-was re-verified by re-reading the binary's own RTTI Complete Object Locator
-chain.
+**Verification status: `tools/verify.py` prints `VERIFICATION PASSED` with nine
+checks.** 263 of the 264 headers under `src/include/` compile standalone at the
+target ABI (`g++ -m32 -std=c++03 -fsyntax-only`; `ts_prelude.h` is the shared
+prelude and is included rather than compiled on its own), and the combined
+translation unit `build/tu_all.cpp` compiles. Every vtable→class binding in the
+class manifest was re-verified by re-reading the binary's own RTTI Complete
+Object Locator chain. Check 9 makes the compiler confirm every recovered member
+offset a header can express: **3,073/3,073**.
 
-The recovered **machine code is transcribed**, not stubbed: 43,668 functions,
-897,027 of 897,193 instructions (99.98%), rendered against the machine model in
-`src/handwritten/Machine.h`. The whole tree — 482 translation units — **links
+The recovered **machine code is transcribed**, not stubbed: 46,008 functions
+(43,564 recovered function starts + 2,444 tail entries), 918,438 of 918,438
+instruction lines (100%, 0 unmodelled), rendered against the machine model in
+`src/handwritten/Machine.h`. The whole tree — 492 translation units — **links
 into a program**, and that program runs the original PE entry point against the
 model.
 
@@ -26,7 +28,10 @@ manifest's vtable bindings match the binary, and that the tree links. It does
 not prove the disassembly is correct, it does not verify data-member *types* or
 ordering, and the transcription is **not source-shaped** — it is faithful to
 what the machine does and is not claimed to be the shape the original source
-had. Roughly a fifth of the virtuals and 3% of the members are named.
+had. Measured naming: 4,496 of 6,954 header virtual declarations are named
+(64.7%; 2,458 remain `vfunc_N`), representing 5,557 named `(class, slot)` pairs
+and 917 distinct names (281 semantic); 291 of 3,526 non-vptr members are named
+(8.3%).
 
 ## Input
 
@@ -78,27 +83,31 @@ prologue patterns, then extended by call-graph traversal with seed-boundary
 termination, plus a gap-recovery pass over already-recorded branch targets.
 
 Recovered (`python3 tools/disasm.py bin/GAME.EXE out`):
-- **23,129** functions, covering **63.66%** of `.text` bytes
+- **43,564** functions/spans, covering **2,606,135 bytes = 96.09%** of `.text`
   (`python3 tools/harness.py metrics --no-append`)
-- **572,378** instructions
+- **848,822** static instructions
 - Per-function callees and referenced strings
-- **963 KB** of `.text` remains unattributed
+- **105,966 B (103 KB)** of `.text` remains unattributed, classified in
+  `out/text_data.json` as 12 jump tables (264 B), 7 switch index tables (349 B),
+  104,959 B of alignment padding, and 394 B in 55 unclassified runs; 99.99% of
+  `.text` is attributed as code or data
 
 Function sizes are measured as merged intervals, not summed per-function sizes:
-**193** entry points sit inside another recovered body (shared jump tails) and
-would be double-counted otherwise.
+**1,080** entry points sit inside another recovered body (`shared_tail_entry_points`)
+and would be double-counted otherwise.
 
 ### 3. Schema recovery
 
-**1,719** strings referenced by code were extracted, of which **1,335** are
-INI-key-like `CamelCase` identifiers (`TiberiumChainReaction`,
-`HalfDamageSmokeLocation1`, `Capturable`, `Unsellable`, `CustomRotor`, ...).
-These are the original struct member names, recovered verbatim.
+**1,876** strings referenced by code were extracted (`out/ini_keys.json`), of
+which **1,319** match the `CamelCase` identifier shape used for INI keys
+(`TiberiumChainReaction`, `HalfDamageSmokeLocation1`, `Capturable`,
+`Unsellable`, `CustomRotor`, ...). These are the original struct member names,
+recovered verbatim.
 
 ```
+python3 tools/harness.py metrics --no-append
+#   ini_keys          1876
 python3 tools/gen_strings.py bin/GAME.EXE out
-#   referenced strings: 1719
-#   INI-key-like      : 1335
 ```
 
 `out/ini_keys.json` maps each string to the function VAs that reference it.
@@ -110,20 +119,24 @@ Class headers are emitted from a per-class manifest (`tools/gen_manifest.py`)
 and deepened by three further recovery passes:
 
 - **member offsets** from constructor store sequences
-  (`tools/gen_members.py`, `tools/name_members.py`): **4,634** member-offset
-  records recovered, **135** named across 20 classes where an INI key or
-  string provides evidence;
-- **calling conventions and arity** (`tools/gen_signatures.py`): **21,649**
-  signatures (`__stdcall` 7,727, `__thiscall` 4,933, `__cdecl` 3,455, and
-  5,534 with no convention recovered);
-- **virtual naming** (`tools/name_virtuals.py`): **1,285** virtuals named from
-  call-site evidence (**18.6%** of the 6,922 `virtual` declarations the harness
-  counts). The remaining **5,637** are honestly named `vfunc_N` rather than
+  (`tools/gen_members.py`, `tools/name_members.py`): **4,289** member-offset
+  records recovered (763 vptr stores, 3,526 real members), **291** named across
+  20 classes where an INI key or string provides evidence;
+- **calling conventions and arity** (`tools/gen_signatures.py`): **43,564**
+  signatures (`__thiscall` 11,478, `__stdcall` 10,728, `__cdecl` 9,642, and
+  11,716 with no convention recovered);
+- **virtual naming** (`tools/name_virtuals.py`): **4,496** named virtual
+  declarations (64.7% of the 6,954 the harness counts) and **5,557** named
+  `(class, slot)` pairs, from **917** distinct names (**281** semantic). The
+  remaining **2,458** declarations are honestly named `vfunc_N` rather than
   guessed. (`tools/harness.py metrics` reports `virtuals_named` and
-  `virtuals_unnamed`.)
+  `virtuals_unnamed`; its `virtual_names: 702` key counts classes with a naming
+  record, not names.)
 
 Every declaration cites its evidence (RTTI name, vtable VA, constructor VA,
-INI key, or function VA). No `.cpp` function bodies exist yet.
+INI key, or function VA). The `.cpp` bodies are no longer empty: every recovered
+function is transcribed in `src/generated/code/` and every header declaration
+has a forwarder in `src/generated/` (see [Verification](#verification)).
 
 ## Deliverables
 
@@ -136,14 +149,14 @@ re/
   out/classes.json          755 classes, 1291 edges, 842 locators, 843 vtables
   out/hierarchy.txt         readable class hierarchy
   out/vtables.txt           vtable -> class map (843 entries)
-  out/functions.json        41,822 functions with instructions, callees, refs
+  out/functions.json        43,564 functions with 848,822 instructions, callees, refs
   out/ini_keys.json         1,876 referenced strings -> referencing functions
   out/class_manifest.json   749 classes, 9,810 virtual slots
-  out/members.json          member-offset records
-  out/signatures.json       37,595 signatures
-  src/include/*.h           262 headers (261 standalone-compilable + prelude)
-  src/generated/code/       43,668 machine-code transcriptions + registration
-  src/generated/*.cpp       6,996 forwarders across 309 translation units
+  out/members.json          4,289 member-offset records
+  out/signatures.json       43,564 signatures
+  src/include/*.h           264 headers (263 standalone-compilable + prelude)
+  src/generated/code/       46,008 machine-code transcriptions + registration
+  src/generated/*.cpp       6,962 forwarders across 310 translation units
   src/handwritten/          hand-written, evidence-backed headers
   src/include/SCHEMA.md     1374-row INI key -> class -> type table
   src/include/INDEX.md      core hierarchy index
@@ -167,14 +180,15 @@ is missing, rather than running a subset and printing `VERIFICATION PASSED`.
 Current output:
 
 ```
-[1] standalone compile: 261/261
+[1] standalone compile: 263/263
 [2] combined TU compile: PASS
 [3] class coverage: 749/749 (100.0%)
 [4] vtable->class bindings: 749/749 verified
 [5] header content vs manifest: 219/219 verified
 [6] inheritance vs direct bases: 220/220 verified
-[7] member offsets vs recovered table: 2186/2186 verified
-[8] declared arity vs recovered signatures: reported, not gated
+[7] member offsets vs recovered table: 1317/1317 verified (206 classes emit offsets)
+[8] declared arity vs recovered signatures: 331/1116 match, 785 divergence(s) (reported, not gated)
+[9] compiler-confirmed member offsets: PASS (3073/3073 asserted)
 VERIFICATION PASSED
 ```
 
@@ -189,24 +203,29 @@ VERIFICATION PASSED
 | 5 | each header's cited vtable VA and per-slot targets match the manifest | manifest output |
 | 6 | emitted base clauses match `out/direct_bases.json` | tool output |
 | 7 | emitted member offsets match `out/members.json` | tool output |
+| 9 | every recovered member offset a header can express is confirmed by `offsetof` at `-m32` | **the compiler** |
 
-Only **check 4** reads the target binary independently. Checks 5–7 compare the
-generated tree against other tools' output, so they detect generator
+Only **checks 4 and 9** are anchored outside the tool chain: check 4 reads the
+target binary, check 9 makes the compiler adjudicate the layout. Checks 5–7
+compare the generated tree against other tools' output, so they detect generator
 regressions and header/manifest disagreement, but they cannot detect an error
 common to a recovery tool and the generator that consumes it. Check 3 has the
-same limitation.
+same limitation. `tools/verify_members_binary.py` is a separate binary-anchored
+gate: 4,285 of 4,289 claims confirmed (99.9%, 4 refuted).
 
 **Explicit non-claims:**
 
 - **The disassembly is not verified.** No check re-decodes function boundaries
   against an independent source. Every downstream artifact inherits any
   boundary error in `tools/disasm.py`.
-- **Data-member layout is not verified anywhere.** Check 7 compares only the 6
-  classes that actually emit offsets (10 offsets total) against
-  `out/members.json`, which is itself produced by `tools/gen_members.py` from
-  the same constructor scan. Member offsets are exact where recovered and
-  their provenance is recorded, but nothing cross-checks them against the
-  binary's access patterns.
+- **Data-member layout is verified against the compiler, not against the
+  original source.** Check 7 compares 1,317 emitted offsets across 206 classes
+  against `out/members.json` (itself produced by `tools/gen_members.py`), and
+  check 9 makes the compiler confirm 3,073/3,073 expressible offsets at `-m32`.
+  `tools/verify_members_binary.py` independently confirms 4,285 of 4,289 claims
+  against stores in the binary's constructors. What is *not* verified is member
+  *type* and *ordering* — whether a 4-byte slot is an `int` rather than a
+  pointer, or whether two members are the right way round.
 - **The declaration tree alone does not reproduce behaviour** — but it is no
   longer alone. `src/generated/code/` transcribes the whole recovered
   instruction stream and `tools/link_test.py` links and runs it; what the
@@ -218,35 +237,40 @@ same limitation.
   in the project from ever being emitted.
 - Check 6 now reports 220/220; the four divergences were resolved.
 
-Evidence density in the reconstructed headers: **9,657** address citations,
-**473** quoted INI-key citations, **384** RTTI citations. **239** distinct
-virtuals could not be semantically identified and are named `vfunc_N` rather
-than guessed; **1,002** items are explicitly marked `/* ? */`.
+Evidence density in the reconstructed headers, measured this session: **10,288**
+address citations, **473** quoted INI-key citations, **378** RTTI citations.
+**2,458** virtual declarations could not be semantically identified and are
+named `vfunc_N` rather than guessed (126 distinct `vfunc_N` numbers);
+**1,811** items are explicitly marked `/* ? */`.
 
 ```
-grep -rhoE '0x[0-9a-fA-F]{6,8}' src/include/*.h | wc -l   # 9657
-grep -rhoE 'INI "[^"]+"'        src/include/*.h | wc -l   # 473
-grep -rho  'RTTI'               src/include/*.h | wc -l   # 384
-grep -rhoE 'vfunc_[0-9]+'       src/include/*.h | sort -u | wc -l   # 239
-grep -rhoF '/* ? */'            src/include/*.h | wc -l   # 1002
+grep -rhoE '0x[0-9a-fA-F]{6,8}' src/include/*.h | wc -l            # 10288
+grep -rhoE 'INI "[^"]+"'        src/include/*.h | wc -l            # 473
+grep -rho  'RTTI'               src/include/*.h | wc -l            # 378
+grep -rhoE 'vfunc_[0-9]+'       src/include/*.h | sort -u | wc -l  # 126
+grep -rhoF '/* ? */'            src/include/*.h | wc -l            # 1811
+grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
 ```
 
 ## Known gaps
 
-- **The transcription is not source-shaped.** 43,668 functions are transcribed
+- **The transcription is not source-shaped.** 46,008 functions are transcribed
   faithfully against a machine model, but a transcription is not a
   reconstruction: it is what the machine does, not the shape the original
-  source had. 166 instructions (0.02%) have no faithful rendering and are
-  emitted as `ts::unmodelled(va, "mnem")`.
-- **228 destructors are labelled stubs.** The headers declare them; no comment
+  source had. 0 instructions have no faithful rendering
+  (`grep ts::unmodelled src/generated/code` returns nothing).
+- **229 destructors are labelled stubs.** The headers declare them; no comment
   records where they are, so there is no transcription to forward to.
-- **The entry-point run stops at import thunks.** The model never loads the
-  image's data sections, so `call dword ptr [IAT]` reads 0. 16,383 of the entry
-  point's calls are this.
-- **Member layout is only partly verified.** Offsets are confirmed against real
-  stores at 99.9%; member *types* and ordering are not.
-- **~1,741 INI keys are unmapped.** 1,876 referenced strings are recovered but
-  only 135 members across 20 classes are named from them.
+- **The entry-point run does not stop at import thunks.** `Image.h` maps every
+  section's raw extent and writes a stub VA into all 341 IAT slots;
+  `link_test.py` reports `341 of 341 IAT slots written` and `0 with no stub`.
+  The old "16,383 calls read 0" claim described the pre-`Image.h` model and is
+  retracted.
+- **Member layout is verified where expressible; types and ordering are not.**
+  Check 9 confirms 3,073/3,073 offsets at `-m32`, and the binary-anchored
+  verifier confirms 4,285 of 4,289; member *types* and ordering are not checked.
+- **1,876 referenced strings are recovered, but only 291 members across 20
+  classes are named from them** (8.3% of 3,526 non-vptr members).
 - **`RulesClass` has no RTTI record** (it is not polymorphic); it is identified
   only by its reader functions, so its member offsets are not isolated.
 - **`Node<>` is still declared inside `INIClass.h`** rather than in its own
@@ -257,8 +281,9 @@ grep -rhoF '/* ? */'            src/include/*.h | wc -l   # 1002
   offsets are not isolated.
 - **Member offsets are exact where recovered; names only where an INI key or
   string provides evidence.** Do not infer a name.
-- **`out/functions.json` is 65 MB**, over GitHub's 50 MB warning threshold. It
-  is a regenerable artifact; untracking it would need a history rewrite. (The
+- **`out/functions.json` is 67,670,646 bytes (~65 MB)**, over GitHub's 50 MB
+  warning threshold. It is a regenerable artifact; untracking it would need a
+  history rewrite. (The
   stray `out/out/` duplicate that sat in the repo for months has been removed,
   and `tools/pipeline.sh` now fails loudly if it reappears.)
 

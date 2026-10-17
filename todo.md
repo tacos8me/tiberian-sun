@@ -13,22 +13,56 @@ roadmap first if you are deciding what to work on; read this file before
 touching anything.
 
 **Measure before you trust any number here.** Run
-`python3 tools/harness.py metrics --no-append`. The figures below were measured
-at the commit that last touched this file; prose goes stale, measurements do
-not. Where a number is quoted it is because the *change* matters, not because
-the value is current.
+`python3 tools/harness.py metrics --no-append`. The figures below were
+re-measured on 2026-10-17; prose goes stale, measurements do not. Where a number
+is quoted it is because the *change* matters, not because the value is current.
+
+Naming quantities are easy to conflate, so state them the same way everywhere:
+**9,810** vtable `(class, slot)` instances; **5,557** named pairs; **917**
+distinct name strings (**281** semantic, excluding destructors and
+QI/AddRef/Release); **6,954** virtual declarations in the headers (**4,496**
+named + **2,458** `vfunc_N`); **702** classes with a naming record (this is what
+`harness.py metrics` prints as `virtual_names` -- it is not a count of distinct
+names). `PROGRESS.md` states the same distinction once in full.
 
 ---
 
-## P0 — correctness of the transcription  [REOPENED]
+## P0 — correctness of the transcription  [COMPLETE]
 
 ### [x] Spans that do not end on a transfer drop their continuation
-**Fixed.** 10,477 spans now continue into another span by tail transfer; the 15
-that do not are itemised (2 overlap another span's instruction, 13 land in bytes
-never recovered). A control-flow gate now fails on a span that falls through onto
-an instruction boundary with nothing registered, proven by mutation (126 spans
-reported, exit 1). Instruction coverage went UP, not down: 897,193 -> 918,438,
-because 139 continuations needed an entry of their own.
+**Fixed.** Every span that would otherwise fall through now emits a tail
+continuation to a registered VA. Measured with
+`python3 tools/gen_code.py out bin/GAME.EXE src/generated/code --check`:
+**12,383 spans continue into another span by tail transfer**; the 15 that do not
+are itemised (2 land inside another span's instruction, 13 land in bytes never
+recovered as code). The same run reports `46008 functions transcribed,
+918438/918438 instructions modelled (100.00%), 0 unmodelled`, and the
+faithfulness gate passes instruction-for-instruction.
+
+`tools/gen_code.py` fails the run when a span falls through onto an instruction
+boundary inside recovered code with nothing registered there. The check is
+proven by mutation (removing a continuation makes it report the defect and exit
+1).
+
+**Retraction, kept because it explains the defect.** This file used to carry the
+same title twice: once `[x]` and once `[~]`. The `[~]` copy was the pre-fix
+description — "1,513 spans end on a conditional branch and 8,937 on a
+non-transfer instruction, about 10,450 spans incomplete" over 43,497
+transcriptions — and its numbers are historical, not current. The two entries are
+now one.
+
+How it presented: a boot fault at `rep stos` 0x0068d781 with ECX=0x08000004
+dwords. Chain: `calloc(1,0x74)` at 0x68794e -> 0x689c3d -> `_heap_alloc`
+0x688bd0 -> sub_00688c9a, a 6-instruction span ending on `je 0x688cbe`. The
+fall-through was dropped, so 0x688ed4's epilogue never ran and calloc was
+returned into with EAX=EBX=0x20000010 -- the heap header pointer -- which it then
+used as both `dst` and `count` for a 512 MB memset.
+
+**Why the old gate passed over it.** The faithfulness gate proves *instruction
+coverage*: every instruction appears exactly once, in order, with matching
+operands, and the rendering round-trips. It did not prove *control-flow
+coverage*. A tree could satisfy it completely while ~10,450 spans had no
+continuation. That is the gap the control-flow gate closes.
 
 ### [x] Recovery missed ~1,700 entry points that the game actually calls
 **Found by running the code, not by reading it.** The disassembler's prologue
@@ -43,59 +77,33 @@ sources, all read out of the binary: data-section code-pointer tables (a run of
 landing in a gap, and spans that begin in alignment fill. Every seed was CALLED by
 the original program, so it is evidence, not a guess.
 
-Result: spans 41,822 -> 43,564, functions transcribed 43,807 -> 46,008,
-instructions 897,193 -> 918,438 at 100%, 0 unmodelled, `.text` code coverage
-96.06% -> 96.09%, and **unmapped calls inside .text 13,108,943 -> 2**.
+Current measured state: 43,564 spans, 46,008 transcriptions, 918,438/918,438
+instructions modelled at 100%, 0 unmodelled, `.text` code coverage 96.09%, and
+**2 unmapped calls inside .text** (link test). The historical progression quoted
+in the previous version of this entry (41,822 -> 43,564 spans; 897,193 -> 918,438
+instructions) is kept only as history.
 
-The residual 2 are `0x6844df` and `0x46f3f8` -- both RETURN ADDRESSES of indirect
-calls, so the model is calling a return address. That is a garbage function
-pointer, not a recovery gap: EBP is a code address at the stop (`0x004876e7`),
-which is independently what the import lane found. Next step is to record the
-CALLER as well as the target, so the source of the bad pointer is nameable.
+The residual 2 are `0x6844df` (from `0x5e7317`) and `0x46f3f8` (from `0x674bf6`)
+-- both RETURN ADDRESSES of indirect calls, so the model is calling a return
+address. That is a garbage function pointer, not a recovery gap: EBP is a code
+address at the stop (`0x004876e7`). Next step is to name the caller of each and
+fix the corruption.
 *Done when:* that is fixed and the link test passes.
 
 ### [x] The 32 ordinal imports could not pop their arguments
 The stub table keyed an ordinal by its raw ILT value (`"ord_2147483681"`) while
 the loader asks for `"#161"`, so all 32 silently fell back to a stub with
 `nargs=0` -- a stub that cannot pop. Every such call left the stack imbalanced.
-Now 342/342 resolved, 0 fallbacks, 315 with a body, 27 generic. Argument counts
-are derived from the recovered instruction stream (count the pushes reaching each
-`call [slot]`, stop at a branch target/call/ret/pop/ESP-adjust, skip the
-prologue); 12 measured, 20 with no call site tagged `"doc"` and printed as
-unmeasured. `--stack-check`: 341 driven, 0 imbalanced.
-
-### [~] Spans that do not end on a transfer drop their continuation
-**Found by chasing a boot fault, and it is the largest defect found in the
-generated code.**
-
-`tools/gen_code.py` renders a span as a sequence of instructions. When a span
-ends on a **conditional branch**, the taken branch is rendered as a transfer but
-the **fall-through is dropped** -- the C++ body simply ends. When a span ends on
-a **non-transfer instruction**, the continuation is dropped entirely. Either way
-the body returns with its frame abandoned: the original's `pop/leave/ret` never
-execute, so 4+ frames unwind into a caller with garbage registers and an
-unbalanced stack.
-
-Measured over all 43,497 generated transcriptions: **1,513 spans end on a
-conditional branch and 8,937 end on a non-transfer instruction** -- about 10,450
-spans whose control flow is incomplete.
-
-How it presented: a boot fault at `rep stos` 0x0068d781 with ECX=0x08000004
-dwords. Chain: `calloc(1,0x74)` at 0x68794e -> 0x689c3d -> `_heap_alloc`
-0x688bd0 -> sub_00688c9a, a 6-instruction span ending on `je 0x688cbe`. The
-fall-through was dropped, so 0x688ed4's epilogue never ran and calloc was
-returned into with EAX=EBX=0x20000010 -- the heap header pointer -- which it then
-used as both `dst` and `count` for a 512 MB memset.
-
-**Why the gate passed over it.** The faithfulness gate proves *instruction
-coverage*: every instruction appears exactly once, in order, with matching
-operands, and the rendering round-trips. It does not prove *control-flow
-coverage*. A tree can satisfy it completely while ~10,450 spans have no
-continuation. That is the gap to close.
-
-*Done when:* every span either ends on a transfer or emits a tail continuation to
-a registered VA; the residue is reported as a first-class count; a new check
-fails on a span with neither; and the check is proven by breaking it on purpose.
+Now **341 of 341 PE import-directory thunks resolve** (`link_test.py`: `imports:
+341 across 13 DLLs`, `341 of 341 IAT slots written`, `0 with no stub`), 0
+fallbacks. The stub table has **342 rows** because it also carries
+`COMCTL32!DllGetVersion`, which is reached through `GetProcAddress`, not the
+import directory; `register_win32_stubs()` reports 315 with a body and 27
+generic. Argument counts are derived from the recovered instruction stream
+(count the pushes reaching each `call [slot]`, stop at a branch
+target/call/ret/pop/ESP-adjust, skip the prologue); 12 measured, 20 with no call
+site tagged `"doc"` and printed as unmeasured. `--stack-check`: 341 driven, 0
+imbalanced.
 
 ## P0 — correctness of the gate and the tools  [COMPLETE]
 
@@ -158,10 +166,14 @@ and replaced; re-running is idempotent.
 declarations rose from ~1,966 to 2,743.
 
 ### [x] Generate `.cpp` function bodies
-6,668 bodies across 303 translation units. Bodies are **empty definitions**
-carrying the recovered instruction listing, size and calling convention as a
-comment — no invented control flow. They prove signatures compile; they do not
-reproduce behaviour.
+**Superseded, and the old description is retracted.** The bodies are no longer
+empty definitions. `src/generated/code/` holds 46,008 transcriptions
+(43,564 recovered function starts + 2,444 tail entries), one machine instruction
+per generated line, 918,438 instruction lines in all; the per-class `.cpp` files
+are 6,962 forwarders across 310 translation units that call the canonical
+transcription of their VA (3,024 distinct machine functions, 3,938 aliases). The
+tree links (492 TUs) and runs the original entry point. The project reproduces
+behaviour as a machine transcription; it is not source-shaped C++ (see P3).
 
 ### [x] Recover more unattributed `.text`
 Gap-recovery over already-recorded branch targets. 12,784 → 23,882 functions;
@@ -187,11 +199,12 @@ beyond 200 recall flattens). False claims fell from 1,052 to 4 and the check is
 now a gate with a 95% floor.
 
 ### [x] Recover the unattributed `.text`
-Done: 65.6% -> **96.06%** coverage, 23,882 -> 41,822 functions, 912 KB -> 104 KB
-unattributed. The tool recorded gap-recovered bodies' callees but never fed them
-back, never followed conditional jumps, and read jump tables only from initial
-seeds. Made the worklist a fixpoint. Verified the 1,019 inner entry points are
-real: 1,004 are branch/call targets, only 15 unreferenced.
+Done. Measured now: **43,564 spans**, **96.09%** of `.text` as recovered code,
+**105,966 B (103 KB)** unattributed and classified as data/padding. The tool
+recorded gap-recovered bodies' callees but never fed them back, never followed
+conditional jumps, and read jump tables only from initial seeds. Made the
+worklist a fixpoint. Verified the 1,019 inner entry points are real: 1,004 are
+branch/call targets, only 15 unreferenced.
 
 ### [x] Declare members at the width the constructor stores
 Done. Every member was emitted as a 4-byte `unsigned long`; one written with
@@ -203,8 +216,10 @@ Done. AbstractClass.h now matches the binary and the prelude
 (HRESULT/__stdcall/ULARGE_INTEGER*); slot 0 is no longer mislabelled a
 destructor (0x405790 is a shared E_POINTER stub and slot 0 of 66 classes); slot 6
 is declared; LocomotionClass's Load/Save/GetSizeMax citations are corrected.
-verify.py gained check 8, reporting declared-vs-recovered arity (478/1172 match,
-694 divergences) with the `this`-counting caveat documented.
+verify.py gained check 8, reporting declared-vs-recovered arity (measured now:
+**331/1116 match, 785 divergences**) with the `this`-counting caveat documented.
+**A duplicate of this item in P3 stayed `[ ]` after the fix; it has been
+collapsed into this entry.**
 
 ### [x] Wire the dead naming rules
 Done. R9 QueryInterface/AddRef/Release was defined but never called; R2 Read_INI
@@ -274,47 +289,72 @@ closes on itself.
 Consequence: `tools/extract_realdata.py` no longer needs hand-computed byte
 ranges; the offsets come from the index.
 
-### [~] Recover the remaining 104 KB of `.text`
-**Measured, and the earlier guess was wrong.** This item said "roughly 95% of it
-is real code". I read the bytes in the largest gaps instead of assuming:
+### [x] Classify the remaining ~103 KB of `.text`
+**Done.** The earlier guess ("roughly 95% of it is real code") was wrong, and
+reading the bytes showed why:
 
 ```
 gap 0x663820 224B: c62a6600 4c376600 db2c6600 8e2a6600 ...   <- jump table
 gap 0x45fef0  64B: c7fe4500 e3fe4500 d0fe4500 dafe4500 ...   <- jump table
 ```
 
-They are **switch tables and alignment padding**. The largest gap anywhere in the
-binary is 224 bytes and there are **zero gaps over 512 bytes**. So the residual is
-not unknown code. What is left is to *emit* those tables as data and classify the
-padding, which is mechanical.
-*Done when:* coverage is >=99.5% with every remaining byte classified as a named
-jump table or padding.
+They are **switch tables and alignment padding**. Measured in
+`out/text_data.json`: 105,966 B unattributed, classified as 12 jump tables
+(264 B), 7 switch index tables (349 B), 104,959 B of alignment padding in 12,606
+runs, and 394 B in 55 runs reported verbatim rather than forced into a category.
+99.99% of `.text` is attributed as code or data; 96.09% is recovered code.
+*Done when:* coverage is >=99.5% with every remaining byte classified. **The
+"coverage" here means attributed, not code: the 99.5% code target is not met and
+is not achievable, because the remainder is data.**
 
-### [ ] Load the image's data sections into the machine model
-`tools/link_test.py` runs the original PE entry point against the model and it
-stops at the first import: `call dword ptr [IAT]` reads 0, because the model's
-lazily-paged memory starts empty and nothing ever copies `.idata`/`.rdata` in.
-16,383 of the entry point's calls are this. Loading the sections would let the
-import table resolve to real addresses and make the run far more meaningful.
-*Done when:* the entry-point run reports no call target of 0x00000000.
+### [x] Load the image's data sections into the machine model — retracted as a defect
+**The premise was false.** `src/handwritten/Image.h` copies every PE section's
+raw extent into modelled memory at its real VA and writes a stub VA into every
+one of the **341** IAT slots. `tools/link_test.py` reports `imports: 341 across
+13 DLLs`, `resolve_imports() ... 341 of 341 IAT slots written`, and `341 imports
+bound, 0 with no stub`; it does **not** stop at a null call target. The stub
+table has 342 rows because it also carries `COMCTL32!DllGetVersion`, reached
+through `GetProcAddress` rather than the import directory.
 
-### [ ] 166 instructions have no faithful rendering
-Emitted as `ts::unmodelled(va, "mnem")` rather than approximated: MMX/SSE
-(`movq`, `psrlw`, `movd`, `pxor`, `packuswb`, `punpcklbw`, `punpckhwd`,
-`psrad`, `pmulhw`), the x87 environment save/restore (`fnsave`, `frstor`,
-`fnstenv`, `fldenv`), far pointers (`les`, `lds`) and `lar`. MMX/SSE is the
-largest group and would need 64-bit register state in the model.
-*Done when:* the count reaches zero, or every remaining mnemonic is argued for
-in the generated README.
+The empty `MessageBoxA` text is `LoadStringA` returning 0 (see the stub table),
+not a missing section. The "16,383 calls read 0" figure described the pre-Image.h
+model and is retracted.
+*Done when:* the entry-point run reports no call target of 0x00000000. **Met;
+this item should not be worked on.**
+
+### [x] 166 instructions have no faithful rendering
+**Done: 0 unmodelled.** The former 166 — MMX/SSE (`movq`, `psrlw`, `movd`,
+`pxor`, `packuswb`, `punpcklbw`, `punpckhwd`, `psrad`, `pmulhw`), the x87
+environment save/restore (`fnsave`, `frstor`, `fnstenv`, `fldenv`), far
+pointers (`les`, `lds`) and `lar` — are rendered against the machine model.
+Measured: `python3 tools/gen_code.py out bin/GAME.EXE src/generated/code
+--check` prints `46008 functions transcribed, 918438/918438 instructions
+modelled (100.00%), 0 unmodelled`, and `grep ts::unmodelled
+src/generated/code/*.cpp` returns nothing. Two limits of the *model* remain
+(`lar` has no descriptor table; `fnsave`/`fnstenv` write zero into the x87
+pointer fields), stated in `Machine.h`.
 
 ### [ ] Name more virtuals
-**The denominator in this item was wrong and the real problem is 3x smaller.**
-Measured: 9,780 manifest slots, 1,500 named (15.3%) — but 600 of those are
-destructors and 403 are COM boilerplate, so only **497 are genuinely semantic
-(5.1%)**. And **65.1% of all (class, slot) pairs are inherited from a base**, so
-the slots needing an original name are **3,409, not 9,810**.
+**The denominator in this item was wrong twice and is now measured once.** The
+old "1,500 named (15.3%), 8,280 unnamed, 3,409 distinct" mixed three different
+quantities and is retracted. Measured on 2026-10-17:
 
-Leverage is the whole game here — naming a base names its subtree:
+- **9,810** vtable `(class, slot)` instances in the manifest.
+- **5,557** of those carry a name in `out/virtual_names.json` (56.6%).
+- **917** distinct name strings; **281** excluding destructors and
+  QI/AddRef/Release.
+- The generated headers declare **6,954** virtuals: **4,496 named** (64.7%) and
+  **2,458 `vfunc_N`**. Headers declare only what a class introduces or
+  overrides, which is why 6,954 is smaller than 9,810.
+- `harness.py metrics` prints `virtual_names: 702`; that key counts **classes
+  with a naming record**, not distinct names. Do not quote it as a name count.
+
+The old "3,409 distinct" was an estimate of slot instances after inheritance
+deduplication, not a name count, and is not used as a denominator.
+
+Leverage is the whole game here — naming a base names its subtree (re-derived
+from `out/class_manifest.json` and `out/direct_bases.json`; the metric is the
+base's slot count times (subclasses + 1)):
 
 | Class | slots | subclasses | slot-instances covered |
 |---|---|---|---|
@@ -325,14 +365,17 @@ Leverage is the whole game here — naming a base names its subtree:
 | `RadioClass` | 135 | 6 | 945 |
 
 The top 18 bases cover 13,011 slot-instances. An inheritance-propagation engine
-is the prerequisite: today only 2.8% of unnamed slots propagate, because there
-are only 497 names to propagate.
-*Done when:* >=60% of the 3,409 distinct virtuals are named, each citing its rule
-and the concrete signal it keyed on. Do not loosen a rule to raise the ratio.
+is the prerequisite: 917 distinct names currently cover 5,557 named pairs, and
+each new base name can cover its whole subtree.
+*Done when:* >=60% of the 6,954 header virtual declarations are named, each
+citing its rule and the concrete signal it keyed on. Do not loosen a rule to
+raise the ratio.
 
 ### [ ] Mine the unused `rules.ini` keys
-1,876 strings recovered; only 135 members named across 20 classes. The
-reader-trace mechanism in `name_members.py` works and is proven.
+1,876 strings recovered; 291 members named across 20 classes (8.3% of the 3,526
+non-vptr members). `tools/e2e_rules.py` resolves 280 of 291 (96.2%) against the
+shipped INIs. The reader-trace mechanism in `name_members.py` works and is
+proven.
 *Done when:* distinct named members rise substantially, each citing key VA and
 reader VA.
 
@@ -348,81 +391,49 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: 36 checks. Not golden-count assertions -- every one is a
-regression test for a defect that actually shipped, or a differential test
-against an independent implementation. Four are proven to fail when the defect
-is reintroduced (mutating `gen_bodies.DECL`, swapping the `in` operands,
-removing the `loop` tail handling, removing the immediate mask each produce
-failures naming the right check). Wired into the pipeline as stage 0b.
+`tools/test_tools.py`: **39 checks passed** (measured this session). Not
+golden-count assertions -- every one is a regression test for a defect that
+actually shipped, or a differential test against an independent implementation.
+Four are proven to fail when the defect is reintroduced (mutating
+`gen_bodies.DECL`, swapping the `in` operands, removing the `loop` tail
+handling, removing the immediate mask each produce failures naming the right
+check). Wired into the pipeline as stage 0b.
 
-### [~] Compile the gate with `-m32`
-The shim is host-sized: on this LP64 host `sizeof(DWORD)` is 8 and `sizeof(GUID)`
-is 24, against 4 and 16 in the PE32 target, and `__stdcall` is defined away
-entirely. So the calling-convention data recovered for 22,328 functions is not
-exercised by the build.
-
-**There is a cheaper fix for the width half of this, and it should come first.**
-The generator emits every recovered member as `unsigned long`, which is 8 bytes
-here and 4 in the game:
+### [x] Compile the gate with `-m32`
+**Done and gating.** `verify.py` compiles every header and the combined TU at
+`-m32` and fails closed when `g++-multilib` is absent. Measured this session:
 
 ```
-   2313 unsigned long   <- wrong width on this host
-    569 unsigned char
-     36 unsigned short
+[1] standalone compile: 263/263
+[2] combined TU compile: PASS
+[9] compiler-confirmed member offsets: PASS (3073/3073 asserted)
 ```
 
-`unsigned int` is 4 bytes on both, so retyping the emission fixes 2,313 of the
-2,919 member declarations with no toolchain change at all. What it does not fix:
-pointer width, `__stdcall`/`__thiscall`, and `GUID` — those need `-m32`.
-
-**Measured, and better than expected.** After installing `g++-multilib`:
-
-```
-sizeof(void*)=4  sizeof(DWORD)=4  sizeof(ULONG)=4  sizeof(long)=4
-standalone headers -m32 : 262/262 OK
-generated code -m32     : compiles
-whole tree -m32         : links (482 TUs, 1m37s) and the entry point RUNS
-```
-
-The tree is *already* ABI-correct at 32-bit; the gate simply never asked. What
-remains is to put `-m32` in the gate, fail closed when multilib is absent, and
-document the requirement.
-
-**And it exposes something worse.** At `-m32` the compiler reports
-`offsetof(AbstractClass, m_000) == 20` where the recovered table says `0`. 1,053
-of the 4,326 recovered member entries are **vtable-pointer stores** (622 at
-offset 0) emitted as ordinary data members, so the reconstructed class counts the
-vptr twice and every member after it is displaced. The tree compiles, links and
-runs and still does not have the game's memory layout.
-*Done when:* the gate compiles everything `-m32` and fails unless the compiler
-confirms every recovered member offset via `offsetof`.
+**Retraction, kept because the two stale claims were both real defects once.**
+An earlier copy of this entry was `[~]` and quoted the LP64 host build: 2,313
+`unsigned long` declarations, `offsetof(AbstractClass, m_000) == 20`, 1,053 of
+4,326 member entries being vptr stores emitted as data members. Those figures
+described the pre-fix tree and are not current. The current recovered table has
+763 vptr stores (620 at offset 0) out of 4,289 entries; the headers omit them and
+check 9 confirms 3,073/3,073 expressible offsets. The old "262/262 headers,
+482 TUs" measurements are likewise superseded (263/263 and 492 TUs).
 
 ### [x] Run against real game data
 `realdata/` holds the shipped control files extracted from the retail archive
 (`rules.ini`, `art.ini`, `ai.ini`, `sound.ini`, `theme.ini`, `BATTLE.INI`,
 `MISSION.INI`; byte ranges and section counts in `realdata/README.md`);
 `tools/e2e_rules.py` drives the reconstructed model with them and
-`tools/extract_realdata.py` regenerates them from the MIX archive. 101 of 112
-recovered member names (90.2%) resolve to keys the shipped data sets, and 9
-more are named in the files' own comment headers -- 110 (98.2%) confirmed by
-either class, reported separately because a comment proves the name exists, not
-that a value is read. This is the first external validation of the recovered
-names, offsets and readers. The two unconfirmed names are `RandomMap` and
-`Inaccuate`, the latter being the binary's own misspelling of `Inaccurate`.
+`tools/extract_realdata.py` regenerates them from the MIX archive. Measured this
+session: `tools/e2e_rules.py` resolves **280 of 291 (96.2%)** recovered member
+names against the shipped data; 14 are documented only in the files' own comment
+headers. This is the first external validation of the recovered names, offsets
+and readers.
 
 ### [x] Declare the base classes two hand-written headers omit
 `AnimClass` omitted `StageClass` (RTTI: mdisp 76) and was fixed: StageClass now
 has its own header, since its definition lived inside `TechnoClass.h`, which no
 other class included. `HouseClass` turned out to be CORRECT -- the checker could
 not read a multi-line base clause. Check 6 is now 220/220 with no divergence.
-
-### [ ] Fix the IPersistStream type inconsistency
-`AbstractClass.h` declares `IPersistStream` with `long`/`unsigned long*`, while
-`ts_prelude.h`, `LocomotionClass.h` and real COM use `HRESULT`/`ULARGE_INTEGER*`.
-Same vtable shape so no layout impact, but it makes
-`LocomotionClass::GetSizeMax` hide the base's and accounts for one of 204
-`-Woverloaded-virtual` warnings.
-*Done when:* one definition exists and the source is type-consistent.
 
 ### [ ] Eliminate the 204 -Woverloaded-virtual warnings
 Every one is `-Woverloaded-virtual`, which fires when a derived class declares a
@@ -462,10 +473,12 @@ Recompile and diff where a matching compiler is available.
 ## P4 — booting the game  [IN PROGRESS]
 
 ### [x] Load the image and resolve the imports
-`src/handwritten/Image.h` maps the PE's sections at their real VAs (3,227,799
-bytes) and writes a stub VA into every one of the 341 IAT slots.
-`src/handwritten/Win32Stubs.h` supplies those stubs. **16,383 unmapped calls
-became 0.** The PE details that would have silently corrupted it, all handled and
+`src/handwritten/Image.h` maps the PE's sections at their real VAs and writes a
+stub VA into every one of the **341** PE import-directory IAT slots.
+`src/handwritten/Win32Stubs.h` supplies those stubs. Measured: `link_test.py`
+reports `341 of 341 IAT slots written` and `341 imports bound, 0 with no stub`.
+(The historical "16,383 unmapped calls became 0" described the pre-Image.h
+model.) The PE details that would have silently corrupted it, all handled and
 read from the file: no `.reloc` (mapped at preferred base, so the transcriptions'
 absolute immediates stay valid), no bound imports, `OriginalFirstThunk == 0` for
 KERNEL32/USER32, and `.data` VirtualSize > SizeOfRawData.
@@ -486,7 +499,13 @@ Fixed, and the fix was two separate defects:
     drifted until code read a stale `[esp]` as a return address.
   - Spans that did not end on a transfer dropped their continuation, so ~10,450
     bodies returned with their frame abandoned.
-Both are recorded below. The memset itself was a symptom of the second.
+Both are recorded above. The memset itself was a symptom of the second.
+
+**Retraction, kept because the diagnostic was useful.** A second copy of this
+item was marked `[ ]` and described the fault at `rep stos` 0x0068d781 with
+ECX=0x08000004 dwords, `calloc(n,4)` at 0x6845b4 and the bad count in the global
+at 0x836280. That was the pre-fix state; the two defects above are the fix. The
+duplicate entry has been collapsed into this one.
 
 ### [ ] Reach a window and a message loop
 **NOT reached.** This entry previously said "Reached. CreateWindowExA=1,
@@ -501,28 +520,39 @@ reached through `GetProcAddress` rather than the import table, so there was no
 stub, the version read as 0, the CRT's version check failed and the game called
 `ExitProcess(1)` before initialising anything. One export reporting 4.72 fixed it.
 
-### [x] The 2 unmapped calls, and the argument that arrives as a return address
-**Diagnosed and measured, not yet fixed.** The atexit walk over the 3,311-entry
-static-constructor table leaks **108 bytes**: ESP is 0x002ff56c at `push %esi`
-(0x6844cf) and 0x002ff4fc at the matching `pop %esi` (0x6844ea). So `pop %esi`
-loads a return address, ESI becomes 0x6844df, and `call *%esi` at 0x5e72cf calls
-into `ExitProcess`. That call's result sets `bl`, which decides whether the game
-shows its "Direct X" error box -- so the error box, the corrupted exit code
-(0x6844df for 1) and the corrupted MessageBox type (0x00a00201 for 0x30) are all
-one symptom.
-*Remaining:* name the constructor(s) that leak. The check must compare ESP at a
-constructor's own entry with ESP at its `ret`; a plain "ESP must return" check also
-flags `_alloca_probe` (0x684230), which moves ESP by design (`mov %ecx,%esp`).
+The stubs that matter next: `RegisterClassA`, `CreateWindowExA`, `PeekMessageA`
+(must return 0 when there is no message -- that is what keeps a game loop
+running), `GetMessageA` (must not return 0 immediately, which looks like
+WM_QUIT), `GetSystemMetrics`, `DirectDrawCreate` (must return a plausible object
+with a vtable, because the game's own wrapper calls through it).
+*Done when:* the run reaches a message loop and keeps executing frames rather
+than returning. **A second copy of this entry existed with the same status and
+the same "not reached" conclusion; it is collapsed into this one.**
 
 ### [ ] The 2 unmapped calls, and the argument that arrives as a return address
-`0x6844df` (from `0x5e7317`, `call *%esi`) and `0x46f3f8` (from `0x674bf6`,
-`call *0x58(%edx)`). Both targets are RETURN ADDRESSES, so a data pointer slot
-holds a code address. The same corruption is visible without the link test:
-`ExitProcess` receives `0x6844df` where the code passed `1`, and EBP is a code
-address at the stop (`0x004876e7`). A value that should be an argument arrives as
-a return address.
-*Done when:* the caller of each is identified and the corruption fixed, and the
-link test passes.
+**Diagnosed and measured, not yet fixed.** The link test's two in-`.text`
+targets are `0x6844df` (from `0x5e7317`, `call *%esi`) and `0x46f3f8` (from
+`0x674bf6`, `call *0x58(%edx)`). Both targets are RETURN ADDRESSES, so a data
+pointer slot holds a code address. The same corruption is visible without the
+link test: `ExitProcess` receives `0x6844df` where the code passed `1`, and EBP
+is a code address at the stop (`0x004876e7`).
+
+The cause is measured: the atexit walk over the 3,311-entry static-constructor
+table leaks **108 bytes** -- ESP is 0x002ff56c at `push %esi` (0x6844cf) and
+0x002ff4fc at the matching `pop %esi` (0x6844ea). So `pop %esi` loads a return
+address, ESI becomes 0x6844df, and `call *%esi` at 0x5e72cf calls into
+`ExitProcess`. That call's result sets `bl`, which decides whether the game shows
+its "Direct X" error box -- so the error box, the corrupted exit code (0x6844df
+for 1) and the corrupted MessageBox type (0x00a00201 for 0x30) are all one
+symptom.
+*Remaining:* name the constructor(s) that leak. The check must compare ESP at a
+constructor's own entry with ESP at its `ret`; a plain "ESP must return" check
+also flags `_alloca_probe` (0x684230), which moves ESP by design
+(`mov %ecx,%esp`). **This file used to carry the same title twice, once `[x]`
+and once `[ ]`; the `[x]` copy said "not yet fixed", so it was a status error as
+well as a duplicate. They are now one `[ ]` entry.**
+*Done when:* the caller of each is identified, the corruption fixed, and the link
+test passes.
 
 ### [x] Real file I/O
 The stub layer used to make every file "exist" and read as empty, with
@@ -539,30 +569,15 @@ the game opens before it exits.
 *Note:* this did NOT change the outcome (still 1,011,817 instructions), which is
 what localized the blocker to the stack leak rather than missing files.
 
-### [ ] Get past the 512 MB memset
-Faults at `rep stos` 0x0068d781 with ECX=0x08000004 dwords. The caller is
-`calloc(n,4)` at 0x6845b4 and `n` is read from the global at 0x836280, which
-should hold a small stdio buffer count and holds 0x08000004; 0x08000004 * 4 =
-0x20000010, exactly the faulting size. 0x836280 is inside `.data`'s virtual
-extent (0x6bb000..0x836294) but beyond SizeOfRawData, so it is uninitialised
-storage that should read zero.
-*Done when:* the run gets past it and the next fault is diagnosed.
-
-### [ ] Reach a window and a message loop
-The next phase after the memset is window creation and DirectDraw. The stubs
-that matter: `RegisterClassA`, `CreateWindowExA`, `PeekMessageA` (must return 0
-when there is no message -- that is what keeps a game loop running),
-`GetMessageA` (must not return 0 immediately, which looks like WM_QUIT),
-`GetSystemMetrics`, `DirectDrawCreate` (must return a plausible object with a
-vtable, because the game's own wrapper calls through it).
-*Done when:* the run reaches a message loop and keeps executing frames rather
-than returning.
-
-### [ ] Make the boot a one-command measurement
-`tools/boot.py` should build (cached, so a one-file change is fast), run with a
-budget and a timeout, and print instructions, depth, faults with EIP and
-instruction bytes, import calls by name, and the last N call targets so a stop is
-bisectable.
+### [~] Make the boot a one-command measurement
+`tools/boot.py` builds (cached), runs with a budget and a timeout, and prints
+instructions, depth, faults with EIP and instruction bytes, import calls by name,
+and the last N call targets so a stop is bisectable. **Boot status is being
+re-measured by a concurrent lane**, and `boot.py` currently fails to build in
+this worktree after `sync_handwritten()` copies the hand-written headers over the
+generated set (140 of 492 translation units fail on missing COM types). That is
+a boot-lane defect, not a documentation one; do not quote a boot figure from this
+tree until it is fixed.
 *Done when:* `python3 tools/boot.py` reproduces the boot and reports it.
 
 ## Standing caveats
@@ -575,4 +590,10 @@ bisectable.
   verified**: whether the types and ordering are right is unchecked.
 - Member names exist only where an INI key or string provides evidence. Never
   infer one.
-- Function bodies are empty. The project reproduces structure, not behaviour.
+- **"Function bodies are empty" was false and is retracted.** Every recovered
+  function is transcribed in `src/generated/code/`: 46,008 functions
+  (43,564 starts + 2,444 tail entries), 918,438 instruction lines, one machine
+  instruction per line against `ts::` in `Machine.h`. The per-class `.cpp` files
+  are forwarders to those transcriptions, and `tools/link_test.py` links 492
+  translation units and runs the original entry point. What the project does not
+  yet reproduce is *source-shaped* C++ (ROADMAP P3), not behaviour.
