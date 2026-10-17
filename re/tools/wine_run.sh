@@ -21,6 +21,26 @@
 # It found, in one run, that the retail game reaches DirectDraw surface creation
 # and dies there -- and that its IDirectDraw calls include slot 23
 # (GetAvailableVidMem), which our COM vtable was one entry too short for.
+#
+# WHAT IT DOES HERE, verified with a screenshot: creates a 1024x768 "Tiberian Sun"
+# window, shows "Warning - Unable to create Direct Sound Object. Proceeding with
+# audio disabled.", walks a second dialog, then exits. There is no audio device,
+# no CD mounted and no install registry, so the retail game gives up early too.
+# Mounting the CD and satisfying the install is what would extend this past init.
+#
+# FOR AN INSTRUCTION-LEVEL ORACLE (tools/oracle.py, not yet written), three
+# things bite and each cost a run:
+#   1. Attaching needs /proc/sys/kernel/yama/ptrace_scope=0 (it is 1 here).
+#      `sudo sysctl -w kernel.yama.ptrace_scope=0`.
+#   2. Do NOT break at the instruction AFTER ExitProcess -- 0x684529. Wine's
+#      ExitProcess terminates the process and never returns, so that breakpoint is
+#      never hit. Break at the call itself, 0x684523.
+#   3. `gdb --args wine ...` fails ("not in executable format") because
+#      /usr/bin/wine is a shell wrapper. The real loader is /usr/lib/wine/wine.
+#      Attaching to the running GAME.EXE pid is the more reliable route anyway,
+#      because it guarantees the PE is mapped at its preferred base first.
+# Verify the mapping before trusting any address: /proc/<pid>/maps should show
+#   00400000-00698000 r-xp ... GAME.EXE
 set -e
 
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
