@@ -680,6 +680,31 @@ next blocker.
 `LoadStringA` is not producing formatted text. The box renders with the format
 string; fix it when the message path is stable.
 
+### [ ] Implement the Blowfish cipher the MIX indexes need
+**Measured against the retail binary, and it is not optional.** The object that
+`blowfish.dll` registers (`IBlowfish`, CLSID
+`{1440AD10-6AA8-11D1-B6F9-00A024DDAFD1}`, vtable `0x1101e480`, 8 entries) is a
+real cipher the game uses during startup: `SetKey(56, key)` **9 times** and
+`Decrypt(8, in, out)` **1586 times**. The nine 56-byte keys are byte-identical
+to the keys derived from nine shipped MIX indexes (TIBSUN.MIX, three TIBSUN
+sub-archives, MAPS01, MULTI, SCORES, MOVIES01), and 1586 is exactly the sum of
+those index sizes in 8-byte blocks.
+
+The model's current `IBlowfish::Encrypt`/`Decrypt` copy the block and log once
+that no cipher is modelled. If the game reaches MIX content loading, every
+index decrypts to garbage and the failure will look like a corrupt archive
+rather than a missing cipher — exactly the "plausible wrong value" failure this
+project keeps finding.
+
+*Spec:* `re/out/blowfish_oracle.md` (vtable indices and method semantics,
+object layout, the nine-index corroboration, reproduction commands). This is
+standard Blowfish ECB with the key supplied by the game; the Westwood RSA step
+is not needed in the stub.
+*Done when:* the stub decrypts a shipped MIX index byte-identically to
+`tools/mix.py` (which already decodes the index independently), with a
+known-answer test in `tools/test_tools.py`; then re-run the boot and confirm the
+game's MIX reads are no longer garbage.
+
 ### [x] The unmapped calls — all gone
 **The two in-`.text` targets are gone.** `0x6844df` and `0x46f3f8` disappeared
 with the stack-leak fix; the link test reported **0 unmapped calls inside
