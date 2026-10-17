@@ -86,7 +86,7 @@ is generated too.
 | `tools/gen_headers.py` | header emission from the manifest |
 | `tools/reconcile_prelude.py` | prelude/header base reconciliation |
 | `tools/make_selfcontained.py` | add missing includes per header |
-| `tools/verify.py` | full verification gate (8 checks, fail-closed) |
+| `tools/verify.py` | full verification gate (9 checks, fail-closed, compiled at the target ABI) |
 | `tools/harness.py` | measure real state (`metrics`) and prove reproducibility (`determinism`) |
 | `tools/gen_code.py` | the canonical transcription of every recovered function, plus the registration unit and tail entries; mutation-proven faithfulness gate (`--check`) |
 | `tools/gen_bodies.py` | the declaration-shaped forwarders the reconstructed headers require, de-duplicated by function VA, gated to name a defined transcription |
@@ -98,6 +98,7 @@ is generated too.
 | `tools/extract_realdata.py` | extract the shipped INI control files from `TIBSUN.MIX` with disjoint byte ranges |
 | `tools/e2e_rules.py` | drive the reconstructed model with real shipped data and check recovered field names against it |
 | `tools/mix.py` | MIX archive reader (reads the headerless TD/RA1 variant; the encrypted TS header is not yet decrypted and fails explicitly) |
+| `tools/gen_layout_check.py` | emit `offsetof` assertions for every recovered member offset and compile them at `-m32`; the only layout check the compiler adjudicates. Gated as verify.py check 9 |
 
 ### Tools that are not pipeline stages
 
@@ -134,13 +135,25 @@ do not satisfy it by emitting one header per instantiation.
 
 ## Build / verify
 
-The gate is `tools/verify.py`. It runs eight checks: standalone compilation of
-every header, a combined translation unit, class coverage against the manifest,
-exhaustive vtable→class bindings resolved through the binary's own RTTI COL
-chain, header-content-vs-manifest, inheritance-vs-direct-bases, member
-offsets-vs-recovered-table, and declared-vs-recovered virtual arity. It is
-fail-closed: a missing artifact makes it exit non-zero naming what is missing
-rather than running a subset and printing PASSED.
+The gate is `tools/verify.py`. It runs nine checks: standalone compilation of
+every header at the target ABI (`-m32`), a combined translation unit at `-m32`,
+class coverage against the manifest, exhaustive vtable→class bindings resolved
+through the binary's own RTTI COL chain, header-content-vs-manifest,
+inheritance-vs-direct-bases, member offsets-vs-recovered-table,
+declared-vs-recovered virtual arity, and `offsetof` assertions that make the
+compiler confirm every recovered member offset. It is fail-closed: a missing
+artifact makes it exit non-zero naming what is missing rather than running a
+subset and printing PASSED, and it exits non-zero when `g++` cannot compile
+`-m32` rather than falling back to the host's LP64 ABI.
+
+**The target ABI is a prerequisite, not a preference.** The target is PE32
+i386, so the gate compiles at `-m32`: on the host's LP64 ABI `sizeof(void*)`
+is 8, `long` is 8 bytes, and `__stdcall`/`__thiscall` are defined away, so a
+host-ABI build answers a question the game does not ask. Install
+`g++-multilib` (Debian/Ubuntu: `apt-get install g++-multilib`); without it
+`tools/pipeline.sh` stops at its prerequisite check and `tools/verify.py`
+exits naming the missing toolchain. This is deliberate — a silent skip is
+exactly how an unlinkable tree survived here for months.
 
 ```bash
 cd re
@@ -261,7 +274,7 @@ measurable exit criterion rather than a percentage.
 | Binary recovery | **effectively closed** | 41,822 functions, 96.06% of `.text`; the remaining 104 KB is verified jump tables and padding, not unknown code |
 | Structural reconstruction | **strong** | 749/749 classes, 9,780 vtable slots, 0 unseeded, every constructor a real entry point |
 | Code transcription | **complete** | 43,668 functions, 897,027 of 897,193 instructions (99.98%) |
-| Verification | **strong but bounded** | 8 checks, fail-closed, 2 anchored to the binary, whole-tree link, determinism over 497 artifacts |
+| Verification | **strong but bounded** | 9 checks, fail-closed, 2 anchored to the binary, whole-tree link, determinism over 497 artifacts; check 9 (compiler-confirmed layout) currently fails 1/3,090 |
 | **Semantics** | **~5%** | 497 of 9,780 slots have a genuinely semantic virtual name (1,500 total minus 600 destructors and 403 COM boilerplate); 135 of 3,273 real members named |
 | **Modifiability** | **minimal** | there is no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is 47 headers |
 | Behaviour | **partial** | the tree links and the original entry point runs against the model; it stops at import thunks |
@@ -327,10 +340,13 @@ instruction stream transcribed (43,668 functions including 1,846 tail entries,
 6,996 forwarders across 309 translation units).
 
 The pipeline reproduces all of it from `bin/GAME.EXE` alone and
-`tools/verify.py` passes **eight** checks: 261/261 standalone, combined TU PASS,
-749/749 coverage, 749/749 vtable bindings, 219/219 header content, 220/220
-inheritance, 2186/2186 member offsets across 248 classes, and check 8 reporting
-declared-vs-recovered virtual arity (reported, not gated). The transcription
+`tools/verify.py` runs **nine** checks: 261/261 standalone at `-m32`, combined TU
+PASS at `-m32`, 749/749 coverage, 749/749 vtable bindings, 219/219 header
+content, 220/220 inheritance, 2186/2186 member offsets across 248 classes,
+check 8 reporting declared-vs-recovered virtual arity (reported, not gated),
+and check 9 compiling `offsetof` assertions for the recovered member offsets at
+`-m32`, which currently confirms **1 of 3,090** — the vptr-emitted-as-a-data-
+member defect (ROADMAP P0.2), not a broken check. The transcription
 faithfulness gate verifies all 43,668 functions instruction-for-instruction, and
 `tools/test_tools.py` runs 36 checks with four mutation-proven.
 `tools/harness.py determinism --run` reports **497** artifacts byte-identical

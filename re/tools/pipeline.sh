@@ -27,6 +27,18 @@ if [ ! -f "$BIN" ]; then
   exit 1
 fi
 
+# The target is PE32 i386 and the gate compiles at -m32 (verify.py checks 1, 2
+# and 9). Check it HERE, before any stage runs, rather than letting a host-ABI
+# build answer a different question: a silent fallback to the host ABI is how
+# an unlinkable tree survived here for months. -m32 needs the 32-bit crt and
+# libc, so this links a program, not just a syntax check.
+if ! echo 'int main(){return 0;}' | g++ -m32 -x c++ - -o /dev/null 2>/dev/null; then
+  echo "error: g++ cannot compile and link 32-bit (-m32) code" >&2
+  echo "       the target is PE32 i386; the host LP64 ABI is a different ABI" >&2
+  echo "       install g++-multilib (Debian/Ubuntu: apt-get install g++-multilib)" >&2
+  exit 1
+fi
+
 if [ "${1:-}" != "--verify-only" ]; then
   # Start from a clean generated tree: keep only the hand-written headers and
   # the prelude, so headers that are no longer generated do not linger.
@@ -39,6 +51,9 @@ if [ "${1:-}" != "--verify-only" ]; then
   # defect that shipped.
   echo "== 0b/10 tool unit tests =="
   python3 tools/test_tools.py
+  # The layout gate must be able to fail AND able to pass: the selftest runs it
+  # against a fixture whose offsets are known, once correct and once displaced.
+  python3 tools/gen_layout_check.py --selftest
 
   echo "== 1/10 RTTI recovery =="
   python3 tools/rtti.py "$BIN" "$OUT"

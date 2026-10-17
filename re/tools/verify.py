@@ -3,17 +3,30 @@
 Verify the reconstructed source tree.
 
 Checks:
-  1. every header compiles standalone
-  2. the combined translation unit compiles
+  1. every header compiles standalone, at the target ABI (-m32)
+  2. the combined translation unit compiles, at the target ABI (-m32)
   3. class coverage: every class in the manifest has a header or definition
   4. vtable->class bindings re-resolve correctly through the RTTI COL chain
   5. header content vs manifest: the vtable VA and per-slot target addresses
      cited in each header match the manifest
+  6. inheritance clauses vs the reduced direct-base set
+  7. emitted member offsets vs the recovered offset table
+  8. declared virtual arity vs recovered signatures (reported, not gated)
+  9. recovered member offsets confirmed by the compiler (offsetof, -m32)
+
+Checks 1-8 compare the tree against other tools' output, so a generator bug
+makes both sides wrong together. Check 9 is the one layout check the compiler
+adjudicates: it emits an offsetof assertion per recovered member offset and
+fails if the compiler places the member elsewhere.
+
+The 32-bit ABI is a prerequisite, not an option: the game is 32-bit, so a host
+LP64 compile answers a different question. If g++ cannot compile -m32 this
+exits non-zero naming g++-multilib rather than silently falling back.
 
 Note: checks 1-4 prove the tree compiles and that the MANIFEST agrees with the
-binary. Only check 5 reads what a header actually CLAIMS, so it is the only
-check that can fail when a header is wrong about the binary. It does not
-validate inheritance or member offsets yet.
+binary. Check 5 reads what a header CLAIMS about the binary; checks 6 and 7
+compare inheritance and emitted member offsets against the recovered tables;
+check 9 makes the compiler itself confirm the recovered member offsets.
 
 Exits non-zero if any check fails.
 """
@@ -60,6 +73,19 @@ def sh(cmd):
     r = subprocess.run(cmd, capture_output=True)
     return r.returncode == 0, r.stderr.decode(errors="replace")
 
+
+def m32_available():
+    """True when g++ can compile and link for the target ABI.
+
+    The game is PE32 i386. Compiling with the host's LP64 ABI answers a
+    different question (sizeof(void*)==8, `long` is 8 bytes, __stdcall and
+    __thiscall are defined away), so the gate must not fall back to it.
+    """
+    r = subprocess.run(["g++", "-m32", "-x", "c++", "-", "-o", os.devnull],
+                       input=b"int main(){return 0;}\n", capture_output=True)
+    return r.returncode == 0
+
+
 def main():
     srcdir = sys.argv[1] if len(sys.argv) > 1 else "src/include"
     shim = sys.argv[2] if len(sys.argv) > 2 else "build/shim"
@@ -87,14 +113,31 @@ def main():
         print("VERIFICATION INCOMPLETE (cannot run checks that need them)")
         print("Run ./tools/pipeline.sh to regenerate.")
         sys.exit(1)
+
+    # The 32-bit target ABI. This is a prerequisite, not a preference: without
+    # it, checks 1, 2 and 9 would compile at the host's LP64 ABI and answer a
+    # question the game does not ask. Falling back silently is exactly how an
+    # unlinkable tree survived here for months, so this fails closed.
+    if not m32_available():
+        print("REQUIRED TOOLCHAIN MISSING: g++ cannot compile 32-bit code "
+              "(-m32).")
+        print("The target is PE32 i386; the host's LP64 ABI has "
+              "sizeof(void*)==8 and no")
+        print("__stdcall/__thiscall, so the gate refuses to fall back to it.")
+        print("Install g++-multilib (Debian/Ubuntu: "
+              "apt-get install g++-multilib) and re-run.")
+        print()
+        print("VERIFICATION INCOMPLETE (the gate could not run at -m32)")
+        sys.exit(1)
     headers = sorted(p for p in glob.glob(os.path.join(srcdir, "*.h"))
                      if os.path.basename(p) != "ts_prelude.h")
 
     # 1. standalone
     bad = []
     for p in headers:
-        ok, _ = sh(["g++", "-std=c++03", "-fsyntax-only", f"-I{srcdir}",
-                    f"-I{shim}", "-include", p, "-x", "c++", "/dev/null"])
+        ok, _ = sh(["g++", "-m32", "-std=c++03", "-fsyntax-only",
+                    f"-I{srcdir}", f"-I{shim}", "-include", p, "-x", "c++",
+                    "/dev/null"])
         if not ok:
             bad.append(os.path.basename(p))
     print(f"[1] standalone compile: {len(headers)-len(bad)}/{len(headers)}")
@@ -104,8 +147,8 @@ def main():
     # 2. combined
     tu = "build/tu_all.cpp"
     if os.path.exists(tu):
-        ok, err = sh(["g++", "-std=c++03", "-fsyntax-only", f"-I{srcdir}",
-                      f"-I{shim}", tu])
+        ok, err = sh(["g++", "-m32", "-std=c++03", "-fsyntax-only",
+                      f"-I{srcdir}", f"-I{shim}", tu])
         print(f"[2] combined TU compile: {'PASS' if ok else 'FAIL'}")
         if not ok:
             failures.append("combined TU failed")
@@ -632,6 +675,41 @@ def main():
     else:
         print("[8] declared virtual arity vs recovered signatures: skipped "
               "(out/signatures.json missing)")
+
+    # 9. recovered member offsets confirmed by the compiler (GATED)
+    #
+    # Checks 1-8 compare the tree against other tools' output: the headers are
+    # generated from out/members.json, so a bug in the generator makes both
+    # sides wrong together and every one of those checks still passes. This
+    # check puts the compiler between them: gen_layout_check.py emits an
+    # offsetof assertion for every recovered member offset a header declares a
+    # member for, compiles the assertions at -m32, and fails if the compiler
+    # places a member anywhere other than the recovered offset.
+    #
+    # It is GATED. Today it fails widely, and that is the finding, not a
+    # reason to weaken it: the generator emits the vtable-pointer store as an
+    # ordinary data member (m_000), so C++ inserts the real vptr and displaces
+    # every member after it.
+    tool = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        "gen_layout_check.py")
+    if os.path.exists(tool):
+        r = subprocess.run([sys.executable, tool, "--src", srcdir,
+                            "--shim", shim], capture_output=True)
+        text = (r.stdout.decode(errors="replace")
+                + r.stderr.decode(errors="replace"))
+        sys.stdout.write(text)
+        if r.returncode == 0:
+            print("[9] compiler-confirmed member offsets: PASS")
+        elif r.returncode == 2:
+            failures.append("layout check could not run (see [9] output)")
+        else:
+            m = re.search(r"compiler-confirmed recovered member offsets: "
+                          r"(\d+)/(\d+)", text)
+            failures.append(
+                "recovered member offsets not confirmed by the compiler: "
+                + (f"{m.group(1)}/{m.group(2)}" if m else "see [9] output"))
+    else:
+        failures.append("tools/gen_layout_check.py is missing (check 9)")
 
     print()
     if failures:

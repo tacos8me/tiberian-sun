@@ -6,6 +6,11 @@ __pycache__/
 # The linked test program is a build product of tools/link_test.py.
 re/build/ts_link_test
 
+# The layout-check translation unit and its report program are build products
+# of tools/gen_layout_check.py, regenerated on every run.
+re/build/layout_check.cpp
+re/build/layout_report
+
 # Raw CD images and the extracted ISO trees. These are ~2.7 GB and are inputs
 # to the recovery pipeline, not part of the reconstruction. Keeping them out of
 # git is what makes `git push` finish.
