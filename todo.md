@@ -899,21 +899,59 @@ Mutation proof: a stub body leaving ESP 4 bytes off reports 10,703 real
 imbalances, and `--stack-check` still catches a body/table arity disagreement.
 `tools/boot.py` now parses and forwards the bare `STACK IMBALANCE` header.
 
-### [ ] Signed `idiv` raises a false divide overflow
-**The current boot stop, and it is a model defect.** At `0x00422a59` the
+### [x] Signed `idiv` raises a false divide overflow — fixed
+**Was the boot stop, and it was a model defect.** At `0x00422a59` the
 instruction is `idiv ecx` with `ECX = 0xffffffff`. The true quotient for
 `EDX:EAX = 0xffffffffffffffff`, `ECX = -1` is 1, but `ts::idiv32`/`divmod64`
-(`src/handwritten/Machine.h`) ignores its `sign` flag, divides the unsigned
-value by `-d` (=1), and raises "divide overflow". The game has not misbehaved;
-the model's arithmetic has.
+(`src/handwritten/Machine.h`) ignored its `sign` flag, divided the unsigned
+value by `-d` (=1), and raised "divide overflow".
 
-*Fix:* correct signed division (signed quotient/remainder, overflow only when the
-quotient does not fit in 32 bits or the divisor is zero) and add vectors for
-negative/positive combinations, remainder sign, divide-by-zero and overflow.
-A regression test for `IDirectDrawSurface::Lock`'s 5-argument pop belongs in the
-same pass (the teardown lane did not own `test_tools.py`).
-*Done when:* the boot passes `0x00422a5b` and the next stop is named; the signed
-division vectors and the Lock test are mutation-proven.
+**Fixed in `16e21fa`.** `divmod64` now honors `sign`: the signed path divides
+magnitudes and applies signs (quotient truncated toward zero, remainder takes the
+dividend's sign, `#DE` only for a zero divisor or a quotient outside
+`[-2^31, 2^31-1]`), which also keeps `INT64_MIN / -1` out of the host's
+undefined signed-division case. `div32`/`idiv32` are one-line wrappers. The
+recovered stream contains only 32-bit `div`/`idiv` (no 8/16-bit forms), so there
+is no live 8/16-bit defect. Tests: `test_machine_div` (the boot case, sign
+combinations, overflow, divide-by-zero, and a 200,000-pair differential sweep)
+and `test_win32_surface_lock` (slot 25, five arguments, ESP returns at
+`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **70 checks**.
+
+Measured with `TS_ROOT=.../gamedir`: the idiv is passed. New stop is **budget
+exhaustion at `0x00422db9` after 20,000,001 instructions**, depth 28, inside
+`sub_00422d64 +0x55` (a row-copy loop calling the virtual memcpy at
+`0x006764c0`); `GetMessage=1 PeekMessage=827 DispatchMessage=1
+CreateWindowExA=1`; coverage **52,833 / 4,641 of 45,947**; **0 unmapped calls,
+0 stack imbalances**; `--strict` exits 0.
+
+### [ ] The game is alive in a dialog-setup loop
+**The current runtime state: no fault, no corruption, and no progress.** At
+200M and 400M instruction budgets the counters scale exactly (`PeekMessage`
+39,443 -> 79,208; import calls 295,852 -> 591,123) while **coverage freezes at
+52,858 instructions / 4,643 functions** — a stable ~200M-instruction cycle.
+
+The cycle creates a dialog via `CreateDialogIndirectParamA`, then does
+`GetDlgItem`/`EnableWindow`/`ShowWindow`/`SetForegroundWindow` on its controls
+and polls `PeekMessageA`, repeating. The model's dialog layer is fake:
+- `CreateDialogIndirectParamA` is `TS_RET(..., 5, 0x00010002u)`: it creates no
+  window and sends no `WM_INITDIALOG`.
+- `GetDlgItem` always returns the constant `0x00010003`.
+- `PeekMessageA` always returns 0, so `DispatchMessage` stays at 1 for the whole
+  run.
+
+So the game re-runs the same dialog setup forever and never receives input. The
+CD check is ruled out: a temporary diagnostic returning `DRIVE_CDROM` from
+`GetDriveTypeA` and label `TS1` from `GetVolumeInformationA` with `TS1.DSK` at
+the root changed nothing (identical call counts), and was reverted.
+
+*Next:* implement the dialog/input layer in `Win32Stubs.h`: create a real dialog
+window and control handles, send `WM_INITDIALOG` to the dialog procedure, deliver
+`WM_COMMAND`/`WM_ACTIVATEAPP` through the message queue so `DispatchMessageA`
+runs, and provide a minimal input source (scripted keys/mouse or at least a
+synthesized message). Use the retail oracle (`tools/wine_env.sh`,
+`tools/oracle.py`) to compare the dialog call sequence.
+*Done when:* `DispatchMessageA > 1`, coverage advances past 52,858, the setup
+loop breaks, and the next stop is named.
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and
