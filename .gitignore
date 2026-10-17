@@ -41,3 +41,6 @@ ghidra-proj/
 .wine/
 .wine32/
 gamedir/
+
+# Agent worktrees (Claude Code), local-only.
+.claude/worktrees/
