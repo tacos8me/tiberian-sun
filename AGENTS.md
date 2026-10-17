@@ -97,7 +97,7 @@ is generated too.
 | `tools/verify_members_binary.py` | re-derive member offsets from the binary's own code; the only member check not trusting `out/` |
 | `tools/extract_realdata.py` | extract the shipped INI control files from `TIBSUN.MIX` with disjoint byte ranges |
 | `tools/e2e_rules.py` | drive the reconstructed model with real shipped data and check recovered field names against it |
-| `tools/mix.py` | MIX archive reader (reads the headerless TD/RA1 variant; the encrypted TS header is not yet decrypted and fails explicitly) |
+| `tools/mix.py` | MIX archive reader. Both index variants decode: the headerless TD/RA1 one, and the TS/RA2 one with the RSA key block, the Blowfish-encrypted index and the SHA1 trailer. Validated by the header+index+body filling the file to the byte on all four encrypted archives on these CDs, and by TIBSUN.MIX yielding keys.ini -- the file containing the key that decrypted it |
 
 ### Tools that are not pipeline stages
 

@@ -173,12 +173,29 @@ for what it is. The hand-written headers were fixed the same way. The 14
 destructors that had been forwarding to the stub are now labelled stubs
 instead of pointing at the wrong address.
 
-### [ ] Decrypt the encrypted MIX header (deferred, low value)
-tools/mix.py now reads the headerless TD/RA1 variant correctly (SETUP.MIX: 61
-entries, exact size identity) and fails explicitly on the encrypted TS variant
-rather than reporting garbage. The published Westwood RSA/Blowfish scheme was
-implemented and the search space explored without a self-consistent table.
-Deferred: every INI-based verification works without it.
+### [x] Decrypt the encrypted MIX header
+**Solved.** The headerless TD/RA1 variant was already correct (SETUP.MIX: 61
+entries, exact size identity). The TS/RA2 encrypted variant now decodes too.
+
+The earlier attempt failed on two details, both of which produce plausible-looking
+key material that decrypts nothing:
+  * the exponent is the public 0x10001, not the private key from keys.ini;
+  * the key block is decoded in `a+1`-byte pieces where `a = (bitlen-2)/8` and
+    each piece yields only `a` bytes. Copying `a+1` bytes out gives an 80-byte
+    key instead of the correct 56, and the wrong byte alignment.
+The decrypted index is a `u16` count then a `u32` body size -- 6 bytes, not a
+`u32` count at 0 -- then 12-byte records, padded to a Blowfish block. Flags bit
+0x00010000 adds a 20-byte SHA1 trailer.
+
+The proof is not that the numbers look plausible. It is that header + padded
+index + body size equals the file size exactly, which holds on TIBSUN.MIX,
+MULTI.MIX, SCORES.MIX and MOVIES02.MIX with every record in bounds and the
+bodies contiguous. TIBSUN.MIX then yields a 151-byte entry whose contents are
+the `[PublicKey]` line naming the modulus used to decrypt it, so the round trip
+closes on itself.
+
+Consequence: `tools/extract_realdata.py` no longer needs hand-computed byte
+ranges; the offsets come from the index.
 
 ### [~] Recover the remaining 104 KB of `.text`
 **Measured, and the earlier guess was wrong.** This item said "roughly 95% of it
@@ -351,7 +368,7 @@ files are now extracted with explicit byte ranges (`tools/extract_realdata.py`,
 inventory in `realdata/README.md`), which lifted member-name confirmation from
 85.2% to 98.2% and left only 2 names unconfirmed.
 
-### [ ] Decrypt the encrypted TS MIX index
+### [x] Decrypt the encrypted TS MIX index
 `tools/mix.py` reads the headerless TD/RA1 variant exactly (`SETUP/SETUP.MIX`,
 61 entries) and fails *explicitly* on the encrypted TS variant rather than
 reporting garbage. The published Westwood RSA/Blowfish scheme is implemented but

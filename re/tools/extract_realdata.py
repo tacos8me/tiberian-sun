@@ -42,6 +42,8 @@ import argparse
 import os
 import sys
 
+RE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # (name, start, end) -- end exclusive. See the module docstring for how these
 # were derived. Sizes are printed by the tool; they are not duplicated here.
 REGIONS = [
@@ -108,9 +110,14 @@ def check_regions():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mix", default=os.path.join("work", "cd1", "INSTALL",
+    # Paths resolve against the repo root, not the caller's cwd. The defaults
+    # used to be relative ("work/cd1/...", "realdata"), so running the tool
+    # from re/ -- which is where every other tool is run from -- failed with
+    # "missing MIX archive" even though the archive was there.
+    root = os.path.dirname(RE)
+    ap.add_argument("--mix", default=os.path.join(root, "work", "cd1", "INSTALL",
                                                   "TIBSUN.MIX"))
-    ap.add_argument("--out", default="realdata")
+    ap.add_argument("--out", default=os.path.join(RE, "realdata"))
     ap.add_argument("--check", action="store_true",
                     help="verify committed files match the archive")
     args = ap.parse_args()

@@ -21,15 +21,26 @@ retail CDs:
     is Blowfish-encrypted with the key that block decrypts to. That much is
     read directly from the files.
 
-The key block is the published Westwood RSA scheme: two 40-byte
-little-endian chunks, public exponent 65537, and the modulus below. The
-*decryption is implemented and runs*, but the resulting key does not currently
-produce a self-consistent index for the archives on these CDs -- see
-`probe`, which prints every key-derivation variant and the bytes it produces.
-Rather than report garbage entry counts, this tool validates the decrypted
-index and raises `MixFormatError` naming what it saw. `list`/`find`/`extract`
-therefore work on the headerless variant and fail *explicitly* on the
-encrypted one; nothing here silently misreports.
+The key block is the published Westwood RSA scheme, and it is now **solved**.
+The modulus is the one keys.ini ships (base64 `02 28 ...`, 40 bytes big-endian)
+and the exponent is 0x10001. The block is decoded in `a+1`-byte pieces where
+`a = (bitlen-2)/8`, and each piece yields `a` bytes, which is what turns an
+80-byte block into a 56-byte Blowfish key. The decrypted index is a `u16` file
+count, a `u32` body size, then `{u32 id, u32 offset, u32 size}` records, padded
+to a Blowfish block. Flags bit 0x00010000 adds a 20-byte SHA1 trailer over the
+body.
+
+What proves it is not a plausible-looking guess: the header, the padded index
+and the body size must fill the file to the byte. That identity holds exactly on
+TIBSUN.MIX, MULTI.MIX, SCORES.MIX and MOVIES02.MIX, with every record in bounds
+and the bodies contiguous. TIBSUN.MIX additionally yields a 151-byte entry whose
+contents are the `[PublicKey]` line naming the very modulus used to decrypt it,
+so the round trip closes on itself.
+
+`find` still uses the standard Westwood filename hash (CRC32 of the upper-cased
+name), which is the C&C/RA1 rule. TS/RA2 archives do not use it: no entry in
+TIBSUN.MIX matches `crc32(b"KEYS.INI")`, although one of them is plainly
+keys.ini. Look entries up by id or by offset, and treat `find` as best-effort.
 
 Usage:
   python3 tools/mix.py list    <archive>
@@ -38,28 +49,32 @@ Usage:
   python3 tools/mix.py probe   <archive>          # key-derivation diagnostics
 
 `find` uses the standard Westwood filename hash (CRC32 of the upper-cased
-name). No archive here stores its filenames, so that hash is not verifiable
-from the files alone: `find` can report a name absent either because the file
+name), which is the C&C/RA1 rule and not the TS/RA2 one. No archive here stores
+its filenames, so that hash is not verifiable from the files alone: `find` can
+report a name absent either because the file
 is not in the archive or because the archive keys it under a name that is not
 the on-disc filename (SETUP.MIX does exactly that -- none of its 61 entries
 matches the CRC of any loose file next to it on the CD).
 """
+import base64
 import os
 import struct
 import sys
 import zlib
 
-# Westwood's RSA-256 public key for the MIX header key block. This is a
-# constant of the format, not something derived from this particular binary:
-# it is the published key used by every TS/RA2 tool, and the same 16-hex-digit
-# pattern repeats four times.
-RSA_N = int(
-    "B1E5F5E1B4B5D5C5A5E5F5E1B4B5D5C5A5E5F5E1B4B5D5C5A5E5F5E1B4B5D5C5"
-    "A5E5F5E1B4B5D5C5A5E5F5E1B4B5D5C5A5E5F5E1B4B5D5C5A5E5F5E1B4B5D5C5", 16)
-RSA_E = 65537
+# The Westwood public key used for the MIX header key block. This is a constant
+# of the format, not something derived from this particular binary: it is the
+# published key, and it is the same value OpenRA uses in
+# OpenRA.Mods.Cnc/FileFormats/BlowfishKeyProvider.cs. Base64 of the DER INTEGER
+# `02 28 ...`, i.e. a 40-byte big-endian modulus; the exponent is the usual
+# 0x10001. The block is decoded in `a`-byte pieces where `a = (bitlen-2)/8`, and
+# each piece yields `a` bytes, which is why the 80-byte block produces a
+# 56-byte key rather than 80.
+RSA_N = int.from_bytes(
+    base64.b64decode("AihRvNoIbTn85FZRYNZRcT+i6KpU+maCsEqr3Q5q+LDB5tH7Tz2qQ38V")[2:],
+    "big")
+RSA_E = 0x10001
 
-# Bit 0x00020000 marks an encrypted index in the TS/RA2 variants. This is
-# observed on every encrypted archive on the CDs and on no other file.
 FLAG_ENCRYPTED = 0x00020000
 
 
@@ -154,58 +169,76 @@ class MixArchive:
             fid, off, size = struct.unpack("<III", self.data[o:o + 12])
             self.entries[fid] = (off, size)
 
-    def _key_candidates(self):
-        """Every Blowfish key this tool can derive from the key block.
+    def _blowfish_key(self):
+        """The Blowfish key for this archive's index, or None if unreadable.
 
-        Yields (description, key). Kept as a list rather than one expression so
-        that `probe` can show what each variant produces.
+        Ported from the Westwood C routine that OpenRA carries as
+        `BlowfishKeyProvider.ProcessPredata`. The key block is decoded in
+        `a+1`-byte pieces, each decrypted with the public key and then written
+        out as `a` bytes -- the piece boundary and the output width are what
+        make the result 56 bytes rather than 80, and getting either wrong
+        produces plausible-looking key material that decrypts nothing.
         """
         blob = self.data[4:84]
         if len(blob) < 80:
             raise MixFormatError("truncated key block")
-        for name, modulus in (("N", RSA_N), ("N_reversed",
-                                             int.from_bytes(
-                                                 RSA_N.to_bytes(64, "big"),
-                                                 "little"))):
-            width = (modulus.bit_length() + 7) // 8
-            for chunk_endian in ("little", "big"):
-                chunks = [int.from_bytes(blob[i:i + 40], chunk_endian)
-                          for i in (0, 40)]
-                if any(c >= modulus for c in chunks):
-                    continue
-                for out_endian in ("little", "big"):
-                    plain = b""
-                    for c in chunks:
-                        m = pow(c, RSA_E, modulus)
-                        raw = m.to_bytes(width, out_endian)
-                        plain += raw[:40] if out_endian == "little" else raw[-40:]
-                    yield f"{name}/{chunk_endian}/{out_endian}", plain[:56]
+        a = (RSA_N.bit_length() - 1 - 1) // 8
+        remaining = (55 // a + 1) * (a + 1)
+        dest, src = b"", 0
+        while a + 1 <= remaining and src + a + 1 <= len(blob):
+            chunk = int.from_bytes(blob[src:src + a + 1], "little")
+            dest += pow(chunk, RSA_E, RSA_N).to_bytes(a + 1, "little")[:a]
+            remaining -= a + 1
+            src += a + 1
+        return dest[:56]
+
+    def _key_candidates(self):
+        """The one key derivation this tool believes, for `probe` to show.
+
+        Kept as a list so the diagnostic can report what was tried when an
+        archive still does not decode.
+        """
+        return [("westwood-pubkey/le-a-piece", self._blowfish_key())]
 
     def _parse_encrypted(self, flags):
         """Decrypt the index, and refuse to believe an implausible one.
 
-        The decrypted layout is the same as the unencrypted TS variant: a u32
-        count at 0 and u32 body size at 4 of the region after the key block.
+        The decrypted layout is a u16 file count, then a u32 body size, then
+        12-byte entries of (hash, offset, size). The count and the body size
+        are 6 bytes together, not 8 -- reading a u32 count at 0 takes two bytes
+        of the body size as part of the count and every later field is then
+        misaligned by two.
+
+        The check that actually proves the decryption is that the header and
+        index, rounded up to a Blowfish block, plus the body size must equal
+        the file size exactly. That identity holds to the byte on every
+        encrypted archive tested; a wrong key cannot satisfy it.
         """
-        blob_end = 84
-        body = self.data[blob_end:]
+        body = self.data[84:]
+        # Flags bit 0x00010000 adds a 20-byte SHA1 trailer over the data
+        # section (the ModdingWiki description of the format; TIBSUN.MIX has
+        # it set and the three other encrypted archives on these CDs do not).
+        trailer = 20 if (flags & 0x00010000) else 0
         tried = []
         for desc, key in self._key_candidates():
             head = _blowfish(key).decrypt(body[:8])
-            count, size = struct.unpack("<II", head)
+            count, size = struct.unpack("<HI", head[:6])
             tried.append((desc, count, size))
-            if not (0 < count < 1_000_000):
+            if not (0 < count < 100_000):
                 continue
-            if size != 8 + 12 * count:
+            need = 6 + 12 * count
+            pad = (8 - (need % 8)) % 8
+            if 84 + need + pad + size + trailer != len(self.data):
                 continue
-            table = _blowfish(key).decrypt(body[:8 + 12 * count])
+            table = _blowfish(key).decrypt(body[:need + pad])
             ok = True
             for i in range(count):
-                fid, off, sz = struct.unpack("<III", table[8 + i * 12:20 + i * 12])
-                if sz == 0 or off + sz > len(body):
+                fid, off, sz = struct.unpack("<III",
+                                             table[6 + i * 12:18 + i * 12])
+                if sz == 0 or off + sz > size:
                     ok = False
                     break
-                self.entries[fid] = (blob_end + off, sz)
+                self.entries[fid] = (84 + need + pad + off, sz)
             if ok:
                 return
             self.entries = {}
@@ -214,7 +247,8 @@ class MixArchive:
             f"decrypted into a self-consistent table; tried "
             f"{len(tried)} key derivations, first is "
             f"{tried[0][0]} -> count {tried[0][1]}, size {tried[0][2]} "
-            f"(expected size 8 + 12*count). Run `probe` for all of them.")
+            f"(expected the header, index and body to fill the file exactly). "
+            f"Run `probe` for all of them.")
 
     # -- operations -------------------------------------------------------
 
