@@ -20,17 +20,29 @@ The recovered **machine code is transcribed**, not stubbed: 46,008 functions
 instruction lines (100%, 0 unmodelled), rendered against the machine model in
 `src/handwritten/Machine.h`. The whole tree — 492 translation units — **links
 into a program**, and that program runs the original PE entry point against the
-model: **7,038,765 instructions**, reaching the game's own error box with
-`MessageBoxA` type `0x30` and calling `ExitProcess(1)`, with **0 unmapped calls
-inside `.text`** (2 remain outside it: `0x002fffe8`, `0xa000f9b6`). The message
-loop is **not reached**. `tools/link_test.py` exits 0; a full
-`./tools/pipeline.sh` run completed exit 0 in `d23d1bf`.
+model: **20,000,001 instructions** (the budget) ending in the `PeekMessage` pump
+at `0x0055f888`, with **`CreateWindowExA=1`, `PeekMessage=695,115`,
+`GetMessage=0`, `DispatchMessage=0`** — the game's own **message loop**, reached
+with **0 unmapped calls**. Coverage is **43,845 distinct instructions; 4,142 of
+46,008 recovered functions entered**; the only message box is the expected
+DirectSound warning at `0x484456` (`type=0x30`). The loop is **idle**: nothing is
+dispatched, so the game does not yet run frames. `tools/link_test.py` exits 0;
+`boot.py --strict` exits 0; a full `./tools/pipeline.sh` run completed exit 0 in
+`d23d1bf`.
 
 The **retail** binary, run under Wine with the CD and a 640x480x16 screen
 (`tools/wine_env.sh`), reaches its **main menu** (screenshot md5
 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s). That is the
-differential oracle: the model still stops at the error box, the retail game
-gets to the menu.
+differential oracle: the model reaches the loop but not the menu.
+
+The retail oracle also measured what `blowfish.dll` registers
+(`re/out/blowfish_oracle.md`, `tools/oracle_blowfish.py`,
+`tools/wine_blowfish_trace.sh`): the object is a **real Blowfish cipher the game
+uses**, with 9 `SetKey(56,key)` calls and 1,586 `Decrypt(8,in,out)` calls during
+startup, matching nine shipped MIX indexes. The model's
+`IBlowfish::Encrypt`/`Decrypt` currently copy the block and log once that no
+cipher is modelled, so MIX-index decryption would be silently wrong; implementing
+the cipher is queued in `todo.md` and is **not** done.
 
 **What that does *not* mean is stated under [Verification](#verification)
 below.** In short: the gate proves the declaration tree compiles, that the
@@ -276,6 +288,13 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   `link_test.py` reports `341 of 341 IAT slots written` and `0 with no stub`.
   The old "16,383 calls read 0" claim described the pre-`Image.h` model and is
   retracted.
+- **The message loop is reached but idle.** `CreateWindowExA=1` and
+  `PeekMessage=695,115`, but `DispatchMessage=0`: no `WM_ACTIVATEAPP` reaches the
+  WndProc, `DAT_007b2e50` never becomes 1, and the game does not run frames.
+- **`IBlowfish::Encrypt`/`Decrypt` are not a cipher.** The retail object is a
+  real Blowfish cipher the game uses (9 `SetKey`, 1,586 `Decrypt` calls during
+  startup); the model copies the block and logs once. MIX-index decryption would
+  be silently wrong until the cipher is implemented.
 - **Member layout is verified where expressible; types and ordering are not.**
   Check 9 confirms 3,073/3,073 offsets at `-m32`, and the binary-anchored
   verifier confirms 4,285 of 4,289; member *types* and ordering are not checked.

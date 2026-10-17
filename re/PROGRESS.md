@@ -1,10 +1,10 @@
 # PROGRESS — Tiberian Sun reconstruction
 
-All figures below were re-measured on 2026-10-17, after merging the boot and
-oracle lanes, with `python3 tools/harness.py metrics --no-append`,
-`python3 tools/verify.py src/include build/shim`,
+All figures below were re-measured on 2026-10-17, after merging the boot,
+oracle and COM-registration lanes, with `python3 tools/harness.py metrics
+--no-append`, `python3 tools/verify.py src/include build/shim`,
 `python3 tools/verify_members_binary.py`, `python3 tools/test_tools.py`,
-`python3 tools/boot.py` (and `--strict`), `python3 tools/link_test.py`,
+`python3 tools/boot.py` (and `--no-build --strict`), `python3 tools/link_test.py`,
 `tools/wine_env.sh`, and direct counts over `out/` and `src/generated/`.
 Re-run those rather than trusting this file.
 
@@ -19,32 +19,58 @@ what to work on.
 the one that matters most: it makes the compiler confirm every recovered member
 offset it can express, and it passes 3,073/3,073. **The link stage is green**:
 measured this session, `link: OK (492 translation units)`, `ts_link_test: OK`,
-exit **0**, `MESSAGE LOOP: not reached (no GetMessage/PeekMessage call)`, 2
-unmapped calls (0 inside `.text`). A full `./tools/pipeline.sh` run completed
-**exit 0** in `d23d1bf` (40 tool tests, `VERIFICATION PASSED`, 4,285/4,289 member
-claims, no code or header diffs); this worktree did not re-run the full
-pipeline. The link was the expensive stage when last timed (about 471 s).
+exit **0**, `MESSAGE LOOP: reached -- GetMessage 0, PeekMessage 695115,
+DispatchMessage 0`, 0 unmapped calls, instruction budget exhausted at
+20,000,001. `test_tools.py` runs **41** checks. A full `./tools/pipeline.sh` run
+completed **exit 0** in `d23d1bf` (40 tool tests at that commit; `VERIFICATION
+PASSED`, 4,285/4,289 member claims, no code or header diffs); this worktree did
+not re-run the full pipeline. The link was the expensive stage when last timed
+(about 471 s).
 
-**The game boots, reaches its own error box, and exits 1.** The image maps at its
+**The game boots and reaches its own message loop — idle.** The image maps at its
 real VAs and all **341/341** PE import-directory thunks are written to stubs
 (`link_test.py`: `imports: 341 across 13 DLLs`, `resolve_imports() ... 341 of
 341 IAT slots written`, `traced thunks: 341 imports bound, 0 with no stub`). The
-original entry point 0x6854e3 runs **7,038,765 instructions** of CRT startup and
-game init, then calls `ExitProcess(1)` with a `MessageBoxA` type of `0x30` — the
-arguments the code actually pushed. Coverage: **44,246 distinct instructions;
-4,211 of 46,008 recovered functions entered**; 2,046 import calls over 341 traced
-imports (64 distinct). Message loop **not reached**. The 108-byte atexit leak
-that corrupted these arguments is fixed: `ts_call_ptr` now delegates to
-`ts_call_at` (`Machine.h:863`), so `pop %esi` no longer reads a return address.
-The two model defects found alongside it are also fixed: `jmp_indirect` was a
-no-op (now `ts_tail`) and conditional `rep`/`repne` `scas`/`cmps` zeroed ECX
-instead of leaving the count that did not run.
+original entry point 0x6854e3 runs until the **20,000,001-instruction budget** at
+`0x0055f888` (the `PeekMessage` pump): **`CreateWindowExA=1`, `PeekMessage=695,115`,
+`GetMessage=0`, `DispatchMessage=0`**, no fault and no `ExitProcess`. Coverage:
+**43,845 distinct instructions; 4,142 of 46,008 recovered functions entered**;
+696,713 import calls over 341 traced imports (82 distinct). The only message box
+is the expected DirectSound warning at `0x484456` (`type=0x30`); the
+primary-surface check passes (`TS_PEEK=0x006beed8` → `1`). **0 unmapped calls**;
+`boot.py --strict` exits **0**.
 
-**2 unmapped calls remain, both outside `.text`:** `0x002fffe8` (a stack
-address) and `0xa000f9b6` (inside the synthetic traced-thunk region, base
-`0x00a00000`, but not a registered thunk). `python3 tools/boot.py --strict`
-exits **4** on them; the boot reports `unmapped targets: below 0x1000=0
-.rdata=0 elsewhere=2`.
+**The loop is idle, and that is the current runtime blocker.**
+`DispatchMessageA=0`, so no `WM_ACTIVATEAPP` reaches the WndProc and
+`DAT_007b2e50` never becomes 1. The exact path and the USER32 contract are in
+`todo.md`: dispatch `0x65bcaf`, handler `0x65bd00`, flag store `0x65bd2a`.
+
+**The COM registration blocker is fixed (`1580be3`).** `LoadLibraryA` returns a
+named module handle with a per-module export table; `blowfish.dll` exports
+`DllRegisterServer`/`DllUnregisterServer` (S_OK), `DllGetClassObject` and
+`DllCanUnloadNow`; `CoCreateInstance` writes an `IBlowfish` object for CLSID
+`{1440AD10-6AA8-11D1-B6F9-00A024DDAFD1}` with an eight-slot vtable recovered from
+`BLOWFISH.DLL`; `IDirectDraw::CreateClipper` writes a real clipper;
+`DirectSoundCreate` returns `DSERR_NODRIVER` (no audio, matching retail). A
+`win32-module-exports` regression test is mutation-proven.
+
+**The Blowfish object is a real cipher the game uses, and the model does not
+implement it.** `re/out/blowfish_oracle.md` (produced by
+`tools/oracle_blowfish.py` and `tools/wine_blowfish_trace.sh`) measures
+`SetKey(56,key)` **9 times** and `Decrypt(8,in,out)` **1,586 times** during
+startup; the nine keys are byte-identical to the keys derived from nine shipped
+MIX indexes, and 1,586 is exactly their total index size in 8-byte blocks. The
+model's `IBlowfish::Encrypt`/`Decrypt` copy the block and log once that no cipher
+is modelled, so any MIX-index decrypt would be silently garbage. The item is
+queued in `todo.md` as "Implement the Blowfish cipher the MIX indexes need"; it
+is **not** implemented.
+
+**The 108-byte atexit leak that corrupted the exit arguments is fixed:**
+`ts_call_ptr` now delegates to `ts_call_at` (`Machine.h:863`), so `pop %esi` no
+longer reads a return address. The two model defects found alongside it are also
+fixed: `jmp_indirect` was a no-op (now `ts_tail`) and conditional
+`rep`/`repne` `scas`/`cmps` zeroed ECX instead of leaving the count that did not
+run.
 
 **The import counts are three different quantities, and the docs used to
 conflate them.** Stated once here:
@@ -90,12 +116,15 @@ case-insensitive per-component path resolution, a 64-entry handle table and real
 let `ExitProcess` return, so execution continued past a fatal exit and the
 "loop" was one the real game never ran. `ExitProcess` now halts the run in both
 `boot_driver` and `ts_link_test.cpp`; the link test's stub had the same defect
-(it set `g_halt` but not `m.halt`) and was fixed in `db612d1`. Measured now:
-`MESSAGE LOOP: not reached` in both. The corrupted-argument defect that the
-first halt exposed is also fixed: the atexit walk leaked **108 bytes (27
-dwords)**, so ESI held a return address; `ts_call_ptr` now delegates to
-`ts_call_at`, and the exit arguments are `ExitProcess(1)` and `MessageBoxA` type
-`0x30`, the values the code pushed.
+(it set `g_halt` but not `m.halt`) and was fixed in `db612d1`. **The loop is now
+genuinely reached, and the claim is now backed by a run that never calls
+`ExitProcess`:** `CreateWindowExA=1`, `PeekMessage=695,115`, `GetMessage=0`,
+`DispatchMessage=0`, ending on the instruction budget at `0x0055f888`. The old
+retracted `PeekMessage=137,295` is kept as history, not as evidence. The
+corrupted-argument defect that the first halt exposed is also fixed: the atexit
+walk leaked **108 bytes (27 dwords)**, so ESI held a return address;
+`ts_call_ptr` now delegates to `ts_call_at`, and the exit arguments are
+`ExitProcess(1)` and `MessageBoxA` type `0x30`, the values the code pushed.
 
 `Image.h` and `Win32Stubs.h` are what make this possible; neither does anything
 alone. The single change that unblocked startup was giving `comctl32!DllGetVersion`
@@ -123,9 +152,9 @@ Measured state:
 | static instructions in `out/functions.json` | 848,822 across 43,564 spans |
 | forwarder definitions | 6,962 across 310 class translation units; 3,024 distinct machine functions, 3,938 aliases (`src/generated/README.md`) |
 | destructor stubs (declared, no recovered address) | 229 |
-| **boot** | **7,038,765 instructions**, depth 15, 0.2 s wall; `MessageBoxA` type `0x30`; `ExitProcess(1)`; message loop not reached; **2 unmapped calls, 0 in `.text`**; coverage **44,246 distinct instructions / 4,211 of 46,008 functions** (`boot.py`) |
-| boot strict gate | exits **4**: `2 garbage call target(s) remain` (`boot.py --strict`) |
-| link test | **OK**, exit 0, 492 TUs, 7,038,765 instructions, message loop not reached, 2 unmapped (0 in `.text`), 0 unmodelled (`link_test.py`) |
+| **boot** | **20,000,001 instructions** (budget exhausted) at `0x0055f888`, depth 15, 1.1 s wall; `CreateWindowExA=1`, `PeekMessage=695,115`, `GetMessage=0`, `DispatchMessage=0`; **message loop reached (idle)**; only `MessageBoxA` is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls**; coverage **43,845 distinct instructions / 4,142 of 46,008 functions**; primary surface `TS_PEEK=0x006beed8` → 1 (`boot.py`, default `../gamedir`) |
+| boot strict gate | exits **0**: 0 garbage call targets (`boot.py --no-build --strict`) |
+| link test | **OK**, exit 0, 492 TUs, 20,000,001 instructions, **message loop reached** (`PeekMessage=695,115`, `DispatchMessage=0`), 0 unmapped, 0 unmodelled (`link_test.py`) |
 | retail oracle | reaches the **main menu**, 640x480, md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s (`wine_env.sh`) |
 
 ### The code is transcribed, not stubbed
@@ -174,19 +203,19 @@ Coverage is achieved in three tiers:
 | Class forwarders emitted | 6,962 | done |
 | Whole-tree link + entry-point run | 492 TUs | done |
 | Binary-anchored member verification | 4,285/4,289 (99.9%), gated | done |
-| Tool unit tests | 40 checks, mutation-proven | done |
+| Tool unit tests | 41 checks, mutation-proven | done |
 
 ### Verification performed
 
 - `tools/verify.py` runs **nine** checks (about 6 s last timed) and is
   **fail-closed**: a missing artifact exits non-zero naming what is missing,
   rather than running a subset and printing PASSED.
-- `tools/boot.py` runs the image for **7,038,765 instructions**, reports the
-  fault, import calls, coverage and unmapped-target classification, and
-  `--strict` exits 4 while any garbage target remains (currently 2, both outside
-  `.text`).
+- `tools/boot.py` runs the image for **20,000,001 instructions** (the budget),
+  reports the stop, import calls, coverage and unmapped-target classification,
+  and **reaches the message loop** (`CreateWindowExA=1`, `PeekMessage=695,115`,
+  `DispatchMessage=0`). `--strict` exits **0** with 0 garbage targets.
 - `tools/link_test.py` links **492** translation units, runs the entry point, and
-  exits **0** with the message loop **not reached**.
+  exits **0** with the message loop **reached** (`PeekMessage=695,115`).
 - `tools/wine_env.sh` runs the **retail** binary to its main menu (640x480,
   screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s).
 - Check 4 re-resolves **all 749** manifest vtables through the binary's own COL
@@ -200,7 +229,7 @@ Coverage is achieved in three tiers:
   catches a corrupted statement whose evidence comment is intact.
 - `tools/link_test.py` links the whole tree and runs it. See "defects found by
   the link" below for what it caught.
-- `tools/test_tools.py` runs **40** unit checks, each a regression test for a
+- `tools/test_tools.py` runs **41** unit checks, each a regression test for a
   shipped defect or a differential test against an independent implementation.
   Four of them are mutation-proven to fail when the defect is reintroduced.
 - Determinism: two clean pipeline runs produce **497 byte-identical artifacts**
@@ -270,15 +299,29 @@ Coverage is achieved in three tiers:
 - [x] Fix `LoadStringA`'s arity (5 -> 4) and make `gen_win32_stubs.py` refuse to
       write when a `TS_RET` body and `NARGS` disagree.
 - [x] Fix the link test's `ExitProcess` stub (it returned; now it faults). Link
-      test exits 0 with the message loop not reached.
+      test exits 0 with the message loop reached.
 - [x] Fix `boot.py`'s fresh-checkout header sync (`60dac16`).
-- [ ] Name or remove the **2 unmapped calls outside `.text`**
-      (`0x002fffe8`, `0xa000f9b6`); `boot.py --strict` exits 4 on them.
-- [ ] Reach a message loop and keep executing frames. Not reached:
-      `GetMessage=0 PeekMessage=0 DispatchMessage=0 CreateWindowExA=0`.
+- [x] Remove the unmapped calls. `1580be3` fixed `IDirectDraw::CreateClipper`
+      and `DirectSoundCreate` (`DSERR_NODRIVER`); the boot reports **0 unmapped
+      calls** and `boot.py --strict` exits **0**.
+- [x] **Reach a window and a message loop.** Reached: `CreateWindowExA=1`,
+      `PeekMessage=695,115`, `GetMessage=0`, `DispatchMessage=0`, ending on the
+      20,000,001-instruction budget at `0x0055f888`; coverage 43,845 distinct
+      instructions / 4,142 of 46,008 functions; primary surface
+      `TS_PEEK=0x006beed8` → 1. The loop is **idle**.
+- [ ] **Deliver queued messages so the game runs frames.** The current runtime
+      blocker: `DispatchMessageA=0`, so no `WM_ACTIVATEAPP` reaches the WndProc
+      and `DAT_007b2e50` never becomes 1. `todo.md` has the WndProc addresses
+      (`0x65bcaf` dispatch, `0x65bd00` handler, `0x65bd2a` flag store) and the
+      USER32 contract.
+- [ ] **Implement the Blowfish cipher the MIX indexes need.** The retail object
+      is a real cipher: 9 `SetKey(56,key)` and 1,586 `Decrypt(8,in,out)` calls
+      during startup, matching nine shipped MIX indexes
+      (`re/out/blowfish_oracle.md`). The model's `Encrypt`/`Decrypt` copy the
+      block, so MIX-index decryption is silently wrong until this lands.
 - [ ] Draw the main menu in the **model**: the retail oracle reaches it, but the
-      model stops at its own error box. The menu's PCX assets are inside a
-      nested MIX entry and audio is absent in the oracle environment.
+      model does not. The menu's PCX assets are inside a nested MIX entry and
+      audio is absent in the oracle environment.
 
 ## Known gaps (documented, not hidden)
 
@@ -292,12 +335,20 @@ Coverage is achieved in three tiers:
   is marked as a stub in the source and counted in the generated README.
 - **The transcribed code is not source-shaped.** It is faithful to what the
   machine does and is not claimed to be the shape the original source had.
-- **The boot has 2 unmapped calls, both outside `.text`**: `0x002fffe8` (a stack
-  address) and `0xa000f9b6` (inside the synthetic thunk region but not a
-  registered thunk). 0 remain inside `.text`; `boot.py --strict` exits 4.
-- **The model does not reach a message loop.** It reaches its own error box and
-  exits 1. The retail oracle reaches the main menu, but the menu's buttons/text
-  are not drawn (PCX assets inside a nested MIX entry) and audio is absent.
+- **The boot has 0 unmapped calls**; `boot.py --strict` exits 0. The two former
+  targets (`0x002fffe8`, `0xa000f9b6`) were fixed by `1580be3`, which made
+  `IDirectDraw::CreateClipper` and `DirectSoundCreate` write/fail correctly.
+- **The message loop is reached but idle.** `CreateWindowExA=1`,
+  `PeekMessage=695,115`, but `DispatchMessage=0` and `GetMessage=0`, so no
+  `WM_ACTIVATEAPP` reaches the WndProc and `DAT_007b2e50` stays 0. Delivering
+  queued messages is the current runtime blocker. The retail oracle reaches the
+  main menu, but the menu's buttons/text are not drawn (PCX assets inside a
+  nested MIX entry) and audio is absent.
+- **`IBlowfish::Encrypt`/`Decrypt` are honest copies, not a cipher.** The retail
+  object is a real Blowfish cipher the game uses: 9 `SetKey(56,key)` and 1,586
+  `Decrypt(8,in,out)` calls during startup, matching nine shipped MIX indexes
+  (`re/out/blowfish_oracle.md`). The model logs once that no cipher is modelled;
+  any content path that decrypts MIX data through it would be silently wrong.
 - **A transcription reads its arguments from the model, not from C++
   parameters.** Hand-written callers (the template headers) therefore reach the
   right code through `ts::ts_invoke`, but the values they pass are only
@@ -397,14 +448,17 @@ tools/link_test.py
   link: OK (492 translation units); ts_link_test: OK (exit 0)
   5 of 5 sampled VAs resolved
   imports: 341 across 13 DLLs; 341 of 341 IAT slots written; 341 bound, 0 with no stub
-  entry 0x006854e3 ran; 7,038,765 instructions; 2 unmapped calls (0 in .text)
-  MESSAGE LOOP: not reached (no GetMessage/PeekMessage call)
+  entry 0x006854e3 ran; 20,000,001 instructions (budget); 0 unmapped calls
+  MESSAGE LOOP: reached -- GetMessage 0, PeekMessage 695115, DispatchMessage 0
 
 tools/boot.py
-  7,038,765 instructions; MessageBoxA type 0x30; ExitProcess(1)
-  message loop: not-reached; unmapped calls: 2 (0 inside .text)
-  coverage: 44,246 distinct instructions; 4,211 of 46,008 recovered functions entered
-  --strict: exit 4, 2 garbage call target(s) remain
+  20,000,001 instructions (budget exhausted at 0x0055f888)
+  CreateWindowExA=1 PeekMessage=695115 GetMessage=0 DispatchMessage=0
+  only MessageBoxA: DirectSound warning at 0x484456 (type 0x30)
+  message loop: reached; unmapped calls: 0
+  coverage: 43,845 distinct instructions; 4,142 of 46,008 recovered functions entered
+  primary surface: TS_PEEK 0x006beed8 = 1
+  --no-build --strict: exit 0, 0 garbage call targets
 
 tools/wine_env.sh
   retail game: main menu, 640x480, md5 58cb9c0bb64a1bf11c6e9b28e96eca11

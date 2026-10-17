@@ -390,7 +390,7 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: **40 checks passed** (measured this session). Not
+`tools/test_tools.py`: **41 checks passed** (measured this session). Not
 golden-count assertions -- every one is a regression test for a defect that
 actually shipped, or a differential test against an independent implementation.
 Four are proven to fail when the defect is reintroduced (mutating
@@ -512,12 +512,13 @@ matching `pop %esi` (0x6844ea). `pop %esi` therefore loaded a return address,
 ESI became 0x6844df, and `call *%esi` at 0x5e72cf called into `ExitProcess`
 instead of the function whose result decides whether the "Direct X" error box
 appears. The fix is `ts_call_ptr` delegating to `ts_call_at` (`Machine.h:863`),
-so the two call paths balance the same way. Measured after the fix: the game
-reaches its own error box with `MessageBoxA` type **0x30**, calls
-**`ExitProcess(1)`**, and stops after **7,038,765 instructions** with **0
+so the two call paths balance the same way. Measured at that commit: the game
+reached its own error box with `MessageBoxA` type **0x30**, called
+**`ExitProcess(1)`**, and stopped after **7,038,765 instructions** with **0
 unmapped calls inside `.text`**. The old corrupted values (`0x6844df` for `1`,
-`0x00a00201` for `0x30`) are gone; exit 1 is now the game's legitimate failure
-path, not a corrupted one.
+`0x00a00201` for `0x30`) were gone; exit 1 was the game's legitimate failure
+path, not a corrupted one. The later COM fix (`1580be3`) carried the run past
+that error box to the message loop (20,000,001 instructions).
 
 ### [x] `jmp_indirect` was a no-op — fixed
 `Machine.h:1368` is now `inline void jmp_indirect(u32 target) { ts_tail(target); }`.
@@ -544,9 +545,11 @@ is empty at that point, not because the stack was wrong.
 longjmp and the run walked past the fatal exit; that is why it printed
 `MESSAGE LOOP: reached` after a fatal exit — the same retracted false positive
 `boot_driver` had already fixed. Commit `db612d1` makes it call `ts::fault(...)`.
-Measured: `link_test.py` exits **0**, reports `MESSAGE LOOP: not reached (no
-GetMessage/PeekMessage call)`, 7,038,765 instructions, 2 unmapped calls (0 in
-`.text`), `ts_link_test: OK`.
+Measured at `db612d1`: `link_test.py` exits **0**, reports `MESSAGE LOOP: not
+reached (no GetMessage/PeekMessage call)`, 7,038,765 instructions, 2 unmapped
+calls (0 in `.text`), `ts_link_test: OK`. The COM fix later made the loop
+genuinely reach: measured now `MESSAGE LOOP: reached -- PeekMessage 695115,
+DispatchMessage 0`, 20,000,001 instructions, 0 unmapped, `ts_link_test: OK`.
 
 ### [x] `boot.py`'s fresh-checkout header sync — fixed
 `60dac16` runs reconcile + self-contained after copying the hand-written headers,
@@ -606,9 +609,11 @@ there is no `ExitProcess`, the primary-surface check passes
 calls, `boot.py --strict` exits 0.
 
 **Caveat:** `IBlowfish::Encrypt`/`Decrypt` copy the block and log once that no
-cipher is modelled. They are not reached in this boot path, but if the game
-decrypts MIX data with them the plaintext will be silently wrong. Implement the
-real cipher before trusting any content path that depends on it.
+cipher is modelled. They are not reached in the model's current boot path (the
+message loop is idle before content loading), but the retail game calls
+`Decrypt(8,in,out)` **1,586 times** during startup; if the model reaches MIX
+content with the copy, the plaintext will be silently wrong. The cipher item
+below is the fix.
 
 ### [x] Write `DDSURFACEDESC` fields where the game reads them
 The game's `DSurface` wrapper (`0x4874c0`/`0x487ad0`) reads `dwRGBBitCount` at
@@ -697,7 +702,8 @@ rather than a missing cipher — exactly the "plausible wrong value" failure thi
 project keeps finding.
 
 *Spec:* `re/out/blowfish_oracle.md` (vtable indices and method semantics,
-object layout, the nine-index corroboration, reproduction commands). This is
+object layout, the nine-index corroboration, reproduction commands), produced by
+`re/tools/oracle_blowfish.py` and `re/tools/wine_blowfish_trace.sh`. This is
 standard Blowfish ECB with the key supplied by the game; the Westwood RSA step
 is not needed in the stub.
 *Done when:* the stub decrypts a shipped MIX index byte-identically to
@@ -736,17 +742,20 @@ the game could never load `rules.ini`, `TIBSUN.MIX` or the CD. Now: a host root
 so, so a caller takes its real failure path instead of reading zeroes.
 First run: `CreateFileA("\\.\MONO")` -- the sound device name.
 *Note:* this did not itself move the stop; the instruction count rose from
-1,011,817 to 7,038,765 only when the stack leak was fixed.
+1,011,817 to 7,038,765 when the stack leak was fixed, and to 20,000,001 (the
+budget, at the message loop) when COM registration was fixed.
 
 ### [x] Make the boot a one-command measurement
 `tools/boot.py` builds (cached), runs with a budget and a timeout, and prints
-instructions, depth, faults with EIP and instruction bytes, import calls by name,
-the last N call targets, and (new) coverage and unmapped-target classification.
-Measured: `python3 tools/boot.py` builds (0 of 492 units compiled on a warm
-cache), runs in 0.2 s wall, and reports 7,038,765 instructions, message loop not
-reached, 44,246 distinct instructions, 4,211 of 46,008 functions entered, and 2
-unmapped calls (0 in `.text`). `--strict` is the gate: it exits 4 while those 2
-remain. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild` and
+instructions, depth, stop/fault EIP with instruction bytes, import calls by name,
+the last N call targets, coverage and unmapped-target classification. Measured:
+`python3 tools/boot.py` builds (0 of 492 units compiled on a warm cache), runs in
+1.1 s wall, and reports **20,000,001 instructions** (budget exhausted at
+`0x0055f888`, the PeekMessage pump), **message loop reached** (`CreateWindowExA=1`,
+`PeekMessage=695,115`, `GetMessage=0`, `DispatchMessage=0`), **43,845 distinct
+instructions / 4,142 of 46,008 functions entered**, **0 unmapped calls**, and
+primary surface `TS_PEEK=0x006beed8` = 1. `--no-build --strict` is the gate: it
+exits **0**. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild` and
 `--no-build` are documented in the tool's header.
 *Done when:* `python3 tools/boot.py` reproduces the boot and reports it. **Met.**
 
@@ -756,12 +765,19 @@ remain. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild` and
   agree with the recovered tables. It does **not** prove the disassembly is
   correct. Check 4 reads the binary, check 9 makes the compiler adjudicate
   layout, and `verify_members_binary.py` is a separate binary-anchored gate.
-- The link test now **passes** (exit 0, 492 TUs, message loop not reached), but
-  the boot still has **2 unmapped calls outside `.text`**
-  (`0x002fffe8`, `0xa000f9b6`); `boot.py --strict` exits 4 on them.
+- The link test now **passes** (exit 0, 492 TUs, **message loop reached**,
+  `PeekMessage=695,115`, `DispatchMessage=0`), and the boot has **0 unmapped
+  calls**; `boot.py --strict` exits 0.
+- **The message loop is idle:** `DispatchMessage=0`, so no `WM_ACTIVATEAPP`
+  reaches the WndProc and `DAT_007b2e50` never becomes 1. Delivering queued
+  messages is the current runtime blocker (see the P4 entry above).
 - The retail oracle reaches the **main menu** (`tools/wine_env.sh`), but the
   main-menu buttons/text are not drawn because the PCX assets live inside a
   nested MIX entry, and there is no audio.
+- **`IBlowfish::Encrypt`/`Decrypt` are honest copies, not a cipher.** The retail
+  object is a real Blowfish cipher the game uses (9 `SetKey`, 1,586 `Decrypt`
+  calls during startup; `re/out/blowfish_oracle.md`). MIX-index decryption would
+  be silently wrong until the cipher is implemented; the item is queued above.
 - Member offsets are 99.9% confirmed against the binary, but **layout is not
   verified**: whether the types and ordering are right is unchecked.
 - Member names exist only where an INI key or string provides evidence. Never
