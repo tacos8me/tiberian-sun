@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Emit src/include/SCHEMA.md from tools/ini_map.json."""
+"""Emit out/SCHEMA.md from tools/ini_map.json.
+
+This writes to out/, not src/include/. It used to write src/include/SCHEMA.md,
+but pipeline.sh copies src/handwritten/SCHEMA.md over that path afterwards, so
+running this tool and then the pipeline silently discarded its output. The
+hand-written file is the authoritative one; this is a derived report about it,
+and out/ is where derived reports live.
+"""
 import json, os
 
 RE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -113,5 +120,5 @@ for k in unassigned:
     out.append('| `%s` | %s |' % (k, vas))
 out.append('')
 
-open(os.path.join(RE, 'src', 'include', 'SCHEMA.md'), 'w').write('\n'.join(out))
-print('wrote SCHEMA.md; assigned=%d unassigned=%d' % (len(assigned), len(unassigned)))
+open(os.path.join(RE, 'out', 'SCHEMA.md'), 'w').write('\n'.join(out))
+print('wrote out/SCHEMA.md; assigned=%d unassigned=%d' % (len(assigned), len(unassigned)))
