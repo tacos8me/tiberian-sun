@@ -24,6 +24,11 @@ re/
   src/include/                    generated headers (do not hand-edit)
   src/handwritten/                hand-written, evidence-backed headers
   src/handwritten/Machine.h       the x86 machine model the transcribed code runs on
+  src/handwritten/Image.h         maps the PE's sections at their real VAs and
+                                  writes a stub VA into every IAT slot
+  src/handwritten/Win32Stubs.h    what the 341 imported Windows functions DO, so
+                                  `call dword ptr [IAT]` reaches code
+  build/image_selftest.cpp        load the image and resolve imports, standalone
   src/generated/code/             the transcription: one ts::sub_XXXXXXXX(void)
                                   per recovered function VA, plus the dispatch
                                   registration unit and recovered.h
@@ -93,6 +98,7 @@ is generated too.
 | `tools/emit_x86.py` | the operand grammar and per-mnemonic rendering used by both generators; the only place that knows the disassembler's operand text |
 | `tools/link_test.py` | link the whole tree into a program and run it; the only check that can see an undefined symbol |
 | `tools/check_compile.py` | compile a set of generated TUs standalone and fail if any does |
+| `tools/gen_win32_stubs.py` | generates `Win32Stubs.h` from the image's own import directory, so the stub table cannot drift from the 341 thunks |
 | `tools/test_tools.py` | unit tests for the load-bearing tools; every one is a regression test for a shipped defect |
 | `tools/verify_members_binary.py` | re-derive member offsets from the binary's own code; the only member check not trusting `out/` |
 | `tools/extract_realdata.py` | extract the shipped INI control files from `TIBSUN.MIX` with disjoint byte ranges |
@@ -177,6 +183,48 @@ for h in src/include/*.h; do
   g++ -std=c++03 -fsyntax-only -Isrc/include -Ibuild/shim -include "$h" -x c++ /dev/null || echo "FAIL $h"
 done
 ```
+
+## Booting the game
+
+The tree does not just compile and link -- it executes the original program. The
+two halves that make that possible are `Image.h` and `Win32Stubs.h`, and neither
+does anything alone: the transcribed code reads its call target out of the
+modelled IAT, so an IAT full of zeroes makes every `call dword ptr [IAT]` land on
+address 0 and the run stops at the first one.
+
+What the boot does today, measured:
+
+```
+reading bin/GAME.EXE ... ok, 3235840 bytes, image base 0x00400000
+imports: 341 across 13 DLLs
+load_image() ... ok          3,227,799 bytes mapped at real VAs
+resolve_imports() ... 341 of 341 IAT slots written
+running entry point 0x006854e3
+  instructions executed: 237     deepest ts_call nesting: 10
+  calls to an address nothing registered: 0    unmodelled: 0
+  import thunk calls: 12 -- GetVersion, HeapCreate, HeapAlloc x2,
+    InitializeCriticalSection x4, TlsAlloc, EnterCriticalSection,
+    VirtualAlloc, LeaveCriticalSection
+  MESSAGE LOOP: not reached
+```
+
+So the game's own CRT startup runs. It is **not** a playable game: there is no
+window, no message loop, no renderer. It currently stops at a 512 MB `memset`.
+
+Three things are worth knowing before touching this, because each cost real time
+to find:
+
+- **The model's page table must be big enough for the game's working set.** It was
+  8192 slots; the game's memset needs 32,768 pages; a full table made `page()`
+  return one shared dummy page for every new address, so every distinct page
+  silently overwrote the same 4 KB while linear probing degraded to O(8192) per
+  lookup. The only symptom was "it got slow". Exhaustion is now a hard fault.
+- **`perf record -g -p <pid> -- sleep 8`** is how that was found (`ts::page` at
+  99.67%), and it is the fastest way to find the next one. `kernel.perf_event_paranoid`
+  must be 1.
+- **A stub that lies is worse than a stub that fails.** An unimplemented import
+  goes through a fallback that logs its name and returns 0, and every call is
+  counted, so an unimplemented import is visible rather than silently plausible.
 
 ## Key technical facts
 
@@ -270,20 +318,21 @@ measurable exit criterion rather than a percentage.
 
 | Layer | State | Note |
 |---|---|---|
-| **ABI / layout** | **not reproduced** | host build is LP64 and the reconstructed classes model the vptr as a data member, so the compiled structs do not have the game's offsets. `-m32` fixes the width problem and is already proven to compile, link and run; the vptr problem is the real one |
+| **ABI / layout** | **reproduced, compiler-confirmed** | everything compiles `-m32` at the target ABI, and check 9 makes the compiler confirm every recovered member offset a header can express: 3109/3109. The 1217 offsets with no assertion are itemised by reason (743 vptr stores the compiler inserts itself, 413 past the declared extent, 82 undeclared, 13 no member offset, 6 headerless) |
 | Binary recovery | **effectively closed** | 41,822 functions, 96.06% of `.text` as recovered code; the remaining 104 KB is classified — 11 jump tables (256 B) and 356 B of switch index tables emitted as data, 105,808 B of alignment padding, and 554 B in 90 runs reported verbatim rather than forced into a category (`out/text_data.json`) |
 | Structural reconstruction | **strong** | 749/749 classes, 9,780 vtable slots, 0 unseeded, every constructor a real entry point |
 | Code transcription | **complete** | 43,668 functions, 897,193 of 897,193 instructions (100%) |
-| Verification | **strong but bounded** | 9 checks, fail-closed, 2 anchored to the binary, whole-tree link, determinism over 497 artifacts; check 9 (compiler-confirmed layout) is the one that fails, and it fails on a real defect |
-| **Semantics** | **~5%** | 497 of 9,780 slots have a genuinely semantic virtual name (1,500 total minus 600 destructors and 403 COM boilerplate); 135 of 3,273 real members named |
-| **Modifiability** | **minimal** | there is no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is 47 headers |
-| Behaviour | **partial** | the tree links and the original entry point runs against the model; it stops at import thunks |
+| Verification | **green and bounded** | 9 checks, all passing, fail-closed, 2 anchored to the binary, whole-tree link, idempotent pipeline. Check 8 (arity) is reported, not gated |
+| **Semantics** | **~9%** | 827 genuinely semantic virtual names across 920 distinct names, and 384 of 3,273 real members named. `e2e_rules.py` resolves 83.1% of member names against the shipped `rules.ini` |
+| **Modifiability** | **minimal** | there is still no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is the hand-written headers |
+| **Behaviour** | **booting** | the image maps at its real VAs, all 341 imports resolve, and the game's own CRT startup **executes** -- GetVersion, HeapCreate, HeapAlloc, 4x InitializeCriticalSection, TlsAlloc, VirtualAlloc. 237 instructions, 0 unmapped calls. It faults at a 512 MB `memset` before reaching a window or a message loop |
 
-So: *the binary is explained, its instructions are transcribed, and the tree
-links and runs — but the source is barely named and not editable as source.* The
-binding constraint is no longer recovery (finished) or transcription (finished).
-It is **semantics and source-shaping**, and the honest headline is that the
-largest single piece of remaining work has not been started.
+So: *the binary is explained, its instructions are transcribed, the layout is
+compiler-confirmed, and the game's own startup now executes.* It is not a
+playable game: there is no window, no message loop, and no renderer. The binding
+constraint is no longer recovery, transcription or layout — all three are done.
+It is **semantics, source-shaping and the boot**, and the honest headline is that
+the source is still barely named and not editable as source.
 
 Two corrections that matter when sizing the rest:
 

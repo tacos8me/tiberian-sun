@@ -274,6 +274,29 @@ recovered statements, every lifted function passing the differential test.
 Exit: a documented command that shows the model doing something the original
 does, and that fails if it stops doing it.
 
+**4.2 is now in progress, and further along than the roadmap expected.** The
+entry point executes: the image maps at its real VAs, all 341 imports resolve, and
+the game's own CRT startup runs (GetVersion, HeapCreate, HeapAlloc,
+InitializeCriticalSection x4, TlsAlloc, VirtualAlloc). 16,383 unmapped calls
+became 0. What is left is to get past a 512 MB `memset` and then out of startup
+into a window and a message loop.
+
+The honest measure of progress here is not "does it run" but **how far into the
+game's own code it gets before it needs something we have not modelled**. Today
+that is 237 instructions and 12 import calls. Each fault is a precise, actionable
+finding rather than a wall, because the harness reports the faulting EIP, the
+instruction bytes there, the register file and the ordered import calls.
+
+Two lessons from getting this far, both recorded in AGENTS.md:
+
+- **The model's page table was silently corrupting long runs.** 8192 slots could
+  not hold the game's working set, and a full table made `page()` return one
+  shared dummy page for every new address. Every distinct page overwrote the same
+  4 KB. The only symptom was that it got slow. Found with `perf`, not by reading
+  code.
+- **A stub that lies is worse than a stub that fails.** Unimplemented imports go
+  through a logged fallback and every call is counted, so a gap is visible.
+
 ---
 
 ## 4. Critical path, and what is deliberately not on it

@@ -382,6 +382,53 @@ Recompile and diff where a matching compiler is available.
 
 ---
 
+## P4 — booting the game  [IN PROGRESS]
+
+### [x] Load the image and resolve the imports
+`src/handwritten/Image.h` maps the PE's sections at their real VAs (3,227,799
+bytes) and writes a stub VA into every one of the 341 IAT slots.
+`src/handwritten/Win32Stubs.h` supplies those stubs. **16,383 unmapped calls
+became 0.** The PE details that would have silently corrupted it, all handled and
+read from the file: no `.reloc` (mapped at preferred base, so the transcriptions'
+absolute immediates stay valid), no bound imports, `OriginalFirstThunk == 0` for
+KERNEL32/USER32, and `.data` VirtualSize > SizeOfRawData.
+*Done when:* the entry point no longer reads a null call target. **Met.**
+
+### [x] Fix the page table that was silently corrupting long runs
+`PageTable` had 8192 slots. The game's memset needs 32,768 pages, so the table
+filled and `page()` returned one shared dummy page for every new address -- every
+distinct page overwrote the same 4 KB -- while linear probing degraded to
+O(8192) per lookup. The only symptom was "it got slow"; every long run would have
+been quietly wrong. Found with `perf` (99.67% in `ts::page`). Now 32,768 slots and
+exhaustion is a hard reported fault.
+*Done when:* a full table is a reported fault, not silent aliasing. **Met.**
+
+### [ ] Get past the 512 MB memset
+Faults at `rep stos` 0x0068d781 with ECX=0x08000004 dwords. The caller is
+`calloc(n,4)` at 0x6845b4 and `n` is read from the global at 0x836280, which
+should hold a small stdio buffer count and holds 0x08000004; 0x08000004 * 4 =
+0x20000010, exactly the faulting size. 0x836280 is inside `.data`'s virtual
+extent (0x6bb000..0x836294) but beyond SizeOfRawData, so it is uninitialised
+storage that should read zero.
+*Done when:* the run gets past it and the next fault is diagnosed.
+
+### [ ] Reach a window and a message loop
+The next phase after the memset is window creation and DirectDraw. The stubs
+that matter: `RegisterClassA`, `CreateWindowExA`, `PeekMessageA` (must return 0
+when there is no message -- that is what keeps a game loop running),
+`GetMessageA` (must not return 0 immediately, which looks like WM_QUIT),
+`GetSystemMetrics`, `DirectDrawCreate` (must return a plausible object with a
+vtable, because the game's own wrapper calls through it).
+*Done when:* the run reaches a message loop and keeps executing frames rather
+than returning.
+
+### [ ] Make the boot a one-command measurement
+`tools/boot.py` should build (cached, so a one-file change is fast), run with a
+budget and a timeout, and print instructions, depth, faults with EIP and
+instruction bytes, import calls by name, and the last N call targets so a stop is
+bisectable.
+*Done when:* `python3 tools/boot.py` reproduces the boot and reports it.
+
 ## Standing caveats
 
 - `VERIFICATION PASSED` means the tree compiles and that the generated headers

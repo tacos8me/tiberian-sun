@@ -12,9 +12,22 @@ what to work on. The one thing this file does not say clearly enough is that
 
 ## Status summary
 
-**`tools/verify.py` prints VERIFICATION PASSED across eight checks**, the whole
+**`tools/verify.py` prints VERIFICATION PASSED across nine checks**, the whole
 tree links into a program, and the pipeline is reproducible from a clean
-checkout. Measured state:
+checkout. Check 9 is the one that matters most and the one that was added last:
+it makes the compiler confirm every recovered member offset, and it passes
+3109/3109.
+
+**The game boots.** The image maps at its real VAs, all 341 imports resolve, and
+the original entry point 0x6854e3 executes the game's own CRT startup -- 237
+instructions, 12 import calls (GetVersion, HeapCreate, HeapAlloc x2,
+InitializeCriticalSection x4, TlsAlloc, EnterCriticalSection, VirtualAlloc,
+LeaveCriticalSection), 0 unmapped calls, 0 unmodelled instructions. It does not
+reach a window or a message loop; it currently stops at a 512 MB `memset`.
+`Image.h` and `Win32Stubs.h` are what make this possible; neither does anything
+alone.
+
+Measured state:
 
 | Measure | Value |
 |---|---|
