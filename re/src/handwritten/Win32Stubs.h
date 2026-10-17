@@ -64,7 +64,11 @@ inline u32 alloc_stub_va() {
 // The model hands out pages lazily and zeroes them, so any address in this
 // region is already valid writable memory; "allocating" is moving a cursor.
 // Nothing is ever freed, which is why every free stub succeeds.
-inline u32 &bump() { static u32 b = 0x20000000u; return b; }
+// Deliberately high and out of the game's way. A stub heap at 0x20000000 put
+// CRT allocations and the game's own allocator in the same pages: the CRT's atexit
+// table landed at 0x20005900 and the game wrote 0x11/0x31 through its own
+// pointers into it, so exit walked 37 "handlers" that were never registered.
+inline u32 &bump() { static u32 b = 0x50000000u; return b; }
 inline u32 alloc_block(u32 size, u32 align) {
     if (size == 0) size = 1;
     u32 &b = bump();
@@ -313,7 +317,17 @@ TS_BEGIN(HeapAlloc)
     u32 size = arg(2);
     u32 p = alloc_block(size, 8u);
     st32(p, size);
-    stub_done(3, p + 16u);
+    u32 q = p + 16u;
+    // Zero the block. Not a convenience -- a correctness requirement. Fresh pages
+    // from the OS are zero, and the CRT relies on it: its atexit table is scanned
+    // for non-null slots, so a table of stale bytes "contains" 37 registered
+    // handlers that were never registered, and exit calls all 37 as function
+    // pointers. That produced calls to 0x11 and 0x6a4e08 from 0x6844dd and, via
+    // the return addresses they leaked, an ESI that made the CRT call WinMain at
+    // an address inside ExitProcess. HEAP_ZERO_MEMORY asks for this explicitly;
+    // a real heap's first use of a page is zero whether you ask or not.
+    for (u32 i = 0; i < size; i += 4u) st32(q + i, 0u);
+    stub_done(3, q);
 TS_END
 
 TS_BEGIN(HeapFree)
@@ -438,9 +452,16 @@ TS_BEGIN(ExitProcess)
     // ExitProcess looks like a run that is making progress. It is printed, and
     // counted, so the log says which it is.
     std::printf("win32stubs: ExitProcess(%u) from 0x%08x -- the program has "
-                "decided to stop; the model keeps executing anyway\n",
+                "decided to stop; halting here, as a real process would\n",
                 (unsigned)arg(0), (unsigned)ld32(ESP.d));
     state().exit_calls++;
+    // Actually stop. Returning from here let the frames above run to their own
+    // `ret` and the model walked on past a fatal exit -- so a "message loop
+    // reached" AFTER an ExitProcess was a loop the real game never ran, and the
+    // exit path's own bookkeeping (an atexit table malloc had since overwritten)
+    // produced 71 calls to addresses that are not code. A process that exits is
+    // finished; the model must agree or every later observation is fiction.
+    ts::fault("the program called ExitProcess");
     stub_done(1, 0u);
 TS_END
 TS_RET(TerminateProcess, 2, 1u)

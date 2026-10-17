@@ -128,6 +128,13 @@ struct Machine {
     // argument arriving in a slot that held a vtable; `0x6a4e08` is a data table
     // being walked as if it held function pointers. Recording the CALL SITE turns
     // "the game is spinning on garbage" into a line number to read.
+    // Write watchpoint: the first non-zero byte store to watch_va records the
+    // EIP that made it. Lives in Machine (not at namespace scope) because
+    // namespace-scope `inline` variables need C++17 and this tree is C++03.
+    u32 watch_va;
+    u32 watch_hits;
+    u32 watch_from[8];
+    u32 watch_val[8];
     u32 bad_call_from[16];
     u32 bad_call_to[16];
     unsigned bad_call_n;
@@ -257,6 +264,7 @@ inline void reset() {
     m.unmapped_sample_n = 0;
     m.unmapped_text_sample_n = 0;
     m.bad_call_n = 0;
+    m.watch_va = 0; m.watch_hits = 0;
     m.bad_calls = 0;
     if (m.call_depth_limit == 0) m.call_depth_limit = 4096;
 }
@@ -340,13 +348,34 @@ inline void map(u32 addr, u32 len) {
 }
 
 inline u8  ld8 (u32 a) { u8 v; std::memcpy(&v, page(a), 1); return v; }
-inline void st8 (u32 a, u8 v) { std::memcpy(page(a), &v, 1); }
+// A write watchpoint. "Something writes garbage into this address" is the
+// hardest question to answer by reading code and the easiest by recording the EIP
+// of the store. st8 is the primitive every wider store funnels through, so the
+// hook lives here; putting it in st32 missed every byte-wise write.
+inline void st8 (u32 a, u8 v) {
+    Machine &m = mach();
+    if (m.watch_va && a == m.watch_va && v && m.watch_hits < 8u) {
+        m.watch_from[m.watch_hits] = m.eip;
+        m.watch_val[m.watch_hits] = v;
+        ++m.watch_hits;
+    }
+    std::memcpy(page(a), &v, 1);
+}
 inline u16 ld16(u32 a) { return (u16)((u16)ld8(a) | ((u16)ld8(a + 1) << 8)); }
 inline void st16(u32 a, u16 v) { st8(a, (u8)v); st8(a + 1, (u8)(v >> 8)); }
 inline u32 ld32(u32 a) {
     return (u32)ld8(a) | ((u32)ld8(a + 1) << 8) |
            ((u32)ld8(a + 2) << 16) | ((u32)ld8(a + 3) << 24);
 }
+// A write watchpoint. "Something is writing garbage into this address" is the
+// hardest question to answer by reading code, and the easiest to answer by
+// recording the EIP of the store. Set watch_va from the environment and the first
+// non-zero write to it is reported with the instruction that did it.
+inline u32 watch_va = 0;
+inline u32 watch_hits = 0;
+inline u32 watch_from[8];
+inline u32 watch_val[8];
+
 inline void st32(u32 a, u32 v) {
     st8(a, (u8)v); st8(a + 1, (u8)(v >> 8));
     st8(a + 2, (u8)(v >> 16)); st8(a + 3, (u8)(v >> 24));
@@ -662,7 +691,26 @@ inline void ts_call(u32 va) {
 }
 // A `call` pushes its return address before transferring, so the modelled stack
 // stays the shape the callee's transcription expects.
-inline void ts_call_at(u32 target, u32 ret) { push32(ret); ts_call(target); }
+// A call whose target nothing registered still RETURNS. Emulating that matters
+// more than it looks: ts_call_at pushes the return address, and if no body runs
+// nothing ever pops it, so the address LEAKS -- 4 bytes per unregistered call.
+// The caller then does its own pop or ret and reads a return address where it
+// expects a saved register. That is exactly how ESI became 0x6844df: the atexit
+// walk at 0x6844dd called 71 unregistered targets, the leaked return addresses
+// accumulated, and `pop %esi` in that same function loaded one of them. ESI is
+// the pointer the CRT calls WinMain through, so the game "called WinMain" at an
+// address inside ExitProcess and the link test saw an unmapped call from
+// 0x5e7317. One leaked return address, four layers of confusion.
+inline void ts_call_at(u32 target, u32 ret) {
+    push32(ret);
+    if (!ts_lookup(target)) {
+        ESP.d += 4u;       // the callee is a no-op, so the call still returns
+        ts_call(target);   // records it: unmapped, and outside-.text if it is
+        mach().eip = ret;  // the caller really does continue here
+        return;
+    }
+    ts_call(target);
+}
 
 // A transfer that does NOT push a return address, so the callee's `ret` pops the
 // caller's. Two cases in the recovered code are exactly that: a `jmp` to another

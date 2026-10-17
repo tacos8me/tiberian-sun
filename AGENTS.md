@@ -209,8 +209,24 @@ message loop: reached   (GetMessage=1 PeekMessage=137295 DispatchMessage=1
                          CreateWindowExA=1)
 ```
 
-So the game creates a window and pumps frames. It is **not** a playable game:
-there is no renderer, and 2 unmapped calls remain (see below).
+**A correction that matters more than any of this.** An earlier version of this
+file reported `message loop: reached` with `PeekMessage=137,295`. That was wrong,
+and the way it was wrong is worth keeping: the model let `ExitProcess` *return*,
+so the frames above it ran to their own `ret` and execution continued past a fatal
+exit. Everything observed after that point was a loop the real game never ran.
+
+`ExitProcess` now halts the run, and the honest picture is the one above: the game
+starts, initialises, and exits. It is **not** a playable game and it does not
+reach a message loop.
+
+**The defect that explains it.** At the exit the arguments are stub addresses
+rather than the numbers the code pushed: `ExitProcess(0x6844df)` where the code
+passed `1`, and a `MessageBoxA` type of `0x00a00201` (inside the import-thunk
+region) where the code passed `0x30`. Both are reads from a stack slot that holds
+a return address or a thunk pointer, so a call in the init path leaves ESP wrong
+by one slot and every argument after it is read from the wrong place. Chasing that
+imbalance is the next step, and it is a single question: which call pushes and pops
+different amounts.
 
 **Why it used to exit immediately, and the shape of the answer.** The CRT startup
 reads the comctl32 version and, if it is below 4.00.70, shows an error box and
@@ -351,7 +367,7 @@ measurable exit criterion rather than a percentage.
 | Verification | **9 checks green, pipeline red** | `verify.py` passes all nine in **6 seconds** (263/263, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS). `pipeline.sh` is red at the **link test** on 2 unmapped calls, and takes **471s** — the link is the expensive stage, not verification |
 | **Semantics** | **~9%** | 5,557 of 9,810 slots carry a name (56.6%), but only **917 distinct names** and **281 distinct semantic** ones — most of the coverage is shared-stub propagation. 291 members named across 20 classes; `e2e_rules.py` resolves 96.2% of them against the shipped `rules.ini` |
 | **Modifiability** | **minimal** | there is still no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is the hand-written headers |
-| **Behaviour** | **runs a frame loop** | the image maps at its real VAs, 341/341 imports resolve, and the game **creates a window and pumps messages**: `CreateWindowExA=1`, `PeekMessage=137,295`, `DispatchMessage=1`. A 5,000,000-instruction run ends on budget, not a fault. No renderer, and 2 unmapped calls remain |
+| **Behaviour** | **boots, then exits** | the image maps at its real VAs, 342/342 imports resolve, and the game runs **1,011,817 instructions** of its own CRT startup and init before calling `ExitProcess` -- with a corrupted exit code and a corrupted MessageBox type, both of which are stub addresses where numbers belong. It does **not** get to a message loop: see the correction below |
 
 So: *the binary is explained, its instructions are transcribed, the layout is
 compiler-confirmed, and the game's own startup now executes.* It is not a

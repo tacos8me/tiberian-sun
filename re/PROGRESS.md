@@ -17,11 +17,17 @@ Check 9 is the one that matters most: it makes the compiler confirm every
 recovered member offset, and it passes. **`pipeline.sh` is red at the link test**
 on 2 unmapped calls, and takes 471 seconds -- the link is the expensive stage.
 
-**The game runs a frame loop.** The image maps at its real VAs, 341/341 imports
-resolve, and the original entry point 0x6854e3 creates a window and pumps
-messages: `CreateWindowExA=1`, `PeekMessage=137,295`, `DispatchMessage=1`. A
-5,000,000-instruction run ends on budget rather than a fault. There is no
-renderer, and 2 unmapped calls remain.
+**The game boots, initialises, and exits.** The image maps at its real VAs,
+342/342 imports resolve, and the original entry point 0x6854e3 runs 1,011,817
+instructions of CRT startup and game init before calling `ExitProcess`.
+
+**This paragraph previously claimed a message loop. That was false.** The model
+let `ExitProcess` return, so execution continued past a fatal exit and the
+"loop" was one the real game never ran. `ExitProcess` now halts the run. What the
+halt exposes is the real defect: at exit the arguments are stub addresses rather
+than the numbers the code pushed -- `ExitProcess(0x6844df)` for `1`, and a
+`MessageBoxA` type of `0x00a00201` for `0x30` -- so a call in the init path leaves
+ESP off by one slot.
 
 `Image.h` and `Win32Stubs.h` are what make this possible; neither does anything
 alone. The single change that unblocked startup was giving `comctl32!DllGetVersion`

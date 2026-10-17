@@ -375,6 +375,46 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
     std::printf("\n");
     std::printf("unmapped-calls: %lu\n", m.unmapped_calls);
     std::printf("unmapped-in-text: %lu\n", m.unmapped_in_text);
+    // TS_PEEK=0x7b0d38[,0x7b1fdc,...] -- read a global at the end of the run.
+    // The game's state is a dword in .data, and "which state is it in" is the
+    // question that decides whether a stop means anything. Cheap, and it beats
+    // guessing from the EIP alone.
+    // TS_SCAN=start,count -- report entries of a dword table that are neither
+    // zero nor inside .text. The static-constructor table (_initterm over
+    // 0x6bb000..0x6be3bc) is all-valid in the file, so any entry that is not a
+    // .text VA at the END of a run was written during it, and its index says when.
+    if (const char *scan = std::getenv("TS_SCAN")) {
+        unsigned long start = std::strtoul(scan, 0, 0);
+        const char *comma = std::strchr(scan, ',');
+        unsigned count = comma ? (unsigned)std::strtoul(comma + 1, 0, 0) : 0;
+        unsigned bad = 0;
+        for (unsigned i = 0; i < count; ++i) {
+            unsigned v = (unsigned)ts::ld32((ts::u32)(start + i * 4u));
+            if (v && (v < 0x401000u || v >= 0x698225u)) {
+                if (bad < 12)
+                    std::printf("  scan[%u] @0x%08lx = 0x%08x  (not a .text VA)\n",
+                                i, start + i * 4u, v);
+                ++bad;
+            }
+        }
+        std::printf("scan: %u of %u entries are not .text VAs\n", bad, count);
+    }
+    if (m.watch_hits) {
+        std::printf("watch 0x%08x: %u write(s)\n", m.watch_va, m.watch_hits);
+        for (unsigned i = 0; i < m.watch_hits; ++i)
+            std::printf("  wrote 0x%08x from 0x%08x\n", m.watch_val[i], m.watch_from[i]);
+    }
+    if (const char *peek = std::getenv("TS_PEEK")) {
+        std::printf("peek:\n");
+        const char *p = peek;
+        while (*p) {
+            char *end = 0;
+            unsigned long va = std::strtoul(p, &end, 0);
+            if (end == p) break;
+            std::printf("  0x%08lx = 0x%08x\n", va, (unsigned)ts::ld32((ts::u32)va));
+            p = (*end == ',') ? end + 1 : end;
+        }
+    }
     if (m.bad_calls) {
         std::printf("calls outside .text (not a stub, not code): %u\n", m.bad_calls);
         for (unsigned i = 0; i < m.bad_call_n; ++i)
@@ -465,6 +505,7 @@ int main(int argc, char **argv) {
     bind_traced_imports();
 
     ts::Machine &m = ts::mach();
+    if (const char *w = std::getenv("TS_WATCH")) m.watch_va = (ts::u32)std::strtoul(w, 0, 0);
     m.text_lo = kTextLo;
     m.text_hi = kTextHi;
     m.r[4].d = kStackTop;                  // ESP: a plausible stack, not zero
