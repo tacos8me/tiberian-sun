@@ -52,12 +52,36 @@
 #  endif
 #endif
 #ifndef TS_IMAGE_HAVE_WIN32_STUBS
+// Minimal stand-in stub table, compiled only while Win32Stubs.h is absent, so
+// this header is self-sufficient: it compiles and it links. Every import maps
+// to one stub, which pops the return address and leaves EAX = 0 -- enough to
+// prove a resolved IAT slot dispatches somewhere instead of to 0x00000000.
+//
+// It does not pop the __stdcall argument words, because without a per-name
+// table the arity is not known, so ESP drifts by four bytes per argument. And
+// stub_last_name() cannot name a function for the same reason. Both are what
+// the real table exists to fix; neither is needed to test the loader.
 namespace ts {
-void register_win32_stubs();
-u32  stub_va(const char *dll, const char *fn);
-u32  fallback_stub_va();
-unsigned stub_calls();
-const char *stub_last_name();
+inline unsigned &image_stub_calls() { static unsigned n = 0; return n; }
+inline const char *&image_stub_last() { static const char *p = ""; return p; }
+inline void image_stub_body() {
+    ++image_stub_calls();
+    image_stub_last() = "no stub table (Win32Stubs.h absent)";
+    ESP.d += 4;   // the return address ts_call's caller pushed
+    EAX.d = 0;
+}
+inline u32 fallback_stub_va() {
+    static u32 va = 0;
+    if (va == 0) { va = 0x70000000u; ts_register(va, image_stub_body); }
+    return va;
+}
+inline void register_win32_stubs() { fallback_stub_va(); }
+inline u32 stub_va(const char *dll, const char *fn) {
+    (void)dll; (void)fn;
+    return fallback_stub_va();
+}
+inline unsigned stub_calls() { return image_stub_calls(); }
+inline const char *stub_last_name() { return image_stub_last(); }
 }  // namespace ts
 #endif
 
