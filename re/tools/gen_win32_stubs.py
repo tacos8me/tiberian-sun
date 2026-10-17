@@ -18,6 +18,7 @@ It reads the import directory straight out of bin/GAME.EXE, so a name that is
 not in the binary cannot appear in the table.
 """
 
+import os
 import re
 import struct
 import sys
@@ -136,27 +137,62 @@ NARGS = {
     "ImageList_DragMove": 2, "ImageList_DragShowNolock": 1,
     "ImageList_EndDrag": 0, "GetFileVersionInfoA": 4,
     "GetFileVersionInfoSizeA": 2, "VerQueryValueA": 4, "DirectDrawCreate": 3,
-    # ordinals
-    "ord_2147483649": 3, "ord_2147483650": 1, "ord_2147483651": 7,
-    "ord_2147483654": 1, "ord_2147483655": 1, "ord_2147483656": 0,
-    "ord_2147483657": 0, "ord_2147483659": 0, "ord_2147483660": 1,
-    "ord_2147483662": 5, "ord_2147483663": 7, "ord_2147483665": 1,
-    "ord_2147483668": 4, "ord_2147483669": 6, "ord_2147483671": 4,
-    "ord_2147483681": 1, "ord_2147483682": 2, "ord_2147483700": 3,
-    "ord_2147483705": 2, "ord_2147483749": 5, "ord_2147483756": 0,
-    "ord_2147483759": 0, "ord_2147483763": 2, "ord_2147483764": 0,
-    "ord_2147483809": 1, "ord_2147483848": 4, "ord_2147483849": 2,
-    "ord_2147483850": 2,
 }
 
-# An ordinal means different things in different DLLs, so these few override.
-NARGS_DLL = {
-    ("WSOCK32.dll", "ord_2147483650"): 0,
-    ("WSOCK32.dll", "ord_2147483651"): 7,
-    ("WSOCK32.dll", "ord_2147483665"): 7,
-    ("COMCTL32.dll", "ord_2147483665"): 1,
-    ("DSOUND.dll", "ord_2147483649"): 3,
-    ("OLEAUT32.dll", "ord_2147483650"): 2,
+# An ordinal means a different function in every DLL, so an ordinal's argument
+# count is keyed by (DLL, ordinal) rather than by the ILT's raw value.
+#
+# Each entry records HOW the count was obtained, because a count measured from a
+# call site and a count copied from an API reference are not the same claim:
+#
+#   "call"  the recovered instruction stream contains `call dword ptr [slot]`
+#           for this import, and the arguments are the pushes immediately
+#           before that call. Measured in this binary.
+#   "call*" the same, but indirect: the slot is loaded into a register and that
+#           register is called. Still in-binary, one step weaker.
+#   "doc"   no call site exists in this binary. The import's only reference is a
+#           `jmp dword ptr [slot]` thunk that nothing calls, so the count is the
+#           documented Win32 signature and NOT a measurement. If such an import
+#           is ever reached, its arity is a claim; `--evidence` says so.
+#
+# `python3 tools/gen_win32_stubs.py --evidence` re-derives every "call" count
+# from src/generated/code and exits non-zero if this table disagrees with it.
+ORD_NARGS = {
+    # -- OLEAUT32: measured ---------------------------------------------------
+    ("OLEAUT32.dll", 2): (1, "call"),      # SysAllocString, 3 sites
+    ("OLEAUT32.dll", 6): (1, "call"),      # SysFreeString / SysStringLen, 2
+    ("OLEAUT32.dll", 8): (1, "call"),      # VariantInit
+    ("OLEAUT32.dll", 9): (1, "call"),      # VariantClear, 2 sites
+    ("OLEAUT32.dll", 12): (4, "call"),     # VariantChangeType
+    ("OLEAUT32.dll", 33): (4, "call*"),    # via `mov esi,[slot]; call esi`
+    ("OLEAUT32.dll", 34): (2, "call"),     # 3 sites
+    ("OLEAUT32.dll", 161): (2, "call"),
+    ("OLEAUT32.dll", 200): (2, "call"),
+    ("OLEAUT32.dll", 201): (2, "call"),    # 2 sites
+    ("OLEAUT32.dll", 202): (1, "call"),
+    # -- COMCTL32: measured ---------------------------------------------------
+    ("COMCTL32.dll", 17): (0, "call"),     # InitCommonControls: no arguments
+    # -- no call site in this binary; documented signature only --------------
+    ("WSOCK32.dll", 2): (3, "doc"),        # bind
+    ("WSOCK32.dll", 3): (1, "doc"),        # closesocket
+    ("WSOCK32.dll", 7): (5, "doc"),        # getsockopt
+    ("WSOCK32.dll", 8): (1, "doc"),        # htonl
+    ("WSOCK32.dll", 9): (1, "doc"),        # htons
+    ("WSOCK32.dll", 11): (1, "doc"),       # inet_ntoa
+    ("WSOCK32.dll", 14): (1, "doc"),       # gethostbyname
+    ("WSOCK32.dll", 15): (1, "doc"),       # getprotobyname
+    ("WSOCK32.dll", 17): (2, "doc"),       # getservbyname
+    ("WSOCK32.dll", 20): (2, "doc"),       # listen
+    ("WSOCK32.dll", 21): (1, "doc"),       # ntohl
+    ("WSOCK32.dll", 23): (4, "doc"),       # recv
+    ("WSOCK32.dll", 52): (2, "doc"),       # gethostname
+    ("WSOCK32.dll", 57): (5, "doc"),       # select
+    ("WSOCK32.dll", 101): (4, "doc"),      # WSAAsyncSelect
+    ("WSOCK32.dll", 108): (0, "doc"),      # WSACancelBlockingCall
+    ("WSOCK32.dll", 111): (0, "doc"),      # WSAGetLastError
+    ("WSOCK32.dll", 115): (2, "doc"),      # WSAStartup
+    ("WSOCK32.dll", 116): (0, "doc"),      # WSACleanup
+    ("DSOUND.dll", 1): (3, "doc"),         # DirectSoundCreate
 }
 
 # The value a stub leaves in EAX. 0 is the safe default; these are the ones
@@ -231,27 +267,314 @@ def read_imports(path):
         out.append((dll, fns))
         i += 1
     return out
+GEN = "src/generated/code"
+
+# The transcription keeps one line per machine instruction and the original
+# instruction as a trailing comment. That comment is the recovered instruction
+# stream in order, which is what makes a call site's arguments countable: the
+# arguments of a __stdcall import are the pushes immediately before the call,
+# because the callee pops them and the caller cannot have moved ESP in between.
+INS_RE = re.compile(r"//\s+0x([0-9a-f]{8})\s+(\S+)\s*(.*)$")
+LABEL_RE = re.compile(r"^\s*L_[0-9a-f]+:;")
+DIRECT_RE = re.compile(r"^dword ptr \[(0x[0-9a-f]+)\]$")
+LOAD_RE = re.compile(r"^(e[abcds]x|e[sd]i|ebp), dword ptr \[(0x[0-9a-f]+)\]$")
+
+
+SPAN_RE = re.compile(r"^\s*void sub_[0-9a-f]+\(void\)")
+PROLOGUE_PUSH_RE = re.compile(r"^(e[abcds]x|e[sd]i|ebp)$")
+REG_REG_RE = re.compile(r"^(e[abcds]x|e[sd]i|ebp), (e[abcds]x|e[sd]i|ebp)$")
+
+
+def read_insns():
+    """Every transcription unit as [(addr, mnemonic, operands, is_boundary)]."""
+    import glob
+    units = []
+    for path in sorted(glob.glob(GEN + "/*.cpp")):
+        ins = []
+        for line in open(path, errors="replace"):
+            if SPAN_RE.match(line):
+                ins.append((None, "span", "", True))
+                continue
+            if LABEL_RE.match(line):
+                ins.append((None, "label", "", True))
+                continue
+            m = INS_RE.search(line)
+            if m:
+                ins.append((int(m.group(1), 16), m.group(2), m.group(3).strip(), False))
+        units.append((path, ins))
+    return units
+
+
+def prologue_end(ins, start):
+    """Index of the first instruction after the function's prologue.
+
+    A prologue pushes callee-saved registers, carves the frame and copies its
+    incoming registers; those pushes are not arguments, and a call that sits
+    directly behind them has none. Without this the register saves of a
+    `push ebx/ebp/esi/edi; mov edi,edx; mov esi,ecx; call [IAT]` prologue read
+    as four arguments.
+    """
+    i = start + 1
+    while i < len(ins):
+        _a, mn, ops, boundary = ins[i]
+        if boundary:
+            break
+        if mn == "push" and PROLOGUE_PUSH_RE.match(ops):
+            i += 1
+        elif mn == "sub" and ops.startswith("esp"):
+            i += 1
+        elif mn == "and" and ops.startswith("esp"):
+            i += 1
+        elif mn == "mov" and (ops == "ebp, esp" or REG_REG_RE.match(ops)):
+            i += 1
+        else:
+            break
+    return i
+
+
+def pushes_before(ins, i, floor=0):
+    """How many argument words the call at index i is given.
+
+    Walks back over the pushes that reach the call by fall-through and stops at
+    the first thing that ends the argument sequence: a branch target (another
+    path could have pushed a different set), a call, a return, a pop, or an ESP
+    adjustment. That is the only defensible reading of a stack machine without
+    a data-flow analysis, and it is reported per site so a human can check it.
+    """
+    n, j = 0, i - 1
+    while j >= floor:
+        addr, mn, ops, is_label = ins[j]
+        if is_label:
+            break
+        if mn == "push":
+            n += 1
+        elif mn in ("call", "ret", "pop", "jmp", "leave"):
+            break
+        elif mn in ("add", "sub", "and") and ops.startswith("esp"):
+            break
+        j -= 1
+    return n
+
+
+def derive_ordinals():
+    """slot VA -> (dll, ordinal) for every ordinal import, then measure it."""
+    import struct as _struct
+    d = open(BIN, "rb").read()
+    pe = _struct.unpack_from("<I", d, 0x3C)[0]
+    base = _struct.unpack_from("<I", d, pe + 24 + 28)[0]
+    slots = {}
+    # read_imports drops the slot address; this walks the same directories and
+    # keeps it, because a call site names the import by its slot VA.
+    nsec = _struct.unpack_from("<H", d, pe + 6)[0]
+    optsz = _struct.unpack_from("<H", d, pe + 20)[0]
+    secs = []
+    for i in range(nsec):
+        e = pe + 24 + optsz + i * 40
+        vs, va, rs, ro = _struct.unpack_from("<IIII", d, e + 8)
+        secs.append((base + va, vs, ro, rs))
+
+    def r2o(rva):
+        va = base + rva if rva < base else rva
+        for sva, vs, ro, rs in secs:
+            if sva <= va < sva + max(vs, rs):
+                return ro + (va - sva)
+        raise ValueError("rva 0x%x is in no section" % rva)
+
+    imp = _struct.unpack_from("<II", d, pe + 24 + 104)[0]
+    i = 0
+    while True:
+        o = r2o(imp + i * 20)
+        oft, _ts, _fc, namerva, ft = _struct.unpack_from("<IIIII", d, o)
+        if oft == 0 and namerva == 0:
+            break
+        dll = d[r2o(namerva):d.index(b"\0", r2o(namerva))].decode("latin1")
+        j = 0
+        while True:
+            v = _struct.unpack_from("<I", d, r2o(oft or ft) + j * 4)[0]
+            if v == 0:
+                break
+            if v & 0x80000000:
+                slots[base + ft + 4 * j] = (dll, v & 0xffff)
+            j += 1
+        i += 1
+
+    found = {k: [] for k in slots}     # slot -> [(site, kind, pushes)]
+    for path, ins in read_insns():
+        loaded = {}                     # register -> slot VA, cleared at calls
+        floor = 0                       # first instruction after the prologue
+        for i, (addr, mn, ops, is_label) in enumerate(ins):
+            if mn == "span":
+                floor = prologue_end(ins, i)
+            if mn == "call":
+                m = DIRECT_RE.match(ops)
+                if m:
+                    slot = int(m.group(1), 16)
+                    if slot in slots:
+                        found[slot].append(
+                            (addr, "direct", pushes_before(ins, i, floor)))
+                    loaded = {}
+                    continue
+                if ops in loaded and loaded[ops] in slots:
+                    slot = loaded[ops]
+                    found[slot].append(
+                        (addr, "indirect", pushes_before(ins, i, floor)))
+                    loaded = {}
+                    continue
+            if mn == "mov":
+                m = LOAD_RE.match(ops)
+                if m:
+                    loaded[m.group(1)] = int(m.group(2), 16)
+                elif "," in ops:
+                    loaded.pop(ops.split(",")[0].strip(), None)
+            if mn in ("ret", "jmp") or is_label:
+                loaded = {}
+    return slots, found
+
+# The stub-stack probe. Every stub is driven directly with a known stack: push
+# the number of argument words its table row claims, push a return address,
+# call it, and check ESP came back to exactly where it started. A stub that pops
+# the wrong number leaves ESP four bytes per argument away from where the caller
+# expects it, and the caller then reads its own locals off by that much -- the
+# failure is silent and shows up hundreds of instructions later as a wrong
+# branch. This is the one check that makes the import layer's stack discipline
+# a measurement rather than a claim.
+STACK_PROBE = r"""
+#include <cstdio>
+#include "Image.h"
+
+namespace ts {
+int stubcheck() {
+    reset();
+    if (!load_image("bin/GAME.EXE")) { std::printf("load failed\n"); return 2; }
+    resolve_imports();
+    unsigned n = 0;
+    const w32::ImportDef *t = w32::imports(&n);
+    unsigned bad = 0, checked = 0, unresolved = 0;
+    for (unsigned i = 0; i < n; ++i) {
+        u32 va = stub_va(t[i].dll, t[i].fn);
+        if (!va) { ++unresolved; continue; }
+        const u32 base = 0x002f0000u;
+        ESP.d = base;
+        for (unsigned k = 0; k < t[i].nargs; ++k) push32(0u);
+        ts_call_ptr(va, 0xdeadbeefu);
+        ++checked;
+        if (ESP.d != base) {
+            ++bad;
+            std::printf("IMBALANCE %s!%s nargs=%u: esp 0x%08x -> 0x%08x (%+d bytes)\n",
+                        t[i].dll, t[i].fn, (unsigned)t[i].nargs, base, ESP.d,
+                        (int)(ESP.d - base));
+        }
+    }
+    std::printf("stub stack check: %u stubs driven, %u unresolved, %u imbalanced; "
+                "%lu fallback calls, %lu resolutions with an unknown argument "
+                "count\n", checked, unresolved, bad, w32::state().fallbacks,
+                w32::state().unbalanced_at_resolution);
+    return bad || unresolved ? 1 : 0;
+}
+}  // namespace ts
+
+int main() { return ts::stubcheck(); }
+"""
+
+
+def stack_check():
+    """Compile and run the stub-stack probe at the target ABI."""
+    import subprocess
+    import tempfile
+    d = tempfile.mkdtemp(prefix="stubcheck.")
+    src = os.path.join(d, "stubcheck.cpp")
+    exe = os.path.join(d, "stubcheck")
+    open(src, "w").write(STACK_PROBE)
+    cc = ["g++", "-std=c++03", "-m32", "-Isrc/include", "-Isrc/generated",
+          "-Ibuild/shim", "-o", exe, src]
+    r = subprocess.run(cc, capture_output=True, text=True)
+    if r.returncode:
+        print(r.stdout + r.stderr)
+        print("stack check: cannot compile the probe at -m32")
+        return 2
+    # The probe drives every stub with dummy arguments, so a stub that prints a
+    # string prints whatever is at address 0. Decode tolerantly: the only lines
+    # that matter are this check's own.
+    r = subprocess.run([exe], capture_output=True, cwd=os.getcwd())
+    for line in r.stdout.decode("latin1").splitlines():
+        if line.startswith(("IMBALANCE", "stub stack check", "load failed")):
+            print(line)
+    return r.returncode
+
+
+def evidence():
+    """Print how each ordinal's argument count was obtained; fail on a lie."""
+    slots, found = derive_ordinals()
+    bad = 0
+    print("%-13s %4s %6s %-6s %-6s %-6s %s"
+          % ("dll", "ord", "nargs", "how", "sites", "seen", "verdict"))
+    for slot in sorted(slots, key=lambda s: (slots[s][0], slots[s][1])):
+        dll, ordinal = slots[slot]
+        sites = found[slot]
+        counts = sorted(set(p for _a, _k, p in sites))
+        got = ORD_NARGS.get((dll, ordinal))
+        n, how = got if got else (0, "none")
+        kind = sites[0][1] if sites else "-"
+        if not sites:
+            verdict = "no call site: documented count, unmeasured" \
+                if how == "doc" else "no call site and no evidence tag"
+            if how != "doc":
+                bad += 1
+        elif len(counts) == 1 and counts[0] == n:
+            verdict = "agree (%s at %s)" % (kind, ", ".join(hex(a) for a, _k, _p in sites))
+            if how not in ("call", "call*"):
+                verdict += " BUT TAG IS %s" % how
+                bad += 1
+        else:
+            verdict = "DISAGREE: call sites give %s" % counts
+            bad += 1
+        print("%-13s %4d %6d %-6s %-6d %-6s %s"
+              % (dll, ordinal, n, how, len(sites),
+                 ",".join(str(c) for c in counts) or "-", verdict))
+    print("evidence: %d ordinal imports; %d with a call site; %d wrong"
+          % (len(slots), sum(1 for s in slots if found[s]), bad))
+    return 1 if bad else 0
 
 
 def main():
     src = open(HDR).read()
     head = src.split(SPLIT)[0]
-    # The bodies are written with the TS_RET/TS_BEGIN/TS_ORD_BEGIN macros, so
-    # the symbol names only exist after expansion: collect the macro arguments.
+    # The bodies are written with the TS_RET/TS_BEGIN/TS_ORD_* macros, so the
+    # symbol names only exist after expansion: collect the macro arguments.
+    # An ordinal body names its symbol outright (oleaut_ord_2147483681) rather
+    # than assembling it from a DLL and a number, because the raw ILT value is
+    # what identifies it and the "#161" spelling is derived at runtime.
     real = set("k_" + n for n in re.findall(r"TS_RET\(([A-Za-z0-9_]+)\s*,", head))
     real |= set("k_" + n for n in re.findall(r"TS_BEGIN\(([A-Za-z0-9_]+)\)", head))
-    real |= set("k_%s_ord_%s" % (d, n) for d, n in
-                re.findall(r"TS_ORD_BEGIN\(([A-Za-z0-9_]+)\s*,\s*([0-9]+)\)", head))
+    real |= set("k_" + n for n in re.findall(r"TS_ORD_BEGIN\(([A-Za-z0-9_]+)\s*,", head))
+    real |= set("k_" + n for n in re.findall(r"TS_ORD_RET\(([A-Za-z0-9_]+)\s*,", head))
     real.discard("k_w")   # the `#define TS_BEGIN(w)` line itself
+    real.discard("k_sym")   # the `#define TS_ORD_BEGIN(sym, raw)` line
     imports = read_imports(BIN)
 
     rows, missing = [], []
     for dll, fns in imports:
         for fn in fns:
-            n = NARGS_DLL.get((dll, fn), NARGS.get(fn))
-            if n is None:
-                missing.append("%s!%s" % (dll, fn))
-                n = 0
+            if fn.startswith("ord_"):
+                # The ILT names an ordinal by its raw value with the high bit
+                # set (0x800000a1); the loader asks for it by its number
+                # ("#161"), because that is all the import directory carries.
+                # The row must use the loader's spelling or nothing matches and
+                # the import silently falls back to a stub that cannot pop.
+                ordinal = int(fn[4:]) & 0xffff
+                row_fn = "#%d" % ordinal
+                got = ORD_NARGS.get((dll, ordinal))
+                if got is None:
+                    missing.append("%s!%s" % (dll, row_fn))
+                    n = 0
+                else:
+                    n = got[0]
+            else:
+                row_fn = fn
+                n = NARGS.get(fn)
+                if n is None:
+                    missing.append("%s!%s" % (dll, row_fn))
+                    n = 0
             r = RET.get(fn, 0)
             if fn.startswith("ord_") and dll in ORD_PREFIX:
                 sym = "k_%s_%s" % (ORD_PREFIX[dll], fn)
@@ -259,7 +582,7 @@ def main():
                 sym = "k_" + fn
             ref = ("&" + sym) if sym in real else "0"
             rows.append('\t{ "%s", "%s", %u, 0x%08xu, %s },'
-                        % (DLL_SHORT[dll], fn, n, r & 0xffffffff, ref))
+                        % (DLL_SHORT[dll], row_fn, n, r & 0xffffffff, ref))
     if missing:
         print("WARNING: no argument count for %s" % ", ".join(missing))
 
@@ -294,6 +617,22 @@ inline unsigned long &count_of(const char *fn) {
     for (unsigned i = 0; i < n; ++i)
         if (!std::strcmp(t[i].fn, fn)) return counts()[i];
     return counts()[n];   // everything unnamed shares the last bucket
+}
+
+inline bool same_dll(const char *a, const char *b);
+
+// The definition of the forward declaration in the head: a stub body asks the
+// table how many argument words it owns instead of repeating a count that only
+// one place can check.
+inline void stub_done_for(const char *dll, const char *fn, u32 value) {
+    unsigned n = 0;
+    const ImportDef *t = imports(&n);
+    for (unsigned i = 0; i < n; ++i)
+        if (!std::strcmp(t[i].fn, fn) && same_dll(t[i].dll, dll)) {
+            stub_done(t[i].nargs, value);
+            return;
+        }
+    stub_done(0u, value);
 }
 
 inline u32 *stub_vas() { static u32 v[512]; return v; }
@@ -362,11 +701,26 @@ template<unsigned I> void idx_stub() {
 // own VA, which is why the body is a template over a slot index rather than one
 // shared function.
 //
+// TWO THINGS A FALLBACK MUST NOT DO.
+//
+// It must not be quiet. It says so when it is minted -- not only when it is
+// called, because an import that is resolved and never called is still a hole
+// in the model and the resolution is the moment it is attributable.
+//
+// It must not silently leave the modelled stack imbalanced. A __stdcall callee
+// owns its argument words; a callee that pops none shifts every frame above it
+// by four bytes per argument, and the caller then reads its own locals off by
+// that much. So a fallback looks its own name up in the import table before it
+// gives up: a spelling mismatch (the loader says "#161" where the table says
+// "ord_2147483681") then costs nothing, because the count comes from the row.
+// Only an import the table genuinely does not have ends up with an unknown
+// count, and that case is counted and printed as what it is.
+//
 // The name comes from the last stub_va() call, because that is the only thing
 // the shared interface carries. A caller that asks stub_va(dll, fn) and then
 // fallback_stub_va() gets a fallback that names dll!fn.
 
-struct FallbackDef { char name[80]; u8 nargs; };
+struct FallbackDef { char name[80]; u8 nargs; bool known_arity; };
 inline FallbackDef *fallback_defs() { static FallbackDef d[256]; return d; }
 inline char *pending_query() { static char b[80]; return b; }
 
@@ -383,11 +737,19 @@ template<unsigned I> void fallback_at() {
     const FallbackDef &d = fallback_defs()[I];
     state().fallbacks++;
     note(d.name[0] ? d.name : "(unnamed import)");
-    // Loud: an import nothing implements is a hole in the model, and the only
-    // moment it is attributable to a name is when it is called.
-    std::printf("win32stubs: NO STUB for import \\"%s\\" -- the fallback returns "
-                "0 and cannot pop its arguments\\n",
-                d.name[0] ? d.name : "(unnamed)");
+    if (d.known_arity) {
+        // Loud, and correct about the stack: the row the name resolved to says
+        // how many words the caller pushed.
+        std::printf("win32stubs: NO STUB for import \\"%s\\" -- the fallback pops "
+                    "%u argument word(s) from the import table and returns 0\\n",
+                    d.name[0] ? d.name : "(unnamed)", (unsigned)d.nargs);
+    } else {
+        state().unbalanced++;
+        std::printf("win32stubs: NO STUB for import \\"%s\\" -- ARGUMENT COUNT "
+                    "UNKNOWN, so the fallback cannot pop its arguments and ESP "
+                    "drifts by 4 bytes per argument from here on\\n",
+                    d.name[0] ? d.name : "(unnamed)");
+    }
     stub_done(d.nargs, 0u);   // 0 in EAX: unimplemented, and it says so
 }
 """)
@@ -401,13 +763,47 @@ template<unsigned I> void fallback_at() {
     out.append("""
 inline unsigned &fallback_slot() { static unsigned s = 0; return s; }
 
+// "KERNEL32!CloseHandle" -> the row it names, or -1. One matching rule for
+// stub_va() and the fallback, so the two cannot disagree about what a name
+// means.
+inline int find_row(const char *query) {
+    char dll[64], fn[80];
+    unsigned i = 0, j = 0;
+    for (; query[i] && query[i] != '!' && i + 1u < sizeof(dll); ++i) dll[i] = query[i];
+    dll[i] = 0;
+    if (query[i] == '!') ++i;
+    for (; query[i] && j + 1u < sizeof(fn); ++i) fn[j++] = query[i];
+    fn[j] = 0;
+    unsigned n = 0;
+    const ImportDef *t = imports(&n);
+    for (unsigned k = 0; k < n; ++k)
+        if (!std::strcmp(t[k].fn, fn) && same_dll(t[k].dll, dll)) return (int)k;
+    return -1;
+}
+
 inline u32 fallback_impl() {
     unsigned i = fallback_slot()++ % 256u;
     FallbackDef &d = fallback_defs()[i];
     std::strncpy(d.name, pending_query(), sizeof(d.name) - 1);
     d.name[sizeof(d.name) - 1] = 0;
-    d.nargs = 0;   // an unknown import has an unknown argument count
+    // Ask the table how many words this import owns. A name the table has no
+    // row for leaves the count unknown, and that is stated rather than guessed.
+    int row = find_row(pending_query());
+    unsigned n = 0;
+    const ImportDef *t = imports(&n);
+    d.known_arity = row >= 0;
+    d.nargs = row >= 0 ? t[row].nargs : 0u;
     state().fallback_names++;
+    if (row >= 0) {
+        std::printf("win32stubs: FALLBACK %s -- no stub of its own; the table's "
+                    "%u argument word(s) are popped, EAX is 0\\n",
+                    d.name, (unsigned)d.nargs);
+    } else {
+        state().unbalanced_at_resolution++;
+        std::printf("win32stubs: FALLBACK %s -- NOT IN THE IMPORT TABLE: its "
+                    "argument count is unknown, so the modelled stack cannot be "
+                    "kept balanced if it is called\\n", d.name);
+    }
     u32 va = alloc_stub_va();
     ts_register(va, fallback_fn(i));
     return va;
@@ -423,24 +819,28 @@ inline void register_impl() {
     registered() = true;
     unsigned n = 0;
     const ImportDef *t = imports(&n);
+    unsigned generic = 0;
     for (unsigned i = 0; i < n; ++i) {
         u32 va = alloc_stub_va();
         stub_vas()[i] = va;
         ts_register(va, t[i].real ? t[i].real : idx_stub_fn(i));
+        if (!t[i].real) ++generic;
     }
+    // One line, once, at the moment the table is bound: how much of the import
+    // layer is a real body and how much is a stub that only keeps the caller
+    // alive. Each generic import also names itself on first call; this is the
+    // count a reader needs before the first call happens.
+    std::printf("win32stubs: %u imports registered: %u with a body, %u generic "
+                "(a generic stub pops its table's arguments, returns its row's "
+                "value, and says so on first call)\\n", n, n - generic, generic);
 }
 
 inline u32 stub_va_impl(const char *dll, const char *fn) {
     remember_query(dll, fn);
-    unsigned n = 0;
-    const ImportDef *t = imports(&n);
-    for (unsigned i = 0; i < n; ++i) {
-        if (!std::strcmp(t[i].fn, fn) && same_dll(t[i].dll, dll)) {
-            state().resolved++;
-            return stub_vas()[i];
-        }
-    }
-    return 0;
+    int row = find_row(pending_query());
+    if (row < 0) return 0;
+    state().resolved++;
+    return stub_vas()[row];
 }
 
 inline unsigned long &count_for_impl(const char *dll, const char *fn) {
@@ -493,14 +893,33 @@ inline void stub_report() {
     const w32::ImportDef *t = w32::imports(&n);
     unsigned real = 0;
     for (unsigned i = 0; i < n; ++i) if (t[i].real) ++real;
+    unsigned unresolved = w32::fallback_slot();
     std::printf("win32stubs: %u imports; %u with a hand-written body; "
-                "%u generic; %u stubs resolved; %lu calls; %lu fallbacks\\n",
-                n, real, n - real, (unsigned)w32::state().resolved,
-                w32::state().calls, w32::state().fallbacks);
+                "%u generic; %u stubs resolved; %u FALLBACKS; %lu calls; "
+                "%lu fallback calls; %lu with an UNKNOWN argument count\\n",
+                n, real, n - real, (unsigned)w32::state().resolved, unresolved,
+                w32::state().calls, w32::state().fallbacks,
+                w32::state().unbalanced + w32::state().unbalanced_at_resolution);
     for (unsigned i = 0; i < n; ++i) {
         unsigned long c = w32::counts()[i];
         if (c) std::printf("  %8lu  %s!%s\\n", c, t[i].dll, t[i].fn);
     }
+    // An import that fell back is a hole in the table and the count alone does
+    // not say which one, so name every fallback and say whether its stack
+    // discipline is known.
+    for (unsigned i = 0; i < unresolved; ++i) {
+        const w32::FallbackDef &d = w32::fallback_defs()[i];
+        std::printf("  FALLBACK  %s -- %s\\n", d.name,
+                    d.known_arity ? "argument count from the import table"
+                                  : "ARGUMENT COUNT UNKNOWN: stack unbalanced");
+    }
+    // The generic rows by name. They are correct about the stack and about the
+    // return value, and they are still unimplemented: a reader asking "what does
+    // this model not do yet" should not have to call them all to find out.
+    for (unsigned i = 0; i < n; ++i)
+        if (!t[i].real)
+            std::printf("  GENERIC   %s!%s (%u argument word(s))\\n",
+                        t[i].dll, t[i].fn, (unsigned)t[i].nargs);
     // COM methods are not imports, so the ones served by a generic slot stub
     // are reported from the slot table: a DirectDraw wrapper's Blt, Flip and
     // Unlock calls land there, and a DirectDraw phase needs to see them by
@@ -523,4 +942,8 @@ inline void stub_report() {
 
 
 if __name__ == "__main__":
+    if "--evidence" in sys.argv[1:]:
+        sys.exit(evidence())
+    if "--stack-check" in sys.argv[1:]:
+        sys.exit(stack_check())
     sys.exit(main())

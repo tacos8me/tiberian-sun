@@ -83,10 +83,20 @@ struct StubState {
     unsigned long fallbacks;        // invocations that reached a fallback stub
     unsigned long resolved;         // imports that were given a stub VA
     unsigned long fallback_names;   // distinct names that needed a fallback
+    // Two counts that must both be zero for the modelled stack to be sound: an
+    // import resolved to a fallback whose argument count is not known, and a
+    // call to one of those. Either one is a hole a reader has to see.
+    unsigned long unbalanced_at_resolution;
+    unsigned long unbalanced;       // fallback calls that could not pop
+    unsigned long exit_calls;       // ExitProcess invocations the model walked past
+    unsigned long proc_address_misses;  // GetProcAddress names nothing implements
     char last[64];                  // name of the most recent stub called
     bool verbose;                   // print each stub call
     StubState() : calls(0), fallbacks(0), resolved(0), fallback_names(0),
-                  verbose(false) { last[0] = 0; }
+                  unbalanced_at_resolution(0), unbalanced(0), exit_calls(0),
+                  proc_address_misses(0), verbose(false) {
+        last[0] = 0;
+    }
 };
 inline StubState &state() { static StubState s; return s; }
 
@@ -103,16 +113,44 @@ inline void note(const char *name) {
     if (s.verbose) std::printf("  [stub] %s\n", name);
 }
 
+
 // -- calling convention ------------------------------------------------------
 inline u32 arg(unsigned i) { return ld32(ESP.d + 4u + i * 4u); }
 inline void stub_done(unsigned nargs, u32 value) {
     ESP.d += 4u + nargs * 4u;
     EAX.d = value;
 }
+// An import's argument count belongs to ONE place: its row in the import table,
+// which tools/gen_win32_stubs.py derives from the call sites in the recovered
+// instruction stream (`--evidence` re-derives and checks it). A body that
+// carried its own count was a second, unverifiable claim about the same fact --
+// and for 20 of the 32 ordinal imports the two claims disagreed, so the body
+// would have popped 7 words where the caller had pushed 2. A body therefore
+// asks the table how many words it owns.
+inline void stub_done_for(const char *dll, const char *fn, u32 value);
+
+// 0x800000a1 -> "#161": the spelling the loader uses for an ordinal import,
+// because an ordinal has no name string and its number is all it carries.
+inline const char *ord_name(u32 raw) {
+    static char b[16];
+    std::sprintf(b, "#%u", (unsigned)(raw & 0xffffu));
+    return b;
+}
 
 #define TS_BEGIN(w) void k_##w() { note(#w);
 #define TS_END }
 #define TS_RET(w, n, v) TS_BEGIN(w) stub_done(n, v); TS_END
+
+// An ordinal import's C++ symbol carries its DLL and its raw ILT value
+// (0x800000a1), because the same ordinal number means a different function in
+// every DLL. Its argument count is NOT written here: it lives in the import
+// table row for "#161", which is where `--evidence` checks it. A body that
+// named its own count would be a second claim about the same fact.
+#define TS_ORD_BEGIN(sym, dllname, raw) \
+    void k_##sym() { const char *const ord = ord_name(raw); note(ord);
+#define TS_ORD_END }
+#define TS_ORD_RET(sym, dllname, raw, v) \
+    TS_ORD_BEGIN(sym, dllname, raw) stub_done_for(dllname, ord, v); TS_ORD_END
 
 // -- memory and string helpers ----------------------------------------------
 inline u32 c_strlen(u32 p) { u32 n = 0; while (ld8(p + n)) ++n; return n; }
@@ -144,6 +182,26 @@ inline u32 zero_block(u32 size, u32 align) {
     u32 p = alloc_block(size, align);
     for (u32 i = 0; i < size; ++i) st8(p + i, 0);
     return p;
+}
+
+// A C string printed so that every byte is visible. A stub that shows a program
+// a message box has to report the text, and a boot that has not loaded the
+// game's string table yet hands over a pointer into zeroed memory or into
+// whatever the model happened to leave there: `%s` turns that into a mojibake
+// line, and a reader cannot tell "empty" from "garbled" from "a control code".
+// Escaping every byte makes the difference legible, and the length makes an
+// unterminated buffer visible instead of a read that runs off the page.
+inline void print_escaped(const char *label, u32 p, unsigned max) {
+    std::printf("  %s 0x%08x: \"", label, p);
+    unsigned i = 0;
+    for (; i < max; ++i) {
+        u8 c = ld8(p + i);
+        if (!c) break;
+        if (c >= 0x20u && c < 0x7fu) std::printf("%c", (char)c);
+        else std::printf("\\x%02x", (unsigned)c);
+    }
+    std::printf("\" (%u byte%s%s)\n", i, i == 1u ? "" : "s",
+                i == max ? ", no terminator in range" : "");
 }
 
 // -- clock -------------------------------------------------------------------
@@ -208,11 +266,20 @@ TS_END
 TS_RET(FreeLibrary, 1, 1u)
 
 TS_BEGIN(GetProcAddress)
-    // The returned address must be a registered stub or the caller's first
-    // call lands on nothing. An unknown name gets the fallback, which is
-    // registered and therefore callable, and which logs the miss.
-    u32 va = find_by_name(ld_cstr(arg(1)));
-    stub_done(2, va ? va : 0u);
+    // The returned address must be a registered stub or the caller's first call
+    // lands on nothing, so a name with no stub returns 0 -- and says so. A
+    // silent 0 reads as "this DLL does not export that", which is a claim the
+    // caller acts on: the game asks comctl32 for DllGetVersion, and on a 0 it
+    // decides the system is too old, puts up a message box and exits.
+    const char *name = ld_cstr(arg(1));
+    u32 va = find_by_name(name);
+    if (!va) {
+        state().proc_address_misses++;
+        std::printf("win32stubs: GetProcAddress(module 0x%08x, \"%s\") -> 0 -- no "
+                    "stub for it; a caller that tests this takes its failure path\n",
+                    arg(0), name);
+    }
+    stub_done(2, va);
 TS_END
 
 TS_BEGIN(GetCommandLineA)
@@ -364,9 +431,16 @@ TS_RET(GetCurrentProcessId, 0, 1234u)
 TS_RET(GetCurrentThreadId, 0, 1234u)
 
 TS_BEGIN(ExitProcess)
-    // There is no way to unwind the modelled stack from here, so ExitProcess
-    // returns and the frames above it run to their own `ret`. That is wrong
-    // about control flow but it never loses the caller.
+    // The program has decided to stop, and it says with what code. The model
+    // cannot unwind to its caller from here, so the stub returns and the frames
+    // above it run to their own `ret`: that is wrong about control flow, and
+    // leaving it unspoken is worse, because a run that walks on after an
+    // ExitProcess looks like a run that is making progress. It is printed, and
+    // counted, so the log says which it is.
+    std::printf("win32stubs: ExitProcess(%u) from 0x%08x -- the program has "
+                "decided to stop; the model keeps executing anyway\n",
+                (unsigned)arg(0), (unsigned)ld32(ESP.d));
+    state().exit_calls++;
     stub_done(1, 0u);
 TS_END
 TS_RET(TerminateProcess, 2, 1u)
@@ -1419,11 +1493,16 @@ TS_BEGIN(MessageBoxA)
     // Nothing here can show one, so the text goes to the run's log -- that log
     // is the only place the reason survives -- and the answer is IDOK, because
     // the alternative is a caller that treats the failure as fatal.
-    const char *text = ld_cstr(arg(1));
-    char cap[96];
-    win_copy(cap, sizeof(cap), arg(2));
-    std::printf("win32stubs: MessageBoxA(hwnd 0x%08x) \"%s\" / \"%s\" -> IDOK\n",
-                arg(0), cap, text);
+    // The call site and the raw pointers are printed too: the text is fetched
+    // at runtime from the game's own string table, so on a boot that has not
+    // filled that table the "message" is whatever the model holds at the
+    // pointer, and the only way to tell that apart from a real message is to
+    // see the address it came from.
+    std::printf("win32stubs: MessageBoxA(hwnd 0x%08x, text 0x%08x, caption 0x%08x, "
+                "type 0x%08x) called from 0x%08x (ebp 0x%08x esp 0x%08x) -> IDOK\n",
+                arg(0), arg(1), arg(2), arg(3), ld32(ESP.d), EBP.d, ESP.d);
+    print_escaped("text", arg(1), 64u);
+    print_escaped("caption", arg(2), 64u);
     stub_done(4, 1u);
 TS_END
 
@@ -1867,8 +1946,6 @@ TS_END
 // generic stub, which is correct about the stack and honest about the rest.
 // ===========================================================================
 
-#define TS_ORD_BEGIN(dll, n) void k_##dll##_ord_##n() { note("ord_" #n);
-#define TS_ORD_END }
 
 // -- ADVAPI32 registry -------------------------------------------------------
 // No registry exists, so an opened key is a handle and a query misses. A miss
@@ -1955,26 +2032,39 @@ inline u32 make_bstr(u32 src, u32 chars) {
     st16(p + 4u + chars * 2u, 0u);
     return p + 4u;
 }
-TS_BEGIN(oleaut_ord_2147483681)  // SysAllocString
+// -- OLEAUT32, by ordinal ----------------------------------------------------
+// The ARGUMENT COUNTS of every import in this section are measured, not looked
+// up: tools/gen_win32_stubs.py --evidence walks the recovered instruction
+// stream, counts the pushes in front of each `call dword ptr [slot]` and fails
+// if the import table disagrees with them. The NAMES are inferred from the
+// shape of those call sites and are marked /* ? */ where they are a guess: a
+// name is a convenience, an argument count is not.
+//
+// Only the ordinals whose return value carries something get a body. The rest
+// go to the named generic stub, which pops exactly the words the table says and
+// prints once, on first call, that it is unimplemented.
+
+TS_ORD_BEGIN(oleaut_ord_2147483809, "OLEAUT32", 0x800000a1u)   // LoadTypeLib /* ? */
+    // Measured 2 arguments at 0x5e5910: the wide string "SUN.TLB" and an
+    // out-pointer. Answering success without writing an object would be a lie
+    // the caller dereferences, so this fails the way a missing typelib fails.
+    u32 out = arg(1);
+    if (out) st32(out, 0u);
+    stub_done_for("OLEAUT32", ord, 0x8002801du);   // TYPE_E_CANTLOADLIBRARY
+TS_ORD_END
+
+TS_ORD_BEGIN(oleaut_ord_2147483650, "OLEAUT32", 0x80000002u)   // SysAllocString /* ? */
     u32 s = arg(0);
-    stub_done(1, s ? make_bstr(s, c_strlen(s)) : 0u);
-TS_END
-TS_BEGIN(oleaut_ord_2147483650)  // SysAllocStringLen
-    u32 s = arg(0), n = arg(1);
-    stub_done(2, s ? make_bstr(s, n) : 0u);
-TS_END
-TS_BEGIN(oleaut_ord_2147483656)  // SysStringLen
-    u32 b = arg(0);
-    stub_done(1, b ? ld32(b - 4u) / 2u : 0u);
-TS_END
-TS_RET(oleaut_ord_2147483654, 1, 0u)   // SysFreeString
-TS_RET(oleaut_ord_2147483657, 1, 0u)   // VariantInit
-TS_RET(oleaut_ord_2147483660, 1, 0u)   // VariantClear
-TS_RET(oleaut_ord_2147483682, 2, 1u)   // SysReAllocStringLen
-TS_RET(oleaut_ord_2147483809, 1, 0u)
-TS_RET(oleaut_ord_2147483848, 4, 0u)   // VariantChangeType
-TS_RET(oleaut_ord_2147483849, 2, 0u)   // VariantCopy
-TS_RET(oleaut_ord_2147483850, 2, 0u)   // VariantCopyInd
+    stub_done_for("OLEAUT32", ord, s ? make_bstr(s, c_strlen(s)) : 0u);
+TS_ORD_END
+
+TS_ORD_BEGIN(oleaut_ord_2147483656, "OLEAUT32", 0x80000008u)   // VariantInit /* ? */
+    // The call sites pass `lea reg,[ebp-N]`, a local VARIANT. A VARIANT that
+    // was never zeroed is a variant with a garbage type tag.
+    u32 p = arg(0);
+    for (u32 i = 0; i < 16u; ++i) st8(p + i, 0);
+    stub_done_for("OLEAUT32", ord, 0u);
+TS_ORD_END
 
 // -- WINMM -------------------------------------------------------------------
 // timeGetTime is the millisecond clock the game's frame timer reads; it shares
@@ -1992,7 +2082,10 @@ TS_RET(ImageList_EndDrag, 0, 0u)
 TS_RET(ImageList_DragEnter, 3, 1u)
 TS_RET(ImageList_DragMove, 2, 1u)
 TS_RET(ImageList_DragShowNolock, 1, 1u)
-TS_RET(comctl32_ord_2147483665, 1, 1u)
+// InitCommonControls: measured 0 arguments at 0x65c04b, where the call sits
+// directly behind the prologue with nothing pushed. It is the call a program
+// makes before RegisterClass, which is what the enclosing function does.
+TS_ORD_RET(comctl32_ord_2147483665, "COMCTL32", 0x80000011u, 0u)
 
 // -- VERSION / SHELL32 -------------------------------------------------------
 TS_RET(GetFileVersionInfoSizeA, 2, 0u)   // no version resource, honestly
@@ -2000,10 +2093,21 @@ TS_RET(GetFileVersionInfoA, 4, 0u)
 TS_RET(VerQueryValueA, 4, 0u)
 TS_RET(FindExecutableA, 3, 1u)
 
-// -- WSOCK32 -----------------------------------------------------------------
-// WSAStartup is the one that matters: it must return 0 and fill WSADATA, or a
-// caller that checks the result gives up on networking entirely.
-TS_BEGIN(wsock_ord_2147483763)   // WSAStartup
+// -- WSOCK32, by ordinal -----------------------------------------------------
+// NOTHING IN THIS BINARY CALLS THESE. Each of the 19 slots is referenced once,
+// by a `jmp dword ptr [slot]` thunk in the 0x6824d8 block, and nothing in .text
+// or .data references any of those thunks. So there is no call site to measure
+// an argument count from, and the counts in the import table for these are the
+// documented Win32 signatures, tagged "doc" in tools/gen_win32_stubs.py and
+// listed as unmeasured by `--evidence`. This section used to carry its own
+// counts -- 7 for the import the table called 2 -- which is exactly the kind of
+// second, unverifiable claim this header now avoids.
+//
+// WSAStartup is the one worth a body: it must return 0 and fill WSADATA, or a
+// caller that checks the result gives up on networking entirely. Its argument
+// count is measured all the same -- ordinal 115 is the one ordinal of the 19
+// whose number the classic table and this header agree on.
+TS_ORD_BEGIN(wsock_ord_2147483763, "WSOCK32", 0x80000073u)   // WSAStartup
     u32 p = arg(1);
     for (u32 i = 0; i < 0x190u; ++i) st8(p + i, 0);
     st16(p + 0u, 0x0101u);   // wVersion = 1.1
@@ -2011,26 +2115,8 @@ TS_BEGIN(wsock_ord_2147483763)   // WSAStartup
     c_strcpy(p + 4u, lit("Tiberian Sun WinSock"));
     st16(p + 0x18cu, 0u);
     st16(p + 0x18eu, 0u);
-    stub_done(2, 0u);
-TS_END
-TS_RET(wsock_ord_2147483764, 0, 0u)   // WSACleanup
-TS_RET(wsock_ord_2147483650, 0, 0u)   // WSACleanup
-TS_RET(wsock_ord_2147483655, 1, 0u)   // WSASetLastError
-TS_RET(wsock_ord_2147483656, 0, 0u)   // WSACancelBlockingCall
-TS_RET(wsock_ord_2147483657, 0, 0u)   // WSAIsBlocking
-TS_RET(wsock_ord_2147483659, 0, 0u)   // WSAUnhookBlockingHook
-TS_RET(wsock_ord_2147483662, 5, 0u)   // WSAAsyncGetHostByName
-TS_RET(wsock_ord_2147483663, 7, 0u)   // WSAAsyncGetHostByAddr
-TS_RET(wsock_ord_2147483651, 7, 0u)   // WSAAsyncGetServByPort
-TS_RET(wsock_ord_2147483665, 7, 0u)   // WSAAsyncGetServByPort
-TS_RET(wsock_ord_2147483668, 4, 0u)   // WSAAsyncGetProtoByNumber
-TS_RET(wsock_ord_2147483669, 6, 0u)   // WSAAsyncGetServByName
-TS_RET(wsock_ord_2147483671, 4, 0u)   // WSAAsyncGetProtoByName
-TS_RET(wsock_ord_2147483700, 3, 0u)   // gethostbyaddr
-TS_RET(wsock_ord_2147483749, 5, 0u)   // WSAAsyncSelect
-TS_RET(wsock_ord_2147483756, 0, 0u)
-TS_RET(wsock_ord_2147483759, 0, 0u)   // WSAGetLastError
-TS_RET(wsock_ord_2147483705, 2, 0u)   // gethostname
+    stub_done_for("WSOCK32", ord, 0u);
+TS_ORD_END
 
 // ===========================================================================
 // fake COM objects
@@ -2307,11 +2393,11 @@ TS_BEGIN(DirectDrawCreate)
     stub_done(3, 0u);   // DD_OK
 TS_END
 
-TS_BEGIN(dsound_ord_2147483649)   // DirectSoundCreate
+TS_ORD_BEGIN(dsound_ord_2147483649, "DSOUND", 0x80000001u)   // DirectSoundCreate
     u32 out = arg(1);
     if (out) st32(out, make_directdraw());
-    stub_done(3, 0u);   // DS_OK
-TS_END
+    stub_done_for("DSOUND", ord, 0u);   // DS_OK
+TS_ORD_END
 
 // the import table
 //
@@ -2619,49 +2705,49 @@ inline const ImportDef *imports(unsigned *count) {
 	{ "ole32", "OleLoadFromStream", 3, 0x00000000u, &k_OleLoadFromStream },
 	{ "ole32", "CoCreateInstance", 5, 0x00000000u, 0 },
 	{ "ole32", "OleRun", 1, 0x00000000u, &k_OleRun },
-	{ "OLEAUT32", "ord_2147483650", 2, 0x00000000u, &k_oleaut_ord_2147483650 },
-	{ "OLEAUT32", "ord_2147483809", 1, 0x00000000u, &k_oleaut_ord_2147483809 },
-	{ "OLEAUT32", "ord_2147483654", 1, 0x00000000u, &k_oleaut_ord_2147483654 },
-	{ "OLEAUT32", "ord_2147483849", 2, 0x00000000u, &k_oleaut_ord_2147483849 },
-	{ "OLEAUT32", "ord_2147483660", 1, 0x00000000u, &k_oleaut_ord_2147483660 },
-	{ "OLEAUT32", "ord_2147483850", 2, 0x00000000u, &k_oleaut_ord_2147483850 },
-	{ "OLEAUT32", "ord_2147483657", 0, 0x00000000u, &k_oleaut_ord_2147483657 },
-	{ "OLEAUT32", "ord_2147483656", 0, 0x00000000u, &k_oleaut_ord_2147483656 },
-	{ "OLEAUT32", "ord_2147483682", 2, 0x00000000u, &k_oleaut_ord_2147483682 },
-	{ "OLEAUT32", "ord_2147483681", 1, 0x00000000u, &k_oleaut_ord_2147483681 },
-	{ "OLEAUT32", "ord_2147483848", 4, 0x00000000u, &k_oleaut_ord_2147483848 },
+	{ "OLEAUT32", "#2", 1, 0x00000000u, &k_oleaut_ord_2147483650 },
+	{ "OLEAUT32", "#161", 2, 0x00000000u, &k_oleaut_ord_2147483809 },
+	{ "OLEAUT32", "#6", 1, 0x00000000u, 0 },
+	{ "OLEAUT32", "#201", 2, 0x00000000u, 0 },
+	{ "OLEAUT32", "#12", 4, 0x00000000u, 0 },
+	{ "OLEAUT32", "#202", 1, 0x00000000u, 0 },
+	{ "OLEAUT32", "#9", 1, 0x00000000u, 0 },
+	{ "OLEAUT32", "#8", 1, 0x00000000u, &k_oleaut_ord_2147483656 },
+	{ "OLEAUT32", "#34", 2, 0x00000000u, 0 },
+	{ "OLEAUT32", "#33", 4, 0x00000000u, 0 },
+	{ "OLEAUT32", "#200", 2, 0x00000000u, 0 },
 	{ "WINMM", "timeBeginPeriod", 1, 0x00000000u, &k_timeBeginPeriod },
 	{ "WINMM", "timeSetEvent", 5, 0x00000000u, &k_timeSetEvent },
 	{ "WINMM", "timeKillEvent", 1, 0x00000000u, &k_timeKillEvent },
 	{ "WINMM", "timeGetTime", 0, 0x00000000u, &k_timeGetTime },
 	{ "WINMM", "timeGetDevCaps", 2, 0x00000000u, &k_timeGetDevCaps },
 	{ "WINMM", "timeEndPeriod", 1, 0x00000000u, &k_timeEndPeriod },
-	{ "WSOCK32", "ord_2147483665", 7, 0x00000000u, &k_wsock_ord_2147483665 },
-	{ "WSOCK32", "ord_2147483669", 6, 0x00000000u, &k_wsock_ord_2147483669 },
-	{ "WSOCK32", "ord_2147483668", 4, 0x00000000u, &k_wsock_ord_2147483668 },
-	{ "WSOCK32", "ord_2147483764", 0, 0x00000000u, &k_wsock_ord_2147483764 },
-	{ "WSOCK32", "ord_2147483749", 5, 0x00000000u, &k_wsock_ord_2147483749 },
-	{ "WSOCK32", "ord_2147483756", 0, 0x00000000u, &k_wsock_ord_2147483756 },
-	{ "WSOCK32", "ord_2147483655", 1, 0x00000000u, &k_wsock_ord_2147483655 },
-	{ "WSOCK32", "ord_2147483759", 0, 0x00000000u, &k_wsock_ord_2147483759 },
-	{ "WSOCK32", "ord_2147483659", 0, 0x00000000u, &k_wsock_ord_2147483659 },
-	{ "WSOCK32", "ord_2147483663", 7, 0x00000000u, &k_wsock_ord_2147483663 },
-	{ "WSOCK32", "ord_2147483662", 5, 0x00000000u, &k_wsock_ord_2147483662 },
-	{ "WSOCK32", "ord_2147483657", 0, 0x00000000u, &k_wsock_ord_2147483657 },
-	{ "WSOCK32", "ord_2147483763", 2, 0x00000000u, &k_wsock_ord_2147483763 },
-	{ "WSOCK32", "ord_2147483705", 2, 0x00000000u, &k_wsock_ord_2147483705 },
-	{ "WSOCK32", "ord_2147483700", 3, 0x00000000u, &k_wsock_ord_2147483700 },
-	{ "WSOCK32", "ord_2147483651", 7, 0x00000000u, &k_wsock_ord_2147483651 },
-	{ "WSOCK32", "ord_2147483671", 4, 0x00000000u, &k_wsock_ord_2147483671 },
-	{ "WSOCK32", "ord_2147483650", 0, 0x00000000u, &k_wsock_ord_2147483650 },
-	{ "WSOCK32", "ord_2147483656", 0, 0x00000000u, &k_wsock_ord_2147483656 },
+	{ "WSOCK32", "#17", 2, 0x00000000u, 0 },
+	{ "WSOCK32", "#21", 1, 0x00000000u, 0 },
+	{ "WSOCK32", "#20", 2, 0x00000000u, 0 },
+	{ "WSOCK32", "#116", 0, 0x00000000u, 0 },
+	{ "WSOCK32", "#101", 4, 0x00000000u, 0 },
+	{ "WSOCK32", "#108", 0, 0x00000000u, 0 },
+	{ "WSOCK32", "#7", 5, 0x00000000u, 0 },
+	{ "WSOCK32", "#111", 0, 0x00000000u, 0 },
+	{ "WSOCK32", "#11", 1, 0x00000000u, 0 },
+	{ "WSOCK32", "#15", 1, 0x00000000u, 0 },
+	{ "WSOCK32", "#14", 1, 0x00000000u, 0 },
+	{ "WSOCK32", "#9", 1, 0x00000000u, 0 },
+	{ "WSOCK32", "#115", 2, 0x00000000u, &k_wsock_ord_2147483763 },
+	{ "WSOCK32", "#57", 5, 0x00000000u, 0 },
+	{ "WSOCK32", "#52", 2, 0x00000000u, 0 },
+	{ "WSOCK32", "#3", 1, 0x00000000u, 0 },
+	{ "WSOCK32", "#23", 4, 0x00000000u, 0 },
+	{ "WSOCK32", "#2", 3, 0x00000000u, 0 },
+	{ "WSOCK32", "#8", 1, 0x00000000u, 0 },
 	{ "DDRAW", "DirectDrawCreate", 3, 0x00000000u, &k_DirectDrawCreate },
-	{ "DSOUND", "ord_2147483649", 3, 0x00000000u, &k_dsound_ord_2147483649 },
+	{ "DSOUND", "#1", 3, 0x00000000u, &k_dsound_ord_2147483649 },
 	{ "VERSION", "GetFileVersionInfoSizeA", 2, 0x00000000u, &k_GetFileVersionInfoSizeA },
 	{ "VERSION", "GetFileVersionInfoA", 4, 0x00000000u, &k_GetFileVersionInfoA },
 	{ "VERSION", "VerQueryValueA", 4, 0x00000000u, &k_VerQueryValueA },
 	{ "COMCTL32", "ImageList_DragShowNolock", 1, 0x00000001u, &k_ImageList_DragShowNolock },
-	{ "COMCTL32", "ord_2147483665", 1, 0x00000000u, &k_comctl32_ord_2147483665 },
+	{ "COMCTL32", "#17", 0, 0x00000000u, &k_comctl32_ord_2147483665 },
 	{ "COMCTL32", "ImageList_DragMove", 2, 0x00000001u, &k_ImageList_DragMove },
 	{ "COMCTL32", "ImageList_DragEnter", 3, 0x00000001u, &k_ImageList_DragEnter },
 	{ "COMCTL32", "ImageList_BeginDrag", 3, 0x00000001u, &k_ImageList_BeginDrag },
@@ -2678,6 +2764,22 @@ inline unsigned long &count_of(const char *fn) {
     for (unsigned i = 0; i < n; ++i)
         if (!std::strcmp(t[i].fn, fn)) return counts()[i];
     return counts()[n];   // everything unnamed shares the last bucket
+}
+
+inline bool same_dll(const char *a, const char *b);
+
+// The definition of the forward declaration in the head: a stub body asks the
+// table how many argument words it owns instead of repeating a count that only
+// one place can check.
+inline void stub_done_for(const char *dll, const char *fn, u32 value) {
+    unsigned n = 0;
+    const ImportDef *t = imports(&n);
+    for (unsigned i = 0; i < n; ++i)
+        if (!std::strcmp(t[i].fn, fn) && same_dll(t[i].dll, dll)) {
+            stub_done(t[i].nargs, value);
+            return;
+        }
+    stub_done(0u, value);
 }
 
 inline u32 *stub_vas() { static u32 v[512]; return v; }
@@ -2801,11 +2903,26 @@ inline Fn idx_stub_fn(unsigned i) {
 // own VA, which is why the body is a template over a slot index rather than one
 // shared function.
 //
+// TWO THINGS A FALLBACK MUST NOT DO.
+//
+// It must not be quiet. It says so when it is minted -- not only when it is
+// called, because an import that is resolved and never called is still a hole
+// in the model and the resolution is the moment it is attributable.
+//
+// It must not silently leave the modelled stack imbalanced. A __stdcall callee
+// owns its argument words; a callee that pops none shifts every frame above it
+// by four bytes per argument, and the caller then reads its own locals off by
+// that much. So a fallback looks its own name up in the import table before it
+// gives up: a spelling mismatch (the loader says "#161" where the table says
+// "ord_2147483681") then costs nothing, because the count comes from the row.
+// Only an import the table genuinely does not have ends up with an unknown
+// count, and that case is counted and printed as what it is.
+//
 // The name comes from the last stub_va() call, because that is the only thing
 // the shared interface carries. A caller that asks stub_va(dll, fn) and then
 // fallback_stub_va() gets a fallback that names dll!fn.
 
-struct FallbackDef { char name[80]; u8 nargs; };
+struct FallbackDef { char name[80]; u8 nargs; bool known_arity; };
 inline FallbackDef *fallback_defs() { static FallbackDef d[256]; return d; }
 inline char *pending_query() { static char b[80]; return b; }
 
@@ -2822,11 +2939,19 @@ template<unsigned I> void fallback_at() {
     const FallbackDef &d = fallback_defs()[I];
     state().fallbacks++;
     note(d.name[0] ? d.name : "(unnamed import)");
-    // Loud: an import nothing implements is a hole in the model, and the only
-    // moment it is attributable to a name is when it is called.
-    std::printf("win32stubs: NO STUB for import \"%s\" -- the fallback returns "
-                "0 and cannot pop its arguments\n",
-                d.name[0] ? d.name : "(unnamed)");
+    if (d.known_arity) {
+        // Loud, and correct about the stack: the row the name resolved to says
+        // how many words the caller pushed.
+        std::printf("win32stubs: NO STUB for import \"%s\" -- the fallback pops "
+                    "%u argument word(s) from the import table and returns 0\n",
+                    d.name[0] ? d.name : "(unnamed)", (unsigned)d.nargs);
+    } else {
+        state().unbalanced++;
+        std::printf("win32stubs: NO STUB for import \"%s\" -- ARGUMENT COUNT "
+                    "UNKNOWN, so the fallback cannot pop its arguments and ESP "
+                    "drifts by 4 bytes per argument from here on\n",
+                    d.name[0] ? d.name : "(unnamed)");
+    }
     stub_done(d.nargs, 0u);   // 0 in EAX: unimplemented, and it says so
 }
 
@@ -2871,13 +2996,47 @@ inline Fn fallback_fn(unsigned i) {
 
 inline unsigned &fallback_slot() { static unsigned s = 0; return s; }
 
+// "KERNEL32!CloseHandle" -> the row it names, or -1. One matching rule for
+// stub_va() and the fallback, so the two cannot disagree about what a name
+// means.
+inline int find_row(const char *query) {
+    char dll[64], fn[80];
+    unsigned i = 0, j = 0;
+    for (; query[i] && query[i] != '!' && i + 1u < sizeof(dll); ++i) dll[i] = query[i];
+    dll[i] = 0;
+    if (query[i] == '!') ++i;
+    for (; query[i] && j + 1u < sizeof(fn); ++i) fn[j++] = query[i];
+    fn[j] = 0;
+    unsigned n = 0;
+    const ImportDef *t = imports(&n);
+    for (unsigned k = 0; k < n; ++k)
+        if (!std::strcmp(t[k].fn, fn) && same_dll(t[k].dll, dll)) return (int)k;
+    return -1;
+}
+
 inline u32 fallback_impl() {
     unsigned i = fallback_slot()++ % 256u;
     FallbackDef &d = fallback_defs()[i];
     std::strncpy(d.name, pending_query(), sizeof(d.name) - 1);
     d.name[sizeof(d.name) - 1] = 0;
-    d.nargs = 0;   // an unknown import has an unknown argument count
+    // Ask the table how many words this import owns. A name the table has no
+    // row for leaves the count unknown, and that is stated rather than guessed.
+    int row = find_row(pending_query());
+    unsigned n = 0;
+    const ImportDef *t = imports(&n);
+    d.known_arity = row >= 0;
+    d.nargs = row >= 0 ? t[row].nargs : 0u;
     state().fallback_names++;
+    if (row >= 0) {
+        std::printf("win32stubs: FALLBACK %s -- no stub of its own; the table's "
+                    "%u argument word(s) are popped, EAX is 0\n",
+                    d.name, (unsigned)d.nargs);
+    } else {
+        state().unbalanced_at_resolution++;
+        std::printf("win32stubs: FALLBACK %s -- NOT IN THE IMPORT TABLE: its "
+                    "argument count is unknown, so the modelled stack cannot be "
+                    "kept balanced if it is called\n", d.name);
+    }
     u32 va = alloc_stub_va();
     ts_register(va, fallback_fn(i));
     return va;
@@ -2893,24 +3052,28 @@ inline void register_impl() {
     registered() = true;
     unsigned n = 0;
     const ImportDef *t = imports(&n);
+    unsigned generic = 0;
     for (unsigned i = 0; i < n; ++i) {
         u32 va = alloc_stub_va();
         stub_vas()[i] = va;
         ts_register(va, t[i].real ? t[i].real : idx_stub_fn(i));
+        if (!t[i].real) ++generic;
     }
+    // One line, once, at the moment the table is bound: how much of the import
+    // layer is a real body and how much is a stub that only keeps the caller
+    // alive. Each generic import also names itself on first call; this is the
+    // count a reader needs before the first call happens.
+    std::printf("win32stubs: %u imports registered: %u with a body, %u generic "
+                "(a generic stub pops its table's arguments, returns its row's "
+                "value, and says so on first call)\n", n, n - generic, generic);
 }
 
 inline u32 stub_va_impl(const char *dll, const char *fn) {
     remember_query(dll, fn);
-    unsigned n = 0;
-    const ImportDef *t = imports(&n);
-    for (unsigned i = 0; i < n; ++i) {
-        if (!std::strcmp(t[i].fn, fn) && same_dll(t[i].dll, dll)) {
-            state().resolved++;
-            return stub_vas()[i];
-        }
-    }
-    return 0;
+    int row = find_row(pending_query());
+    if (row < 0) return 0;
+    state().resolved++;
+    return stub_vas()[row];
 }
 
 inline unsigned long &count_for_impl(const char *dll, const char *fn) {
@@ -2963,14 +3126,33 @@ inline void stub_report() {
     const w32::ImportDef *t = w32::imports(&n);
     unsigned real = 0;
     for (unsigned i = 0; i < n; ++i) if (t[i].real) ++real;
+    unsigned unresolved = w32::fallback_slot();
     std::printf("win32stubs: %u imports; %u with a hand-written body; "
-                "%u generic; %u stubs resolved; %lu calls; %lu fallbacks\n",
-                n, real, n - real, (unsigned)w32::state().resolved,
-                w32::state().calls, w32::state().fallbacks);
+                "%u generic; %u stubs resolved; %u FALLBACKS; %lu calls; "
+                "%lu fallback calls; %lu with an UNKNOWN argument count\n",
+                n, real, n - real, (unsigned)w32::state().resolved, unresolved,
+                w32::state().calls, w32::state().fallbacks,
+                w32::state().unbalanced + w32::state().unbalanced_at_resolution);
     for (unsigned i = 0; i < n; ++i) {
         unsigned long c = w32::counts()[i];
         if (c) std::printf("  %8lu  %s!%s\n", c, t[i].dll, t[i].fn);
     }
+    // An import that fell back is a hole in the table and the count alone does
+    // not say which one, so name every fallback and say whether its stack
+    // discipline is known.
+    for (unsigned i = 0; i < unresolved; ++i) {
+        const w32::FallbackDef &d = w32::fallback_defs()[i];
+        std::printf("  FALLBACK  %s -- %s\n", d.name,
+                    d.known_arity ? "argument count from the import table"
+                                  : "ARGUMENT COUNT UNKNOWN: stack unbalanced");
+    }
+    // The generic rows by name. They are correct about the stack and about the
+    // return value, and they are still unimplemented: a reader asking "what does
+    // this model not do yet" should not have to call them all to find out.
+    for (unsigned i = 0; i < n; ++i)
+        if (!t[i].real)
+            std::printf("  GENERIC   %s!%s (%u argument word(s))\n",
+                        t[i].dll, t[i].fn, (unsigned)t[i].nargs);
     // COM methods are not imports, so the ones served by a generic slot stub
     // are reported from the slot table: a DirectDraw wrapper's Blt, Flip and
     // Unlock calls land there, and a DirectDraw phase needs to see them by
