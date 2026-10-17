@@ -35,10 +35,9 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a5d9c; 4-byte store: mov dword ptr [esi], 0x6a5d9c
-    unsigned long m_004;  // +0x004 init 0x6a5cd4; 4-byte store: mov dword ptr [esi + 4], 0x6a5cd4
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
     unsigned char pad_008[0xc];
-    unsigned long m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], ecx
+    unsigned int m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], ecx
 
 };
 
