@@ -115,7 +115,21 @@ struct Machine {
     // outside .text it is an import (expected -- the model has no Windows),
     // inside .text it is a recovered function nothing registered (a defect).
     u32 text_lo, text_hi;
+    // An unregistered target inside .text is one of two very different things,
+    // and one .text range cannot tell them apart: inside a recovered span it is a
+    // recovered function nothing registered (a defect in this tree), and outside
+    // every span it is a call into bytes the disassembly never recovered (a gap
+    // in the recovery, reported by out/text_data.json). The recovered spans are
+    // therefore supplied by the generated registration unit and the two are
+    // counted separately.
     unsigned long unmapped_in_text;
+    unsigned long unmapped_in_gap;
+    // A tail transfer in flight: the VA a transcribed span continues at after
+    // it returns. A recovered `jmp` to another span, and a span whose last
+    // instruction does not transfer control, both continue the SAME invocation
+    // -- the original pushes no return address -- so the dispatcher in ts_call
+    // picks this up in place instead of nesting another host frame.
+    u32 tail;
     u16 fpu_status;
     // Segment registers and the interrupt-enable flag. This model is flat, so
     // segments never affect an address, but the recovered code does push, pop
@@ -214,6 +228,8 @@ inline void reset() {
     for (int i = 0; i < 8; ++i) { m.fault_reg[i].d = 0; m.fault_calls[i] = 0; }
     m.fault_calls_n = 0; m.call_depth_max = 0; m.recent_call_n = 0;
     m.unmapped_in_text = 0;
+    m.unmapped_in_gap = 0;
+    m.tail = 0;
     m.unmodelled_insns = 0;
     m.call_depth = 0;
     m.depth_exceeded = 0;
@@ -509,12 +525,48 @@ inline Fn ts_lookup(u32 va) {
     return 0;
 }
 
+// -- recovered code extents ---------------------------------------------------
+// The [lo, hi) ranges the tree has a transcription for, supplied once by the
+// generated register_all_recovered(). Sorted and non-overlapping, so a target can
+// be classified with a binary search rather than a guessed .text range.
+inline const u32 *&span_table() { static const u32 *p = 0; return p; }
+inline unsigned &span_count() { static unsigned n = 0; return n; }
+
+inline void set_recovered_spans(const u32 *pairs, unsigned n) {
+    span_table() = pairs;
+    span_count() = n;
+}
+
+inline bool in_recovered_span(u32 va) {
+    const u32 *p = span_table();
+    unsigned n = span_count();
+    unsigned lo = 0, hi = n;
+    while (lo < hi) {
+        unsigned mid = (lo + hi) / 2u;
+        if (va < p[2u * mid]) hi = mid;
+        else if (va >= p[2u * mid + 1u]) lo = mid + 1u;
+        else return true;
+    }
+    return false;
+}
+
 // A recovered `call` names a target VA. Nothing is registered by default: a
 // generated body is a member definition whose transcription reads the machine
 // model rather than its own C++ parameters, so making the whole program *execute*
 // is a separate step from transcribing it. An unregistered target is counted,
 // not guessed at. The registry exists so that step can be added without touching
 // a single generated line.
+// Where did an unregistered target come from? Inside a recovered span it is a
+// recovered function nothing registered, which is a defect; anywhere else in
+// .text it is bytes the recovery never covered. With no extent table supplied the
+// old, coarser rule stands, so a caller that does not register spans cannot
+// accidentally pass by classifying every defect as a gap.
+inline void count_unmapped_target(Machine &m, u32 va) {
+    if (!m.text_hi || va < m.text_lo || va >= m.text_hi) return;
+    if (span_count() == 0 || in_recovered_span(va)) ++m.unmapped_in_text;
+    else ++m.unmapped_in_gap;
+}
+
 inline void ts_call(u32 va) {
     Machine &m = mach();
     m.eip = va;
@@ -524,7 +576,7 @@ inline void ts_call(u32 va) {
     if (!f) {
         if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
         m.unmapped_calls++;
-        if (m.text_hi && va >= m.text_lo && va < m.text_hi) ++m.unmapped_in_text;
+        count_unmapped_target(m, va);
         return;
     }
     // Bound the depth. A recovered loop whose modelled condition never changes
@@ -536,12 +588,40 @@ inline void ts_call(u32 va) {
     if (m.call_depth >= m.call_depth_limit) { m.depth_exceeded++; return; }
     m.call_depth++;
     if (m.call_depth > m.call_depth_max) m.call_depth_max = m.call_depth;
-    f();
+    // Run the body, then honour any tail transfer it left behind. A tail
+    // transfer replaces the current frame rather than nesting one, so a chain of
+    // continuations -- or a loop that crosses a span boundary -- costs no host
+    // stack. Without this the continuation would have to be a nested ts_call,
+    // and such a loop would grow the host stack once per iteration.
+    m.tail = 0;
+    for (;;) {
+        f();
+        if (!m.tail) break;
+        va = m.tail;
+        m.tail = 0;
+        m.eip = va;
+        m.recent_calls[m.recent_call_n & 7u] = va;
+        ++m.recent_call_n;
+        f = ts_lookup(va);
+        if (!f) {
+            if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
+            m.unmapped_calls++;
+            count_unmapped_target(m, va);
+            break;
+        }
+    }
     m.call_depth--;
 }
 // A `call` pushes its return address before transferring, so the modelled stack
 // stays the shape the callee's transcription expects.
 inline void ts_call_at(u32 target, u32 ret) { push32(ret); ts_call(target); }
+
+// A transfer that does NOT push a return address, so the callee's `ret` pops the
+// caller's. Two cases in the recovered code are exactly that: a `jmp` to another
+// span, and the end of a span whose last instruction is not a transfer (the
+// original simply continues at the next address). Both name where to continue
+// and return; ts_call dispatches it in the frame already running.
+inline void ts_tail(u32 target) { mach().tail = target; }
 
 // Invoke a recovered function from hand-written code.
 //

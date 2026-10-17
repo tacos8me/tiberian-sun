@@ -51,11 +51,12 @@ def banner(va, f):
         sub_name(va), f["ninsn"], va)
 
 
-def render(va, f, image, stats=None):
+def render(va, f, image, stats=None, known=None):
     """The C++ body lines for one function, without the surrounding definition.
 
     `stats` is optional so the gate can re-render without perturbing the
-    coverage counters it is checking.
+    coverage counters it is checking. `known` is the set of every VA the tree
+    registers, and it decides whether a span's continuation can be dispatched.
     """
     items, st = emit_x86.transcribe(
         f.get("insns", []), image, va, f.get("end") or va + f["size"],
@@ -82,10 +83,67 @@ def render(va, f, image, stats=None):
         for extra in rest.split("\n"):
             if extra:
                 out.append("    " + extra)
-    # A recovered span can end without a `ret` (control falls through into the
-    # next function, which the linker's ordering makes legal). The transcription
-    # is void, so nothing has to be returned.
+    # A recovered span can end without a transfer: the disassembler stopped at a
+    # function boundary, but on the original control simply continues at the next
+    # address -- which is the next span. Dropping that continuation was a silent
+    # hole: the body returned instead, abandoning its frame, so its caller's
+    # callee-saved registers and stack were never restored and the run wandered
+    # off with whatever the abandoned frame happened to hold. It is a TAIL
+    # transfer, not a call: the original pushes no return address here.
+    insns = f.get("insns") or []
+    if insns and not ends_with_transfer(insns[-1]):
+        end = f.get("end") or va + f["size"]
+        if known is not None and end in known:
+            out.append("    ts::ts_tail(0x%08xu);   // span end 0x%08x: the "
+                       "last instruction" % (end, end))
+            out.append("    return;                //   here does not transfer "
+                       "control")
+            if stats is not None:
+                stats["continuations"] = stats.get("continuations", 0) + 1
     return out
+
+
+def control_flow_holes(fns, known):
+    """Span ends that fall through into bytes with no transcription.
+
+    A span whose last instruction does not transfer control continues at its end
+    address. `tail_entries` gives every such address a transcription when the
+    address lies inside a recovered span, so what is left here is either a
+    transcription gap or a recovery gap, and the two are not the same defect:
+
+      defects     -- the continuation is an instruction boundary inside another
+                     recovered span but nothing is registered there. The code
+                     exists and the tree cannot reach it, so a body that runs
+                     into it abandons its frame.
+      overlaps    -- the continuation is inside another span but not on an
+                     instruction boundary of it, so no transcription can start
+                     there. Two spans overlap, which is a defect in the
+                     disassembly rather than in the transcription.
+      unrecovered -- the continuation is in bytes no function covers. There is no
+                     transcription to continue into, which is a gap in the
+                     disassembly rather than in the transcription.
+    """
+    defects = []
+    overlaps = []
+    unrecovered = []
+    for f in fns:
+        insns = f.get("insns") or []
+        if not insns or ends_with_transfer(insns[-1]):
+            continue
+        end = f.get("end") or f["va"] + f["size"]
+        if end in known:
+            continue
+        inside = [g for g in fns if g["va"] < end < g["va"] + g["size"]]
+        if not inside:
+            unrecovered.append((f["va"], end))
+            continue
+        boundary = any(int(i.get("va", 0) or 0) == end
+                       for g in inside for i in g.get("insns", []))
+        if boundary:
+            defects.append((f["va"], end, inside[0]["va"]))
+        else:
+            overlaps.append((f["va"], end, inside[0]["va"]))
+    return defects, overlaps, unrecovered
 
 
 def insn_hook(rec):
@@ -104,6 +162,18 @@ def insn_hook(rec):
 
 BRANCH = ("jmp", "jecxz", "jcxz", "loop", "loope", "loopne")
 
+# Mnemonics after which control does NOT continue at the next address, so the end
+# of a span that holds one needs no continuation: `ret`/`retf` return, `jmp` goes
+# elsewhere, `int`/`int3` trap, `hlt` stops the machine and `ud2` is undefined.
+# Every other instruction falls through, which is why the span end matters.
+TRANSFER = ("ret", "retn", "retf", "iretd", "iret", "hlt", "int", "int3",
+            "ud2", "jmp", "ljmp")
+
+
+def ends_with_transfer(insn):
+    """Does this instruction leave control somewhere other than the next byte?"""
+    return (insn.get("mnem") or "").strip() in TRANSFER
+
 
 def tail_entries(fns):
     """VAs a cross-function branch targets that are not function starts.
@@ -119,7 +189,16 @@ def tail_entries(fns):
     need = set()
     for f in fns:
         lo, hi = f["va"], f["va"] + f["size"]
-        for i in f.get("insns", []):
+        # A span whose last instruction does not transfer control continues at its
+        # end address. If no function starts there, the continuation is still real
+        # code in the middle of another span and needs a transcription of its own,
+        # for the same reason a branch into the middle of a span does.
+        insns = f.get("insns") or []
+        if insns and not ends_with_transfer(insns[-1]):
+            end = f.get("end") or hi
+            if end not in starts:
+                need.add(end)
+        for i in insns:
             m = i.get("mnem", "")
             op = (i.get("op") or "").strip()
             if not op:
@@ -150,20 +229,39 @@ def build(outdir, image, stats):
 
     # Tail entries, described to render() exactly like a function so the rest of
     # the pipeline (banner, gate, registration) is unchanged.
+    #
+    # To a fixpoint: a continuation can land inside a span that is itself a tail
+    # entry, and that continuation needs its own transcription just as much. Each
+    # pass can only add addresses that are not already entries, so this
+    # terminates; the bound is a guard against a pathological input, not a
+    # working limit.
     tails = {}
-    for t, host in tail_entries([f for f in all_fns
-                                 if TEXT_LO <= f["va"] < TEXT_HI]).items():
-        insns = [i for i in host.get("insns", [])
-                 if int(i.get("va", 0) or 0) >= t]
-        if not insns:
-            continue
-        tails[t] = {"va": t, "size": host["va"] + host["size"] - t,
-                    "ninsn": len(insns), "insns": insns,
-                    "callees": host.get("callees") or [],
-                    "tail_of": host["va"]}
+    for _ in range(8):
+        added = 0
+        for t, host in tail_entries(fns + list(tails.values())).items():
+            if t in tails:
+                continue
+            insns = [i for i in host.get("insns", [])
+                     if int(i.get("va", 0) or 0) >= t]
+            if not insns:
+                continue
+            tails[t] = {"va": t, "size": host["va"] + host["size"] - t,
+                        "ninsn": len(insns), "insns": insns,
+                        "callees": host.get("callees") or [],
+                        "tail_of": host["va"]}
+            added += 1
+        if not added:
+            break
     for t, f in tails.items():
         fns.append(f)
     fns.sort(key=lambda f: f["va"])
+
+    # Every VA the tree registers. A span whose last instruction falls through
+    # continues at its end address, and that address is only reachable if
+    # something transcribed it: a function start, or a tail entry.
+    known = set(f["va"] for f in fns)
+    (stats["defects"], stats["overlaps"],
+     stats["unrecovered"]) = control_flow_holes(fns, known)
 
     files = {}
     registered = []
@@ -208,7 +306,7 @@ def build(outdir, image, stats):
             lines.append("//")
             lines.append("void %s(void)" % sub_name(va))
             lines.append("{")
-            lines.extend(render(va, f, image, stats))
+            lines.extend(render(va, f, image, stats, known))
             lines.append("}")
             lines.append("")
             registered.append(va)
@@ -265,8 +363,30 @@ def build(outdir, image, stats):
         "",
         "namespace ts {",
     ]
+    # The extents of recovered code, merged so the table stays small. The model
+    # uses it to tell "a recovered function nothing registered" from "a call into
+    # bytes the recovery never covered" -- two defects a .text range cannot
+    # distinguish. Merging only joins spans that touch, so a gap between two
+    # spans stays a gap.
+    spans = sorted((f["va"], f["va"] + f["size"]) for f in fns)
+    merged = []
+    for lo, hi in spans:
+        if merged and lo <= merged[-1][1]:
+            if hi > merged[-1][1]:
+                merged[-1][1] = hi
+        else:
+            merged.append([lo, hi])
     reg.append("namespace {")
     reg.append("struct Entry { u32 va; Fn fn; };")
+    reg.append("")
+    reg.append("// [lo, hi) per recovered extent, sorted and non-overlapping.")
+    reg.append("const u32 kRecoveredSpans[] = {")
+    for lo, hi in merged:
+        reg.append("    0x%08xu, 0x%08xu," % (lo, hi))
+    reg.append("};")
+    reg.append("const unsigned kRecoveredSpanCount =")
+    reg.append("    sizeof(kRecoveredSpans) / sizeof(kRecoveredSpans[0]) / 2;")
+    reg.append("")
     reg.append("const Entry kRecovered[] = {")
     for va in registered:
         reg.append("    { 0x%08xu, &sub::%s }," % (va, sub_name(va)))
@@ -278,6 +398,7 @@ def build(outdir, image, stats):
     reg.append("void register_all_recovered() {")
     reg.append("    for (unsigned i = 0; i < kRecoveredCount; ++i)")
     reg.append("        ts_register(kRecovered[i].va, kRecovered[i].fn);")
+    reg.append("    set_recovered_spans(kRecoveredSpans, kRecoveredSpanCount);")
     reg.append("}")
     reg.append("")
     reg.append("}  // namespace ts")
@@ -301,6 +422,7 @@ def gate(gendir, outdir, image, registered, batch_of, fns):
     """
     bad = []
     checked = 0
+    known = set(fns)
     for va in registered:
         f = fns[va]
         path = os.path.join(gendir, batch_of[va])
@@ -326,7 +448,7 @@ def gate(gendir, outdir, image, registered, batch_of, fns):
             continue
 
         got = text[body_lo:body_hi]
-        exp = "\n".join(render(va, f, image))
+        exp = "\n".join(render(va, f, image, known=known))
         if got != exp:
             gl = got.split("\n")
             el = exp.split("\n")
@@ -362,7 +484,9 @@ def main():
         print("gen_code: WARNING %s not found; indirect jumps will be recorded "
               "rather than resolved" % imgpath)
 
-    stats = {"modelled": 0, "unmodelled": 0, "unmod": {}}
+    stats = {"modelled": 0, "unmodelled": 0, "unmod": {},
+             "continuations": 0, "defects": [], "overlaps": [],
+             "unrecovered": []}
     files, registered, batch_of, fmap = build(outdir, image, stats)
 
     if not check_only:
@@ -388,6 +512,29 @@ def main():
         top = sorted(stats["unmod"], key=lambda x: -stats["unmod"][x])[:10]
         print("gen_code: unmodelled by mnemonic: " +
               ", ".join("%s=%d" % (k, stats["unmod"][k]) for k in top))
+    # Control-flow coverage, reported next to instruction coverage because it is
+    # the same kind of claim. Instruction coverage says every instruction of every
+    # transcribed span is rendered exactly once; it says nothing about whether the
+    # spans join up, and for 10,450 of them they did not: the body returned at the
+    # end of its span instead of continuing, abandoning its frame. A span that
+    # falls through into recovered code with nothing registered there is that
+    # defect, so it fails the run.
+    print("gen_code: control flow: %d span(s) continue into another span by tail "
+          "transfer, %d end inside another span's instruction (overlapping "
+          "spans, reported), %d end in bytes that were not recovered as code" %
+          (stats["continuations"], len(stats["overlaps"]),
+           len(stats["unrecovered"])))
+    for va, end, host in stats["overlaps"]:
+        print("gen_code:   span 0x%08x falls through to 0x%08x, which is inside "
+              "the span at 0x%08x but not on an instruction boundary" %
+              (va, end, host))
+    if stats["defects"]:
+        print("gen_code CONTROL-FLOW GATE FAILED for %d span(s) that fall "
+              "through into recovered code with no transcription there: %s" %
+              (len(stats["defects"]),
+               "; ".join("0x%08x -> 0x%08x (inside 0x%08x)" % d
+                         for d in stats["defects"][:5])))
+        return 1
     print("gen_code: %d translation units" % (len(files) - 1))
     if bad:
         print("gen_code FAITHFULNESS GATE FAILED for %d function(s): %s" %

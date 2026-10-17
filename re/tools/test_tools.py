@@ -90,7 +90,10 @@ def test_emit_loop_tail():
     items, _st = E.transcribe(insns, None, 0x2000, 0x2002, ret_type="")
     body = "\n".join(c for k, c, _ in items if k == "stmt")
     check("loop-tail-no-goto", "goto" not in body, body)
-    check("loop-tail-dispatch", "ts::ts_call" in body, body)
+    # A TAIL transfer, not a nested call: the transfer replaces the frame, so a
+    # jump chain or a span-crossing loop costs no host stack.
+    check("loop-tail-dispatch", "ts::ts_tail" in body, body)
+    check("loop-tail-not-nested", "ts::ts_call" not in body, body)
     # A target INSIDE the span is still a label.
     insns = [{"va": 0x2000, "mnem": "loop", "op": "0x2000", "bytes": "e2fe"}]
     items, _st = E.transcribe(insns, None, 0x2000, 0x2004, ret_type="")
