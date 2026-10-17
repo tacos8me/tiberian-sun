@@ -6,6 +6,12 @@ __pycache__/
 # The linked test program is a build product of tools/link_test.py.
 re/build/ts_link_test
 
+# The boot driver and its object cache are build products of tools/boot.py.
+# The cache is what makes a boot after a one-file edit take seconds instead of
+# ninety, so it is kept on disk and never committed.
+re/build/boot_driver
+re/build/boot_obj/
+
 # The layout-check translation unit and its report program are build products
 # of tools/gen_layout_check.py, regenerated on every run.
 re/build/layout_check.cpp
