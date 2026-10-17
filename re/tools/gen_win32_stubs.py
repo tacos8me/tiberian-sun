@@ -118,7 +118,7 @@ NARGS = {
     "GetTextExtentPoint32A": 4, "GetTextMetricsA": 2, "ModifyWorldTransform": 3,
     "RestoreDC": 2, "SaveDC": 1, "SelectObject": 2, "SetBkColor": 2,
     "SetBkMode": 2, "SetGraphicsMode": 2, "SetTextAlign": 2, "SetTextColor": 2,
-    "SetViewportOrgEx": 3, "SetWindowOrgEx": 3, "TextOutA": 5, "BitBlt": 9,
+    "SetViewportOrgEx": 4, "SetWindowOrgEx": 4, "TextOutA": 5, "BitBlt": 9,
     "StretchBlt": 11, "PatBlt": 6, "Rectangle": 7, "CreateCompatibleDC": 1,
     "CreateCompatibleBitmap": 3,
     # advapi32, shell32
