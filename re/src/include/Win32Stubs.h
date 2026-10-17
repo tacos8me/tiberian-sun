@@ -2566,7 +2566,12 @@ inline u32 make_surface() {
 }
 
 TS_BEGIN(sfs_GetSurfaceDesc)
-    // DDSURFACEDESC: +8 dwHeight, +12 dwWidth, +104 dwRGBBitCount.
+    // DDSURFACEDESC as THIS GAME reads it, taken from its own wrapper at
+    // 0x4874c0 / 0x487ad0: +8 dwHeight, +12 dwWidth, +0x10 lPitch,
+    // +0x24 lpSurface, +0x54 dwRGBBitCount. The wrapper computes
+    // bytes-per-pixel as (*(u32*)(desc+0x54) + 7) >> 3 and requires 2 for
+    // 16bpp; writing the bit count at +0x68 made that 0 and the game took its
+    // "Direct X" error path.
     u32 p = arg(1);
     if (p) {
         for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
@@ -2574,7 +2579,8 @@ TS_BEGIN(sfs_GetSurfaceDesc)
         st32(p + 4u, 0x00000041u);
         st32(p + 8u, SCREEN_H);
         st32(p + 12u, SCREEN_W);
-        st32(p + 104u, SCREEN_BPP);
+        st32(p + 16u, SCREEN_W * 2u);   // lPitch
+        st32(p + 0x54u, SCREEN_BPP);    // ddpfPixelFormat.dwRGBBitCount
     }
     stub_done(2, 0u);
 TS_END
@@ -2593,8 +2599,8 @@ TS_BEGIN(sfs_Lock)
         st32(p + 8u, SCREEN_H);
         st32(p + 12u, SCREEN_W);
         st32(p + 16u, SCREEN_W * 2u);   // lPitch: the surface's stride in bytes
-        st32(p + 20u, buffer);          // lpSurface
-        st32(p + 104u, SCREEN_BPP);
+        st32(p + 0x24u, buffer);        // lpSurface: the wrapper reads +0x24
+        st32(p + 0x54u, SCREEN_BPP);    // ddpfPixelFormat.dwRGBBitCount
     }
     stub_done(4, 0u);
 TS_END
