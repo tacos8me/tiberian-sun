@@ -196,7 +196,7 @@ void Tactical::As_Coord(int a0)
 // 77 instructions at 0x005f55d0, in src/generated/code/.
 // size 279 bytes; callees: 0x005f56ed, 0x005fa150, 0x00652ed0
 //
-void Tactical::AI(int a0, int a1, int a2, int a3, int a4)
+void Tactical::AI()
 {
     ts::sub::sub_005f55d0();
 }

@@ -209,7 +209,7 @@ void TiberiumClass::Init_Theater(int a0)
 // 111 instructions at 0x00628540, in src/generated/code/.
 // size 366 bytes; callees: 0x00405f20, 0x00418d20, 0x004483e0, 0x004d60b0, 0x004d6960, 0x004d6ed0, 0x005ba380, 0x005ba410, 0x005ba520, 0x005bb7d0, 0x006286be, 0x006837ea
 //
-void TiberiumClass::Read_INI(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void TiberiumClass::Read_INI(int a0)
 {
     ts::sub::sub_00628540();
 }

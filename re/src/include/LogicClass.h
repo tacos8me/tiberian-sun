@@ -19,15 +19,15 @@ class LogicClass : public LayerClass
 {
 public:
     // ---- vtable 0x00698704 (10 slots) ----
-    virtual void vfunc_1(int a0);  // [1] 0x00402540  // __stdcall
-    virtual void vfunc_2(int a0, int a1);  // [2] 0x004026c0  // __thiscall, returns int
-    virtual void vfunc_3();  // [3] 0x004024f0  // __thiscall
-    virtual void vfunc_4(int a0);  // [4] 0x00402770  // __stdcall
-    virtual void vfunc_5(int a0);  // [5] 0x00402520  // __stdcall, returns int
-    virtual void vfunc_6(int a0, int a1);  // [6] 0x004fad40  // __stdcall
-    virtual void vfunc_7();  // [7] 0x00402480  // __cdecl
-    virtual void vfunc_8();  // [8] 0x00402490  // __cdecl
-    virtual void vfunc_9(int a0, int a1);  // [9] 0x004fab40  // __stdcall
+    virtual void vfunc_1(int a0);  // [1] 0x00402540  // __thiscall, returns char
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004026c0  // __thiscall, returns char
+    virtual void vfunc_3();  // [3] 0x004024f0  // __thiscall, returns ?
+    virtual void vfunc_4(int a0);  // [4] 0x00402770  // __thiscall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x00402520  // __thiscall, returns int
+    virtual void vfunc_6(int a0, int a1);  // [6] 0x004fad40  // __stdcall, returns char
+    virtual void vfunc_7();  // [7] 0x00402480  // __thiscall, returns ?
+    virtual void vfunc_8();  // [8] 0x00402490  // __cdecl, returns void
+    virtual void vfunc_9(int a0, int a1);  // [9] 0x004fab40  // __stdcall, returns int
 
     LogicClass();  // 0x00402400
     virtual ~LogicClass();

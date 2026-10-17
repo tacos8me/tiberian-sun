@@ -55,7 +55,7 @@ void MSPrintAnim::vfunc_4(int a0, int a1)
 // 41 instructions at 0x005594a0, in src/generated/code/.
 // size 109 bytes; callees: 0x00412bb0, 0x0055951d
 //
-void MSPrintAnim::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void MSPrintAnim::vfunc_5(int a0, int a1)
 {
     ts::sub::sub_005594a0();
 }

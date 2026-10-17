@@ -84,7 +84,7 @@ void ToggleClass::vfunc_9()
 
 // ToggleClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::Input(int a0, int a1)
+void ToggleClass::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -217,7 +217,7 @@ void ToggleClass::Sticky_Process(int a0)
 
 // ToggleClass::Action -- ALIAS of MyButton::Action (same machine code at 0x0062a8c0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::Action(int a0)
+void ToggleClass::Action(int a0, int a1)
 {
     ts::sub::sub_0062a8c0();
 }

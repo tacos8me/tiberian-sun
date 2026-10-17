@@ -26,9 +26,9 @@ public:
     virtual void vfunc_5(int a0);  // [5] 0x004196a0  // __stdcall, returns int
     virtual void vfunc_6(int a0, int a1);  // [6] 0x004196b0  // __stdcall, returns int
     virtual void vfunc_7(int a0, int a1);  // [7] 0x00419700  // __stdcall, returns int
-    virtual void vfunc_8(int a0, int a1);  // [8] 0x00419750  // __stdcall
-    virtual void vfunc_9(int a0, int a1);  // [9] 0x00419600  // __stdcall
-    virtual void vfunc_10(int a0, int a1);  // [10] 0x00419680  // __stdcall
+    virtual void vfunc_8(int a0, int a1);  // [8] 0x00419750  // __stdcall, returns ?
+    virtual void vfunc_9(int a0, int a1);  // [9] 0x00419600  // __stdcall, returns ?
+    virtual void vfunc_10(int a0, int a1);  // [10] 0x00419680  // __stdcall, returns ?
 
     ApplicationClass();  // 0x00419400
     virtual ~ApplicationClass();

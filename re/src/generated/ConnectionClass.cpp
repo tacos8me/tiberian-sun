@@ -24,7 +24,7 @@
 // 10 instructions at 0x0045eb50, in src/generated/code/.
 // size 31 bytes; callees: 0x0045db40
 //
-void ConnectionClass::vfunc_1(int a0)
+void ConnectionClass::vfunc_1()
 {
     ts::sub::sub_0045eb50();
 }
@@ -34,7 +34,7 @@ void ConnectionClass::vfunc_1(int a0)
 // 14 instructions at 0x0045eb70, in src/generated/code/.
 // size 37 bytes; callees: 0x0045eb9f
 //
-void ConnectionClass::vfunc_2(int a0, int a1)
+void ConnectionClass::vfunc_2(int a0, int a1, int a2)
 {
     ts::sub::sub_0045eb70();
 }
@@ -84,7 +84,7 @@ void ConnectionClass::vfunc_6()
 // 127 instructions at 0x0045eeb0, in src/generated/code/.
 // size 353 bytes; callees: 0x0045dde0, 0x0045df60, 0x0045e200, 0x005f0b30
 //
-void ConnectionClass::vfunc_7(int a0, int a1)
+void ConnectionClass::vfunc_7()
 {
     ts::sub::sub_0045eeb0();
 }

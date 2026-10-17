@@ -31,7 +31,7 @@ void NullModemConnClass::vfunc_1()
 
 // NullModemConnClass::vfunc_2 -- ALIAS of ConnectionClass::vfunc_2 (same machine code at 0x0045eb70); the
 // forwarder is written once, at that declaration.
-void NullModemConnClass::vfunc_2(int a0, int a1)
+void NullModemConnClass::vfunc_2(int a0, int a1, int a2)
 {
     ts::sub::sub_0045eb70();
 }
@@ -66,7 +66,7 @@ void NullModemConnClass::vfunc_6()
 
 // NullModemConnClass::vfunc_7 -- ALIAS of ConnectionClass::vfunc_7 (same machine code at 0x0045eeb0); the
 // forwarder is written once, at that declaration.
-void NullModemConnClass::vfunc_7(int a0, int a1)
+void NullModemConnClass::vfunc_7()
 {
     ts::sub::sub_0045eeb0();
 }

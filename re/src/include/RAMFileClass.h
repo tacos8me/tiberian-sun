@@ -19,22 +19,22 @@ class RAMFileClass : public FileClass
 {
 public:
     // ---- vtable 0x006a3958 (17 slots) ----
-    virtual void vfunc_1();  // [1] 0x005a5c90  // __cdecl, returns int
-    virtual void vfunc_2(int a0);  // [2] 0x005a5ca0  // __stdcall
+    virtual void vfunc_1();  // [1] 0x005a5c90  // __cdecl, returns void*
+    virtual void vfunc_2(int a0);  // [2] 0x005a5ca0  // __thiscall, returns ?
     virtual void vfunc_3();  // [3] 0x005a5a20  // __thiscall, returns int
     virtual void vfunc_4();  // [4] 0x005a5a40  // __thiscall, returns int
-    virtual void vfunc_5(int a0);  // [5] 0x005a5a60  // __stdcall
-    virtual void vfunc_6();  // [6] 0x005a5a70  // __cdecl
-    virtual void vfunc_7(int a0);  // [7] 0x005a5a90  // __thiscall
-    virtual void vfunc_8(int a0, int a1);  // [8] 0x005a5a80  // __stdcall
-    virtual void vfunc_9(int a0, int a1);  // [9] 0x005a5ae0  // __thiscall
-    virtual void vfunc_10(int a0, int a1);  // [10] 0x005a5b60  // __thiscall
-    virtual void vfunc_11();  // [11] 0x005a5be0  // __cdecl
-    virtual void vfunc_12(int a0, int a1);  // [12] 0x005a5bf0  // __thiscall
-    virtual void vfunc_13();  // [13] 0x005a5c80  // __cdecl
+    virtual void vfunc_5(int a0);  // [5] 0x005a5a60  // __stdcall, returns char
+    virtual void vfunc_6();  // [6] 0x005a5a70  // __thiscall, returns char
+    virtual void vfunc_7(int a0);  // [7] 0x005a5a90  // __thiscall, returns int
+    virtual void vfunc_8(int a0, int a1);  // [8] 0x005a5a80  // __thiscall, returns ?
+    virtual void vfunc_9(int a0, int a1);  // [9] 0x005a5ae0  // __thiscall, returns ?
+    virtual void vfunc_10(int a0, int a1);  // [10] 0x005a5b60  // __thiscall, returns ?
+    virtual void vfunc_11();  // [11] 0x005a5be0  // __thiscall, returns ?
+    virtual void vfunc_12(int a0, int a1);  // [12] 0x005a5bf0  // __thiscall, returns ?
+    virtual void vfunc_13();  // [13] 0x005a5c80  // __thiscall, returns void
     virtual void vfunc_14();  // [14] 0x005a5cb0  // __cdecl, returns int
-    virtual void vfunc_15(int a0);  // [15] 0x005a5cc0  // __stdcall
-    virtual void vfunc_16(int a0, int a1, int a2);  // [16] 0x005a5cd0  // __stdcall
+    virtual void vfunc_15(int a0);  // [15] 0x005a5cc0  // __stdcall, returns char
+    virtual void vfunc_16(int a0, int a1, int a2);  // [16] 0x005a5cd0  // __stdcall, returns void
 
     RAMFileClass();  // 0x005a5990
     virtual ~RAMFileClass();

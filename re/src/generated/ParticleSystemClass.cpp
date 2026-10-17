@@ -369,7 +369,7 @@ void ParticleSystemClass::Sort_Y()
 
 // ParticleSystemClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void ParticleSystemClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -383,7 +383,7 @@ void ParticleSystemClass::Occupies_Cells()
 
 // ParticleSystemClass::Limbo -- ALIAS of BulletClass::vfunc_48 (same machine code at 0x0056f6a0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemClass::Limbo(int a0, int a1, int a2, int a3, int a4)
+void ParticleSystemClass::Limbo()
 {
     ts::sub::sub_0056f6a0();
 }
@@ -418,7 +418,7 @@ void ParticleSystemClass::Paradrop(int a0)
 
 // ParticleSystemClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void ParticleSystemClass::Fall_From_Height(int a0)
+void ParticleSystemClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -494,7 +494,7 @@ void ParticleSystemClass::Draw_Post_Render(int a0, int a1)
 // 26 instructions at 0x0058e500, in src/generated/code/.
 // size 91 bytes; callees: 0x0058e55d
 //
-void ParticleSystemClass::Draw_It(int a0, int a1)
+void ParticleSystemClass::Draw_It()
 {
     ts::sub::sub_0058e500();
 }
@@ -585,7 +585,7 @@ void ParticleSystemClass::Select()
 
 // ParticleSystemClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemClass::Unselect(int a0)
+void ParticleSystemClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -760,7 +760,7 @@ void ParticleSystemClass::Get_Target_Cell(int a0)
 
 // ParticleSystemClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void ParticleSystemClass::Get_Target_Cell_Ptr(int a0)
+void ParticleSystemClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }

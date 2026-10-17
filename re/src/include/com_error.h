@@ -18,7 +18,7 @@ class com_error
 {
 public:
     // ---- vtable 0x006a8c10 (1 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x00694082  // __thiscall
+    virtual void vfunc_0(int a0);  // [0] 0x00694082  // __thiscall, returns ?
 
     com_error();  // 0x00694050
     virtual ~com_error();

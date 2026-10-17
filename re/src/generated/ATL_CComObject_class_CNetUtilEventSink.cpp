@@ -54,7 +54,7 @@ void ATL_CComObject_class_CNetUtilEventSink::vfunc_3(int a0, int a1, int a2, int
 // 10 instructions at 0x0066ca60, in src/generated/code/.
 // size 31 bytes; callees: 0x0066ca86
 //
-void ATL_CComObject_class_CNetUtilEventSink::vfunc_4(int a0, int a1)
+void ATL_CComObject_class_CNetUtilEventSink::vfunc_4(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_0066ca60();
 }
@@ -74,7 +74,7 @@ void ATL_CComObject_class_CNetUtilEventSink::vfunc_5(int a0, int a1)
 // 29 instructions at 0x0066d040, in src/generated/code/.
 // size 83 bytes; callees: 0x00407a60, 0x0066d0ae
 //
-void ATL_CComObject_class_CNetUtilEventSink::vfunc_6(int a0, int a1, int a2, int a3, int a4, int a5)
+void ATL_CComObject_class_CNetUtilEventSink::vfunc_6(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
 {
     ts::sub::sub_0066d040();
 }

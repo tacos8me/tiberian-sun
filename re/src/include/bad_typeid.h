@@ -19,8 +19,8 @@ class bad_typeid : public exception
 {
 public:
     // ---- vtable 0x006a7d4c (2 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x00682f9c  // __thiscall
-    virtual void vfunc_1();  // [1] 0x006878ac  // __cdecl, returns int
+    virtual void vfunc_0(int a0);  // [0] 0x00682f9c  // __thiscall, returns ?
+    virtual void vfunc_1();  // [1] 0x006878ac  // __thiscall, returns void*
 
     bad_typeid();  // 0x00682f84
     virtual ~bad_typeid();

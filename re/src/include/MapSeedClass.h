@@ -19,10 +19,10 @@ class MapSeedClass : public LoadOptionsClass
 {
 public:
     // ---- vtable 0x006a1e24 (5 slots) ----
-    virtual void Read_INI(int a0);  // [1] 0x0052d760  // __thiscall  // refs "Description"
-    virtual void Read_INI(int a0, int a1);  // [2] 0x0052d4f0  // __thiscall  // refs "Description"
-    virtual void vfunc_3(int a0);  // [3] 0x0052da20  // __stdcall
-    virtual void vfunc_4(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13);  // [4] 0x0052da30
+    virtual void Read_INI(int a0);  // [1] 0x0052d760  // __thiscall, returns char  // refs "Description"
+    virtual void Read_INI(int a0, int a1);  // [2] 0x0052d4f0  // __thiscall, returns char  // refs "Description"
+    virtual void vfunc_3(int a0);  // [3] 0x0052da20  // __stdcall, returns ?
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x0052da30  // __stdcall, returns char
 
     MapSeedClass();  // 0x0052c500
     virtual ~MapSeedClass();

@@ -64,7 +64,7 @@ void ATL_CComObject_class_CDownloadEventSink::vfunc_4(int a0, int a1)
 // 34 instructions at 0x0066c760, in src/generated/code/.
 // size 108 bytes; callees: 0x0046ebd0, 0x006592f0, 0x0066c7e6, 0x00682aae
 //
-void ATL_CComObject_class_CDownloadEventSink::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5)
+void ATL_CComObject_class_CDownloadEventSink::vfunc_5(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0066c760();
 }
@@ -84,7 +84,7 @@ void ATL_CComObject_class_CDownloadEventSink::vfunc_6(int a0)
 // 13 instructions at 0x0066c830, in src/generated/code/.
 // size 46 bytes; callees: 0x0046ebd0, 0x0066c86e
 //
-void ATL_CComObject_class_CDownloadEventSink::vfunc_7(int a0)
+void ATL_CComObject_class_CDownloadEventSink::vfunc_7(int a0, int a1)
 {
     ts::sub::sub_0066c830();
 }

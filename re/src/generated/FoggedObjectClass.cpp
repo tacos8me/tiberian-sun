@@ -62,7 +62,7 @@ void FoggedObjectClass::IsDirty(int a0)
 // 137 instructions at 0x0049b420, in src/generated/code/.
 // size 411 bytes; callees: 0x00405710, 0x004058b0, 0x0049b5c5, 0x0049bc80, 0x005f36e0
 //
-void FoggedObjectClass::Load(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
+void FoggedObjectClass::Load(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_0049b420();
 }

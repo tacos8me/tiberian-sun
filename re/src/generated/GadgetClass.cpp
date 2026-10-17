@@ -84,7 +84,7 @@ void GadgetClass::vfunc_9()
 
 // GadgetClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void GadgetClass::Input(int a0, int a1)
+void GadgetClass::Input()
 {
     ts::sub::sub_004a5be0();
 }

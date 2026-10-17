@@ -19,11 +19,11 @@ class MSOverlayAnim : public MSFadeAnim
 {
 public:
     // ---- vtable 0x006a24c4 (6 slots) ----
-    virtual void vfunc_1(int a0);  // [1] 0x00557690  // __stdcall
-    virtual void vfunc_2();  // [2] 0x005576a0  // __thiscall
-    virtual void vfunc_3();  // [3] 0x005576f0  // __thiscall
-    virtual void vfunc_4(int a0, int a1, int a2);  // [4] 0x005586a0  // __thiscall
-    virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5);  // [5] 0x005588d0  // __thiscall
+    virtual void vfunc_1(int a0);  // [1] 0x00557690  // __thiscall, returns char
+    virtual void vfunc_2();  // [2] 0x005576a0  // __thiscall, returns ?
+    virtual void vfunc_3();  // [3] 0x005576f0  // __thiscall, returns void
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x005586a0  // __thiscall, returns char
+    virtual void vfunc_5(int a0, int a1);  // [5] 0x005588d0  // __thiscall, returns ?
 
     MSOverlayAnim();  // 0x00558660
     virtual ~MSOverlayAnim();

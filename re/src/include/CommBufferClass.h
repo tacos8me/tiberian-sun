@@ -18,7 +18,7 @@ class CommBufferClass
 {
 public:
     // ---- vtable 0x0069b094 (1 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x0045ea80  // __thiscall
+    virtual void vfunc_0(int a0);  // [0] 0x0045ea80  // __thiscall, returns ?
 
     CommBufferClass();  // 0x0045d980
     virtual ~CommBufferClass();

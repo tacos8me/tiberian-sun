@@ -354,7 +354,7 @@ void SmudgeClass::Sort_Y()
 
 // SmudgeClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void SmudgeClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void SmudgeClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -368,7 +368,7 @@ void SmudgeClass::Occupies_Cells()
 
 // SmudgeClass::Limbo -- ALIAS of BulletClass::vfunc_48 (same machine code at 0x0056f6a0); the
 // forwarder is written once, at that declaration.
-void SmudgeClass::Limbo(int a0, int a1, int a2, int a3, int a4)
+void SmudgeClass::Limbo()
 {
     ts::sub::sub_0056f6a0();
 }
@@ -403,7 +403,7 @@ void SmudgeClass::Paradrop(int a0)
 
 // SmudgeClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void SmudgeClass::Fall_From_Height(int a0)
+void SmudgeClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -570,7 +570,7 @@ void SmudgeClass::Select()
 
 // SmudgeClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void SmudgeClass::Unselect(int a0)
+void SmudgeClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -745,7 +745,7 @@ void SmudgeClass::Get_Target_Cell(int a0)
 
 // SmudgeClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void SmudgeClass::Get_Target_Cell_Ptr(int a0)
+void SmudgeClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }

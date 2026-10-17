@@ -111,6 +111,7 @@
 #include "HouseClass.cpp"
 #include "HouseTypeClass.cpp"
 #include "HoverLocomotionClass.cpp"
+#include "GenericNode.cpp"
 #include "INIClass_INIEntry.cpp"
 #include "INIClass_INISection.cpp"
 #include "IPXConnClass.cpp"

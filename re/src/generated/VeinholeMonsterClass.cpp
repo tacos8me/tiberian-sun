@@ -190,7 +190,7 @@ void VeinholeMonsterClass::As_Coord(int a0)
 // 28 instructions at 0x00643b20, in src/generated/code/.
 // size 80 bytes; callees: 0x0043a3a0, 0x004452f0, 0x00643b72
 //
-void VeinholeMonsterClass::AI(int a0, int a1, int a2)
+void VeinholeMonsterClass::AI()
 {
     ts::sub::sub_00643b20();
 }
@@ -357,7 +357,7 @@ void VeinholeMonsterClass::Sort_Y()
 
 // VeinholeMonsterClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void VeinholeMonsterClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void VeinholeMonsterClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -371,7 +371,7 @@ void VeinholeMonsterClass::Occupies_Cells()
 
 // VeinholeMonsterClass::Limbo -- ALIAS of BulletClass::vfunc_48 (same machine code at 0x0056f6a0); the
 // forwarder is written once, at that declaration.
-void VeinholeMonsterClass::Limbo(int a0, int a1, int a2, int a3, int a4)
+void VeinholeMonsterClass::Limbo()
 {
     ts::sub::sub_0056f6a0();
 }
@@ -406,7 +406,7 @@ void VeinholeMonsterClass::Paradrop(int a0)
 
 // VeinholeMonsterClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void VeinholeMonsterClass::Fall_From_Height(int a0)
+void VeinholeMonsterClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -567,7 +567,7 @@ void VeinholeMonsterClass::Select()
 
 // VeinholeMonsterClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void VeinholeMonsterClass::Unselect(int a0)
+void VeinholeMonsterClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -745,7 +745,7 @@ void VeinholeMonsterClass::Get_Target_Cell(int a0)
 
 // VeinholeMonsterClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void VeinholeMonsterClass::Get_Target_Cell_Ptr(int a0)
+void VeinholeMonsterClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }

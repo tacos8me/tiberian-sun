@@ -71,7 +71,7 @@ void AircraftClass::IsDirty(int a0)
 // 90 instructions at 0x0040df60, in src/generated/code/.
 // size 285 bytes; callees: 0x0040e087, 0x0040ec90, 0x0049c390, 0x004a1d80
 //
-void AircraftClass::Load(int a0, int a1, int a2)
+void AircraftClass::Load(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0040df60();
 }
@@ -98,7 +98,7 @@ void AircraftClass::GetSizeMax(int a0, int a1)
 // 49 instructions at 0x00407fb0, in src/generated/code/.
 // size 157 bytes; callees: 0x00492890, 0x00492960, 0x00492c10, 0x004bb850, 0x0060f180
 //
-void AircraftClass::Init(int a0)
+void AircraftClass::Init()
 {
     ts::sub::sub_00407fb0();
 }
@@ -215,7 +215,7 @@ void AircraftClass::On_Ground()
 // 22 instructions at 0x004a4a30, in src/generated/code/.
 // size 60 bytes; callees: 0x0047eb00, 0x004a4a7b
 //
-void AircraftClass::In_Air(int a0, int a1)
+void AircraftClass::In_Air()
 {
     ts::sub::sub_004a4a30();
 }
@@ -232,7 +232,7 @@ void AircraftClass::As_Coord(int a0)
 // 52 instructions at 0x00408850, in src/generated/code/.
 // size 142 bytes; callees: 0x004a16e0, 0x005111c0
 //
-void AircraftClass::AI(int a0, int a1, int a2, int a3)
+void AircraftClass::AI()
 {
     ts::sub::sub_00408850();
 }
@@ -278,11 +278,11 @@ void AircraftClass::What_Action(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_28 -- the body is the canonical transcription of
+// AircraftClass::What_Action -- the body is the canonical transcription of
 // 51 instructions at 0x0040ade0, in src/generated/code/.
 // size 145 bytes; callees: 0x00405980, 0x0040aeeb, 0x004a4360, 0x004b7310, 0x004c4fb0
 //
-void AircraftClass::vfunc_28(int a0, int a1, int a2)
+void AircraftClass::What_Action(int a0, int a1)
 {
     ts::sub::sub_0040ade0();
 }
@@ -312,7 +312,7 @@ void AircraftClass::Not_Underground()
 // 2 instructions at 0x0040e430, in src/generated/code/.
 // size 5 bytes; callees: none
 //
-void AircraftClass::Considered_Vehicle()
+void AircraftClass::Considered_Vehicle(int a0, int a1, int a2)
 {
     ts::sub::sub_0040e430();
 }
@@ -372,7 +372,7 @@ void AircraftClass::Can_Repair()
 // 70 instructions at 0x004a1080, in src/generated/code/.
 // size 199 bytes; callees: 0x00494170, 0x0067faf0
 //
-void AircraftClass::Can_Demolish(int a0, int a1, int a2, int a3, int a4)
+void AircraftClass::Can_Demolish()
 {
     ts::sub::sub_004a1080();
 }
@@ -482,7 +482,7 @@ void AircraftClass::Occupies_Cells()
 // 57 instructions at 0x004a1cc0, in src/generated/code/.
 // size 191 bytes; callees: 0x005020d0, 0x00611220, 0x006939b0
 //
-void AircraftClass::Limbo(int a0, int a1, int a2, int a3, int a4)
+void AircraftClass::Limbo()
 {
     ts::sub::sub_004a1cc0();
 }
@@ -492,7 +492,7 @@ void AircraftClass::Limbo(int a0, int a1, int a2, int a3, int a4)
 // 27 instructions at 0x004080d0, in src/generated/code/.
 // size 77 bytes; callees: 0x00408140, 0x00510f70, 0x00511350
 //
-void AircraftClass::Unlimbo(int a0, int a1, int a2)
+void AircraftClass::Unlimbo(int a0, int a1)
 {
     ts::sub::sub_004080d0();
 }
@@ -512,7 +512,7 @@ void AircraftClass::Detach_All(int a0)
 // 130 instructions at 0x00617760, in src/generated/code/.
 // size 361 bytes; callees: 0x00603730, 0x00646870
 //
-void AircraftClass::Record_The_Kill(int a0)
+void AircraftClass::Record_The_Kill(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00617760();
 }
@@ -532,7 +532,7 @@ void AircraftClass::Paradrop(int a0)
 // 52 instructions at 0x0056ea70, in src/generated/code/.
 // size 156 bytes; callees: 0x00473150, 0x004731a0, 0x0068309c, 0x006939b0
 //
-void AircraftClass::Fall_From_Height(int a0)
+void AircraftClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -612,7 +612,7 @@ void AircraftClass::Occupy_List(int a0)
 // 57 instructions at 0x00610880, in src/generated/code/.
 // size 163 bytes; callees: 0x00610933
 //
-void AircraftClass::Draw_Pre_Render(int a0, int a1, int a2, int a3, int a4)
+void AircraftClass::Draw_Pre_Render()
 {
     ts::sub::sub_00610880();
 }
@@ -622,7 +622,7 @@ void AircraftClass::Draw_Pre_Render(int a0, int a1, int a2, int a3, int a4)
 // 77 instructions at 0x0060fb90, in src/generated/code/.
 // size 230 bytes; callees: 0x00459da0, 0x0060fc8a
 //
-void AircraftClass::Draw_Post_Render(int a0, int a1, int a2, int a3, int a4, int a5)
+void AircraftClass::Draw_Post_Render(int a0, int a1)
 {
     ts::sub::sub_0060fb90();
 }
@@ -632,7 +632,7 @@ void AircraftClass::Draw_Post_Render(int a0, int a1, int a2, int a3, int a4, int
 // 209 instructions at 0x00408260, in src/generated/code/.
 // size 724 bytes; callees: 0x00408541, 0x00446e70, 0x00454d00, 0x004c4fb0, 0x00502060, 0x00510f70, 0x0051e760, 0x005f5030, 0x005f5120, 0x006939b0
 //
-void AircraftClass::Draw_It(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17)
+void AircraftClass::Draw_It(int a0, int a1, int a2)
 {
     ts::sub::sub_00408260();
 }
@@ -762,7 +762,7 @@ void AircraftClass::Select()
 // 39 instructions at 0x0056eda0, in src/generated/code/.
 // size 117 bytes; callees: 0x00478840, 0x00478860
 //
-void AircraftClass::Unselect(int a0)
+void AircraftClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -862,7 +862,7 @@ void AircraftClass::Assign_Mission(int a0)
 // 167 instructions at 0x0049fae0, in src/generated/code/.
 // size 569 bytes; callees: 0x0044f930, 0x00454d60, 0x0049fd23, 0x004b7310, 0x005020d0, 0x005072b0, 0x005111c0, 0x0061d8e0
 //
-void AircraftClass::Per_Cell_Process(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void AircraftClass::Per_Cell_Process(int a0)
 {
     ts::sub::sub_0049fae0();
 }
@@ -882,7 +882,7 @@ void AircraftClass::Who_Can_Build_Me(int a0, int a1)
 // 12 instructions at 0x0040be00, in src/generated/code/.
 // size 40 bytes; callees: none
 //
-void AircraftClass::Receive_Message(int a0, int a1)
+void AircraftClass::Receive_Message(int a0, int a1, int a2)
 {
     ts::sub::sub_0040be00();
 }
@@ -922,7 +922,7 @@ void AircraftClass::Sell_Back(int a0)
 // 31 instructions at 0x004a2cd0, in src/generated/code/.
 // size 106 bytes; callees: 0x004a2d5e, 0x00655a10
 //
-void AircraftClass::Set_Waypoint_Path(int a0)
+void AircraftClass::Set_Waypoint_Path(int a0, int a1)
 {
     ts::sub::sub_004a2cd0();
 }
@@ -1012,7 +1012,7 @@ void AircraftClass::Get_Target_Cell(int a0)
 // 26 instructions at 0x00570d50, in src/generated/code/.
 // size 81 bytes; callees: 0x005020d0
 //
-void AircraftClass::Get_Target_Cell_Ptr(int a0)
+void AircraftClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }
@@ -1422,7 +1422,7 @@ void AircraftClass::Is_Ready_To_Move()
 // 79 instructions at 0x00613d60, in src/generated/code/.
 // size 236 bytes; callees: 0x00459d80, 0x005020d0, 0x006468b0, 0x00646930
 //
-void AircraftClass::Is_Ready_To_Cloak(int a0, int a1, int a2)
+void AircraftClass::Is_Ready_To_Cloak()
 {
     ts::sub::sub_00613d60();
 }
@@ -1432,7 +1432,7 @@ void AircraftClass::Is_Ready_To_Cloak(int a0, int a1, int a2)
 // 82 instructions at 0x00613c60, in src/generated/code/.
 // size 246 bytes; callees: 0x00459d80, 0x005020d0, 0x006468b0, 0x00646930
 //
-void AircraftClass::Should_Uncloak(int a0, int a1, int a2)
+void AircraftClass::Should_Uncloak()
 {
     ts::sub::sub_00613c60();
 }
@@ -1462,7 +1462,7 @@ void AircraftClass::Is_Weapon_Equipped()
 // 31 instructions at 0x0061cfa0, in src/generated/code/.
 // size 84 bytes; callees: 0x005f82d0
 //
-void AircraftClass::Is_On_Elevation(int a0, int a1)
+void AircraftClass::Is_On_Elevation()
 {
     ts::sub::sub_0061cfa0();
 }
@@ -1502,7 +1502,7 @@ void AircraftClass::Pip_Count()
 // 25 instructions at 0x0061bf60, in src/generated/code/.
 // size 76 bytes; callees: 0x004c4ff0, 0x0067faf0
 //
-void AircraftClass::Refund_Amount(int a0)
+void AircraftClass::Refund_Amount()
 {
     ts::sub::sub_0061bf60();
 }
@@ -1582,7 +1582,7 @@ void AircraftClass::Get_Collateral_Damage()
 // 53 instructions at 0x004a1a50, in src/generated/code/.
 // size 178 bytes; callees: 0x004a1b06, 0x00617f30, 0x00618290, 0x00618420, 0x00618660, 0x006939b0
 //
-void AircraftClass::Get_Z_Adjust(int a0, int a1, int a2)
+void AircraftClass::Get_Z_Adjust()
 {
     ts::sub::sub_004a1a50();
 }
@@ -1602,7 +1602,7 @@ void AircraftClass::Get_Z_Gradient()
 // 33 instructions at 0x0061bd30, in src/generated/code/.
 // size 113 bytes; callees: 0x0046b380, 0x004b7310, 0x0061bdb6
 //
-void AircraftClass::Find_Docking_Bay(int a0, int a1, int a2)
+void AircraftClass::Find_Docking_Bay(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_0061bd30();
 }
@@ -1622,7 +1622,7 @@ void AircraftClass::Find_Exit_Cell(int a0, int a1)
 // 50 instructions at 0x0060efa0, in src/generated/code/.
 // size 159 bytes; callees: 0x005420b0, 0x0060f048, 0x0068309c, 0x006939b0
 //
-void AircraftClass::Turret_Coord(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void AircraftClass::Turret_Coord(int a0, int a1)
 {
     ts::sub::sub_0060efa0();
 }
@@ -1672,7 +1672,7 @@ void AircraftClass::Can_Attack_Now()
 // 159 instructions at 0x006161b0, in src/generated/code/.
 // size 557 bytes; callees: 0x004577f0, 0x005020d0, 0x0068309c
 //
-void AircraftClass::Can_Deploy_Now(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void AircraftClass::Can_Deploy_Now(int a0, int a1, int a2)
 {
     ts::sub::sub_006161b0();
 }
@@ -1782,7 +1782,7 @@ void AircraftClass::Response_Attack()
 // 14 instructions at 0x0040ad60, in src/generated/code/.
 // size 36 bytes; callees: 0x0040ad8e
 //
-void AircraftClass::Player_Assign_Mission(int a0, int a1, int a2, int a3)
+void AircraftClass::Player_Assign_Mission(int a0, int a1, int a2)
 {
     ts::sub::sub_0040ad60();
 }
@@ -1862,7 +1862,7 @@ void AircraftClass::Greatest_Threat(int a0, int a1, int a2)
 // 21 instructions at 0x006142e0, in src/generated/code/.
 // size 61 bytes; callees: 0x00502060, 0x00614348
 //
-void AircraftClass::Assign_Target(int a0, int a1)
+void AircraftClass::Assign_Target(int a0)
 {
     ts::sub::sub_006142e0();
 }
@@ -1892,7 +1892,7 @@ void AircraftClass::Captured(int a0)
 // 29 instructions at 0x00614530, in src/generated/code/.
 // size 89 bytes; callees: 0x00614612
 //
-void AircraftClass::Laser_Zap(int a0, int a1, int a2, int a3, int a4, int a5)
+void AircraftClass::Laser_Zap(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00614530();
 }
@@ -1902,7 +1902,7 @@ void AircraftClass::Laser_Zap(int a0, int a1, int a2, int a3, int a4, int a5)
 // 143 instructions at 0x0061c360, in src/generated/code/.
 // size 497 bytes; callees: 0x00492960, 0x00494170, 0x004941e0, 0x00494230, 0x0061c567
 //
-void AircraftClass::Rock(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void AircraftClass::Rock(int a0, int a1)
 {
     ts::sub::sub_0061c360();
 }
@@ -1962,7 +1962,7 @@ void AircraftClass::Rocking_AI()
 // 133 instructions at 0x0060f8f0, in src/generated/code/.
 // size 421 bytes; callees: 0x00459d80, 0x00459da0, 0x004e53f0, 0x00502060, 0x005020d0, 0x0068298c
 //
-void AircraftClass::Try_To_Cloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void AircraftClass::Try_To_Cloak()
 {
     ts::sub::sub_0060f8f0();
 }
@@ -1972,7 +1972,7 @@ void AircraftClass::Try_To_Cloak(int a0, int a1, int a2, int a3, int a4, int a5,
 // 47 instructions at 0x004a2880, in src/generated/code/.
 // size 159 bytes; callees: 0x004a29fb, 0x0061c9b0
 //
-void AircraftClass::Draw_Action_Line(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void AircraftClass::Draw_Action_Line()
 {
     ts::sub::sub_004a2880();
 }
@@ -2002,7 +2002,7 @@ void AircraftClass::Draw_Health_Bar_Old(int a0, int a1)
 // 208 instructions at 0x00610c50, in src/generated/code/.
 // size 636 bytes; callees: 0x0040e980, 0x00478f00, 0x00570280, 0x005f4dc0, 0x00610ed0, 0x0067faf0
 //
-void AircraftClass::Draw_Health_Bar(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
+void AircraftClass::Draw_Health_Bar(int a0, int a1)
 {
     ts::sub::sub_00610c50();
 }
@@ -2012,7 +2012,7 @@ void AircraftClass::Draw_Health_Bar(int a0, int a1, int a2, int a3, int a4, int 
 // 124 instructions at 0x0061b4f0, in src/generated/code/.
 // size 426 bytes; callees: 0x00446e70, 0x00478f00, 0x0061ba49
 //
-void AircraftClass::Draw_Pips(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void AircraftClass::Draw_Pips(int a0, int a1, int a2)
 {
     ts::sub::sub_0061b4f0();
 }
@@ -2132,7 +2132,7 @@ void AircraftClass::Plot_On_Radar()
 // 33 instructions at 0x0061df20, in src/generated/code/.
 // size 98 bytes; callees: 0x0051e620, 0x0061dfac
 //
-void AircraftClass::Update_Radar_Position(int a0, int a1, int a2, int a3, int a4)
+void AircraftClass::Update_Radar_Position(int a0, int a1, int a2)
 {
     ts::sub::sub_0061df20();
 }
@@ -2302,7 +2302,7 @@ void AircraftClass::Overrun_Square(int a0, int a1)
 // 43 instructions at 0x004a1c20, in src/generated/code/.
 // size 138 bytes; callees: 0x0061d8e0, 0x0067faf0
 //
-void AircraftClass::Current_Speed(int a0, int a1)
+void AircraftClass::Current_Speed()
 {
     ts::sub::sub_004a1c20();
 }
@@ -2312,7 +2312,7 @@ void AircraftClass::Current_Speed(int a0, int a1)
 // 49 instructions at 0x0049de30, in src/generated/code/.
 // size 132 bytes; callees: 0x0060ebd0
 //
-void AircraftClass::Approach_Target(int a0, int a1, int a2, int a3)
+void AircraftClass::Approach_Target(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21, int a22, int a23, int a24, int a25, int a26, int a27, int a28, int a29, int a30, int a31, int a32, int a33, int a34, int a35, int a36, int a37, int a38, int a39, int a40, int a41, int a42, int a43, int a44, int a45, int a46, int a47, int a48, int a49, int a50, int a51, int a52, int a53, int a54, int a55, int a56, int a57, int a58, int a59, int a60, int a61, int a62, int a63, int a64, int a65, int a66, int a67, int a68, int a69)
 {
     ts::sub::sub_0049de30();
 }

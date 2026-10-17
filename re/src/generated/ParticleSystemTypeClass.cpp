@@ -300,7 +300,7 @@ void ParticleSystemTypeClass::Occupy_List(int a0)
 
 // ParticleSystemTypeClass::Who_Can_Build_Me -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3, int a4, int a5)
+void ParticleSystemTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00571710();
 }

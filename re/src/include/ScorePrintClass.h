@@ -19,9 +19,9 @@ class ScorePrintClass : public ScoreAnimClass
 {
 public:
     // ---- vtable 0x006a3ecc (4 slots) ----
-    virtual void vfunc_1();  // [1] 0x005cde90  // __thiscall
-    virtual void vfunc_2();  // [2] 0x005cdee0  // __thiscall
-    virtual void vfunc_3(int a0);  // [3] 0x005cdbc0  // __thiscall
+    virtual void vfunc_1();  // [1] 0x005cde90  // __thiscall, returns ?
+    virtual void vfunc_2();  // [2] 0x005cdee0  // __thiscall, returns void
+    virtual void vfunc_3(int a0);  // [3] 0x005cdbc0  // __thiscall, returns char
 
     ScorePrintClass();  // 0x005ca16a
     virtual ~ScorePrintClass();

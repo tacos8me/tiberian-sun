@@ -44,7 +44,7 @@ void ScoreBigFontClass::vfunc_2(int a0)
 // 26 instructions at 0x005cd6e0, in src/generated/code/.
 // size 74 bytes; callees: 0x005cd736
 //
-void ScoreBigFontClass::vfunc_3(int a0, int a1, int a2)
+void ScoreBigFontClass::vfunc_3(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13)
 {
     ts::sub::sub_005cd6e0();
 }
@@ -54,7 +54,7 @@ void ScoreBigFontClass::vfunc_3(int a0, int a1, int a2)
 // 19 instructions at 0x005cd590, in src/generated/code/.
 // size 56 bytes; callees: 0x005cd5d4
 //
-void ScoreBigFontClass::vfunc_4(int a0, int a1, int a2, int a3, int a4)
+void ScoreBigFontClass::vfunc_4(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12)
 {
     ts::sub::sub_005cd590();
 }

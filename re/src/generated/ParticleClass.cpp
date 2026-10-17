@@ -357,7 +357,7 @@ void ParticleClass::Sort_Y()
 
 // ParticleClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void ParticleClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -371,7 +371,7 @@ void ParticleClass::Occupies_Cells()
 
 // ParticleClass::Limbo -- ALIAS of BulletClass::vfunc_48 (same machine code at 0x0056f6a0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Limbo(int a0, int a1, int a2, int a3, int a4)
+void ParticleClass::Limbo()
 {
     ts::sub::sub_0056f6a0();
 }
@@ -406,7 +406,7 @@ void ParticleClass::Paradrop(int a0)
 
 // ParticleClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Fall_From_Height(int a0)
+void ParticleClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -576,7 +576,7 @@ void ParticleClass::Select()
 
 // ParticleClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Unselect(int a0)
+void ParticleClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -751,7 +751,7 @@ void ParticleClass::Get_Target_Cell(int a0)
 
 // ParticleClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Get_Target_Cell_Ptr(int a0)
+void ParticleClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }
@@ -782,7 +782,7 @@ void ParticleClass::Get_Height()
 // 50 instructions at 0x0058db20, in src/generated/code/.
 // size 166 bytes; callees: 0x005f5120, 0x00652b50
 //
-void ParticleClass::Shape_Number(int a0)
+void ParticleClass::Shape_Number()
 {
     ts::sub::sub_0058db20();
 }

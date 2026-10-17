@@ -44,7 +44,7 @@ void WinModemClass::vfunc_2(int a0)
 // 26 instructions at 0x00658060, in src/generated/code/.
 // size 65 bytes; callees: none
 //
-void WinModemClass::vfunc_3(int a0)
+void WinModemClass::vfunc_3()
 {
     ts::sub::sub_00658060();
 }
@@ -54,7 +54,7 @@ void WinModemClass::vfunc_3(int a0)
 // 10 instructions at 0x006580b0, in src/generated/code/.
 // size 26 bytes; callees: 0x006580da
 //
-void WinModemClass::vfunc_4()
+void WinModemClass::vfunc_4(int a0)
 {
     ts::sub::sub_006580b0();
 }
@@ -64,7 +64,7 @@ void WinModemClass::vfunc_4()
 // 43 instructions at 0x00658480, in src/generated/code/.
 // size 143 bytes; callees: 0x005f0b30, 0x00658513
 //
-void WinModemClass::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14)
+void WinModemClass::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10)
 {
     ts::sub::sub_00658480();
 }
@@ -84,7 +84,7 @@ void WinModemClass::vfunc_6(int a0)
 // 91 instructions at 0x006588b0, in src/generated/code/.
 // size 278 bytes; callees: 0x005f0b30, 0x006582e0, 0x00658370, 0x006589d5
 //
-void WinModemClass::vfunc_7(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14)
+void WinModemClass::vfunc_7(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_006588b0();
 }

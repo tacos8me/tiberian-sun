@@ -18,15 +18,15 @@ class LinkClass
 {
 public:
     // ---- vtable 0x0069e7cc (10 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x004a5f90  // __thiscall
-    virtual void vfunc_1();  // [1] 0x004f6960  // __cdecl
-    virtual void vfunc_2();  // [2] 0x004f6970  // __cdecl
-    virtual void vfunc_3(int a0);  // [3] 0x004f69e0  // __stdcall
-    virtual void vfunc_4(int a0);  // [4] 0x004f6a20  // __thiscall
-    virtual void vfunc_5(int a0);  // [5] 0x004f6a00  // __thiscall
-    virtual void vfunc_6();  // [6] 0x004f6980  // __cdecl
-    virtual void vfunc_7();  // [7] 0x004f69b0  // __cdecl
-    virtual void vfunc_8();  // [8] 0x004f6930  // __cdecl, returns int
+    virtual void vfunc_0(int a0);  // [0] 0x004a5f90  // __thiscall, returns ?
+    virtual void vfunc_1();  // [1] 0x004f6960  // __thiscall, returns ?
+    virtual void vfunc_2();  // [2] 0x004f6970  // __thiscall, returns ?
+    virtual void vfunc_3(int a0);  // [3] 0x004f69e0  // __thiscall, returns ?
+    virtual void vfunc_4(int a0);  // [4] 0x004f6a20  // __thiscall, returns ?
+    virtual void vfunc_5(int a0);  // [5] 0x004f6a00  // __thiscall, returns ?
+    virtual void vfunc_6();  // [6] 0x004f6980  // __thiscall, returns ?
+    virtual void vfunc_7();  // [7] 0x004f69b0  // __thiscall, returns ?
+    virtual void vfunc_8();  // [8] 0x004f6930  // __thiscall, returns int
     virtual void vfunc_9();  // [9] 0x004f6a50  // __thiscall, returns int
 
     LinkClass();  // 0x004a59b0

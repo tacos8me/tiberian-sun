@@ -719,6 +719,16 @@
     "base_name": "What_Action",
     "mdisp": 0
    },
+   "28": {
+    "name": "What_Action",
+    "rule": "R13",
+    "signal": "derived slot 28 calls the base class's slot 28 target 0x4a4360, proving the override; name inherited from FootClass slot 28 (What_Action, displacement 0)",
+    "target": "0x40ade0",
+    "base": "FootClass",
+    "base_slot": 28,
+    "base_name": "What_Action",
+    "mdisp": 0
+   },
    "29": {
     "name": "In_Which_Layer",
     "rule": "R11",
@@ -7622,12 +7632,6 @@
     "rule": "R16",
     "signal": "slot 106 of BulletClass is entry 1 of the class's own declaration-order table (first slot 105); the recovered epilogue pops 1 stack word(s) and the declared signature implies 1",
     "target": "0x4451e0"
-   },
-   "107": {
-    "name": "Unlimbo",
-    "rule": "R16",
-    "signal": "slot 107 of BulletClass is entry 2 of the class's own declaration-order table (first slot 105); the target tail-jumps, so it has no epilogue to check; the declared signature implies 2 stack word(s)",
-    "target": "0x444050"
    }
   },
   "BulletTypeClass": {
@@ -33329,6 +33333,16 @@
     "base_name": "What_Action",
     "mdisp": 0
    },
+   "28": {
+    "name": "What_Action",
+    "rule": "R13",
+    "signal": "derived slot 28 calls the base class's slot 28 target 0x4a4360, proving the override; name inherited from FootClass slot 28 (What_Action, displacement 0)",
+    "target": "0x639020",
+    "base": "FootClass",
+    "base_slot": 28,
+    "base_name": "What_Action",
+    "mdisp": 0
+   },
    "29": {
     "name": "In_Which_Layer",
     "rule": "R11",
@@ -33710,16 +33724,6 @@
     "target": "0x633590",
     "base": "FootClass",
     "base_slot": 72,
-    "base_name": "Active_Click_With",
-    "mdisp": 0
-   },
-   "73": {
-    "name": "Active_Click_With",
-    "rule": "R11",
-    "signal": "direct base FootClass slot 73 named Active_Click_With (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
-    "target": "0x633520",
-    "base": "FootClass",
-    "base_slot": 73,
     "base_name": "Active_Click_With",
     "mdisp": 0
    },

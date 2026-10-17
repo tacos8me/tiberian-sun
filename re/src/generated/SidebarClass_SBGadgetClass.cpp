@@ -84,7 +84,7 @@ void SidebarClass_SBGadgetClass::vfunc_9()
 
 // SidebarClass_SBGadgetClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void SidebarClass_SBGadgetClass::Input(int a0, int a1)
+void SidebarClass_SBGadgetClass::Input()
 {
     ts::sub::sub_004a5be0();
 }

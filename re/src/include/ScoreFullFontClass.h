@@ -20,9 +20,9 @@ class ScoreFullFontClass : public ScoreFontClass
 public:
     // ---- vtable 0x006a3f30 (5 slots) ----
     virtual void vfunc_1(int a0);  // [1] 0x005cd4d0  // __thiscall, returns int
-    virtual void vfunc_2(int a0);  // [2] 0x005cd4a0  // __thiscall
-    virtual void vfunc_3(int a0, int a1, int a2);  // [3] 0x005cd6e0  // __thiscall
-    virtual void vfunc_4(int a0, int a1, int a2, int a3, int a4);  // [4] 0x005cd590  // __thiscall
+    virtual void vfunc_2(int a0);  // [2] 0x005cd4a0  // __thiscall, returns ?
+    virtual void vfunc_3(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13);  // [3] 0x005cd6e0  // __thiscall, returns void*
+    virtual void vfunc_4(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12);  // [4] 0x005cd590  // __thiscall, returns ?
 
     ScoreFullFontClass();  // 0x005cd830
     virtual ~ScoreFullFontClass();

@@ -363,7 +363,7 @@ void WaveClass::Sort_Y()
 
 // WaveClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void WaveClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void WaveClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -418,7 +418,7 @@ void WaveClass::Paradrop(int a0)
 
 // WaveClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void WaveClass::Fall_From_Height(int a0)
+void WaveClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -582,7 +582,7 @@ void WaveClass::Select()
 
 // WaveClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void WaveClass::Unselect(int a0)
+void WaveClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -757,7 +757,7 @@ void WaveClass::Get_Target_Cell(int a0)
 
 // WaveClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void WaveClass::Get_Target_Cell_Ptr(int a0)
+void WaveClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }

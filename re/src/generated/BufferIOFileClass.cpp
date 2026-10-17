@@ -104,7 +104,7 @@ void BufferIOFileClass::vfunc_8(int a0, int a1)
 // 51 instructions at 0x004208c0, in src/generated/code/.
 // size 144 bytes; callees: 0x00420958, 0x005a6600
 //
-void BufferIOFileClass::vfunc_9(int a0, int a1)
+void BufferIOFileClass::vfunc_9(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004208c0();
 }
@@ -154,7 +154,7 @@ void BufferIOFileClass::vfunc_13()
 // 23 instructions at 0x005a68f0, in src/generated/code/.
 // size 71 bytes; callees: none
 //
-void BufferIOFileClass::vfunc_14(int a0, int a1)
+void BufferIOFileClass::vfunc_14()
 {
     ts::sub::sub_005a68f0();
 }

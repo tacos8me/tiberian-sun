@@ -105,7 +105,7 @@ void CCFileClass::vfunc_9(int a0, int a1)
 // 11 instructions at 0x00447520, in src/generated/code/.
 // size 29 bytes; callees: 0x00447544
 //
-void CCFileClass::vfunc_10(int a0)
+void CCFileClass::vfunc_10(int a0, int a1)
 {
     ts::sub::sub_00447520();
 }
@@ -145,7 +145,7 @@ void CCFileClass::vfunc_13()
 // 51 instructions at 0x00447780, in src/generated/code/.
 // size 166 bytes; callees: 0x00420190, 0x00425020, 0x00425170, 0x0044df60, 0x0044e320, 0x00547a40, 0x005a68f0
 //
-void CCFileClass::vfunc_14(int a0, int a1, int a2, int a3, int a4, int a5)
+void CCFileClass::vfunc_14()
 {
     ts::sub::sub_00447780();
 }

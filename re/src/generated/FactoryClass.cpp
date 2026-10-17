@@ -199,7 +199,7 @@ void FactoryClass::As_Coord(int a0)
 // 51 instructions at 0x004930c0, in src/generated/code/.
 // size 156 bytes; callees: 0x0043a3a0, 0x00493163
 //
-void FactoryClass::AI(int a0)
+void FactoryClass::AI()
 {
     ts::sub::sub_004930c0();
 }

@@ -38,7 +38,7 @@ void BSurface::vfunc_2(int a0, int a1, int a2, int a3, int a4)
 // 45 instructions at 0x00675a70, in src/generated/code/.
 // size 144 bytes; callees: 0x00675b17, 0x00675ba0
 //
-void BSurface::vfunc_3(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13)
+void BSurface::vfunc_3(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_00675a70();
 }
@@ -88,7 +88,7 @@ void BSurface::vfunc_7(int a0, int a1, int a2)
 // 139 instructions at 0x006750d0, in src/generated/code/.
 // size 402 bytes; callees: 0x00675266
 //
-void BSurface::vfunc_8(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21)
+void BSurface::vfunc_8(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12)
 {
     ts::sub::sub_006750d0();
 }
@@ -178,7 +178,7 @@ void BSurface::vfunc_16(int a0, int a1, int a2, int a3)
 // 46 instructions at 0x00674650, in src/generated/code/.
 // size 118 bytes; callees: 0x006746ca
 //
-void BSurface::vfunc_17(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void BSurface::vfunc_17(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00674650();
 }

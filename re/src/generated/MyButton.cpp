@@ -84,7 +84,7 @@ void MyButton::vfunc_9()
 
 // MyButton::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void MyButton::Input(int a0, int a1)
+void MyButton::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -223,7 +223,7 @@ void MyButton::Sticky_Process(int a0)
 // 36 instructions at 0x0062a8c0, in src/generated/code/.
 // size 97 bytes; callees: 0x0062a930
 //
-void MyButton::Action(int a0)
+void MyButton::Action(int a0, int a1)
 {
     ts::sub::sub_0062a8c0();
 }
@@ -277,7 +277,7 @@ void MyButton::vfunc_34(int a0)
 // 191 instructions at 0x005a90a0, in src/generated/code/.
 // size 581 bytes; callees: 0x005e44a0, 0x005e4590, 0x00682aae
 //
-void MyButton::vfunc_35(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21, int a22, int a23)
+void MyButton::vfunc_35()
 {
     ts::sub::sub_005a90a0();
 }

@@ -34,7 +34,7 @@ void CD::vfunc_0(int a0)
 // 16 instructions at 0x0044c240, in src/generated/code/.
 // size 50 bytes; callees: 0x0044c2b1, 0x0046ebd0
 //
-void CD::vfunc_1(int a0, int a1)
+void CD::vfunc_1(int a0)
 {
     ts::sub::sub_0044c240();
 }

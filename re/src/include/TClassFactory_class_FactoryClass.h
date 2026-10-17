@@ -20,8 +20,8 @@ class TClassFactory_class_FactoryClass : public IClassFactory
 public:
     // ---- vtable 0x006a4dc0 (5 slots) ----
     virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x005edac0  // __stdcall, returns int
-    virtual void AddRef(int a0);  // [1] 0x005edb30  // __stdcall
-    virtual void Release(int a0);  // [2] 0x005edb50  // __stdcall
+    virtual void AddRef(int a0);  // [1] 0x005edb30  // __stdcall, returns int
+    virtual void Release(int a0);  // [2] 0x005edb50  // __stdcall, returns ?
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005edb80  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005edc00  // __stdcall, returns int
 

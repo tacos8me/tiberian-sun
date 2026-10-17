@@ -18,11 +18,11 @@ class MSAnim
 {
 public:
     // ---- vtable 0x006a2470 (6 slots) ----
-    virtual void vfunc_1(int a0);  // [1] 0x00557690  // __stdcall
-    virtual void vfunc_2();  // [2] 0x005576a0  // __thiscall
-    virtual void vfunc_3();  // [3] 0x005576f0  // __thiscall
-    virtual void vfunc_4();  // [4] 0x006829a5  // __cdecl
-    virtual void vfunc_5();  // [5] 0x006829a5  // __cdecl
+    virtual void vfunc_1(int a0);  // [1] 0x00557690  // __thiscall, returns char
+    virtual void vfunc_2();  // [2] 0x005576a0  // __thiscall, returns ?
+    virtual void vfunc_3();  // [3] 0x005576f0  // __thiscall, returns void
+    virtual void vfunc_4();  // [4] 0x006829a5  // __cdecl, returns void
+    virtual void vfunc_5();  // [5] 0x006829a5  // __cdecl, returns void
 
     MSAnim();  // 0x00557710
     virtual ~MSAnim();

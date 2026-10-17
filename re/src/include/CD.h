@@ -18,9 +18,9 @@ class CD : public DiskSwap
 {
 public:
     // ---- vtable 0x0069ac10 (3 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x0044c220  // __stdcall
-    virtual void vfunc_1(int a0, int a1);  // [1] 0x0044c240  // __thiscall
-    virtual void vfunc_2(int a0);  // [2] 0x0044c3b0  // __thiscall
+    virtual void vfunc_0(int a0);  // [0] 0x0044c220  // __stdcall, returns char
+    virtual void vfunc_1(int a0);  // [1] 0x0044c240  // __thiscall, returns ?
+    virtual void vfunc_2(int a0);  // [2] 0x0044c3b0  // __thiscall, returns char
 
     CD();  // 0x00447430
     virtual ~CD();

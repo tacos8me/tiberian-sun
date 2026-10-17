@@ -213,7 +213,7 @@ void TerrainTypeClass::Init_Theater(int a0)
 // 92 instructions at 0x00625280, in src/generated/code/.
 // size 327 bytes; callees: 0x004486f0, 0x004d70b0, 0x00547660, 0x00572610, 0x006253d8, 0x00683b18
 //
-void TerrainTypeClass::Read_INI(int a0, int a1, int a2, int a3)
+void TerrainTypeClass::Read_INI(int a0)
 {
     ts::sub::sub_00625280();
 }
@@ -309,7 +309,7 @@ void TerrainTypeClass::Occupy_List(int a0)
 
 // TerrainTypeClass::Who_Can_Build_Me -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
 // forwarder is written once, at that declaration.
-void TerrainTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3, int a4, int a5)
+void TerrainTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00571710();
 }

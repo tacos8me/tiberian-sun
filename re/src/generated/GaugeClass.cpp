@@ -84,7 +84,7 @@ void GaugeClass::vfunc_9()
 
 // GaugeClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::Input(int a0, int a1)
+void GaugeClass::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -206,7 +206,7 @@ void GaugeClass::Set_Size(int a0, int a1)
 // 67 instructions at 0x004a6b90, in src/generated/code/.
 // size 212 bytes; callees: 0x00460620, 0x00470d90, 0x004a5940, 0x004a6c70
 //
-void GaugeClass::Draw_Me(int a0, int a1, int a2, int a3)
+void GaugeClass::Draw_Me(int a0)
 {
     ts::sub::sub_004a6b90();
 }
@@ -297,7 +297,7 @@ void GaugeClass::vfunc_36()
 // 46 instructions at 0x004a6e90, in src/generated/code/.
 // size 127 bytes; callees: 0x00470d90
 //
-void GaugeClass::vfunc_37(int a0, int a1)
+void GaugeClass::vfunc_37()
 {
     ts::sub::sub_004a6e90();
 }

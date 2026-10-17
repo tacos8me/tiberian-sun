@@ -54,7 +54,7 @@ void MapSeedClass::vfunc_3(int a0)
 // 63 instructions at 0x0052da30, in src/generated/code/.
 // size 244 bytes; callees: 0x00403960, 0x00403980, 0x004473c0, 0x004d4700, 0x004d6ed0, 0x0052db33, 0x006829b0, 0x006849b0
 //
-void MapSeedClass::vfunc_4(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13)
+void MapSeedClass::vfunc_4(int a0, int a1)
 {
     ts::sub::sub_0052da30();
 }

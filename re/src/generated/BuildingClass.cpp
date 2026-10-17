@@ -208,7 +208,7 @@ void BuildingClass::As_Coord(int a0)
 // 82 instructions at 0x00428c30, in src/generated/code/.
 // size 288 bytes; callees: 0x00428d74, 0x00434830, 0x00612e10
 //
-void BuildingClass::AI(int a0)
+void BuildingClass::AI()
 {
     ts::sub::sub_00428c30();
 }
@@ -235,7 +235,7 @@ void BuildingClass::Visual_Character(int a0, int a1)
 // 6 instructions at 0x00434c20, in src/generated/code/.
 // size 24 bytes; callees: none
 //
-void BuildingClass::Get_Image_Data(int a0, int a1)
+void BuildingClass::Get_Image_Data()
 {
     ts::sub::sub_00434c20();
 }
@@ -420,7 +420,7 @@ void BuildingClass::Sort_Y()
 
 // BuildingClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void BuildingClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -437,7 +437,7 @@ void BuildingClass::Occupies_Cells()
 // 69 instructions at 0x0042cca0, in src/generated/code/.
 // size 208 bytes; callees: 0x0042cd75, 0x00435bb0, 0x00437e40, 0x00438cd0
 //
-void BuildingClass::Limbo(int a0, int a1, int a2, int a3)
+void BuildingClass::Limbo()
 {
     ts::sub::sub_0042cca0();
 }
@@ -464,7 +464,7 @@ void BuildingClass::Detach_All(int a0)
 
 // BuildingClass::Record_The_Kill -- ALIAS of AircraftClass::Record_The_Kill (same machine code at 0x00617760); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Record_The_Kill(int a0)
+void BuildingClass::Record_The_Kill(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00617760();
 }
@@ -478,7 +478,7 @@ void BuildingClass::Paradrop(int a0)
 
 // BuildingClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Fall_From_Height(int a0)
+void BuildingClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -549,14 +549,14 @@ void BuildingClass::Occupy_List(int a0)
 
 // BuildingClass::Draw_Pre_Render -- ALIAS of AircraftClass::Draw_Pre_Render (same machine code at 0x00610880); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Draw_Pre_Render(int a0, int a1, int a2, int a3, int a4)
+void BuildingClass::Draw_Pre_Render()
 {
     ts::sub::sub_00610880();
 }
 
 // BuildingClass::Draw_Post_Render -- ALIAS of AircraftClass::Draw_Post_Render (same machine code at 0x0060fb90); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Draw_Post_Render(int a0, int a1, int a2, int a3, int a4, int a5)
+void BuildingClass::Draw_Post_Render(int a0, int a1)
 {
     ts::sub::sub_0060fb90();
 }
@@ -620,7 +620,7 @@ void BuildingClass::Get_Visual_Rect(int a0)
 // 40 instructions at 0x004386e0, in src/generated/code/.
 // size 130 bytes; callees: 0x004387ed
 //
-void BuildingClass::Get_Render_Rect(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void BuildingClass::Get_Render_Rect(int a0)
 {
     ts::sub::sub_004386e0();
 }
@@ -630,7 +630,7 @@ void BuildingClass::Get_Render_Rect(int a0, int a1, int a2, int a3, int a4, int 
 // 187 instructions at 0x00439240, in src/generated/code/.
 // size 661 bytes; callees: 0x00412bb0, 0x004395c1, 0x00494170, 0x004c4fb0, 0x005f5120, 0x0067faf0
 //
-void BuildingClass::Draw_Radial_Indicator(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17)
+void BuildingClass::Draw_Radial_Indicator(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21, int a22, int a23, int a24, int a25, int a26, int a27, int a28, int a29, int a30, int a31, int a32, int a33, int a34, int a35, int a36, int a37, int a38, int a39, int a40, int a41, int a42, int a43, int a44, int a45, int a46, int a47, int a48, int a49, int a50, int a51, int a52, int a53, int a54, int a55, int a56, int a57, int a58, int a59, int a60, int a61, int a62, int a63, int a64, int a65, int a66, int a67, int a68, int a69, int a70, int a71, int a72, int a73, int a74, int a75, int a76, int a77, int a78, int a79, int a80, int a81, int a82, int a83, int a84, int a85, int a86, int a87, int a88, int a89, int a90, int a91, int a92, int a93, int a94, int a95, int a96, int a97, int a98, int a99, int a100, int a101, int a102, int a103, int a104, int a105, int a106, int a107, int a108, int a109, int a110, int a111, int a112, int a113, int a114, int a115, int a116, int a117, int a118, int a119, int a120, int a121, int a122, int a123, int a124, int a125, int a126, int a127, int a128, int a129, int a130, int a131, int a132, int a133, int a134, int a135, int a136, int a137, int a138, int a139, int a140, int a141, int a142, int a143, int a144, int a145, int a146, int a147, int a148, int a149, int a150, int a151, int a152, int a153, int a154, int a155, int a156, int a157, int a158, int a159, int a160, int a161, int a162, int a163, int a164, int a165, int a166, int a167, int a168, int a169, int a170, int a171, int a172, int a173, int a174, int a175, int a176, int a177, int a178, int a179, int a180, int a181, int a182, int a183, int a184, int a185, int a186, int a187)
 {
     ts::sub::sub_00439240();
 }
@@ -681,7 +681,7 @@ void BuildingClass::Select()
 
 // BuildingClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Unselect(int a0)
+void BuildingClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -794,7 +794,7 @@ void BuildingClass::Revealed(int a0)
 // 16 instructions at 0x0042db60, in src/generated/code/.
 // size 48 bytes; callees: 0x0042dbb8
 //
-void BuildingClass::Repair()
+void BuildingClass::Repair(int a0)
 {
     ts::sub::sub_0042db60();
 }
@@ -877,7 +877,7 @@ void BuildingClass::Get_Target_Cell(int a0)
 
 // BuildingClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Get_Target_Cell_Ptr(int a0)
+void BuildingClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }
@@ -908,7 +908,7 @@ void BuildingClass::Get_Height()
 // 20 instructions at 0x00546d20, in src/generated/code/.
 // size 57 bytes; callees: none
 //
-void BuildingClass::Commence(int a0)
+void BuildingClass::Commence()
 {
     ts::sub::sub_00546d20();
 }
@@ -989,7 +989,7 @@ void BuildingClass::Do_MISSION_GUARD_AREA()
 // 1 instructions at 0x004307a0, in src/generated/code/.
 // size 5 bytes; callees: 0x005467c0
 //
-void BuildingClass::Do_MISSION_HARVEST(int a0)
+void BuildingClass::Do_MISSION_HARVEST()
 {
     ts::sub::sub_004307a0();
 }
@@ -1043,7 +1043,7 @@ void BuildingClass::Do_MISSION_STOP()
 // 35 instructions at 0x00432460, in src/generated/code/.
 // size 127 bytes; callees: none
 //
-void BuildingClass::Do_MISSION_UNLOAD(int a0, int a1, int a2, int a3, int a4, int a5)
+void BuildingClass::Do_MISSION_UNLOAD()
 {
     ts::sub::sub_00432460();
 }
@@ -1063,7 +1063,7 @@ void BuildingClass::Do_MISSION_ENTER()
 // 51 instructions at 0x0042f580, in src/generated/code/.
 // size 178 bytes; callees: 0x0042e1d0, 0x00442030, 0x00492890
 //
-void BuildingClass::Do_MISSION_CONSTRUCTION(int a0)
+void BuildingClass::Do_MISSION_CONSTRUCTION()
 {
     ts::sub::sub_0042f580();
 }
@@ -1073,7 +1073,7 @@ void BuildingClass::Do_MISSION_CONSTRUCTION(int a0)
 // 103 instructions at 0x0042f720, in src/generated/code/.
 // size 381 bytes; callees: 0x004927b0, 0x00492960, 0x004c4ff0, 0x00647f00
 //
-void BuildingClass::Do_MISSION_DECONSTRUCTION(int a0, int a1, int a2, int a3, int a4)
+void BuildingClass::Do_MISSION_DECONSTRUCTION()
 {
     ts::sub::sub_0042f720();
 }
@@ -1083,7 +1083,7 @@ void BuildingClass::Do_MISSION_DECONSTRUCTION(int a0, int a1, int a2, int a3, in
 // 32 instructions at 0x004307b0, in src/generated/code/.
 // size 91 bytes; callees: 0x00435300
 //
-void BuildingClass::Do_MISSION_REPAIR(int a0, int a1, int a2)
+void BuildingClass::Do_MISSION_REPAIR()
 {
     ts::sub::sub_004307b0();
 }
@@ -1239,7 +1239,7 @@ void BuildingClass::Is_Ready_To_Move()
 // 97 instructions at 0x00439bf0, in src/generated/code/.
 // size 317 bytes; callees: 0x0043e6f0, 0x0043e700, 0x0044f930, 0x00452000, 0x005020d0, 0x00613d60
 //
-void BuildingClass::Is_Ready_To_Cloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10)
+void BuildingClass::Is_Ready_To_Cloak()
 {
     ts::sub::sub_00439bf0();
 }
@@ -1249,7 +1249,7 @@ void BuildingClass::Is_Ready_To_Cloak(int a0, int a1, int a2, int a3, int a4, in
 // 97 instructions at 0x00439d40, in src/generated/code/.
 // size 317 bytes; callees: 0x0043e6f0, 0x0043e700, 0x0044f930, 0x00452000, 0x005020d0, 0x00613c60
 //
-void BuildingClass::Should_Uncloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10)
+void BuildingClass::Should_Uncloak()
 {
     ts::sub::sub_00439d40();
 }
@@ -1273,7 +1273,7 @@ void BuildingClass::Is_Weapon_Equipped()
 
 // BuildingClass::Is_On_Elevation -- ALIAS of AircraftClass::Is_On_Elevation (same machine code at 0x0061cfa0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Is_On_Elevation(int a0, int a1)
+void BuildingClass::Is_On_Elevation()
 {
     ts::sub::sub_0061cfa0();
 }
@@ -1304,7 +1304,7 @@ void BuildingClass::Pip_Count()
 
 // BuildingClass::Refund_Amount -- ALIAS of AircraftClass::Refund_Amount (same machine code at 0x0061bf60); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Refund_Amount(int a0)
+void BuildingClass::Refund_Amount()
 {
     ts::sub::sub_0061bf60();
 }
@@ -1361,7 +1361,7 @@ void BuildingClass::How_Many_Survivors()
 // 48 instructions at 0x00439b70, in src/generated/code/.
 // size 122 bytes; callees: 0x0044fa70, 0x00502060
 //
-void BuildingClass::Scatter_Incoming_Infantry(int a0)
+void BuildingClass::Scatter_Incoming_Infantry()
 {
     ts::sub::sub_00439b70();
 }
@@ -1371,7 +1371,7 @@ void BuildingClass::Scatter_Incoming_Infantry(int a0)
 // 39 instructions at 0x00439a20, in src/generated/code/.
 // size 97 bytes; callees: 0x005f0dd0, 0x005f0df0, 0x0061dd70
 //
-void BuildingClass::Get_Collateral_Damage(int a0)
+void BuildingClass::Get_Collateral_Damage()
 {
     ts::sub::sub_00439a20();
 }
@@ -1398,7 +1398,7 @@ void BuildingClass::Get_Z_Gradient()
 
 // BuildingClass::Find_Docking_Bay -- ALIAS of AircraftClass::Find_Docking_Bay (same machine code at 0x0061bd30); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Find_Docking_Bay(int a0, int a1, int a2)
+void BuildingClass::Find_Docking_Bay(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_0061bd30();
 }
@@ -1462,7 +1462,7 @@ void BuildingClass::Can_Attack_Now()
 
 // BuildingClass::Can_Deploy_Now -- ALIAS of AircraftClass::Can_Deploy_Now (same machine code at 0x006161b0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Can_Deploy_Now(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void BuildingClass::Can_Deploy_Now(int a0, int a1, int a2)
 {
     ts::sub::sub_006161b0();
 }
@@ -1551,7 +1551,7 @@ void BuildingClass::Response_Attack()
 // 14 instructions at 0x00615820, in src/generated/code/.
 // size 36 bytes; callees: 0x00615882
 //
-void BuildingClass::Player_Assign_Mission(int a0)
+void BuildingClass::Player_Assign_Mission(int a0, int a1, int a2)
 {
     ts::sub::sub_00615820();
 }
@@ -1615,7 +1615,7 @@ void BuildingClass::Can_Fire(int a0, int a1)
 // 17 instructions at 0x0042d230, in src/generated/code/.
 // size 46 bytes; callees: 0x0042d262, 0x006572d0
 //
-void BuildingClass::Greatest_Threat(int a0)
+void BuildingClass::Greatest_Threat(int a0, int a1, int a2)
 {
     ts::sub::sub_0042d230();
 }
@@ -1635,7 +1635,7 @@ void BuildingClass::Assign_Target(int a0)
 // 64 instructions at 0x006148b0, in src/generated/code/.
 // size 216 bytes; callees: 0x00614994, 0x0068309c
 //
-void BuildingClass::Fire_At(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void BuildingClass::Fire_At(int a0, int a1)
 {
     ts::sub::sub_006148b0();
 }
@@ -1645,21 +1645,21 @@ void BuildingClass::Fire_At(int a0, int a1, int a2, int a3, int a4, int a5, int 
 // 177 instructions at 0x0042e7f0, in src/generated/code/.
 // size 615 bytes; callees: 0x0040e980, 0x0042ea7d, 0x00435bb0, 0x00446e70, 0x00494170, 0x004b2e90, 0x004c4fb0, 0x0063fd30, 0x00647f00, 0x0067faf0
 //
-void BuildingClass::Captured(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void BuildingClass::Captured(int a0)
 {
     ts::sub::sub_0042e7f0();
 }
 
 // BuildingClass::Laser_Zap -- ALIAS of AircraftClass::Laser_Zap (same machine code at 0x00614530); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Laser_Zap(int a0, int a1, int a2, int a3, int a4, int a5)
+void BuildingClass::Laser_Zap(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00614530();
 }
 
 // BuildingClass::Rock -- ALIAS of AircraftClass::Rock (same machine code at 0x0061c360); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Rock(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void BuildingClass::Rock(int a0, int a1)
 {
     ts::sub::sub_0061c360();
 }
@@ -1696,7 +1696,7 @@ void BuildingClass::Renovate()
 // 75 instructions at 0x00437570, in src/generated/code/.
 // size 248 bytes; callees: 0x004377c4
 //
-void BuildingClass::Cloaking_AI(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void BuildingClass::Cloaking_AI(int a0)
 {
     ts::sub::sub_00437570();
 }
@@ -1710,7 +1710,7 @@ void BuildingClass::Rocking_AI()
 
 // BuildingClass::Try_To_Cloak -- ALIAS of AircraftClass::Try_To_Cloak (same machine code at 0x0060f8f0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Try_To_Cloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void BuildingClass::Try_To_Cloak()
 {
     ts::sub::sub_0060f8f0();
 }
@@ -1730,7 +1730,7 @@ void BuildingClass::Draw_Action_Line()
 // 19 instructions at 0x00619490, in src/generated/code/.
 // size 46 bytes; callees: none
 //
-void BuildingClass::Draw_Voxel(int a0, int a1)
+void BuildingClass::Draw_Voxel(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_00619490();
 }
@@ -1744,14 +1744,14 @@ void BuildingClass::Draw_Health_Bar_Old(int a0, int a1)
 
 // BuildingClass::Draw_Health_Bar -- ALIAS of AircraftClass::Draw_Health_Bar (same machine code at 0x00610c50); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Draw_Health_Bar(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
+void BuildingClass::Draw_Health_Bar(int a0, int a1)
 {
     ts::sub::sub_00610c50();
 }
 
 // BuildingClass::Draw_Pips -- ALIAS of AircraftClass::Draw_Pips (same machine code at 0x0061b4f0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Draw_Pips(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void BuildingClass::Draw_Pips(int a0, int a1, int a2)
 {
     ts::sub::sub_0061b4f0();
 }
@@ -1836,7 +1836,7 @@ void BuildingClass::Radar_Track()
 // 35 instructions at 0x00439170, in src/generated/code/.
 // size 93 bytes; callees: 0x005a2b40, 0x005a3780
 //
-void BuildingClass::Radar_Untrack(int a0)
+void BuildingClass::Radar_Untrack()
 {
     ts::sub::sub_00439170();
 }
@@ -1846,14 +1846,14 @@ void BuildingClass::Radar_Untrack(int a0)
 // 37 instructions at 0x004391d0, in src/generated/code/.
 // size 102 bytes; callees: 0x005a34e0, 0x005a3780
 //
-void BuildingClass::Plot_On_Radar(int a0, int a1)
+void BuildingClass::Plot_On_Radar()
 {
     ts::sub::sub_004391d0();
 }
 
 // BuildingClass::Update_Radar_Position -- ALIAS of AircraftClass::Update_Radar_Position (same machine code at 0x0061df20); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Update_Radar_Position(int a0, int a1, int a2, int a3, int a4)
+void BuildingClass::Update_Radar_Position(int a0, int a1, int a2)
 {
     ts::sub::sub_0061df20();
 }
@@ -1863,7 +1863,7 @@ void BuildingClass::Update_Radar_Position(int a0, int a1, int a2, int a3, int a4
 // 23 instructions at 0x0042d2c0, in src/generated/code/.
 // size 74 bytes; callees: 0x0042d30c, 0x00570280
 //
-void BuildingClass::Grand_Opening(int a0, int a1, int a2)
+void BuildingClass::Grand_Opening(int a0)
 {
     ts::sub::sub_0042d2c0();
 }
@@ -1883,7 +1883,7 @@ void BuildingClass::Update_Buildables()
 // 218 instructions at 0x00426f30, in src/generated/code/.
 // size 709 bytes; callees: 0x004271fc, 0x004704c0, 0x004704e0, 0x00470560, 0x00470580, 0x004706a0, 0x005020d0, 0x0051e760, 0x00570280, 0x005f5030, 0x005f5120, 0x00618dd0, 0x0067faf0
 //
-void BuildingClass::Draw_Extras(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
+void BuildingClass::Draw_Extras(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10)
 {
     ts::sub::sub_00426f30();
 }
@@ -1893,7 +1893,7 @@ void BuildingClass::Draw_Extras(int a0, int a1, int a2, int a3, int a4, int a5, 
 // 20 instructions at 0x00428170, in src/generated/code/.
 // size 72 bytes; callees: 0x004281de
 //
-void BuildingClass::Aim_Direction(int a0, int a1, int a2)
+void BuildingClass::Aim_Direction(int a0, int a1)
 {
     ts::sub::sub_00428170();
 }
@@ -1903,7 +1903,7 @@ void BuildingClass::Aim_Direction(int a0, int a1, int a2)
 // 155 instructions at 0x00429ce0, in src/generated/code/.
 // size 571 bytes; callees: 0x00429f80, 0x00435bb0, 0x0043e6f0, 0x0043e700, 0x004b2e90, 0x005a5f10, 0x005e1c10, 0x0061a3e0, 0x00647220
 //
-void BuildingClass::Do_Destruction(int a0, int a1, int a2, int a3)
+void BuildingClass::Do_Destruction(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00429ce0();
 }

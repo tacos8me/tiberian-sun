@@ -19,8 +19,8 @@ class non_rtti_object : public bad_typeid
 {
 public:
     // ---- vtable 0x006a7d40 (2 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x00682f4b  // __thiscall
-    virtual void vfunc_1();  // [1] 0x006878ac  // __cdecl, returns int
+    virtual void vfunc_0(int a0);  // [0] 0x00682f4b  // __thiscall, returns ?
+    virtual void vfunc_1();  // [1] 0x006878ac  // __thiscall, returns void*
 
     non_rtti_object();  // 0x00682f29
     virtual ~non_rtti_object();

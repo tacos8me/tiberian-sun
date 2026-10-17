@@ -84,7 +84,7 @@ void EditClass::vfunc_9()
 
 // EditClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void EditClass::Input(int a0, int a1)
+void EditClass::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -252,7 +252,7 @@ void EditClass::vfunc_33()
 
 // EditClass::vfunc_34 -- ALIAS of DropListClass::vfunc_34 (same machine code at 0x0048ccd0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_34(int a0)
+void EditClass::vfunc_34()
 {
     ts::sub::sub_0048ccd0();
 }

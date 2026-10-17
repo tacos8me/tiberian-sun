@@ -18,15 +18,15 @@ class ConnectionClass
 {
 public:
     // ---- vtable 0x0069b09c (10 slots) ----
-    virtual void vfunc_1(int a0);  // [1] 0x0045eb50
-    virtual void vfunc_2(int a0, int a1);  // [2] 0x0045eb70  // __thiscall
+    virtual void vfunc_1();  // [1] 0x0045eb50  // __thiscall, returns int
+    virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x0045eb70  // __thiscall, returns int
     virtual void vfunc_3(int a0, int a1);  // [3] 0x0045ec10  // __thiscall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x0045edf0  // __thiscall, returns int
     virtual void vfunc_5();  // [5] 0x0045ee80  // __thiscall, returns int
     virtual void vfunc_6();  // [6] 0x0045f020  // __cdecl, returns int
-    virtual void vfunc_7(int a0, int a1);  // [7] 0x0045eeb0  // __thiscall, returns int
+    virtual void vfunc_7();  // [7] 0x0045eeb0  // __thiscall, returns int
     virtual void vfunc_8();  // [8] 0x0045f030  // __thiscall, returns int
-    virtual void vfunc_9();  // [9] 0x006829a5  // __cdecl
+    virtual void vfunc_9();  // [9] 0x006829a5  // __cdecl, returns void
 
     ConnectionClass();  // 0x0045eaa0
     virtual ~ConnectionClass();

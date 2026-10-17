@@ -84,7 +84,7 @@ void StaticButtonClass::vfunc_9()
 
 // StaticButtonClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::Input(int a0, int a1)
+void StaticButtonClass::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -247,7 +247,7 @@ void StaticButtonClass::vfunc_31(int a0, int a1)
 // 56 instructions at 0x005ef100, in src/generated/code/.
 // size 166 bytes; callees: 0x00422740, 0x00422800, 0x004250e0
 //
-void StaticButtonClass::vfunc_32(int a0, int a1, int a2, int a3)
+void StaticButtonClass::vfunc_32()
 {
     ts::sub::sub_005ef100();
 }

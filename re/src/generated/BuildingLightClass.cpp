@@ -199,7 +199,7 @@ void BuildingLightClass::As_Coord(int a0)
 // 35 instructions at 0x004217d0, in src/generated/code/.
 // size 108 bytes; callees: 0x00421ba3
 //
-void BuildingLightClass::AI(int a0, int a1, int a2, int a3)
+void BuildingLightClass::AI()
 {
     ts::sub::sub_004217d0();
 }
@@ -366,7 +366,7 @@ void BuildingLightClass::Sort_Y()
 
 // BuildingLightClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void BuildingLightClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void BuildingLightClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -421,7 +421,7 @@ void BuildingLightClass::Paradrop(int a0)
 
 // BuildingLightClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void BuildingLightClass::Fall_From_Height(int a0)
+void BuildingLightClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -494,7 +494,7 @@ void BuildingLightClass::Draw_Post_Render(int a0, int a1)
 // 67 instructions at 0x004211f0, in src/generated/code/.
 // size 219 bytes; callees: 0x004212d3, 0x00437dd0, 0x0051e760, 0x00577bd0, 0x00682997
 //
-void BuildingLightClass::Draw_It(int a0, int a1, int a2)
+void BuildingLightClass::Draw_It()
 {
     ts::sub::sub_004211f0();
 }
@@ -588,7 +588,7 @@ void BuildingLightClass::Select()
 
 // BuildingLightClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void BuildingLightClass::Unselect(int a0)
+void BuildingLightClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -763,7 +763,7 @@ void BuildingLightClass::Get_Target_Cell(int a0)
 
 // BuildingLightClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void BuildingLightClass::Get_Target_Cell_Ptr(int a0)
+void BuildingLightClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }

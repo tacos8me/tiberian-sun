@@ -156,6 +156,15 @@ def main():
         print("[2] combined TU: skipped (build/tu_all.cpp missing)")
 
     # 3. coverage
+    _reattr_path = os.path.join(outdir, "member_reattribution.json")
+    reattr = {}
+    if os.path.exists(_reattr_path):
+        with open(_reattr_path) as _f:
+            # keyed by the RTTI spelling in the artifact ("class X"); the
+            # manifest entry's ident is bare.
+            reattr = {k.replace("class ", ""): {int(o, 16) for o in v}
+                      for k, v in json.load(_f).items()}
+
     manp = os.path.join(outdir, "class_manifest.json")
     if os.path.exists(manp):
         man = json.load(open(manp))
@@ -558,6 +567,14 @@ def main():
                 if off is None:
                     continue
                 want.add(off)
+            # A derived constructor inlines its base's, and the bytes it writes
+            # inside the base sub-object belong to the BASE. The emitter moves
+            # those offsets to the base and records the move; the recovered
+            # table keeps the constructor's attribution. Without this the
+            # check reads a correct re-attribution as an invented offset.
+            # See out/member_reattribution.json.
+            for _off in reattr.get(m["ident"], ()):
+                want.add(_off)
             # Curated hand-written offsets are authoritative and often richer
             # than the recovered table; they are reported, not gated.
             emitted = emitted - curated

@@ -213,7 +213,7 @@ void SuperWeaponTypeClass::Init_Theater(int a0)
 // 26 instructions at 0x005f2f60, in src/generated/code/.
 // size 82 bytes; callees: 0x00405f20, 0x004d6ed0, 0x005f2fb4, 0x006576f0
 //
-void SuperWeaponTypeClass::Read_INI(int a0, int a1, int a2, int a3, int a4, int a5)
+void SuperWeaponTypeClass::Read_INI(int a0)
 {
     ts::sub::sub_005f2f60();
 }

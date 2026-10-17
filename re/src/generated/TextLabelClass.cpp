@@ -84,7 +84,7 @@ void TextLabelClass::vfunc_9()
 
 // TextLabelClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::Input(int a0, int a1)
+void TextLabelClass::Input()
 {
     ts::sub::sub_004a5be0();
 }

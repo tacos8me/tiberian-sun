@@ -19,42 +19,42 @@ class MyButton : public TextButtonClass
 {
 public:
     // ---- vtable 0x006a3a8c (37 slots) ----
-    virtual void vfunc_1();  // [1] 0x004a5b00
-    virtual void vfunc_2();  // [2] 0x004a5b10
-    virtual void vfunc_3(int a0);  // [3] 0x004f69e0  // __stdcall
-    virtual void vfunc_4(int a0);  // [4] 0x004f6a20  // __thiscall
-    virtual void vfunc_5(int a0);  // [5] 0x004f6a00  // __thiscall
-    virtual void vfunc_6();  // [6] 0x004f6980  // __cdecl
-    virtual void vfunc_7();  // [7] 0x004f69b0  // __cdecl
-    virtual void vfunc_8();  // [8] 0x004f6930  // __cdecl, returns int
-    virtual void vfunc_9();  // [9] 0x004a5ae0  // __thiscall
-    virtual void Input(int a0, int a1);  // [10] 0x004a5be0  // __thiscall
-    virtual void Draw_All(int a0);  // [11] 0x004a5bb0  // __thiscall
-    virtual void Delete_List();  // [12] 0x004a5b20  // __thiscall
+    virtual void vfunc_1();  // [1] 0x004a5b00  // __cdecl, returns ?
+    virtual void vfunc_2();  // [2] 0x004a5b10  // __cdecl, returns ?
+    virtual void vfunc_3(int a0);  // [3] 0x004f69e0  // __thiscall, returns ?
+    virtual void vfunc_4(int a0);  // [4] 0x004f6a20  // __thiscall, returns ?
+    virtual void vfunc_5(int a0);  // [5] 0x004f6a00  // __thiscall, returns ?
+    virtual void vfunc_6();  // [6] 0x004f6980  // __thiscall, returns ?
+    virtual void vfunc_7();  // [7] 0x004f69b0  // __thiscall, returns ?
+    virtual void vfunc_8();  // [8] 0x004f6930  // __thiscall, returns int
+    virtual void vfunc_9();  // [9] 0x004a5ae0  // __thiscall, returns ?
+    virtual void Input();  // [10] 0x004a5be0  // __thiscall, returns ?
+    virtual void Draw_All(int a0);  // [11] 0x004a5bb0  // __thiscall, returns ?
+    virtual void Delete_List();  // [12] 0x004a5b20  // __thiscall, returns ?
     virtual void Extract_Gadget(int a0);  // [13] 0x004a5de0  // __thiscall, returns int
-    virtual void Flag_List_To_Redraw();  // [14] 0x0045afe0  // __cdecl
-    virtual void Disable();  // [15] 0x004a5ad0  // __thiscall
-    virtual void Enable();  // [16] 0x004a5ac0
-    virtual void Get_ID();  // [17] 0x00460610  // __cdecl
-    virtual void Flag_To_Redraw();  // [18] 0x004a5e20  // __cdecl
-    virtual void Peer_To_Peer(int a0, int a1, int a2);  // [19] 0x00460650  // __stdcall
-    virtual void Set_Focus();  // [20] 0x004a5e60  // __thiscall
-    virtual void Clear_Focus();  // [21] 0x004a5e90  // __cdecl
-    virtual void Has_Focus();  // [22] 0x004a5eb0  // __cdecl, returns int
-    virtual void Is_List_To_Redraw();  // [23] 0x004a5ec0  // __cdecl, returns int
-    virtual void Is_To_Redraw();  // [24] 0x0045aff0  // __cdecl
-    virtual void Set_Position(int a0, int a1);  // [25] 0x004a5ee0  // __stdcall
-    virtual void Set_Size(int a0, int a1);  // [26] 0x004a5f00  // __stdcall
+    virtual void Flag_List_To_Redraw();  // [14] 0x0045afe0  // __cdecl, returns void
+    virtual void Disable();  // [15] 0x004a5ad0  // __thiscall, returns ?
+    virtual void Enable();  // [16] 0x004a5ac0  // __thiscall, returns ?
+    virtual void Get_ID();  // [17] 0x00460610  // __thiscall, returns ?
+    virtual void Flag_To_Redraw();  // [18] 0x004a5e20  // __thiscall, returns void
+    virtual void Peer_To_Peer(int a0, int a1, int a2);  // [19] 0x00460650  // __stdcall, returns void
+    virtual void Set_Focus();  // [20] 0x004a5e60  // __thiscall, returns ?
+    virtual void Clear_Focus();  // [21] 0x004a5e90  // __thiscall, returns ?
+    virtual void Has_Focus();  // [22] 0x004a5eb0  // __thiscall, returns ?
+    virtual void Is_List_To_Redraw();  // [23] 0x004a5ec0  // __thiscall, returns int
+    virtual void Is_To_Redraw();  // [24] 0x0045aff0  // __thiscall, returns char
+    virtual void Set_Position(int a0, int a1);  // [25] 0x004a5ee0  // __thiscall, returns ?
+    virtual void Set_Size(int a0, int a1);  // [26] 0x004a5f00  // __thiscall, returns int
     virtual void Draw_Me(int a0);  // [27] 0x005a9010  // __thiscall, returns int
-    virtual void Sticky_Process(int a0);  // [28] 0x004a5e30  // __stdcall
-    virtual void Action(int a0);  // [29] 0x0062a8c0  // __thiscall
-    virtual void Clicked_On(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __stdcall, returns int
-    virtual void vfunc_31(int a0);  // [31] 0x00460600  // __stdcall
-    virtual void vfunc_32(int a0, int a1);  // [32] 0x00626f00  // __thiscall
-    virtual void vfunc_33(int a0, int a1);  // [33] 0x00626eb0  // __thiscall
-    virtual void vfunc_34(int a0);  // [34] 0x005a9000  // __stdcall
-    virtual void vfunc_35(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21, int a22, int a23);  // [35] 0x005a90a0  // __thiscall
-    virtual void vfunc_36(int a0);  // [36] 0x005a92f0  // __stdcall  // refs "dlgsys"
+    virtual void Sticky_Process(int a0);  // [28] 0x004a5e30  // __thiscall, returns char
+    virtual void Action(int a0, int a1);  // [29] 0x0062a8c0  // __thiscall, returns int
+    virtual void Clicked_On(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __thiscall, returns int
+    virtual void vfunc_31(int a0);  // [31] 0x00460600  // __thiscall, returns ?
+    virtual void vfunc_32(int a0, int a1);  // [32] 0x00626f00  // __thiscall, returns ?
+    virtual void vfunc_33(int a0, int a1);  // [33] 0x00626eb0  // __thiscall, returns int
+    virtual void vfunc_34(int a0);  // [34] 0x005a9000  // __thiscall, returns ?
+    virtual void vfunc_35();  // [35] 0x005a90a0  // __thiscall, returns void*
+    virtual void vfunc_36(int a0);  // [36] 0x005a92f0  // __thiscall, returns ?  // refs "dlgsys"
 
     MyButton();  // 0x005a8a20
     virtual ~MyButton();

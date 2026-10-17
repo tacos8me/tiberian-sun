@@ -19,8 +19,8 @@ class RestateMission : public MSEngine
 {
 public:
     // ---- vtable 0x006a3a7c (3 slots) ----
-    virtual void vfunc_1(int a0);  // [1] 0x005a8d30  // __thiscall
-    virtual void vfunc_2();  // [2] 0x0055cc40  // __cdecl
+    virtual void vfunc_1(int a0);  // [1] 0x005a8d30  // __thiscall, returns ?
+    virtual void vfunc_2();  // [2] 0x0055cc40  // __cdecl, returns void
 
     RestateMission();  // 0x005a80c0
     virtual ~RestateMission();

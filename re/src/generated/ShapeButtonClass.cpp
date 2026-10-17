@@ -84,7 +84,7 @@ void ShapeButtonClass::vfunc_9()
 
 // ShapeButtonClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::Input(int a0, int a1)
+void ShapeButtonClass::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -206,7 +206,7 @@ void ShapeButtonClass::Set_Size(int a0, int a1)
 // 19 instructions at 0x005d7ad0, in src/generated/code/.
 // size 52 bytes; callees: 0x00460620, 0x005d7b20
 //
-void ShapeButtonClass::Draw_Me()
+void ShapeButtonClass::Draw_Me(int a0)
 {
     ts::sub::sub_005d7ad0();
 }
@@ -220,7 +220,7 @@ void ShapeButtonClass::Sticky_Process(int a0)
 
 // ShapeButtonClass::Action -- ALIAS of MyButton::Action (same machine code at 0x0062a8c0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::Action(int a0)
+void ShapeButtonClass::Action(int a0, int a1)
 {
     ts::sub::sub_0062a8c0();
 }

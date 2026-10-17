@@ -19,19 +19,19 @@ class CStreamClass : public IStream, public ILinkStream
 public:
     // ---- vtable 0x0069b91c (15 slots) ----
     virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x0046e1b0  // __stdcall, returns int
-    virtual void AddRef(int a0);  // [1] 0x0046e150  // __stdcall
-    virtual void Release(int a0);  // [2] 0x0046e170  // __stdcall
+    virtual void AddRef(int a0);  // [1] 0x0046e150  // __stdcall, returns int
+    virtual void Release(int a0);  // [2] 0x0046e170  // __stdcall, returns ?
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x0046e380  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1, int a2, int a3);  // [4] 0x0046e4f0  // __stdcall, returns int
-    virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4);  // [5] 0x0046e620  // __stdcall
-    virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x0046e670  // __stdcall
-    virtual void vfunc_7(int a0, int a1, int a2, int a3, int a4, int a5);  // [7] 0x0046e6c0  // __stdcall
-    virtual void vfunc_8(int a0, int a1);  // [8] 0x0046e700  // __stdcall
-    virtual void vfunc_9(int a0);  // [9] 0x0046e730  // __stdcall
-    virtual void vfunc_10(int a0, int a1, int a2, int a3, int a4, int a5);  // [10] 0x0046e760  // __stdcall
-    virtual void vfunc_11(int a0, int a1, int a2, int a3, int a4, int a5);  // [11] 0x0046e7a0  // __stdcall
-    virtual void vfunc_12(int a0, int a1, int a2);  // [12] 0x0046e7e0  // __stdcall
-    virtual void vfunc_13(int a0, int a1);  // [13] 0x0046e810  // __stdcall
+    virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4);  // [5] 0x0046e620  // __stdcall, returns ?
+    virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x0046e670  // __stdcall, returns ?
+    virtual void vfunc_7(int a0, int a1, int a2, int a3, int a4, int a5);  // [7] 0x0046e6c0  // __stdcall, returns ?
+    virtual void vfunc_8(int a0, int a1);  // [8] 0x0046e700  // __stdcall, returns ?
+    virtual void vfunc_9(int a0);  // [9] 0x0046e730  // __stdcall, returns ?
+    virtual void vfunc_10(int a0, int a1, int a2, int a3, int a4, int a5);  // [10] 0x0046e760  // __stdcall, returns ?
+    virtual void vfunc_11(int a0, int a1, int a2, int a3, int a4, int a5);  // [11] 0x0046e7a0  // __stdcall, returns ?
+    virtual void vfunc_12(int a0, int a1, int a2);  // [12] 0x0046e7e0  // __stdcall, returns ?
+    virtual void vfunc_13(int a0, int a1);  // [13] 0x0046e810  // __stdcall, returns ?
 
     CStreamClass();  // 0x0046e040
     virtual ~CStreamClass();

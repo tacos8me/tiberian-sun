@@ -17,7 +17,7 @@ The per-class `.cpp` files here hold **forwarders**: the out-of-line definitions
 | forwarders emitted (every declaring name) | 6961 |
 | distinct machine functions among those | 3023 |
 | alias definitions (same machine code) | 3938 |
-| destructor stubs (declared, no recovered VA) | 228 |
+| destructor stubs (declared, no recovered VA) | 229 |
 | skipped: duplicate | 0 |
 | skipped: nested_class_covered | 6 |
 | skipped: no_function_record | 6 |

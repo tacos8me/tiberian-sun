@@ -196,7 +196,7 @@ void VoxelAnimClass::As_Coord(int a0)
 // 18 instructions at 0x00640b10, in src/generated/code/.
 // size 40 bytes; callees: none
 //
-void VoxelAnimClass::AI(int a0, int a1)
+void VoxelAnimClass::AI()
 {
     ts::sub::sub_00640b10();
 }
@@ -363,7 +363,7 @@ void VoxelAnimClass::Sort_Y()
 
 // VoxelAnimClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void VoxelAnimClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -377,7 +377,7 @@ void VoxelAnimClass::Occupies_Cells()
 
 // VoxelAnimClass::Limbo -- ALIAS of BulletClass::vfunc_48 (same machine code at 0x0056f6a0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimClass::Limbo(int a0, int a1, int a2, int a3, int a4)
+void VoxelAnimClass::Limbo()
 {
     ts::sub::sub_0056f6a0();
 }
@@ -412,7 +412,7 @@ void VoxelAnimClass::Paradrop(int a0)
 
 // VoxelAnimClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void VoxelAnimClass::Fall_From_Height(int a0)
+void VoxelAnimClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -491,7 +491,7 @@ void VoxelAnimClass::Draw_Post_Render(int a0, int a1)
 // 69 instructions at 0x00640770, in src/generated/code/.
 // size 233 bytes; callees: 0x00502060, 0x00510f70, 0x0051e760, 0x00640867
 //
-void VoxelAnimClass::Draw_It(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void VoxelAnimClass::Draw_It(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00640770();
 }
@@ -582,7 +582,7 @@ void VoxelAnimClass::Select()
 
 // VoxelAnimClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimClass::Unselect(int a0)
+void VoxelAnimClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -757,7 +757,7 @@ void VoxelAnimClass::Get_Target_Cell(int a0)
 
 // VoxelAnimClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void VoxelAnimClass::Get_Target_Cell_Ptr(int a0)
+void VoxelAnimClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }

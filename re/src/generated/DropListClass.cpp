@@ -99,7 +99,7 @@ void DropListClass::vfunc_9()
 
 // DropListClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void DropListClass::Input(int a0, int a1)
+void DropListClass::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -165,7 +165,7 @@ void DropListClass::Flag_To_Redraw()
 // 21 instructions at 0x0047ee80, in src/generated/code/.
 // size 62 bytes; callees: 0x0047ef0d
 //
-void DropListClass::Peer_To_Peer(int a0, int a1)
+void DropListClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_0047ee80();
 }
@@ -294,7 +294,7 @@ void DropListClass::vfunc_33()
 // 15 instructions at 0x0048ccd0, in src/generated/code/.
 // size 51 bytes; callees: 0x00470d90
 //
-void DropListClass::vfunc_34(int a0)
+void DropListClass::vfunc_34()
 {
     ts::sub::sub_0048ccd0();
 }
@@ -344,7 +344,7 @@ void DropListClass::vfunc_38()
 // 3 instructions at 0x0047edc0, in src/generated/code/.
 // size 18 bytes; callees: none
 //
-void DropListClass::vfunc_39()
+void DropListClass::vfunc_39(int a0, int a1, int a2)
 {
     ts::sub::sub_0047edc0();
 }
@@ -374,7 +374,7 @@ void DropListClass::vfunc_41(int a0)
 // 3 instructions at 0x0047f330, in src/generated/code/.
 // size 18 bytes; callees: none
 //
-void DropListClass::vfunc_42()
+void DropListClass::vfunc_42(int a0)
 {
     ts::sub::sub_0047f330();
 }

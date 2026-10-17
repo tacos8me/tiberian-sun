@@ -120,7 +120,7 @@ void FootClass::Fetch_Object_Size()
 // 121 instructions at 0x004a23c0, in src/generated/code/.
 // size 368 bytes; callees: 0x0046d660, 0x0046d680, 0x0046d6c0, 0x00494170, 0x004a2532, 0x0061ccf0, 0x0067faf0
 //
-void FootClass::Compute_CRC(int a0, int a1, int a2)
+void FootClass::Compute_CRC(int a0)
 {
     ts::sub::sub_004a23c0();
 }
@@ -176,7 +176,7 @@ void FootClass::On_Ground()
 
 // FootClass::In_Air -- ALIAS of AircraftClass::In_Air (same machine code at 0x004a4a30); the
 // forwarder is written once, at that declaration.
-void FootClass::In_Air(int a0, int a1)
+void FootClass::In_Air()
 {
     ts::sub::sub_004a4a30();
 }
@@ -193,7 +193,7 @@ void FootClass::As_Coord(int a0)
 // 77 instructions at 0x004a16e0, in src/generated/code/.
 // size 255 bytes; callees: 0x004a17e1, 0x00502060, 0x00570280, 0x00612e10, 0x0061d8e0, 0x0067faf0
 //
-void FootClass::AI(int a0)
+void FootClass::AI()
 {
     ts::sub::sub_004a16e0();
 }
@@ -303,7 +303,7 @@ void FootClass::Can_Repair()
 
 // FootClass::Can_Demolish -- ALIAS of AircraftClass::Can_Demolish (same machine code at 0x004a1080); the
 // forwarder is written once, at that declaration.
-void FootClass::Can_Demolish(int a0, int a1, int a2, int a3, int a4)
+void FootClass::Can_Demolish()
 {
     ts::sub::sub_004a1080();
 }
@@ -380,7 +380,7 @@ void FootClass::Occupies_Cells()
 
 // FootClass::Limbo -- ALIAS of AircraftClass::Limbo (same machine code at 0x004a1cc0); the
 // forwarder is written once, at that declaration.
-void FootClass::Limbo(int a0, int a1, int a2, int a3, int a4)
+void FootClass::Limbo()
 {
     ts::sub::sub_004a1cc0();
 }
@@ -404,7 +404,7 @@ void FootClass::Detach_All(int a0)
 
 // FootClass::Record_The_Kill -- ALIAS of AircraftClass::Record_The_Kill (same machine code at 0x00617760); the
 // forwarder is written once, at that declaration.
-void FootClass::Record_The_Kill(int a0)
+void FootClass::Record_The_Kill(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00617760();
 }
@@ -418,7 +418,7 @@ void FootClass::Paradrop(int a0)
 
 // FootClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void FootClass::Fall_From_Height(int a0)
+void FootClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -477,14 +477,14 @@ void FootClass::Occupy_List(int a0)
 
 // FootClass::Draw_Pre_Render -- ALIAS of AircraftClass::Draw_Pre_Render (same machine code at 0x00610880); the
 // forwarder is written once, at that declaration.
-void FootClass::Draw_Pre_Render(int a0, int a1, int a2, int a3, int a4)
+void FootClass::Draw_Pre_Render()
 {
     ts::sub::sub_00610880();
 }
 
 // FootClass::Draw_Post_Render -- ALIAS of AircraftClass::Draw_Post_Render (same machine code at 0x0060fb90); the
 // forwarder is written once, at that declaration.
-void FootClass::Draw_Post_Render(int a0, int a1, int a2, int a3, int a4, int a5)
+void FootClass::Draw_Post_Render(int a0, int a1)
 {
     ts::sub::sub_0060fb90();
 }
@@ -591,7 +591,7 @@ void FootClass::Select()
 
 // FootClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void FootClass::Unselect(int a0)
+void FootClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -664,7 +664,7 @@ void FootClass::Assign_Mission(int a0)
 
 // FootClass::Per_Cell_Process -- ALIAS of AircraftClass::Per_Cell_Process (same machine code at 0x0049fae0); the
 // forwarder is written once, at that declaration.
-void FootClass::Per_Cell_Process(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void FootClass::Per_Cell_Process(int a0)
 {
     ts::sub::sub_0049fae0();
 }
@@ -709,7 +709,7 @@ void FootClass::Sell_Back(int a0)
 
 // FootClass::Set_Waypoint_Path -- ALIAS of AircraftClass::Set_Waypoint_Path (same machine code at 0x004a2cd0); the
 // forwarder is written once, at that declaration.
-void FootClass::Set_Waypoint_Path(int a0)
+void FootClass::Set_Waypoint_Path(int a0, int a1)
 {
     ts::sub::sub_004a2cd0();
 }
@@ -775,7 +775,7 @@ void FootClass::Get_Target_Cell(int a0)
 
 // FootClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void FootClass::Get_Target_Cell_Ptr(int a0)
+void FootClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }
@@ -803,7 +803,7 @@ void FootClass::Get_Height()
 
 // FootClass::Commence -- ALIAS of BuildingClass::Commence (same machine code at 0x00546d20); the
 // forwarder is written once, at that declaration.
-void FootClass::Commence(int a0)
+void FootClass::Commence()
 {
     ts::sub::sub_00546d20();
 }
@@ -861,7 +861,7 @@ void FootClass::Do_MISSION_CAPTURE(int a0)
 // 97 instructions at 0x0049da90, in src/generated/code/.
 // size 284 bytes; callees: 0x004c4ff0, 0x00547100, 0x0061d8e0, 0x0067faf0, 0x0068309c
 //
-void FootClass::Do_MISSION_GUARD(int a0)
+void FootClass::Do_MISSION_GUARD()
 {
     ts::sub::sub_0049da90();
 }
@@ -871,7 +871,7 @@ void FootClass::Do_MISSION_GUARD(int a0)
 // 198 instructions at 0x0049e7f0, in src/generated/code/.
 // size 637 bytes; callees: 0x0044fa70, 0x004a4be0, 0x004b72d0, 0x004c4ff0, 0x00502060, 0x005020d0, 0x00508650, 0x00508fe0, 0x005a5f10, 0x0061cf90
 //
-void FootClass::Do_MISSION_GUARD_AREA(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
+void FootClass::Do_MISSION_GUARD_AREA()
 {
     ts::sub::sub_0049e7f0();
 }
@@ -1092,14 +1092,14 @@ void FootClass::Is_Ready_To_Move()
 
 // FootClass::Is_Ready_To_Cloak -- ALIAS of AircraftClass::Is_Ready_To_Cloak (same machine code at 0x00613d60); the
 // forwarder is written once, at that declaration.
-void FootClass::Is_Ready_To_Cloak(int a0, int a1, int a2)
+void FootClass::Is_Ready_To_Cloak()
 {
     ts::sub::sub_00613d60();
 }
 
 // FootClass::Should_Uncloak -- ALIAS of AircraftClass::Should_Uncloak (same machine code at 0x00613c60); the
 // forwarder is written once, at that declaration.
-void FootClass::Should_Uncloak(int a0, int a1, int a2)
+void FootClass::Should_Uncloak()
 {
     ts::sub::sub_00613c60();
 }
@@ -1123,7 +1123,7 @@ void FootClass::Is_Weapon_Equipped()
 
 // FootClass::Is_On_Elevation -- ALIAS of AircraftClass::Is_On_Elevation (same machine code at 0x0061cfa0); the
 // forwarder is written once, at that declaration.
-void FootClass::Is_On_Elevation(int a0, int a1)
+void FootClass::Is_On_Elevation()
 {
     ts::sub::sub_0061cfa0();
 }
@@ -1151,7 +1151,7 @@ void FootClass::Pip_Count()
 
 // FootClass::Refund_Amount -- ALIAS of AircraftClass::Refund_Amount (same machine code at 0x0061bf60); the
 // forwarder is written once, at that declaration.
-void FootClass::Refund_Amount(int a0)
+void FootClass::Refund_Amount()
 {
     ts::sub::sub_0061bf60();
 }
@@ -1207,7 +1207,7 @@ void FootClass::Get_Collateral_Damage()
 
 // FootClass::Get_Z_Adjust -- ALIAS of AircraftClass::Get_Z_Adjust (same machine code at 0x004a1a50); the
 // forwarder is written once, at that declaration.
-void FootClass::Get_Z_Adjust(int a0, int a1, int a2)
+void FootClass::Get_Z_Adjust()
 {
     ts::sub::sub_004a1a50();
 }
@@ -1221,7 +1221,7 @@ void FootClass::Get_Z_Gradient()
 
 // FootClass::Find_Docking_Bay -- ALIAS of AircraftClass::Find_Docking_Bay (same machine code at 0x0061bd30); the
 // forwarder is written once, at that declaration.
-void FootClass::Find_Docking_Bay(int a0, int a1, int a2)
+void FootClass::Find_Docking_Bay(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_0061bd30();
 }
@@ -1235,7 +1235,7 @@ void FootClass::Find_Exit_Cell(int a0, int a1)
 
 // FootClass::Turret_Coord -- ALIAS of AircraftClass::Turret_Coord (same machine code at 0x0060efa0); the
 // forwarder is written once, at that declaration.
-void FootClass::Turret_Coord(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void FootClass::Turret_Coord(int a0, int a1)
 {
     ts::sub::sub_0060efa0();
 }
@@ -1273,7 +1273,7 @@ void FootClass::Can_Attack_Now()
 
 // FootClass::Can_Deploy_Now -- ALIAS of AircraftClass::Can_Deploy_Now (same machine code at 0x006161b0); the
 // forwarder is written once, at that declaration.
-void FootClass::Can_Deploy_Now(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void FootClass::Can_Deploy_Now(int a0, int a1, int a2)
 {
     ts::sub::sub_006161b0();
 }
@@ -1350,7 +1350,7 @@ void FootClass::Response_Attack()
 
 // FootClass::Player_Assign_Mission -- ALIAS of BuildingClass::Player_Assign_Mission (same machine code at 0x00615820); the
 // forwarder is written once, at that declaration.
-void FootClass::Player_Assign_Mission(int a0)
+void FootClass::Player_Assign_Mission(int a0, int a1, int a2)
 {
     ts::sub::sub_00615820();
 }
@@ -1409,14 +1409,14 @@ void FootClass::Greatest_Threat(int a0, int a1, int a2)
 
 // FootClass::Assign_Target -- ALIAS of AircraftClass::Assign_Target (same machine code at 0x006142e0); the
 // forwarder is written once, at that declaration.
-void FootClass::Assign_Target(int a0, int a1)
+void FootClass::Assign_Target(int a0)
 {
     ts::sub::sub_006142e0();
 }
 
 // FootClass::Fire_At -- ALIAS of BuildingClass::Fire_At (same machine code at 0x006148b0); the
 // forwarder is written once, at that declaration.
-void FootClass::Fire_At(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void FootClass::Fire_At(int a0, int a1)
 {
     ts::sub::sub_006148b0();
 }
@@ -1430,14 +1430,14 @@ void FootClass::Captured(int a0)
 
 // FootClass::Laser_Zap -- ALIAS of AircraftClass::Laser_Zap (same machine code at 0x00614530); the
 // forwarder is written once, at that declaration.
-void FootClass::Laser_Zap(int a0, int a1, int a2, int a3, int a4, int a5)
+void FootClass::Laser_Zap(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00614530();
 }
 
 // FootClass::Rock -- ALIAS of AircraftClass::Rock (same machine code at 0x0061c360); the
 // forwarder is written once, at that declaration.
-void FootClass::Rock(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void FootClass::Rock(int a0, int a1)
 {
     ts::sub::sub_0061c360();
 }
@@ -1479,14 +1479,14 @@ void FootClass::Rocking_AI()
 
 // FootClass::Try_To_Cloak -- ALIAS of AircraftClass::Try_To_Cloak (same machine code at 0x0060f8f0); the
 // forwarder is written once, at that declaration.
-void FootClass::Try_To_Cloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void FootClass::Try_To_Cloak()
 {
     ts::sub::sub_0060f8f0();
 }
 
 // FootClass::Draw_Action_Line -- ALIAS of AircraftClass::Draw_Action_Line (same machine code at 0x004a2880); the
 // forwarder is written once, at that declaration.
-void FootClass::Draw_Action_Line(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void FootClass::Draw_Action_Line()
 {
     ts::sub::sub_004a2880();
 }
@@ -1507,14 +1507,14 @@ void FootClass::Draw_Health_Bar_Old(int a0, int a1)
 
 // FootClass::Draw_Health_Bar -- ALIAS of AircraftClass::Draw_Health_Bar (same machine code at 0x00610c50); the
 // forwarder is written once, at that declaration.
-void FootClass::Draw_Health_Bar(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
+void FootClass::Draw_Health_Bar(int a0, int a1)
 {
     ts::sub::sub_00610c50();
 }
 
 // FootClass::Draw_Pips -- ALIAS of AircraftClass::Draw_Pips (same machine code at 0x0061b4f0); the
 // forwarder is written once, at that declaration.
-void FootClass::Draw_Pips(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void FootClass::Draw_Pips(int a0, int a1, int a2)
 {
     ts::sub::sub_0061b4f0();
 }
@@ -1566,7 +1566,7 @@ void FootClass::Random_Animate()
 // 94 instructions at 0x004a0830, in src/generated/code/.
 // size 302 bytes; callees: 0x0043ad90, 0x004a09a8, 0x006939b0
 //
-void FootClass::Assign_Destination(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12)
+void FootClass::Assign_Destination(int a0, int a1)
 {
     ts::sub::sub_004a0830();
 }
@@ -1604,7 +1604,7 @@ void FootClass::Plot_On_Radar()
 
 // FootClass::Update_Radar_Position -- ALIAS of AircraftClass::Update_Radar_Position (same machine code at 0x0061df20); the
 // forwarder is written once, at that declaration.
-void FootClass::Update_Radar_Position(int a0, int a1, int a2, int a3, int a4)
+void FootClass::Update_Radar_Position(int a0, int a1, int a2)
 {
     ts::sub::sub_0061df20();
 }
@@ -1726,14 +1726,14 @@ void FootClass::Overrun_Square(int a0, int a1)
 
 // FootClass::Current_Speed -- ALIAS of AircraftClass::Current_Speed (same machine code at 0x004a1c20); the
 // forwarder is written once, at that declaration.
-void FootClass::Current_Speed(int a0, int a1)
+void FootClass::Current_Speed()
 {
     ts::sub::sub_004a1c20();
 }
 
 // FootClass::Approach_Target -- ALIAS of AircraftClass::Approach_Target (same machine code at 0x0049de30); the
 // forwarder is written once, at that declaration.
-void FootClass::Approach_Target(int a0, int a1, int a2, int a3)
+void FootClass::Approach_Target(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21, int a22, int a23, int a24, int a25, int a26, int a27, int a28, int a29, int a30, int a31, int a32, int a33, int a34, int a35, int a36, int a37, int a38, int a39, int a40, int a41, int a42, int a43, int a44, int a45, int a46, int a47, int a48, int a49, int a50, int a51, int a52, int a53, int a54, int a55, int a56, int a57, int a58, int a59, int a60, int a61, int a62, int a63, int a64, int a65, int a66, int a67, int a68, int a69)
 {
     ts::sub::sub_0049de30();
 }

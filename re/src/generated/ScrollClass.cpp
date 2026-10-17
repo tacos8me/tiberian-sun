@@ -121,14 +121,14 @@ void ScrollClass::vfunc_13(int a0)
 
 // ScrollClass::vfunc_14 -- ALIAS of DisplayClass::vfunc_14 (same machine code at 0x004b2ff0); the
 // forwarder is written once, at that declaration.
-void ScrollClass::vfunc_14(int a0, int a1)
+void ScrollClass::vfunc_14()
 {
     ts::sub::sub_004b2ff0();
 }
 
 // ScrollClass::vfunc_15 -- ALIAS of MouseClass::vfunc_15 (same machine code at 0x005f40b0); the
 // forwarder is written once, at that declaration.
-void ScrollClass::vfunc_15(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void ScrollClass::vfunc_15(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_005f40b0();
 }
@@ -184,14 +184,14 @@ void ScrollClass::vfunc_22()
 
 // ScrollClass::vfunc_23 -- ALIAS of DisplayClass::vfunc_23 (same machine code at 0x00502500); the
 // forwarder is written once, at that declaration.
-void ScrollClass::vfunc_23(int a0, int a1, int a2)
+void ScrollClass::vfunc_23()
 {
     ts::sub::sub_00502500();
 }
 
 // ScrollClass::vfunc_24 -- ALIAS of DisplayClass::vfunc_24 (same machine code at 0x00510cc0); the
 // forwarder is written once, at that declaration.
-void ScrollClass::vfunc_24(int a0)
+void ScrollClass::vfunc_24(int a0, int a1)
 {
     ts::sub::sub_00510cc0();
 }
@@ -205,7 +205,7 @@ void ScrollClass::vfunc_25()
 
 // ScrollClass::vfunc_26 -- ALIAS of DisplayClass::vfunc_26 (same machine code at 0x00507150); the
 // forwarder is written once, at that declaration.
-void ScrollClass::vfunc_26(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void ScrollClass::vfunc_26()
 {
     ts::sub::sub_00507150();
 }
@@ -246,7 +246,7 @@ void ScrollClass::vfunc_30(int a0)
 
 // ScrollClass::vfunc_31 -- ALIAS of DisplayClass::vfunc_31 (same machine code at 0x00476390); the
 // forwarder is written once, at that declaration.
-void ScrollClass::vfunc_31(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void ScrollClass::vfunc_31(int a0)
 {
     ts::sub::sub_00476390();
 }
@@ -260,7 +260,7 @@ void ScrollClass::vfunc_32(int a0)
 
 // ScrollClass::vfunc_33 -- ALIAS of MouseClass::vfunc_33 (same machine code at 0x005dc4a0); the
 // forwarder is written once, at that declaration.
-void ScrollClass::vfunc_33(int a0)
+void ScrollClass::vfunc_33()
 {
     ts::sub::sub_005dc4a0();
 }
@@ -281,14 +281,14 @@ void ScrollClass::vfunc_35(int a0, int a1)
 
 // ScrollClass::vfunc_36 -- ALIAS of DisplayClass::vfunc_36 (same machine code at 0x004736b0); the
 // forwarder is written once, at that declaration.
-void ScrollClass::vfunc_36(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void ScrollClass::vfunc_36(int a0, int a1)
 {
     ts::sub::sub_004736b0();
 }
 
 // ScrollClass::vfunc_37 -- ALIAS of DisplayClass::vfunc_37 (same machine code at 0x00473930); the
 // forwarder is written once, at that declaration.
-void ScrollClass::vfunc_37(int a0, int a1, int a2, int a3, int a4, int a5)
+void ScrollClass::vfunc_37(int a0, int a1)
 {
     ts::sub::sub_00473930();
 }
@@ -337,7 +337,7 @@ void ScrollClass::vfunc_43(int a0)
 
 // ScrollClass::vfunc_44 -- ALIAS of DisplayClass::vfunc_44 (same machine code at 0x00474660); the
 // forwarder is written once, at that declaration.
-void ScrollClass::vfunc_44(int a0, int a1, int a2, int a3)
+void ScrollClass::vfunc_44(int a0, int a1, int a2)
 {
     ts::sub::sub_00474660();
 }

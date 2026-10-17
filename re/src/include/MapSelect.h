@@ -19,9 +19,9 @@ class MapSelect : public MSEngine
 {
 public:
     // ---- vtable 0x006a1fac (3 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x00542050  // __thiscall
-    virtual void vfunc_1(int a0);  // [1] 0x00542040  // __stdcall
-    virtual void vfunc_2(int a0);  // [2] 0x00541980  // __thiscall
+    virtual void vfunc_0(int a0);  // [0] 0x00542050  // __thiscall, returns ?
+    virtual void vfunc_1(int a0);  // [1] 0x00542040  // __stdcall, returns void
+    virtual void vfunc_2();  // [2] 0x00541980  // __thiscall, returns ?
 
     MapSelect();  // 0x00540f30
     virtual ~MapSelect();

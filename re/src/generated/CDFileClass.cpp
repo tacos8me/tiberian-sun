@@ -83,7 +83,7 @@ void CDFileClass::vfunc_8(int a0, int a1)
 
 // CDFileClass::vfunc_9 -- ALIAS of BufferIOFileClass::vfunc_9 (same machine code at 0x004208c0); the
 // forwarder is written once, at that declaration.
-void CDFileClass::vfunc_9(int a0, int a1)
+void CDFileClass::vfunc_9(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004208c0();
 }
@@ -118,7 +118,7 @@ void CDFileClass::vfunc_13()
 
 // CDFileClass::vfunc_14 -- ALIAS of BufferIOFileClass::vfunc_14 (same machine code at 0x005a68f0); the
 // forwarder is written once, at that declaration.
-void CDFileClass::vfunc_14(int a0, int a1)
+void CDFileClass::vfunc_14()
 {
     ts::sub::sub_005a68f0();
 }

@@ -20,11 +20,11 @@ class CounterClass : public VectorClass<H>
 {
 public:
     // ---- vtable 0x0069b7ec (6 slots) ----
-    virtual void vfunc_1(int a0);  // [1] 0x0044af30  // __stdcall
-    virtual void vfunc_2(int a0, int a1);  // [2] 0x0044af70  // __thiscall
-    virtual void vfunc_3();  // [3] 0x0046b3e0  // __cdecl
-    virtual void vfunc_4(int a0);  // [4] 0x0044b050  // __stdcall, returns int
-    virtual void vfunc_5(int a0);  // [5] 0x0044b090  // __stdcall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x0044af30  // __thiscall, returns char
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0044af70  // __thiscall, returns int
+    virtual void vfunc_3();  // [3] 0x0046b3e0  // __thiscall, returns int
+    virtual void vfunc_4(int a0);  // [4] 0x0044b050  // __thiscall, returns int
+    virtual void vfunc_5(int a0);  // [5] 0x0044b090  // __thiscall, returns int
 
     CounterClass();  // 0x0046b270
     virtual ~CounterClass();

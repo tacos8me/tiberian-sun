@@ -1609,6 +1609,12 @@ def main():
     # so 12 of its offsets were declared nowhere at all. Attribute them to the
     # base that owns the region, carry the store-width evidence with them, and
     # re-derive the model until the attribution stops growing the base regions.
+    # Offsets the emitter moves from a derived class to the base that owns the
+    # bytes. The recovered table keeps the constructor's attribution, so a
+    # tool that checks the table against the headers has to be told about the
+    # move or it reads a correct re-attribution as an invented offset. Recorded
+    # rather than re-derived so the justification is auditable.
+    _reattr = {}
     for _round in range(4):
         _extra = {}
         for _m in manifest:
@@ -1645,10 +1651,19 @@ def main():
                 _w = (widths_by_class.get(_c) or {}).get(_off)
                 if _w:
                     widths_by_class.setdefault(_ident, {}).setdefault(_off, _w)
+                _reattr.setdefault(_ident, {})[_off] = _c
                 _added += 1
         if not _added:
             break
         layout = _make_layout()
+
+    try:
+        with open(os.path.join("out", "member_reattribution.json"), "w") as _f:
+            json.dump({k: {"%x" % o: v for o, v in sorted(d.items())}
+                       for k, d in sorted(_reattr.items())}, _f,
+                      indent=1, sort_keys=True)
+    except (OSError, NameError):
+        pass
 
     if os.environ.get("GEN_HEADERS_DEBUG"):
         # GEN_HEADERS_DEBUG="class TechnoClass" prints what the layout model

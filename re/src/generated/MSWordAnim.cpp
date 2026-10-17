@@ -55,7 +55,7 @@ void MSWordAnim::vfunc_4(int a0, int a1)
 // 50 instructions at 0x005597a0, in src/generated/code/.
 // size 128 bytes; callees: 0x00412bb0, 0x00559845
 //
-void MSWordAnim::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void MSWordAnim::vfunc_5(int a0, int a1)
 {
     ts::sub::sub_005597a0();
 }

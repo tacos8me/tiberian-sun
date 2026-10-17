@@ -360,7 +360,7 @@ void IsometricTileClass::Sort_Y()
 
 // IsometricTileClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void IsometricTileClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -415,7 +415,7 @@ void IsometricTileClass::Paradrop(int a0)
 
 // IsometricTileClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Fall_From_Height(int a0)
+void IsometricTileClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -519,7 +519,7 @@ void IsometricTileClass::Look(int a0, int a1)
 // 78 instructions at 0x004e8d50, in src/generated/code/.
 // size 290 bytes; callees: 0x004e8ff0, 0x005020d0, 0x00503e00, 0x00570000
 //
-void IsometricTileClass::Mark(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void IsometricTileClass::Mark(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004e8d50();
 }
@@ -582,7 +582,7 @@ void IsometricTileClass::Select()
 
 // IsometricTileClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Unselect(int a0)
+void IsometricTileClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -757,7 +757,7 @@ void IsometricTileClass::Get_Target_Cell(int a0)
 
 // IsometricTileClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Get_Target_Cell_Ptr(int a0)
+void IsometricTileClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }

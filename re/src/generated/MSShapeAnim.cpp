@@ -45,7 +45,7 @@ void MSShapeAnim::vfunc_3()
 // 53 instructions at 0x00557c30, in src/generated/code/.
 // size 150 bytes; callees: 0x0041e5c0, 0x00557cdd, 0x005f0b30
 //
-void MSShapeAnim::vfunc_4(int a0, int a1, int a2)
+void MSShapeAnim::vfunc_4(int a0, int a1)
 {
     ts::sub::sub_00557c30();
 }
@@ -55,7 +55,7 @@ void MSShapeAnim::vfunc_4(int a0, int a1, int a2)
 // 30 instructions at 0x00557f90, in src/generated/code/.
 // size 85 bytes; callees: 0x00557ffc
 //
-void MSShapeAnim::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5)
+void MSShapeAnim::vfunc_5(int a0, int a1)
 {
     ts::sub::sub_00557f90();
 }

@@ -45,7 +45,7 @@ void MSOverlayAnim::vfunc_3()
 // 47 instructions at 0x005586a0, in src/generated/code/.
 // size 138 bytes; callees: 0x0041e5c0, 0x00558741, 0x005f0b30
 //
-void MSOverlayAnim::vfunc_4(int a0, int a1, int a2)
+void MSOverlayAnim::vfunc_4(int a0, int a1)
 {
     ts::sub::sub_005586a0();
 }
@@ -55,7 +55,7 @@ void MSOverlayAnim::vfunc_4(int a0, int a1, int a2)
 // 27 instructions at 0x005588d0, in src/generated/code/.
 // size 76 bytes; callees: 0x00558933
 //
-void MSOverlayAnim::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5)
+void MSOverlayAnim::vfunc_5(int a0, int a1)
 {
     ts::sub::sub_005588d0();
 }

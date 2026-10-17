@@ -19,11 +19,11 @@ class MSVQAnim : public MSAnim
 {
 public:
     // ---- vtable 0x006a24e0 (6 slots) ----
-    virtual void vfunc_1(int a0);  // [1] 0x00557690  // __stdcall
-    virtual void vfunc_2();  // [2] 0x005576a0  // __thiscall
-    virtual void vfunc_3();  // [3] 0x005576f0  // __thiscall
-    virtual void vfunc_4(int a0, int a1);  // [4] 0x00558c70  // __thiscall
-    virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [5] 0x00558dc0
+    virtual void vfunc_1(int a0);  // [1] 0x00557690  // __thiscall, returns char
+    virtual void vfunc_2();  // [2] 0x005576a0  // __thiscall, returns ?
+    virtual void vfunc_3();  // [3] 0x005576f0  // __thiscall, returns void
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x00558c70  // __thiscall, returns char
+    virtual void vfunc_5(int a0, int a1);  // [5] 0x00558dc0  // __thiscall, returns int
 
     MSVQAnim();  // 0x00558a10
     virtual ~MSVQAnim();

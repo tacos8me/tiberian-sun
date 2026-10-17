@@ -213,7 +213,7 @@ void ParticleTypeClass::Init_Theater(int a0)
 // 75 instructions at 0x00597d00, in src/generated/code/.
 // size 268 bytes; callees: 0x0044a1b0, 0x0044b690, 0x0044bb30, 0x004d41b0, 0x004d60b0, 0x004d6ed0, 0x00572610, 0x00597e0e, 0x005987f0, 0x00651d30
 //
-void ParticleTypeClass::Read_INI(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void ParticleTypeClass::Read_INI(int a0)
 {
     ts::sub::sub_00597d00();
 }
@@ -303,7 +303,7 @@ void ParticleTypeClass::Occupy_List(int a0)
 
 // ParticleTypeClass::Who_Can_Build_Me -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
 // forwarder is written once, at that declaration.
-void ParticleTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3, int a4, int a5)
+void ParticleTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00571710();
 }

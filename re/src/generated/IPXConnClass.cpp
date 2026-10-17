@@ -24,14 +24,14 @@
 // 1 instructions at 0x004e6f10, in src/generated/code/.
 // size 5 bytes; callees: 0x0045eb50
 //
-void IPXConnClass::vfunc_1(int a0)
+void IPXConnClass::vfunc_1()
 {
     ts::sub::sub_004e6f10();
 }
 
 // IPXConnClass::vfunc_2 -- ALIAS of ConnectionClass::vfunc_2 (same machine code at 0x0045eb70); the
 // forwarder is written once, at that declaration.
-void IPXConnClass::vfunc_2(int a0, int a1)
+void IPXConnClass::vfunc_2(int a0, int a1, int a2)
 {
     ts::sub::sub_0045eb70();
 }
@@ -66,7 +66,7 @@ void IPXConnClass::vfunc_6()
 
 // IPXConnClass::vfunc_7 -- ALIAS of ConnectionClass::vfunc_7 (same machine code at 0x0045eeb0); the
 // forwarder is written once, at that declaration.
-void IPXConnClass::vfunc_7(int a0, int a1)
+void IPXConnClass::vfunc_7()
 {
     ts::sub::sub_0045eeb0();
 }
@@ -83,7 +83,7 @@ void IPXConnClass::vfunc_8()
 // 41 instructions at 0x004e7000, in src/generated/code/.
 // size 118 bytes; callees: 0x004e6a40, 0x004e6ad0, 0x004e6b50, 0x004e70aa
 //
-void IPXConnClass::vfunc_9(int a0, int a1, int a2, int a3, int a4, int a5)
+void IPXConnClass::vfunc_9(int a0, int a1)
 {
     ts::sub::sub_004e7000();
 }

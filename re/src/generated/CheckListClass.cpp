@@ -105,7 +105,7 @@ void CheckListClass::vfunc_9()
 // 41 instructions at 0x004a5be0, in src/generated/code/.
 // size 148 bytes; callees: 0x004a5c7f, 0x004f1ca0, 0x004f1cf0
 //
-void CheckListClass::Input(int a0, int a1)
+void CheckListClass::Input()
 {
     ts::sub::sub_004a5be0();
 }

@@ -84,7 +84,7 @@ void ListClass::vfunc_9()
 
 // ListClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void ListClass::Input(int a0, int a1)
+void ListClass::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -372,7 +372,7 @@ void ListClass::vfunc_48(int a0)
 // 25 instructions at 0x004f75f0, in src/generated/code/.
 // size 74 bytes; callees: 0x004a5940, 0x004f7640
 //
-void ListClass::vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5)
+void ListClass::vfunc_49(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_004f75f0();
 }

@@ -54,7 +54,7 @@ void LoadOptionsClass::vfunc_3(int a0)
 // 45 instructions at 0x004f91c0, in src/generated/code/.
 // size 147 bytes; callees: 0x004f9283, 0x005bea10, 0x006849b0
 //
-void LoadOptionsClass::vfunc_4(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void LoadOptionsClass::vfunc_4(int a0, int a1)
 {
     ts::sub::sub_004f91c0();
 }

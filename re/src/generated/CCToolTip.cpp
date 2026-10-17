@@ -24,7 +24,7 @@
 // 51 instructions at 0x0044be30, in src/generated/code/.
 // size 150 bytes; callees: 0x0044bef7, 0x00471560
 //
-void CCToolTip::vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5)
+void CCToolTip::vfunc_1(int a0)
 {
     ts::sub::sub_0044be30();
 }
@@ -54,7 +54,7 @@ void CCToolTip::vfunc_3(int a0)
 // 25 instructions at 0x0044c030, in src/generated/code/.
 // size 71 bytes; callees: 0x0044c0de
 //
-void CCToolTip::vfunc_4(int a0, int a1, int a2, int a3)
+void CCToolTip::vfunc_4(int a0)
 {
     ts::sub::sub_0044c030();
 }

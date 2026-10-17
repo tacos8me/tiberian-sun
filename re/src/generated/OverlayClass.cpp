@@ -354,7 +354,7 @@ void OverlayClass::Sort_Y()
 
 // OverlayClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void OverlayClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void OverlayClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -368,7 +368,7 @@ void OverlayClass::Occupies_Cells()
 
 // OverlayClass::Limbo -- ALIAS of BulletClass::vfunc_48 (same machine code at 0x0056f6a0); the
 // forwarder is written once, at that declaration.
-void OverlayClass::Limbo(int a0, int a1, int a2, int a3, int a4)
+void OverlayClass::Limbo()
 {
     ts::sub::sub_0056f6a0();
 }
@@ -403,7 +403,7 @@ void OverlayClass::Paradrop(int a0)
 
 // OverlayClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void OverlayClass::Fall_From_Height(int a0)
+void OverlayClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -486,7 +486,7 @@ void OverlayClass::Draw_It(int a0, int a1)
 // 118 instructions at 0x00576140, in src/generated/code/.
 // size 366 bytes; callees: 0x00510f70, 0x00576437, 0x005764b0, 0x005f5030
 //
-void OverlayClass::Editor_Draw_It(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void OverlayClass::Editor_Draw_It(int a0, int a1)
 {
     ts::sub::sub_00576140();
 }
@@ -510,7 +510,7 @@ void OverlayClass::Look(int a0, int a1)
 // 46 instructions at 0x00575200, in src/generated/code/.
 // size 142 bytes; callees: 0x00451480, 0x005020d0, 0x00570000, 0x005752b6
 //
-void OverlayClass::Mark(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void OverlayClass::Mark(int a0)
 {
     ts::sub::sub_00575200();
 }
@@ -573,7 +573,7 @@ void OverlayClass::Select()
 
 // OverlayClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void OverlayClass::Unselect(int a0)
+void OverlayClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -748,7 +748,7 @@ void OverlayClass::Get_Target_Cell(int a0)
 
 // OverlayClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void OverlayClass::Get_Target_Cell_Ptr(int a0)
+void OverlayClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }

@@ -62,7 +62,7 @@ void OverlayTypeClass::IsDirty(int a0)
 // 45 instructions at 0x005773f0, in src/generated/code/.
 // size 161 bytes; callees: 0x00571410, 0x00571870, 0x005724a0, 0x005729b0, 0x005774c7, 0x005f36e0, 0x00683b18
 //
-void OverlayTypeClass::vfunc_5(int a0, int a1, int a2)
+void OverlayTypeClass::vfunc_5(int a0, int a1)
 {
     ts::sub::sub_005773f0();
 }
@@ -213,7 +213,7 @@ void OverlayTypeClass::Init_Theater(int a0)
 // 89 instructions at 0x00577090, in src/generated/code/.
 // size 319 bytes; callees: 0x00418d20, 0x00448c20, 0x004d60b0, 0x004d6ed0, 0x004d70b0, 0x00572610, 0x005771d1
 //
-void OverlayTypeClass::Read_INI(int a0, int a1)
+void OverlayTypeClass::Read_INI(int a0)
 {
     ts::sub::sub_00577090();
 }
@@ -309,7 +309,7 @@ void OverlayTypeClass::Occupy_List(int a0)
 
 // OverlayTypeClass::Who_Can_Build_Me -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3, int a4, int a5)
+void OverlayTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00571710();
 }
@@ -326,7 +326,7 @@ void OverlayTypeClass::Get_Cameo_Data()
 // 31 instructions at 0x00577720, in src/generated/code/.
 // size 110 bytes; callees: 0x00407a60, 0x005777ce, 0x00683b18
 //
-void OverlayTypeClass::Get_Image_Data(int a0, int a1)
+void OverlayTypeClass::Get_Image_Data()
 {
     ts::sub::sub_00577720();
 }

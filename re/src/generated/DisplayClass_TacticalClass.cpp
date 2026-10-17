@@ -84,7 +84,7 @@ void DisplayClass_TacticalClass::vfunc_9()
 
 // DisplayClass_TacticalClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::Input(int a0, int a1)
+void DisplayClass_TacticalClass::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -226,7 +226,7 @@ void DisplayClass_TacticalClass::Sticky_Process(int a0)
 // 15 instructions at 0x00474410, in src/generated/code/.
 // size 58 bytes; callees: 0x0047447d
 //
-void DisplayClass_TacticalClass::Action(int a0, int a1, int a2, int a3, int a4)
+void DisplayClass_TacticalClass::Action(int a0, int a1)
 {
     ts::sub::sub_00474410();
 }

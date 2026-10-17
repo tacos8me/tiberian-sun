@@ -84,7 +84,7 @@ void RadarClass_RTacticalClass::vfunc_9()
 
 // RadarClass_RTacticalClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void RadarClass_RTacticalClass::Input(int a0, int a1)
+void RadarClass_RTacticalClass::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -220,7 +220,7 @@ void RadarClass_RTacticalClass::Sticky_Process(int a0)
 // 23 instructions at 0x005a1050, in src/generated/code/.
 // size 81 bytes; callees: 0x005a10b9
 //
-void RadarClass_RTacticalClass::Action(int a0, int a1)
+void RadarClass_RTacticalClass::Action(int a0)
 {
     ts::sub::sub_005a1050();
 }

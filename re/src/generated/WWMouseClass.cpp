@@ -24,7 +24,7 @@
 // 86 instructions at 0x00672a60, in src/generated/code/.
 // size 256 bytes; callees: 0x00407a60, 0x0041e5c0, 0x00672b66
 //
-void WWMouseClass::vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void WWMouseClass::vfunc_1(int a0, int a1, int a2)
 {
     ts::sub::sub_00672a60();
 }
@@ -104,7 +104,7 @@ void WWMouseClass::vfunc_8(int a0, int a1, int a2, int a3)
 // 2 instructions at 0x00673b70, in src/generated/code/.
 // size 5 bytes; callees: none
 //
-void WWMouseClass::vfunc_9(int a0)
+void WWMouseClass::vfunc_9(int a0, int a1)
 {
     ts::sub::sub_00673b70();
 }
@@ -164,7 +164,7 @@ void WWMouseClass::vfunc_14(int a0, int a1)
 // 26 instructions at 0x00673350, in src/generated/code/.
 // size 79 bytes; callees: 0x006733a2
 //
-void WWMouseClass::vfunc_15(int a0, int a1, int a2, int a3, int a4, int a5)
+void WWMouseClass::vfunc_15(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00673350();
 }

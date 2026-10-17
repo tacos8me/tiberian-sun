@@ -84,7 +84,7 @@ void Dial8Class::vfunc_9()
 
 // Dial8Class::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void Dial8Class::Input(int a0, int a1)
+void Dial8Class::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -206,7 +206,7 @@ void Dial8Class::Set_Size(int a0, int a1)
 // 60 instructions at 0x00470b60, in src/generated/code/.
 // size 197 bytes; callees: 0x00460620, 0x00470c31, 0x00470d90, 0x004a5940
 //
-void Dial8Class::Draw_Me(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void Dial8Class::Draw_Me(int a0)
 {
     ts::sub::sub_00470b60();
 }

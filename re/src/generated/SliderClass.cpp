@@ -84,7 +84,7 @@ void SliderClass::vfunc_9()
 
 // SliderClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void SliderClass::Input(int a0, int a1)
+void SliderClass::Input()
 {
     ts::sub::sub_004a5be0();
 }
@@ -226,7 +226,7 @@ void SliderClass::Sticky_Process(int a0)
 // 15 instructions at 0x005de280, in src/generated/code/.
 // size 37 bytes; callees: 0x005de2ad
 //
-void SliderClass::Action(int a0)
+void SliderClass::Action(int a0, int a1)
 {
     ts::sub::sub_005de280();
 }
@@ -260,7 +260,7 @@ void SliderClass::vfunc_32(int a0)
 // 21 instructions at 0x005de180, in src/generated/code/.
 // size 47 bytes; callees: 0x004a6aa0, 0x005de1b2
 //
-void SliderClass::vfunc_33(int a0, int a1)
+void SliderClass::vfunc_33(int a0)
 {
     ts::sub::sub_005de180();
 }
@@ -294,7 +294,7 @@ void SliderClass::vfunc_36()
 // 20 instructions at 0x005de390, in src/generated/code/.
 // size 63 bytes; callees: 0x00470d90
 //
-void SliderClass::vfunc_37(int a0)
+void SliderClass::vfunc_37()
 {
     ts::sub::sub_005de390();
 }
@@ -318,7 +318,7 @@ void SliderClass::vfunc_39(int a0)
 // 22 instructions at 0x005de0f0, in src/generated/code/.
 // size 53 bytes; callees: 0x005de128
 //
-void SliderClass::vfunc_40(int a0, int a1)
+void SliderClass::vfunc_40(int a0)
 {
     ts::sub::sub_005de0f0();
 }

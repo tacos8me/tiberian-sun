@@ -18,9 +18,9 @@ class MSEngine
 {
 public:
     // ---- vtable 0x006a266c (3 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x0055cc50  // __thiscall
-    virtual void vfunc_1(int a0);  // [1] 0x00542040  // __stdcall
-    virtual void vfunc_2();  // [2] 0x0055cc40  // __cdecl
+    virtual void vfunc_0(int a0);  // [0] 0x0055cc50  // __thiscall, returns ?
+    virtual void vfunc_1(int a0);  // [1] 0x00542040  // __stdcall, returns void
+    virtual void vfunc_2();  // [2] 0x0055cc40  // __cdecl, returns void
 
     MSEngine();  // 0x0055c130
     virtual ~MSEngine();

@@ -1,0 +1,79 @@
+{
+ "class ConnManClass": {
+  "10": "class type_info",
+  "14": "class type_info",
+  "18": "class type_info",
+  "1a": "class type_info",
+  "1c": "class type_info",
+  "20": "class type_info",
+  "24": "class type_info",
+  "28": "class type_info",
+  "2c": "class type_info",
+  "30": "class type_info",
+  "34": "class type_info",
+  "38": "class type_info",
+  "4": "class type_info",
+  "8": "class type_info",
+  "c": "class type_info"
+ },
+ "class ControlClass": {
+  "14": "class type_info",
+  "18": "class type_info"
+ },
+ "class EditClass": {
+  "18": "class type_info"
+ },
+ "class FileClass": {
+  "10": "class type_info",
+  "14": "class type_info",
+  "8": "class type_info",
+  "c": "class type_info"
+ },
+ "class FootClass": {
+  "134": "class type_info",
+  "1f8": "class type_info",
+  "28": "class type_info"
+ },
+ "class LinkClass": {
+  "16": "class type_info"
+ },
+ "class MissionClass": {
+  "28": "class type_info"
+ },
+ "class ObjectTypeClass": {
+  "64": "class type_info",
+  "68": "class type_info",
+  "c7": "class type_info",
+  "c8": "class type_info",
+  "c9": "class type_info",
+  "ca": "class type_info",
+  "cb": "class type_info",
+  "cc": "class type_info",
+  "cd": "class type_info",
+  "ce": "class type_info"
+ },
+ "class RadioClass": {
+  "28": "class type_info"
+ },
+ "class RawFileClass": {
+  "18": "class type_info",
+  "1a": "class type_info",
+  "4": "class type_info",
+  "8": "class type_info",
+  "c": "class type_info"
+ },
+ "class ScoreFontClass": {
+  "10": "class type_info"
+ },
+ "class TechnoClass": {
+  "28": "class type_info"
+ },
+ "class TechnoTypeClass": {
+  "c7": "class type_info"
+ },
+ "class ToggleClass": {
+  "14": "class type_info",
+  "18": "class type_info",
+  "31": "class type_info"
+ }
+}

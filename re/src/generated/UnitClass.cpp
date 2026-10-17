@@ -182,7 +182,7 @@ void UnitClass::On_Ground()
 
 // UnitClass::In_Air -- ALIAS of AircraftClass::In_Air (same machine code at 0x004a4a30); the
 // forwarder is written once, at that declaration.
-void UnitClass::In_Air(int a0, int a1)
+void UnitClass::In_Air()
 {
     ts::sub::sub_004a4a30();
 }
@@ -236,11 +236,11 @@ void UnitClass::What_Action(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// UnitClass::vfunc_28 -- the body is the canonical transcription of
+// UnitClass::What_Action -- the body is the canonical transcription of
 // 36 instructions at 0x00639020, in src/generated/code/.
 // size 113 bytes; callees: 0x004a4360, 0x0061d8e0, 0x006391db
 //
-void UnitClass::vfunc_28(int a0, int a1, int a2)
+void UnitClass::What_Action(int a0, int a1)
 {
     ts::sub::sub_00639020();
 }
@@ -312,7 +312,7 @@ void UnitClass::Can_Repair()
 
 // UnitClass::Can_Demolish -- ALIAS of AircraftClass::Can_Demolish (same machine code at 0x004a1080); the
 // forwarder is written once, at that declaration.
-void UnitClass::Can_Demolish(int a0, int a1, int a2, int a3, int a4)
+void UnitClass::Can_Demolish()
 {
     ts::sub::sub_004a1080();
 }
@@ -392,7 +392,7 @@ void UnitClass::Occupies_Cells()
 // 27 instructions at 0x0063c120, in src/generated/code/.
 // size 75 bytes; callees: 0x004a1cc0, 0x004b8bd0
 //
-void UnitClass::Limbo(int a0)
+void UnitClass::Limbo()
 {
     ts::sub::sub_0063c120();
 }
@@ -433,7 +433,7 @@ void UnitClass::Paradrop(int a0)
 
 // UnitClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void UnitClass::Fall_From_Height(int a0)
+void UnitClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -498,14 +498,14 @@ void UnitClass::Occupy_List(int a0)
 
 // UnitClass::Draw_Pre_Render -- ALIAS of AircraftClass::Draw_Pre_Render (same machine code at 0x00610880); the
 // forwarder is written once, at that declaration.
-void UnitClass::Draw_Pre_Render(int a0, int a1, int a2, int a3, int a4)
+void UnitClass::Draw_Pre_Render()
 {
     ts::sub::sub_00610880();
 }
 
 // UnitClass::Draw_Post_Render -- ALIAS of AircraftClass::Draw_Post_Render (same machine code at 0x0060fb90); the
 // forwarder is written once, at that declaration.
-void UnitClass::Draw_Post_Render(int a0, int a1, int a2, int a3, int a4, int a5)
+void UnitClass::Draw_Post_Render(int a0, int a1)
 {
     ts::sub::sub_0060fb90();
 }
@@ -515,7 +515,7 @@ void UnitClass::Draw_Post_Render(int a0, int a1, int a2, int a3, int a4, int a5)
 // 95 instructions at 0x00636b90, in src/generated/code/.
 // size 305 bytes; callees: 0x00454d00, 0x004e4a00, 0x00502060, 0x00547660, 0x005fb650, 0x00636ccd
 //
-void UnitClass::Draw_It(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void UnitClass::Draw_It(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_00636b90();
 }
@@ -587,11 +587,11 @@ void UnitClass::Active_Click_With(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// UnitClass::Active_Click_With -- the body is the canonical transcription of
+// UnitClass::vfunc_73 -- the body is the canonical transcription of
 // 26 instructions at 0x00633520, in src/generated/code/.
 // size 56 bytes; callees: 0x00633569
 //
-void UnitClass::Active_Click_With(int a0, int a1)
+void UnitClass::vfunc_73(int a0, int a1, int a2)
 {
     ts::sub::sub_00633520();
 }
@@ -612,7 +612,7 @@ void UnitClass::Select()
 
 // UnitClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void UnitClass::Unselect(int a0)
+void UnitClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -736,7 +736,7 @@ void UnitClass::Sell_Back(int a0)
 
 // UnitClass::Set_Waypoint_Path -- ALIAS of AircraftClass::Set_Waypoint_Path (same machine code at 0x004a2cd0); the
 // forwarder is written once, at that declaration.
-void UnitClass::Set_Waypoint_Path(int a0)
+void UnitClass::Set_Waypoint_Path(int a0, int a1)
 {
     ts::sub::sub_004a2cd0();
 }
@@ -802,7 +802,7 @@ void UnitClass::Get_Target_Cell(int a0)
 
 // UnitClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void UnitClass::Get_Target_Cell_Ptr(int a0)
+void UnitClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }
@@ -830,7 +830,7 @@ void UnitClass::Get_Height()
 
 // UnitClass::Commence -- ALIAS of BuildingClass::Commence (same machine code at 0x00546d20); the
 // forwarder is written once, at that declaration.
-void UnitClass::Commence(int a0)
+void UnitClass::Commence()
 {
     ts::sub::sub_00546d20();
 }
@@ -1122,14 +1122,14 @@ void UnitClass::Is_Ready_To_Move()
 
 // UnitClass::Is_Ready_To_Cloak -- ALIAS of AircraftClass::Is_Ready_To_Cloak (same machine code at 0x00613d60); the
 // forwarder is written once, at that declaration.
-void UnitClass::Is_Ready_To_Cloak(int a0, int a1, int a2)
+void UnitClass::Is_Ready_To_Cloak()
 {
     ts::sub::sub_00613d60();
 }
 
 // UnitClass::Should_Uncloak -- ALIAS of AircraftClass::Should_Uncloak (same machine code at 0x00613c60); the
 // forwarder is written once, at that declaration.
-void UnitClass::Should_Uncloak(int a0, int a1, int a2)
+void UnitClass::Should_Uncloak()
 {
     ts::sub::sub_00613c60();
 }
@@ -1153,7 +1153,7 @@ void UnitClass::Is_Weapon_Equipped()
 
 // UnitClass::Is_On_Elevation -- ALIAS of AircraftClass::Is_On_Elevation (same machine code at 0x0061cfa0); the
 // forwarder is written once, at that declaration.
-void UnitClass::Is_On_Elevation(int a0, int a1)
+void UnitClass::Is_On_Elevation()
 {
     ts::sub::sub_0061cfa0();
 }
@@ -1190,7 +1190,7 @@ void UnitClass::Pip_Count()
 
 // UnitClass::Refund_Amount -- ALIAS of AircraftClass::Refund_Amount (same machine code at 0x0061bf60); the
 // forwarder is written once, at that declaration.
-void UnitClass::Refund_Amount(int a0)
+void UnitClass::Refund_Amount()
 {
     ts::sub::sub_0061bf60();
 }
@@ -1246,7 +1246,7 @@ void UnitClass::Get_Collateral_Damage()
 
 // UnitClass::Get_Z_Adjust -- ALIAS of AircraftClass::Get_Z_Adjust (same machine code at 0x004a1a50); the
 // forwarder is written once, at that declaration.
-void UnitClass::Get_Z_Adjust(int a0, int a1, int a2)
+void UnitClass::Get_Z_Adjust()
 {
     ts::sub::sub_004a1a50();
 }
@@ -1260,7 +1260,7 @@ void UnitClass::Get_Z_Gradient()
 
 // UnitClass::Find_Docking_Bay -- ALIAS of AircraftClass::Find_Docking_Bay (same machine code at 0x0061bd30); the
 // forwarder is written once, at that declaration.
-void UnitClass::Find_Docking_Bay(int a0, int a1, int a2)
+void UnitClass::Find_Docking_Bay(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_0061bd30();
 }
@@ -1274,7 +1274,7 @@ void UnitClass::Find_Exit_Cell(int a0, int a1)
 
 // UnitClass::Turret_Coord -- ALIAS of AircraftClass::Turret_Coord (same machine code at 0x0060efa0); the
 // forwarder is written once, at that declaration.
-void UnitClass::Turret_Coord(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void UnitClass::Turret_Coord(int a0, int a1)
 {
     ts::sub::sub_0060efa0();
 }
@@ -1284,7 +1284,7 @@ void UnitClass::Turret_Coord(int a0, int a1, int a2, int a3, int a4, int a5, int
 // 26 instructions at 0x00639890, in src/generated/code/.
 // size 58 bytes; callees: 0x004d2ed0, 0x006398eb
 //
-void UnitClass::Desired_Load_Dir(int a0, int a1, int a2, int a3, int a4)
+void UnitClass::Desired_Load_Dir(int a0, int a1)
 {
     ts::sub::sub_00639890();
 }
@@ -1318,7 +1318,7 @@ void UnitClass::Can_Attack_Now()
 
 // UnitClass::Can_Deploy_Now -- ALIAS of AircraftClass::Can_Deploy_Now (same machine code at 0x006161b0); the
 // forwarder is written once, at that declaration.
-void UnitClass::Can_Deploy_Now(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void UnitClass::Can_Deploy_Now(int a0, int a1, int a2)
 {
     ts::sub::sub_006161b0();
 }
@@ -1395,7 +1395,7 @@ void UnitClass::Response_Attack()
 
 // UnitClass::Player_Assign_Mission -- ALIAS of BuildingClass::Player_Assign_Mission (same machine code at 0x00615820); the
 // forwarder is written once, at that declaration.
-void UnitClass::Player_Assign_Mission(int a0)
+void UnitClass::Player_Assign_Mission(int a0, int a1, int a2)
 {
     ts::sub::sub_00615820();
 }
@@ -1457,7 +1457,7 @@ void UnitClass::Greatest_Threat(int a0, int a1, int a2)
 
 // UnitClass::Assign_Target -- ALIAS of AircraftClass::Assign_Target (same machine code at 0x006142e0); the
 // forwarder is written once, at that declaration.
-void UnitClass::Assign_Target(int a0, int a1)
+void UnitClass::Assign_Target(int a0)
 {
     ts::sub::sub_006142e0();
 }
@@ -1484,14 +1484,14 @@ void UnitClass::Captured(int a0)
 
 // UnitClass::Laser_Zap -- ALIAS of AircraftClass::Laser_Zap (same machine code at 0x00614530); the
 // forwarder is written once, at that declaration.
-void UnitClass::Laser_Zap(int a0, int a1, int a2, int a3, int a4, int a5)
+void UnitClass::Laser_Zap(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00614530();
 }
 
 // UnitClass::Rock -- ALIAS of AircraftClass::Rock (same machine code at 0x0061c360); the
 // forwarder is written once, at that declaration.
-void UnitClass::Rock(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void UnitClass::Rock(int a0, int a1)
 {
     ts::sub::sub_0061c360();
 }
@@ -1533,14 +1533,14 @@ void UnitClass::Rocking_AI()
 
 // UnitClass::Try_To_Cloak -- ALIAS of AircraftClass::Try_To_Cloak (same machine code at 0x0060f8f0); the
 // forwarder is written once, at that declaration.
-void UnitClass::Try_To_Cloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void UnitClass::Try_To_Cloak()
 {
     ts::sub::sub_0060f8f0();
 }
 
 // UnitClass::Draw_Action_Line -- ALIAS of AircraftClass::Draw_Action_Line (same machine code at 0x004a2880); the
 // forwarder is written once, at that declaration.
-void UnitClass::Draw_Action_Line(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void UnitClass::Draw_Action_Line()
 {
     ts::sub::sub_004a2880();
 }
@@ -1561,14 +1561,14 @@ void UnitClass::Draw_Health_Bar_Old(int a0, int a1)
 
 // UnitClass::Draw_Health_Bar -- ALIAS of AircraftClass::Draw_Health_Bar (same machine code at 0x00610c50); the
 // forwarder is written once, at that declaration.
-void UnitClass::Draw_Health_Bar(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
+void UnitClass::Draw_Health_Bar(int a0, int a1)
 {
     ts::sub::sub_00610c50();
 }
 
 // UnitClass::Draw_Pips -- ALIAS of AircraftClass::Draw_Pips (same machine code at 0x0061b4f0); the
 // forwarder is written once, at that declaration.
-void UnitClass::Draw_Pips(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void UnitClass::Draw_Pips(int a0, int a1, int a2)
 {
     ts::sub::sub_0061b4f0();
 }
@@ -1620,7 +1620,7 @@ void UnitClass::Random_Animate()
 // 101 instructions at 0x0063a420, in src/generated/code/.
 // size 336 bytes; callees: 0x0061cf90, 0x0063a64b, 0x0068309c
 //
-void UnitClass::Assign_Destination(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void UnitClass::Assign_Destination(int a0, int a1)
 {
     ts::sub::sub_0063a420();
 }
@@ -1630,7 +1630,7 @@ void UnitClass::Assign_Destination(int a0, int a1, int a2, int a3, int a4, int a
 // 56 instructions at 0x006335b0, in src/generated/code/.
 // size 170 bytes; callees: 0x0049f8e0, 0x004a1220, 0x0063381f
 //
-void UnitClass::Enter_Idle_Mode(int a0, int a1, int a2, int a3)
+void UnitClass::Enter_Idle_Mode(int a0, int a1)
 {
     ts::sub::sub_006335b0();
 }
@@ -1658,7 +1658,7 @@ void UnitClass::Plot_On_Radar()
 
 // UnitClass::Update_Radar_Position -- ALIAS of AircraftClass::Update_Radar_Position (same machine code at 0x0061df20); the
 // forwarder is written once, at that declaration.
-void UnitClass::Update_Radar_Position(int a0, int a1, int a2, int a3, int a4)
+void UnitClass::Update_Radar_Position(int a0, int a1, int a2)
 {
     ts::sub::sub_0061df20();
 }
@@ -1783,7 +1783,7 @@ void UnitClass::Overrun_Square(int a0, int a1)
 
 // UnitClass::Current_Speed -- ALIAS of AircraftClass::Current_Speed (same machine code at 0x004a1c20); the
 // forwarder is written once, at that declaration.
-void UnitClass::Current_Speed(int a0, int a1)
+void UnitClass::Current_Speed()
 {
     ts::sub::sub_004a1c20();
 }
@@ -1831,7 +1831,7 @@ void UnitClass::Is_LZ_Clear(int a0)
 // 28 instructions at 0x006354d0, in src/generated/code/.
 // size 94 bytes; callees: none
 //
-void UnitClass::Unit_Draw_Voxel(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void UnitClass::Unit_Draw_Voxel(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_006354d0();
 }
@@ -1841,7 +1841,7 @@ void UnitClass::Unit_Draw_Voxel(int a0, int a1, int a2, int a3, int a4, int a5, 
 // 40 instructions at 0x00636230, in src/generated/code/.
 // size 148 bytes; callees: 0x00492960, 0x0063635e
 //
-void UnitClass::Unit_Draw_Shape(int a0, int a1, int a2, int a3, int a4, int a5)
+void UnitClass::Unit_Draw_Shape(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12)
 {
     ts::sub::sub_00636230();
 }
@@ -1851,7 +1851,7 @@ void UnitClass::Unit_Draw_Shape(int a0, int a1, int a2, int a3, int a4, int a5)
 // 67 instructions at 0x006350f0, in src/generated/code/.
 // size 200 bytes; callees: 0x00617f30, 0x00618290
 //
-void UnitClass::Unit_Blit_Voxel(int a0, int a1)
+void UnitClass::Unit_Blit_Voxel()
 {
     ts::sub::sub_006350f0();
 }

@@ -223,7 +223,7 @@ void ScriptTypeClass::Read_INI(int a0)
 // 36 instructions at 0x005ce660, in src/generated/code/.
 // size 102 bytes; callees: 0x00405fb0, 0x004d6b50, 0x005ce6d6, 0x0062a700, 0x0062e450, 0x00682aae
 //
-void ScriptTypeClass::Write_INI(int a0, int a1, int a2, int a3)
+void ScriptTypeClass::Write_INI(int a0)
 {
     ts::sub::sub_005ce660();
 }

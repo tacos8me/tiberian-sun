@@ -19,13 +19,13 @@ class AnimFile : public Animate
 {
 public:
     // ---- vtable 0x00699a6c (8 slots) ----
-    virtual void vfunc_1(int a0);  // [1] 0x00416a50  // __thiscall
-    virtual void vfunc_2();  // [2] 0x00416a90  // __thiscall
+    virtual void vfunc_1(int a0);  // [1] 0x00416a50  // __thiscall, returns ?
+    virtual void vfunc_2();  // [2] 0x00416a90  // __thiscall, returns ?
     virtual void vfunc_3(int a0);  // [3] 0x00416d90  // __thiscall, returns int
-    virtual void vfunc_4();  // [4] 0x00417590  // __cdecl
-    virtual void vfunc_5();  // [5] 0x00416d50  // __cdecl
-    virtual void vfunc_6();  // [6] 0x00416d70  // __cdecl, returns int
-    virtual void vfunc_7();  // [7] 0x00416d80  // __cdecl, returns int
+    virtual void vfunc_4();  // [4] 0x00417590  // __thiscall, returns void*
+    virtual void vfunc_5();  // [5] 0x00416d50  // __thiscall, returns int
+    virtual void vfunc_6();  // [6] 0x00416d70  // __thiscall, returns short
+    virtual void vfunc_7();  // [7] 0x00416d80  // __thiscall, returns short
 
     AnimFile();  // 0x00416970
     virtual ~AnimFile();

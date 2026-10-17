@@ -18,11 +18,11 @@ class ToolTipManager
 {
 public:
     // ---- vtable 0x006a62c4 (6 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x0062b520  // __thiscall
-    virtual void vfunc_1(int a0);  // [1] 0x0062b3c0  // __stdcall
-    virtual void vfunc_2(int a0);  // [2] 0x0062b3d0  // __stdcall
-    virtual void vfunc_3(int a0);  // [3] 0x0062b4a0  // __thiscall
-    virtual void vfunc_4(int a0);  // [4] 0x0062b4d0  // __stdcall
+    virtual void vfunc_0(int a0);  // [0] 0x0062b520  // __thiscall, returns ?
+    virtual void vfunc_1(int a0);  // [1] 0x0062b3c0  // __stdcall, returns char
+    virtual void vfunc_2(int a0);  // [2] 0x0062b3d0  // __thiscall, returns int
+    virtual void vfunc_3(int a0);  // [3] 0x0062b4a0  // __thiscall, returns ?
+    virtual void vfunc_4(int a0);  // [4] 0x0062b4d0  // __stdcall, returns int
     virtual void vfunc_5(int a0);  // [5] 0x0062b4f0  // __stdcall, returns int
 
     ToolTipManager();  // 0x0062a9f0

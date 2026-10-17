@@ -213,7 +213,7 @@ void SmudgeTypeClass::Init_Theater(int a0)
 // 51 instructions at 0x005e1960, in src/generated/code/.
 // size 173 bytes; callees: 0x004d60b0, 0x004d70b0, 0x00572610, 0x005e1a33
 //
-void SmudgeTypeClass::Read_INI(int a0, int a1, int a2)
+void SmudgeTypeClass::Read_INI(int a0)
 {
     ts::sub::sub_005e1960();
 }
@@ -303,7 +303,7 @@ void SmudgeTypeClass::Occupy_List(int a0)
 
 // SmudgeTypeClass::Who_Can_Build_Me -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3, int a4, int a5)
+void SmudgeTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00571710();
 }

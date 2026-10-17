@@ -54,7 +54,7 @@ void ATL_CComObject_class_CChatEventSink::vfunc_3(int a0, int a1, int a2)
 // 30 instructions at 0x006699f0, in src/generated/code/.
 // size 106 bytes; callees: 0x0046ebd0, 0x00567940, 0x00669bf0
 //
-void ATL_CComObject_class_CChatEventSink::vfunc_4(int a0, int a1, int a2, int a3)
+void ATL_CComObject_class_CChatEventSink::vfunc_4(int a0, int a1, int a2)
 {
     ts::sub::sub_006699f0();
 }
@@ -114,7 +114,7 @@ void ATL_CComObject_class_CChatEventSink::vfunc_9(int a0, int a1, int a2)
 // 63 instructions at 0x0066a210, in src/generated/code/.
 // size 182 bytes; callees: 0x0066a2e2, 0x00682aae, 0x0068369a, 0x00683ff0
 //
-void ATL_CComObject_class_CChatEventSink::vfunc_10(int a0, int a1, int a2)
+void ATL_CComObject_class_CChatEventSink::vfunc_10(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_0066a210();
 }
@@ -234,7 +234,7 @@ void ATL_CComObject_class_CChatEventSink::vfunc_21(int a0, int a1, int a2, int a
 // 67 instructions at 0x0066b3f0, in src/generated/code/.
 // size 230 bytes; callees: 0x005682b0, 0x005f0b30, 0x0066b4e1, 0x00682610, 0x00683fa4, 0x006849b0, 0x0068be26
 //
-void ATL_CComObject_class_CChatEventSink::vfunc_22(int a0, int a1, int a2, int a3, int a4)
+void ATL_CComObject_class_CChatEventSink::vfunc_22(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_0066b3f0();
 }
@@ -244,7 +244,7 @@ void ATL_CComObject_class_CChatEventSink::vfunc_22(int a0, int a1, int a2, int a
 // 104 instructions at 0x0066b140, in src/generated/code/.
 // size 382 bytes; callees: 0x00407a60, 0x00668630, 0x00668b30, 0x0066b2c2, 0x00684028
 //
-void ATL_CComObject_class_CChatEventSink::vfunc_23(int a0, int a1, int a2, int a3)
+void ATL_CComObject_class_CChatEventSink::vfunc_23(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_0066b140();
 }
@@ -284,7 +284,7 @@ void ATL_CComObject_class_CChatEventSink::vfunc_26(int a0, int a1, int a2)
 // 5 instructions at 0x0066bab0, in src/generated/code/.
 // size 15 bytes; callees: 0x0066bb10
 //
-void ATL_CComObject_class_CChatEventSink::vfunc_27(int a0)
+void ATL_CComObject_class_CChatEventSink::vfunc_27(int a0, int a1)
 {
     ts::sub::sub_0066bab0();
 }
@@ -334,7 +334,7 @@ void ATL_CComObject_class_CChatEventSink::vfunc_31(int a0, int a1, int a2, int a
 // 33 instructions at 0x00669c10, in src/generated/code/.
 // size 99 bytes; callees: 0x00669c7d
 //
-void ATL_CComObject_class_CChatEventSink::vfunc_32(int a0, int a1, int a2)
+void ATL_CComObject_class_CChatEventSink::vfunc_32(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00669c10();
 }

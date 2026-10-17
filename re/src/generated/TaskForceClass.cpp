@@ -220,7 +220,7 @@ void TaskForceClass::Read_INI(int a0)
 // 32 instructions at 0x00606990, in src/generated/code/.
 // size 80 bytes; callees: 0x00405fb0, 0x0048eaa0, 0x004d6b50, 0x006069f0, 0x00682aae
 //
-void TaskForceClass::Write_INI(int a0, int a1, int a2)
+void TaskForceClass::Write_INI(int a0)
 {
     ts::sub::sub_00606990();
 }

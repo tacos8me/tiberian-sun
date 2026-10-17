@@ -69,7 +69,7 @@ void PowerClass::vfunc_6(int a0)
 // 34 instructions at 0x00593b20, in src/generated/code/.
 // size 123 bytes; callees: 0x005a0b10, 0x005f0b30
 //
-void PowerClass::vfunc_7(int a0)
+void PowerClass::vfunc_7()
 {
     ts::sub::sub_00593b20();
 }
@@ -93,7 +93,7 @@ void PowerClass::vfunc_9(int a0, int a1, int a2)
 // 144 instructions at 0x00594290, in src/generated/code/.
 // size 540 bytes; callees: 0x004b2e90, 0x00593d30, 0x0059470a, 0x005f0b30
 //
-void PowerClass::vfunc_10(int a0, int a1, int a2, int a3, int a4, int a5)
+void PowerClass::vfunc_10()
 {
     ts::sub::sub_00594290();
 }
@@ -121,7 +121,7 @@ void PowerClass::vfunc_13(int a0)
 
 // PowerClass::vfunc_14 -- ALIAS of DisplayClass::vfunc_14 (same machine code at 0x004b2ff0); the
 // forwarder is written once, at that declaration.
-void PowerClass::vfunc_14(int a0, int a1)
+void PowerClass::vfunc_14()
 {
     ts::sub::sub_004b2ff0();
 }
@@ -187,14 +187,14 @@ void PowerClass::vfunc_22()
 
 // PowerClass::vfunc_23 -- ALIAS of DisplayClass::vfunc_23 (same machine code at 0x00502500); the
 // forwarder is written once, at that declaration.
-void PowerClass::vfunc_23(int a0, int a1, int a2)
+void PowerClass::vfunc_23()
 {
     ts::sub::sub_00502500();
 }
 
 // PowerClass::vfunc_24 -- ALIAS of DisplayClass::vfunc_24 (same machine code at 0x00510cc0); the
 // forwarder is written once, at that declaration.
-void PowerClass::vfunc_24(int a0)
+void PowerClass::vfunc_24(int a0, int a1)
 {
     ts::sub::sub_00510cc0();
 }
@@ -208,7 +208,7 @@ void PowerClass::vfunc_25()
 
 // PowerClass::vfunc_26 -- ALIAS of DisplayClass::vfunc_26 (same machine code at 0x00507150); the
 // forwarder is written once, at that declaration.
-void PowerClass::vfunc_26(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void PowerClass::vfunc_26()
 {
     ts::sub::sub_00507150();
 }
@@ -249,7 +249,7 @@ void PowerClass::vfunc_30(int a0)
 
 // PowerClass::vfunc_31 -- ALIAS of DisplayClass::vfunc_31 (same machine code at 0x00476390); the
 // forwarder is written once, at that declaration.
-void PowerClass::vfunc_31(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void PowerClass::vfunc_31(int a0)
 {
     ts::sub::sub_00476390();
 }
@@ -269,7 +269,7 @@ void PowerClass::vfunc_32(int a0)
 // 33 instructions at 0x00594790, in src/generated/code/.
 // size 129 bytes; callees: 0x005a1840, 0x005dca90, 0x0062aea0, 0x0062b050
 //
-void PowerClass::vfunc_33(int a0, int a1, int a2, int a3)
+void PowerClass::vfunc_33()
 {
     ts::sub::sub_00594790();
 }
@@ -290,14 +290,14 @@ void PowerClass::vfunc_35(int a0, int a1)
 
 // PowerClass::vfunc_36 -- ALIAS of DisplayClass::vfunc_36 (same machine code at 0x004736b0); the
 // forwarder is written once, at that declaration.
-void PowerClass::vfunc_36(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void PowerClass::vfunc_36(int a0, int a1)
 {
     ts::sub::sub_004736b0();
 }
 
 // PowerClass::vfunc_37 -- ALIAS of DisplayClass::vfunc_37 (same machine code at 0x00473930); the
 // forwarder is written once, at that declaration.
-void PowerClass::vfunc_37(int a0, int a1, int a2, int a3, int a4, int a5)
+void PowerClass::vfunc_37(int a0, int a1)
 {
     ts::sub::sub_00473930();
 }
@@ -346,7 +346,7 @@ void PowerClass::vfunc_43(int a0)
 
 // PowerClass::vfunc_44 -- ALIAS of DisplayClass::vfunc_44 (same machine code at 0x00474660); the
 // forwarder is written once, at that declaration.
-void PowerClass::vfunc_44(int a0, int a1, int a2, int a3)
+void PowerClass::vfunc_44(int a0, int a1, int a2)
 {
     ts::sub::sub_00474660();
 }

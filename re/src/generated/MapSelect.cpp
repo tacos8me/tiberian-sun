@@ -41,7 +41,7 @@ void MapSelect::vfunc_1(int a0)
 // 49 instructions at 0x00541980, in src/generated/code/.
 // size 162 bytes; callees: 0x00484c90, 0x00485fb0, 0x005f0b30
 //
-void MapSelect::vfunc_2(int a0)
+void MapSelect::vfunc_2()
 {
     ts::sub::sub_00541980();
 }

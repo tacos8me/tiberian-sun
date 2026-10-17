@@ -18,7 +18,7 @@ class type_info
 {
 public:
     // ---- vtable 0x006a7d04 (1 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x00682906  // __thiscall
+    virtual void vfunc_0(int a0);  // [0] 0x00682906  // __thiscall, returns ?
 
     type_info();  // 0x006828dd
     virtual ~type_info();

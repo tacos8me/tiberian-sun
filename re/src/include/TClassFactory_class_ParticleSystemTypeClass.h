@@ -20,8 +20,8 @@ class TClassFactory_class_ParticleSystemTypeClass : public IClassFactory
 public:
     // ---- vtable 0x006a4e50 (5 slots) ----
     virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x005ee3c0  // __stdcall, returns int
-    virtual void AddRef(int a0);  // [1] 0x005ee430  // __stdcall
-    virtual void Release(int a0);  // [2] 0x005ee450  // __stdcall
+    virtual void AddRef(int a0);  // [1] 0x005ee430  // __stdcall, returns int
+    virtual void Release(int a0);  // [2] 0x005ee450  // __stdcall, returns ?
     virtual void vfunc_3(int a0, int a1, int a2, int a3);  // [3] 0x005ee480  // __stdcall, returns int
     virtual void vfunc_4(int a0, int a1);  // [4] 0x005ee500  // __stdcall, returns int
 

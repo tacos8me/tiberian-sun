@@ -216,7 +216,7 @@ void TagTypeClass::Init_Theater(int a0)
 // 31 instructions at 0x006043a0, in src/generated/code/.
 // size 108 bytes; callees: 0x004d6ed0, 0x00604421, 0x00683725, 0x006837ea
 //
-void TagTypeClass::Read_INI(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void TagTypeClass::Read_INI(int a0)
 {
     ts::sub::sub_006043a0();
 }

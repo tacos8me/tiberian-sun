@@ -88,7 +88,7 @@ void DSurface::vfunc_7(int a0, int a1, int a2)
 
 // DSurface::vfunc_8 -- ALIAS of BSurface::vfunc_8 (same machine code at 0x006750d0); the
 // forwarder is written once, at that declaration.
-void DSurface::vfunc_8(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21)
+void DSurface::vfunc_8(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12)
 {
     ts::sub::sub_006750d0();
 }
@@ -126,7 +126,7 @@ void DSurface::vfunc_12(int a0, int a1, int a2)
 // 137 instructions at 0x0048b1f0, in src/generated/code/.
 // size 451 bytes; callees: 0x00412bb0, 0x0048b3bb, 0x00494170, 0x00676030, 0x0067faf0
 //
-void DSurface::vfunc_13(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20)
+void DSurface::vfunc_13(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
 {
     ts::sub::sub_0048b1f0();
 }
@@ -136,7 +136,7 @@ void DSurface::vfunc_13(int a0, int a1, int a2, int a3, int a4, int a5, int a6, 
 // 113 instructions at 0x004888b0, in src/generated/code/.
 // size 388 bytes; callees: 0x00412bb0, 0x0045a920, 0x00488a3f, 0x00676030, 0x0067faf0
 //
-void DSurface::vfunc_14(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21)
+void DSurface::vfunc_14(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10)
 {
     ts::sub::sub_004888b0();
 }
@@ -146,7 +146,7 @@ void DSurface::vfunc_14(int a0, int a1, int a2, int a3, int a4, int a5, int a6, 
 // 165 instructions at 0x00489360, in src/generated/code/.
 // size 657 bytes; callees: 0x00412bb0, 0x0045a920, 0x004895f9, 0x00676030, 0x0067faf0, 0x006826c0
 //
-void DSurface::vfunc_15(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18, int a19, int a20, int a21, int a22, int a23, int a24, int a25, int a26, int a27, int a28, int a29, int a30)
+void DSurface::vfunc_15(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00489360();
 }
@@ -160,7 +160,7 @@ void DSurface::vfunc_16(int a0, int a1, int a2, int a3)
 
 // DSurface::vfunc_17 -- ALIAS of BSurface::vfunc_17 (same machine code at 0x00674650); the
 // forwarder is written once, at that declaration.
-void DSurface::vfunc_17(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void DSurface::vfunc_17(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00674650();
 }
@@ -180,7 +180,7 @@ void DSurface::vfunc_18(int a0, int a1, int a2, int a3, int a4, int a5)
 // 57 instructions at 0x0048c2f0, in src/generated/code/.
 // size 177 bytes; callees: 0x0048c3a5, 0x00676030
 //
-void DSurface::vfunc_19(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12)
+void DSurface::vfunc_19(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_0048c2f0();
 }
@@ -313,7 +313,7 @@ void DSurface::vfunc_34(int a0, int a1)
 // 131 instructions at 0x0048ac10, in src/generated/code/.
 // size 428 bytes; callees: 0x00412bb0, 0x0048adde, 0x005aad80, 0x00676030
 //
-void DSurface::vfunc_35(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17, int a18)
+void DSurface::vfunc_35(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_0048ac10();
 }

@@ -207,7 +207,7 @@ void SideClass::Init_Theater(int a0)
 
 // SideClass::Read_INI -- ALIAS of AbstractClass::Fetch_ID_2 (same machine code at 0x00405f20); the
 // forwarder is written once, at that declaration.
-void SideClass::Read_INI(int a0, int a1, int a2, int a3, int a4)
+void SideClass::Read_INI(int a0)
 {
     ts::sub::sub_00405f20();
 }

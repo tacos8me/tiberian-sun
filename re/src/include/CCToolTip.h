@@ -19,10 +19,10 @@ class CCToolTip : public ToolTipManager
 {
 public:
     // ---- vtable 0x006a7654 (6 slots) ----
-    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5);  // [1] 0x0044be30  // __thiscall
-    virtual void vfunc_2(int a0);  // [2] 0x0044bfb0  // __thiscall
-    virtual void vfunc_3(int a0);  // [3] 0x0044c010  // __stdcall
-    virtual void vfunc_4(int a0, int a1, int a2, int a3);  // [4] 0x0044c030  // __thiscall
+    virtual void vfunc_1(int a0);  // [1] 0x0044be30  // __thiscall, returns char
+    virtual void vfunc_2(int a0);  // [2] 0x0044bfb0  // __thiscall, returns char
+    virtual void vfunc_3(int a0);  // [3] 0x0044c010  // __thiscall, returns ?
+    virtual void vfunc_4(int a0);  // [4] 0x0044c030  // __thiscall, returns void*
     virtual void vfunc_5(int a0);  // [5] 0x0044c1a0  // __stdcall, returns int
 
     CCToolTip();  // 0x0065bbfd

@@ -45,7 +45,7 @@ void MSFadeAnim::vfunc_3()
 // 22 instructions at 0x00558120, in src/generated/code/.
 // size 59 bytes; callees: 0x0055815d, 0x005f0b30
 //
-void MSFadeAnim::vfunc_4(int a0)
+void MSFadeAnim::vfunc_4()
 {
     ts::sub::sub_00558120();
 }
@@ -55,7 +55,7 @@ void MSFadeAnim::vfunc_4(int a0)
 // 30 instructions at 0x00558500, in src/generated/code/.
 // size 85 bytes; callees: 0x0055856c
 //
-void MSFadeAnim::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5)
+void MSFadeAnim::vfunc_5(int a0, int a1)
 {
     ts::sub::sub_00558500();
 }

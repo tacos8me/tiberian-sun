@@ -142,7 +142,7 @@ void RawFileClass::vfunc_13()
 
 // RawFileClass::vfunc_14 -- ALIAS of BufferIOFileClass::vfunc_14 (same machine code at 0x005a68f0); the
 // forwarder is written once, at that declaration.
-void RawFileClass::vfunc_14(int a0, int a1)
+void RawFileClass::vfunc_14()
 {
     ts::sub::sub_005a68f0();
 }

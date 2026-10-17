@@ -18,14 +18,14 @@ class FontClass
 {
 public:
     // ---- vtable 0x006a7b5c (9 slots) ----
-    virtual void vfunc_1();  // [1] 0x006829a5  // __cdecl
-    virtual void vfunc_2();  // [2] 0x006829a5  // __cdecl
-    virtual void vfunc_3();  // [3] 0x006829a5  // __cdecl
-    virtual void vfunc_4();  // [4] 0x006829a5  // __cdecl
-    virtual void vfunc_5();  // [5] 0x006829a5  // __cdecl
-    virtual void vfunc_6();  // [6] 0x006829a5  // __cdecl
-    virtual void vfunc_7();  // [7] 0x006829a5  // __cdecl
-    virtual void vfunc_8();  // [8] 0x006829a5  // __cdecl
+    virtual void vfunc_1();  // [1] 0x006829a5  // __cdecl, returns void
+    virtual void vfunc_2();  // [2] 0x006829a5  // __cdecl, returns void
+    virtual void vfunc_3();  // [3] 0x006829a5  // __cdecl, returns void
+    virtual void vfunc_4();  // [4] 0x006829a5  // __cdecl, returns void
+    virtual void vfunc_5();  // [5] 0x006829a5  // __cdecl, returns void
+    virtual void vfunc_6();  // [6] 0x006829a5  // __cdecl, returns void
+    virtual void vfunc_7();  // [7] 0x006829a5  // __cdecl, returns void
+    virtual void vfunc_8();  // [8] 0x006829a5  // __cdecl, returns void
 
     FontClass();  // 0x00672570
     virtual ~FontClass();

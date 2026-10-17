@@ -18,10 +18,10 @@ class LoadOptionsClass
 {
 public:
     // ---- vtable 0x006a1814 (5 slots) ----
-    virtual void vfunc_1(int a0);  // [1] 0x004f9100  // __stdcall
-    virtual void vfunc_2(int a0, int a1);  // [2] 0x004f9150  // __stdcall
-    virtual void vfunc_3(int a0);  // [3] 0x004f91a0  // __stdcall
-    virtual void vfunc_4(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8);  // [4] 0x004f91c0
+    virtual void vfunc_1(int a0);  // [1] 0x004f9100  // __stdcall, returns ?
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x004f9150  // __stdcall, returns ?
+    virtual void vfunc_3(int a0);  // [3] 0x004f91a0  // __stdcall, returns ?
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x004f91c0  // __stdcall, returns char
 
     LoadOptionsClass();  // 0x004f8000
     virtual ~LoadOptionsClass();

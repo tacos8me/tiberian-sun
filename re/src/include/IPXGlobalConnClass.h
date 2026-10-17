@@ -19,16 +19,16 @@ class IPXGlobalConnClass : public IPXConnClass
 {
 public:
     // ---- vtable 0x006a0af4 (13 slots) ----
-    virtual void vfunc_1(int a0);  // [1] 0x004e6f10
-    virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x004e79e0  // __stdcall
-    virtual void vfunc_3(int a0, int a1);  // [3] 0x004e7a00  // __stdcall
-    virtual void vfunc_4(int a0, int a1);  // [4] 0x004e7a20  // __stdcall
+    virtual void vfunc_1();  // [1] 0x004e6f10  // __cdecl, returns int
+    virtual void vfunc_2(int a0, int a1, int a2);  // [2] 0x004e79e0  // __stdcall, returns ?
+    virtual void vfunc_3(int a0, int a1);  // [3] 0x004e7a00  // __stdcall, returns ?
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x004e7a20  // __stdcall, returns ?
     virtual void vfunc_5();  // [5] 0x0045ee80  // __thiscall, returns int
-    virtual void vfunc_6(int a0, int a1, int a2, int a3, int a4);  // [6] 0x004e7970  // __thiscall
-    virtual void vfunc_7(int a0, int a1);  // [7] 0x0045eeb0  // __thiscall, returns int
+    virtual void vfunc_6();  // [6] 0x004e7970  // __thiscall, returns ?
+    virtual void vfunc_7();  // [7] 0x0045eeb0  // __thiscall, returns int
     virtual void vfunc_8();  // [8] 0x004e7910  // __thiscall, returns int
-    virtual void vfunc_9(int a0, int a1, int a2, int a3);  // [9] 0x004e78a0  // __thiscall
-    virtual void vfunc_10(int a0, int a1, int a2);  // [10] 0x004e7590  // __thiscall
+    virtual void vfunc_9(int a0, int a1, int a2, int a3);  // [9] 0x004e78a0  // __thiscall, returns void
+    virtual void vfunc_10(int a0, int a1, int a2, int a3);  // [10] 0x004e7590  // __thiscall, returns int
     virtual void vfunc_11(int a0, int a1, int a2);  // [11] 0x004e7640  // __thiscall, returns int
     virtual void vfunc_12(int a0, int a1, int a2, int a3);  // [12] 0x004e7810  // __stdcall, returns int
 

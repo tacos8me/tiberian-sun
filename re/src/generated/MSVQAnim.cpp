@@ -55,7 +55,7 @@ void MSVQAnim::vfunc_4(int a0, int a1)
 // 71 instructions at 0x00558dc0, in src/generated/code/.
 // size 204 bytes; callees: 0x0041e5c0, 0x00558ed6
 //
-void MSVQAnim::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void MSVQAnim::vfunc_5(int a0, int a1)
 {
     ts::sub::sub_00558dc0();
 }

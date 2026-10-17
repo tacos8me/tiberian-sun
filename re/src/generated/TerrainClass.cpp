@@ -199,7 +199,7 @@ void TerrainClass::As_Coord(int a0)
 // 75 instructions at 0x00623a00, in src/generated/code/.
 // size 237 bytes; callees: 0x0043a3a0, 0x0056e860, 0x005a5ec0
 //
-void TerrainClass::AI(int a0, int a1)
+void TerrainClass::AI()
 {
     ts::sub::sub_00623a00();
 }
@@ -363,7 +363,7 @@ void TerrainClass::Sort_Y()
 
 // TerrainClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
+void TerrainClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_00570db0();
 }
@@ -380,7 +380,7 @@ void TerrainClass::Occupies_Cells()
 // 90 instructions at 0x00623c60, in src/generated/code/.
 // size 295 bytes; callees: 0x00450750, 0x00502060, 0x005020d0, 0x00508840, 0x0051c870, 0x0056f6a0, 0x005a25c0
 //
-void TerrainClass::Limbo(int a0, int a1, int a2, int a3, int a4)
+void TerrainClass::Limbo()
 {
     ts::sub::sub_00623c60();
 }
@@ -418,7 +418,7 @@ void TerrainClass::Paradrop(int a0)
 
 // TerrainClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Fall_From_Height(int a0)
+void TerrainClass::Fall_From_Height()
 {
     ts::sub::sub_0056ea70();
 }
@@ -500,7 +500,7 @@ void TerrainClass::Draw_Post_Render(int a0, int a1)
 // 32 instructions at 0x006234b0, in src/generated/code/.
 // size 90 bytes; callees: 0x005020d0, 0x00623528
 //
-void TerrainClass::Draw_It(int a0, int a1, int a2)
+void TerrainClass::Draw_It(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_006234b0();
 }
@@ -510,7 +510,7 @@ void TerrainClass::Draw_It(int a0, int a1, int a2)
 // 67 instructions at 0x00623660, in src/generated/code/.
 // size 216 bytes; callees: 0x00456ca0, 0x005020d0, 0x005f5030, 0x00623742
 //
-void TerrainClass::Editor_Draw_It(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void TerrainClass::Editor_Draw_It(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00623660();
 }
@@ -600,7 +600,7 @@ void TerrainClass::Select()
 
 // TerrainClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Unselect(int a0)
+void TerrainClass::Unselect()
 {
     ts::sub::sub_0056eda0();
 }
@@ -641,7 +641,7 @@ void TerrainClass::Scatter(int a0, int a1, int a2)
 // 68 instructions at 0x006238b0, in src/generated/code/.
 // size 210 bytes; callees: 0x00412f30, 0x00414fb0, 0x005a5ec0, 0x00682997
 //
-void TerrainClass::Catch_Fire(int a0, int a1)
+void TerrainClass::Catch_Fire()
 {
     ts::sub::sub_006238b0();
 }
@@ -651,7 +651,7 @@ void TerrainClass::Catch_Fire(int a0, int a1)
 // 36 instructions at 0x00623990, in src/generated/code/.
 // size 104 bytes; callees: none
 //
-void TerrainClass::Fire_Out(int a0)
+void TerrainClass::Fire_Out()
 {
     ts::sub::sub_00623990();
 }
@@ -787,7 +787,7 @@ void TerrainClass::Get_Target_Cell(int a0)
 
 // TerrainClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Get_Target_Cell_Ptr(int a0)
+void TerrainClass::Get_Target_Cell_Ptr()
 {
     ts::sub::sub_00570d50();
 }

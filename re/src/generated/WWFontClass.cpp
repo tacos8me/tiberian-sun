@@ -44,7 +44,7 @@ void WWFontClass::vfunc_2(int a0)
 // 31 instructions at 0x00671ce0, in src/generated/code/.
 // size 68 bytes; callees: 0x00671d44
 //
-void WWFontClass::vfunc_3(int a0, int a1, int a2, int a3)
+void WWFontClass::vfunc_3(int a0, int a1)
 {
     ts::sub::sub_00671ce0();
 }
@@ -74,7 +74,7 @@ void WWFontClass::vfunc_5()
 // 109 instructions at 0x00671eb0, in src/generated/code/.
 // size 357 bytes; callees: 0x00672503
 //
-void WWFontClass::vfunc_6(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17)
+void WWFontClass::vfunc_6(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_00671eb0();
 }
