@@ -801,7 +801,14 @@ inline void ts_tail(u32 target) { mach().tail = target; }
 inline void ts_invoke(u32 va) { push32(0u); ts_call(va); }
 // An indirect `call dword ptr [eax+0x2c]`: the target is read first, for the same
 // reason the multiply operands are.
-inline void ts_call_ptr(u32 target, u32 ret) { push32(ret); ts_call(target); }
+//
+// This is the same call as ts_call_at and must balance the same way. It used to
+// push the return address and hand off to ts_call, which is a no-op when the
+// target is unregistered -- so every indirect call into an unregistered address
+// leaked its return address. The atexit walk at 0x6844dd is one of those calls
+// (`call eax`), and 27 of them leaked 108 bytes, which is how `pop %esi` at
+// 0x6844ea came to load 0x6844df. Delegate rather than duplicate the balance.
+inline void ts_call_ptr(u32 target, u32 ret) { ts_call_at(target, ret); }
 
 // -- string ops -------------------------------------------------------------
 // The direction flag is honoured, because the recovered code does use `std`.
