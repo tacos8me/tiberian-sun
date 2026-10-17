@@ -13,7 +13,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-class VoxelAnimClass;
+#include "VoxelAnimClass.h"
 
 class TClassFactory_class_VoxelAnimClass : public IClassFactory
 {

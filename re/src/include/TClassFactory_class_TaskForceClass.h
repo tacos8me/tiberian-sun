@@ -13,7 +13,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-class TaskForceClass;
+#include "TaskForceClass.h"
 
 class TClassFactory_class_TaskForceClass : public IClassFactory
 {

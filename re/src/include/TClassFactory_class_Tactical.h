@@ -13,7 +13,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-class Tactical;
+#include "Tactical.h"
 
 class TClassFactory_class_Tactical : public IClassFactory
 {

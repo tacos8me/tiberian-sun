@@ -13,7 +13,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-class UnitClass;
+#include "UnitClass.h"
 
 class TClassFactory_class_UnitClass : public IClassFactory
 {

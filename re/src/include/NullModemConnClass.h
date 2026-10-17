@@ -37,12 +37,12 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    // The machine block begins at +0x4: the compiled end of the
-    // base sub-object region. Evidence: ConnectionClass at +0x0 (ends +0x4).
-    // 1 recovered offset(s) below +0x4 lie inside the base
+    // The machine block begins at +0x20: the compiled end of the
+    // base sub-object region. Evidence: ConnectionClass at +0x0 (ends +0x20).
+    // 1 recovered offset(s) below +0x20 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0
-    unsigned char pad_004[0x34];
+    unsigned char pad_020[0x18];
     unsigned int m_038;  // +0x038 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x38], 0xffffffff
     unsigned int m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [esi + 0x3c], eax
 };

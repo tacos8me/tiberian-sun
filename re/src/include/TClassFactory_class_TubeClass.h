@@ -13,7 +13,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-class TubeClass;
+#include "TubeClass.h"
 
 class TClassFactory_class_TubeClass : public IClassFactory
 {

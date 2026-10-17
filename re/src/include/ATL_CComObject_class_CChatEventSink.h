@@ -14,7 +14,7 @@
 
 #include "ts_prelude.h"
 #include "CChatEventSink.h"
-class CChatEventSink;
+#include "CChatEventSink.h"
 
 class ATL_CComObject_class_CChatEventSink : public CChatEventSink
 {

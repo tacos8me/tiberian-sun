@@ -13,7 +13,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-class TagClass;
+#include "TagClass.h"
 
 class TClassFactory_class_TagClass : public IClassFactory
 {

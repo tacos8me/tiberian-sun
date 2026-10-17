@@ -13,7 +13,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-class TerrainTypeClass;
+#include "TerrainTypeClass.h"
 
 class TClassFactory_class_TerrainTypeClass : public IClassFactory
 {

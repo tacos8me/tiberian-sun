@@ -13,7 +13,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-class TEventClass;
+#include "TEventClass.h"
 
 class TClassFactory_class_TEventClass : public IClassFactory
 {

@@ -70,18 +70,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    // The machine block begins at +0x2c: the compiled end of the
-    // base sub-object region. Evidence: GaugeClass at +0x0 (ends +0x2c).
-    // 1 recovered offset(s) below +0x2c lie inside the base
+    // The machine block begins at +0x3c: the compiled end of the
+    // base sub-object region. Evidence: GaugeClass at +0x0 (ends +0x3c).
+    // 7 recovered offset(s) below +0x3c lie inside the base
     // sub-object region and are NOT declared here: they are declared and
-    // compiler-checked in the base's own header -- +0x0
-    unsigned char m_02c;  // +0x02c /* ? */; 1-byte store: mov byte ptr [edi + 0x2c], cl
-    unsigned char m_02d;  // +0x02d /* ? */; 1-byte store: mov byte ptr [edi + 0x2d], dl
-    unsigned char m_02e;  // +0x02e /* ? */; 1-byte store: mov byte ptr [edi + 0x2e], cl
-    unsigned char pad_02f[0x1];
-    unsigned int m_030;  // +0x030 /* ? */; 4-byte store: mov dword ptr [edi + 0x30], edx
-    unsigned int m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [edi + 0x34], ecx
-    unsigned int m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [edi + 0x38], edx
+    // compiler-checked in the base's own header -- +0x0, +0x2c, +0x2d, +0x2e, +0x30, +0x34, +0x38
     unsigned int m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [edi + 0x3c], ecx
     unsigned int m_040;  // +0x040 /* ? */; 4-byte store: mov dword ptr [edi + 0x40], edx
     unsigned char m_044;  // +0x044 /* ? */; 1-byte store: mov byte ptr [edi + 0x44], cl

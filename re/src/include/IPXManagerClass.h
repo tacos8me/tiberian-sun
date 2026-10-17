@@ -44,24 +44,11 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    // The machine block begins at +0x4: the compiled end of the
-    // base sub-object region. Evidence: ConnManClass at +0x0 (ends +0x4).
-    // 1 recovered offset(s) below +0x4 lie inside the base
+    // The machine block begins at +0x44: the compiled end of the
+    // base sub-object region. Evidence: ConnManClass at +0x0 (ends +0x44).
+    // 12 recovered offset(s) below +0x44 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
-    // compiler-checked in the base's own header -- +0x0
-    unsigned char m_004;  // +0x004 init 0x1; 1-byte store: mov byte ptr [esi + 4], 1
-    unsigned char m_005;  // +0x005 /* ? */; 1-byte store: mov byte ptr [esi + 5], bl
-    unsigned char pad_006[0x2];
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [esi + 8], eax
-    unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ecx
-    unsigned int m_010;  // +0x010 /* ? */; 4-byte store: mov dword ptr [esi + 0x10], edx
-    unsigned int m_014;  // +0x014 /* ? */; 4-byte store: mov dword ptr [esi + 0x14], eax
-    unsigned short m_018;  // +0x018 /* ? */; 2-byte store: mov word ptr [esi + 0x18], cx
-    unsigned short m_01a;  // +0x01a /* ? */; 2-byte store: mov word ptr [esi + 0x1a], dx
-    unsigned int m_01c;  // +0x01c /* ? */; 4-byte store: mov dword ptr [esi + 0x1c], ebx
-    unsigned char pad_020[0x1c];
-    unsigned int m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [esi + 0x3c], ebx
-    unsigned int m_040;  // +0x040 /* ? */; 4-byte store: mov dword ptr [esi + 0x40], ebx
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x5, +0x8, +0xc, +0x10, +0x14, +0x18 ...
     unsigned int m_044;  // +0x044 /* ? */; 4-byte store: mov dword ptr [esi + 0x44], ebx
     unsigned int m_048;  // +0x048 init 0x2; 4-byte store: mov dword ptr [esi + 0x48], 2
     unsigned int m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [esi + 0x4c], eax

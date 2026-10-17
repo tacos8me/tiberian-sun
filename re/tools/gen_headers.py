@@ -219,6 +219,41 @@ def _member_decl_size(widths, off):
     while w > 1 and off % w:
         w //= 2
     return w
+
+def _standalone_idents(manifest, owned, prelude_owned_types):
+    """Idents this run writes a `<ident>.h` for.
+
+    Needed because a header is asked for BEFORE it is written: the derived
+    class that includes a base is usually emitted after the base, but the
+    emitter cannot rely on that, and on a clean tree (the pipeline wipes
+    src/include) nothing is on disk at all. Deciding an include from the
+    filesystem alone dropped it on the first run and added it on the second.
+    """
+    out = set()
+    for m in manifest:
+        ident = m.get("ident")
+        if not ident or ident in owned or ident in prelude_owned_types:
+            continue
+        if ident in out:
+            continue
+        rtti = m.get("class", "")
+        if "<" in rtti:
+            tmpl = rtti.split("<")[0]
+            for kw in ("class ", "struct "):
+                if tmpl.startswith(kw):
+                    tmpl = tmpl[len(kw):]
+            if tmpl.strip() in owned:
+                continue
+        out.add(ident)
+    return out
+
+
+def _have_header(srcdir, hw_dir, ident, will_write):
+    """True when a header for `ident` exists now or is written by this run."""
+    if ident in will_write:
+        return True
+    return any(os.path.exists(os.path.join(d, ident + ".h"))
+               for d in (srcdir, hw_dir))
 _MEMBER_BANNER = "// ---- data members (offsets from ctor"
 
 # The first line of the block this emitter writes. A hand-written header may
@@ -459,24 +494,76 @@ class DeclaredLayout:
                     if cand and class_body_span(src, cand) is not None:
                         res = (path, cand)
                         break
+        if res is None and ident:
+            # owner_header is built from the tree as it was at startup, so it
+            # does not know a header THIS run has just written. On a clean tree
+            # (the pipeline wipes src/include) every generated header is in that
+            # state, and without this a generated class's body was invisible to
+            # the layout model -- so the class's own recovered offsets were
+            # modelled as undeclared. Ask for the deterministic file name the
+            # emitter writes the class under, at the moment of the call.
+            for d in (self.srcdir, self.hw_dir):
+                p = os.path.join(d, ident + ".h")
+                if os.path.exists(p) and class_body_span(
+                        open(p).read(), ident) is not None:
+                    res = (p, ident)
+                    break
         if res is None:
             res = self.find_body(key)
+            # `find_body` is `owning_header`, which collapses a nested RTTI name
+            # to its ENCLOSING class (class SidebarClass::SBGadgetClass ->
+            # SidebarClass.h, class SidebarClass). The enclosing class is the
+            # right owner for the nested class's block but the wrong BODY: its
+            # base clause is SidebarClass's, so the nested class was modelled
+            # with SidebarClass's bases (PowerClass instead of GadgetClass) and
+            # its recovered offsets were read as lying inside a 0x152c-byte
+            # base. Keep searching when the file does not define the class
+            # asked for.
+            names = (key, ident, key.split("::")[-1],
+                     key.split("<")[0].split()[-1])
+            if res is not None and (res[1] not in names
+                                    or not self._defines(res[0], res[1])):
+                res = None
         if res is None:
             # Not a manifest class: an interface from ts_prelude.h, a mix-in
             # like StageClass, or a template head. Search the hand-written
             # headers first -- they are the authoritative copies -- then the
-            # generated tree.
+            # generated tree. `key` is the RTTI spelling (`class ConnManClass`)
+            # and a header writes the bare name, so both are tried: matching on
+            # `key` alone never matched a class-prefixed RTTI name.
+            cands = [c for c in (key, ident, key.split("::")[-1],
+                                 key.split("<")[0].split()[-1]) if c]
             for d in (self.hw_dir, self.srcdir):
                 if not os.path.isdir(d):
                     continue
                 for p in sorted(glob.glob(os.path.join(d, "*.h"))):
-                    if class_body_span(open(p).read(), key) is not None:
-                        res = (p, key)
+                    src = open(p).read()
+                    for cand in cands:
+                        if class_body_span(src, cand) is not None:
+                            res = (p, cand)
+                            break
+                    if res is not None:
                         break
                 if res is not None:
                     break
+        if res is None and key in self._manifest:
+            # A manifest class's header is written by THIS run, so a negative
+            # answer is only about the tree as it is right now. Do not cache it:
+            # a base asked for before its own header exists would otherwise stay
+            # invisible for the rest of the run, which is what made the emitter
+            # order-dependent and so not idempotent.
+            return res
         self._find_cache[key] = res
         return res
+
+    @staticmethod
+    def _defines(path, *names):
+        """True when the header at `path` defines a class called one of `names`."""
+        try:
+            src = open(path).read()
+        except OSError:
+            return False
+        return any(n and class_body_span(src, n) is not None for n in names)
 
     def _hw_names(self):
         if not hasattr(self, "_hw_name_set"):
@@ -675,7 +762,7 @@ class DeclaredLayout:
         """
         b = self.body(key)
         if b is None or not b[3]:
-            return [], []
+            return [], [], []
         pads, duplicates, unfixable = [], [], []
         floor = self.cursor(key)
         cur = floor
@@ -748,6 +835,20 @@ class DeclaredLayout:
         ident = self.ident_of.get(key)
         if ident is None or ident in self.prelude_owned_types:
             return False
+        if key in self._manifest:
+            # A manifest class gets a block whether its header already exists
+            # or not: the loop below writes a standalone header for it, or
+            # appends the block to the header that owns it. Asking the
+            # filesystem instead (`_defined_elsewhere`) answered "some header
+            # defines this name" for the class's OWN header on a clean tree, so
+            # the block was modelled as absent -- and `end()` came out as the
+            # vptr alone. IPXManagerClass therefore modelled its base
+            # ConnManClass as 4 bytes and re-declared every one of the base's
+            # members at their absolute offsets, which the compiler then
+            # displaced by the base sub-object's real 0x44 bytes. It also made
+            # the emitter non-idempotent: the second run saw the header on disk
+            # and laid the same class out differently.
+            return True
         hdr = self._find(key)
         if hdr is None:
             return not self._defined_elsewhere(key.split("<")[0].split()[-1])
@@ -1279,7 +1380,11 @@ def main():
             break
     if os.path.exists(rp):
         _rs = open(rp).read()
-        _m = re.search(r"PRELUDE_ONLY\s*=\s*\{(.*?)\n\}", _rs, re.S)
+        # `\n\}` alone stops at the first entry that ends in a line of its
+        # own `}` -- every entry's struct literal does -- so only the first
+        # name was ever read and GScreenClass stayed un-owned. The dict's own
+        # close is the only `}` that ends a line.
+        _m = re.search(r"PRELUDE_ONLY\s*=\s*\{(.*?)\n\}\n", _rs, re.S)
         if _m:
             for pm in re.finditer(r'"([A-Za-z_]\w*)"\s*:', _m.group(1)):
                 prelude_owned_types.add(pm.group(1))
@@ -1394,6 +1499,10 @@ def main():
     # A class the loop skips never enters the file-writing branch, so its
     # recovered offsets would otherwise be computed and thrown away.
     deferred_members = []
+
+    # Headers this run writes itself, so an include of one is correct even
+    # before the file lands on disk.
+    will_write_headers = _standalone_idents(manifest, owned, prelude_owned_types)
 
     # The base list the per-class loop below will actually EMIT, per class. The
     # layout model has to model the declaration the compiler sees, and a base
@@ -1519,7 +1628,7 @@ def main():
             # alone, or the two definitions collide.
             if b in prelude_types and b not in prelude_defines:
                 continue
-            if os.path.exists(os.path.join(srcdir, b + ".h")):
+            if _have_header(srcdir, hw_dir, b, will_write_headers):
                 L.append(f'#include "{b}.h"')
                 continue
             # A base that is an instantiation of a hand-written template
@@ -1541,7 +1650,7 @@ def main():
                 for _at in re.findall(r"[A-Za-z_]\w*", _bt[_bt.index("<"):]):
                     if _at in _KEYWORDS:
                         continue
-                    if os.path.exists(os.path.join(srcdir, _at + ".h")):
+                    if _have_header(srcdir, hw_dir, _at, will_write_headers):
                         L.append(f'#include "{_at}.h"')
                     elif template_header.get(_at):
                         L.append(f'#include "{template_header[_at]}"')
@@ -1556,7 +1665,7 @@ def main():
                 if tok in _KEYWORDS or tok in seen:
                     continue
                 seen.add(tok)
-                if os.path.exists(os.path.join(srcdir, tok + ".h")):
+                if _have_header(srcdir, hw_dir, tok, will_write_headers):
                     L.append(f'#include "{tok}.h"')
                 elif template_header.get(tok):
                     # The argument is itself defined by a hand-written template
@@ -1585,7 +1694,7 @@ def main():
                     if _tok in _KEYWORDS or _tok in _declared:
                         continue
                     _declared.add(_tok)
-                    if os.path.exists(os.path.join(srcdir, _tok + ".h")):
+                    if _have_header(srcdir, hw_dir, _tok, will_write_headers):
                         continue
                     if _tok in owned or _tok in prelude_types:
                         continue

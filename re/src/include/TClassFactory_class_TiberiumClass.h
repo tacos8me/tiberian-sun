@@ -13,7 +13,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-class TiberiumClass;
+#include "TiberiumClass.h"
 
 class TClassFactory_class_TiberiumClass : public IClassFactory
 {

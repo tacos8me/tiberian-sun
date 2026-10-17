@@ -33,11 +33,9 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    // The machine block begins at +0x3d: the compiled end of the
-    // base sub-object region. Evidence: MSFadeAnim at +0x0 (ends +0x3d).
-    // 1 recovered offset(s) below +0x3d lie inside the base
+    // The machine block begins at +0x44: the compiled end of the
+    // base sub-object region. Evidence: MSFadeAnim at +0x0 (ends +0x44).
+    // 2 recovered offset(s) below +0x44 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
-    // compiler-checked in the base's own header -- +0x0
-    unsigned char pad_03d[0x3];
-    unsigned int m_040;  // +0x040 /* ? */; 4-byte store: mov dword ptr [esi + 0x40], edx
+    // compiler-checked in the base's own header -- +0x0, +0x40
 };

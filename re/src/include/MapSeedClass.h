@@ -32,15 +32,12 @@ public:
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    // The machine block begins at +0x4: the compiled end of the
-    // base sub-object region. Evidence: LoadOptionsClass at +0x0 (ends +0x4).
-    // 1 recovered offset(s) below +0x4 lie inside the base
+    // The machine block begins at +0x18: the compiled end of the
+    // base sub-object region. Evidence: LoadOptionsClass at +0x0 (ends +0x18).
+    // 3 recovered offset(s) below +0x18 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
-    // compiler-checked in the base's own header -- +0x0
-    unsigned char pad_004[0x4];
-    unsigned int m_008;  // +0x008 init 0x6cd9cc; 4-byte store: mov dword ptr [ebx + 8], 0x6cd9cc
-    unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [ebx + 0xc], ebp
-    unsigned char pad_010[0x24];
+    // compiler-checked in the base's own header -- +0x0, +0x8, +0xc
+    unsigned char pad_018[0x1c];
     unsigned int m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [ebx + 0x34], eax
     unsigned int m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [ebx + 0x38], eax
     unsigned int Time;  // +0x03c (INI key); 4-byte store: mov dword ptr [ebx + 0x3c], 1
