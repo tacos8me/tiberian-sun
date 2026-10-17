@@ -78,16 +78,17 @@ landing in a gap, and spans that begin in alignment fill. Every seed was CALLED 
 the original program, so it is evidence, not a guess.
 
 Current measured state: 43,564 spans, 46,008 transcriptions, 918,438/918,438
-instructions modelled at 100%, 0 unmodelled, `.text` code coverage 96.09%, and
-**0 unmapped calls inside `.text`** (link test). The historical progression
-quoted in the previous version of this entry (41,822 -> 43,564 spans; 897,193 ->
-918,438 instructions) is kept only as history.
+instructions modelled at 100%, 0 unmodelled, `.text` code coverage 96.09%. The
+historical progression quoted in the previous version of this entry (41,822 ->
+43,564 spans; 897,193 -> 918,438 instructions) is kept only as history.
 
 The two residual in-`.text` targets this entry used to name — `0x6844df` (from
 `0x5e7317`) and `0x46f3f8` (from `0x674bf6`), both RETURN ADDRESSES of indirect
-calls — disappeared with the 108-byte stack-leak fix. The link test now passes;
-the 2 remaining unmapped calls are outside `.text` (see the P4 entry).
-*Done when:* that is fixed and the link test passes. **Met.**
+calls — disappeared with the 108-byte stack-leak fix, and the link test passed
+until the newly reachable shutdown code reintroduced **10 in-text unmapped
+calls** (a separate teardown defect, queued in P4).
+*Done when:* that is fixed and the link test passes. **Met for the recovery
+defect; reopened as a teardown defect.**
 
 ### [x] The 32 ordinal imports could not pop their arguments
 The stub table keyed an ordinal by its raw ILT value (`"ord_2147483681"`) while
@@ -390,7 +391,7 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: **41 checks passed** (measured this session). Not
+`tools/test_tools.py`: **43 checks passed** (measured this session). Not
 golden-count assertions -- every one is a regression test for a defect that
 actually shipped, or a differential test against an independent implementation.
 Four are proven to fail when the defect is reintroduced (mutating
@@ -602,18 +603,16 @@ environment). A regression test (`win32-module-exports`) covers handle
 identity, export isolation, `*ppv` being written, the IBlowfish methods and ESP
 balance; it is mutation-proven.
 
-Measured: the registration flag stays 0, the `0x5e72fb` error box never fires,
-there is no `ExitProcess`, the primary-surface check passes
+Measured at that commit: the registration flag stays 0, the `0x5e72fb` error box
+never fires, there is no `ExitProcess`, the primary-surface check passes
 (`TS_PEEK: 0x006beed8 = 1`), and the boot **reaches the message loop**:
 `PeekMessage=695,115`, `CreateWindowExA=1`, `DispatchMessageA=0`, 0 unmapped
 calls, `boot.py --strict` exits 0.
 
-**Caveat:** `IBlowfish::Encrypt`/`Decrypt` copy the block and log once that no
-cipher is modelled. They are not reached in the model's current boot path (the
-message loop is idle before content loading), but the retail game calls
-`Decrypt(8,in,out)` **1,586 times** during startup; if the model reaches MIX
-content with the copy, the plaintext will be silently wrong. The cipher item
-below is the fix.
+**Superseded by later commits:** message delivery (`f3011ca`) made the loop
+dispatch, and the Blowfish cipher (`345aae7`, below) replaced the identity copy.
+The boot now stops in the CRT exit path with 70 unmapped calls (10 in `.text`);
+see the open teardown entry.
 
 ### [x] Write `DDSURFACEDESC` fields where the game reads them
 The game's `DSurface` wrapper (`0x4874c0`/`0x487ad0`) reads `dwRGBBitCount` at
@@ -623,11 +622,12 @@ The game's `DSurface` wrapper (`0x4874c0`/`0x487ad0`) reads `dwRGBBitCount` at
 `138718a` against the game's own code. This did not move the current stop
 (COM registration fails earlier), but it is the next runtime check.
 
-### [x] Reach a window and a message loop — reached, but idle
+### [x] Reach a window and a message loop — reached
 **Reached in `1580be3`.** `CreateWindowExA=1` and `PeekMessage=695,115`; the
 loop at `0x0055f78a` (`sub_0055f780`, the PeekMessage pump) is the game's own.
-`DispatchMessageA=0` and `GetMessage=0`, so the loop spins without delivering a
-message. The run now ends on the instruction budget, not a fault or an exit.
+At that commit the loop was idle (`DispatchMessageA=0`, `GetMessage=0`), which
+the next entry fixed: `f3011ca` delivers `WM_ACTIVATEAPP`, so the loop now
+dispatches and the game leaves the spin.
 
 This entry previously said "Reached. CreateWindowExA=1, PeekMessage=137,295"
 and was false, for an instructive reason: the model let `ExitProcess` return,
@@ -642,14 +642,13 @@ version read as 0, the CRT's version check failed and the game called
 it. The same class of defect (`GetProcAddress` on a module the model only
 pretended to load) blocked `blowfish.dll!DllRegisterServer` until `1580be3`.
 
-Measured on `main` with the project's `../gamedir`: **43,845 distinct
+Measured at that commit with the project's `../gamedir`: **43,845 distinct
 instructions; 4,142 of 46,008 recovered functions entered**; 0 unmapped calls;
-`boot.py --strict` exits 0. Without `../gamedir` the counts differ slightly
+`boot.py --strict` exited 0. Without `../gamedir` the counts differ slightly
 (the `CreateFileA("\\.\MONO")` path changes); use the project gamedir for the
-canonical figure.
-
-*The next entry is the real remaining work on this path: the loop is reached,
-but no message is ever delivered to the window procedure.*
+canonical figure. **Superseded:** message delivery (`f3011ca`) and Blowfish
+(`345aae7`) moved the stop to the CRT exit path and reintroduced teardown
+unmapped calls; see the entries below.
 
 ### [x] Deliver queued messages so the game runs frames — fixed
 **Was the blocker, measured.** The message loop at `0x0055f780` spun on
@@ -687,11 +686,12 @@ the TIBSUN.MIX index is read and "decrypted" to ciphertext, so a wrapped
 `LoadStringA` is not producing formatted text. The box renders with the format
 string; fix it when the content path is stable.
 
-**Downstream:** the newly reachable code makes 5 indirect calls with
+**Downstream:** the newly reachable code makes indirect calls with
 `this == NULL` (`ESI=0`) at `0x4b312b`, `0x4b319b`, `0x4b31a4`, `0x487d16`,
-`0x5e7c7e` — teardown of objects whose construction failed after the
-undecryptable index. `boot.py --strict` exits 4 while they remain. They should
-disappear when the index decrypts; if not, they are a separate teardown defect.
+`0x5e7c7e` (and later `0x5f1083`, `0x5f1006`, `0x5e7cfe`, `0x5e8489`) —
+teardown of objects whose construction failed after the undecryptable index.
+They did **not** disappear when the cipher was fixed; the separate teardown
+entry below tracks them. `boot.py --strict` exits non-zero (currently **3**).
 
 ### [x] Implement the Blowfish cipher the MIX indexes need — fixed
 **Measured against the retail binary, and it was not optional.** The object that
@@ -703,9 +703,9 @@ to the keys derived from nine shipped MIX indexes (TIBSUN.MIX, three TIBSUN
 sub-archives, MAPS01, MULTI, SCORES, MOVIES01), and 1586 is exactly the sum of
 those index sizes in 8-byte blocks.
 
-The model's current `IBlowfish::Encrypt`/`Decrypt` copy the block and log once
-that no cipher is modelled. If the game reaches MIX content loading, every
-index decrypts to garbage and the failure will look like a corrupt archive
+Before the fix, the model's `IBlowfish::Encrypt`/`Decrypt` copied the block and
+logged once that no cipher was modelled. If the game reached MIX content loading,
+every index decrypted to garbage and the failure looked like a corrupt archive
 rather than a missing cipher — exactly the "plausible wrong value" failure this
 project keeps finding.
 
@@ -808,10 +808,10 @@ mutation that proves a wrong arity is caught.
 import's arity still fails the gate. This touches `Machine.h` and `stub_done`
 in `Win32Stubs.h`, so it is sequenced behind the Blowfish change.
 
-### [x] The unmapped calls — all gone
-**The two in-`.text` targets are gone.** `0x6844df` and `0x46f3f8` disappeared
-with the stack-leak fix; the link test reported **0 unmapped calls inside
-`.text`** and passed.
+### [x] The first unmapped calls — fixed
+**The two in-`.text` targets from the leak era are gone.** `0x6844df` and
+`0x46f3f8` disappeared with the stack-leak fix; the link test then reported
+**0 unmapped calls inside `.text`** and passed.
 
 Two outside-`.text` targets remained:
 - `0x002fffe8` -- a stack address (the entry ESP is 0x002ffffc), so a data slot
@@ -823,9 +823,16 @@ Two outside-`.text` targets remained:
 Both were the same class: a stub that returned `S_OK` without writing its out
 pointer. `1580be3` fixed `IDirectDraw::CreateClipper` (the `0x4876e4` call to
 address 0) and `DirectSoundCreate` (the `0x484839` call to address 0; it now
-returns `DSERR_NODRIVER`, matching the retail no-audio environment). The boot
-now reports **0 unmapped calls** and `python3 tools/boot.py --strict` exits
-**0**.
+returns `DSERR_NODRIVER`, matching the retail no-audio environment). That made
+the boot report 0 unmapped calls and `boot.py --strict` exit 0 **at that
+commit**.
+
+**Reopened by the newly reachable code.** After `f3011ca`/`345aae7` the boot
+reports **70 unmapped calls, 10 inside `.text`** (33 below `0x1000`, 27
+elsewhere); the link test **fails** on the 10 in-text targets, and
+`boot.py --strict` exits non-zero (3). They are a teardown defect, tracked in
+the open entry above ("Null-pointer teardown calls and the 10 in-text unmapped
+calls"), not a regression of the `1580be3` fix.
 
 ### [x] Real file I/O
 The stub layer used to make every file "exist" and read as empty, with
@@ -839,21 +846,24 @@ the game could never load `rules.ini`, `TIBSUN.MIX` or the CD. Now: a host root
 so, so a caller takes its real failure path instead of reading zeroes.
 First run: `CreateFileA("\\.\MONO")` -- the sound device name.
 *Note:* this did not itself move the stop; the instruction count rose from
-1,011,817 to 7,038,765 when the stack leak was fixed, and to 20,000,001 (the
-budget, at the message loop) when COM registration was fixed.
+1,011,817 to 7,038,765 when the stack leak was fixed, to 20,000,001 (the
+budget, at the message loop) when COM registration was fixed, and the stop moved
+to the CRT exit path (`0x006844db`) once message delivery and the Blowfish
+cipher landed.
 
 ### [x] Make the boot a one-command measurement
 `tools/boot.py` builds (cached), runs with a budget and a timeout, and prints
 instructions, depth, stop/fault EIP with instruction bytes, import calls by name,
 the last N call targets, coverage and unmapped-target classification. Measured:
-`python3 tools/boot.py` builds (0 of 492 units compiled on a warm cache), runs in
-1.1 s wall, and reports **20,000,001 instructions** (budget exhausted at
-`0x0055f888`, the PeekMessage pump), **message loop reached** (`CreateWindowExA=1`,
-`PeekMessage=695,115`, `GetMessage=0`, `DispatchMessage=0`), **43,845 distinct
-instructions / 4,142 of 46,008 functions entered**, **0 unmapped calls**, and
-primary surface `TS_PEEK=0x006beed8` = 1. `--no-build --strict` is the gate: it
-exits **0**. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild` and
-`--no-build` are documented in the tool's header.
+`python3 tools/boot.py` builds (0 of 492 units compiled on a warm cache) and
+reports **20,000,001 instructions** (budget exhausted at `0x006844db`,
+`sub_00684486`, the `_exit`/atexit walk), **message loop reached and
+dispatching** (`CreateWindowExA=1`, `GetMessage=2`, `PeekMessage=5`,
+`DispatchMessage=2`), **51,604 distinct instructions / 4,535 of 46,008
+functions entered**, and **70 unmapped calls (10 inside `.text`; 33 below
+`0x1000`, 27 elsewhere)**. `--no-build --strict` is the gate: it exits
+**non-zero (3)** while those remain. `--json`, `--watch`, `--imports N`,
+`--budget N`, `--rebuild` and `--no-build` are documented in the tool's header.
 *Done when:* `python3 tools/boot.py` reproduces the boot and reports it. **Met.**
 
 ## Standing caveats
@@ -862,19 +872,22 @@ exits **0**. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild` and
   agree with the recovered tables. It does **not** prove the disassembly is
   correct. Check 4 reads the binary, check 9 makes the compiler adjudicate
   layout, and `verify_members_binary.py` is a separate binary-anchored gate.
-- The link test now **passes** (exit 0, 492 TUs, **message loop reached**,
-  `PeekMessage=695,115`, `DispatchMessage=0`), and the boot has **0 unmapped
-  calls**; `boot.py --strict` exits 0.
-- **The message loop is idle:** `DispatchMessage=0`, so no `WM_ACTIVATEAPP`
-  reaches the WndProc and `DAT_007b2e50` never becomes 1. Delivering queued
-  messages is the current runtime blocker (see the P4 entry above).
+- The link test now **fails** (exit 1, 492 TUs, 20,000,001 instructions,
+  message loop reached and dispatching) on **10 unmapped calls inside `.text`**;
+  `boot.py --strict` exits **3**. They are the teardown defect queued above.
+- **Message delivery is fixed** (`f3011ca`): `WM_ACTIVATEAPP` is queued, the
+  WndProc at `0x65ba70` runs, `DAT_007b2e50` becomes 1, and the game leaves the
+  `PeekMessage` spin. The current stop is the CRT exit path (`0x006844db`) with
+  WinMain having returned at ~7.66M instructions with ESP `0x11` — the shutdown
+  ESP corruption queued above.
+- **The Blowfish cipher is implemented and proven** (`345aae7`): standard
+  Blowfish-ECB, four known-answer vectors plus a byte-identical `tools/mix.py`
+  cross-check on the shipped TIBSUN.MIX index (`2ce3171bdbecb40e` →
+  `110090d97904849a`, count 17, body 75,094,416). The next content defect is the
+  MIX index read (2 of 27 blocks), queued above.
 - The retail oracle reaches the **main menu** (`tools/wine_env.sh`), but the
   main-menu buttons/text are not drawn because the PCX assets live inside a
   nested MIX entry, and there is no audio.
-- **`IBlowfish::Encrypt`/`Decrypt` are honest copies, not a cipher.** The retail
-  object is a real Blowfish cipher the game uses (9 `SetKey`, 1,586 `Decrypt`
-  calls during startup; `re/out/blowfish_oracle.md`). MIX-index decryption would
-  be silently wrong until the cipher is implemented; the item is queued above.
 - Member offsets are 99.9% confirmed against the binary, but **layout is not
   verified**: whether the types and ordering are right is unchecked.
 - Member names exist only where an INI key or string provides evidence. Never

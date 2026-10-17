@@ -20,29 +20,34 @@ The recovered **machine code is transcribed**, not stubbed: 46,008 functions
 instruction lines (100%, 0 unmodelled), rendered against the machine model in
 `src/handwritten/Machine.h`. The whole tree — 492 translation units — **links
 into a program**, and that program runs the original PE entry point against the
-model: **20,000,001 instructions** (the budget) ending in the `PeekMessage` pump
-at `0x0055f888`, with **`CreateWindowExA=1`, `PeekMessage=695,115`,
-`GetMessage=0`, `DispatchMessage=0`** — the game's own **message loop**, reached
-with **0 unmapped calls**. Coverage is **43,845 distinct instructions; 4,142 of
-46,008 recovered functions entered**; the only message box is the expected
-DirectSound warning at `0x484456` (`type=0x30`). The loop is **idle**: nothing is
-dispatched, so the game does not yet run frames. `tools/link_test.py` exits 0;
-`boot.py --strict` exits 0; a full `./tools/pipeline.sh` run completed exit 0 in
-`d23d1bf`.
+model: **20,000,001 instructions** (the budget) ending in the CRT exit path at
+`0x006844db` (`sub_00684486`, the `_exit`/atexit walk), with
+**`CreateWindowExA=1`, `GetMessage=2`, `PeekMessage=5`, `DispatchMessage=2`** —
+the game's own **message loop**, reached and dispatching. Coverage is **51,604
+distinct instructions; 4,535 of 46,008 recovered functions entered**; the only
+message box is the expected DirectSound warning at `0x484456` (`type=0x30`).
+WinMain returns at ~7.66M instructions with **ESP `0x11`** (entry `0x2fff84`),
+so the atexit walk runs away; **70 unmapped calls remain (10 inside `.text`)**,
+`boot.py --strict` exits 3, and `tools/link_test.py` fails (exit 1). A full
+`./tools/pipeline.sh` last completed exit 0 in `d23d1bf`, before this shutdown
+code was reachable.
 
 The **retail** binary, run under Wine with the CD and a 640x480x16 screen
 (`tools/wine_env.sh`), reaches its **main menu** (screenshot md5
 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s). That is the
-differential oracle: the model reaches the loop but not the menu.
+differential oracle: the model reaches message delivery and the shutdown path,
+but not the menu.
 
 The retail oracle also measured what `blowfish.dll` registers
 (`re/out/blowfish_oracle.md`, `tools/oracle_blowfish.py`,
 `tools/wine_blowfish_trace.sh`): the object is a **real Blowfish cipher the game
 uses**, with 9 `SetKey(56,key)` calls and 1,586 `Decrypt(8,in,out)` calls during
-startup, matching nine shipped MIX indexes. The model's
-`IBlowfish::Encrypt`/`Decrypt` currently copy the block and log once that no
-cipher is modelled, so MIX-index decryption would be silently wrong; implementing
-the cipher is queued in `todo.md` and is **not** done.
+startup, matching nine shipped MIX indexes. The model **now implements standard
+Blowfish-ECB** (`345aae7`), proven by the four standard known-answer vectors and
+a byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
+(`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416). The
+page-table exhaustion at `0x00a006b0` is gone; the next content defect is the
+MIX index read (2 of 27 blocks).
 
 **What that does *not* mean is stated under [Verification](#verification)
 below.** In short: the gate proves the declaration tree compiles, that the
@@ -288,13 +293,14 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   `link_test.py` reports `341 of 341 IAT slots written` and `0 with no stub`.
   The old "16,383 calls read 0" claim described the pre-`Image.h` model and is
   retracted.
-- **The message loop is reached but idle.** `CreateWindowExA=1` and
-  `PeekMessage=695,115`, but `DispatchMessage=0`: no `WM_ACTIVATEAPP` reaches the
-  WndProc, `DAT_007b2e50` never becomes 1, and the game does not run frames.
-- **`IBlowfish::Encrypt`/`Decrypt` are not a cipher.** The retail object is a
-  real Blowfish cipher the game uses (9 `SetKey`, 1,586 `Decrypt` calls during
-  startup); the model copies the block and logs once. MIX-index decryption would
-  be silently wrong until the cipher is implemented.
+- **Message delivery works; shutdown does not.** `WM_ACTIVATEAPP` is delivered,
+  the WndProc runs and `DAT_007b2e50` becomes 1, but WinMain returns with ESP
+  `0x11` and the CRT atexit walk runs away to the budget.
+- **The MIX index read stops after 2 of 27 blocks** (`0x547435`/`0x547426`).
+- **70 unmapped calls remain, 10 inside `.text`** (null teardown calls); the link
+  test fails and `boot.py --strict` exits 3.
+- **The Blowfish cipher is implemented and proven** (`345aae7`), not a copy:
+  four known-answer vectors plus a byte-identical `tools/mix.py` cross-check.
 - **Member layout is verified where expressible; types and ordering are not.**
   Check 9 confirms 3,073/3,073 offsets at `-m32`, and the binary-anchored
   verifier confirms 4,285 of 4,289; member *types* and ordering are not checked.

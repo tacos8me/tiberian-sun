@@ -8,8 +8,9 @@ Figures in this file were re-measured on 2026-10-17 with `harness.py metrics`,
 `verify.py`, `verify_members_binary.py`, `test_tools.py`, `boot.py` (and
 `--no-build --strict`), `link_test.py`, `wine_env.sh`, and direct counts over
 `out/` and `src/generated/`. The boot and oracle figures were re-measured after
-the COM-registration and message-loop merge; the full `pipeline.sh` run recorded
-in `d23d1bf` was not re-run here.
+the message-delivery and Blowfish-cipher merge; the full `pipeline.sh` run
+recorded in `d23d1bf` was not re-run here (and predates the newly reachable
+shutdown code).
 
 The point of this document is to say **what is actually left**, what the
 *smallest* honest size of that work is, and in what order it can be done — not to
@@ -279,23 +280,29 @@ recovered statements, every lifted function passing the differential test.
 Exit: a documented command that shows the model doing something the original
 does, and that fails if it stops doing it.
 
-**4.2 is still NOT done, but the message loop is now reached — idle.** A previous
-version of this file claimed the game "runs a frame loop" with
-`PeekMessage=137,295`. That was retracted: the model let `ExitProcess` return, so
-execution continued past a fatal exit and the "loop" was one the real game never
-ran. The current claim is from a run that never calls `ExitProcess`.
+**4.2 is still NOT done, but message delivery now works and the run reaches the
+CRT exit path.** A previous version of this file claimed the game "runs a frame
+loop" with `PeekMessage=137,295`. That was retracted: the model let
+`ExitProcess` return, so execution continued past a fatal exit and the "loop"
+was one the real game never ran. The current claim is from a run that never
+calls `ExitProcess`.
 
-What is true, measured after the COM-registration merge: the game maps at its
-real VAs and resolves **341/341** PE import-directory thunks (309 by name, 32 by
-ordinal, across 13 DLLs). The stub table holds 342 rows because it also carries
-`COMCTL32!DllGetVersion`, which is not an import — the CRT reaches it through
-`GetProcAddress`. The game runs until the **20,000,001-instruction budget** at
-`0x0055f888` (the `PeekMessage` pump): **`CreateWindowExA=1`,
-`PeekMessage=695,115`, `GetMessage=0`, `DispatchMessage=0`**, no fault and no
-`ExitProcess`. Coverage: **43,845 distinct instructions; 4,142 of 46,008
-recovered functions entered**. **0 unmapped calls**; `boot.py --strict` exits
-**0**. The only message box is the expected DirectSound warning at `0x484456`
-(`type=0x30`), and the primary-surface check passes (`TS_PEEK=0x006beed8` → 1).
+What is true, measured after the message-delivery and Blowfish merges: the game
+maps at its real VAs and resolves **341/341** PE import-directory thunks (309 by
+name, 32 by ordinal, across 13 DLLs). The stub table holds 342 rows because it
+also carries `COMCTL32!DllGetVersion`, which is not an import — the CRT reaches
+it through `GetProcAddress`. The game creates its window, **delivers
+`WM_ACTIVATEAPP`**, dispatches messages (`CreateWindowExA=1`, `GetMessage=2`,
+`PeekMessage=5`, `DispatchMessage=2`; the WndProc at `0x65ba70` runs and
+`DAT_007b2e50` becomes 1), then shuts down. The run consumes the full
+**20,000,001-instruction budget** at `0x006844db` (`sub_00684486`, the
+`_exit`/atexit walk) because WinMain returns at ~7.66M instructions with **ESP
+`0x11`** (entry `0x2fff84`). Coverage: **51,604 distinct instructions; 4,535 of
+46,008 recovered functions entered**. **70 unmapped calls remain (10 inside
+`.text`; 33 below `0x1000`, 27 elsewhere)**; `boot.py --strict` exits **3** and
+the link test fails. The only message box is the expected DirectSound warning at
+`0x484456` (`type=0x30`), and the primary-surface check passes
+(`TS_PEEK=0x006beed8` → 1).
 
 **COM registration is fixed (`1580be3`).** The game registers Westwood's
 `BLOWFISH.DLL` class `{1440AD10-6AA8-11D1-B6F9-00A024DDAFD1}`; `LoadLibraryA` now
@@ -304,16 +311,17 @@ exports `DllRegisterServer`/`DllUnregisterServer`/`DllGetClassObject`/
 `DllCanUnloadNow`, `CoCreateInstance` writes an `IBlowfish` object with an
 eight-slot vtable recovered from `BLOWFISH.DLL`, `IDirectDraw::CreateClipper`
 writes a real clipper, and `DirectSoundCreate` returns `DSERR_NODRIVER` (no
-audio, matching retail). The object is a **real Blowfish cipher the game uses**:
-`re/out/blowfish_oracle.md` measures `SetKey(56,key)` 9 times and
-`Decrypt(8,in,out)` 1,586 times during startup, matching nine shipped MIX
-indexes. The model's `Encrypt`/`Decrypt` are honest copies, so MIX-index
-decryption is queued, not done.
+audio, matching retail).
 
-**The loop is idle, and that is the next blocker.** `DispatchMessageA=0`, so no
-`WM_ACTIVATEAPP` reaches the WndProc and `DAT_007b2e50` never becomes 1. The
-WndProc path is `0x65bcaf` (dispatch), `0x65bd00` (handler), `0x65bd2a` (flag
-store); `todo.md` has the USER32 contract to implement.
+**Message delivery is fixed (`f3011ca`), and the Blowfish cipher is implemented
+and proven (`345aae7`).** `CreateWindowExA` queues `WM_ACTIVATEAPP`; the WndProc
+runs and the game leaves the spin (measured at that commit: 1,882,051
+instructions, `GetMessage=1`, `PeekMessage=3`, `DispatchMessage=1`, coverage
+49,635 / 4,455). `IBlowfish::SetKey`/`Encrypt`/`Decrypt` are now standard
+Blowfish-ECB, proven by the four known-answer vectors and a byte-identical
+`tools/mix.py` cross-check on the shipped TIBSUN.MIX index
+(`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416); the
+page-table exhaustion at `0x00a006b0` is gone.
 
 **The oracle premise is now inverted.** `tools/wine_env.sh` gives the retail
 binary an X screen at 640x480x16 and a `DRIVE_CDROM` `d:` labelled `TS1` holding
@@ -326,19 +334,17 @@ no audio. So the model reaches the loop but not the menu, and the oracle is the
 target.
 
 Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
-  1. Deliver queued messages: record the WndProc in `RegisterClassA`, queue
-     `WM_CREATE`/`WM_ACTIVATEAPP` in `CreateWindowExA`, return `MSG` from
-     `PeekMessageA`/`GetMessageA`, and call the WndProc from `DispatchMessageA`.
-     Exit: `DispatchMessageA > 0`, `DAT_007b2e50` becomes 1, and the loop stops
-     being a pure `PeekMessage` spin.
-  2. Implement the Blowfish cipher the MIX indexes need. The retail object is a
-     real cipher (9 `SetKey`, 1,586 `Decrypt` calls during startup; see
-     `re/out/blowfish_oracle.md`); the model's `Encrypt`/`Decrypt` copy the
-     block, so MIX-index decryption is silently wrong until this lands.
-  3. Make the model reach the main menu: real rendering (per-surface memory and
+  1. Fix the MIX index read: it stops after 2 of 27 blocks
+     (`0x547435`/`0x547426`). Decide whether the short read is in the
+     pipe/straw layer or the control flow at `0x547426`; the cipher is proven.
+  2. Fix the shutdown ESP corruption: WinMain returns with ESP `0x11` (entry
+     `0x2fff84`), so the CRT atexit walk runs away for ~12.3M instructions.
+  3. Fix the null teardown calls / 10 in-text unmapped calls so
+     `boot.py --strict` exits 0 and the link test passes.
+  4. Make the model reach the main menu: real rendering (per-surface memory and
      real `Blt`/`Flip`), the nested-MIX PCX assets, and the stubs the menu path
      needs. The retail oracle now shows the target.
-  4. Instruction-level differential: `tools/oracle.py 0xADDR --compare` at
+  5. Instruction-level differential: `tools/oracle.py 0xADDR --compare` at
      checkpoints the model and the retail binary both reach.
 
 **The lesson worth keeping from this phase.** The game exits immediately unless
@@ -351,8 +357,8 @@ wrong value is harder to diagnose than one that fails loudly.
 
 The honest measure of progress here is not "does it run" but **how far into the
 game's own code it gets before it needs something we have not modelled**. The
-measured figure is **20,000,001 instructions** (the budget) ending in the
-`PeekMessage` pump at `0x0055f888` — the message loop is reached, idle. Before
+measured figure is **20,000,001 instructions** (the budget) ending in the CRT
+exit path at `0x006844db`, after message delivery and the Blowfish cipher. Before
 the stack-leak fix it was 1,011,817 instructions ending in `ExitProcess(1)`.
 Each stop is a precise, actionable finding rather than a wall, because the
 harness reports the stop EIP, the instruction bytes there, the containing

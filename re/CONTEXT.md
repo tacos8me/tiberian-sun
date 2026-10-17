@@ -44,9 +44,10 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
 - `verify_members_binary.py` — re-derives member offsets from the binary's own
   code (4,285 of 4,289 confirmed, 99.9%)
 - `link_test.py` — links all 492 translation units into a program and runs it;
-  measured **OK, exit 0**, message loop **reached** (`PeekMessage=695,115`,
-  `DispatchMessage=0`), 0 unmapped
-- `test_tools.py` — 41 unit tests for the tools themselves
+  measured **FAILED, exit 1**, message loop reached and dispatching
+  (`GetMessage=2`, `PeekMessage=5`, `DispatchMessage=2`), **10 unmapped calls
+  inside `.text`**
+- `test_tools.py` — 43 unit tests for the tools themselves
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
   (`determinism`)
 - `gen_win32_stubs.py` — generates `Win32Stubs.h` from the PE import directory
@@ -55,12 +56,13 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   refuses to write when a `TS_RET` body's argument count disagrees with `NARGS`;
   `--evidence` reports per-ordinal agreement.
 - `boot.py` — builds and runs the image against the model. Measured:
-  **20,000,001 instructions** (budget) at `0x0055f888`, `CreateWindowExA=1`,
-  `PeekMessage=695,115`, `GetMessage=0`, `DispatchMessage=0` — message loop
-  **reached but idle**; only `MessageBoxA` is the DirectSound warning at
-  `0x484456` (`type=0x30`); 0 unmapped calls; coverage 43,845 distinct
-  instructions / 4,142 of 46,008 functions; primary surface
-  `TS_PEEK=0x006beed8`=1. `--no-build --strict` exits 0.
+  **20,000,001 instructions** (budget) at `0x006844db` (`_exit`/atexit walk),
+  `CreateWindowExA=1`, `GetMessage=2`, `PeekMessage=5`, `DispatchMessage=2` —
+  message loop **reached and dispatching**; only `MessageBoxA` is the DirectSound
+  warning at `0x484456` (`type=0x30`); **70 unmapped calls (10 inside `.text`)**;
+  coverage 51,604 distinct instructions / 4,535 of 46,008 functions; primary
+  surface `TS_PEEK=0x006beed8`=1; WinMain returns ~7.66M with ESP `0x11`.
+  `--no-build --strict` exits **3**.
 - `wine_run.sh` / `wine_env.sh` — run the **retail** binary under Wine.
   `wine_env.sh` supplies the CD (`d:`, label `TS1`, `TS1.DSK`) and a
   640x480x16 screen; measured, the retail game reaches its **main menu**
@@ -71,8 +73,14 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   `out/blowfish_oracle.md`, the measured retail spec for `blowfish.dll`. It
   establishes that the registered object is a **real Blowfish cipher the game
   uses**: 9 `SetKey(56,key)` and 1,586 `Decrypt(8,in,out)` calls during startup,
-  matching nine shipped MIX indexes. The model's `Encrypt`/`Decrypt` are honest
-  copies, not a cipher; implementing it is queued in `todo.md`.
+  matching nine shipped MIX indexes. The model **implements standard
+  Blowfish-ECB** (`345aae7`), proven by four known-answer vectors and a
+  byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
+  (`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416).
+
+**Current runtime defects** (queued in `todo.md`): the MIX index read stops after
+2 of 27 blocks (`0x547435`/`0x547426`); shutdown corrupts ESP (WinMain returns
+with `0x11`); null teardown calls produce 70 unmapped calls, 10 inside `.text`.
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the
