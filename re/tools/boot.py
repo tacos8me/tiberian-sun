@@ -216,13 +216,17 @@ def build(rebuild):
 # Where an address lives.
 #
 # The boundaries come from the artifacts, not from a disassembly this tool
-# redoes: out/functions.json is the authoritative table (disasm.py's recovered
-# function list, start + size), and src/generated/code/*.cpp records the same
-# boundaries per transcribed function together with the C++ that executes them.
-# out/functions.json is gitignored -- it is a derived artifact a fresh clone
-# does not have until the pipeline runs -- so the generated tree, which is
-# committed, is the primary source and out/functions.json only fills in
-# functions that have no transcription.
+# redoes. src/generated/code/*.cpp records, per transcribed function, its start,
+# its size and the C++ that executes it, so one pass over the committed
+# generated tree answers both "which function contains this address" and "what
+# is the instruction there". That is the primary source.
+#
+# out/functions.json holds the same boundaries for all 41,822 recovered
+# functions (disasm.py's table), and it is consulted only when the generated
+# index has no answer -- an address in a recovered function with no
+# transcription, which is a boundary the generated tree cannot see. It is read
+# lazily because it is a 64 MB artifact that a fresh clone does not have until
+# the pipeline runs.
 SUB_RE = re.compile(
     rb"^// (sub_[0-9a-f]{8}) -- transcription of (\d+) instructions at 0x([0-9a-f]{8})$")
 SIZE_RE = re.compile(rb"^// size (\d+) bytes$")
@@ -289,6 +293,42 @@ def function_at(entries, va):
     if best and (best[1] == 0 or va < best[0] + best[1]):
         return best
     return None
+
+
+_FUNCTIONS_JSON = []
+
+
+def function_from_disassembly(va):
+    """The recovered function containing `va` per out/functions.json, or None.
+
+    Loaded at most once, and only when the generated index has no answer: this
+    is the table of every recovered function, including the ones with no
+    transcription, and it costs 64 MB and a second to parse.
+    """
+    if not _FUNCTIONS_JSON:
+        try:
+            with open(os.path.join("out", "functions.json")) as fh:
+                data = json.load(fh)
+        except (OSError, ValueError):
+            _FUNCTIONS_JSON.append(None)
+            return None
+        table = {}
+        for f in data.get("functions", []):
+            table[f["va"]] = (f.get("size", 0), f.get("ninsn", 0))
+        _FUNCTIONS_JSON.append(table)
+    table = _FUNCTIONS_JSON[0]
+    if not table:
+        return None
+    best = None
+    for start in table:
+        if start <= va and (best is None or start > best):
+            best = start
+    if best is None:
+        return None
+    size, ninsn = table[best]
+    if size and va >= best + size:
+        return None
+    return [best, size, ninsn, "sub_%08x" % best, "", -1]
 
 
 def function_lines(entry):
@@ -388,7 +428,7 @@ def thunk_labels(keys):
 
 
 def fmt_name(entries, va, thunks=None):
-    e = function_at(entries, va)
+    e = function_at(entries, va) or function_from_disassembly(va)
     if e:
         return "0x%08x  %s +0x%x" % (va, e[3], va - e[0])
     if thunks and va in thunks:
@@ -414,8 +454,16 @@ def stop_point(keys, entries, out):
     va = va[0]
     entry = function_at(entries, va)
     if not entry:
+        entry = function_from_disassembly(va)
+    if not entry:
         out.append("  in:    0x%08x -- no recovered function contains this address"
                    % va)
+        return
+    if entry[5] < 0:
+        out.append("  in:    0x%08x  %s +0x%x  (%d instructions, %d bytes; "
+                   "recovered but not transcribed, boundaries from "
+                   "out/functions.json)"
+                   % (va, entry[3], va - entry[0], entry[2], entry[1]))
         return
     start, size, ninsn, name, path, line = entry
     out.append("  in:    0x%08x  %s +0x%x  (%d instructions, %d bytes, %s:%d)"
