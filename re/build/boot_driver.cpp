@@ -62,6 +62,23 @@ const u32 kWrapperStep = 16u;
 const unsigned kMaxImports = 512;       // the image has 341
 const unsigned kEventRing  = 64;        // last import calls kept, in order
 
+// Coverage: one bit per byte of .text, in BSS so it costs nothing to start and
+// nothing to leave out of a report that does not ask. The model writes the
+// bits through Machine's maps; this file owns them and counts them.
+const unsigned kTextBytes = kTextHi - kTextLo;
+const unsigned kMapBytes  = (kTextBytes + 7u) / 8u;
+u8 g_exec_map[kMapBytes];
+u8 g_func_map[kMapBytes];
+
+unsigned long popcount_map(const u8 *map, unsigned nbytes) {
+    unsigned long n = 0;
+    for (unsigned i = 0; i < nbytes; ++i) {
+        u8 v = map[i];
+        while (v) { v = (u8)(v & (u8)(v - 1u)); ++n; }   // clear the low set bit
+    }
+    return n;
+}
+
 // -- the run ----------------------------------------------------------------
 struct Options {
     const char *image;
@@ -375,6 +392,28 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
     std::printf("\n");
     std::printf("unmapped-calls: %lu\n", m.unmapped_calls);
     std::printf("unmapped-in-text: %lu\n", m.unmapped_in_text);
+    // Where the garbage targets point. A null function pointer (below 0x1000),
+    // a data pointer used as code (.rdata), and a stack/heap value are three
+    // different defects; a single "unmapped" count hides which one is left.
+    std::printf("unmapped-below-1000: %lu\n", m.unmapped_below_1000);
+    std::printf("unmapped-rdata: %lu\n", m.unmapped_in_rdata);
+    std::printf("unmapped-elsewhere: %lu\n", m.unmapped_elsewhere);
+    // How much of the recovered code the run actually reached. The instruction
+    // count is distinct VAs, not executions, so a loop cannot inflate it.
+    std::printf("coverage-text-bytes: %u\n", kTextBytes);
+    std::printf("coverage-instructions: %lu\n", popcount_map(g_exec_map, kMapBytes));
+    std::printf("coverage-functions: %lu\n", popcount_map(g_func_map, kMapBytes));
+    std::printf("coverage-functions-total: %lu\n", ts::registry_recovered_count());
+    if (m.unmapped_text_sample_n) {
+        // The target alone says the stack is wrong; the call site says which
+        // push put it there. Both, for the same reason the out-of-text sample
+        // carries both.
+        std::printf("unmapped-in-text-sample:");
+        for (unsigned i = 0; i < m.unmapped_text_sample_n; ++i)
+            std::printf(" 0x%08x@0x%08x",
+                        m.unmapped_text_sample[i], m.unmapped_text_from[i]);
+        std::printf("\n");
+    }
     // TS_PEEK=0x7b0d38[,0x7b1fdc,...] -- read a global at the end of the run.
     // The game's state is a dword in .data, and "which state is it in" is the
     // question that decides whether a stop means anything. Cheap, and it beats
@@ -528,6 +567,8 @@ int main(int argc, char **argv) {
     if (const char *w = std::getenv("TS_WATCH")) m.watch_va = (ts::u32)std::strtoul(w, 0, 0);
     m.text_lo = kTextLo;
     m.text_hi = kTextHi;
+    m.exec_map = g_exec_map; m.exec_map_lo = kTextLo; m.exec_map_hi = kTextHi;
+    m.func_map = g_func_map; m.func_map_lo = kTextLo; m.func_map_hi = kTextHi;
     m.r[4].d = kStackTop;                  // ESP: a plausible stack, not zero
     ts::push32(kSentinel);                 // what the entry point's final `ret` pops
     const unsigned long esp0 = m.r[4].d;
