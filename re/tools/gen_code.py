@@ -74,8 +74,11 @@ def render(va, f, image, stats=None):
         # A rendering may be a block (an indirect jump's dispatch), in which case
         # only the first line carries the evidence record so the gate still sees
         # each instruction exactly once.
+        # One ts::insn(va) per instruction: the model's only per-instruction
+        # hook. It keeps eip exact, counts instructions and enforces the step
+        # budget, so a fault can name the instruction it happened at.
         first, _, rest = cpp.partition("\n")
-        out.append("    %s   //   %s" % (first, rec))
+        out.append("    %s%s   //   %s" % (insn_hook(rec), first, rec))
         for extra in rest.split("\n"):
             if extra:
                 out.append("    " + extra)
@@ -83,6 +86,20 @@ def render(va, f, image, stats=None):
     # next function, which the linker's ordering makes legal). The transcription
     # is void, so nothing has to be returned.
     return out
+
+
+def insn_hook(rec):
+    """The `ts::insn(0x...)` prefix that makes one instruction observable.
+
+    `rec` is the evidence record and starts with the instruction's own VA. A
+    rendering whose record does not (a synthetic label target) gets no hook
+    rather than a guessed address.
+    """
+    tok = rec.split()[0] if rec.split() else ""
+    try:
+        return "ts::insn(0x%08xu); " % int(tok, 16)
+    except ValueError:
+        return ""
 
 
 BRANCH = ("jmp", "jecxz", "jcxz", "loop", "loope", "loopne")

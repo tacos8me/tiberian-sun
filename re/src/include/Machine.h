@@ -30,6 +30,7 @@
 #include <cstring>
 #include <cmath>
 #include <cstdlib>
+#include <setjmp.h>
 
 namespace ts {
 
@@ -57,7 +58,6 @@ union Reg {
 
 struct Machine {
     Reg r[8];              // 0 eax 1 ecx 2 edx 3 ebx 4 esp 5 ebp 6 esi 7 edi
-    u32 eip;
     // eflags, one modelled field per bit any recovered branch tests.
     u8 cf, pf, af, zf, sf, df, of;
     // x87 stack, top at st[st_top]. Host long double is the closest available
@@ -65,11 +65,38 @@ struct Machine {
     long double st[8];
     int st_top;
     u16 fcw;
+    // Where the run is, at INSTRUCTION granularity. The generator emits
+    // ts::insn(va) once per transcribed instruction, so eip names the
+    // instruction that faulted rather than only the function that called it.
+    // `steps` is the instruction count and `step_limit` an optional budget
+    // (0 = none); exceeding it halts the run and is reported as a truncation.
+    // Both fields existed before this instrumentation and were never written.
+    u32 eip;
     // Runaway guard: a transcription is only useful if it terminates.
     unsigned long steps;
     unsigned long step_limit;
     bool faulted;
+    bool step_limit_hit;
     const char *fault_why;
+    // The fault is a REPORT, not an abort: without this the run wanders on
+    // after the model has already lost its footing and the interesting state is
+    // overwritten. A caller that sets `halt` gets control back at the fault
+    // with the machine untouched, so the report can name where and with what.
+    jmp_buf *halt;
+    // Snapshot taken once, the first time fault() fires.
+    u32 fault_eip;
+    unsigned long fault_steps;
+    unsigned long fault_depth;
+    Reg fault_reg[8];
+    u32 fault_calls[8];
+    unsigned fault_calls_n;
+    // High-water mark of ts_call nesting: the depth the run actually reached,
+    // which is what says whether the limit was a real bound or an artefact.
+    unsigned long call_depth_max;
+    // Most recent call targets, oldest first at index n-1. Kept as a ring so a
+    // fault report can name the few calls that led to it.
+    u32 recent_calls[8];
+    unsigned recent_call_n;
     unsigned long unmodelled_insns;
     unsigned long unmapped_calls;
     // Recursion depth of ts_call. A transcription that does not terminate would
@@ -84,6 +111,11 @@ struct Machine {
     // kernel32) or recovered functions that went missing (a defect).
     u32 unmapped_sample[16];
     unsigned unmapped_sample_n;
+    // .text bounds, set by the caller. They let an unmapped call be classified:
+    // outside .text it is an import (expected -- the model has no Windows),
+    // inside .text it is a recovered function nothing registered (a defect).
+    u32 text_lo, text_hi;
+    unsigned long unmapped_in_text;
     u16 fpu_status;
     // Segment registers and the interrupt-enable flag. This model is flat, so
     // segments never affect an address, but the recovered code does push, pop
@@ -176,8 +208,12 @@ inline void reset() {
     m.eip = 0; m.cf = m.pf = m.af = m.zf = m.sf = m.df = m.of = 0;
     for (int i = 0; i < 8; ++i) m.st[i] = 0.0L;
     m.st_top = 0; m.fcw = 0x037f;
-    m.steps = 0; m.step_limit = 0;
-    m.faulted = false; m.fault_why = 0;
+    m.steps = 0; m.step_limit = 0; m.step_limit_hit = false;
+    m.faulted = false; m.fault_why = 0; m.halt = 0;
+    m.fault_eip = 0; m.fault_steps = 0; m.fault_depth = 0;
+    for (int i = 0; i < 8; ++i) { m.fault_reg[i].d = 0; m.fault_calls[i] = 0; }
+    m.fault_calls_n = 0; m.call_depth_max = 0; m.recent_call_n = 0;
+    m.unmapped_in_text = 0;
     m.unmodelled_insns = 0;
     m.call_depth = 0;
     m.depth_exceeded = 0;
@@ -185,9 +221,38 @@ inline void reset() {
     if (m.call_depth_limit == 0) m.call_depth_limit = 4096;
 }
 
+// Record why the model lost its footing, once, together with the machine state
+// at that moment. A bare "it crashed" is not a diagnosis; the caller prints
+// fault_eip, the registers, the depth and the last few call targets from here.
 inline void fault(const char *why) {
     Machine &m = mach();
-    if (!m.faulted) { m.faulted = true; m.fault_why = why; }
+    if (m.faulted) return;
+    m.faulted = true;
+    m.fault_why = why;
+    m.fault_eip = m.eip;
+    m.fault_steps = m.steps;
+    m.fault_depth = m.call_depth;
+    for (int i = 0; i < 8; ++i) m.fault_reg[i] = m.r[i];
+    m.fault_calls_n = m.recent_call_n < 8 ? m.recent_call_n : 8;
+    for (unsigned i = 0; i < m.fault_calls_n; ++i) {
+        unsigned idx = (m.recent_call_n - m.fault_calls_n + i) & 7u;
+        m.fault_calls[i] = m.recent_calls[idx];
+    }
+}
+
+// One call per transcribed instruction, emitted by tools/gen_code.py. It is the
+// only per-instruction hook in the model: it keeps eip, counts instructions, and
+// enforces the step budget. When the model has faulted and the caller asked to
+// be halted, it longjmps back so the run stops at the fault instead of walking
+// on with a broken machine.
+inline void insn(u32 va) {
+    Machine &m = mach();
+    m.eip = va;
+    ++m.steps;
+    if (m.step_limit && m.steps > m.step_limit) {
+        if (!m.faulted) { m.step_limit_hit = true; fault("instruction budget exhausted"); }
+    }
+    if (m.faulted && m.halt) longjmp(*m.halt, 1);
 }
 
 inline void unmodelled(u32 va, const char *mnem) {
@@ -202,7 +267,7 @@ inline void unmodelled(u32 va, const char *mnem) {
 // .bss does. Accesses are assembled byte-wise so that a multi-byte access
 // straddling a page boundary is still correct.
 struct PageTable {
-    enum { SLOTS = 8192 };
+    enum { SLOTS = 32768 };
     u32 key[SLOTS];
     u8 *val[SLOTS];
     PageTable() { for (int i = 0; i < SLOTS; ++i) { key[i] = 0xffffffffu; val[i] = 0; } }
@@ -452,10 +517,14 @@ inline Fn ts_lookup(u32 va) {
 // a single generated line.
 inline void ts_call(u32 va) {
     Machine &m = mach();
+    m.eip = va;
+    m.recent_calls[m.recent_call_n & 7u] = va;
+    ++m.recent_call_n;
     Fn f = ts_lookup(va);
     if (!f) {
         if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
         m.unmapped_calls++;
+        if (m.text_hi && va >= m.text_lo && va < m.text_hi) ++m.unmapped_in_text;
         return;
     }
     // Bound the depth. A recovered loop whose modelled condition never changes
@@ -466,6 +535,7 @@ inline void ts_call(u32 va) {
     if (m.call_depth_limit == 0) m.call_depth_limit = 4096;
     if (m.call_depth >= m.call_depth_limit) { m.depth_exceeded++; return; }
     m.call_depth++;
+    if (m.call_depth > m.call_depth_max) m.call_depth_max = m.call_depth;
     f();
     m.call_depth--;
 }
