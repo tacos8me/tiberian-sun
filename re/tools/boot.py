@@ -101,6 +101,44 @@ def signature(path):
     return [st.st_mtime_ns, st.st_size]
 
 
+def dependencies(obj):
+    """The headers an object was compiled against, read from its -MMD file.
+
+    The cache must not miss a header edit: Machine.h and Win32Stubs.h are where
+    a boot's behaviour actually changes, and a cache keyed on the .cpp alone
+    would hand back a binary built against the previous header. The compiler
+    already knows the answer, so it writes it (-MMD) and this reads it back.
+    """
+    path = obj + ".d"
+    try:
+        with open(path) as fh:
+            text = fh.read().replace("\\\n", " ")
+    except OSError:
+        return None
+    _, _, deps = text.partition(":")
+    return deps.split()
+
+
+def stale(src, obj):
+    """True when the object is missing or older than anything it was built from."""
+    if not os.path.exists(obj):
+        return True
+    try:
+        built = os.stat(obj).st_mtime_ns
+    except OSError:
+        return True
+    deps = dependencies(obj)
+    if deps is None:
+        return True
+    for dep in deps:
+        try:
+            if os.stat(dep).st_mtime_ns > built:
+                return True
+        except OSError:
+            return True          # a header that vanished changes the build
+    return False
+
+
 def load_manifest():
     try:
         with open(MANIFEST) as fh:
@@ -122,7 +160,8 @@ def save_manifest(m):
 
 def compile_one(src):
     obj = object_path(src)
-    r = subprocess.run(["g++"] + CXXFLAGS + ["-c", src, "-o", obj],
+    r = subprocess.run(["g++"] + CXXFLAGS + ["-MMD", "-MF", obj + ".d",
+                                             "-c", src, "-o", obj],
                        capture_output=True)
     return src, obj, r.returncode, r.stderr.decode("utf-8", "replace")
 
@@ -138,7 +177,9 @@ def build(rebuild):
     for src in srcs:
         sig = signature(src)
         ent = objects.get(src)
-        if rebuild or not ent or ent.get("sig") != sig or not os.path.exists(ent["obj"]):
+        obj = ent["obj"] if ent else object_path(src)
+        if (rebuild or not ent or ent.get("sig") != sig
+                or obj != object_path(src) or stale(src, obj)):
             todo.append(src)
 
     if todo:
