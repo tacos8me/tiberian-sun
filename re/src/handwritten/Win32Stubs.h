@@ -1631,7 +1631,7 @@ TS_RET(GetWindowContextHelpId, 1, 0u)
 TS_RET(WaitForInputIdle, 2, 0u)
 TS_RET(TranslateAccelerator, 3, 0u)
 TS_RET(WinHelpA, 4, 1u)
-TS_RET(LoadStringA, 5, 0u)
+TS_RET(LoadStringA, 4, 0u)
 TS_RET(GetUpdateRect, 3, 1u)
 TS_RET(GetAsyncKeyState, 1, 0u)
 TS_RET(GetKeyState, 1, 0u)
@@ -2663,7 +2663,8 @@ TS_ORD_END
 
 // the import table
 //
-// One row per import in bin/GAME.EXE's import directory, in directory order.
+// One row per import in bin/GAME.EXE's import directory, in directory order,
+// followed by the exports reached only through GetProcAddress.
 // `nargs` is the number of __stdcall arguments the callee owns and must pop;
 // `ret` is the value a stub with no body of its own leaves in EAX; `real` is a
 // hand-written body above, or 0 to use the named generic stub.
@@ -2894,7 +2895,7 @@ inline const ImportDef *imports(unsigned *count) {
 	{ "USER32", "GetDC", 1, 0x00000000u, &k_GetDC },
 	{ "USER32", "ReleaseDC", 2, 0x00000000u, &k_ReleaseDC },
 	{ "USER32", "MessageBoxA", 4, 0x00000000u, &k_MessageBoxA },
-	{ "USER32", "LoadStringA", 5, 0x00000000u, &k_LoadStringA },
+	{ "USER32", "LoadStringA", 4, 0x00000000u, &k_LoadStringA },
 	{ "USER32", "MessageBoxIndirectA", 1, 0x00000000u, &k_MessageBoxIndirectA },
 	{ "USER32", "wsprintfA", 0, 0x00000000u, &k_wsprintfA },
 	{ "USER32", "CreateWindowExA", 12, 0x00000000u, &k_CreateWindowExA },
@@ -3009,13 +3010,13 @@ inline const ImportDef *imports(unsigned *count) {
 	{ "VERSION", "GetFileVersionInfoA", 4, 0x00000000u, &k_GetFileVersionInfoA },
 	{ "VERSION", "VerQueryValueA", 4, 0x00000000u, &k_VerQueryValueA },
 	{ "COMCTL32", "ImageList_DragShowNolock", 1, 0x00000001u, &k_ImageList_DragShowNolock },
-	{ "COMCTL32", "DllGetVersion", 1, 0x00000000u, &k_DllGetVersion },
 	{ "COMCTL32", "#17", 0, 0x00000000u, &k_comctl32_ord_2147483665 },
 	{ "COMCTL32", "ImageList_DragMove", 2, 0x00000001u, &k_ImageList_DragMove },
 	{ "COMCTL32", "ImageList_DragEnter", 3, 0x00000001u, &k_ImageList_DragEnter },
 	{ "COMCTL32", "ImageList_BeginDrag", 3, 0x00000001u, &k_ImageList_BeginDrag },
 	{ "COMCTL32", "ImageList_Destroy", 1, 0x00000001u, &k_ImageList_Destroy },
 	{ "COMCTL32", "ImageList_EndDrag", 0, 0x00000000u, &k_ImageList_EndDrag },
+	{ "COMCTL32", "DllGetVersion", 1, 0x00000000u, &k_DllGetVersion },
     };
     *count = (unsigned)(sizeof(t) / sizeof(t[0]));
     return t;
@@ -3092,7 +3093,7 @@ template<unsigned I> void idx_stub() {
 }
 
 inline Fn idx_stub_fn(unsigned i) {
-    static Fn f[341] = {
+    static Fn f[342] = {
         &idx_stub<0>, &idx_stub<1>, &idx_stub<2>, &idx_stub<3>, &idx_stub<4>, &idx_stub<5>,
         &idx_stub<6>, &idx_stub<7>, &idx_stub<8>, &idx_stub<9>, &idx_stub<10>, &idx_stub<11>,
         &idx_stub<12>, &idx_stub<13>, &idx_stub<14>, &idx_stub<15>, &idx_stub<16>, &idx_stub<17>,
@@ -3149,9 +3150,9 @@ inline Fn idx_stub_fn(unsigned i) {
         &idx_stub<318>, &idx_stub<319>, &idx_stub<320>, &idx_stub<321>, &idx_stub<322>, &idx_stub<323>,
         &idx_stub<324>, &idx_stub<325>, &idx_stub<326>, &idx_stub<327>, &idx_stub<328>, &idx_stub<329>,
         &idx_stub<330>, &idx_stub<331>, &idx_stub<332>, &idx_stub<333>, &idx_stub<334>, &idx_stub<335>,
-        &idx_stub<336>, &idx_stub<337>, &idx_stub<338>, &idx_stub<339>, &idx_stub<340>,
+        &idx_stub<336>, &idx_stub<337>, &idx_stub<338>, &idx_stub<339>, &idx_stub<340>, &idx_stub<341>,
     };
-    return i < 341u ? f[i] : 0;
+    return i < 342u ? f[i] : 0;
 }
 
 

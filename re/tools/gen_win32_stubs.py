@@ -2,10 +2,11 @@
 """Generate the import table at the tail of src/handwritten/Win32Stubs.h.
 
 Win32Stubs.h is a hand-written header -- it is copied verbatim into src/include
-by the pipeline and nothing regenerates it. But its tail is 341 data rows, one
-per import in bin/GAME.EXE's import directory, and typing those by hand invites
-a wrong argument count that no check would catch. So the tail is generated here
-and the head is left alone.
+by the pipeline and nothing regenerates it. But its tail is 342 data rows -- one
+per import in bin/GAME.EXE's import directory (341) plus the GetProcAddress-only
+export DllGetVersion -- and typing those by hand invites a wrong argument count
+that no check would catch. So the tail is generated here and the head is left
+alone.
 
 The split point is the line `// the import table`: everything before it is the
 hand-written part (helpers, stub bodies, the COM-object machinery) and is kept
@@ -98,7 +99,7 @@ NARGS = {
     "GetWindowRect": 2, "GetWindowTextA": 3, "IntersectRect": 3,
     "InvalidateRect": 3, "IsDialogMessage": 2, "IsWindow": 1,
     "IsWindowEnabled": 1, "KillTimer": 2, "LoadCursorA": 2, "LoadIconA": 2,
-    "LoadStringA": 5, "MapVirtualKeyA": 2, "MessageBoxA": 4,
+    "LoadStringA": 4, "MapVirtualKeyA": 2, "MessageBoxA": 4,
     "MessageBoxIndirectA": 1, "MoveWindow": 6, "PeekMessageA": 5,
     "PostMessageA": 4, "PostQuitMessage": 1, "RedrawWindow": 5,
     "RegisterClassA": 1, "RegisterHotKey": 4, "ReleaseCapture": 0,
@@ -138,6 +139,14 @@ NARGS = {
     "ImageList_EndDrag": 0, "GetFileVersionInfoA": 4,
     "GetFileVersionInfoSizeA": 2, "VerQueryValueA": 4, "DirectDrawCreate": 3,
 }
+
+# Exports reached through GetProcAddress, so they have no row in the import
+# directory. They still need a row here: the program looks them up by name and
+# a missing row silently falls back to a generic stub.
+EXTRA_EXPORTS = [
+    # (dll, function, nargs, return value)
+    ("COMCTL32", "DllGetVersion", 1, 0),
+]
 
 # An ordinal means a different function in every DLL, so an ordinal's argument
 # count is keyed by (DLL, ordinal) rather than by the ILT's raw value.
@@ -539,6 +548,21 @@ def evidence():
 def main():
     src = open(HDR).read()
     head = src.split(SPLIT)[0]
+
+    # A hand-written TS_RET body pops its own argument count, while a generic
+    # row pops the one in NARGS. If the two disagree, the stub over- or
+    # under-pops and every later argument in the caller is read from the wrong
+    # slot. LoadStringA shipped with 5 in both places where the call site
+    # pushes 4, so check the two claims against each other before writing.
+    bad_arity = []
+    for name, n in re.findall(r"TS_RET\(([A-Za-z0-9_]+)\s*,\s*(\d+)\s*,", head):
+        if name in NARGS and int(n) != NARGS[name]:
+            bad_arity.append((name, int(n), NARGS[name]))
+    if bad_arity:
+        for name, body, table in bad_arity:
+            print("ARITY MISMATCH %s: body pops %d, NARGS says %d"
+                  % (name, body, table))
+        return 1
     # The bodies are written with the TS_RET/TS_BEGIN/TS_ORD_* macros, so the
     # symbol names only exist after expansion: collect the macro arguments.
     # An ordinal body names its symbol outright (oleaut_ord_2147483681) rather
@@ -586,6 +610,17 @@ def main():
     if missing:
         print("WARNING: no argument count for %s" % ", ".join(missing))
 
+    # GetProcAddress-only exports. These are NOT in the import directory, so
+    # they cannot come from read_imports(), but the program reaches them by
+    # name and the stub table must carry a row or the lookup falls back to a
+    # generic stub. DllGetVersion is the CRT's comctl32 version check: a 0
+    # there makes it ExitProcess(1) before the game initialises anything.
+    for dll, fn, n, r in EXTRA_EXPORTS:
+        sym = "k_" + fn
+        ref = ("&" + sym) if sym in real else "0"
+        rows.append('\t{ "%s", "%s", %u, 0x%08xu, %s },'
+                    % (DLL_SHORT.get(dll, dll), fn, n, r & 0xffffffff, ref))
+
     withreal = sum(1 for r in rows if not r.rstrip(",").endswith(" 0 }"))
     print("imports %d; with a hand-written body %d; generic %d"
           % (len(rows), withreal, len(rows) - withreal))
@@ -594,7 +629,8 @@ def main():
     out.append("""
 // the import table
 //
-// One row per import in bin/GAME.EXE's import directory, in directory order.
+// One row per import in bin/GAME.EXE's import directory, in directory order,
+// followed by the exports reached only through GetProcAddress.
 // `nargs` is the number of __stdcall arguments the callee owns and must pop;
 // `ret` is the value a stub with no body of its own leaves in EAX; `real` is a
 // hand-written body above, or 0 to use the named generic stub.
