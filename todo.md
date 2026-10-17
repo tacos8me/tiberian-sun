@@ -746,30 +746,61 @@ correct decryptions of the first index blocks are visible in `TS_FILE_TRACE`.
 *Spec (kept for the MIX read path):* `re/out/blowfish_oracle.md`, produced by
 `re/tools/oracle_blowfish.py` and `re/tools/wine_blowfish_trace.sh`.
 
-### [ ] The MIX index read stops after 2 of 27 blocks
-**The next measurable defect, after `345aae7`.** The game reads the TIBSUN.MIX
-header and only **2 index blocks (16 bytes)** instead of 27. The 204-byte
-record-table read at `0x547435` returns just one further 8-byte block: the pipe
-chain (`0x5932d8 -> 0x5f1070 -> 0x423660`) moves one block per call, and
-`0x547426` calls it once without looping or checking the count, so the 17-entry
-table is built from ~10 valid bytes plus stale memory.
+### [x] The MIX index read stops after 2 of 27 blocks — fixed
+**Was the next measurable defect, after `345aae7`.** The game read only **2
+index blocks (16 bytes)** instead of 27. The root cause was **not** the pipe or
+the cipher: `Buffer::Read` at `0x423620` loops correctly, reading 8-byte
+Blowfish blocks and copying each into the caller's buffer with `memcpy`
+(`0x683bb0`). The `memcpy` takes an **unaligned-destination jump table**; for
+`dest & 3 == 2` it jumps to entry 2, `0x683c4c`.
 
-At step 1,886,937 the game posts `WM_DESTROY` (caller `0x5e7d29`, shutdown block
-`sub_005e7cd9`), drains the loop, and WinMain (`0x5e5b80`, called from `entry`
-at `0x6855b1`) returns at ~7.66M instructions. The CRT exit path is then entered
-with ESP already corrupted (`0x11`; it was `0x2fff84` at entry), so the atexit
-walk runs away for the remaining ~12.3M instructions.
+`0x683c4c` is an instruction boundary inside the recovered span at `0x683c49`,
+but it was **not a registered function start**. `ts::jmp_indirect` dispatches by
+exact VA, `ts_lookup(0x683c4c)` returned null, so the tail dispatch recorded an
+unregistered call and returned — **abandoning memcpy's frame**: EBP/EDI/ESI
+(12 bytes) and the return address (4 bytes) stayed on the modelled stack, and
+ESI still held the source pointer. The next loop iteration at `0x4236a7` used
+`ESI = 0x2fefbc` (the memcpy source) as its `this`, so the read never continued.
 
-*Next:* decide whether the short read is a model defect in the pipe/straw layer
-or a transcription/control-flow defect at `0x547426` (the call should consume
-204 bytes, not 8). Use `TS_FILE_TRACE=1`, `TS_TRACE` at `0x547426`/`0x547435`,
-and compare against the retail sequence. Do not assume the cipher is still at
-fault; it is proven against `mix.py`.
-*Done when:* the 17-entry index is read correctly and the game proceeds past
-the MIX header, with the next stop named.
+**Fixed in `1c0db7e`.** `tools/gen_code.py` now discovers static switch-table
+targets from the image and registers every entry that is an instruction boundary
+of a recovered span as a tail entry: **43 added, 46,008 -> 46,051
+transcriptions, 919,493 instructions**. No `emit_x86.py`, `Machine.h` or stub
+change was needed. A mutation-proven regression test is in `13726a9`.
 
-### [ ] Shutdown corrupts ESP before the CRT exit path
-**Measured, and separate from the MIX read.** WinMain returns at ~7.66M
+Measured: all **27 index blocks** are read (file position 84 -> 300) and the
+**17 records match `tools/mix.py` 17/17** (offset - 300, size equal). The game
+then reads entry bodies: 544 8-byte reads, file position past 22 MB. New stop:
+budget exhausted at `0x0055fd1c` (`sub_0055fcf0 +0x2c`, a vector/array copy
+loop), depth 23, **ESP `0x002fee5c` (healthy)**, no fault, no `ExitProcess`;
+message loop `GetMessage=1 PeekMessage=13,607 DispatchMessage=1`; coverage
+52,011 / 4,616 of 46,051; **5 unmapped calls, 0 inside `.text`** (the known null
+teardown sites). At a 60M budget it stays in the same steady state, so it is not
+a corrupted loop. The shutdown/ESP path is no longer reached.
+
+### [ ] The recovery decoded memcpy's jump tables as code
+**Latent, measured by the lane that fixed the short read.** The jump tables at
+`0x683c10` and `0x683c20` were decoded as code, creating false spans at
+`0x683c14`, `0x683c89` and `0x683cf6`. As a result, entry 1 of each table is
+still not an instruction boundary and cannot be registered as a tail entry. It
+did not fire in the 20M or 60M runs, but any `memcpy` with `dest & 3 == 1` and
+`len >= 4` will still abandon its frame and corrupt the next iteration.
+
+*Fix:* in `tools/disasm.py`, treat jump-table bytes as data and start a span at
+each target, rather than decoding the table itself. This is a recovery change,
+so it needs the full pipeline and a re-verification of the 46,051 transcriptions.
+*Done when:* entry 1 of both tables is an instruction boundary with a
+transcription, and the unaligned `dest & 3 == 1` memcpy case is exercised by a
+test (a synthetic `memcpy` call or a boot path that reaches it).
+
+### [ ] Shutdown corrupts ESP before the CRT exit path — not reached now
+**Measured before the MIX-read fix; the current run never gets here.** After
+`1c0db7e` the game reads the index and entry bodies and stays in its own loop;
+it no longer posts `WM_DESTROY` within the 20M/60M budget, so this path is
+dormant, not fixed. Keep it on the list: it will matter as soon as shutdown is
+reached again.
+
+**Original measurement, separate from the MIX read.** WinMain returned at ~7.66M
 instructions with ESP `0x11`; it was `0x2fff84` at entry. The CRT's atexit walk
 then consumes the remaining ~12.3M instructions. This is the same class as the
 original 108-byte leak, but on the shutdown path: find the call or tail
@@ -821,44 +852,40 @@ path. Do not chase the walk's targets individually.
 *Done when:* WinMain returns with ESP where its caller left it and the CRT exit
 path completes (or faults at a named instruction).
 
-### [ ] Null-pointer teardown calls and the 10 in-text unmapped calls
-**Measured after `345aae7`; they did not disappear when the index decrypted.**
-The original five `this == NULL` sites still fire twice each: `0x4b312b`,
-`0x4b319b`, `0x4b31a4`, `0x487d16`, `0x5e7c7e`; new null sites are `0x5f1083`,
-`0x5f1006`, `0x5e7cfe`, `0x5e8489`. The boot now reports **70 unmapped calls,
-10 inside `.text`** (it was 5, none in `.text`), and `boot.py --strict` exits
-non-zero. They are a teardown defect, not a consequence of the undecryptable
-index.
+### [ ] The 5 null-pointer teardown calls
+**The remaining runtime defect after `1c0db7e`.** The boot reports **5 unmapped
+calls, 0 inside `.text`**: `0x4b312b`, `0x4b319b`, `0x4b31a4`, `0x487d16`,
+`0x5e7c7e` (the original five `this == NULL` sites). `boot.py --strict` exits
+**4** on them; the link test's in-text gate is green again. The 9 atexit-walk
+targets and the `0x683c4c` MIX target are gone with the fixes above; these five
+are a real teardown defect of objects whose construction failed, not a symptom
+of the index read.
 
-**The 10 in-text targets split into two groups:**
-- **9 are the CRT atexit walk** at `0x6844dd`, calling return addresses stored
-  in the table (`0x6844df`, `0x5e867e`, `0x5e864a`, `0x682995`, `0x683fce`,
-  `0x5e7d68`, `0x6864ba`, `0x46f8e9`). They are a symptom of the shutdown ESP
-  corruption above; fix that first and re-measure before chasing them.
-- **1 is `0x683c4c` from `0x423679`** (`sub_00423660 +0x19`), in the MIX/pipe
-  read path. That one belongs with the short-index-read lane.
-
-*Next:* fix the shutdown ESP corruption, re-run `boot.py --strict`, and see how
-many remain. Then name the caller and the object whose construction failed for
-each survivor; fix the null `this` or the missing registration.
-*Done when:* 0 in-text unmapped calls and each null site named or fixed.
+*Next:* fix the stack-imbalance tracker first (the entry below), then use the
+corrected per-callee ESP data and `TS_TRACE` to name the caller and the object
+whose construction failed at each site. Fix the null `this` or the missing
+registration; re-run `boot.py --strict`.
+*Done when:* `boot.py --strict` exits 0 and each site is named or fixed.
 
 ### [ ] The stack-imbalance tracker flags correct `__stdcall` stubs
-**A diagnostic false positive, measured at 2,069 stub calls after `f3011ca`.**
-`ts_call_at` (`src/handwritten/Machine.h`) compares ESP after a call to the ESP
-before it, but a correct `__stdcall` stub ends at `esp_before + 4*nargs`
-because it pops its own arguments. Every correct stub therefore looks like a
-leak, and the real signal is buried. The project's stub-stack probe and the new
-USER32 test's explicit `ESP == caller_ESP + 4*nargs` check are the reliable
-arity gates today.
+**A diagnostic false positive, now measured at 111,682 stub calls.** `ts_call_at`
+(`src/handwritten/Machine.h`) compares ESP after a call to the ESP before it,
+but a correct `__stdcall` stub ends at `esp_before + 4*nargs` because it pops
+its own arguments. Every correct stub therefore looks like a leak, and the real
+signal is buried. The project's stub-stack probe and the USER32 test's explicit
+`ESP == caller_ESP + 4*nargs` check are the reliable arity gates today.
+
+**Reporting defect on top:** `tools/boot.py`'s report parser drops the
+`STACK IMBALANCE` header because it has no colon, so the boot summary hides the
+signal; the direct `build/boot_driver` still prints it.
 
 *Fix:* let the stub record the argument count it popped (a field set from
 `stub_done`, or an expected-delta hook), and compare a stub call against
 `esp_before + 4*nargs`; non-stub calls still require `esp_before`. Keep the
-mutation that proves a wrong arity is caught.
-*Done when:* a boot reports 0 false imbalances, and deliberately changing one
-import's arity still fails the gate. This touches `Machine.h` and `stub_done`
-in `Win32Stubs.h`, so it is sequenced behind the Blowfish change.
+mutation that proves a wrong arity is caught. Fix the boot.py parser to forward
+the header.
+*Done when:* a boot reports 0 false imbalances, a deliberately wrong arity still
+fails the gate, and `boot.py` shows the header when one exists.
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and
