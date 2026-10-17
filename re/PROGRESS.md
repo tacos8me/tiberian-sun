@@ -1,30 +1,57 @@
 # PROGRESS — Tiberian Sun reconstruction
 
-All figures below are measured; re-run `python3 tools/harness.py metrics
---no-append` rather than trusting this file.
+All figures below were re-measured on 2026-10-17 with
+`python3 tools/harness.py metrics --no-append`, `python3 tools/verify.py
+src/include build/shim`, `python3 tools/verify_members_binary.py`,
+`python3 tools/test_tools.py`, `python3 tools/link_test.py`, and direct counts
+over `out/` and `src/generated/`. Re-run those rather than trusting this file.
+Boot-status figures (instructions executed, `ExitProcess` argument, message-loop
+state) are **being re-measured by a concurrent lane** and are marked where they
+appear.
 
 **This file records state. `ROADMAP.md` records the plan** — what "done" means
 for documented/modifiable/compilable as measurable exit criteria, the corrected
 size of each remaining problem, and the phase order. Read the roadmap to decide
-what to work on. The one thing this file does not say clearly enough is that
-"VERIFICATION PASSED" is not a statement about layout: see the ABI row in
-`AGENTS.md`, and the `-m32` item in `todo.md`.
+what to work on.
 
 ## Status summary
 
-**`tools/verify.py` prints VERIFICATION PASSED across nine checks in 6 seconds.**
-Check 9 is the one that matters most: it makes the compiler confirm every
-recovered member offset, and it passes. **`pipeline.sh` is red at the link test**
-on 2 unmapped calls, and takes 471 seconds -- the link is the expensive stage.
+**`tools/verify.py` prints VERIFICATION PASSED across nine checks in about 6
+seconds.** Check 9 is the one that matters most: it makes the compiler confirm
+every recovered member offset it can express, and it passes 3,073/3,073.
+**`pipeline.sh` is red at the link test** on 2 unmapped calls, and takes about
+471 seconds -- the link is the expensive stage. Measured link: `link: OK (492
+translation units)`, then `ts_link_test: FAILED (2 unmapped calls inside .text:
+0x006844df from 0x005e7317, 0x0046f3f8 from 0x00674bf6)`.
 
-**The game boots, initialises, and exits.** The image maps at its real VAs,
-342/342 imports resolve, and the original entry point 0x6854e3 runs 1,011,817
-instructions of CRT startup and game init before calling `ExitProcess`. The cause
+**The game boots, initialises, and exits.** The image maps at its real VAs and
+all **341/341** PE import-directory thunks are written to stubs (`link_test.py`:
+`imports: 341 across 13 DLLs`, `resolve_imports() ... 341 of 341 IAT slots
+written`, `traced thunks: 341 imports bound, 0 with no stub`). The original
+entry point 0x6854e3 runs 1,011,817 instructions of CRT startup and game init
+before calling `ExitProcess` (boot-status figure, being re-measured). The cause
 is measured rather than guessed: the CRT's atexit walk over the 3,311-entry
 static-constructor table leaks **108 bytes** (ESP 0x002ff56c at `push %esi`,
 0x002ff4fc at the matching `pop %esi`), so `pop %esi` reads a return address, ESI
 becomes 0x6844df, and `call *%esi` at 0x5e72cf calls into `ExitProcess` instead of
 the function whose result decides whether the "Direct X" error box appears.
+
+**The import counts are three different quantities, and the docs used to
+conflate them.** Stated once here:
+
+- **341** — PE import-directory thunks in `GAME.EXE` (309 by name, 32 by
+  ordinal, across 13 DLLs). `Image.h` writes a stub VA into every one of these
+  IAT slots, so boot reports **341/341 resolved**.
+- **342** — rows in the stub table (`w32::imports`, `Win32Stubs.h`). It is the
+  341 imports plus `COMCTL32!DllGetVersion`, which is **not** an import: the CRT
+  reaches it through `GetProcAddress`. `register_win32_stubs()` therefore says
+  "342 imports registered: 315 with a body, 27 generic".
+- **traced** — imports actually called during a run. `link_test.py` reports
+  `341 imports bound, 0 with no stub`; boot reports the calls it observed.
+
+Do not write "342/342 resolved": resolution is a property of the 341 IAT slots.
+The old "342/342" and "341 vs 342 disagree" statements were both reading one of
+these quantities as another.
 
 **There is now an oracle, and it changed the premise.** `tools/wine_run.sh` runs
 the retail binary under Wine; `tools/oracle.py` reads its real registers with gdb.
@@ -47,8 +74,11 @@ let `ExitProcess` return, so execution continued past a fatal exit and the
 "loop" was one the real game never ran. `ExitProcess` now halts the run. What the
 halt exposes is the real defect: at exit the arguments are stub addresses rather
 than the numbers the code pushed -- `ExitProcess(0x6844df)` for `1`, and a
-`MessageBoxA` type of `0x00a00201` for `0x30` -- so a call in the init path leaves
-ESP off by one slot.
+`MessageBoxA` type of `0x00a00201` for `0x30` -- because the atexit walk leaks
+**108 bytes (27 dwords)**, so ESI holds a return address. (`tools/link_test.py`
+still reports `MESSAGE LOOP: reached -- PeekMessage 30,089,403`; that is the same
+retracted artifact, because the link test records the `ExitProcess` fault and
+keeps running. Do not quote it as a reached loop.)
 
 `Image.h` and `Win32Stubs.h` are what make this possible; neither does anything
 alone. The single change that unblocked startup was giving `comctl32!DllGetVersion`
@@ -58,21 +88,24 @@ rather than the import table.
 
 Measured state:
 
-| Measure | Value |
+| Measure | Value (command) |
 |---|---|
-| headers | 262 (261 standalone-compilable + prelude) |
-| functions recovered | 41,822 (96.06% of `.text`) |
-| `.text` | 43,564 spans, 2,645,082 bytes, **99.99% attributed as code or data**: 11 jump tables (256 B), 356 B of switch index tables, 105,808 B of alignment padding; 554 B in 90 runs reported unclassified in `out/text_data.json`. Recovery is not as closed as it looked -- running the code found ~1,700 more entry points |
+| headers | 264 (263 standalone-compilable + prelude) (`harness.py metrics`; `verify.py` check 1) |
+| functions recovered | 43,564 spans (`harness.py metrics`: `functions`) |
+| `.text` | 2,712,101 bytes; 2,606,135 covered as code = **96.09%**; **99.99% attributed as code or data**. Residual: 12 jump tables (264 B), 7 switch index tables (349 B), 104,959 B of alignment padding, 394 B in 55 unclassified runs (`out/text_data.json`) |
 | classes / vtable slots | 749 / 9,810 (`vtable_slots_unseeded` 0) |
-| constructors that are real function starts | 100% |
-| virtuals named | 1,567 of 6,987 (22.4%) |
-| named members | 135 across 20 classes |
-| member offsets recovered | 4,326 |
-| member claims confirmed in the binary | 99.9% |
-| **machine functions transcribed** | **43,668 (41,822 starts + 1,846 tail entries)** |
-| **instructions transcribed** | **897,193 of 897,193 (100%)** |
-| forwarder definitions | 6,996 across 309 translation units |
-| destructor stubs (declared, no recovered address) | 228 |
+| constructors that are real function starts | 100.0% (`ctors_are_function_starts`) |
+| virtual declarations in headers | 6,954 = 4,496 named (64.7%) + 2,458 `vfunc_N` |
+| named `(class, slot)` pairs | 5,557 of 9,810 (56.6%); 917 distinct names (281 semantic); 702 classes carry a naming record (`out/virtual_names.json`) |
+| named members | 291 across 20 classes |
+| member offsets recovered | 4,289 (763 are vptr stores; 3,526 real members) |
+| member claims confirmed in the binary | 4,285 of 4,289 (99.9%, 4 refuted) (`verify_members_binary.py`) |
+| signatures recovered | 43,564 (`harness.py metrics`) |
+| **machine functions transcribed** | **46,008 (43,564 recovered starts + 2,444 tail entries)** |
+| **instruction lines transcribed** | **918,438; 0 unmodelled** (`grep ts::unmodelled` → 0) |
+| static instructions in `out/functions.json` | 848,822 across 43,564 spans |
+| forwarder definitions | 6,962 across 310 class translation units; 3,024 distinct machine functions, 3,938 aliases (`src/generated/README.md`) |
+| destructor stubs (declared, no recovered address) | 229 |
 
 ### The code is transcribed, not stubbed
 
@@ -87,7 +120,7 @@ The per-class files in `src/generated/` are **forwarders** — the out-of-line
 definitions the reconstructed headers require, each calling the canonical
 transcription of its VA. One machine function, one body.
 
-The tree **links and runs**. `tools/link_test.py` links all 482 translation units
+The tree **links and runs**. `tools/link_test.py` links all 492 translation units
 into a program, registers every recovered function, and executes the original PE
 entry point against the model. That link is what found the defects below; a
 per-file syntax check cannot see a symbol nothing defines.
@@ -110,17 +143,17 @@ Coverage is achieved in three tiers:
 | Class hierarchies | 755 | done |
 | Complete Object Locators | 842 | done |
 | Vtables bound to classes | 843 | done |
-| Functions disassembled | 41,822 | done |
-| Instructions recovered | 897,193 | done |
+| Functions disassembled | 43,564 spans | done |
+| Instructions recovered | 848,822 static (918,438 transcribed lines) | done |
 | INI keys / referenced strings | 1,876 | done |
 | Per-class vtable+ctor manifest | 749 classes, 9,810 slots | done |
 | Direct-base reduction | 749 classes | done |
-| Member offsets recovered | 4,326 | done |
-| Machine code transcribed | 43,668 functions | done |
-| Class forwarders emitted | 6,996 | done |
-| Whole-tree link + entry-point run | 482 TUs | done |
-| Binary-anchored member verification | 99.9% confirmed, gated | done |
-| Tool unit tests | 36 checks, mutation-proven | done |
+| Member offsets recovered | 4,289 | done |
+| Machine code transcribed | 46,008 functions | done |
+| Class forwarders emitted | 6,962 | done |
+| Whole-tree link + entry-point run | 492 TUs | done |
+| Binary-anchored member verification | 4,285/4,289 (99.9%), gated | done |
+| Tool unit tests | 39 checks, mutation-proven | done |
 
 ### Verification performed
 
@@ -138,11 +171,12 @@ Coverage is achieved in three tiers:
   catches a corrupted statement whose evidence comment is intact.
 - `tools/link_test.py` links the whole tree and runs it. See "defects found by
   the link" below for what it caught.
-- `tools/test_tools.py` runs 36 unit checks, each a regression test for a
+- `tools/test_tools.py` runs **39** unit checks, each a regression test for a
   shipped defect or a differential test against an independent implementation.
   Four of them are mutation-proven to fail when the defect is reintroduced.
 - Determinism: two clean pipeline runs produce **497 byte-identical artifacts**
-  (the recovered data *and* the generated C++).
+  (the recovered data *and* the generated C++). *Not re-run in this session
+  (it costs two full pipeline runs); 497 is the last measured value.*
 
 ## Remaining work
 
@@ -150,51 +184,62 @@ Coverage is achieved in three tiers:
 - [x] Fix inheritance emission (real includes, direct bases only)
 - [x] Regenerate all 749 class headers; compile standalone and combined
 - [x] Reconcile generated headers with the hand-written ones
-- [x] Make `verify.py` fail-closed and exhaustive (8 checks)
+- [x] Make `verify.py` fail-closed and exhaustive (9 checks)
 
 ### P1 — deepen the reconstruction  [DONE]
-- [x] Recover data-member offsets from constructor store sequences (4,326)
-- [x] Name members from INI keys (135 across 20 classes)
-- [x] Recover function signatures (37,595)
-- [x] Name virtuals where evidence exists (1,567 of 6,987)
-- [x] Anchor member verification to the binary (99.9% confirmed)
-- [x] Transcribe every recovered function (46,008 functions, 918,438/918,438 instructions, 100%, 0 unmodelled)
+- [x] Recover data-member offsets from constructor store sequences (4,289)
+- [x] Name members from INI keys (291 across 20 classes)
+- [x] Recover function signatures (43,564)
+- [x] Name virtuals where evidence exists (4,496 named declarations; 5,557 named `(class, slot)` pairs; 917 distinct names)
+- [x] Anchor member verification to the binary (4,285/4,289, 99.9% confirmed)
+- [x] Transcribe every recovered function (46,008 functions, 918,438 instruction lines, 0 unmodelled)
 - [x] Emit the forwarders the headers require, and link the tree
 
 ### P2 — remaining
-- [ ] **Name more virtuals.** 5,420 remain `vfunc_N`. This is now the largest
-      single gap in how editable the source is.
-- [ ] **Name more members.** 135 of 4,326 have evidence-backed names.
+- [ ] **Name more virtuals.** 2,458 header declarations remain `vfunc_N`;
+      5,557 `(class, slot)` pairs carry a name, but only 917 names are distinct
+      (281 semantic). This is now the largest single gap in how editable the
+      source is.
+- [ ] **Name more members.** 291 of 3,526 non-vptr members (4,289 recovered
+      offsets) have evidence-backed names.
 - [ ] `Node<>` container template (declared in `INIClass.h`; should be its own
       header with recovered layout). 2 classes still show unresolved bases for
       it: `INIClass::INIEntry` and `MixFileClass`.
 - [ ] Reconstruct the MS* multimedia classes and the WOL/ATL COM layer.
-- [x] Classify the remaining 104 KB of residual `.text`. It is 11 jump tables
-      (256 B) and 356 B of switch index tables, emitted as data in
-      `out/text_data.json`, plus 105,808 B of alignment padding. 554 B in 90
+- [x] Classify the remaining ~103 KB of residual `.text`. It is 12 jump tables
+      (264 B) and 7 switch index tables (349 B), emitted as data in
+      `out/text_data.json`, plus 104,959 B of alignment padding. 394 B in 55
       runs are neither and are listed verbatim, not forced into a category.
-- [x] 0 instructions have no faithful rendering. The last 166 (MMX/SSE, the x87
-      environment save/restore, far pointers, `lar`, `fbld`, `fcmovnbe`,
-      `pushaw`) are modelled in `src/handwritten/Machine.h`.
-- [ ] Load the image's data sections into the model. The entry-point run stops
-      at import thunks because `call dword ptr [IAT]` reads 0 from modelled
-      memory; the model never loads `.idata`.
+- [x] 0 instructions have no faithful rendering (`grep ts::unmodelled
+      src/generated/code` → 0). The formerly unmodelled MMX/SSE, x87
+      environment, far-pointer, `lar`, `fbld`, `fcmovnbe` and `pushaw`
+      instructions are modelled in `src/handwritten/Machine.h`.
+- [x] **Load the image's data sections into the model — retracted as a defect.**
+      The premise was false: `src/handwritten/Image.h` copies every section's
+      raw extent into modelled memory and writes a stub VA into every one of the
+      341 IAT slots, and `link_test.py` reports `341 of 341 IAT slots written`.
+      The entry-point run does not stop at a null call target. The empty
+      `MessageBoxA` text is `LoadStringA` returning 0, not a missing section.
 
 ### P3 — validation
-- [ ] Compile the gate with `-m32` so target type widths are enforced. The shim
-      is host-sized: `sizeof(DWORD)` is 8, and `__stdcall` is defined away.
+- [x] Compile the gate with `-m32` so target type widths are enforced. Done:
+      `verify.py` compiles every header and the combined TU at `-m32`, fails
+      closed when `g++-multilib` is absent, and check 9 confirms 3,073/3,073
+      recovered member offsets with `offsetof` assertions.
 - [ ] Byte-level validation: recompile and diff generated code against the
       original binary where a matching compiler is available.
-- [ ] Cross-check every INI key against a real `rules.ini` (the e2e harness
-      already resolves 110 of 112 recovered field names against the shipped
-      INIs; widen it).
+- [ ] Cross-check every INI key against real shipped data. `tools/e2e_rules.py`
+      resolves **280 of 291 (96.2%)** recovered member names against the shipped
+      INIs; 14 are documented only in comment headers. Widen it.
 
 ## Known gaps (documented, not hidden)
 
-- **0.1% of member-offset claims are not confirmed by the binary.** Recovery is
-  deliberately conservative: the plausibility gate trades recall for precision.
+- **4 of 4,289 member-offset claims (0.1%) are not confirmed by the binary.**
+  Recovery is deliberately conservative: the plausibility gate trades recall for
+  precision. The four are two offsets each in `ScoreTimeClass` and
+  `ScorePrintClass`.
 - **Member *type* and ordering are not verified.** Offsets are.
-- **228 destructors are labelled stubs.** The headers declare them; no comment
+- **229 destructors are labelled stubs.** The headers declare them; no comment
   records where they are, so there is no transcription to forward to. The stub
   is marked as a stub in the source and counted in the generated README.
 - **The transcribed code is not source-shaped.** It is faithful to what the
@@ -209,8 +254,9 @@ Coverage is achieved in three tiers:
   `RadarClass::RTacticalClass`) have no located constructor.
 - Member *names* exist only where an INI key or string provides evidence. Never
   infer one.
-- **`out/functions.json` is 65 MB**, over GitHub's 50 MB warning threshold. It
-  is a regenerable artifact; untracking it would need a history rewrite.
+- **`out/functions.json` is 67,670,646 bytes (~65 MB)**, over GitHub's 50 MB
+  warning threshold. It is a regenerable artifact; untracking it would need a
+  history rewrite.
 
 ## Defects found by the link (recorded because they were all invisible before)
 
@@ -245,7 +291,7 @@ To measure or check reproducibility without regenerating:
 ```bash
 python3 tools/harness.py metrics --no-append        # real state, no prose
 python3 tools/harness.py determinism --run          # two clean runs, byte-diffed
-python3 tools/verify.py src/include build/shim      # the 8-check gate
+python3 tools/verify.py src/include build/shim      # the 9-check gate
 python3 tools/verify_members_binary.py              # binary-anchored member check
 python3 tools/test_tools.py                         # tool unit tests
 python3 tools/link_test.py                          # link + run the whole tree
@@ -275,14 +321,15 @@ python3 tools/gen_bodies.py out src/include src/generated src/generated/code
 `tools/verify.py` reports, both in-tree and from a clean checkout:
 
 ```
-[1] standalone compile: 261/261
+[1] standalone compile: 263/263
 [2] combined TU compile: PASS
 [3] class coverage: 749/749 (100.0%)
 [4] vtable->class bindings: 749/749 verified
 [5] header content vs manifest: 219/219 verified
 [6] inheritance vs direct bases: 220/220 verified
-[7] member offsets vs recovered table: 2186/2186 verified
-[8] declared arity vs recovered signatures: reported, not gated
+[7] member offsets vs recovered table: 1317/1317 verified (206 classes emit offsets)
+[8] declared arity vs recovered signatures: 331/1116 match, 785 divergence(s) (reported, not gated)
+[9] compiler-confirmed member offsets: PASS (3073/3073 asserted)
 VERIFICATION PASSED
 ```
 
@@ -290,11 +337,12 @@ Plus the two checks whose input is the binary rather than another tool's output:
 
 ```
 tools/verify_members_binary.py
-  confirmed of checkable 99.9%
+  classes examined 637; claims 4289; confirmed 4285; refuted 4; 99.9%
 
 tools/link_test.py
-  link: OK (482 translation units)
+  link: OK (492 translation units)
   5 of 5 sampled VAs resolved
-  entry 0x006854e3 ran; unmapped calls: 16383 (all import thunks reading 0)
-  recursion depth limit 4096; times hit: 21
+  imports: 341 across 13 DLLs; 341 of 341 IAT slots written; 341 bound, 0 with no stub
+  entry 0x006854e3 ran; FAILED on 2 unmapped calls inside .text:
+    0x006844df (from 0x005e7317), 0x0046f3f8 (from 0x00674bf6)
 ```

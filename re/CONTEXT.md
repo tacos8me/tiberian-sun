@@ -11,7 +11,8 @@
 ## Recovered artifacts (in `re/out/`)
 
 Counts are approximate and drift as the tools improve; run
-`python3 tools/harness.py metrics --no-append` for the current figures.
+`python3 tools/harness.py metrics --no-append` for the current figures. The
+figures in this file were re-measured on 2026-10-17.
 
 - `classes.json` — RTTI classes, inheritance edges, object locators, vtables
 - `hierarchy.txt` — human-readable class hierarchy with base-class displacements
@@ -37,15 +38,24 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   `src/generated/code/`, against the machine model in `src/handwritten/Machine.h`
 - `gen_bodies.py` — the declaration-shaped forwarders the headers require
 - `emit_x86.py` — the operand grammar and per-mnemonic rendering both use
-- `verify.py` — the 8-check fail-closed gate
-- `verify_members_binary.py` — re-derives member offsets from the binary's own code
-- `link_test.py` — links the whole tree into a program and runs it
-- `test_tools.py` — unit tests for the tools themselves
+- `verify.py` — the **9-check** fail-closed gate, compiled at the target ABI
+  (`-m32`); check 9 makes the compiler confirm recovered member offsets with
+  `offsetof`
+- `verify_members_binary.py` — re-derives member offsets from the binary's own
+  code (4,285 of 4,289 confirmed, 99.9%)
+- `link_test.py` — links all 492 translation units into a program and runs it
+- `test_tools.py` — 39 unit tests for the tools themselves
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
   (`determinism`)
+- `gen_win32_stubs.py` — generates `Win32Stubs.h` from the PE import directory
+  (341 imports across 13 DLLs; the stub table has 342 rows because it also
+  carries `COMCTL32!DllGetVersion`, reached through `GetProcAddress`)
+- `boot.py` — builds and runs the image against the model (boot-status figures
+  are being re-measured; see `PROGRESS.md`)
 
-**Measure, do not trust prose.** `python3 tools/harness.py metrics` reports the
-real state; `python3 tools/verify.py src/include build/shim` is the gate.
+**Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
+reports the real state; `python3 tools/verify.py src/include build/shim` is the
+gate.
 ## Key facts for reconstruction
 1. **RTTI gives exact class names and inheritance.** Use `hierarchy.txt`.
 2. **INI keys are the original struct field names.** e.g. `TiberiumChainReaction`,

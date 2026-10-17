@@ -525,12 +525,14 @@ def main():
                 fh.write("| skipped: %s | %d |\n" % (k, skip[k]))
             fh.write("\n")
             if defined:
-                fh.write("%.2f%% of the recovered functions have a "
-                         "transcription; the rest are the ones\n"
-                         "the headers do not declare, and they are transcribed "
-                         "in `code/`\nregardless -- see "
-                         "`code/` and `tools/gen_code.py`.\n\n"
-                         % (100.0 * distinct / len(fns)))
+                fh.write("%.2f%% of the recovered functions (%d of %d) are "
+                         "declared by the\nreconstructed headers, so a "
+                         "forwarder exists for them. The other %d are\n"
+                         "transcribed in `code/` regardless, but no "
+                         "reconstructed header declares\nthem -- see `code/` "
+                         "and `tools/gen_code.py`.\n\n"
+                         % (100.0 * distinct / len(fns), distinct, len(fns),
+                            len(fns) - distinct))
             fh.write("Every transcription is one machine instruction per "
                      "generated line, with the\noriginal instruction kept as a "
                      "trailing comment, so a file can be read against\n"

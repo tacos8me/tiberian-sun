@@ -1,8 +1,14 @@
 # ROADMAP — the remaining trajectory to documented, modifiable, compilable source
 
-Written after a full audit of the tree. Every figure below was
-measured, not estimated; the commands that produce them are named. Re-measure
-before trusting this file (`python3 tools/harness.py metrics`).
+Written after a full audit of the tree. Every figure below was measured, not
+estimated; the commands that produce them are named. Re-measure before trusting
+this file (`python3 tools/harness.py metrics --no-append`).
+
+Figures in this file were re-measured on 2026-10-17 with `harness.py metrics`,
+`verify.py`, `verify_members_binary.py`, `test_tools.py`, and direct counts over
+`out/` and `src/generated/`. Boot-status figures (instructions executed,
+`ExitProcess` argument, message-loop state) are **being re-measured by a
+concurrent lane** and are marked where they appear; do not treat them as final.
 
 The point of this document is to say **what is actually left**, what the
 *smallest* honest size of that work is, and in what order it can be done — not to
@@ -30,8 +36,8 @@ Nothing below counts as done until one of those commands changes its output.
 
 ### 2.1 Recovery is effectively closed — this is not the problem any more
 
-`.text` is 2,712,101 bytes. 104 KB is unattributed. I read the bytes in the
-largest gaps rather than assuming:
+`.text` is 2,712,101 bytes. 105,966 bytes (103 KB) are unattributed. I read the
+bytes in the largest gaps rather than assuming:
 
 ```
 gap 0x663820 224B: c62a6600 4c376600 db2c6600 8e2a6600 ...   <- jump table
@@ -43,93 +49,88 @@ binary is 224 bytes and there are **zero gaps larger than 512 bytes**. So the
 "4% unattributed" is not unknown code — it is data living inside `.text`.
 Function discovery is done.
 
-| Item | State |
+| Item | State (measured) |
 |---|---|
-| Functions recovered | 41,822 (96.06% of `.text` as recovered code) |
-| Residual `.text` | 104 KB, classified: 11 jump tables (256 B) and 356 B of switch index tables, emitted as data in `out/text_data.json`, plus 105,808 B of alignment padding. 554 B in 90 runs are neither and are reported verbatim. |
-| Instructions with no faithful rendering | 0 (the last 166 — MMX/SSE, x87 env, far pointers, `lar`, `fbld`, `fcmovnbe`, `pushaw` — are modelled) |
-| Member offsets refuted by the binary | 4 of 4,326 (`ScoreTimeClass`, `ScorePrintClass`) |
+| Functions recovered | 43,564 spans (`harness.py metrics`: `functions`), 2,606,135 bytes = 96.09% of `.text` as recovered code |
+| Residual `.text` | 105,966 B unattributed, classified in `out/text_data.json`: 12 jump tables (264 B), 7 switch index tables (349 B), 104,959 B of alignment padding in 12,606 runs, and 394 B in 55 runs reported verbatim. 99.99% of `.text` is attributed as code or data. |
+| Instructions in `out/functions.json` | 848,822 static instructions across 43,564 spans |
+| Instructions with no faithful rendering | 0 (`grep ts::unmodelled src/generated/code` → 0) |
+| Member offsets refuted by the binary | 4 of 4,289 (`ScoreTimeClass`, `ScorePrintClass`); 4,285 confirmed (99.9%) |
 
 **Do not spend the next round on disassembly.** It is finished.
 
-### 2.2 The ABI gap is real, and it is a gate fix, not a project
+### 2.2 The ABI gap — RESOLVED, and recorded here as history
 
-The host build is LP64, so `sizeof(void*)==8` and `#define __stdcall` is a no-op.
-But the bigger and more immediate problem is what the generator emits:
+This phase is closed. The gate compiles at the target ABI (`-m32`), and the
+toolchain requirement is documented in `AGENTS.md`: `verify.py` exits non-zero
+when `g++-multilib` is absent rather than silently falling back to LP64.
 
-```
-member declarations in the generated headers, by declared type
-   2313 unsigned long        <- 8 bytes here, 4 in the game
-    569 unsigned char
-     36 unsigned short
-```
-
-`unsigned long` is the generator's universal slot type for a recovered member, so
-**2,313 of 2,919 member declarations have the wrong width on this host** and every
-generated struct is inflated (`ObjectClass`: 248 bytes here against 164 at the
-target's ABI). The recovered offsets are documented in comments and cannot be
-reproduced by the code.
-
-That part needs no toolchain change: `unsigned int` is 4 bytes on both LP64 and
-i386, so retyping the emission fixes the width problem outright. What it cannot
-fix is pointer width, `__stdcall`/`__thiscall` (the 22,328 recovered calling
-conventions are not exercised at all while the macro is defined away), or `GUID`
-(24 bytes here against 16). Those need the real 32-bit target.
-
-I installed `g++-multilib` and measured what `-m32` gives:
+The figures this section used to quote — 2,313 `unsigned long` declarations and
+`ObjectClass` at 248 bytes against 164 — described the LP64 host build before
+the gate asked for `-m32`. They are **retracted as current measurements**, not
+replaced with different numbers for the same claim: the host-width problem they
+described no longer exists in the build the gate runs. Measured now:
 
 ```
-sizeof(void*)=4  sizeof(DWORD)=4  sizeof(ULONG)=4  sizeof(long)=4
-standalone headers -m32 : 262/262 OK
-generated code -m32     : compiles
-whole tree -m32         : links (482 TUs, 1m37s) and the entry point RUNS
+verify.py -m32 standalone headers : 263/263
+verify.py -m32 combined TU        : PASS
 ```
 
-So the tree is *already* ABI-correct at 32-bit; **the gate just never asked**. That
-is the single highest-value change available, and it is small.
+### 2.3 The vptr-as-data-member defect — RESOLVED
 
-### 2.3 …but the layout still does not match, and that is the real defect
+An earlier version of this section called this "the real defect" and quoted
+`offsetof(AbstractClass, m_000) == 20` against a recovered offset of 0. That was
+a real defect, and the record is kept because it is instructive: the recovered
+table contains vtable-pointer stores (763 of 4,289 entries, 620 of them at
+offset 0), and emitting each as an ordinary data member made C++ count the vptr
+twice and displace every member after it.
 
-Making the compiler the authority immediately exposes something worse than the
-host-width problem:
+It is fixed. The generated headers **omit vptr stores** — the compiler supplies
+the vptr — and check 9 now compiles an `offsetof` assertion for every recovered
+offset a header can express:
 
 ```
-offsetof(AbstractClass, m_000) == 20     // compiler, -m32
-recovered table says               0     // out/members.json
+[9] compiler-confirmed member offsets: PASS
+    coverage: 3073/4289 recovered offsets asserted
+    compiler-confirmed: 3073/3073
 ```
 
-The cause is structural, not cosmetic. **1,053 of the 4,326 "members" in the
-recovered table are vtable-pointer stores** — 622 of them at offset 0 — and the
-generator emits each as an ordinary data member:
-
-```cpp
-unsigned long m_000;  // +0x000 init 0x698a60   <- this is the vptr
-```
-
-C++ inserts the vptr itself, so the reconstructed class counts it twice and every
-member after it is displaced. This means the tree compiles, links and runs, and
-still **does not have the game's memory layout**. For a decompilation that is the
-difference between "it builds" and "it is the game".
+The 1,216 offsets with no assertion are itemised by reason in the check output
+(743 vptr stores, 413 offsets past the declared extent, 44 undeclared, 10 with
+no member offset, 6 headerless). The tree's memory layout is now enforced by the
+compiler, not asserted in prose.
 
 ### 2.4 Semantics — the bulk of what is left, and smaller than it looks
 
-```
-vtable slots in the manifest            9,780
-named                                     1,500  (15.3%)
-  of which destructors                      600
-  of which COM boilerplate (QI/AddRef/Rel)  403
-  of which genuinely semantic               497  (5.1%)
-unnamed                                   8,280
-```
-
-The raw 8,280 is misleading. **65.1% of all (class, slot) pairs are inherited
-from a base class.** The number of slots that need an original name is:
+**One measured set, and the three quantities it contains.** Earlier versions of
+this file and `todo.md` used "1,500 named, 8,280 unnamed, 3,409 distinct"; that
+mixed quantities and is retracted. Measured on 2026-10-17:
 
 ```
-genuinely distinct (class, slot) pairs  3,409
+vtable (class, slot) instances in the manifest        9,810
+named (class, slot) pairs in out/virtual_names.json   5,557  (56.6%)
+distinct name strings among those pairs                 917
+  excluding destructors and QI/AddRef/Release            281
+classes with at least one naming record                  702
+virtual declarations in the generated headers          6,954
+  named declarations                                   4,496  (64.7%)
+  vfunc_N declarations                                 2,458
 ```
 
-And the leverage is extreme — naming a base names its whole subtree:
+The distinction, stated once: a **slot instance** is a `(class, slot)` pair in
+the manifest (9,810). A **named pair** is one of those that carries a name
+(5,557). A **distinct name** is a unique name string (917; 281 if destructors
+and COM boilerplate are excluded). The headers declare only the virtuals a class
+introduces or overrides, so they contain 6,954 declarations — fewer than 9,810
+slot instances because 65.1% of slot instances are inherited. `harness.py
+metrics` prints `virtual_names: 702`; that key counts **classes with a naming
+record**, not distinct name strings, and should not be quoted as a name count.
+The old "3,409 distinct" was an estimate of slot instances after inheritance
+deduplication, not a name count, and is not used as a denominator here.
+
+And the leverage is extreme — naming a base names its whole subtree. Re-derived
+from `out/class_manifest.json` and `out/direct_bases.json` this session; the
+metric is the base's slot count times (subclasses + 1):
 
 | Class | slots | subclasses | slot-instances covered |
 |---|---|---|---|
@@ -143,17 +144,19 @@ And the leverage is extreme — naming a base names its whole subtree:
 | `GadgetClass` | 31 | 20 | 651 |
 | `ObjectTypeClass` | 40 | 14 | 600 |
 
-The top 18 bases cover 13,011 slot-instances. **The naming problem is ~1,800
-slots of real work, not 9,810.** That is tractable, and it is where the next
-rounds belong.
+The top 18 bases cover 13,011 slot-instances. The naming problem is the 2,458
+`vfunc_N` declarations the headers still carry (and the 5,557 named pairs that
+could be given better evidence), not 9,810. That is tractable, and it is where
+the next documentation rounds belong.
 
-Members: 4,326 recovered entries, 3,273 after removing vptr stores, **135 named
-(3.1%)**.
+Members: 4,289 recovered entries, 3,526 after removing 763 vptr stores, **291
+named across 20 classes (8.3% of non-vptr members)**.
 
 ### 2.5 Modifiability — the hardest gap, and the one with no partial credit
 
-**There is not one hand-written `.cpp` file in the tree.** Every one of the
-43,668 functions is generated machine transcription, one instruction per line:
+**There is not one hand-written `.cpp` file in the tree.** The transcription is
+46,008 generated functions (43,564 recovered function starts + 2,444 tail
+entries), one instruction per generated line, 918,438 instruction lines in all:
 
 ```cpp
 ts::push32(0x19u);          //   0x006829a5  push 0x19
@@ -162,87 +165,88 @@ ts::mov_r32(EAX.d, 0u);     //   0x006829a7  mov eax, 0
 
 This is faithful and gated, and it is **not source**. A human can read it against
 the recovered listing line for line, but cannot meaningfully *edit* it. The
-hand-editable surface today is 47 headers; the other 262 headers and all the code
-are regenerated.
+hand-editable surface today is 49 headers under `src/handwritten/`; the other
+headers under `src/include/` (264 total) and all the code are regenerated.
 
 So: the tree is compilable and increasingly documented, and it is only
 *marginally* modifiable. This is the long pole and it needs a different
-technique from everything done so far — pattern recognition over 847,121
-instructions rather than more recovery.
+technique from everything done so far — pattern recognition over the 848,822
+static instructions rather than more recovery.
 
 ---
 
 ## 3. The trajectory
 
-### P0 — Make "compilable" mean the game's ABI
+### P0 — Make "compilable" mean the game's ABI  [RESOLVED]
 
-*Small, immediate, unblocks every later claim about layout.*
+*Kept as history. Every item below is done and gating.*
 
-- **0.0** Stop emitting members as `unsigned long`. That is the generator's
-  universal slot type, and it is 8 bytes on this host against 4 in the game:
-  **2,313 of the 2,919 member declarations in the generated headers are
-  `unsigned long`**, so every generated struct is inflated and no recovered
-  offset can mean anything. `unsigned int` is 4 bytes on both, so this costs
-  nothing and needs no toolchain change. Do this first: it is the reason the
-  offsets disagree, and it is independent of the `-m32` question below.
-
-- **0.1** Gate on `-m32`, fail closed when multilib is absent (a gate that
-  silently skips is exactly how an unlinkable tree survived for months).
-  Document the toolchain requirement. *Verified working already.*
-- **0.2** Stop emitting vptr stores as data members; reconcile base-class
-  layout so absolute offsets are reproduced rather than displaced.
+- **0.0** Stop emitting members as `unsigned long`. **Done.** The figures this
+  item used to quote (2,313 of 2,919) were measured on the LP64 host build and
+  are retracted; they are not current.
+- **0.1** Gate on `-m32`, fail closed when multilib is absent. **Done.**
+  `verify.py` exits non-zero naming the missing toolchain.
+- **0.2** Stop emitting vptr stores as data members. **Done.** The headers omit
+  them; the recovered table still records 763 vptr stores (620 at offset 0),
+  which is evidence, not declarations.
 - **0.3** Generate `offsetof` assertions for every recovered member offset and
-  gate on them. **Expect this to fail widely at first. That failure list is the
-  work**, and it is the first time the layout will be enforced by the compiler
-  instead of asserted in prose.
+  gate on them. **Done.** Check 9 confirms **3,073/3,073** asserted offsets at
+  `-m32`.
 
-Exit: `tools/verify.py` fails unless the compiler confirms every recovered
-member offset at `-m32`.
+Exit met: `tools/verify.py` fails unless the compiler confirms every recovered
+member offset it can express at `-m32`.
 
 ### P1 — Close recovery and hygiene
 
 *Bounded and mostly mechanical.*
 
-- **1.1** Emit the 104 KB of jump tables as data and classify the padding.
-  **Done:** `tools/disasm.py` classifies the residual into jump tables, switch
-  index tables and padding, reports what is neither, and writes
-  `out/text_data.json`.
-- **1.2** Implement the 166 unmodelled instructions. **Done:** 0 unmodelled;
-  the model additions are in `src/handwritten/Machine.h`.
-- **1.3** Fix the 4 refuted offsets.
-- **1.4** Locate the 228 destructors, or mark each explicitly rather than
-  labelling it a stub.
-- **1.5** Get `out/functions.json` (64.3 MB, over GitHub's 50 MB warning) out of
-  the repository — release asset or compressed.
-- **1.6** Decrypt the encrypted TS MIX header (`tools/mix.py` currently fails
-  explicitly on it).
+- **1.1** Emit the residual `.text` as data and classify the padding. **Done:**
+  `tools/disasm.py` classifies it into 12 jump tables (264 B), 7 switch index
+  tables (349 B), 104,959 B of padding and 394 B in 55 unclassified runs, and
+  writes `out/text_data.json`.
+- **1.2** Implement the unmodelled instructions. **Done:** 0 unmodelled; the
+  model additions are in `src/handwritten/Machine.h`.
+- **1.3** Fix the 4 refuted offsets. **Open:** `ScoreTimeClass` and
+  `ScorePrintClass`, two offsets each, still refuted by
+  `tools/verify_members_binary.py`.
+- **1.4** Locate the destructors, or mark each explicitly rather than labelling
+  it a stub. **Partly done:** 229 destructors are emitted as labelled stubs and
+  counted in `src/generated/README.md`.
+- **1.5** Get `out/functions.json` (67,670,646 bytes, over GitHub's 50 MB
+  warning) out of the repository — release asset or compressed.
+- **1.6** Decrypt the encrypted TS MIX header. **Done:** `tools/mix.py` decodes
+  both index variants; header + padded index + body size equals the file size
+  on all four encrypted archives.
 
 Exit: `.text` coverage ≥99.5% with the remainder classified; 0 unmodelled; 0
-labelled stubs; no tracked file over 50 MB.
+labelled stubs; no tracked file over 50 MB. *Not met:* coverage is 96.09% as
+code (99.99% attributed), and 229 stubs remain.
 
 ### P2 — Name the tree
 
-*Bounded in size: 3,409 distinct virtuals, 3,273 real members. This is the
-semantics layer, and it is where council rounds fit — one lane per evidence
-source, with disjoint files.*
+*Bounded in size: 2,458 `vfunc_N` header declarations, 917 distinct names (281
+semantic), 3,526 non-vptr members. This is the semantics layer, and it is where
+council rounds fit — one lane per evidence source, with disjoint files.*
 
 - **2.1** Build the inheritance-propagation engine: a name established on a base
-  propagates to every override, with the evidence chain recorded per slot. Only
-  2.8% of unnamed slots propagate today *because there are only 497 names to
-  propagate* — this engine is what makes each new name worth 20.
+  propagates to every override, with the evidence chain recorded per slot. 5,557
+  `(class, slot)` pairs already carry a name; the engine is what turns 917
+  distinct names into more of those pairs.
 - **2.2** Work the leverage table in §2.4 in order, starting with `ObjectClass`,
   `AbstractClass`, `TechnoClass`, `MissionClass`, `RadioClass`, `FootClass`.
 - **2.3** Evidence sources to mine, in rough order of yield: call-site argument
   and return shape; cross-references to the 1,876 recovered INI keys; the string
-  table; the existing 497 anchors; RTTI. `tools/e2e_rules.py` already validates
-  names against shipped data — that validation is what keeps this honest.
+  table; the existing 917 names; RTTI. `tools/e2e_rules.py` validates names
+  against shipped data — 280 of 291 (96.2%) resolve — and that validation is
+  what keeps this honest.
 - **2.4** Fix the arity check (`nargs` counts `this` for COM `__stdcall` but not
-  for `__thiscall`) so check 8 can become a gate instead of a signal.
+  for `__thiscall`) so check 8 can become a gate instead of a signal. Measured
+  today: **331/1,116 match, 785 divergence**.
 - **2.5** Member naming from INI store sites, extending `name_members.py` beyond
-  the current 20 classes.
+  the current 20 classes / 291 names.
 
-Exit: ≥60% of the 3,409 distinct virtuals named with a per-name evidence record;
-arity check gated; ≥50% of the 3,273 real members named.
+Exit: ≥60% of the 6,954 header virtual declarations named with a per-name
+evidence record; arity check gated; ≥50% of the 3,526 non-vptr members named.
 
 ### P3 — Source-shaping (the long pole)
 
@@ -279,11 +283,15 @@ loop" with `PeekMessage=137,295`. That was retracted: the model let `ExitProcess
 return, so execution continued past a fatal exit and the "loop" was one the real
 game never ran.**
 
-What is true, measured: the game maps at its real VAs, resolves 342/342 imports,
-runs 1,011,817 instructions of CRT startup and init, and exits. The cause is
-measured: the atexit walk over the 3,311-entry static-constructor table leaks
-**108 bytes**, so ESI holds a return address and `call *%esi` at `0x5e72cf` calls
-into `ExitProcess`, which makes the game take its "Direct X" error box.
+What is true: the game maps at its real VAs and resolves **341/341** PE
+import-directory thunks (309 by name, 32 by ordinal, across 13 DLLs). The stub
+table holds 342 rows because it also carries `COMCTL32!DllGetVersion`, which is
+not an import — the CRT reaches it through `GetProcAddress`. Boot-status figures
+below (1,011,817 instructions, the `ExitProcess` argument, message-loop state)
+are **being re-measured by a concurrent lane**; the cause recorded here is the
+atexit walk over the 3,311-entry static-constructor table leaking **108 bytes**,
+so ESI holds a return address and `call *%esi` at `0x5e72cf` calls into
+`ExitProcess`, which makes the game take its "Direct X" error box.
 
 **The oracle changed the premise.** `tools/oracle.py` shows the retail binary also
 exits with code 01 before DirectDraw surface creation on this host, because there
@@ -310,9 +318,10 @@ because the string table is empty at that point. A stub returning a plausible
 wrong value is harder to diagnose than one that fails loudly.
 
 The honest measure of progress here is not "does it run" but **how far into the
-game's own code it gets before it needs something we have not modelled**. Today
-that is now 1,011,817 instructions ending in a measured `ExitProcess`, rather than
-237. Each stop is a precise, actionable finding rather than a wall, because the
+game's own code it gets before it needs something we have not modelled**. The
+last measured figure was 1,011,817 instructions ending in an `ExitProcess`
+(boot numbers are being re-measured). Each stop is a precise, actionable finding
+rather than a wall, because the
 harness reports the faulting EIP, the instruction bytes there, the containing
 function and generated source line, and the ordered import calls -- and
 `tools/oracle.py` can read the same registers from the retail binary.
@@ -331,8 +340,11 @@ Two lessons from getting this far, both recorded in AGENTS.md:
 
 ## 4. Critical path, and what is deliberately not on it
 
-**P0 → P1 → P2 → P3.** P0 and P1 are small and bounded. P2 is bounded in item
-count and is where parallel rounds pay. P3 is the long pole.
+**P0 → P1 → P2 → P3.** P0 is resolved. P1 is small and mostly closed. P2 is
+bounded in item count and is where parallel rounds pay. P3 is the long pole.
+`STRATEGY.md` argues that for *playability* none of P2/P3 is on the path; this
+file is the source-artifact roadmap, and the two are deliberately different
+products.
 
 Not on the critical path, and should not be worked on: more disassembly
 (§2.1), more class discovery (749/749 with every constructor a real entry
@@ -344,16 +356,16 @@ point), more header coverage.
   Lifting cannot prove it found the author's intent. The honest claim is
   behavioural equivalence with the machine, and the differential test is the
   strongest available evidence for it. This limit will not go away.
-- **P0.2 may require redesigning member emission**, not patching it: if vptr
-  stores, base subobjects and real members are conflated in the recovered table,
-  the fix is a new emitter, and the 4,326 offsets may need re-deriving with
-  vptrs excluded.
+- **P0.2 required redesigning member emission, not patching it** — and that is
+  what happened. The headers omit vptr stores and check 9 confirms the offsets
+  the compiler can express (3,073/3,073). The recovered table still records 763
+  vptr stores; they are evidence for the constructor scan, not declarations.
 - **`-m32` becomes a build requirement.** Anyone without `g++-multilib` cannot
   pass the gate. That is the correct trade — a silent skip is what produced the
   unlinkable tree — but it must be documented, not discovered.
 - **Naming effort is not linear.** The first names on `ObjectClass` are cheap
   (string cross-references); the last ones in a 214-slot class may each need
   reading a function. The leverage table in §2.4 is a *floor*, not a promise.
-- **Everything here assumes the recovered offsets are right.** 4 are already
-  refuted. If P0.3 shows the recovered table is systematically wrong rather than
-  merely mis-emitted, P2's member work has to wait.
+- **Everything here assumes the recovered offsets are right.** 4 of 4,289 are
+  refuted (99.9% confirmed). P0.3 did not show the table is systematically
+  wrong, so P2's member work is not blocked.

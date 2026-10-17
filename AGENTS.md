@@ -26,7 +26,8 @@ re/
   src/handwritten/Machine.h       the x86 machine model the transcribed code runs on
   src/handwritten/Image.h         maps the PE's sections at their real VAs and
                                   writes a stub VA into every IAT slot
-  src/handwritten/Win32Stubs.h    what the 341 imported Windows functions DO, so
+  src/handwritten/Win32Stubs.h    what the 341 imported Windows functions (plus
+                                  the one GetProcAddress-only export) DO, so
                                   `call dword ptr [IAT]` reaches code
   build/image_selftest.cpp        load the image and resolve imports, standalone
   build/boot_driver.cpp           the boot harness behind tools/boot.py
@@ -109,7 +110,7 @@ is generated too.
 | `tools/emit_x86.py` | the operand grammar and per-mnemonic rendering used by both generators; the only place that knows the disassembler's operand text |
 | `tools/link_test.py` | link the whole tree into a program and run it; the only check that can see an undefined symbol |
 | `tools/check_compile.py` | compile a set of generated TUs standalone and fail if any does |
-| `tools/gen_win32_stubs.py` | generates `Win32Stubs.h` from the image's own import directory, so the stub table cannot drift from the 341 thunks; `--evidence` derives argument counts from the recovered instruction stream |
+| `tools/gen_win32_stubs.py` | generates `Win32Stubs.h` from the image's own import directory, so the stub table cannot drift from the **341 PE thunks** across 13 DLLs (309 by name, 32 by ordinal). The table holds **342 rows**: the 341 imports plus `COMCTL32!DllGetVersion`, which the CRT reaches through `GetProcAddress`, not the import directory. Resolution is a property of the 341 IAT slots (`Image.h`: `341 of 341 IAT slots written`); do not write "342/342 resolved". `--evidence` derives argument counts from the recovered instruction stream |
 | `tools/boot.py` | one command that builds (cached: 0.4s), boots the image and reports it -- imports called by name, fault EIP with instruction bytes, containing function and generated source line, and whether a message loop was reached |
 | `tools/ghidra.sh` | decompile the function containing each given address, from a saved Ghidra project (seconds, no re-analysis) |
 | `tools/wine_run.sh` | run the **retail** `GAME.EXE` under Wine, headless: plain, `--trace ddraw`, `--dismiss` the startup dialog chain, `--shot` a PNG. The only oracle this project has |
@@ -211,7 +212,7 @@ What the boot does today, measured:
 
 ```
 $ python3 tools/boot.py            # 0.4s build (cached), 0.2s run
-image:  3227799 bytes in 4 sections; 342 of 342 imports resolved, 342 traced
+image:  3227799 bytes in 4 sections; 341 of 341 imports resolved, 341 traced
 stop:   fault at 0x00684529 after 1,011,817 instructions, depth 15
 why:    the program called ExitProcess
 message loop: not-reached   (GetMessage=0 PeekMessage=0 DispatchMessage=0
@@ -415,14 +416,14 @@ measurable exit criterion rather than a percentage.
 
 | Layer | State | Note |
 |---|---|---|
-| **ABI / layout** | **reproduced, compiler-confirmed** | everything compiles `-m32` at the target ABI, and check 9 makes the compiler confirm every recovered member offset a header can express: 3109/3109. The 1217 offsets with no assertion are itemised by reason (743 vptr stores the compiler inserts itself, 413 past the declared extent, 82 undeclared, 13 no member offset, 6 headerless) |
+| **ABI / layout** | **reproduced, compiler-confirmed** | everything compiles `-m32` at the target ABI, and check 9 makes the compiler confirm every recovered member offset a header can express: **3,073/3,073**. The 1,216 offsets with no assertion are itemised by reason (743 vptr stores the compiler inserts itself, 413 past the declared extent, 44 undeclared, 10 no member offset, 6 headerless) |
 | Binary recovery | **effectively closed** | 41,822 functions, 96.06% of `.text` as recovered code; the remaining 104 KB is classified — 11 jump tables (256 B) and 356 B of switch index tables emitted as data, 105,808 B of alignment padding, and 554 B in 90 runs reported verbatim rather than forced into a category (`out/text_data.json`) |
 | Structural reconstruction | **strong** | 749/749 classes, 9,780 vtable slots, 0 unseeded, every constructor a real entry point |
 | Code transcription | **complete** | 43,668 functions, 897,193 of 897,193 instructions (100%) |
 | Verification | **9 checks green, pipeline red** | `verify.py` passes all nine in **6 seconds** (263/263, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS). `pipeline.sh` is red at the **link test** on 2 unmapped calls, and takes **471s** — the link is the expensive stage, not verification |
 | **Semantics** | **~9%** | 5,557 of 9,810 slots carry a name (56.6%), but only **917 distinct names** and **281 distinct semantic** ones — most of the coverage is shared-stub propagation. 291 members named across 20 classes; `e2e_rules.py` resolves 96.2% of them against the shipped `rules.ini` |
 | **Modifiability** | **minimal** | there is still no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is the hand-written headers |
-| **Behaviour** | **boots, then exits** | the image maps at its real VAs, 342/342 imports resolve, and the game runs **1,011,817 instructions** of its own CRT startup and init before calling `ExitProcess`. The cause is measured: the atexit walk leaks **108 bytes** across the static-constructor table, so ESI holds a return address and `call *%esi` at `0x5e72cf` goes to garbage. The **retail binary does the same thing here** (exits code 01, before DirectDraw surface creation), so this is not a divergence from a working game |
+| **Behaviour** | **boots, then exits** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`), and the game runs **1,011,817 instructions** of its own CRT startup and init before calling `ExitProcess`. The cause is measured: the atexit walk leaks **108 bytes** across the static-constructor table, so ESI holds a return address and `call *%esi` at `0x5e72cf` goes to garbage. The **retail binary does the same thing here** (exits code 01, before DirectDraw surface creation), so this is not a divergence from a working game |
 
 So: *the binary is explained, its instructions are transcribed, the layout is
 compiler-confirmed, and the game's own startup now executes.* It is not a
