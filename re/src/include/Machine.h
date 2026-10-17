@@ -398,15 +398,6 @@ inline u32 ld32(u32 a) {
     return (u32)ld8(a) | ((u32)ld8(a + 1) << 8) |
            ((u32)ld8(a + 2) << 16) | ((u32)ld8(a + 3) << 24);
 }
-// A write watchpoint. "Something is writing garbage into this address" is the
-// hardest question to answer by reading code, and the easiest to answer by
-// recording the EIP of the store. Set watch_va from the environment and the first
-// non-zero write to it is reported with the instruction that did it.
-inline u32 watch_va = 0;
-inline u32 watch_hits = 0;
-inline u32 watch_from[8];
-inline u32 watch_val[8];
-
 inline void st32(u32 a, u32 v) {
     st8(a, (u8)v); st8(a + 1, (u8)(v >> 8));
     st8(a + 2, (u8)(v >> 16)); st8(a + 3, (u8)(v >> 24));

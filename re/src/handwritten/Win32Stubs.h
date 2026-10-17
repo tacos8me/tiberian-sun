@@ -42,6 +42,7 @@
 // ---------------------------------------------------------------------------
 
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 
 #include "Machine.h"
@@ -94,6 +95,8 @@ struct StubState {
     unsigned long unbalanced;       // fallback calls that could not pop
     unsigned long exit_calls;       // ExitProcess invocations the model walked past
     unsigned long proc_address_misses;  // GetProcAddress names nothing implements
+    unsigned long file_opens;           // CreateFileA that found a real file
+    unsigned long file_misses;          // CreateFileA that returned INVALID_HANDLE
     char last[64];                  // name of the most recent stub called
     bool verbose;                   // print each stub call
     StubState() : calls(0), fallbacks(0), resolved(0), fallback_names(0),
@@ -576,45 +579,211 @@ TS_BEGIN(WriteConsoleA)
 TS_END
 
 // -- files -------------------------------------------------------------------
-// There is no real file system behind the model. A file "exists" (so callers
-// take the success path and stay alive) and reads as empty. That is a lie, but
-// it is a consistent one: GetFileSize and SetFilePointer both say zero too, so
-// nothing reads past an end that was never written.
+// Real file I/O over a host directory.
+//
+// This used to be a lie: every file "existed" and read as empty, and
+// GetFileSize/SetFilePointer agreed, so nothing ever read past an end that was
+// never written. It was consistent and it was useless -- the game cannot read
+// rules.ini, TIBSUN.MIX or the CD, so it exits during init, and no amount of
+// DirectDraw work changes that. `tools/oracle.py` confirmed the retail binary
+// gives up at the same stage in this environment, for the same reason.
+//
+// Paths are resolved case-insensitively per component, because Windows is
+// case-insensitive and the game asks for `rules.ini` when the file on disk may be
+// `RULES.INI`. A miss returns INVALID_HANDLE_VALUE and sets the last error, which
+// is what lets a caller take its real failure path instead of reading zeroes.
+#include <dirent.h>
+#include <sys/stat.h>
+
+inline const char *ts_root() {
+    const char *r = std::getenv("TS_ROOT");
+    return (r && *r) ? r : "../gamedir";
+}
+
+inline void model_rd(void *dst, u32 va, u32 n) {
+    u8 *d = (u8 *)dst;
+    for (u32 i = 0; i < n; ++i) d[i] = ld8(va + i);
+}
+inline void model_wr(u32 va, const void *src, u32 n) {
+    const u8 *sp = (const u8 *)src;
+    for (u32 i = 0; i < n; ++i) st8(va + i, sp[i]);
+}
+
+// Resolve one path component against a directory, ignoring case. Returns the
+// on-disk spelling, which is what fopen needs on a case-sensitive filesystem.
+inline bool resolve_ci(const char *dir, const char *want, char *out, size_t outn) {
+    DIR *d = opendir(dir[0] ? dir : ".");
+    if (!d) return false;
+    bool ok = false;
+    while (struct dirent *e = readdir(d)) {
+        const char *a = e->d_name, *b = want;
+        while (*a && *b) {
+            char ca = (*a >= 'A' && *a <= 'Z') ? (char)(*a + 32) : *a;
+            char cb = (*b >= 'A' && *b <= 'Z') ? (char)(*b + 32) : *b;
+            if (ca != cb) break;
+            ++a; ++b;
+        }
+        if (*a == 0 && *b == 0) {
+            std::snprintf(out, outn, "%s/%s", dir[0] ? dir : ".", e->d_name);
+            ok = true;
+            break;
+        }
+    }
+    closedir(d);
+    return ok;
+}
+
+// Map a Windows path to a host path under ts_root(). Strips a drive prefix and
+// any leading separators, then resolves each component case-insensitively.
+inline bool host_path(const char *win, char *out, size_t outn) {
+    if (!win || !*win) return false;
+    char buf[512];
+    std::snprintf(buf, sizeof buf, "%s", win);
+    char *p = buf;
+    if (p[0] && p[1] == ':') p += 2;
+    while (*p == '\\' || *p == '/') ++p;
+    std::snprintf(out, outn, "%s", ts_root());
+    char *save = 0;
+    for (char *tok = strtok_r(p, "\\/", &save); tok; tok = strtok_r(0, "\\/", &save)) {
+        if (!*tok) continue;
+        if (!strcmp(tok, ".") || !strcmp(tok, "..")) continue;
+        char next[512];
+        if (!resolve_ci(out, tok, next, sizeof next)) {
+            // Not present under any spelling: keep the literal name so a caller
+            // that is about to create the file still gets a usable path.
+            std::snprintf(next, sizeof next, "%s/%s", out, tok);
+        }
+        std::snprintf(out, outn, "%s", next);
+    }
+    return true;
+}
+
+struct HostFile { std::FILE *f; unsigned long size; int used; };
+inline HostFile *file_table() { static HostFile t[64]; return t; }
 inline u32 &file_serial() { static u32 n = 0; return n; }
 
+inline HostFile *file_slot(u32 h) {
+    u32 i = h - 0x00080000u;
+    if (i >= 64u) return 0;
+    HostFile *f = &file_table()[i];
+    return f->used ? f : 0;
+}
+
 TS_BEGIN(CreateFileA)
-    stub_done(7, 0x00080000u + (file_serial()++));
+    const char *name = ld_cstr(arg(0));
+    u32 access = arg(1), disp = arg(4);
+    char hp[512];
+    host_path(name, hp, sizeof hp);
+    // GENERIC_WRITE is bit 0x40000000; CREATE_ALWAYS/OPEN_ALWAYS create.
+    const char *mode = (access & 0x40000000u) ? ((disp == 2u) ? "wb" : "r+b") : "rb";
+    if (mode[0] == 'r' && mode[1] == '+' && !std::fopen(hp, "rb")) mode = "wb";
+    std::FILE *f = std::fopen(hp, mode);
+    if (!f && (access & 0x40000000u)) f = std::fopen(hp, "wb");
+    if (!f) {
+        std::printf("win32stubs: CreateFileA(\"%s\") -> INVALID_HANDLE_VALUE "
+                    "(no %s)\n", name, hp);
+        state().file_misses++;
+        stub_done(7, 0xffffffffu);
+    } else {
+        HostFile *t = file_table();
+        u32 slot = 64u;
+        for (u32 i = 0; i < 64u; ++i) if (!t[i].used) { slot = i; break; }
+        if (slot == 64u) { std::fclose(f); stub_done(7, 0xffffffffu); }
+        else {
+            t[slot].f = f;
+            t[slot].used = 1;
+            std::fseek(f, 0, SEEK_END);
+            long sz = std::ftell(f);
+            t[slot].size = sz < 0 ? 0 : (unsigned long)sz;
+            std::fseek(f, 0, SEEK_SET);
+            std::printf("win32stubs: CreateFileA(\"%s\") -> %s (%lu bytes)\n",
+                        name, hp, t[slot].size);
+            state().file_opens++;
+            stub_done(7, 0x00080000u + slot);
+        }
+    }
 TS_END
 
 TS_BEGIN(ReadFile)
-    u32 got = arg(3);
-    if (got) st32(got, 0u);
+    u32 h = arg(0), buf = arg(1), want = arg(2), got = arg(3);
+    HostFile *f = file_slot(h);
+    u32 n = 0;
+    if (f && want) {
+        static u8 tmp[65536];
+        u32 cap = want < sizeof tmp ? want : (u32)sizeof tmp;
+        n = (u32)std::fread(tmp, 1, cap, f->f);
+        model_wr(buf, tmp, n);
+    }
+    if (got) st32(got, n);
     stub_done(5, 1u);
 TS_END
 
 TS_BEGIN(WriteFile)
-    u32 written = arg(3);
-    if (written) st32(written, arg(2));
+    u32 h = arg(0), buf = arg(1), want = arg(2), written = arg(3);
+    HostFile *f = file_slot(h);
+    u32 n = 0;
+    if (f && want) {
+        static u8 tmp[65536];
+        u32 cap = want < sizeof tmp ? want : (u32)sizeof tmp;
+        model_rd(tmp, buf, cap);
+        n = (u32)std::fwrite(tmp, 1, cap, f->f);
+        if ((unsigned long)std::ftell(f->f) > f->size) f->size = (unsigned long)std::ftell(f->f);
+    }
+    if (written) st32(written, n);
     stub_done(5, 1u);
 TS_END
 
-TS_RET(CloseHandle, 1, 1u)
+TS_BEGIN(CloseHandle)
+    HostFile *f = file_slot(arg(0));
+    if (f) {
+        std::fclose(f->f);
+        f->used = 0;
+        f->f = 0;
+    }
+    stub_done(1, 1u);
+TS_END
+
+TS_BEGIN(GetFileSize)
+    HostFile *f = file_slot(arg(0));
+    u32 hi = arg(1);
+    if (hi) st32(hi, 0u);
+    stub_done(2, f ? (u32)f->size : 0xffffffffu);
+TS_END
+
+TS_BEGIN(SetFilePointer)
+    HostFile *f = file_slot(arg(0));
+    long lo = (long)arg(1);
+    u32 method = arg(3);
+    int whence = method == 0u ? SEEK_SET : (method == 1u ? SEEK_CUR : SEEK_END);
+    if (!f) { stub_done(4, 0xffffffffu); }
+    else {
+        std::fseek(f->f, lo, whence);
+        long pos = std::ftell(f->f);
+        stub_done(4, pos < 0 ? 0xffffffffu : (u32)pos);
+    }
+TS_END
+
 TS_RET(SetEndOfFile, 1, 1u)
 TS_RET(FlushFileBuffers, 1, 1u)
 TS_RET(FlushInstructionCache, 3, 1u)
-TS_RET(DeleteFileA, 1, 1u)
 TS_RET(SetFileTime, 4, 1u)
 TS_RET(GetFileTime, 4, 1u)
 TS_RET(GetFileInformationByHandle, 2, 1u)
-TS_RET(GetFileAttributesA, 1, 0x20u)   // FILE_ATTRIBUTE_ARCHIVE
 
-TS_BEGIN(GetFileSize)
-    u32 high = arg(1);
-    if (high) st32(high, 0u);
-    stub_done(2, 0u);
+TS_BEGIN(DeleteFileA)
+    char hp[512];
+    if (host_path(ld_cstr(arg(0)), hp, sizeof hp)) std::remove(hp);
+    stub_done(1, 1u);
 TS_END
 
-TS_BEGIN(SetFilePointer) stub_done(4, 0u); TS_END
+TS_BEGIN(GetFileAttributesA)
+    char hp[512];
+    struct stat st;
+    u32 r = 0xffffffffu;
+    if (host_path(ld_cstr(arg(0)), hp, sizeof hp) && stat(hp, &st) == 0)
+        r = S_ISDIR(st.st_mode) ? 0x10u : 0x20u;
+    stub_done(1, r);
+TS_END
 
 TS_BEGIN(GetOverlappedResult)
     u32 got = arg(2);
@@ -1908,7 +2077,6 @@ TS_RET(dd_AddRef, 1, 1u)
 TS_RET(dd_Release, 1, 1u)
 TS_RET(dd_Compact, 1, 0u)
 TS_RET(dd_CreateClipper, 4, 0u)
-TS_RET(dd_CreatePalette, 4, 0u)
 TS_RET(dd_DuplicateSurface, 3, 0u)
 TS_RET(dd_EnumDisplayModes, 5, 0u)
 TS_RET(dd_EnumSurfaces, 5, 0u)
@@ -1920,6 +2088,14 @@ TS_RET(dd_RestoreDisplayMode, 1, 0u)
 TS_RET(dd_SetCooperativeLevel, 3, 0u)
 TS_RET(dd_SetDisplayMode, 4, 0u)
 TS_RET(dd_WaitForVerticalBlank, 3, 0u)
+
+inline u32 make_dd_palette();
+
+TS_BEGIN(dd_CreatePalette)
+    // arg(0)=this, arg(1)=dwFlags, arg(2)=lpColorTable, arg(3)=**lplpPalette
+    if (arg(3)) st32(arg(3), make_dd_palette());
+    stub_done(4, 0u);
+TS_END
 
 TS_BEGIN(dd_GetAvailableVidMem)
     // Wine's trace of the REAL game (WINEDEBUG=+ddraw) shows this is called
@@ -2318,6 +2494,26 @@ inline u32 make_com_object(const char *const *names, const u8 *nargs,
     return obj;
 }
 
+inline u32 make_dd_palette() {
+    // IDirectDrawPalette: QueryInterface/AddRef/Release/GetCaps/GetEntries/
+    // SetEntries/Initialize. FUN_0046f670 checks only that CreatePalette returned
+    // DD_OK, but it stores the out-pointer and the game dereferences it later, so
+    // returning 0 while leaving *lplpDDPalette NULL moves the failure downstream
+    // where it is much harder to read.
+    static const char *const names[7] = {
+        "IDirectDrawPalette::QueryInterface", "IDirectDrawPalette::AddRef",
+        "IDirectDrawPalette::Release", "IDirectDrawPalette::GetCaps",
+        "IDirectDrawPalette::GetEntries", "IDirectDrawPalette::SetEntries",
+        "IDirectDrawPalette::Initialize",
+    };
+    static const u8 nargs[7] = { 3, 1, 1, 2, 4, 4, 4 };
+    Fn over[7] = { 0 };
+    static u32 obj = 0;
+    if (!obj) obj = make_com_object(names, nargs, over, 7);
+    return obj;
+}
+
+
 void k_sfs_Lock();
 void k_sfs_GetSurfaceDesc();
 void k_sfs_GetAttachedSurface();
@@ -2438,6 +2634,7 @@ inline u32 make_directdraw() {
         4, 3,
     };
     Fn over[25] = { 0 };
+    over[5] = &k_dd_CreatePalette;
     over[6] = &k_dd_CreateSurface;
     over[11] = &k_dd_GetCaps;
     over[12] = &k_dd_GetDisplayMode;
