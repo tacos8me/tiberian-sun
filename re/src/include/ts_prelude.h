@@ -16,6 +16,22 @@
 
 #include <windows.h>
 
+// --- UI layer --------------------------------------------------------------
+// GScreenClass has a vtable of its own and a constructor that stores at +0x4,
+// +0x8 and +0xc. It is defined here rather than by reconcile_prelude.py so the
+// three recovered offsets have a declaration the layout gate can assert;
+// reconcile_prelude.py's PRELUDE_ONLY step leaves an already-complete
+// definition alone.
+struct GScreenClass {
+    virtual ~GScreenClass() {}
+    virtual void _dummy_GScreen() {}
+    // Named m_FieldN, not m_NNN: curated_members() reads an m_<hex> identifier
+    // as this emitter's own machine text and skips it.
+    unsigned int m_Field4;   // +0x4 /* ? */; 4-byte store: mov dword ptr [esi + 4], eax
+    unsigned int m_Field8;   // +0x8 /* ? */; 4-byte store: mov dword ptr [esi + 8], ebx
+    unsigned int m_Fieldc;   // +0xc /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ebx
+};
+
 // --- core geometry types (original: COORD.H / DEFINES.H) -------------------
 struct CoordStruct { int X, Y, Z; };
 struct CellStruct  { short X; short Y; };
@@ -31,15 +47,8 @@ struct IUnknown {
     virtual ULONG   __stdcall AddRef() = 0;
     virtual ULONG   __stdcall Release() = 0;
 };
-struct IPersist {
-    virtual HRESULT __stdcall GetClassID(CLSID* pClassID) = 0;
-};
-struct IPersistStream : public IPersist {
-    virtual HRESULT __stdcall IsDirty() = 0;
-    virtual HRESULT __stdcall Load(IStream* pStm) = 0;
-    virtual HRESULT __stdcall Save(IStream* pStm, BOOL fClearDirty) = 0;
-    virtual HRESULT __stdcall GetSizeMax(ULARGE_INTEGER* pcbSize) = 0;
-};
+struct IPersist;   // defined by its own reconstructed header
+struct IPersistStream;   // defined by its own reconstructed header
 struct ISequentialStream {
     virtual HRESULT __stdcall Read(void* pv, ULONG cb, ULONG* pcbRead) = 0;
     virtual HRESULT __stdcall Write(const void* pv, ULONG cb, ULONG* pcbWritten) = 0;
@@ -83,36 +92,18 @@ struct IClassFactory {
 struct IConnectionPoint {
     virtual HRESULT __stdcall _dummy_IConnectionPoint() = 0;
 };
-struct IConnectionPointContainer {
-    virtual HRESULT __stdcall _dummy_IConnectionPointContainer() = 0;
-};
+struct IConnectionPointContainer;   // defined by its own reconstructed header
 struct IEnumConnectionPoints {
     virtual HRESULT __stdcall _dummy_IEnumConnectionPoints() = 0;
 };
 struct IEnumConnections {
     virtual HRESULT __stdcall _dummy_IEnumConnections() = 0;
 };
-struct IRTTITypeInfo {
-    virtual int  __stdcall Get_RTTI() = 0;
-    virtual int  __stdcall Fetch_ID() = 0;
-    virtual void __stdcall Set_ID(int id) = 0;
-};
-struct IPiggyback {
-    virtual HRESULT __stdcall Begin_Piggyback(IStream* pStm) = 0;
-    virtual HRESULT __stdcall End_Piggyback(IStream* pStm) = 0;
-    virtual HRESULT __stdcall Is_Ok_To_End() = 0;
-    virtual HRESULT __stdcall Piggyback_Available() = 0;
-};
-struct ILocomotion {
-    virtual HRESULT __stdcall _dummy_ILocomotion() = 0;
-};
-struct IHouse {
-    virtual HRESULT __stdcall _dummy_IHouse() = 0;
-};
-struct IPublicHouse {
-    virtual HRESULT __stdcall _dummy_IPublicHouse() = 0;
-};
-
+struct IRTTITypeInfo;   // defined by its own reconstructed header
+struct IPiggyback;   // defined by its own reconstructed header
+struct ILocomotion;   // defined by its own reconstructed header
+struct IHouse;   // defined by its own reconstructed header
+struct IPublicHouse;   // defined by its own reconstructed header
 // --- WOL (Westwood Online) event interfaces --------------------------------
 namespace WOL {
     struct IChatEvent {
@@ -143,12 +134,8 @@ struct BounceClass {
 struct DiskSwap {
     virtual ~DiskSwap() {}
 };
-struct FlasherClass {
-    virtual ~FlasherClass() {}
-};
-struct StageClass {
-    virtual ~StageClass() {}
-};
+struct FlasherClass;   // defined by its own reconstructed header
+struct StageClass;   // defined by its own reconstructed header
 struct CDownloadEventSink {
     virtual ~CDownloadEventSink() {}
 };
@@ -157,9 +144,4 @@ struct CNetUtilEventSink {
 };
 
 // --- container node templates referenced as bases --------------------------
-template <class T, class Key>
-struct Node {
-    T* Next;
-    T* Prev;
-    Key ID;
-};
+// Node<T,Key> is defined by INIClass.h.

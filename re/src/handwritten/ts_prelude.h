@@ -16,6 +16,22 @@
 
 #include <windows.h>
 
+// --- UI layer --------------------------------------------------------------
+// GScreenClass has a vtable of its own and a constructor that stores at +0x4,
+// +0x8 and +0xc. It is defined here rather than by reconcile_prelude.py so the
+// three recovered offsets have a declaration the layout gate can assert;
+// reconcile_prelude.py's PRELUDE_ONLY step leaves an already-complete
+// definition alone.
+struct GScreenClass {
+    virtual ~GScreenClass() {}
+    virtual void _dummy_GScreen() {}
+    // Named m_FieldN, not m_NNN: curated_members() reads an m_<hex> identifier
+    // as this emitter's own machine text and skips it.
+    unsigned int m_Field4;   // +0x4 /* ? */; 4-byte store: mov dword ptr [esi + 4], eax
+    unsigned int m_Field8;   // +0x8 /* ? */; 4-byte store: mov dword ptr [esi + 8], ebx
+    unsigned int m_Fieldc;   // +0xc /* ? */; 4-byte store: mov dword ptr [esi + 0xc], ebx
+};
+
 // --- core geometry types (original: COORD.H / DEFINES.H) -------------------
 struct CoordStruct { int X, Y, Z; };
 struct CellStruct  { short X; short Y; };

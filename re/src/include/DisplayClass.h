@@ -18,6 +18,7 @@
 // ============================================================================
 
 #include "MapClass.h"
+#include "GadgetClass.h"
 #include "ts_prelude.h"   // gadget/UI bases (GScreenClass, GadgetClass, ...)
 
 class DisplayClass : public MapClass

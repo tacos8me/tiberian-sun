@@ -13,6 +13,7 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
+#include "ObjectTypeClass.h"
 
 class SideClass : public AbstractTypeClass
 {

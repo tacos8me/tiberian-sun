@@ -885,6 +885,22 @@ class DeclaredLayout:
             return []
         return sorted({r["off"] for r in (rec.get("members") or [])})
 
+    def recovered_any(self, key):
+        """Recovered offsets for `key`, or the union over its instantiations.
+
+        A template head (Node, VectorClass) has no members.json entry of its
+        own -- its offsets are recorded under each instantiation -- but a
+        derived class's base region is laid out by the template body, so a gap
+        in that body is filled from the union. Without this, INIClass::INIEntry
+        had nine recovered offsets inside Node's own pad and no declaration.
+        """
+        out = set(self.recovered(key))
+        b = self.body(key)
+        if b is not None:
+            for rtti in self.body_owners.get((b[0], b[1]), []):
+                out |= set(self.recovered(rtti))
+        return sorted(out)
+
     def base_note(self, key):
         """Human-readable evidence for the cursor, for the emitted comment."""
         _pos, parts = self._base_region(key)
@@ -1127,7 +1143,7 @@ def curated_gap(layout, rtti_class, lo, hi, ident, taken):
     marker so a re-run can find and replace it.
     """
     widths = layout.widths.get(rtti_class) or {}
-    marks = [o for o in layout.recovered(rtti_class) if lo <= o < hi]
+    marks = [o for o in layout.recovered_any(rtti_class) if lo <= o < hi]
     out = []
 
     def pad(size, before, at):
