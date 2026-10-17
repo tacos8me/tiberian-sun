@@ -349,6 +349,39 @@ def strip_leading_padding(bin_, va, limit):
         va += 1
     return va
 
+# The gap seeder works at a 16-byte minimum: most shorter gaps are the previous
+# function's alignment residue, and seeding them decodes padding. A short gap that
+# decodes to instructions filling it exactly and ending in a transfer is not
+# residue, and `short_gap_body` admits it. 0x6905b1 is the case that named this:
+# `push [0x834c60]; call [0x698108]; ret`, 13 bytes, no prologue, called by the
+# program and named by the code-pointer table at 0x6be3f0.
+GAP_MIN = 16
+
+
+def short_gap_body(md, bin_, a, b):
+    """True if a..b is exactly one prologue-less function and nothing else.
+
+    The test is byte-exact rather than heuristic: the sweep from the stripped gap
+    start must consume the gap to its last byte and stop on a control transfer. A
+    run of `nop`-form fill, a fragment of a table, or a body that would continue
+    past the gap all fail it, so the minimum stays in force for those.
+    """
+    s = strip_leading_padding(bin_, a, b)
+    if s >= b:
+        return False
+    sec = bin_.section_of(s)
+    off = sec["raw"] + (s - sec["va"])
+    end = s
+    last = None
+    for ins in md.disasm(bin_.data[off:off + (b - s)], s):
+        if ins.address + ins.size > b:
+            return False
+        last = ins
+        end = ins.address + ins.size
+        if ins.mnemonic in ("ret", "retn", "jmp"):
+            break
+    return (last is not None and end == b
+            and last.mnemonic in ("ret", "retn", "jmp"))
 
 # --- Residual .text: jump tables and padding --------------------------------
 #
@@ -542,11 +575,17 @@ def pointer_table_targets(bin_, funcs, iat):
     file and of stubs at run time, not code the program wrote down, and the
     0x698000..0x698580 block would otherwise dominate the result.
 
-    A candidate is also required to be an instruction boundary of the span that
-    contains it: the sweep already decoded an instruction there, so splitting
-    loses and duplicates nothing. Candidates that are not a boundary are returned
-    apart and reported -- they say the containing span's sweep is misaligned,
-    which is a defect in that span rather than a missing entry point.
+    A named VA that sits in a *gap* is admitted as well, and there the table is
+    the only evidence there is: no span covers those bytes, so nothing can be
+    split. 0x6be3f0 names 0x6905b1 -- `push [0x834c60]; call [0x698108]; ret`, a
+    13-byte leaf with no prologue -- which the gap seeder never reached because it
+    works at a 16-byte minimum. The boot calls it too.
+
+    A candidate inside a span is also required to be an instruction boundary of
+    that span: the sweep already decoded an instruction there, so splitting loses
+    and duplicates nothing. Candidates that are not a boundary are returned apart
+    and reported -- they say the containing span's sweep is misaligned, which is a
+    defect in that span rather than a missing entry point.
 
     Returns ({va: slot_va}, set_of_non_boundary_candidates).
     """
@@ -593,9 +632,7 @@ def pointer_table_targets(bin_, funcs, iat):
                     if va in starts:
                         continue
                     host = host_of(va)
-                    if not host:
-                        continue
-                    if is_boundary(host[0], va):
+                    if not host or is_boundary(host[0], va):
                         found.setdefault(va, sec["va"] + 4 * k)
                     else:
                         unbounded.add(va)
@@ -796,7 +833,7 @@ def recover(bin_, seeds, vtable_code):
             gaps.append((prev, text_end))
         progressed = False
         for a, b in gaps:
-            if b - a < 16:
+            if b - a < GAP_MIN and not short_gap_body(md, bin_, a, b):
                 continue
             s = strip_leading_padding(bin_, a, b)
             if s >= b or s in seen or s in gap_tried:
