@@ -644,6 +644,28 @@ inline const char *ts_root() {
     return (r && *r) ? r : "../gamedir";
 }
 
+// The CD is a second host root, because it is a second *drive* to the game.
+// GetCDClass (0x4a7600) scans c:..z: with GetDriveTypeA and keeps the letters
+// that answer DRIVE_CDROM; Force_CD_Available then requires one of them to
+// carry the volume label "TS%d" and to hold TS%d.dsk. TS_CD names the host
+// directory that stands in for that drive, and D: is the letter it is given.
+inline const char *ts_cd_root() {
+    const char *r = std::getenv("TS_CD");
+    return (r && *r) ? r : "";
+}
+enum { CD_DRIVE_INDEX = 3 };   // 'D'
+inline int drive_index_of(const char *path) {
+    if (path && path[0] && path[1] == ':') {
+        char c = path[0];
+        if (c >= 'a' && c <= 'z') c = (char)(c - 32);
+        if (c >= 'A' && c <= 'Z') return c - 'A';
+    }
+    return -1;
+}
+inline bool path_is_cd_drive(const char *path) {
+    return ts_cd_root()[0] && drive_index_of(path) == (int)CD_DRIVE_INDEX;
+}
+
 inline void model_rd(void *dst, u32 va, u32 n) {
     u8 *d = (u8 *)dst;
     for (u32 i = 0; i < n; ++i) d[i] = ld8(va + i);
@@ -677,16 +699,21 @@ inline bool resolve_ci(const char *dir, const char *want, char *out, size_t outn
     return ok;
 }
 
-// Map a Windows path to a host path under ts_root(). Strips a drive prefix and
-// any leading separators, then resolves each component case-insensitively.
+// Map a Windows path to a host path. A drive prefix selects the root: D: is
+// the CD when TS_CD names one, and every other drive is the install root.
+// Then each component is resolved case-insensitively.
 inline bool host_path(const char *win, char *out, size_t outn) {
     if (!win || !*win) return false;
     char buf[512];
     std::snprintf(buf, sizeof buf, "%s", win);
     char *p = buf;
-    if (p[0] && p[1] == ':') p += 2;
+    const char *base = ts_root();
+    if (p[0] && p[1] == ':') {
+        if (path_is_cd_drive(p)) base = ts_cd_root();
+        p += 2;
+    }
     while (*p == '\\' || *p == '/') ++p;
-    std::snprintf(out, outn, "%s", ts_root());
+    std::snprintf(out, outn, "%s", base);
     char *save = 0;
     for (char *tok = strtok_r(p, "\\/", &save); tok; tok = strtok_r(0, "\\/", &save)) {
         if (!*tok) continue;
@@ -1049,18 +1076,192 @@ TS_BEGIN(lstrcat)
 TS_END
 
 // -- resources ---------------------------------------------------------------
-TS_RET(FindResourceA, 3, 1u)   // a non-null HRSRC; nothing dereferences it
+// The game's dialog templates and its entire UI string table live in
+// LANGUAGE.DLL's .rsrc, not in GAME.EXE (GAME.EXE has two dialogs; LANGUAGE.DLL
+// has 60, including 206 -- the message box -- and 240). The old stub returned a
+// non-null zero block, so every DLGTEMPLATE had cdit=0 and every LoadStringA
+// failed: the game's message boxes had no text and no buttons. This reads the
+// module's own resource directory from the file the model opened for it, so
+// the control IDs and the strings are the shipped ones.
+//
+// The tree is IMAGE_RESOURCE_DIRECTORY (type -> name -> language); every entry
+// offset is relative to the resource directory's RVA. Only integer IDs are
+// matched -- every resource this binary asks for by ID is one.
+struct ResImage {
+    u8 *data; u32 size;
+    u32 res_rva;
+    unsigned nsec;
+    u32 sec_va[16], sec_vs[16], sec_raw[16], sec_rs[16];
+    char name[64];
+};
+inline ResImage *res_images() { static ResImage r[4]; return r; }
+inline unsigned &res_image_n() { static unsigned n = 0; return n; }
+
+inline u32 res_rd16(const u8 *p) { return (u32)p[0] | ((u32)p[1] << 8); }
+inline u32 res_rd32(const u8 *p) {
+    return (u32)p[0] | ((u32)p[1] << 8) | ((u32)p[2] << 16) | ((u32)p[3] << 24);
+}
+
+// The handle -> module name lookup is defined with the module table below.
+inline const char *module_name_of(u32 handle);
+
+inline u32 res_off(const ResImage *im, u32 rva) {
+    for (unsigned i = 0; i < im->nsec; ++i) {
+        u32 span = im->sec_vs[i] > im->sec_rs[i] ? im->sec_vs[i] : im->sec_rs[i];
+        if (rva >= im->sec_va[i] && rva < im->sec_va[i] + span) {
+            u32 off = im->sec_raw[i] + (rva - im->sec_va[i]);
+            return off < im->size ? off : 0xffffffffu;
+        }
+    }
+    return 0xffffffffu;
+}
+
+inline ResImage *res_load(const char *module) {
+    if (!module || !*module) return 0;
+    for (unsigned i = 0; i < res_image_n(); ++i)
+        if (!std::strcmp(res_images()[i].name, module)) return &res_images()[i];
+    if (res_image_n() >= 4u) return 0;
+    char hp[512];
+    if (!host_path(module, hp, sizeof hp)) return 0;
+    std::FILE *f = std::fopen(hp, "rb");
+    if (!f) return 0;
+    std::fseek(f, 0, SEEK_END);
+    long sz = std::ftell(f);
+    std::fseek(f, 0, SEEK_SET);
+    if (sz < 0x40) { std::fclose(f); return 0; }
+    u8 *d = (u8 *)std::malloc((size_t)sz);
+    if (!d) { std::fclose(f); return 0; }
+    if (std::fread(d, 1, (size_t)sz, f) != (size_t)sz) {
+        std::free(d); std::fclose(f); return 0;
+    }
+    std::fclose(f);
+    u32 pe = res_rd32(d + 0x3c);
+    if (pe + 24u > (u32)sz || res_rd32(d + pe) != 0x00004550u) {
+        std::free(d); return 0;
+    }
+    unsigned nsec = res_rd16(d + pe + 6);
+    unsigned optsz = res_rd16(d + pe + 20);
+    u32 opt = pe + 24u;
+    u32 magic = res_rd16(d + opt);
+    u32 dd = opt + (magic == 0x10bu ? 96u : 112u);
+    u32 rrva = res_rd32(d + dd + 16u);
+    if (nsec > 16u) nsec = 16u;
+    ResImage &im = res_images()[res_image_n()];
+    im.data = d; im.size = (u32)sz; im.res_rva = rrva; im.nsec = nsec;
+    u32 st = opt + optsz;
+    for (unsigned i = 0; i < nsec; ++i) {
+        u32 o = st + i * 40u;
+        im.sec_vs[i] = res_rd32(d + o + 8u);
+        im.sec_va[i] = res_rd32(d + o + 12u);
+        im.sec_rs[i] = res_rd32(d + o + 16u);
+        im.sec_raw[i] = res_rd32(d + o + 20u);
+    }
+    unsigned j = 0;
+    for (; module[j] && j + 1u < sizeof(im.name); ++j) im.name[j] = module[j];
+    im.name[j] = 0;
+    res_image_n() = res_image_n() + 1u;
+    return &im;
+}
+
+inline u32 res_find_entry(ResImage *im, u32 dir, u32 id, bool any) {
+    const u8 *d = im->data;
+    if (dir + 16u > im->size) return 0u;
+    unsigned n = res_rd16(d + dir + 12u) + res_rd16(d + dir + 14u);
+    for (unsigned i = 0; i < n; ++i) {
+        u32 e = dir + 16u + i * 8u;
+        if (e + 8u > im->size) return 0u;
+        if (!any) {
+            u32 nm = res_rd32(d + e);
+            if (nm & 0x80000000u) continue;   // a named entry, not an integer ID
+            if (nm != id) continue;
+        }
+        return e;
+    }
+    return 0u;
+}
+
+inline bool res_lookup(ResImage *im, u32 type_id, u32 name_id,
+                       u32 *out_rva, u32 *out_size) {
+    u32 base = res_off(im, im->res_rva);
+    if (base == 0xffffffffu) return false;
+    u32 e = res_find_entry(im, base, type_id, false);
+    if (!e) return false;
+    u32 off = res_rd32(im->data + e + 4u);
+    if (!(off & 0x80000000u)) return false;   // a type is a directory
+    u32 dir = base + (off & 0x7fffffffu);
+    e = res_find_entry(im, dir, name_id, false);
+    if (!e) return false;
+    off = res_rd32(im->data + e + 4u);
+    u32 de;
+    if (off & 0x80000000u) {
+        dir = base + (off & 0x7fffffffu);
+        e = res_find_entry(im, dir, 0u, true);   // first language
+        if (!e) return false;
+        off = res_rd32(im->data + e + 4u);
+        if (off & 0x80000000u) return false;
+    }
+    de = base + off;
+    if (de + 16u > im->size) return false;
+    *out_rva = res_rd32(im->data + de);
+    *out_size = res_rd32(im->data + de + 4u);
+    return true;
+}
+
+struct ResHandle { u32 magic; u32 module; u32 rva; u32 size; };
+enum { RES_HANDLE_MAGIC = 0x52535243u };   // "RSRC"
+
+TS_BEGIN(FindResourceA)
+    // FindResourceA(hModule, lpName, lpType). An integer resource ID is passed
+    // as a small value cast to a pointer, which is how FUN_0046ed10 asks for
+    // RT_DIALOG 206; anything at or above 0x10000 is a string pointer, and no
+    // caller here uses one.
+    u32 hmod = arg(0), name = arg(1), type = arg(2);
+    const char *mn = module_name_of(hmod);
+    ResImage *im = mn ? res_load(mn) : 0;
+    u32 rva = 0u, size = 0u;
+    if (!im || name >= 0x10000u || type >= 0x10000u ||
+        !res_lookup(im, type, name, &rva, &size)) {
+        stub_done(3, 0u);
+        return;
+    }
+    u32 h = alloc_block(16u, 4u);
+    st32(h + 0u, (u32)RES_HANDLE_MAGIC);
+    st32(h + 4u, hmod);
+    st32(h + 8u, rva);
+    st32(h + 12u, size);
+    stub_done(3, h);
+TS_END
 
 TS_BEGIN(LoadResource)
-    static u32 block = 0;
-    if (!block) block = zero_block(4096u, 4u);
-    stub_done(2, block);
+    // The resource's bytes, copied into model memory. Nothing is freed: a
+    // dialog template must stay valid for as long as the dialog lives, and the
+    // bump allocator is the model's lifetime.
+    u32 hp = arg(1);
+    if (!hp || ld32(hp) != (u32)RES_HANDLE_MAGIC) { stub_done(2, 0u); return; }
+    const char *mn = module_name_of(ld32(hp + 4u));
+    ResImage *im = mn ? res_load(mn) : 0;
+    u32 off = im ? res_off(im, ld32(hp + 8u)) : 0xffffffffu;
+    u32 size = ld32(hp + 12u);
+    if (!im || off == 0xffffffffu || off + size > im->size) {
+        stub_done(2, 0u);
+        return;
+    }
+    u32 dst = alloc_block(size ? size : 1u, 4u);
+    for (u32 i = 0; i < size; ++i) st8(dst + i, im->data[off + i]);
+    stub_done(2, dst);
 TS_END
 
 TS_BEGIN(LockResource) stub_done(1, arg(0)); TS_END
 
 // -- drives, volumes, filesystem information ---------------------------------
-TS_RET(GetDriveTypeA, 1, 3u)   // DRIVE_FIXED
+TS_BEGIN(GetDriveTypeA)
+    // GetCDClass (0x4a7600) finds the CD by asking this for every letter, and
+    // Force_CD_Available (0x4dc670) then requires the answer to carry the
+    // label "TS%d" and to hold TS%d.dsk. Reporting DRIVE_CDROM for the drive
+    // backed by TS_CD is what lets the game see its disc; every other drive is
+    // a fixed disk.
+    stub_done(1, path_is_cd_drive(ld_cstr(arg(0))) ? 5u : 3u);   // DRIVE_CDROM / DRIVE_FIXED
+TS_END
 
 TS_BEGIN(GetDiskFreeSpaceA)
     st32(arg(1), 0x10000u); st32(arg(2), 512u);
@@ -1069,14 +1270,29 @@ TS_BEGIN(GetDiskFreeSpaceA)
 TS_END
 
 TS_BEGIN(GetLogicalDriveStringsA)
-    u32 buf = arg(1);
-    if (buf) { st8(buf, 'C'); st8(buf + 1u, ':'); st8(buf + 2u, '\\'); st8(buf + 3u, 0); st8(buf + 4u, 0); }
-    stub_done(2, 4u);
+    // "C:\D:\" when a CD is configured. FUN_00647a70 walks this list and
+    // checks every DRIVE_CDROM entry for the Tiberian Sun label.
+    u32 buf = arg(1), cch = arg(0), n = 4u;
+    if (buf && cch >= 4u) {
+        st8(buf, 'C'); st8(buf + 1u, ':'); st8(buf + 2u, '\\'); st8(buf + 3u, 0);
+        if (ts_cd_root()[0]) {
+            if (cch >= 8u) {
+                st8(buf + 4u, 'D'); st8(buf + 5u, ':'); st8(buf + 6u, '\\'); st8(buf + 7u, 0);
+                n = 8u;
+            }
+        }
+        st8(buf + n, 0);
+    }
+    stub_done(2, n);
 TS_END
 
 TS_BEGIN(GetVolumeInformationA)
+    // The volume label is what identifies the disc: the game formats "TS%d"
+    // and compares it with this answer before it will use the drive. Only the
+    // CD root carries that label; a fixed drive gets a neutral one.
     u32 name = arg(1);
-    if (name) c_strcpy(name, lit("TSVOL"));
+    const char *label = path_is_cd_drive(ld_cstr(arg(0))) ? "TS1" : "TSVOL";
+    if (name) c_strcpy(name, lit(label));
     stub_done(8, 1u);
 TS_END
 TS_RET(SetVolumeLabelA, 2, 1u)
@@ -1160,7 +1376,10 @@ TS_RET(SetupComm, 3, 1u)
 // message a run sees is one the program posted to itself, which is exactly the
 // set the program can be expected to handle.
 
-enum { MAX_WINDOWS = 32, MAX_CLASSES = 16, MAX_MSGS = 128 };
+// 128 slots, not 32: a dialog owns its controls as window records too, and the
+// game creates and destroys a dialog per message box. A slot is freed by
+// DestroyWindow, which also frees the dialog's children.
+enum { MAX_WINDOWS = 128, MAX_CLASSES = 16, MAX_MSGS = 128 };
 
 // The screen this model reports, and the single value every geometry answer is
 // derived from: GetSystemMetrics, GetClientRect, the created window's size and
@@ -1175,13 +1394,40 @@ enum { IDLE_POLLS = 64 };
 
 struct WinRec {
     u32 hwnd;        // 0 marks a free slot
-    u32 proc;        // GWL_WNDPROC
+    u32 proc;        // GWL_WNDPROC (a dialog's DLGPROC lives here too)
     u32 userdata;    // GWL_USERDATA: where a program stores its `this`
     u32 style, exstyle, parent, id, atom, shown;
+    u32 enabled;     // EnableWindow state; a disabled control refuses input
+    u32 is_dialog;   // created by CreateDialog*, so messages go to `proc`
+    u32 has_template;  // controls came from the DLGTEMPLATE, not lazily
+    u8  extra[64];   // window extra bytes: DWLP_MSGRESULT 0, DLGPROC 4, USER 8
     i32 x, y, cx, cy;   // window rect, in screen coordinates
     char text[64];
 };
 inline WinRec *wins() { static WinRec w[MAX_WINDOWS]; return w; }
+
+// Dialogs and controls get their own handle range: 0x0002xxxx. The main
+// window's range is 0x0001xxxx (CreateWindowExA), and 0x0003xxxx is a device
+// context. A handle only ever has to be distinct and stable, but keeping the
+// ranges apart makes a trace readable.
+inline u32 &win_handle_serial() { static u32 s = 0; return s; }
+inline u32 new_win_handle() { return 0x00020001u + (win_handle_serial()++); }
+
+inline void win_zero_extra(WinRec *w) {
+    for (unsigned i = 0; i < sizeof(w->extra); ++i) w->extra[i] = 0;
+}
+inline u32 win_extra_get(WinRec *w, u32 off) {
+    if (!w || off + 4u > sizeof(w->extra)) return 0u;
+    return (u32)w->extra[off] | ((u32)w->extra[off + 1u] << 8) |
+           ((u32)w->extra[off + 2u] << 16) | ((u32)w->extra[off + 3u] << 24);
+}
+inline void win_extra_set(WinRec *w, u32 off, u32 v) {
+    if (!w || off + 4u > sizeof(w->extra)) return;
+    w->extra[off] = (u8)v;
+    w->extra[off + 1u] = (u8)(v >> 8);
+    w->extra[off + 2u] = (u8)(v >> 16);
+    w->extra[off + 3u] = (u8)(v >> 24);
+}
 
 struct ClassRec { u32 atom; u32 proc; char name[48]; };
 inline ClassRec *classes() { static ClassRec c[MAX_CLASSES]; return c; }
@@ -1255,6 +1501,84 @@ inline void msg_fill(u32 p, const MsgRec &m) {
     st32(p + 20u, 0u);
     st32(p + 24u, 0u);
 }
+
+// -- dialogs ----------------------------------------------------------------
+// A dialog is a window whose procedure is a DLGPROC and whose controls are
+// child windows. The template is the module's own RT_DIALOG resource, read from
+// the DLL on disk (see module_resources below), so the control IDs are the
+// shipped ones and a GetDlgItem for an ID the template does not declare
+// answers 0 exactly as Windows does.
+inline void win_copy_w(char *dst, unsigned cap, u32 src) {
+    unsigned i = 0;
+    if (src) for (; i + 1u < cap && ld16(src + i * 2u); ++i)
+        dst[i] = (char)(ld16(src + i * 2u) & 0xffu);
+    dst[i] = 0;
+}
+
+inline WinRec *win_child_find(u32 parent, u32 id) {
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i) {
+        WinRec &w = wins()[i];
+        if (w.hwnd && w.parent == parent && w.id == id) return &w;
+    }
+    return 0;
+}
+
+inline WinRec *win_child_new(u32 parent, u32 id) {
+    WinRec *w = win_alloc();
+    if (!w) return 0;
+    w->hwnd = new_win_handle();
+    w->proc = 0u; w->userdata = 0u;
+    w->style = 0u; w->exstyle = 0u;
+    w->parent = parent; w->id = id; w->atom = 0u;
+    w->shown = 0u; w->enabled = 1u; w->is_dialog = 0u; w->has_template = 0u;
+    win_zero_extra(w);
+    w->x = w->y = w->cx = w->cy = 0;
+    w->text[0] = 0;
+    return w;
+}
+
+// GetDlgItem's answer: an existing control of this dialog, or (for a dialog
+// whose template was not available) a stable handle allocated on demand. A
+// dialog with a parsed template answers 0 for an ID it does not declare, which
+// is what the real API does and what a caller testing for an optional control
+// relies on.
+inline u32 dlg_item(u32 hdlg, u32 id) {
+    WinRec *d = win_find(hdlg);
+    if (!d) return 0u;
+    WinRec *c = win_child_find(hdlg, id);
+    if (c) return c->hwnd;
+    if (d->has_template) return 0u;
+    c = win_child_new(hdlg, id);
+    return c ? c->hwnd : 0u;
+}
+
+// The default button a scripted click presses: IDOK when the template declares
+// it, else the button whose text is "OK", else nothing. A dialog with only a
+// Cancel button (a progress window) is deliberately not clicked: cancelling it
+// would be a different program, not this one.
+inline u32 dlg_default_button(u32 hdlg) {
+    u32 fallback = 0u;
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i) {
+        WinRec &w = wins()[i];
+        if (!w.hwnd || w.parent != hdlg) continue;
+        if (w.atom != 0x80u && w.atom != 0u) continue;   // 0x80 = "Button"
+        if (w.id == 1u) return 1u;
+        if (!fallback) fallback = w.id;
+        const char *t = w.text;
+        if ((t[0] == 'O' || t[0] == 'o') && (t[1] == 'K' || t[1] == 'k') && !t[2])
+            return w.id;
+    }
+    // An untemplated dialog has no text to recognise; IDOK is the only safe
+    // guess and only when a control with that id was actually asked for.
+    WinRec *c = win_child_find(hdlg, 1u);
+    if (c) return 1u;
+    (void)fallback;
+    return 0u;
+}
+
+// Focus and foreground are single handles, as they are on one desktop.
+inline u32 &focus_handle() { static u32 h = 0; return h; }
+inline u32 &foreground_handle() { static u32 h = 0; return h; }
 
 // Call the program's own window procedure. The game's wndproc is recovered
 // code, so it is entered as a __stdcall callee: arguments right to left, a
@@ -1344,6 +1668,10 @@ TS_BEGIN(CreateWindowExA)
         w->id = id;
         w->atom = atom;
         w->shown = 0u;
+        w->enabled = 1u;
+        w->is_dialog = 0u;
+        w->has_template = 0u;
+        win_zero_extra(w);
         w->x = x; w->y = y; w->cx = cx; w->cy = cy;
         win_copy(w->text, sizeof(w->text), title);
         if (!wnd_handle()) wnd_handle() = h;
@@ -1599,15 +1927,35 @@ TS_RET(ValidateRect, 2, 1u)
 TS_RET(RedrawWindow, 5, 1u)
 
 TS_BEGIN(IsWindow) stub_done(1, win_find(arg(0)) ? 1u : 0u); TS_END
-TS_RET(IsWindowEnabled, 1, 1u)
-TS_RET(EnableWindow, 2, 1u)
+
+TS_BEGIN(IsWindowEnabled)
+    WinRec *w = win_find(arg(0));
+    stub_done(1, (w && w->enabled) ? 1u : 0u);
+TS_END
+
+TS_BEGIN(EnableWindow)
+    // The previous state is the return value, and a disabled control refuses
+    // input: a program that disables a button and re-enables it later reads
+    // both transitions back.
+    u32 hwnd = arg(0), enable = arg(1);
+    WinRec *w = win_find(hwnd);
+    u32 prev = 0u;
+    if (w) { prev = w->enabled; w->enabled = enable ? 1u : 0u; }
+    stub_done(2, prev);
+TS_END
 
 TS_BEGIN(DestroyWindow)
+    // A dialog owns its controls: destroying it frees their slots too, or the
+    // game's message-box loop exhausts the table after a few dozen boxes.
     u32 hwnd = arg(0);
     WinRec *w = win_find(hwnd);
     if (w) {
+        for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
+            if (wins()[i].hwnd && wins()[i].parent == hwnd) wins()[i].hwnd = 0u;
         w->hwnd = 0u;
         if (wnd_handle() == hwnd) wnd_handle() = 0u;
+        if (focus_handle() == hwnd) focus_handle() = 0u;
+        if (foreground_handle() == hwnd) foreground_handle() = 0u;
         stub_done(1, 1u);
     } else {
         stub_done(1, 0u);
@@ -1639,11 +1987,27 @@ TS_BEGIN(SetWindowPos)
 TS_END
 
 TS_BEGIN(SetActiveWindow)  stub_done(1, wnd_handle()); TS_END
-TS_RET(SetForegroundWindow, 1, 1u)
-TS_BEGIN(GetForegroundWindow) stub_done(0, wnd_handle()); TS_END
+TS_BEGIN(SetForegroundWindow)
+    // The handle is remembered: a dialog that asks whether it is the
+    // foreground window after asking to become it must be told yes.
+    foreground_handle() = arg(0) ? arg(0) : wnd_handle();
+    stub_done(1, 1u);
+TS_END
+TS_BEGIN(GetForegroundWindow)
+    stub_done(0, foreground_handle() ? foreground_handle() : wnd_handle());
+TS_END
 TS_BEGIN(GetActiveWindow)     stub_done(0, wnd_handle()); TS_END
-TS_BEGIN(GetFocus)            stub_done(0, wnd_handle()); TS_END
-TS_BEGIN(SetFocus)            stub_done(1, wnd_handle()); TS_END
+TS_BEGIN(GetFocus)
+    stub_done(0, focus_handle() ? focus_handle() : wnd_handle());
+TS_END
+TS_BEGIN(SetFocus)
+    // Returns the window that had focus. A dialog's WM_INITDIALOG ends by
+    // focusing one of its controls, and the answer is read back.
+    u32 prev = focus_handle();
+    WinRec *w = win_find(arg(0));
+    focus_handle() = w ? w->hwnd : 0u;
+    stub_done(1, prev);
+TS_END
 TS_BEGIN(GetCapture)          stub_done(0, wnd_handle()); TS_END
 TS_BEGIN(SetCapture)          stub_done(1, wnd_handle()); TS_END
 TS_RET(ReleaseCapture, 0, 1u)
@@ -1686,13 +2050,65 @@ TS_BEGIN(FindWindowA)
     stub_done(2, found);
 TS_END
 
-TS_RET(EnumChildWindows, 3, 1u)
+TS_BEGIN(EnumChildWindows)
+    // Call the program's callback for every child of hwndParent, in table
+    // order. A dialog's WM_INITDIALOG enumerates its controls to build its
+    // own record of them, so an enumeration that calls nothing leaves that
+    // record empty. A callback that returns 0 stops the walk.
+    u32 parent = arg(0), cb = arg(1), lp = arg(2), r = 1u;
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i) {
+        u32 child = wins()[i].hwnd;
+        if (!child || wins()[i].parent != parent) continue;
+        if (!cb) continue;
+        u32 sp = ESP.d;
+        push32(lp);
+        push32(child);
+        ts_call_at(cb, 0x00fed000u);
+        u32 keep = EAX.d;
+        ESP.d = sp;
+        if (!keep) { r = 0u; break; }
+    }
+    stub_done(3, r);
+TS_END
 TS_RET(GetMenu, 1, 0x00060001u)
 TS_RET(GetWindowContextHelpId, 1, 0u)
 TS_RET(WaitForInputIdle, 2, 0u)
 TS_RET(TranslateAccelerator, 3, 0u)
 TS_RET(WinHelpA, 4, 1u)
-TS_RET(LoadStringA, 4, 0u)
+TS_BEGIN(LoadStringA)
+    // LoadStringA(hInstance, uID, lpBuffer, cchBufferMax). RT_STRING is a
+    // table of blocks of 16 strings; block id = id/16 + 1, and each string is
+    // a WORD length followed by that many UTF-16 code units (no terminator).
+    // The game's UI text is ASCII, so the ANSI form is the low byte.
+    u32 hmod = arg(0), id = arg(1), buf = arg(2), cch = arg(3);
+    const char *mn = module_name_of(hmod);
+    ResImage *im = mn ? res_load(mn) : 0;
+    u32 rva = 0u, size = 0u, n = 0u;
+    if (im && res_lookup(im, 6u, id / 16u + 1u, &rva, &size)) {
+        u32 off = res_off(im, rva);
+        if (off != 0xffffffffu) {
+            const u8 *d = im->data;
+            u32 p = off, end = off + size;
+            for (u32 k = 0; k < 16u && p + 2u <= end; ++k) {
+                u32 len = res_rd16(d + p);
+                p += 2u;
+                if (p + len * 2u > end) break;
+                if (k == id % 16u) {
+                    if (buf && cch) {
+                        u32 j = 0;
+                        for (; j + 1u < cch && j < len; ++j)
+                            st8(buf + j, (u8)(res_rd16(d + p + j * 2u) & 0xffu));
+                        st8(buf + j, 0u);
+                        n = j;
+                    }
+                    break;
+                }
+                p += len * 2u;
+            }
+        }
+    }
+    stub_done(4, n);
+TS_END
 TS_RET(GetUpdateRect, 3, 1u)
 TS_RET(GetAsyncKeyState, 1, 0u)
 TS_RET(GetKeyState, 1, 0u)
@@ -1731,14 +2147,202 @@ TS_BEGIN(SetWindowTextA)
     else stub_done(2, 0u);
 TS_END
 
-TS_RET(SetDlgItemTextA, 3, 1u)
-TS_RET(GetDlgItemTextA, 4, 0u)
-TS_RET(SendDlgItemMessageA, 5, 0u)
-TS_RET(EndDialog, 2, 1u)
-TS_RET(IsDialogMessage, 2, 0u)
-TS_RET(GetDlgItem, 2, 0x00010003u)
-TS_RET(GetNextDlgTabItem, 3, 0x00010003u)
-TS_RET(GetDlgCtrlID, 1, 1u)
+// A variable-length DLGTEMPLATE/DLGITEMTEMPLATE field: 0 means absent, 0xffff
+// means an ordinal (one more WORD), otherwise a NUL-terminated UTF-16 string.
+inline u32 dlg_var_end(u32 p) {
+    u16 v = (u16)ld16(p);
+    if (v == 0u) return p + 2u;
+    if (v == 0xffffu) return p + 4u;
+    while (ld16(p)) p += 2u;
+    return p + 2u;
+}
+
+// Create the dialog's window record and the controls its DLGTEMPLATE declares.
+// The template is the shipped RT_DIALOG resource (see the resource reader), so
+// the IDs, classes and styles are the original ones. Returns 0 when the window
+// table is full.
+inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
+    WinRec *d = win_alloc();
+    if (!d) return 0u;
+    u32 style = 0x40u, exstyle = 0u, cdit = 0u;
+    i32 x = 0, y = 0, cx = 0, cy = 0;
+    if (tpl) {
+        style = ld32(tpl);
+        exstyle = ld32(tpl + 4u);
+        cdit = ld16(tpl + 8u);
+        x = (i32)(i16)ld16(tpl + 10u);
+        y = (i32)(i16)ld16(tpl + 12u);
+        cx = (i32)(i16)ld16(tpl + 14u);
+        cy = (i32)(i16)ld16(tpl + 16u);
+    }
+    d->hwnd = new_win_handle();
+    d->proc = proc;
+    d->userdata = 0u;
+    d->style = style;
+    d->exstyle = exstyle;
+    d->parent = parent;
+    d->id = 0u;
+    d->atom = 0u;
+    d->shown = 0u;
+    d->enabled = 1u;
+    d->is_dialog = 1u;
+    d->has_template = cdit ? 1u : 0u;
+    win_zero_extra(d);
+    d->x = x; d->y = y; d->cx = cx; d->cy = cy;
+    d->text[0] = 0;
+    u32 h = d->hwnd;
+
+    if (tpl && cdit) {
+        u32 p = tpl + 18u;
+        p = dlg_var_end(p);          // menu
+        p = dlg_var_end(p);          // window class
+        p = dlg_var_end(p);          // title
+        if (style & 0x40u) {         // DS_SETFONT: point size + typeface
+            p += 2u;
+            while (ld16(p)) p += 2u;
+            p += 2u;
+        }
+        for (u32 k = 0; k < cdit; ++k) {
+            p = (p + 3u) & ~3u;
+            u32 cstyle = ld32(p);
+            u32 cexstyle = ld32(p + 4u);
+            i32 ccx = (i32)(i16)ld16(p + 8u);
+            i32 ccy = (i32)(i16)ld16(p + 10u);
+            i32 ccxx = (i32)(i16)ld16(p + 12u);
+            i32 ccyy = (i32)(i16)ld16(p + 14u);
+            u32 cid = ld16(p + 16u);
+            u32 q = p + 18u;
+            u32 catom = 0u;
+            u16 cv = (u16)ld16(q);
+            if (cv == 0xffffu) { catom = ld16(q + 2u); q += 4u; }
+            else if (cv == 0u) q += 2u;
+            else q = dlg_var_end(q);
+            char ctext[64];
+            ctext[0] = 0;
+            u16 tv = (u16)ld16(q);
+            if (tv == 0xffffu) q += 4u;
+            else if (tv == 0u) q += 2u;
+            else { win_copy_w(ctext, sizeof ctext, q); q = dlg_var_end(q); }
+            u16 cextra = (u16)ld16(q);
+            p = q + 2u + cextra;
+            WinRec *c = win_child_new(h, cid);
+            if (!c) break;
+            c->style = cstyle;
+            c->exstyle = cexstyle;
+            c->atom = catom;
+            c->shown = (cstyle & 0x10000000u) ? 1u : 0u;   // WS_VISIBLE
+            c->x = ccx; c->y = ccy; c->cx = ccxx; c->cy = ccyy;
+            for (unsigned t = 0; t + 1u < sizeof(c->text) && ctext[t]; ++t)
+                c->text[t] = ctext[t];
+        }
+    }
+
+    // The real API sends WM_INITDIALOG before it returns, and a dialog that
+    // initialises its controls there expects to have run. wParam is the control
+    // that takes the default focus (0 here) and lParam is dwInitParam.
+    call_wndproc(proc, h, 0x0110u, 0u, init);
+
+    // A scripted input source: press the dialog's default button. The command
+    // is queued, not delivered here, so the game's own PeekMessage/GetMessage/
+    // DispatchMessage loop carries it to the dialog procedure.
+    u32 btn = dlg_default_button(h);
+    if (btn) msg_push(h, 0x0111u, btn, dlg_item(h, btn));
+    return h;
+}
+
+TS_BEGIN(SetDlgItemTextA)
+    u32 h = dlg_item(arg(0), arg(1));
+    WinRec *w = win_find(h);
+    if (w) { win_copy(w->text, sizeof(w->text), arg(2)); stub_done(3, 1u); }
+    else stub_done(3, 0u);
+TS_END
+
+TS_BEGIN(GetDlgItemTextA)
+    u32 h = dlg_item(arg(0), arg(1)), buf = arg(2), cch = arg(3), n = 0;
+    WinRec *w = win_find(h);
+    const char *src = w ? w->text : "";
+    while (src[n]) ++n;
+    if (buf && cch) {
+        u32 i = 0;
+        for (; i + 1u < cch && src[i]; ++i) st8(buf + i, (u8)src[i]);
+        st8(buf + i, 0u);
+    }
+    stub_done(4, n);
+TS_END
+
+TS_BEGIN(SendDlgItemMessageA)
+    // The control messages a dialog's own code sends: text, and a button's
+    // check state. Everything else answers 0, which is what a control with no
+    // such message returns.
+    u32 h = dlg_item(arg(0), arg(1)), msg = arg(2), wp = arg(3), lp = arg(4), r = 0u;
+    WinRec *w = win_find(h);
+    if (w) {
+        if (msg == 0x000cu) {                       // WM_SETTEXT
+            win_copy(w->text, sizeof(w->text), lp);
+            r = 1u;
+        } else if (msg == 0x000du) {                // WM_GETTEXT
+            u32 n = 0;
+            while (w->text[n]) ++n;
+            if (lp) {
+                u32 i = 0;
+                for (; i + 1u < wp && w->text[i]; ++i) st8(lp + i, (u8)w->text[i]);
+                st8(lp + i, 0u);
+            }
+            r = n;
+        } else if (msg == 0x000eu) {                // WM_GETTEXTLENGTH
+            while (w->text[r]) ++r;
+        } else if (msg == 0x00f1u) {                // BM_SETCHECK
+            w->extra[0] = (u8)wp;
+        } else if (msg == 0x00f0u) {                // BM_GETCHECK
+            r = w->extra[0];
+        }
+    }
+    stub_done(5, r);
+TS_END
+
+TS_BEGIN(EndDialog)
+    // Destroy the dialog and its controls. The result is not kept: this model
+    // has no modal loop that would read it.
+    u32 h = arg(0);
+    WinRec *w = win_find(h);
+    if (w) {
+        for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
+            if (wins()[i].hwnd && wins()[i].parent == h) wins()[i].hwnd = 0u;
+        w->hwnd = 0u;
+    }
+    stub_done(2, 1u);
+TS_END
+
+TS_BEGIN(IsDialogMessage)
+    // The scripted input is a WM_COMMAND, not a keystroke, so the dialog
+    // manager has nothing to translate and must let the message through to
+    // DispatchMessageA. Answering 1 here would swallow the command.
+    (void)arg(0); (void)arg(1);
+    stub_done(2, 0u);
+TS_END
+
+TS_BEGIN(GetDlgItem)
+    stub_done(2, dlg_item(arg(0), arg(1)));
+TS_END
+
+TS_BEGIN(GetNextDlgTabItem)
+    // The next control of the same dialog after hctl, in table order.
+    u32 hdlg = arg(0), hctl = arg(1);
+    u32 r = 0u;
+    bool after = (hctl == 0u);
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS && !r; ++i) {
+        WinRec &w = wins()[i];
+        if (!w.hwnd || w.parent != hdlg) continue;
+        if (after) r = w.hwnd;
+        if (w.hwnd == hctl) after = true;
+    }
+    stub_done(3, r);
+TS_END
+
+TS_BEGIN(GetDlgCtrlID)
+    WinRec *w = win_find(arg(0));
+    stub_done(1, w ? w->id : 0u);
+TS_END
 
 TS_BEGIN(MessageBoxA)
     // A message box is the program telling a human why it is about to stop.
@@ -1760,14 +2364,53 @@ TS_END
 
 TS_RET(MessageBoxIndirectA, 1, 1u)
 
+// The DLGTEMPLATE a dialog-name API asks for, copied into model memory from
+// the module's RT_DIALOG resource. Returns 0 when the module has no such
+// template -- the caller then takes its real failure path instead of being
+// handed a zeroed block that reads as a dialog with no controls.
+inline u32 dialog_template_by_id(u32 hinst, u32 name) {
+    const char *mn = module_name_of(hinst);
+    ResImage *im = mn ? res_load(mn) : 0;
+    u32 rva = 0u, size = 0u;
+    if (!im || name >= 0x10000u || !res_lookup(im, 5u, name, &rva, &size)) return 0u;
+    u32 off = res_off(im, rva);
+    if (off == 0xffffffffu) return 0u;
+    u32 dst = alloc_block(size ? size : 1u, 4u);
+    for (u32 i = 0; i < size; ++i) st8(dst + i, im->data[off + i]);
+    return dst;
+}
+
 TS_BEGIN(DialogBoxParamA)
-    std::printf("win32stubs: DialogBoxParamA(0x%08x, \"%s\") -> IDOK "
-                "(no dialog is created)\n", arg(0), ld_cstr(arg(1)));
+    // A modal dialog would block inside this call until EndDialog; the game's
+    // observed startup path uses CreateDialog*, so this creates the dialog (so
+    // WM_INITDIALOG runs) and answers IDOK without a modal loop.
+    u32 hinst = arg(0), name = arg(1), parent = arg(2), proc = arg(3), init = arg(4);
+    u32 tpl = dialog_template_by_id(hinst, name);
+    u32 h = tpl ? dialog_create(tpl, parent, proc, init) : 0u;
+    if (h) {
+        WinRec *w = win_find(h);
+        if (w) {
+            for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
+                if (wins()[i].hwnd && wins()[i].parent == h) wins()[i].hwnd = 0u;
+            w->hwnd = 0u;
+        }
+    }
     stub_done(5, 1u);
 TS_END
 TS_RET(DialogBoxIndirectParamA, 5, 1u)
-TS_RET(CreateDialogParamA, 5, 0x00010002u)
-TS_RET(CreateDialogIndirectParamA, 5, 0x00010002u)
+
+TS_BEGIN(CreateDialogParamA)
+    u32 hinst = arg(0), name = arg(1), parent = arg(2), proc = arg(3), init = arg(4);
+    u32 tpl = dialog_template_by_id(hinst, name);
+    stub_done(5, tpl ? dialog_create(tpl, parent, proc, init) : 0u);
+TS_END
+
+TS_BEGIN(CreateDialogIndirectParamA)
+    // CreateDialogIndirectParamA(hInstance, lpTemplate, hWndParent,
+    // lpDialogFunc, dwInitParam). Creates the dialog and its controls from the
+    // template, sends WM_INITDIALOG synchronously, and returns the handle.
+    stub_done(5, dialog_create(arg(1), arg(2), arg(3), arg(4)));
+TS_END
 
 TS_BEGIN(SetWindowLongA)
     // Per window, and the previous value is returned: a subclassing wrapper
@@ -1777,7 +2420,12 @@ TS_BEGIN(SetWindowLongA)
     WinRec *w = win_find(hwnd);
     if (!w && hwnd == wnd_handle()) w = win_find(wnd_handle());
     if (w) {
-        if (idx == 0xfffffffcu) { prev = w->proc; w->proc = val; wnd_proc() = val; }
+        // A non-negative index addresses the window's extra bytes. A dialog
+        // procedure stores its context at DWLP_USER (8) and reads it back in
+        // every message; without this, the first WM_COMMAND writes through a
+        // null pointer.
+        if (idx < 64u) { prev = win_extra_get(w, idx); win_extra_set(w, idx, val); }
+        else if (idx == 0xfffffffcu) { prev = w->proc; w->proc = val; wnd_proc() = val; }
         else if (idx == 0xffffffebu) { prev = w->userdata; w->userdata = val; }
         else if (idx == 0xfffffff0u) { prev = w->style; w->style = val; }
         else if (idx == 0xfffffff4u) { prev = w->id; w->id = val; }
@@ -1790,7 +2438,8 @@ TS_BEGIN(GetWindowLongA)
     u32 hwnd = arg(0), idx = arg(1), r = 0u;
     WinRec *w = win_find(hwnd);
     if (w) {
-        if (idx == 0xfffffffcu) r = w->proc;
+        if (idx < 64u) r = win_extra_get(w, idx);
+        else if (idx == 0xfffffffcu) r = w->proc;
         else if (idx == 0xffffffebu) r = w->userdata;
         else if (idx == 0xfffffff0u) r = w->style;
         else if (idx == 0xfffffff4u) r = w->id;
@@ -1940,12 +2589,23 @@ TS_END
 
 TS_BEGIN(GetClassNameA)
     // The class this window was created from, which a program compares against
-    // to tell its own windows from a dialog's.
+    // to tell its own windows from a dialog's. A template control's class is
+    // the predefined atom its DLGITEMTEMPLATE names (0x80 Button, 0x81 Edit,
+    // 0x82 Static, ...), and a dialog's is "Dialog".
     u32 buf = arg(1), cch = arg(2), n = 0;
     const char *name = "";
     WinRec *w = win_find(arg(0));
-    if (w) for (unsigned i = 0; i < class_n(); ++i)
-        if (classes()[i].atom == w->atom) name = classes()[i].name;
+    if (w) {
+        if (w->is_dialog) name = "Dialog";
+        else if (w->atom == 0x80u) name = "Button";
+        else if (w->atom == 0x81u) name = "Edit";
+        else if (w->atom == 0x82u) name = "Static";
+        else if (w->atom == 0x83u) name = "ListBox";
+        else if (w->atom == 0x84u) name = "ScrollBar";
+        else if (w->atom == 0x85u) name = "ComboBox";
+        else for (unsigned i = 0; i < class_n(); ++i)
+            if (classes()[i].atom == w->atom) name = classes()[i].name;
+    }
     while (name[n]) ++n;
     if (buf && cch) {
         u32 i = 0;
@@ -2085,8 +2745,16 @@ TS_RET(SetGraphicsMode, 2, 1u)
 TS_RET(TextOutA, 5, 1u)
 TS_RET(SaveDC, 1, 1u)
 TS_RET(RestoreDC, 2, 1u)
-TS_RET(SetViewportOrgEx, 3, 1u)
-TS_RET(SetWindowOrgEx, 3, 1u)
+// Both take FOUR arguments -- (hdc, x, y, lppt) -- and the call sites in
+// FUN_0065a190 push all four. The table used to say 3, so the stub left one
+// argument on the stack on every call. Two such calls leaked 8 bytes inside
+// FUN_00659e90, which shifted its epilogue by two slots: its POP EBX restored
+// a stale value (0xff) instead of the caller's 0, and the window-record hash
+// walk in FUN_0057a260 -- which uses EBX as its null sentinel -- then looped
+// forever on a null bucket. One wrong argument count, an infinite loop four
+// frames away.
+TS_RET(SetViewportOrgEx, 4, 1u)
+TS_RET(SetWindowOrgEx, 4, 1u)
 TS_RET(DPtoLP, 3, 1u)
 TS_RET(ModifyWorldTransform, 3, 1u)
 
@@ -3127,6 +3795,16 @@ inline ModuleDef *module_defs(unsigned *count) {
 struct LoadedModule { u32 handle; char name[64]; const ModuleDef *def; };
 inline LoadedModule *loaded_modules() { static LoadedModule m[32]; return m; }
 inline unsigned &loaded_module_count() { static unsigned n = 0; return n; }
+
+// A module handle's file name, for the resource reader. GetModuleHandleA
+// answers 0x00400000 for "this image", and LoadLibraryA's handles are the
+// rows loaded_modules() keeps.
+inline const char *module_name_of(u32 handle) {
+    if (handle == 0x00400000u) return "GAME.EXE";
+    for (unsigned i = 0; i < loaded_module_count(); ++i)
+        if (loaded_modules()[i].handle == handle) return loaded_modules()[i].name;
+    return 0;
+}
 
 inline u32 module_load(const char *name) {
     register_module_exports();
