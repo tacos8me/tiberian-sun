@@ -9,6 +9,7 @@
     python3 tools/boot.py --json              # the parsed report as JSON
     python3 tools/boot.py --rebuild           # ignore the object cache
     python3 tools/boot.py --no-build          # reuse the last binary, do not compile
+    python3 tools/boot.py --strict            # exit non-zero if a garbage call target remains
     python3 tools/boot.py --help
 
 WHAT IT DOES
@@ -579,6 +580,23 @@ def print_report(keys, lists, entries, build_note, elapsed):
     if in_text:
         out.append("DEFECT: %d unmapped calls inside .text -- a recovered function "
                    "nothing registered" % in_text)
+        for target, site in re.findall(r"(0x[0-9a-f]+)@(0x[0-9a-f]+)",
+                                       keys.get("unmapped-in-text-sample", "")):
+            out.append("  %s  from %s"
+                       % (fmt_name(entries, int(target, 16), thunks),
+                          fmt_name(entries, int(site, 16), thunks)))
+    # Where the remaining unmapped targets point, and how much of the recovered
+    # code the run reached. Distinct VAs, so a loop cannot inflate the count.
+    if "coverage-instructions" in keys:
+        out.append("coverage: %s distinct instructions; %s of %s recovered "
+                   "functions entered"
+                   % (keys.get("coverage-instructions", "?"),
+                      keys.get("coverage-functions", "?"),
+                      keys.get("coverage-functions-total", "?")))
+        out.append("unmapped targets: below 0x1000=%s  .rdata=%s  elsewhere=%s"
+                   % (keys.get("unmapped-below-1000", "?"),
+                      keys.get("unmapped-rdata", "?"),
+                      keys.get("unmapped-elsewhere", "?")))
     out.append("depth guard: %s truncations, unmodelled instructions: %s"
                % (keys.get("depth-exceeded", "?"), keys.get("unmodelled", "?")))
     print("\n".join(out))
@@ -591,9 +609,10 @@ def usage():
 def parse_args(argv):
     opt = {"image": "bin/GAME.EXE", "budget": 20000000, "timeout": 60,
            "depth": 20000, "imports": 12, "calls": 8, "watch": False,
-           "json": False, "rebuild": False, "no_build": False}
+           "json": False, "rebuild": False, "no_build": False,
+           "strict": False}
     flags = {"--watch": "watch", "--json": "json", "--rebuild": "rebuild",
-             "--no-build": "no_build"}
+             "--no-build": "no_build", "--strict": "strict"}
     values = {"--image": "image", "--budget": "budget", "--timeout": "timeout",
               "--depth": "depth", "--imports": "imports", "--calls": "calls"}
     i = 0
@@ -690,6 +709,17 @@ def main(argv):
         return 2
     if run.returncode == 3:
         return 3
+    if opt["strict"]:
+        # A garbage target is a call the model could not attribute: a null or
+        # near-null pointer, data used as code, a stack/heap value, or a .text
+        # address nothing registered. Report-only by default; --strict makes
+        # "none remain" a gate.
+        garbage = sum(int(keys.get(k, "0") or 0) for k in (
+            "unmapped-in-text", "unmapped-below-1000", "unmapped-rdata",
+            "unmapped-elsewhere"))
+        if garbage:
+            print("boot: --strict: %d garbage call target(s) remain" % garbage)
+            return 4
     return 0
 
 

@@ -20,6 +20,7 @@ adding one: if it cannot fail, it is not worth the runtime.
   Machine flags           -- add/sub carry and overflow, against the manual
   Machine stack           -- push/pop balance
   Machine mmx lanes       -- differential against lane-array reference code
+  Machine boot regressions -- call_ptr balance, rep ECX, jmp_indirect, maps
   gen_code tails          -- cross-function tail targets are found
 
 Usage:
@@ -572,12 +573,102 @@ int main() {
     eq("machine-depth", r.stdout.decode().strip(), "0")
 
 
+def test_machine_boot_regressions():
+    """The four model defects that blocked the boot, each a shipped bug.
+
+    ts_call_ptr used to leak the return address on an unregistered target;
+    the conditional repeats zeroed ECX instead of leaving the count that did
+    not run (so `repne scasb; not ecx` produced a 4 GB length); jmp_indirect
+    was a no-op that skipped the target span and its epilogue; and the
+    coverage maps are new, so a bit that is not set is a metric that silently
+    reads low. Each check is independent and prints the failing one.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Machine.h"
+
+static void noop() {}
+
+int main() {
+    ts::Machine &m = ts::mach();
+    m.r[4].d = 0x300000u;
+    m.step_limit = 0;
+    m.text_lo = 0x401000u;
+    m.text_hi = 0x697225u;
+
+    // 1. An indirect call to an unregistered target still returns, and the
+    //    return address it pushed must be popped. Before the fix this leaked
+    //    4 bytes per call; 27 of them made ESI hold a return address.
+    ts::u32 base = m.r[4].d;
+    ts::ts_call_ptr(0x00999999u, 0x12345678u);
+    if (m.r[4].d != base) { std::printf("FAIL call_ptr esp %u\n", base - m.r[4].d); return 1; }
+    if (m.eip != 0x12345678u) { std::printf("FAIL call_ptr eip\n"); return 1; }
+
+    // 2. repne scasb must leave ECX = iterations that did not run. The inline
+    //    strlen is `repne scasb; not ecx`, so ECX == 0 makes the length -1.
+    //    Memory: 11 22 33 00, scan 16 bytes for AL == 0.
+    ts::u32 buf = 0x200000u;
+    ts::st8(buf + 0, 0x11); ts::st8(buf + 1, 0x22);
+    ts::st8(buf + 2, 0x33); ts::st8(buf + 3, 0x00);
+    m.r[7].d = buf; m.r[1].d = 16u; m.r[0].b[0] = 0; m.df = 0;
+    ts::ts_repne_scasb();
+    if (m.r[1].d != 12u) { std::printf("FAIL repne ecx %u\n", m.r[1].d); return 1; }
+    if (m.r[7].d != buf + 4) { std::printf("FAIL repne edi\n"); return 1; }
+    if (!m.zf) { std::printf("FAIL repne zf\n"); return 1; }
+
+    // repe scasb: 11 11 22, scan for AL == 11; stops on the mismatch.
+    ts::st8(buf + 0, 0x11); ts::st8(buf + 1, 0x11); ts::st8(buf + 2, 0x22);
+    m.r[7].d = buf; m.r[1].d = 16u; m.r[0].b[0] = 0x11;
+    ts::ts_rep_scasb();
+    if (m.r[1].d != 13u) { std::printf("FAIL repe ecx %u\n", m.r[1].d); return 1; }
+
+    // 3. jmp_indirect is a tail transfer, not a counted no-op. Skipping it
+    //    skipped the target span's epilogue (memcpy's pop esi/edi; leave; ret).
+    m.tail = 0;
+    ts::jmp_indirect(0x0056789au);
+    if (m.tail != 0x0056789au) { std::printf("FAIL jmp_indirect tail\n"); return 1; }
+
+    // 4. The coverage maps are written by insn() and ts_call(). A map that is
+    //    not marked reads as code that never ran.
+    static ts::u8 emap[16], fmap[16];
+    for (int i = 0; i < 16; ++i) { emap[i] = 0; fmap[i] = 0; }
+    m.exec_map = emap; m.exec_map_lo = 0x401000u; m.exec_map_hi = 0x401080u;
+    m.func_map = fmap; m.func_map_lo = 0x401000u; m.func_map_hi = 0x401080u;
+    ts::insn(0x401004u);
+    if (!(emap[(0x401004u - 0x401000u) >> 3] & (1u << (0x401004u & 7u)))) {
+        std::printf("FAIL exec map\n"); return 1;
+    }
+    ts::ts_register(0x401020u, &noop);
+    ts::ts_call(0x401020u);
+    if (!(fmap[(0x401020u - 0x401000u) >> 3] & (1u << (0x401020u & 7u)))) {
+        std::printf("FAIL func map\n"); return 1;
+    }
+    // A VA outside the map must not write.
+    ts::insn(0x500000u);
+    std::printf("0\n");
+    return 0;
+}
+'''
+    open("/tmp/ts_boot_regress.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_boot_regress",
+                        "/tmp/ts_boot_regress.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("machine-boot-regress-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_boot_regress"], capture_output=True)
+    eq("machine-boot-regress", r.stdout.decode().strip(), "0")
+
+
 def main():
     for fn in (test_emit_masking, test_emit_in_out, test_emit_loop_tail,
                test_emit_ret, test_decl_destructor, test_slot_va,
                test_slot0_shared, test_reduce_bases, test_tail_entries,
                test_machine_mul, test_machine_flags, test_machine_stack,
-               test_machine_mmx, test_machine_depth_guard):
+               test_machine_mmx, test_machine_depth_guard,
+               test_machine_boot_regressions):
         try:
             fn()
         except Exception as exc:  # a tool that raises is a failure, not a skip

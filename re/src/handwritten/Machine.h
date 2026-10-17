@@ -176,6 +176,19 @@ struct Machine {
     // outside .text it is an import (expected -- the model has no Windows),
     // inside .text it is a recovered function nothing registered (a defect).
     u32 text_lo, text_hi;
+    // Coverage maps, owned by the caller (build/boot_driver.cpp). One bit per
+    // byte of .text: insn() sets the executed bit, and ts_call() sets the
+    // entered bit for every registered target it dispatches. A null map
+    // disables the marking, so the model's behaviour is unchanged; the cost is
+    // one shift and one OR per instruction.
+    u8 *exec_map; u32 exec_map_lo, exec_map_hi;
+    u8 *func_map; u32 func_map_lo, func_map_hi;
+    // Every unregistered call outside .text, split by where its target points.
+    // "below 0x1000" is a null or near-null pointer; ".rdata" is data being
+    // called; "elsewhere" is a stack or heap value used as a function pointer.
+    unsigned long unmapped_below_1000;
+    unsigned long unmapped_in_rdata;
+    unsigned long unmapped_elsewhere;
     // An unregistered target inside .text is one of two very different things,
     // and one .text range cannot tell them apart: inside a recovered span it is a
     // recovered function nothing registered (a defect in this tree), and outside
@@ -290,6 +303,9 @@ inline void reset() {
     m.fault_calls_n = 0; m.call_depth_max = 0; m.recent_call_n = 0;
     m.unmapped_in_text = 0;
     m.unmapped_in_gap = 0;
+    m.unmapped_below_1000 = 0;
+    m.unmapped_in_rdata = 0;
+    m.unmapped_elsewhere = 0;
     m.tail = 0;
     m.unmodelled_insns = 0;
     m.call_depth = 0;
@@ -301,6 +317,10 @@ inline void reset() {
     m.stub_dispatches = 0; m.stack_imbalances = 0; m.stack_imbalance_n = 0;
     m.trace_va = 0; m.trace_n = 0; m.leak_n = 0;
     m.bad_calls = 0;
+    if (m.exec_map && m.exec_map_hi > m.exec_map_lo)
+        std::memset(m.exec_map, 0, (m.exec_map_hi - m.exec_map_lo + 7u) / 8u);
+    if (m.func_map && m.func_map_hi > m.func_map_lo)
+        std::memset(m.func_map, 0, (m.func_map_hi - m.func_map_lo + 7u) / 8u);
     if (m.call_depth_limit == 0) m.call_depth_limit = 4096;
 }
 
@@ -323,6 +343,15 @@ inline void fault(const char *why) {
     }
 }
 
+// Set one bit in a caller-owned coverage map. The map is one bit per byte of
+// the covered VA range; a null map (the default) makes this a no-op.
+inline void mark_map(u8 *map, u32 lo, u32 hi, u32 va) {
+    if (map && va >= lo && va < hi) {
+        u32 off = va - lo;
+        map[off >> 3] = (u8)(map[off >> 3] | (u8)(1u << (off & 7u)));
+    }
+}
+
 // One call per transcribed instruction, emitted by tools/gen_code.py. It is the
 // only per-instruction hook in the model: it keeps eip, counts instructions, and
 // enforces the step budget. When the model has faulted and the caller asked to
@@ -332,6 +361,7 @@ inline void insn(u32 va) {
     Machine &m = mach();
     m.eip = va;
     ++m.steps;
+    mark_map(m.exec_map, m.exec_map_lo, m.exec_map_hi, va);
     if (m.trace_va && va == m.trace_va && m.trace_n < 8u) {
         m.trace_esp[m.trace_n] = ESP.d;
         m.trace_eax[m.trace_n] = EAX.d;
@@ -593,12 +623,26 @@ struct FnTable {
 
 inline FnTable &fntab() { static FnTable t; return t; }
 
+// How many distinct VAs are registered, and how many of those are recovered
+// functions rather than import stubs. The generated transcriptions live in
+// .text (0x401000..0x698225); Image.h registers the import stubs and
+// boot_driver the traced thunks at 0xa00000. The boot report uses the second
+// count as the denominator for "N of M recovered functions entered".
+inline unsigned long &registry_count() { static unsigned long n = 0; return n; }
+inline unsigned long &registry_recovered_count() { static unsigned long n = 0; return n; }
+
 inline void ts_register(u32 va, Fn f) {
     FnTable &t = fntab();
     u32 h = (va * 2654435761u) & (FnTable::SLOTS - 1);
     for (u32 p = 0; p < FnTable::SLOTS; ++p) {
         u32 i = (h + p) & (FnTable::SLOTS - 1);
-        if (t.key[i] == va || t.key[i] == 0xffffffffu) { t.key[i] = va; t.val[i] = f; return; }
+        if (t.key[i] == va) { t.val[i] = f; return; }
+        if (t.key[i] == 0xffffffffu) {
+            t.key[i] = va; t.val[i] = f;
+            ++registry_count();
+            if (va < 0x700000u) ++registry_recovered_count();
+            return;
+        }
     }
 }
 
@@ -674,6 +718,9 @@ inline void ts_call(u32 va) {
         m.unmapped_calls++;
         if (!m.text_hi || va < m.text_lo || va >= m.text_hi) {
             ++m.bad_calls;
+            if (va < 0x1000u) ++m.unmapped_below_1000;
+            else if (va >= 0x698000u && va < 0x6bb000u) ++m.unmapped_in_rdata;
+            else ++m.unmapped_elsewhere;
             if (m.bad_call_n < 16) {
                 m.bad_call_from[m.bad_call_n] = from;
                 m.bad_call_to[m.bad_call_n] = va;
@@ -683,6 +730,7 @@ inline void ts_call(u32 va) {
         count_unmapped_target(m, va, from);
         return;
     }
+    mark_map(m.func_map, m.func_map_lo, m.func_map_hi, va);
     // Bound the depth. A recovered loop whose modelled condition never changes
     // state would recurse forever, and "ran out of host stack" is a worse
     // diagnostic than "depth exceeded at VA X".
@@ -712,6 +760,9 @@ inline void ts_call(u32 va) {
             m.unmapped_calls++;
             if (!m.text_hi || va < m.text_lo || va >= m.text_hi) {
                 ++m.bad_calls;
+                if (va < 0x1000u) ++m.unmapped_below_1000;
+                else if (va >= 0x698000u && va < 0x6bb000u) ++m.unmapped_in_rdata;
+                else ++m.unmapped_elsewhere;
                 if (m.bad_call_n < 16) {
                     m.bad_call_from[m.bad_call_n] = from;
                     m.bad_call_to[m.bad_call_n] = va;
@@ -721,6 +772,7 @@ inline void ts_call(u32 va) {
             count_unmapped_target(m, va, from);
             break;
         }
+        mark_map(m.func_map, m.func_map_lo, m.func_map_hi, va);
     }
     m.call_depth--;
 }
