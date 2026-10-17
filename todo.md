@@ -554,6 +554,56 @@ so a fresh checkout no longer gets 140 raw headers copied over the reconciled
 ones. Measured: `python3 tools/boot.py` builds (0 of 492 units compiled on a warm
 cache) and reports.
 
+### [ ] `blowfish.dll!DllRegisterServer` fails, so the game takes its error box
+**The current boot stop, measured.** The game reaches its own `MessageBoxA` at
+`0x5e72fb` (`type=0x30`, `ExitProcess(1)`). The box is guarded by the byte at
+`-0x5f4(%ebp)`, which is set at `0x5e6216` from `FUN_005e87a0` (a
+`CoCreateInstance` wrapper) and, in the fallback, at `0x5e625b`/`0x5e626b`.
+
+The fallback path is the failure:
+
+```
+0x5e6227  push 0x6d99d4                 ; "blowfish.dll"
+0x5e622b  call LoadLibraryA
+0x5e6233  push 0x6d9b34                 ; "DllRegisterServer"
+0x5e6239  call GetProcAddress
+0x5e623f  test %eax,%eax
+0x5e6241  je 0x5e625b                   ; not found -> set the error flag
+```
+
+The model's `LoadLibraryA("blowfish.dll")` returns a fake handle, and
+`GetProcAddress(handle, "DllRegisterServer")` returns 0 because no stub exists
+for it. The flag becomes 1, and the box appears after init. The retail game has
+`BLOWFISH.DLL` in `gamedir` and its export registers the Westwood class
+`{1440AD10-6AA8-11D1-B6F9-00A024DDAFD1}` (`0x69e960`; a second CLSID at
+`0x69e970` is `{B45A4A80-86DA-11D1-B706-00A024DDAFD1}`).
+
+Two related defects in the same path:
+- `CoCreateInstance` is a **generic** row (`Win32Stubs.h:2975`, `real=0`), so it
+  returns `S_OK` but never writes its out pointer, contrary to the comment at
+  `Win32Stubs.h:2199` ("handed a fake COM object rather than a null"). The
+  wrapper then calls `OleRun`/`QueryInterface` through an uninitialised pointer.
+- `GetProcAddress` cannot resolve an export on a DLL the model only pretends to
+  load; `DllRegisterServer` is exactly that case.
+
+*Next:* give `LoadLibraryA`/`GetProcAddress` a named export table for
+`blowfish.dll` (at minimum `DllRegisterServer`/`DllUnregisterServer` returning
+`S_OK`), and make `CoCreateInstance` write a fake COM object with a real vtable.
+Then boot; the next stop should be the primary-surface check, whose descriptor
+offsets are already fixed (`138718a`: bpp at `+0x54`, `lpSurface` at `+0x24`).
+If the game actually calls Blowfish methods to decrypt MIX data, those methods
+need behaviour, not just `S_OK`.
+*Done when:* the registration flag stays 0 and the run reaches the next precise
+stop (or the message loop).
+
+### [x] Write `DDSURFACEDESC` fields where the game reads them
+The game's `DSurface` wrapper (`0x4874c0`/`0x487ad0`) reads `dwRGBBitCount` at
+`desc+0x54` and `lpSurface` at `desc+0x24`, and computes bytes-per-pixel as
+`(bpp + 7) >> 3`; it requires 2 for 16bpp. The stubs wrote the bit count at
+`+0x68` and `lpSurface` at `+0x14`, so the primary-surface check saw 0. Fixed in
+`138718a` against the game's own code. This did not move the current stop
+(COM registration fails earlier), but it is the next runtime check.
+
 ### [ ] Reach a window and a message loop
 **NOT reached.** This entry previously said "Reached. CreateWindowExA=1,
 PeekMessage=137,295" -- that was false, and it was false for an instructive
