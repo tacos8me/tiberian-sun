@@ -727,8 +727,9 @@ TS_BEGIN(CreateFileA)
             long sz = std::ftell(f);
             t[slot].size = sz < 0 ? 0 : (unsigned long)sz;
             std::fseek(f, 0, SEEK_SET);
-            std::printf("win32stubs: CreateFileA(\"%s\") -> %s (%lu bytes)\n",
-                        name, hp, t[slot].size);
+            std::printf("win32stubs: CreateFileA(\"%s\") -> %s (%lu bytes, "
+                        "handle 0x%08x)\n", name, hp, t[slot].size,
+                        0x00080000u + slot);
             state().file_opens++;
             stub_done(7, 0x00080000u + slot);
         }
@@ -746,6 +747,14 @@ TS_BEGIN(ReadFile)
         model_wr(buf, tmp, n);
     }
     if (got) st32(got, n);
+    // TS_FILE_TRACE -- what each read actually returned, and where the file
+    // pointer was afterwards. A short read at a non-EOF position is the shape
+    // of a file-layer defect, and the caller's next move (a size computed from
+    // the bytes it expected) is otherwise impossible to attribute.
+    if (std::getenv("TS_FILE_TRACE"))
+        std::fprintf(stderr, "win32stubs: ReadFile(h=0x%08x want=%u) -> %u "
+                             "(pos=%ld, step=%lu)\n", h, want, n,
+                     f ? std::ftell(f->f) : -1L, mach().steps);
     stub_done(5, 1u);
 TS_END
 
@@ -1343,6 +1352,14 @@ TS_BEGIN(CreateWindowExA)
         st32(cs + 40u, clsname);
         st32(cs + 44u, arg(0));      // dwExStyle
         call_wndproc(proc, h, 0x0001u, 0u, cs);   // WM_CREATE
+        // WM_ACTIVATEAPP is a POSTED message, not a synchronous send: the
+        // window manager queues it when the window becomes the active one, and
+        // the program's own message loop delivers it. A program that gates its
+        // frame loop on "am I the active application" -- as this game does,
+        // spinning on the flag its WM_ACTIVATEAPP handler sets -- never leaves
+        // that spin if the message is not queued. wParam is TRUE for the
+        // window being activated. lParam is the thread id; nothing reads it.
+        msg_push(h, 0x001cu, 1u, 0u);             // WM_ACTIVATEAPP, active
     }
     stub_done(12, h);
 TS_END
@@ -2590,6 +2607,11 @@ TS_BEGIN(bf_SetKey)
     } else {
         if (key) for (u32 i = 0; i < len; ++i) blowfish_key()[i] = ld8(key + i);
         blowfish_key_len() = len;
+        if (key && std::getenv("TS_FILE_TRACE"))
+            std::fprintf(stderr, "win32stubs: IBlowfish::SetKey len=%u key=%02x%02x%02x%02x "
+                                 "(caller 0x%08x, step %lu)\n", len,
+                         ld8(key), ld8(key + 1u), ld8(key + 2u), ld8(key + 3u),
+                         ld32(ESP.d), mach().steps);
         stub_done(3, 0u);
     }
 TS_END
@@ -2629,6 +2651,11 @@ TS_BEGIN(bf_Decrypt)
         if (!said) { said = true;
             std::printf("win32stubs: IBlowfish::Decrypt -- no cipher in the "
                         "model; the block is copied unchanged\n"); }
+        if (std::getenv("TS_FILE_TRACE"))
+            std::fprintf(stderr, "win32stubs: IBlowfish::Decrypt len=%u src=%02x%02x%02x%02x "
+                                 "(caller 0x%08x, step %lu)\n", len,
+                         ld8(src), ld8(src + 1u), ld8(src + 2u), ld8(src + 3u),
+                         ld32(ESP.d), mach().steps);
         for (u32 i = 0; i < len; ++i) st8(dst + i, ld8(src + i));
         stub_done(4, 0u);
     }
