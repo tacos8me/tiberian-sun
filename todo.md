@@ -77,18 +77,18 @@ sources, all read out of the binary: data-section code-pointer tables (a run of
 landing in a gap, and spans that begin in alignment fill. Every seed was CALLED by
 the original program, so it is evidence, not a guess.
 
-Current measured state: 43,564 spans, 46,008 transcriptions, 918,438/918,438
-instructions modelled at 100%, 0 unmodelled, `.text` code coverage 96.09%. The
-historical progression quoted in the previous version of this entry (41,822 ->
-43,564 spans; 897,193 -> 918,438 instructions) is kept only as history.
+Current measured state: **43,557 spans, 45,947 transcriptions, 912,879/912,879
+instruction lines modelled at 100%**, 0 unmodelled, `.text` code coverage
+**95.86%** (the disasm correction, below). The historical progression quoted in
+the previous version of this entry (41,822 -> 43,564 spans; 897,193 -> 918,438
+instructions) is kept only as history.
 
 The two residual in-`.text` targets this entry used to name — `0x6844df` (from
 `0x5e7317`) and `0x46f3f8` (from `0x674bf6`), both RETURN ADDRESSES of indirect
-calls — disappeared with the 108-byte stack-leak fix, and the link test passed
-until the newly reachable shutdown code reintroduced **10 in-text unmapped
-calls** (a separate teardown defect, queued in P4).
-*Done when:* that is fixed and the link test passes. **Met for the recovery
-defect; reopened as a teardown defect.**
+calls — disappeared with the 108-byte stack-leak fix. A later teardown
+regression (10 in-text unmapped calls) was fixed by `47d26eb`; the link test
+passes and `boot.py --strict` exits 0.
+*Done when:* that is fixed and the link test passes. **Met.**
 
 ### [x] The 32 ordinal imports could not pop their arguments
 The stub table keyed an ordinal by its raw ILT value (`"ord_2147483681"`) while
@@ -167,9 +167,9 @@ declarations rose from ~1,966 to 2,743.
 
 ### [x] Generate `.cpp` function bodies
 **Superseded, and the old description is retracted.** The bodies are no longer
-empty definitions. `src/generated/code/` holds 46,008 transcriptions
-(43,564 recovered function starts + 2,444 tail entries), one machine instruction
-per generated line, 918,438 instruction lines in all; the per-class `.cpp` files
+empty definitions. `src/generated/code/` holds 45,947 transcriptions
+(43,557 recovered function starts + 2,390 tail entries), one machine instruction
+per generated line, 912,879 instruction lines in all; the per-class `.cpp` files
 are 6,962 forwarders across 310 translation units that call the canonical
 transcription of their VA (3,024 distinct machine functions, 3,938 aliases). The
 tree links (492 TUs) and runs the original entry point. The project reproduces
@@ -199,8 +199,9 @@ beyond 200 recall flattens). False claims fell from 1,052 to 4 and the check is
 now a gate with a 95% floor.
 
 ### [x] Recover the unattributed `.text`
-Done. Measured now: **43,564 spans**, **96.09%** of `.text` as recovered code,
-**105,966 B (103 KB)** unattributed and classified as data/padding. The tool
+Done. Measured now: **43,557 spans**, **95.86%** of `.text` as recovered code,
+**112,401 B (110 KB)** unattributed and classified as data/padding (the
+switch-table correction moved 213 tables out of code; see below). The tool
 recorded gap-recovered bodies' callees but never fed them back, never followed
 conditional jumps, and read jump tables only from initial seeds. Made the
 worklist a fixpoint. Verified the 1,019 inner entry points are real: 1,004 are
@@ -299,10 +300,11 @@ gap 0x45fef0  64B: c7fe4500 e3fe4500 d0fe4500 dafe4500 ...   <- jump table
 ```
 
 They are **switch tables and alignment padding**. Measured in
-`out/text_data.json`: 105,966 B unattributed, classified as 12 jump tables
-(264 B), 7 switch index tables (349 B), 104,959 B of alignment padding in 12,606
-runs, and 394 B in 55 runs reported verbatim rather than forced into a category.
-99.99% of `.text` is attributed as code or data; 96.09% is recovered code.
+`out/text_data.json`: 112,401 B unattributed, classified as **213 static switch
+tables (6,388 B)**, 102 switch index tables (145 B), 105,492 B of alignment
+padding in 12,671 runs, and 376 B in 46 runs reported verbatim rather than forced
+into a category. 99.99% of `.text` is attributed as code or data; 95.86% is
+recovered code.
 *Done when:* coverage is >=99.5% with every remaining byte classified. **The
 "coverage" here means attributed, not code: the 99.5% code target is not met and
 is not achievable, because the remainder is data.**
@@ -391,7 +393,7 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: **43 checks passed** (measured this session). Not
+`tools/test_tools.py`: **70 checks passed** (measured this session). Not
 golden-count assertions -- every one is a regression test for a defect that
 actually shipped, or a differential test against an independent implementation.
 Four are proven to fail when the defect is reintroduced (mutating
@@ -610,9 +612,9 @@ never fires, there is no `ExitProcess`, the primary-surface check passes
 calls, `boot.py --strict` exits 0.
 
 **Superseded by later commits:** message delivery (`f3011ca`) made the loop
-dispatch, and the Blowfish cipher (`345aae7`, below) replaced the identity copy.
-The boot now stops in the CRT exit path with 70 unmapped calls (10 in `.text`);
-see the open teardown entry.
+dispatch, the Blowfish cipher (`345aae7`) replaced the identity copy, and the
+MIX-read/teardown fixes carried the run into the steady-state dialog-setup loop
+at `0x00422db9` with **0 unmapped calls** and `--strict` exiting 0.
 
 ### [x] Write `DDSURFACEDESC` fields where the game reads them
 The game's `DSurface` wrapper (`0x4874c0`/`0x487ad0`) reads `dwRGBBitCount` at
@@ -734,14 +736,15 @@ round-trip/block/tail/stack tests, and — the strongest evidence — a
 byte-identical cross-check against `tools/mix.py` on the shipped TIBSUN.MIX
 index: key `82060323...`, ciphertext `2ce3171bdbecb40e` decrypts to
 `110090d97904849a` (count 17, body 75,094,416). That vector is now a permanent
-regression test; `tools/test_tools.py` runs **43** checks.
+regression test; `tools/test_tools.py` now runs **70** checks.
 
-Measured: the page-table exhaustion at `0x00a006b0` is **gone**. The run now
-consumes the full 20,000,001-instruction budget in the CRT exit path at
-`0x006844db` (`sub_00684486`, `_exit`/atexit walk); message loop
-`GetMessage=2 PeekMessage=5 DispatchMessage=2 CreateWindowExA=1`; coverage
-51,604 / 4,535 of 46,008. The game's own `SetKey(56, 82060323...)` and the
-correct decryptions of the first index blocks are visible in `TS_FILE_TRACE`.
+Measured at that commit: the page-table exhaustion at `0x00a006b0` was
+**gone**. The later MIX-read, disasm, tracker and `idiv` fixes moved the stop to
+the steady-state dialog-setup loop at `0x00422db9`; the current measurement is
+`GetMessage=1 PeekMessage=827 DispatchMessage=1 CreateWindowExA=1`, coverage
+52,833 / 4,641 of 45,947, **0 unmapped, 0 imbalances**, `--strict` exit 0. The
+game's own `SetKey(56, 82060323...)` and the correct decryptions are visible in
+`TS_FILE_TRACE`.
 
 *Spec (kept for the MIX read path):* `re/out/blowfish_oracle.md`, produced by
 `re/tools/oracle_blowfish.py` and `re/tools/wine_blowfish_trace.sh`.
@@ -972,12 +975,11 @@ returns `DSERR_NODRIVER`, matching the retail no-audio environment). That made
 the boot report 0 unmapped calls and `boot.py --strict` exit 0 **at that
 commit**.
 
-**Reopened by the newly reachable code.** After `f3011ca`/`345aae7` the boot
-reports **70 unmapped calls, 10 inside `.text`** (33 below `0x1000`, 27
-elsewhere); the link test **fails** on the 10 in-text targets, and
-`boot.py --strict` exits non-zero (3). They are a teardown defect, tracked in
-the open entry above ("Null-pointer teardown calls and the 10 in-text unmapped
-calls"), not a regression of the `1580be3` fix.
+**Reopened and re-closed.** After `f3011ca`/`345aae7` the boot reported **70
+unmapped calls, 10 inside `.text`**; `47d26eb` fixed the single root cause (the
+`IDirectDrawSurface::Lock` arity), and the boot now reports **0 unmapped calls,
+0 stack imbalances**, `boot.py --strict` exits 0, and the link test passes.
+See "The 5 null-pointer teardown calls — fixed" above.
 
 ### [x] Real file I/O
 The stub layer used to make every file "exist" and read as empty, with
@@ -992,23 +994,22 @@ so, so a caller takes its real failure path instead of reading zeroes.
 First run: `CreateFileA("\\.\MONO")` -- the sound device name.
 *Note:* this did not itself move the stop; the instruction count rose from
 1,011,817 to 7,038,765 when the stack leak was fixed, to 20,000,001 (the
-budget, at the message loop) when COM registration was fixed, and the stop moved
-to the CRT exit path (`0x006844db`) once message delivery and the Blowfish
-cipher landed.
+budget, at the message loop) when COM registration was fixed, to the CRT exit
+path once message delivery and Blowfish landed, and now to the steady-state
+dialog-setup loop at `0x00422db9` after the MIX-read and teardown fixes.
 
 ### [x] Make the boot a one-command measurement
 `tools/boot.py` builds (cached), runs with a budget and a timeout, and prints
 instructions, depth, stop/fault EIP with instruction bytes, import calls by name,
 the last N call targets, coverage and unmapped-target classification. Measured:
 `python3 tools/boot.py` builds (0 of 492 units compiled on a warm cache) and
-reports **20,000,001 instructions** (budget exhausted at `0x006844db`,
-`sub_00684486`, the `_exit`/atexit walk), **message loop reached and
-dispatching** (`CreateWindowExA=1`, `GetMessage=2`, `PeekMessage=5`,
-`DispatchMessage=2`), **51,604 distinct instructions / 4,535 of 46,008
-functions entered**, and **70 unmapped calls (10 inside `.text`; 33 below
-`0x1000`, 27 elsewhere)**. `--no-build --strict` is the gate: it exits
-**non-zero (3)** while those remain. `--json`, `--watch`, `--imports N`,
-`--budget N`, `--rebuild` and `--no-build` are documented in the tool's header.
+reports **20,000,001 instructions** (budget exhausted at `0x00422db9`, depth 28,
+inside `sub_00422d64 +0x55`), **message loop reached and dispatching**
+(`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`),
+**52,833 distinct instructions / 4,641 of 45,947 functions entered**, and **0
+unmapped calls, 0 stack imbalances**. `--no-build --strict` is the gate: it
+exits **0**. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild` and
+`--no-build` are documented in the tool's header.
 *Done when:* `python3 tools/boot.py` reproduces the boot and reports it. **Met.**
 
 ## Standing caveats
@@ -1017,19 +1018,17 @@ functions entered**, and **70 unmapped calls (10 inside `.text`; 33 below
   agree with the recovered tables. It does **not** prove the disassembly is
   correct. Check 4 reads the binary, check 9 makes the compiler adjudicate
   layout, and `verify_members_binary.py` is a separate binary-anchored gate.
-- The link test now **fails** (exit 1, 492 TUs, 20,000,001 instructions,
-  message loop reached and dispatching) on **10 unmapped calls inside `.text`**;
-  `boot.py --strict` exits **3**. They are the teardown defect queued above.
+- The link test now **passes** (exit 0, 492 TUs, 20,000,001 instructions,
+  message loop reached and dispatching); the boot has **0 unmapped calls, 0
+  stack imbalances**, and `boot.py --strict` exits 0.
 - **Message delivery is fixed** (`f3011ca`): `WM_ACTIVATEAPP` is queued, the
   WndProc at `0x65ba70` runs, `DAT_007b2e50` becomes 1, and the game leaves the
-  `PeekMessage` spin. The current stop is the CRT exit path (`0x006844db`) with
-  WinMain having returned at ~7.66M instructions with ESP `0x11` — the shutdown
-  ESP corruption queued above.
-- **The Blowfish cipher is implemented and proven** (`345aae7`): standard
-  Blowfish-ECB, four known-answer vectors plus a byte-identical `tools/mix.py`
-  cross-check on the shipped TIBSUN.MIX index (`2ce3171bdbecb40e` →
-  `110090d97904849a`, count 17, body 75,094,416). The next content defect is the
-  MIX index read (2 of 27 blocks), queued above.
+  `PeekMessage` spin. The game is now alive in a steady-state **dialog-setup
+  loop** (52,858 instructions / 4,643 functions at 200M), because the dialog
+  layer is fake — the current blocker queued above.
+- **The Blowfish cipher is implemented and proven** (`345aae7`), and the MIX
+  index read is fixed: all 27 blocks are read and the 17 records match
+  `tools/mix.py` 17/17.
 - The retail oracle reaches the **main menu** (`tools/wine_env.sh`), but the
   main-menu buttons/text are not drawn because the PCX assets live inside a
   nested MIX entry, and there is no audio.
@@ -1038,9 +1037,10 @@ functions entered**, and **70 unmapped calls (10 inside `.text`; 33 below
 - Member names exist only where an INI key or string provides evidence. Never
   infer one.
 - **"Function bodies are empty" was false and is retracted.** Every recovered
-  function is transcribed in `src/generated/code/`: 46,008 functions
-  (43,564 starts + 2,444 tail entries), 918,438 instruction lines, one machine
-  instruction per line against `ts::` in `Machine.h`. The per-class `.cpp` files
-  are forwarders to those transcriptions, and `tools/link_test.py` links 492
-  translation units and runs the original entry point. What the project does not
-  yet reproduce is *source-shaped* C++ (ROADMAP P3), not behaviour.
+  function is transcribed in `src/generated/code/`: **45,947** functions
+  (**43,557** starts + **2,390** tail entries), **912,879** instruction lines,
+  one machine instruction per line against `ts::` in `Machine.h`. The per-class
+  `.cpp` files are forwarders to those transcriptions, and `tools/link_test.py`
+  links 492 translation units and runs the original entry point. What the
+  project does not yet reproduce is *source-shaped* C++ (ROADMAP P3), not
+  behaviour.

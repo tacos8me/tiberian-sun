@@ -15,39 +15,47 @@ class manifest was re-verified by re-reading the binary's own RTTI Complete
 Object Locator chain. Check 9 makes the compiler confirm every recovered member
 offset a header can express: **3,073/3,073**.
 
-The recovered **machine code is transcribed**, not stubbed: 46,008 functions
-(43,564 recovered function starts + 2,444 tail entries), 918,438 of 918,438
+The recovered **machine code is transcribed**, not stubbed: 45,947 functions
+(43,557 recovered function starts + 2,390 tail entries), 912,879 of 912,879
 instruction lines (100%, 0 unmodelled), rendered against the machine model in
 `src/handwritten/Machine.h`. The whole tree — 492 translation units — **links
 into a program**, and that program runs the original PE entry point against the
-model: **20,000,001 instructions** (the budget) ending in the CRT exit path at
-`0x006844db` (`sub_00684486`, the `_exit`/atexit walk), with
-**`CreateWindowExA=1`, `GetMessage=2`, `PeekMessage=5`, `DispatchMessage=2`** —
-the game's own **message loop**, reached and dispatching. Coverage is **51,604
-distinct instructions; 4,535 of 46,008 recovered functions entered**; the only
-message box is the expected DirectSound warning at `0x484456` (`type=0x30`).
-WinMain returns at ~7.66M instructions with **ESP `0x11`** (entry `0x2fff84`),
-so the atexit walk runs away; **70 unmapped calls remain (10 inside `.text`)**,
-`boot.py --strict` exits 3, and `tools/link_test.py` fails (exit 1). A full
-`./tools/pipeline.sh` last completed exit 0 in `d23d1bf`, before this shutdown
-code was reachable.
+model: **20,000,001 instructions** (the budget) ending at `0x00422db9`
+(`sub_00422d64 +0x55`), with **`CreateWindowExA=1`, `GetMessage=1`,
+`PeekMessage=827`, `DispatchMessage=1`** — the game's own **message loop**,
+reached and dispatching. Coverage is **52,833 distinct instructions; 4,641 of
+45,947 recovered functions entered**, freezing at 52,858 / 4,643 at a 200M
+budget. **0 unmapped calls, 0 stack imbalances**; `boot.py --strict` exits 0 and
+`tools/link_test.py` passes (exit 0). A full `./tools/pipeline.sh` ran exit 0 in
+the disasm-correction lane (8m51s, per `todo.md`); it was not re-run here.
+
+The game is **alive in a steady-state dialog-setup loop**: the dialog layer is
+fake (`CreateDialogIndirectParamA` creates no window and sends no
+`WM_INITDIALOG`, `GetDlgItem` returns a constant, `PeekMessageA` returns 0), so
+it repeats the same setup forever. That is the current blocker and the layer
+does **not** work yet.
 
 The **retail** binary, run under Wine with the CD and a 640x480x16 screen
 (`tools/wine_env.sh`), reaches its **main menu** (screenshot md5
 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s). That is the
-differential oracle: the model reaches message delivery and the shutdown path,
-but not the menu.
+differential oracle: the model reaches message delivery and MIX reading, but not
+the menu.
 
 The retail oracle also measured what `blowfish.dll` registers
 (`re/out/blowfish_oracle.md`, `tools/oracle_blowfish.py`,
 `tools/wine_blowfish_trace.sh`): the object is a **real Blowfish cipher the game
 uses**, with 9 `SetKey(56,key)` calls and 1,586 `Decrypt(8,in,out)` calls during
-startup, matching nine shipped MIX indexes. The model **now implements standard
+startup, matching nine shipped MIX indexes. The model **implements standard
 Blowfish-ECB** (`345aae7`), proven by the four standard known-answer vectors and
 a byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
-(`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416). The
-page-table exhaustion at `0x00a006b0` is gone; the next content defect is the
-MIX index read (2 of 27 blocks).
+(`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416). The MIX
+index read is fixed as well: all 27 blocks are read and the 17 records match
+`tools/mix.py` 17/17.
+
+The recovery was corrected (`9e5703f` + `ad62afc`): **213 static switch tables
+(6,388 B)** are now data (was 12), including three hole tables whose entry-1
+addresses are function starts; `.text` code coverage is **95.86%**. Every
+instruction that left the transcription was classified.
 
 **What that does *not* mean is stated under [Verification](#verification)
 below.** In short: the gate proves the declaration tree compiles, that the
@@ -110,17 +118,17 @@ prologue patterns, then extended by call-graph traversal with seed-boundary
 termination, plus a gap-recovery pass over already-recorded branch targets.
 
 Recovered (`python3 tools/disasm.py bin/GAME.EXE out`):
-- **43,564** functions/spans, covering **2,606,135 bytes = 96.09%** of `.text`
+- **43,557** functions/spans, covering **2,599,700 bytes = 95.86%** of `.text`
   (`python3 tools/harness.py metrics --no-append`)
-- **848,822** static instructions
+- **845,093** static instructions
 - Per-function callees and referenced strings
-- **105,966 B (103 KB)** of `.text` remains unattributed, classified in
-  `out/text_data.json` as 12 jump tables (264 B), 7 switch index tables (349 B),
-  104,959 B of alignment padding, and 394 B in 55 unclassified runs; 99.99% of
-  `.text` is attributed as code or data
+- **112,401 B (110 KB)** of `.text` remains unattributed, classified in
+  `out/text_data.json` as **213 static switch tables (6,388 B)**, 102 switch
+  index tables (145 B), 105,492 B of alignment padding, and 376 B in 46
+  unclassified runs; 99.99% of `.text` is attributed as code or data
 
 Function sizes are measured as merged intervals, not summed per-function sizes:
-**1,080** entry points sit inside another recovered body (`shared_tail_entry_points`)
+**1,000** entry points sit inside another recovered body (`shared_tail_entry_points`)
 and would be double-counted otherwise.
 
 ### 3. Schema recovery
@@ -149,7 +157,7 @@ and deepened by three further recovery passes:
   (`tools/gen_members.py`, `tools/name_members.py`): **4,289** member-offset
   records recovered (763 vptr stores, 3,526 real members), **291** named across
   20 classes where an INI key or string provides evidence;
-- **calling conventions and arity** (`tools/gen_signatures.py`): **43,564**
+- **calling conventions and arity** (`tools/gen_signatures.py`): **43,557**
   signatures (`__thiscall` 11,478, `__stdcall` 10,728, `__cdecl` 9,642, and
   11,716 with no convention recovered);
 - **virtual naming** (`tools/name_virtuals.py`): **4,496** named virtual
@@ -176,13 +184,13 @@ re/
   out/classes.json          755 classes, 1291 edges, 842 locators, 843 vtables
   out/hierarchy.txt         readable class hierarchy
   out/vtables.txt           vtable -> class map (843 entries)
-  out/functions.json        43,564 functions with 848,822 instructions, callees, refs
+  out/functions.json        43,557 functions with 845,093 instructions, callees, refs
   out/ini_keys.json         1,876 referenced strings -> referencing functions
   out/class_manifest.json   749 classes, 9,810 virtual slots
   out/members.json          4,289 member-offset records
-  out/signatures.json       43,564 signatures
+  out/signatures.json       43,557 signatures
   src/include/*.h           264 headers (263 standalone-compilable + prelude)
-  src/generated/code/       46,008 machine-code transcriptions + registration
+  src/generated/code/       45,947 machine-code transcriptions + registration
   src/generated/*.cpp       6,962 forwarders across 310 translation units
   src/handwritten/          hand-written, evidence-backed headers
   src/include/SCHEMA.md     1374-row INI key -> class -> type table
@@ -281,7 +289,7 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
 
 ## Known gaps
 
-- **The transcription is not source-shaped.** 46,008 functions are transcribed
+- **The transcription is not source-shaped.** 45,947 functions are transcribed
   faithfully against a machine model, but a transcription is not a
   reconstruction: it is what the machine does, not the shape the original
   source had. 0 instructions have no faithful rendering
@@ -293,14 +301,16 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   `link_test.py` reports `341 of 341 IAT slots written` and `0 with no stub`.
   The old "16,383 calls read 0" claim described the pre-`Image.h` model and is
   retracted.
-- **Message delivery works; shutdown does not.** `WM_ACTIVATEAPP` is delivered,
-  the WndProc runs and `DAT_007b2e50` becomes 1, but WinMain returns with ESP
-  `0x11` and the CRT atexit walk runs away to the budget.
-- **The MIX index read stops after 2 of 27 blocks** (`0x547435`/`0x547426`).
-- **70 unmapped calls remain, 10 inside `.text`** (null teardown calls); the link
-  test fails and `boot.py --strict` exits 3.
-- **The Blowfish cipher is implemented and proven** (`345aae7`), not a copy:
-  four known-answer vectors plus a byte-identical `tools/mix.py` cross-check.
+- **The game is alive in a steady-state dialog-setup loop.** The dialog layer is
+  fake (`CreateDialogIndirectParamA`, `GetDlgItem`, `PeekMessageA`), so
+  `DispatchMessage` stays 1 and coverage freezes at 52,858 / 4,643. This is the
+  current blocker; the layer does **not** work yet.
+- **The boot has 0 unmapped calls and 0 stack imbalances**; the link test passes
+  and `boot.py --strict` exits 0.
+- **The Blowfish cipher and the MIX index read are fixed.** All 27 index blocks
+  are read and the 17 records match `tools/mix.py` 17/17.
+- **Shutdown corrupts ESP, but the path is dormant.** WinMain returned with ESP
+  `0x11` before the MIX-read fix; the current run never reaches shutdown.
 - **Member layout is verified where expressible; types and ordering are not.**
   Check 9 confirms 3,073/3,073 offsets at `-m32`, and the binary-anchored
   verifier confirms 4,285 of 4,289; member *types* and ordering are not checked.

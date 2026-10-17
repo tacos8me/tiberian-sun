@@ -7,10 +7,9 @@ this file (`python3 tools/harness.py metrics --no-append`).
 Figures in this file were re-measured on 2026-10-17 with `harness.py metrics`,
 `verify.py`, `verify_members_binary.py`, `test_tools.py`, `boot.py` (and
 `--no-build --strict`), `link_test.py`, `wine_env.sh`, and direct counts over
-`out/` and `src/generated/`. The boot and oracle figures were re-measured after
-the message-delivery and Blowfish-cipher merge; the full `pipeline.sh` run
-recorded in `d23d1bf` was not re-run here (and predates the newly reachable
-shutdown code).
+`out/` and `src/generated/`. The boot and recovery figures were re-measured
+after the disasm, stack-tracker, teardown and signed-`idiv` merges; the full
+`pipeline.sh` run recorded in `todo.md` (exit 0, 8m51s) was not re-run here.
 
 The point of this document is to say **what is actually left**, what the
 *smallest* honest size of that work is, and in what order it can be done — not to
@@ -38,7 +37,7 @@ Nothing below counts as done until one of those commands changes its output.
 
 ### 2.1 Recovery is effectively closed — this is not the problem any more
 
-`.text` is 2,712,101 bytes. 105,966 bytes (103 KB) are unattributed. I read the
+`.text` is 2,712,101 bytes. 112,401 bytes (110 KB) are unattributed. I read the
 bytes in the largest gaps rather than assuming:
 
 ```
@@ -53,9 +52,9 @@ Function discovery is done.
 
 | Item | State (measured) |
 |---|---|
-| Functions recovered | 43,564 spans (`harness.py metrics`: `functions`), 2,606,135 bytes = 96.09% of `.text` as recovered code |
-| Residual `.text` | 105,966 B unattributed, classified in `out/text_data.json`: 12 jump tables (264 B), 7 switch index tables (349 B), 104,959 B of alignment padding in 12,606 runs, and 394 B in 55 runs reported verbatim. 99.99% of `.text` is attributed as code or data. |
-| Instructions in `out/functions.json` | 848,822 static instructions across 43,564 spans |
+| Functions recovered | 43,557 spans (`harness.py metrics`: `functions`), 2,599,700 bytes = 95.86% of `.text` as recovered code |
+| Residual `.text` | 112,401 B unattributed, classified in `out/text_data.json`: **213 static switch tables (6,388 B)**, 102 switch index tables (145 B), 105,492 B of alignment padding in 12,671 runs, and 376 B in 46 runs reported verbatim. 99.99% of `.text` is attributed as code or data. |
+| Instructions in `out/functions.json` | 845,093 static instructions across 43,557 spans |
 | Instructions with no faithful rendering | 0 (`grep ts::unmodelled src/generated/code` → 0) |
 | Member offsets refuted by the binary | 4 of 4,289 (`ScoreTimeClass`, `ScorePrintClass`); 4,285 confirmed (99.9%) |
 
@@ -157,8 +156,8 @@ named across 20 classes (8.3% of non-vptr members)**.
 ### 2.5 Modifiability — the hardest gap, and the one with no partial credit
 
 **There is not one hand-written `.cpp` file in the tree.** The transcription is
-46,008 generated functions (43,564 recovered function starts + 2,444 tail
-entries), one instruction per generated line, 918,438 instruction lines in all:
+45,947 generated functions (43,557 recovered function starts + 2,390 tail
+entries), one instruction per generated line, 912,879 instruction lines in all:
 
 ```cpp
 ts::push32(0x19u);          //   0x006829a5  push 0x19
@@ -203,8 +202,8 @@ member offset it can express at `-m32`.
 *Bounded and mostly mechanical.*
 
 - **1.1** Emit the residual `.text` as data and classify the padding. **Done:**
-  `tools/disasm.py` classifies it into 12 jump tables (264 B), 7 switch index
-  tables (349 B), 104,959 B of padding and 394 B in 55 unclassified runs, and
+  `tools/disasm.py` classifies it into 213 static switch tables (6,388 B), 102
+  switch index tables (145 B), 105,492 B of padding and 376 B in 46 unclassified runs, and
   writes `out/text_data.json`.
 - **1.2** Implement the unmodelled instructions. **Done:** 0 unmodelled; the
   model additions are in `src/handwritten/Machine.h`.
@@ -221,7 +220,7 @@ member offset it can express at `-m32`.
   on all four encrypted archives.
 
 Exit: `.text` coverage ≥99.5% with the remainder classified; 0 unmodelled; 0
-labelled stubs; no tracked file over 50 MB. *Not met:* coverage is 96.09% as
+labelled stubs; no tracked file over 50 MB. *Not met:* coverage is 95.86% as
 code (99.99% attributed), and 229 stubs remain.
 
 ### P2 — Name the tree
@@ -287,22 +286,27 @@ loop" with `PeekMessage=137,295`. That was retracted: the model let
 was one the real game never ran. The current claim is from a run that never
 calls `ExitProcess`.
 
-What is true, measured after the message-delivery and Blowfish merges: the game
+What is true, measured after the disasm, tracker and `idiv` merges: the game
 maps at its real VAs and resolves **341/341** PE import-directory thunks (309 by
 name, 32 by ordinal, across 13 DLLs). The stub table holds 342 rows because it
 also carries `COMCTL32!DllGetVersion`, which is not an import — the CRT reaches
 it through `GetProcAddress`. The game creates its window, **delivers
-`WM_ACTIVATEAPP`**, dispatches messages (`CreateWindowExA=1`, `GetMessage=2`,
-`PeekMessage=5`, `DispatchMessage=2`; the WndProc at `0x65ba70` runs and
-`DAT_007b2e50` becomes 1), then shuts down. The run consumes the full
-**20,000,001-instruction budget** at `0x006844db` (`sub_00684486`, the
-`_exit`/atexit walk) because WinMain returns at ~7.66M instructions with **ESP
-`0x11`** (entry `0x2fff84`). Coverage: **51,604 distinct instructions; 4,535 of
-46,008 recovered functions entered**. **70 unmapped calls remain (10 inside
-`.text`; 33 below `0x1000`, 27 elsewhere)**; `boot.py --strict` exits **3** and
-the link test fails. The only message box is the expected DirectSound warning at
-`0x484456` (`type=0x30`), and the primary-surface check passes
-(`TS_PEEK=0x006beed8` → 1).
+`WM_ACTIVATEAPP`**, reads the MIX index correctly, and then repeats the same
+dialog setup: `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`,
+`DispatchMessage=1`. The run consumes the full **20,000,001-instruction budget**
+at `0x00422db9` (`sub_00422d64 +0x55`), depth 28. Coverage: **52,833 distinct
+instructions; 4,641 of 45,947 recovered functions entered**, freezing at 52,858 /
+4,643 at a 200M budget. **0 unmapped calls, 0 stack imbalances**; `boot.py
+--strict` exits **0** and the link test passes. The only message box is the
+expected DirectSound warning at `0x484456` (`type=0x30`), and the primary-surface
+check passes (`TS_PEEK=0x006beed8` → 1).
+
+**The recovery was corrected (`9e5703f` + `ad62afc`).** 213 static switch tables
+are now data (was 12), including three hole tables (`0x683c10`, `0x683d98`,
+`0x68ce40`). Recovered functions **43,557**, transcriptions **45,947**,
+instruction lines **912,879**, `.text` code **95.86%**, jump tables **6,388 B /
+213**. Every lost instruction was classified. This also fixed the MIX index read:
+all 27 blocks are read and the 17 records match `tools/mix.py` 17/17.
 
 **COM registration is fixed (`1580be3`).** The game registers Westwood's
 `BLOWFISH.DLL` class `{1440AD10-6AA8-11D1-B6F9-00A024DDAFD1}`; `LoadLibraryA` now
@@ -313,15 +317,22 @@ eight-slot vtable recovered from `BLOWFISH.DLL`, `IDirectDraw::CreateClipper`
 writes a real clipper, and `DirectSoundCreate` returns `DSERR_NODRIVER` (no
 audio, matching retail).
 
-**Message delivery is fixed (`f3011ca`), and the Blowfish cipher is implemented
-and proven (`345aae7`).** `CreateWindowExA` queues `WM_ACTIVATEAPP`; the WndProc
-runs and the game leaves the spin (measured at that commit: 1,882,051
-instructions, `GetMessage=1`, `PeekMessage=3`, `DispatchMessage=1`, coverage
-49,635 / 4,455). `IBlowfish::SetKey`/`Encrypt`/`Decrypt` are now standard
-Blowfish-ECB, proven by the four known-answer vectors and a byte-identical
-`tools/mix.py` cross-check on the shipped TIBSUN.MIX index
-(`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416); the
-page-table exhaustion at `0x00a006b0` is gone.
+**Message delivery (`f3011ca`), the Blowfish cipher (`345aae7`), the stack
+tracker (`d047496`), the null teardown calls (`47d26eb`) and signed `idiv`
+(`16e21fa`) are fixed.** `CreateWindowExA` queues `WM_ACTIVATEAPP`; the WndProc
+runs and the game leaves the spin. `IBlowfish` is standard Blowfish-ECB, proven
+by four known-answer vectors and a byte-identical `tools/mix.py` cross-check on
+the shipped TIBSUN.MIX index (`2ce3171bdbecb40e` → `110090d97904849a`, count 17,
+body 75,094,416); the page-table exhaustion at `0x00a006b0` is gone. The stack
+tracker went from **111,682 false imbalances to 0**, and the five null teardown
+calls had one root cause — `IDirectDrawSurface::Lock` popped 4 arguments instead
+of 5 — now fixed, so the boot has **0 unmapped calls** and `--strict` exits 0.
+
+**The current blocker is the fake dialog layer.** `CreateDialogIndirectParamA`
+creates no window and sends no `WM_INITDIALOG`, `GetDlgItem` returns a constant,
+and `PeekMessageA` returns 0, so the game repeats the same dialog setup forever
+and `DispatchMessage` stays at 1. The CD check is ruled out. A dialog/input lane
+is implementing it now; the layer does **not** work yet.
 
 **The oracle premise is now inverted.** `tools/wine_env.sh` gives the retail
 binary an X screen at 640x480x16 and a `DRIVE_CDROM` `d:` labelled `TS1` holding
@@ -334,18 +345,19 @@ no audio. So the model reaches the loop but not the menu, and the oracle is the
 target.
 
 Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
-  1. Fix the MIX index read: it stops after 2 of 27 blocks
-     (`0x547435`/`0x547426`). Decide whether the short read is in the
-     pipe/straw layer or the control flow at `0x547426`; the cipher is proven.
-  2. Fix the shutdown ESP corruption: WinMain returns with ESP `0x11` (entry
-     `0x2fff84`), so the CRT atexit walk runs away for ~12.3M instructions.
-  3. Fix the null teardown calls / 10 in-text unmapped calls so
-     `boot.py --strict` exits 0 and the link test passes.
-  4. Make the model reach the main menu: real rendering (per-surface memory and
+  1. Implement the dialog/input layer: create a real dialog window and control
+     handles, send `WM_INITDIALOG` to the dialog procedure, deliver
+     `WM_COMMAND`/`WM_ACTIVATEAPP` through the message queue so
+     `DispatchMessageA` runs, and provide a minimal input source. Exit:
+     `DispatchMessageA > 1`, coverage advances past 52,858, the setup loop
+     breaks, and the next stop is named.
+  2. Make the model reach the main menu: real rendering (per-surface memory and
      real `Blt`/`Flip`), the nested-MIX PCX assets, and the stubs the menu path
      needs. The retail oracle now shows the target.
-  5. Instruction-level differential: `tools/oracle.py 0xADDR --compare` at
+  3. Instruction-level differential: `tools/oracle.py 0xADDR --compare` at
      checkpoints the model and the retail binary both reach.
+  4. Keep the shutdown ESP defect (`0x11` on WinMain return) queued: it is
+     dormant now but will matter as soon as shutdown is reached again.
 
 **The lesson worth keeping from this phase.** The game exits immediately unless
 `comctl32!DllGetVersion` reports >= 4.00.70, and it reaches that function through
@@ -357,9 +369,10 @@ wrong value is harder to diagnose than one that fails loudly.
 
 The honest measure of progress here is not "does it run" but **how far into the
 game's own code it gets before it needs something we have not modelled**. The
-measured figure is **20,000,001 instructions** (the budget) ending in the CRT
-exit path at `0x006844db`, after message delivery and the Blowfish cipher. Before
-the stack-leak fix it was 1,011,817 instructions ending in `ExitProcess(1)`.
+measured figure is **20,000,001 instructions** (the budget) ending in the
+steady-state dialog-setup loop at `0x00422db9`, after message delivery, the
+Blowfish cipher and the MIX-read fix. Before the stack-leak fix it was 1,011,817
+instructions ending in `ExitProcess(1)`.
 Each stop is a precise, actionable finding rather than a wall, because the
 harness reports the stop EIP, the instruction bytes there, the containing
 function and generated source line, and the ordered import calls -- and

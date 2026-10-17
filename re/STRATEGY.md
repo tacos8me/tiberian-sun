@@ -37,20 +37,20 @@ documentation says cannot exist.
 | check 7 | 1,317/1,317 member offsets, 206 classes | same |
 | check 8 (arity) | **331/1,116 match, 785 divergence**, reported not gated | same |
 | check 9 (`offsetof`) | **3,073/3,073 compiler-confirmed** | same |
-| recovered functions | 43,564 | `harness.py metrics` |
-| instructions in `out/functions.json` | 848,822 | summed over `insns` |
-| transcriptions emitted | 46,008 | `grep` over `src/generated/code` |
-| `.text` | 96.09% as code, 99.99% attributed | metrics |
+| recovered functions | 43,557 | `harness.py metrics` |
+| instructions in `out/functions.json` | 845,093 | summed over `insns` |
+| transcriptions emitted | 45,947 (912,879 instruction lines) | `grep` over `src/generated/code` |
+| `.text` | 95.86% as code, 99.99% attributed; 213 switch tables / 6,388 B | metrics |
 | classes / slots | 749 / 9,810, 0 unseeded | metrics |
 | member offsets / named | 4,289 / **291** | metrics |
 | virtual slots | **5,557** named `(class, slot)` pairs of 9,810; **917** distinct names (**281** semantic); headers declare 4,496 named + 2,458 `vfunc_N`; `metrics`' `virtual_names: 702` counts *classes with a naming record*, not names | metrics + `out/virtual_names.json` |
 | indirect call sites | **18,056 of 60,449 (29.9%)** | walked `insns` |
 | functions with no direct caller | **31,834 (73.1%)** | direct-edge graph from `callees` |
 | functions reachable from entry `0x6854e3` by direct edges | **69 (0.16%)** | BFS over `callees` |
-| functions declared by the reconstructed headers | **3,024 of 43,564 (6.9%)** | unique `sub_*` in `src/generated/*.cpp` |
-| boot | **20,000,001 instructions** (budget) at `0x006844db` (`_exit`/atexit walk), **1,977 import calls, 99 distinct imports**, depth 16, **70 unmapped targets (10 in `.text`; 33 below `0x1000`, 27 elsewhere)**, message loop **reached and dispatching** (`CreateWindowExA=1`, `GetMessage=2`, `PeekMessage=5`, `DispatchMessage=2`), **51,604 distinct instructions / 4,535 of 46,008 functions entered**, primary surface `0x006beed8`=1, WinMain returns ~7.66M with ESP `0x11` | `tools/boot.py` (default `../gamedir`) |
-| link test | **FAILED, exit 1**, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=2`, `PeekMessage=5`, `DispatchMessage=2`), **10 unmapped calls inside `.text`**, 0 unmodelled | `tools/link_test.py` |
-| boot strict gate | **exit 3**, 70 garbage call targets | `boot.py --no-build --strict` |
+| functions declared by the reconstructed headers | **3,024 of 43,557 (6.9%)** | unique `sub_*` in `src/generated/*.cpp` |
+| boot | **20,000,001 instructions** (budget) at `0x00422db9` (`sub_00422d64 +0x55`, dialog-setup loop), **9,132 import calls, 104 distinct imports**, depth 28, **0 unmapped targets, 0 stack imbalances**, message loop **reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`), **52,833 distinct instructions / 4,641 of 45,947 functions entered** (200M: 52,858 / 4,643), primary surface `0x006beed8`=1 | `tools/boot.py` (default `../gamedir`) |
+| link test | **OK, exit 0**, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled | `tools/link_test.py` |
+| boot strict gate | **exit 0**, 0 garbage call targets | `boot.py --no-build --strict` |
 | retail oracle | reaches the **main menu**, 640x480, screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s | `tools/wine_env.sh` |
 | Win32 surface | **341** PE import-directory thunks, all resolved; the stub table has **342** rows (the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`): **315 with a body, 27 generic** | `link_test.py` / boot |
 
@@ -60,19 +60,18 @@ In words:
    critical path. A round spent there is a round spent on polish.
 2. **The code has no name.** 73% of functions are reached only indirectly, the
    direct call graph reaches 69 functions from `main`, and the headers bind to
-   3,024 of 43,564 functions. Whatever "named" means in the metrics, the tree a
+   3,024 of 43,557 functions. Whatever "named" means in the metrics, the tree a
    reader can *call* is 6.9% of the program.
 3. **The runtime is the product.** What exists is a **20-million-instruction**
-   run of the game's own startup that **delivers messages and reaches its own
-   shutdown path**: `CreateWindowExA=1`, `GetMessage=2`, `PeekMessage=5`,
-   `DispatchMessage=2`; the WndProc runs and `DAT_007b2e50` becomes 1. COM
-   registration (`1580be3`) and message delivery (`f3011ca`) are fixed, and the
-   Blowfish cipher is **implemented and proven** (`345aae7`: four known-answer
-   vectors plus a byte-identical `tools/mix.py` cross-check on the shipped
-   TIBSUN.MIX index). The run now consumes the 20M budget in the CRT exit path
-   because WinMain returns with ESP `0x11`, and **70 unmapped teardown calls
-   remain (10 in `.text`)**. The next content defect is the MIX index read
-   (2 of 27 blocks).
+   run of the game's own startup that **delivers messages and is alive in a
+   dialog-setup loop**: `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`,
+   `DispatchMessage=1`; the WndProc runs, `DAT_007b2e50` becomes 1, and the MIX
+   index is read correctly. COM registration, message delivery, the Blowfish
+   cipher, the stack tracker, the null teardown calls and signed `idiv` are all
+   fixed; the boot has **0 unmapped calls and 0 stack imbalances**. The current
+   blocker is the **fake dialog layer** (`CreateDialogIndirectParamA` creates no
+   window, `GetDlgItem` is a constant, `PeekMessageA` returns 0), so the game
+   repeats the same setup forever and coverage freezes at 52,858 / 4,643.
 4. **The Win32 layer is real where the game has been, and fiction where it has
    not** (`Win32Stubs.h`, read):
    - File I/O: **real** — a host root, case-insensitive paths, a 64-entry handle
@@ -88,9 +87,9 @@ In words:
 
 So: **structure recovered, instructions transcribed, layout compiler-confirmed,
 and a runtime that has executed 20,000,001 instructions through message delivery
-into its own shutdown path, on a Win32 layer that can load a file, create a
-window and dispatch messages but cannot yet read the MIX index correctly, survive
-shutdown, read a key, fire a timer, or show a pixel.**
+and MIX reading into a steady-state dialog loop, on a Win32 layer that can load a
+file, create a window, dispatch messages and read the MIX index but cannot yet
+create a real dialog, read a key, fire a timer, or show a pixel.**
 
 ### The fact the docs do not contain
 
@@ -146,11 +145,11 @@ bytes.
    art, maps, audio, movies. **File I/O is now real** (`Win32Stubs.h`: a host
    root, case-insensitive path resolution, a 64-entry handle table, real
    `CreateFileA`/`ReadFile`/`WriteFile`/`SetFilePointer`/`GetFileSize`), and
-   `tools/mix.py` decodes both MIX index variants. What remains is routing
-   `MixFileClass` through the real reader in the model, not inventing a file
-   layer — and the model's MIX index read currently stops after **2 of 27
-   blocks** (`0x547435`/`0x547426`), the next queued content defect. This was the
-   largest missing block and it has moved.
+   `tools/mix.py` decodes both MIX index variants. The model's MIX index read is
+   **fixed** (`1c0db7e`): all 27 blocks are read and the 17 records match
+   `tools/mix.py` 17/17. What remains is routing `MixFileClass` through the real
+   reader, not inventing a file layer. This was the largest missing block and it
+   has moved.
 4. **Surface memory, real blits, a frame dump.** → anything visual, and any
    judgement that the game works. Needs 3 to have content to draw.
 5. **A virtual clock with timer callbacks.** → the logic tick. A
@@ -159,13 +158,13 @@ bytes.
 7. **Fidelity at scale.** Unbounded in principle, bounded by the oracle: run
    both, diff at checkpoints, fix the first divergence. This is where the months
    are, and it is only tractable with 2.
-8. **Speed.** 20,000,001 instructions in 1.1 s wall is order 18M instructions/s —
+8. **Speed.** 20,000,001 instructions in 1.65 s wall is order 12M instructions/s —
    and that includes image mapping, so treat it as an upper bound on cost, not a
    clean throughput. A 30 fps budget is ~330k instructions/frame. If a TS frame
    costs millions, the interpreter is 10–30× too slow. Measure before promising.
 
-**Not on the path:** naming the 2,458 `vfunc_N` slots, source-shaping 46,008
-transcriptions, the last 104 KB of `.text`, re-deriving member offsets. All four
+**Not on the path:** naming the 2,458 `vfunc_N` slots, source-shaping 45,947
+transcriptions, the last 110 KB of `.text`, re-deriving member offsets. All four
 serve the *source artifact*. They are the right work only if the deliverable is
 documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
 
@@ -206,17 +205,21 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
   applies: a stub returning a plausible wrong value is worse than one that fails.
   `LoadStringA` now has the correct arity but returns 0 because the string table
   is empty; the box renders blank and nothing says why.
-- **The Blowfish cipher is real, and the model now implements it.** The retail
-  oracle measures 9 `SetKey(56,key)` calls and 1,586 `Decrypt(8,in,out)` calls
-  during startup, matching nine shipped MIX indexes; `345aae7` implements
-  standard Blowfish-ECB and proves it against four known-answer vectors and a
-  byte-identical `tools/mix.py` cross-check. The next content defect is the MIX
-  index **read** (2 of 27 blocks), not the cipher.
-- **The shutdown path is the new ESP defect.** WinMain returns at ~7.66M
-  instructions with ESP `0x11` (entry `0x2fff84`); the atexit walk then consumes
-  the remaining ~12.3M instructions. This is the same class as the original
+- **The Blowfish cipher and the MIX index read are fixed.** The retail oracle
+  measures 9 `SetKey(56,key)` calls and 1,586 `Decrypt(8,in,out)` calls during
+  startup, matching nine shipped MIX indexes; `345aae7` implements standard
+  Blowfish-ECB and proves it against four known-answer vectors and a
+  byte-identical `tools/mix.py` cross-check. `1c0db7e` fixes the index read: all
+  27 blocks are read and the 17 records match `mix.py` 17/17.
+- **The dialog layer is fake, and that is the current blocker.**
+  `CreateDialogIndirectParamA` creates no window and sends no `WM_INITDIALOG`,
+  `GetDlgItem` returns a constant, and `PeekMessageA` returns 0. The game is
+  alive but repeats the same dialog setup forever; coverage freezes at 52,858 /
+  4,643. Do not claim the dialog layer works.
+- **The shutdown ESP defect is dormant.** WinMain returned at ~7.66M
+  instructions with ESP `0x11` (entry `0x2fff84`) before the MIX-read fix; the
+  current run never reaches shutdown. It is the same class as the original
   108-byte leak, on the exit path.
-  Implement the cipher before trusting any MIX content path.
 - **x87 is right; FPU control state is unverified.** `Machine.h` keeps the x87
   stack in host `long double` (80-bit here), which is correct. The rounding-mode
   and precision-control bits of the FPU control word are **unverified**; a game
@@ -234,9 +237,10 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
 Each has an exit criterion a command can decide. **Units 1–5 are done** (the
 Wine oracle reaches the main menu, the stack leak is fixed, the control-flow gate
 is in `gen_code.py`, boot reports coverage and target classification, and file
-I/O is real); **message delivery and the Blowfish cipher are also done** (units
-11 and 12 below). Units 6–10 remain, and **the MIX index read (unit 13) is the
-next runtime blocker**.
+I/O is real); **message delivery, the Blowfish cipher, the MIX index read, the
+stack tracker, the teardown calls and signed `idiv` are also done** (units
+11–17 below). Units 6–10 remain, and **the dialog/input layer (unit 18) is the
+current blocker**.
 
 1. **Wine oracle (`tools/oracle.py`).** `tools/wine_env.sh` runs the retail game
    with the CD and a 640x480x16 screen; `oracle.py` attaches gdb, breaks at an
@@ -250,18 +254,18 @@ next runtime blocker**.
    neither a transfer nor a registered continuation, proven by mutation.
    **Done.**
 4. **Make the boot report coverage.** `boot.py` prints `coverage: N distinct
-   instructions; N of 46,008 recovered functions entered` and classifies unmapped
-   targets (`below 0x1000`, `.rdata`, `elsewhere`). Measured now: 51,604 distinct
-   instructions / 4,535 functions, **70 unmapped (10 in `.text`)**, `--strict`
-   exits **3**. **Done** (the gate correctly reports the new teardown defect).
+   instructions; N of 45,947 recovered functions entered` and classifies unmapped
+   targets (`below 0x1000`, `.rdata`, `elsewhere`). Measured now: 52,833 distinct
+   instructions / 4,641 functions, **0 unmapped**, `--strict` exits **0**.
+   **Done.**
 5. **Real file I/O.** Real `CreateFileA`/`ReadFile`/`WriteFile`/`SetFilePointer`/
    `GetFileSize`/`CloseHandle` over a host root, handles as real objects.
    **Done.**
 6. **MIX in C++.** Port `tools/mix.py` (proven: both index variants decode,
    header+index+body equals file size) and route `MixFileClass` through it.
    *Exit:* the model opens `TIBSUN.MIX` and entry count and offsets match
-   `mix.py` byte for byte. The cipher is done; the model's index read currently
-   stops after 2 of 27 blocks (unit 13).
+   `mix.py` byte for byte. The cipher and the index read are done (all 27 blocks,
+   17/17 records); routing `MixFileClass` through the reader remains.
 7. **Framebuffer.** Per-surface memory, real `Blt`/`BltFast`/`Fill`/`Flip`,
    `boot.py --dump-frame=N` writing a PNG. *Exit:* a non-blank PNG whose palette
    and dimensions match a Wine screenshot of the same screen, reported as a
@@ -291,14 +295,24 @@ only honest way to close the rest.
 12. **Implement the Blowfish cipher.** Standard Blowfish-ECB, proven by four
     known-answer vectors and a byte-identical `tools/mix.py` cross-check.
     **Done (`345aae7`).** The page-table exhaustion at `0x00a006b0` is gone.
-13. **Fix the MIX index read.** It stops after 2 of 27 blocks
-    (`0x547435`/`0x547426`). *Exit:* the 17-entry index is read correctly and
-    the game proceeds past the MIX header. **Open — the next blocker.**
+13. **Fix the MIX index read.** **Done (`1c0db7e`):** the root cause was the
+    unaligned `memcpy` jump table; all 27 blocks are read and the 17 records
+    match `tools/mix.py` 17/17.
 14. **Fix the shutdown ESP corruption.** WinMain returns with ESP `0x11` (entry
-    `0x2fff84`); the atexit walk runs away. *Exit:* WinMain returns with ESP
-    where its caller left it. **Open.**
-15. **Fix the null teardown calls / 10 in-text unmapped calls.** *Exit:*
-    `boot.py --strict` exits 0 and the link test passes. **Open.**
+    `0x2fff84`). **Dormant:** the current run never reaches shutdown. *Exit:*
+    WinMain returns with ESP where its caller left it.
+15. **Fix the null teardown calls / 10 in-text unmapped calls.** **Done
+    (`47d26eb`):** one root cause, the `IDirectDrawSurface::Lock` arity; 0
+    unmapped, `boot.py --strict` exits 0, link test passes.
+16. **Fix the stack-imbalance tracker.** **Done (`d047496`):** 111,682 false
+    imbalances -> 0.
+17. **Fix signed `idiv`.** **Done (`16e21fa`):** true signed x86 semantics.
+18. **Implement the dialog/input layer.** **Open — the current blocker.**
+    `CreateDialogIndirectParamA` creates no window and sends no `WM_INITDIALOG`,
+    `GetDlgItem` is a constant, and `PeekMessageA` returns 0, so the game
+    repeats the same dialog setup forever. *Exit:* `DispatchMessageA > 1`,
+    coverage advances past 52,858, the setup loop breaks, and the next stop is
+    named.
 
 ---
 
@@ -330,7 +344,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
    naming record. The distinction is stated once in `PROGRESS.md`; the old
    "1,500 / 8,280 / 3,409" mixed quantities and is retracted (`8467f84`).
 5. **RESOLVED — `src/generated/README.md` contradicted itself.** The sentence now
-   says what the number measures: **3,024 of 43,564 (6.94%) recovered functions
+   says what the number measures: **3,024 of 43,557 (6.94%) recovered functions
    are declared by the reconstructed headers**, so a forwarder exists for them;
    the other 40,540 are transcribed in `code/` but no header declares them. The
    generator (`tools/gen_bodies.py`) was fixed, not the output (`8467f84`).
@@ -347,8 +361,8 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
    The entry is retracted and marked done; the empty MessageBox text is
    `LoadStringA` returning 0.
 8. **RESOLVED — "Function bodies are empty" was false.** `todo.md`'s standing
-   caveat now says the opposite with measured counts: 46,008 transcriptions,
-   918,438 instruction lines, 0 unmodelled, 492 TUs linked.
+   caveat now says the opposite with measured counts: 45,947 transcriptions,
+   912,879 instruction lines, 0 unmodelled, 492 TUs linked.
 9. **RESOLVED — the import counts are now distinguished.** **341** PE
    import-directory thunks (309 by name, 32 by ordinal, 13 DLLs), all resolved;
    **342** stub-table rows (the extra is `COMCTL32!DllGetVersion`, reached
@@ -363,7 +377,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     headerless = 1,216). Measured this session.
 11. **RESOLVED — `CONTEXT.md` called `verify.py` "the 8-check gate".** It now
     says nine, describes check 9, and lists `link_test.py` (492 TUs),
-    `test_tools.py` (now 43 checks) and the import distinction (`8467f84`).
+    `test_tools.py` (now 70 checks) and the import distinction (`8467f84`).
 12. **OPEN — the framing error, which is the expensive one.** `ROADMAP.md` §2.3
     used to close with "for a decompilation that is the difference between 'it
     builds' and 'it is the game'". The sentence is gone and §4 now cross-
@@ -371,12 +385,12 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     and unresolved: the roadmap optimises the source artifact, this file
     optimises a playable runtime. Say which product you are building.
 13. **RESOLVED — `AGENTS.md`'s "Current status" table carried stale counts.**
-    It now uses the measured set: 43,564 spans (not 41,822), 96.09% code (not
-    96.06%), 105,966 B unattributed classified as 12 jump tables / 264 B, 7
-    switch index tables / 349 B, 104,959 B padding, 394 B in 55 runs (not 104 KB,
-    11 jump tables / 256 B, 356 B, 105,808 B, 554 B in 90 runs); 9,810 vtable
-    slots (not 9,780); 46,008 transcriptions / 918,438 instruction lines (not
-    43,668 / 897,193); 264 headers (not 262); 2,444 tail entries (not 1,846;
+    It now uses the measured set: 43,557 spans (not 41,822), 95.86% code (not
+    96.06%), 112,401 B unattributed classified as 213 static switch tables /
+    6,388 B, 102 switch index tables / 145 B, 105,492 B padding, 376 B in 46
+    runs (not 104 KB, 11 jump tables / 256 B, 356 B, 105,808 B, 554 B in 90
+    runs); 9,810 vtable slots (not 9,780); 45,947 transcriptions / 912,879
+    instruction lines (not 43,668 / 897,193); 264 headers (not 262); 2,390 tail entries (not 1,846;
     `shared_tail_entry_points` = 1,080 is a different quantity and is now
     labelled as such); 492 TUs (not 482); 4,289 member claims, 4,285 confirmed
     (not 4,326 / 4,322); check 7 1,317 offsets across 206 classes (not 2,186
@@ -395,9 +409,8 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     `boot_driver`. `db612d1` wires `m.halt`, and the link test then exited **0**
     with the message loop genuinely reached from a run that never calls
     `ExitProcess`. A full `./tools/pipeline.sh` run completed exit 0 in
-    `d23d1bf`. **Superseded:** the newly reachable shutdown code reintroduces
-    **10 in-text unmapped calls**, so the link test now fails (exit 1) and the
-    pipeline would stop there. Item 22 tracks it.
+    `d23d1bf`. A later teardown regression (10 in-text unmapped calls) was fixed
+    by `47d26eb`; the link test passes again (item 22).
 16. **RESOLVED — the oracle "gives up early" was false.** `tools/wine_env.sh`
     reaches the retail **main menu** (640x480, screenshot md5
     `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s). The remaining
@@ -426,15 +439,29 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     known-answer vectors and a byte-identical `tools/mix.py` cross-check on the
     shipped TIBSUN.MIX index (`2ce3171bdbecb40e` → `110090d97904849a`, count 17,
     body 75,094,416). The page-table exhaustion at `0x00a006b0` is gone.
-20. **OPEN (new) — the MIX index read stops after 2 of 27 blocks**
-    (`0x547435`/`0x547426`). The next content defect; `todo.md` has the
-    reproduction and the pipe/control-flow hypotheses.
-21. **OPEN (new) — shutdown corrupts ESP.** WinMain returns at ~7.66M
-    instructions with ESP `0x11` (entry `0x2fff84`); the CRT atexit walk consumes
-    the remaining ~12.3M instructions.
-22. **OPEN (new) — null teardown calls produce 70 unmapped calls, 10 inside
-    `.text`.** They did not disappear when the index decrypted. `boot.py
-    --strict` exits 3 and the link test fails (exit 1).
+20. **RESOLVED — the MIX index read is fixed (`1c0db7e`).** The root cause was
+    the unaligned `memcpy` jump table, not the pipe or cipher; all 27 blocks are
+    read and the 17 records match `tools/mix.py` 17/17.
+21. **RESOLVED — the disasm switch-table correction (`9e5703f` + `ad62afc`).**
+    213 static switch tables (6,388 B) are data; recovered functions 43,557,
+    transcriptions 45,947, instruction lines 912,879, `.text` code 95.86%. Every
+    lost instruction was classified.
+22. **RESOLVED — the stack tracker and the null teardown calls.** `d047496`
+    makes `ts_call_at` compare direct stub calls against `esp_before + 4*nargs`
+    (**111,682 false imbalances -> 0**); `47d26eb` fixes the one root cause of
+    the five null teardown calls (`IDirectDrawSurface::Lock` popped 4, not 5).
+    Measured: 0 unmapped, `--strict` exits 0, link test passes.
+23. **RESOLVED — signed `idiv` (`16e21fa`).** `divmod64` has true signed x86
+    semantics; the old divide-overflow stop is passed. `test_tools.py` is 70
+    checks.
+24. **OPEN (new) — the dialog layer is fake, and that is the current blocker.**
+    `CreateDialogIndirectParamA` creates no window and sends no `WM_INITDIALOG`,
+    `GetDlgItem` returns a constant, and `PeekMessageA` returns 0, so the game is
+    alive in a steady-state setup loop (`DispatchMessage` stays 1; coverage
+    freezes at 52,858 / 4,643). A dialog/input lane is implementing it; do not
+    claim it works.
+25. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
+    `0x11` before the MIX-read fix; the current run never reaches shutdown.
 
 ---
 

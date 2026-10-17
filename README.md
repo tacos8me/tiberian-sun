@@ -16,9 +16,13 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 
 - The model boots the image at its real VAs, resolves all 341 PE import-directory
   thunks, reaches the game's own **message loop**, decrypts the TIBSUN.MIX index
-  with a real Blowfish-ECB implementation, and posts `WM_DESTROY`. The MIX index
-  read then stops after 2 of 27 blocks, and the shutdown path corrupts ESP before
-  the CRT exit walk.
+  with a real Blowfish-ECB implementation (all 27 index blocks, 17/17 records
+  matching `tools/mix.py`), and then stays **alive in a steady-state
+  dialog-setup loop**. The dialog layer is fake (`CreateDialogIndirectParamA`
+  creates no window and sends no `WM_INITDIALOG`, `GetDlgItem` returns a
+  constant, `PeekMessageA` returns 0), so the game repeats the same setup
+  forever; that is the current blocker. The run has **0 unmapped calls and 0
+  stack imbalances**, and `boot.py --strict` exits 0.
 - The **retail** game reaches its **main menu** under Wine on this host; that is
   the project's external oracle.
 - Every function body is generated machine transcription, one instruction per
@@ -28,16 +32,16 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 | Measure | Value |
 |---|---|
 | classes / vtable slots | 749 / 9,810 (all slots seeded) |
-| functions recovered | 43,564 spans, 96.09% of `.text`; 99.99% attributed as code or data |
-| instruction stream transcribed | 46,008 functions (43,564 starts + 2,444 tail entries), 918,438 instruction lines, 0 unmodelled |
+| functions recovered | 43,557 spans, 95.86% of `.text`; 99.99% attributed as code or data; 213 static switch tables / 6,388 B |
+| instruction stream transcribed | 45,947 functions (43,557 starts + 2,390 tail entries), 912,879 instruction lines, 0 unmodelled |
 | forwarders / link units | 6,962 across 310 units; the whole tree links as 492 TUs |
 | member offsets recovered | 4,289 (4,285 confirmed against the binary, 99.9%; 4 refuted) |
 | named members | 291 across 20 classes |
 | virtuals named | 5,557 of 9,810 slot pairs (56.6%); 917 distinct names (281 semantic) |
 | headers | 264 total, 263 compile standalone at `-m32` |
 | verification gate | 9 checks, fail-closed, passing; check 9 confirms 3,073/3,073 offsets |
-| tool tests | 42 checks, several mutation-proven |
-| boot | message loop reached; real Blowfish-ECB; 20M budget in the CRT exit path; next defect is a short MIX-index read |
+| tool tests | 70 checks, several mutation-proven |
+| boot | message loop reached and dispatching; real Blowfish-ECB; MIX index read correctly; 20M budget in a steady-state dialog-setup loop; 0 unmapped, 0 stack imbalances; current blocker is the fake dialog layer |
 
 **Measure, don't trust prose.** `python3 tools/harness.py metrics` prints the
 real state; these figures drift as the tools improve. `AGENTS.md` records the
@@ -57,10 +61,11 @@ python3 tools/harness.py determinism --run     # two clean runs, byte-diffed
 ```
 
 The gate is fail-closed: a missing artifact exits non-zero naming what is
-missing, rather than running a subset and reporting success. Only check 4 and
-`verify_members_binary.py` are anchored to the binary; the others compare the
-tree against recovered data, so they can agree with each other while both are
-wrong. That distinction matters when reading `VERIFICATION PASSED`.
+missing, rather than running a subset and reporting success. Check 4 reads the
+binary, check 9 makes the compiler adjudicate layout, and
+`verify_members_binary.py` is a separate binary-anchored gate; the others
+compare the tree against recovered data, so they can agree with each other while
+both are wrong. That distinction matters when reading `VERIFICATION PASSED`.
 
 ## Booting the original program
 
@@ -75,20 +80,20 @@ resolve to stubs, and the original entry point `0x6854e3` runs. The current
 measured stop:
 
 ```
-message loop: reached  (GetMessage=2 PeekMessage=5 DispatchMessage=2 CreateWindowExA=1)
-stop: instruction budget exhausted at 0x006844db after 20,000,001 instructions
-why:  the game posted WM_DESTROY and WinMain returned; the CRT exit walk runs on
-coverage: 51,604 distinct instructions; 4,535 of 46,008 recovered functions
-unmapped calls: 70 (10 inside .text)
+message loop: reached  (GetMessage=1 PeekMessage=827 DispatchMessage=1 CreateWindowExA=1)
+stop: instruction budget exhausted at 0x00422db9 after 20,000,001 instructions
+why:  the game is alive in a steady-state dialog-setup loop (no fault, no exit)
+coverage: 52,833 distinct instructions; 4,641 of 45,947 recovered functions
+unmapped calls: 0 (0 inside .text); stack imbalances: 0
 ```
 
 Real Blowfish-ECB is implemented and proven against `tools/mix.py` (the shipped
-TIBSUN.MIX first index block decrypts byte-identically), so the old page-table
-exhaustion is gone. The next measurable defect is that the game reads only 2 of
-the 27 index blocks: the 204-byte record-table read at `0x547435` moves one
-8-byte block through the pipe chain, and `0x547426` calls it once without
-looping. The shutdown path then returns with ESP corrupted (`0x11`), so the CRT
-atexit walk consumes the remaining budget. Both are recorded in `todo.md`.
+TIBSUN.MIX first index block decrypts byte-identically), and the MIX index read
+is fixed: all 27 blocks are read and the 17 records match `mix.py` 17/17. At a
+200M budget the counters scale while coverage freezes at 52,858 / 4,643 — the
+game repeats the same dialog setup because the dialog layer is fake. That is the
+current blocker, recorded in `todo.md`; the shutdown ESP defect is dormant (the
+run no longer reaches shutdown).
 
 The model has diagnostics for this work: `TS_TRACE=0xADDR`, `TS_PEEK=0xADDR`,
 `TS_SCAN=start,count`, `TS_WATCH=0xADDR`, `TS_FILE_TRACE=1`, plus `bad_calls`,
@@ -136,9 +141,10 @@ regenerates `realdata/` from `TIBSUN.MIX`.
 
 ## What was recovered
 
-- **43,564** function spans, 96.09% of `.text`; the residual 103 KB is
-  classified as 12 jump tables, 7 switch index tables and alignment padding.
-- **46,008** transcriptions covering **918,438** instructions, all modelled.
+- **43,557** function spans, 95.86% of `.text`; the residual 110 KB is
+  classified as **213 static switch tables (6,388 B)**, 102 switch index tables
+  and alignment padding.
+- **45,947** transcriptions covering **912,879** instructions, all modelled.
 - **749** classes with exact inheritance from intact MSVC 6 RTTI, and **9,810**
   vtable slots, every one bound through the binary's own Complete Object Locator
   chain.

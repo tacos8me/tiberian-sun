@@ -44,10 +44,9 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
 - `verify_members_binary.py` — re-derives member offsets from the binary's own
   code (4,285 of 4,289 confirmed, 99.9%)
 - `link_test.py` — links all 492 translation units into a program and runs it;
-  measured **FAILED, exit 1**, message loop reached and dispatching
-  (`GetMessage=2`, `PeekMessage=5`, `DispatchMessage=2`), **10 unmapped calls
-  inside `.text`**
-- `test_tools.py` — 43 unit tests for the tools themselves
+  measured **OK, exit 0**, message loop reached and dispatching
+  (`GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`), 0 unmapped
+- `test_tools.py` — 70 unit tests for the tools themselves
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
   (`determinism`)
 - `gen_win32_stubs.py` — generates `Win32Stubs.h` from the PE import directory
@@ -56,13 +55,13 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   refuses to write when a `TS_RET` body's argument count disagrees with `NARGS`;
   `--evidence` reports per-ordinal agreement.
 - `boot.py` — builds and runs the image against the model. Measured:
-  **20,000,001 instructions** (budget) at `0x006844db` (`_exit`/atexit walk),
-  `CreateWindowExA=1`, `GetMessage=2`, `PeekMessage=5`, `DispatchMessage=2` —
-  message loop **reached and dispatching**; only `MessageBoxA` is the DirectSound
-  warning at `0x484456` (`type=0x30`); **70 unmapped calls (10 inside `.text`)**;
-  coverage 51,604 distinct instructions / 4,535 of 46,008 functions; primary
-  surface `TS_PEEK=0x006beed8`=1; WinMain returns ~7.66M with ESP `0x11`.
-  `--no-build --strict` exits **3**.
+  **20,000,001 instructions** (budget) at `0x00422db9` (`sub_00422d64 +0x55`,
+  dialog-setup loop), `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`,
+  `DispatchMessage=1` — message loop **reached and dispatching**; only
+  `MessageBoxA` is the DirectSound warning at `0x484456` (`type=0x30`); **0
+  unmapped calls, 0 stack imbalances**; coverage 52,833 distinct instructions /
+  4,641 of 45,947 functions (200M: 52,858 / 4,643); primary surface
+  `TS_PEEK=0x006beed8`=1. `--no-build --strict` exits **0**.
 - `wine_run.sh` / `wine_env.sh` — run the **retail** binary under Wine.
   `wine_env.sh` supplies the CD (`d:`, label `TS1`, `TS1.DSK`) and a
   640x480x16 screen; measured, the retail game reaches its **main menu**
@@ -78,9 +77,12 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
   (`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416).
 
-**Current runtime defects** (queued in `todo.md`): the MIX index read stops after
-2 of 27 blocks (`0x547435`/`0x547426`); shutdown corrupts ESP (WinMain returns
-with `0x11`); null teardown calls produce 70 unmapped calls, 10 inside `.text`.
+**Current runtime blocker** (queued in `todo.md`): the dialog layer is fake —
+`CreateDialogIndirectParamA` creates no window and sends no `WM_INITDIALOG`,
+`GetDlgItem` returns a constant, and `PeekMessageA` returns 0 — so the game is
+alive in a steady-state dialog-setup loop and coverage freezes at 52,858 / 4,643.
+The shutdown ESP corruption is dormant (the run never reaches shutdown). The MIX
+index read is fixed (27/27 blocks, 17/17 records).
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the
