@@ -73,6 +73,7 @@
 #include "IPXGlobalConnClass.h"
 #include "IPXInterfaceClass.h"
 #include "IPXManagerClass.h"
+#include "Image.h"
 #include "InfantryClass.h"
 #include "InfantryTypeClass.h"
 #include "IsometricTileClass.h"
