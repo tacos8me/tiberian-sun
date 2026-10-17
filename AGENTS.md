@@ -219,6 +219,12 @@ message loop: not-reached   (GetMessage=0 PeekMessage=0 DispatchMessage=0
                              CreateWindowExA=0)
 ```
 
+**Boot status is being re-measured by a concurrent lane.** The instruction
+count, the `ExitProcess` argument and the message-loop state above are the last
+measured values, not re-measured here; `tools/boot.py` currently fails to build
+in the docs worktree after `sync_handwritten()` copies the hand-written headers
+over the generated set. Do not re-quote these as final until it builds.
+
 So: the game starts, initialises, and exits. It does **not** reach a message
 loop, and it creates no window.
 
@@ -407,8 +413,14 @@ to find:
 ## Current status
 
 Last updated after the transcription, whole-tree-link and gap-closing work.
-Every figure here is from `python3 tools/harness.py metrics`; re-run it rather
-than trusting this list.
+Every figure here was re-measured on 2026-10-17 with `python3 tools/harness.py
+metrics --no-append`, `python3 tools/verify.py src/include build/shim`,
+`python3 tools/verify_members_binary.py`, `python3 tools/test_tools.py`,
+`python3 tools/gen_code.py ... --check`, `python3 tools/link_test.py`, and
+direct counts over `out/` and `src/generated/`. Re-run them rather than
+trusting this list. Boot-status figures (instructions executed, `ExitProcess`
+argument, message-loop state) are being re-measured by a concurrent lane and
+are marked where they appear.
 
 **How far off "complete" is this project.** The layers are far apart. Read this
 before quoting any single number. `ROADMAP.md` states each of these as a
@@ -417,13 +429,13 @@ measurable exit criterion rather than a percentage.
 | Layer | State | Note |
 |---|---|---|
 | **ABI / layout** | **reproduced, compiler-confirmed** | everything compiles `-m32` at the target ABI, and check 9 makes the compiler confirm every recovered member offset a header can express: **3,073/3,073**. The 1,216 offsets with no assertion are itemised by reason (743 vptr stores the compiler inserts itself, 413 past the declared extent, 44 undeclared, 10 no member offset, 6 headerless) |
-| Binary recovery | **effectively closed** | 41,822 functions, 96.06% of `.text` as recovered code; the remaining 104 KB is classified — 11 jump tables (256 B) and 356 B of switch index tables emitted as data, 105,808 B of alignment padding, and 554 B in 90 runs reported verbatim rather than forced into a category (`out/text_data.json`) |
-| Structural reconstruction | **strong** | 749/749 classes, 9,780 vtable slots, 0 unseeded, every constructor a real entry point |
-| Code transcription | **complete** | 43,668 functions, 897,193 of 897,193 instructions (100%) |
-| Verification | **9 checks green, pipeline red** | `verify.py` passes all nine in **6 seconds** (263/263, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS). `pipeline.sh` is red at the **link test** on 2 unmapped calls, and takes **471s** — the link is the expensive stage, not verification |
+| Binary recovery | **effectively closed** | **43,564** functions/spans, **96.09%** of `.text` as recovered code; **105,966 B (103 KB)** unattributed, classified in `out/text_data.json` as **12** jump tables (264 B), **7** switch index tables (349 B), **104,959 B** of alignment padding, and **394 B in 55 runs** reported verbatim rather than forced into a category. 99.99% of `.text` is attributed as code or data. |
+| Structural reconstruction | **strong** | 749/749 classes, **9,810** vtable slots, 0 unseeded, every constructor a real entry point |
+| Code transcription | **complete** | **43,564** recovered function spans, transcribed as **46,008** functions (43,564 starts + **2,444** tail entries) and **918,438** instruction lines, 100% modelled, 0 unmodelled |
+| Verification | **9 checks green, link stage red** | `verify.py` passes all nine (263/263, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS; about 6 s last timed). The **link stage** is red on 2 unmapped calls (`link_test.py`, 492 TUs); the full `pipeline.sh` last measured about 471 s — the link is the expensive stage, not verification |
 | **Semantics** | **~9%** | 5,557 of 9,810 slots carry a name (56.6%), but only **917 distinct names** and **281 distinct semantic** ones — most of the coverage is shared-stub propagation. 291 members named across 20 classes; `e2e_rules.py` resolves 96.2% of them against the shipped `rules.ini` |
 | **Modifiability** | **minimal** | there is still no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is the hand-written headers |
-| **Behaviour** | **boots, then exits** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`), and the game runs **1,011,817 instructions** of its own CRT startup and init before calling `ExitProcess`. The cause is measured: the atexit walk leaks **108 bytes** across the static-constructor table, so ESI holds a return address and `call *%esi` at `0x5e72cf` goes to garbage. The **retail binary does the same thing here** (exits code 01, before DirectDraw surface creation), so this is not a divergence from a working game |
+| **Behaviour** | **boots, then exits** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`), and the game runs **1,011,817 instructions** of its own CRT startup and init before calling `ExitProcess` (**boot status being re-measured**). The cause is measured: the atexit walk leaks **108 bytes** across the static-constructor table, so ESI holds a return address and `call *%esi` at `0x5e72cf` goes to garbage. The **retail binary does the same thing here** (exits code 01, before DirectDraw surface creation), so this is not a divergence from a working game |
 
 So: *the binary is explained, its instructions are transcribed, the layout is
 compiler-confirmed, and the game's own startup now executes.* It is not a
@@ -434,26 +446,35 @@ the source is still barely named and not editable as source.
 
 Two corrections that matter when sizing the rest:
 
-- **The virtual-naming problem is 3,409 distinct slots, not 9,780.** 65.1% of
-  (class, slot) pairs are inherited from a base. The top 18 bases cover 13,011
-  slot-instances, so naming effort on `ObjectClass`/`AbstractClass`/`TechnoClass`
-  and their peers is worth roughly 20 slots per name.
-- **`-m32` works here today** (`g++-multilib` installed): 262/262 headers
-  compile, the tree links in 1m37s and the entry point runs. The gate just never
-  asked. Putting it in the gate is the highest-value small change available.
+- **The naming denominators are three different quantities.** The old "3,409
+  distinct slots" was an estimate of slot instances after inheritance
+  deduplication, not a name count, and is retracted. Measured: **9,810** vtable
+  `(class, slot)` instances; **5,557** named pairs (56.6%); **917** distinct
+  name strings (**281** semantic, excluding destructors and QI/AddRef/Release);
+  **6,954** virtual declarations in the headers (**4,496** named + **2,458**
+  `vfunc_N`); **702** classes with a naming record (this is what
+  `harness.py metrics` prints as `virtual_names` — not a count of names).
+  65.1% of slot instances are inherited, so naming a base names its subtree;
+  the top 18 bases cover 13,011 slot-instances.
+- **`-m32` is in the gate today** (`g++-multilib` installed): **263/263** headers
+  compile at the target ABI, the tree links (492 TUs) and the entry point runs.
+  This item is closed; check 9 confirms 3,073/3,073 offsets.
 
 **The whole recovered instruction stream is transcribed.** `tools/gen_code.py`
 renders each recovered function into C++ against the `ts::` machine model in
 `src/handwritten/Machine.h` — registers, flags, memory and control flow are
 modelled, so the generated code does what the machine does. Each generated line
 is one machine instruction and keeps the original as a trailing comment. It emits
-one canonical `ts::sub_XXXXXXXX(void)` per function VA, plus 1,846 **tail
-entries**: addresses a cross-function branch targets that are not function
-starts, which were previously dispatch gaps. The per-class files in
-`src/generated/` are **forwarders** that call those, so one machine function has
-one body.
+one canonical `ts::sub_XXXXXXXX(void)` per recovered function VA (**43,564**),
+plus **2,444 tail entries**: addresses a cross-function branch targets that are
+not function starts, which were previously dispatch gaps. That is **46,008**
+transcriptions and **918,438** instruction lines in all. (The harness's
+`shared_tail_entry_points` = **1,080** is a *different* quantity: entry points
+that sit strictly inside another recovered body.) The per-class files in
+`src/generated/` are **6,962 forwarders** across **310** translation units that
+call those, so one machine function has one body.
 
-`tools/link_test.py` links all 482 translation units into a program, registers
+`tools/link_test.py` links all **492** translation units into a program, registers
 every recovered function, and executes the original PE entry point against the
 model. **That link is not decoration**: a per-file syntax check cannot see a
 forwarder naming a symbol nothing defines, and the tree did not link for months
@@ -461,18 +482,21 @@ because no check looked.
 
 Honest limits, all stated in `src/generated/README.md`:
 
-- 0 instructions have no faithful rendering. The last 166 (MMX/SSE, the x87
-  environment save/restore, far pointers, `lar`, `fbld`, `fcmovnbe`, `pushaw`)
-  are rendered against the machine model: 897,193 of 897,193 instructions are
+- 0 instructions have no faithful rendering. The 166 that once did (MMX/SSE, the
+  x87 environment save/restore, far pointers, `lar`, `fbld`, `fcmovnbe`,
+  `pushaw`) are now modelled: **918,438 of 918,438 instruction lines** are
   modelled and the transcription gate still verifies every function
   instruction-for-instruction. Two limits of the *model* remain, stated where
   they live in `Machine.h`: `lar` reports the flat ring-3 code segment because
   the model has no descriptor table, and `fnsave`/`fnstenv` write zero into the
   two x87 pointer fields because the model does not track them.
-- 228 destructors are **labelled stubs**. The headers declare them; no comment
-  records where they are, so there is no transcription to forward to.
-- The entry-point run stops at import thunks, because the model never loads the
-  image's data sections and `call dword ptr [IAT]` therefore reads 0.
+- **229** destructors are **labelled stubs**. The headers declare them; no
+  comment records where they are, so there is no transcription to forward to.
+- **The entry-point run does not stop at import thunks.** `Image.h` maps every
+  PE section's raw extent and writes a stub VA into all **341** IAT slots;
+  `link_test.py` reports `341 of 341 IAT slots written` and `0 with no stub`.
+  The old "stops at import thunks / reads 0" claim described the pre-`Image.h`
+  model and is retracted.
 
 It is **not** source-shaped decompilation: the generated code is faithful to what
 the machine does and is not claimed to be the shape the original source had.
@@ -481,39 +505,41 @@ hand-written callers reach the right code through `ts::ts_invoke` but the values
 they pass are only meaningful when the caller is itself a transcription.
 
 **Done and verified.** RTTI recovery (788 type descriptors, 755 hierarchies,
-843 vtables), disassembly (41,822 functions, 96.06% of `.text`,
-`vtable_slots_unseeded` 0), class manifest (749 classes, 9,810 slots, every
-constructor a **real function entry point**), direct-base reduction, 4,326 member
-offsets recovered (99.9% confirmed against the binary by disassembling the
-constructors), 1,567 named virtuals with a per-name evidence file, 135 member
+843 vtables), disassembly (**43,564** functions, **96.09%** of `.text`,
+`vtable_slots_unseeded` 0), class manifest (749 classes, **9,810** slots, every
+constructor a **real function entry point**), direct-base reduction, **4,289**
+member offsets recovered (4,285 = 99.9% confirmed against the binary by
+disassembling the constructors), **4,496** named virtual declarations and
+**5,557** named `(class, slot)` pairs from **917** distinct names, **291** member
 names from INI keys, headers for all 749 classes, and the whole recovered
-instruction stream transcribed (43,668 functions including 1,846 tail entries,
-6,996 forwarders across 309 translation units).
+instruction stream transcribed (**46,008** functions including **2,444** tail
+entries, **6,962** forwarders across **310** translation units).
 
 The pipeline reproduces all of it from `bin/GAME.EXE` alone and
-`tools/verify.py` runs **nine** checks: 261/261 standalone at `-m32`, combined TU
-PASS at `-m32`, 749/749 coverage, 749/749 vtable bindings, 219/219 header
-content, 220/220 inheritance, 2186/2186 member offsets across 248 classes,
-check 8 reporting declared-vs-recovered virtual arity (reported, not gated),
-and check 9 compiling `offsetof` assertions for the recovered member offsets at
-`-m32`, which currently confirms **1 of 3,090** — the vptr-emitted-as-a-data-
-member defect (ROADMAP P0.2), not a broken check. The transcription
-faithfulness gate verifies all 43,668 functions instruction-for-instruction, and
-`tools/test_tools.py` runs 36 checks with four mutation-proven.
-`tools/harness.py determinism --run` reports **497** artifacts byte-identical
-across two clean runs — the recovered data *and* the generated C++.
+`tools/verify.py` runs **nine** checks: **263/263** standalone at `-m32`,
+combined TU PASS at `-m32`, 749/749 coverage, 749/749 vtable bindings, 219/219
+header content, 220/220 inheritance, **1,317/1,317** member offsets across
+**206** classes, check 8 reporting declared-vs-recovered virtual arity
+(**331/1,116** match, 785 divergence; reported, not gated), and check 9
+compiling `offsetof` assertions for the recovered member offsets at `-m32`,
+which confirms **3,073/3,073** asserted offsets. The transcription
+faithfulness gate verifies all **46,008** functions instruction-for-instruction,
+and `tools/test_tools.py` runs **39** checks with four mutation-proven.
+`tools/harness.py determinism --run` last measured **497** artifacts
+byte-identical across two clean runs — the recovered data *and* the generated
+C++ (*not re-run in this session*).
 
 **Real shipped game data is committed** under `realdata/` (rules.ini, ai.ini,
 art.ini, sound.ini, theme.ini, BATTLE.INI, MISSION.INI, ~1 MB), extracted from
 `INSTALL/TIBSUN.MIX`. `tools/e2e_rules.py` drives the reconstructed model with it
-and checks the recovered field names against shipped keys: 110 of 112 resolve
-(101 as `key=value`, 9 only in the documented comment header). This is the only
+and checks the recovered field names against shipped keys: **280 of 291
+(96.2%)** resolve; 14 are documented only in the files' comment headers. This is the only
 validation that compares the reconstruction against something outside the
 project's own artifacts. It is committed deliberately so a fresh clone can run
 it without the 2.7 GB of CD images.
 
 **Closing a coverage gap is a test, not just more output.** Widening the
-transcription from 2,845 functions to all 41,822 — and then linking the result —
+transcription from 2,845 functions to all 43,564 — and then linking the result —
 exposed six defects that every existing check had passed over, including one that
 had prevented a single destructor from ever being emitted in the life of the
 project. Both of those moves are the same move: make the check reach code it did
@@ -527,8 +553,9 @@ byte-identical. Use these before and after any change.
 **Read `ROADMAP.md` to decide what to work on, and `todo.md` before touching
 anything.** The roadmap states what "done" means for *documented*, *modifiable*
 and *compilable* as measurable exit criteria, corrects the raw counts for what
-they actually mean (the virtual-naming problem is 3,409 distinct slots, not
-9,810, because 65% are inherited), and gives the phase order. todo.md is the
+they actually mean (9,810 slot instances, 5,557 named pairs, 917 distinct names,
+4,496 named + 2,458 `vfunc_N` header declarations; 65% of slot instances are
+inherited), and gives the phase order. todo.md is the
 defect ledger and records what is broken and how it was verified. Do not read the
 status above as "everything is fine".
 
@@ -543,29 +570,31 @@ agree with the recovered tables.
 It still does **not** prove the disassembly is correct. Two specific gaps to
 keep in mind:
 
-- Check 4 and `tools/verify_members_binary.py` are the only checks anchored to
-  the binary. Checks 5–7 compare the tree against other tools' output
-  (`out/class_manifest.json`, `out/direct_bases.json`, `out/members.json`), so a
-  bug in `gen_manifest.py` would make the manifest and the headers wrong
-  *together* and those checks would still pass.
+- Check 4, check 9 and `tools/verify_members_binary.py` are the only checks
+  anchored outside the tool chain: check 4 reads the binary, check 9 makes the
+  compiler adjudicate layout. Checks 5–7 compare the tree against other tools'
+  output (`out/class_manifest.json`, `out/direct_bases.json`,
+  `out/members.json`), so a bug in `gen_manifest.py` would make the manifest and
+  the headers wrong *together* and those checks would still pass.
 - `tools/verify_members_binary.py` disassembles each constructor in the binary
   and confirms claimed offsets against real stores. It examines 637 classes and
-  4,326 claims, confirms **99.9%** (4,322 confirmed, 4 refuted, 0 uncheckable)
-  and runs as a **gate** with a 95% floor. The 4 refuted are two offsets in each
-  of `ScoreTimeClass` and `ScorePrintClass`. It caught a real defect earlier: a
-  store site buried inside a large general-purpose function was being accepted
-  as the constructor, which misattributed member claims for 180 of 585 classes.
-  A plausibility gate now requires the vtable write to occur early in the
-  function through a non-stack register, which cut false claims from 1,052 to 4.
-- Check 7 covers **248 classes and 2,186 offsets** (it previously skipped
+  **4,289 claims**, confirms **99.9%** (**4,285 confirmed, 4 refuted, 0
+  uncheckable**) and runs as a **gate** with a 95% floor. The 4 refuted are two
+  offsets in each of `ScoreTimeClass` and `ScorePrintClass`. It caught a real
+  defect earlier: a store site buried inside a large general-purpose function was
+  being accepted as the constructor, which misattributed member claims for 180 of
+  585 classes. A plausibility gate now requires the vtable write to occur early
+  in the function through a non-stack register, which cut false claims from 1,052
+  to 4.
+- Check 7 covers **206 classes and 1,317 offsets** (it previously skipped
   hand-written headers and reported only 6 classes). It verifies the
   machine-generated `m_<hex>`/`vptr_<hex>` declarations against the recovered
   table. It deliberately does **not** gate *curated* hand-written names
   (`vptr`, `NextStage`, `m_Field474`): those carry their own ctor evidence and
   are often richer than the automated table, so a disagreement is reported
   rather than treated as an error.
-- Check 8 reports declared-vs-recovered virtual arity: 478 of 1,172 agree, 694
-  diverge. It is **reported, not gated**, because `nargs` counts `this` for COM
+- Check 8 reports declared-vs-recovered virtual arity: **331 of 1,116** agree,
+  **785** diverge. It is **reported, not gated**, because `nargs` counts `this` for COM
   `__stdcall` methods and not for `__thiscall`, so it is a signal rather than
   ground truth. It already caught a real case (`DisplayClass.h`'s
   `TacticalClass::vfunc_4()` declared with 0 arguments where `0x4f6a20` is
@@ -609,7 +638,7 @@ keep in mind:
   what the game does after init.
 - **Test the tools, not only their output.** `tools/verify.py` checks artifacts;
   a tool can be wrong in a way that produces self-consistent output and nothing
-  notices. `tools/test_tools.py` holds 36 checks, each a regression test for a
+  notices. `tools/test_tools.py` holds 39 checks, each a regression test for a
   defect that shipped or a differential test against an independent
   implementation, and four of them are mutation-proven to fail when the defect
   is reintroduced. If a test cannot fail, it is not worth the runtime.
@@ -619,7 +648,7 @@ keep in mind:
   two-check transcription gate was written because a mutation showed the
   record-only check could not see a corrupted statement.
 - **Closing a coverage gap finds bugs in code that was already there.** Extending
-  the transcription from 2,845 functions to all 41,822 exposed six defects in the
+  the transcription from 2,845 functions to all 43,564 exposed six defects in the
   emitter and generator, including one that had prevented every destructor from
   ever being emitted. Widening scope is a test, not just more output.
 - **Never `git stash push -u -- <path>` to get a clean tree for a test.** `git
@@ -642,16 +671,18 @@ keep in mind:
 
 Member **offsets** are the one piece of layout that IS verified against the
 binary: `tools/verify_members_binary.py` disassembles each constructor and
-confirms the claimed displacement appears in a real store, at 99.9% (4,322 of
-4,326, 4 refuted, 0 uncheckable). What is **not** verified is member *type* and
+confirms the claimed displacement appears in a real store, at 99.9% (4,285 of
+4,289, 4 refuted, 0 uncheckable). What is **not** verified is member *type* and
 *ordering* — whether a 4-byte slot is really an `int` rather than a pointer, or
 whether two members are the right way round. Hand-written inheritance is reported
 separately in check 6, not gated, because those headers are the authoritative
 richer source and legitimately omit transitively-implied bases.
 
 **Known open defects** are listed in `todo.md` with evidence. The two largest
-now are: **5,420 virtuals and ~4,190 members are unnamed** — the source compiles,
-links and runs, but a reader still meets `vfunc_247` more often than a name; and
+now are: **2,458 header virtual declarations remain `vfunc_N`** (5,557
+`(class, slot)` pairs carry a name, but only 917 names are distinct), and
+**3,235 of 3,526 non-vptr members are unnamed** — the source compiles, links and
+runs, but a reader still meets `vfunc_247` more often than a name; and
 **the transcription is not source-shaped**, so a function reads as one machine
 instruction per line rather than as the C++ the original author wrote. The
 slot-0 mislabel is fixed (the generator now detects shared slot-0 stubs and
