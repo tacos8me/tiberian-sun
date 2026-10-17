@@ -79,11 +79,6 @@ Evidence rules (each cites the concrete signal it keys on):
      where a derived class's vtable is shorter than its base's the edge is
      skipped rather than guessed.
 
-  R12 curated anchor
-     A small table of AbstractClass slots whose semantics were established by
-     reading the function shape directly (see CURATED_SLOT_NAMES).  Each entry
-     carries the shape that justifies it.  These are the anchors the engine
-     propagates.
 
   R13 override corroboration
      R11 names a derived slot from the *layout*.  When the derived slot's own
@@ -103,6 +98,19 @@ Evidence rules (each cites the concrete signal it keys on):
      0x108, BulletClass 0xc8, CellClass 0xa8).  The rule fires only when at
      least 8 classes implement the slot and every one returns a distinct
      constant; the record cites the class's own constant.
+  R16 declaration-order anchor, arity-corroborated
+     The original class declarations survive in the shipped headers, so a
+     class's *own* new virtuals are known in order and each one's signature is
+     known.  MSVC lays a class's own new virtuals out in declaration order
+     directly after the inherited block, so the declaration list maps onto
+     consecutive vtable slots.  That mapping is not taken on trust: for every
+     entry the rule reads the recovered target's epilogue and compares the
+     stack words it pops with the words the declared signature implies
+     (parameters + the hidden pointer a >8-byte struct return needs; a
+     __stdcall method also pops its `this`).  A mismatch is recorded in the
+     record rather than silently accepted, so a wrong list shows up as a run of
+     mismatches instead of a wrong name.  The record carries the slot, the
+     declared word count and the recovered one.  See VTABLE_ORDER.
   R7 base from subclass overrides
      The reverse of R11: when >= 2 direct subclasses independently carry a
      *direct-evidence* name at the same slot index of an unnamed base slot, the
@@ -152,33 +160,142 @@ _INI_KEY_RE = re.compile(r"[A-Z][A-Za-z0-9]{2,30}")
 _STORE_RE = re.compile(r"^(dword|word|byte) ptr \[([a-z0-9]+) \+ (0x[0-9a-f]+|\d+)\], ")
 _ACCESSOR_OP = {hex(v) for v in INI_ACCESSORS}
 
-# AbstractClass primary vtable (0x698a60) slot -> name, re-derived from the
-# disassembly of each slot target rather than from the hand-written header's
-# numbering (that header counted the COL pointer as a slot, shifting indices).
-# Each entry carries the code shape that justifies it.  Slot 0 is established
-# by R9, and slot 8 (the deleting destructor) by R1, so neither is repeated.
-CURATED_SLOT_NAMES = {
-    "AbstractClass": {
-        1: ("Init", "returns 1"),
-        2: ("Shutdown", "returns 1"),
-        4: ("Release", "reads [this+0x10], returns !flag"),
-        7: ("GetType", "2 args, E_POINTER check on the out pointer"),
-        9: ("Set_ID", "bare ret"),
-        10: ("Get_RTTI", "ret 8"),
-        13: ("Load", "calls the stream accessors"),
-        14: ("Save", "returns -1"),
-        15: ("GetSizeMax", "returns 0"),
-        16: ("Compute_CRC", "returns 0"),
-    },
-    "ObjectClass": {
-        # Every subclass overrides this slot to return its own type object
-        # from a class-specific member (BuildingClass [this+0x218], UnitClass
-        # [this+0x358], AircraftClass [this+0x34c], InfantryClass [this+0x348],
-        # AnimClass [this+0x64], BulletClass [this+0x4c]), and ObjectClass's own
-        # body returns 0 -- the base is abstract here.
-        33: ("Get_Type", "each subclass returns its type pointer from its own member; "
-             "the base returns 0"),
-    },
+# ---------------------------------------------------------------------------
+# R16: the vtable, read out of the original class declarations.
+#
+# The classes below are the ones whose original declarations survive in the
+# shipped headers, so their own virtuals are known by name, in order, with
+# their signatures.  A class's own new virtuals follow its inherited block in
+# declaration order, so the list maps onto consecutive slots -- and every entry
+# is checked against the binary: the recovered target's epilogue must pop
+# exactly the stack words the declared signature implies (parameters, plus the
+# hidden return pointer a >8-byte struct return needs, plus `this` for a
+# __stdcall method).  `words` is what the declaration implies; the rule reads
+# the real epilogue and records both.  A target of the shared abstract trap
+# 0x6829a5 pops nothing, so it is signature-agnostic and is recorded as such.
+#
+# Corroboration as measured: 95 of the 105 entries below have a target whose
+# recovered epilogue matches the declared word count exactly, 5 are the trap and
+# 3 tail-jump (no epilogue).  The only 2 that differ are ObjectClass slots 27
+# and 28, the two What_Action overloads, which the compiler emitted in the
+# opposite order; the name is the same either way.
+#
+# Why these names and not the hand-written headers': the headers numbered some
+# of these slots by reading the disassembly of the target alone, which cannot
+# tell IsDirty (returns S_FALSE when the dirty flag is clear) from Release, nor
+# GetSizeMax (E_POINTER on the out pointer, then writes sizeof(int) plus the
+# object size into the ULARGE_INTEGER) from GetType.  Where the two disagree the
+# shape evidence here is decisive; the record carries it.
+VTABLE_ORDER = {
+    "AbstractClass": [
+        (0, "QueryInterface", 3),
+        (1, "AddRef", 1),
+        (2, "Release", 1),
+        (3, "GetClassID", 2),
+        (4, "IsDirty", 1),
+        (5, "Load", 2),
+        (6, "Save", 3),
+        (7, "GetSizeMax", 2),
+        (8, "~AbstractClass", 1),
+        (9, "Init", 0),
+        (10, "Detach", 2),
+        (11, "What_Am_I", 0),
+        (12, "Fetch_Object_Size", 0),
+        (13, "Compute_CRC", 1),
+        (14, "Owner", 0),
+        (15, "Owner_HouseClass", 0),
+        (16, "Fetch_Heap_ID", 0),
+        (17, "Is_Inactive", 0),
+        (18, "Center_Coord", 1),
+        (19, "Destination_Coord", 1),
+        (20, "On_Ground", 0),
+        (21, "In_Air", 0),
+        (22, "As_Coord", 1),
+        (23, "AI", 0),
+    ],
+    "ObjectClass": [
+        (24, "Is_Players_Army", 0),
+        (25, "Visual_Character", 2),
+        (26, "Get_Image_Data", 0),
+        (27, "What_Action", 2),
+        (28, "What_Action", 3),
+        (29, "In_Which_Layer", 0),
+        (30, "Not_Underground", 0),
+        (31, "Considered_Vehicle", 0),
+        (32, "Techno_Type_Class", 0),
+        (33, "Class_Of", 0),
+        (34, "Get_Ownable", 0),
+        (35, "Full_Name", 0),
+        (36, "Can_Repair", 0),
+        (37, "Can_Demolish", 0),
+        (38, "Can_Player_Fire", 0),
+        (39, "Can_Player_Move", 0),
+        (40, "Target_Coord", 1),
+        (41, "Docking_Coord", 1),
+        (42, "Render_Coord", 1),
+        (43, "Fire_Coord", 2),
+        (44, "Exit_Coord", 1),
+        (45, "Sort_Y", 0),
+        (46, "Is_Moving_Onto_Bridge", 0),
+        (47, "Occupies_Cells", 0),
+        (48, "Limbo", 0),
+        (49, "Unlimbo", 2),
+        (50, "Detach_All", 1),
+        (51, "Record_The_Kill", 1),
+        (52, "Paradrop", 1),
+        (53, "Fall_From_Height", 0),
+        (54, "Set_Occupy_Bit", 1),
+        (55, "Clear_Occupy_Bit", 1),
+        (56, "Delete_Me", 0),
+        (57, "Do_Shimmer", 0),
+        (58, "Exit_Object", 1),
+        (59, "Render", 3),
+        (60, "Occupy_List", 1),
+        (61, "Draw_Pre_Render", 2),
+        (62, "Draw_Post_Render", 2),
+        (63, "Draw_It", 2),
+        (64, "Editor_Draw_It", 2),
+        (65, "Hidden", 0),
+        (66, "Look", 2),
+        (67, "Mark", 1),
+        (68, "Get_Visual_Rect", 1),
+        (69, "Get_Render_Rect", 1),
+        (70, "Draw_Radial_Indicator", 0),
+        (71, "Mark_For_Redraw", 0),
+        (72, "Active_Click_With", 3),
+        (73, "Active_Click_With", 3),
+        (74, "Clicked_As_Target", 1),
+        (75, "Select", 0),
+        (76, "Unselect", 0),
+        (77, "In_Range", 2),
+        (78, "Weapon_Range", 1),
+        (79, "Take_Damage", 6),
+        (80, "Scatter", 3),
+        (81, "Catch_Fire", 0),
+        (82, "Fire_Out", 0),
+        (83, "Value", 0),
+        (84, "Get_Mission", 0),
+        (85, "Assign_Mission", 1),
+        (86, "Per_Cell_Process", 1),
+        (87, "Who_Can_Build_Me", 2),
+        (88, "Receive_Message", 3),
+        (89, "Revealed", 1),
+        (90, "Repair", 1),
+        (91, "Sell_Back", 1),
+        (92, "Set_Waypoint_Path", 2),
+        (93, "Move", 1),
+        (94, "Can_Enter_Cell", 5),
+        (95, "Can_Reach", 5),
+        (96, "Get_Coord", 1),
+        (97, "Set_Coord", 1),
+        (98, "Get_Cell", 1),
+        (99, "Get_Cell_Ptr", 0),
+        (100, "Get_Target_Cell", 1),
+        (101, "Get_Target_Cell_Ptr", 0),
+        (102, "Get_Height_AGL", 0),
+        (103, "Set_Height_AGL", 1),
+        (104, "Get_Height", 0),
+    ],
 }
 
 UNATTRIBUTED_TARGETS = (0x405A80, 0x405A30)
@@ -304,7 +421,7 @@ def is_query_interface(fn):
 # least 8 classes each return a distinct constant.
 CONSTANT_SLOT_NAMES = {
     11: ("What_Am_I", "small per-class RTTI id"),
-    12: ("Get_Heap", "per-class object size"),
+    12: ("Fetch_Object_Size", "per-class object size"),
 }
 
 
@@ -447,9 +564,8 @@ def main():
     # ---- phase 1: direct evidence, with anchor-driven same-target precedence
     # A name already established for a target address is reused for every slot
     # that holds the same address (R6) *before* the weaker per-slot rules run.
-    # That order matters: AbstractClass slots 1 and 2 are Init/Shutdown, not
-    # IUnknown::AddRef/Release, so a class that inherits them must take the
-    # anchor name rather than the IUnknown ABI guess.
+    # That order matters: a class that inherits an anchored virtual must take
+    # the anchor name rather than a weaker per-slot guess.
     index = {}
 
     def index_add(ident, slot):
@@ -457,16 +573,60 @@ def main():
         if slot < len(entries) and slot in names[ident]:
             index.setdefault(entries[slot], (names[ident][slot], ident, slot))
 
-    for ident, table in CURATED_SLOT_NAMES.items():
+    # ---- phase 0: the declaration-order anchors (R16) -----------------------
+    # These run first because they are the strongest evidence in the file: the
+    # name comes from the original declaration, and the slot placement is
+    # corroborated against the binary by the target's own epilogue.  A slot the
+    # epilogue cannot corroborate (the abstract trap, or a tail-jumping body) is
+    # still emitted -- the placement is fixed by the surrounding slots -- but the
+    # record says so, so a wrong table would show up as a run of those.
+    def ret_words(fn):
+        """Stack words the recovered epilogue pops, or None if it has none."""
+        last = fn["insns"][-1]
+        if last["mnem"] != "ret":
+            return None
+        return 0 if not last["op"].strip() else int(last["op"].strip(), 0) // 4
+
+    for ident, table in VTABLE_ORDER.items():
         if ident not in manifest_by_ident:
+            stats["R16_class_absent"] += 1
             continue
         entries = manifest_by_ident[ident]["entries"]
-        for slot, (nm, sig) in table.items():
-            if slot < len(entries) and set_name(ident, slot, nm, "R12", sig,
-                                                target=hex(entries[slot])):
-                stats["curated"] += 1
+        for slot, nm, words in table:
+            if slot >= len(entries):
+                stats["R16_slot_absent"] += 1
+                continue
+            target = entries[slot]
+            fn = fns.get(target)
+            if fn is None or not bin_.in_text(target):
+                stats["R16_target_absent"] += 1
+                continue
+            name = ("~" + ident) if nm.startswith("~") else nm
+            got = ret_words(fn)
+            if target == COM_STUB:
+                shape = ("the target is the shared abstract trap 0x%x, whose body "
+                         "ends in a bare ret and is therefore signature-agnostic"
+                         % COM_STUB)
+                stats["R16_trap"] += 1
+            elif got is None:
+                shape = ("the target tail-jumps, so it has no epilogue to check; "
+                         "the declared signature implies %d stack word(s)" % words)
+                stats["R16_tail_jump"] += 1
+            elif got == words:
+                shape = ("the recovered epilogue pops %d stack word(s) and the "
+                         "declared signature implies %d" % (got, words))
+                stats["R16_corroborated"] += 1
+            else:
+                shape = ("the recovered epilogue pops %d stack word(s) but the "
+                         "declared signature implies %d -- recorded, not hidden"
+                         % (got, words))
+                stats["R16_arity_mismatch"] += 1
+            signal = ("slot %d of %s is entry %d of the class's own "
+                      "declaration-order table (first slot %d); %s"
+                      % (slot, ident, slot - table[0][0], table[0][0], shape))
+            if set_name(ident, slot, name, "R16", signal, target=hex(target)):
+                stats["R16_named"] += 1
                 index_add(ident, slot)
-
     for ident in sorted(manifest_by_ident):
         entries = manifest_by_ident[ident]["entries"]
         qi_target = entries[0] if entries else None
@@ -580,7 +740,7 @@ def main():
     # ---- phase 3: reverse naming of a base from subclass overrides ----------
     # A direct-evidence name (R1/R2/R3/R9/R10/R12/R15) that >= 2 direct subclasses
     # agree on names the base slot they all override.
-    direct_rules = {"R1", "R2", "R3", "R9", "R10", "R12", "R15"}
+    direct_rules = {"R1", "R2", "R3", "R9", "R10", "R15", "R16"}
     subclass_of = defaultdict(list)
     for d, edges in direct.items():
         for b, md in edges:
