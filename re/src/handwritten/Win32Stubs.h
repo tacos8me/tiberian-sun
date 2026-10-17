@@ -1641,54 +1641,65 @@ TS_END
 TS_BEGIN(wsprintfA)
     // wsprintfA is __cdecl and variadic: the caller pops the arguments, so this
     // stub discards only the return address and reads the rest without owning
-    // it. It handles %s %c %d %u %x %X %p %%; anything else is copied through.
+    // it. It formats %[flags][width][l]s %c %d %i %u %x %X %p and %%; a
+    // conversion it does not know is copied through with its flags, so a bad
+    // format is visible in the output rather than silently eating an argument.
     u32 dst = arg(0);
     const char *fmt = ld_cstr(arg(1));
     u32 out = 0, ai = 2;
-    char tmp[32];
+    char field[48];
     for (u32 i = 0; fmt[i]; ++i) {
-        if (fmt[i] != '%') { st8(dst + out, (u8)fmt[i]); ++out; continue; }
+        if (fmt[i] != '%') { st8(dst + out++, (u8)fmt[i]); continue; }
         ++i;
-        if (fmt[i] == '%') { st8(dst + out, '%'); ++out; continue; }
-        bool pad0 = false;
-        while (fmt[i] == '0' || fmt[i] == '-') { pad0 = pad0 || fmt[i] == '0'; ++i; }
-        while (fmt[i] >= '0' && fmt[i] <= '9') ++i;
+        if (fmt[i] == '%') { st8(dst + out++, (u8)'%'); continue; }
+        bool pad0 = false, left = false;
+        for (;; ++i) {
+            if (fmt[i] == '0') pad0 = true;
+            else if (fmt[i] == '-') left = true;
+            else break;
+        }
+        unsigned width = 0;
+        while (fmt[i] >= '0' && fmt[i] <= '9') {
+            width = width * 10u + (unsigned)(fmt[i] - '0');
+            ++i;
+        }
         if (fmt[i] == 'l') ++i;
         char c = fmt[i];
+        unsigned n = 0, head = 0;   // head: characters that precede zero padding
         if (c == 's') {
-            u32 s = arg(ai++);
-            while (ld8(s)) st8(dst + out++, ld8(s++));
+            u32 src = arg(ai++);
+            while (ld8(src) && n + 1u < sizeof(field)) field[n++] = (char)ld8(src++);
         } else if (c == 'c') {
-            st8(dst + out++, (u8)arg(ai++));
-        } else if (c == 'd' || c == 'i' || c == 'u' || c == 'x' || c == 'X') {
-            i32 v = (i32)arg(ai++);
-            u32 base = (c == 'x' || c == 'X') ? 16u : ((c == 'u') ? 10u : 10u);
+            field[n++] = (char)(u8)arg(ai++);
+        } else if (c == 'd' || c == 'i' || c == 'u' || c == 'x' || c == 'X' || c == 'p') {
+            u32 v = arg(ai++);
             bool neg = false;
-            u32 uv;
-            if (v < 0 && c != 'u' && c != 'x' && c != 'X') { neg = true; uv = (u32)(0 - (u32)v); }
-            else uv = (u32)v;
+            if ((c == 'd' || c == 'i') && (i32)v < 0) { neg = true; v = (u32)(0u - v); }
+            u32 base = (c == 'x' || c == 'X' || c == 'p') ? 16u : 10u;
+            bool upper = (c == 'X');
+            char rev[24];
             unsigned k = 0;
             do {
-                u32 dg = uv % base;
-                tmp[k++] = (char)(dg < 10u ? ('0' + dg) : ((c == 'X' ? 'A' : 'a') + dg - 10u));
-                uv /= base;
-            } while (uv && k < sizeof(tmp));
-            if (neg) st8(dst + out++, '-');
-            while (k) st8(dst + out++, (u8)tmp[--k]);
-        } else if (c == 'p') {
-            u32 v = arg(ai++);
-            tmp[0] = '0'; tmp[1] = 'x';
-            unsigned k = 2;
-            for (int b = 7; b >= 0; --b) {
-                u32 dg = (v >> (b * 4)) & 0xfu;
-                tmp[k++] = (char)(dg < 10u ? ('0' + dg) : ('a' + dg - 10u));
-            }
-            for (unsigned j = 0; j < k; ++j) st8(dst + out++, (u8)tmp[j]);
+                u32 dg = v % base;
+                rev[k++] = (char)(dg < 10u ? ('0' + dg)
+                                          : ((upper ? 'A' : 'a') + dg - 10u));
+                v /= base;
+            } while (v && k < sizeof(rev));
+            if (neg) field[n++] = '-';
+            if (c == 'p') { field[n++] = '0'; field[n++] = 'x'; }
+            head = n;
+            while (k) field[n++] = rev[--k];
         } else {
-            st8(dst + out++, (u8)'%');
-            if (c) st8(dst + out++, (u8)c);
+            field[n++] = '%';
+            if (c) field[n++] = c;
+            head = n;
         }
-        (void)pad0;
+        unsigned pad = width > n ? width - n : 0u;
+        if (!left && !pad0) for (unsigned k = 0; k < pad; ++k) st8(dst + out++, (u8)' ');
+        for (unsigned k = 0; k < head; ++k) st8(dst + out++, (u8)field[k]);
+        if (!left && pad0) for (unsigned k = 0; k < pad; ++k) st8(dst + out++, (u8)'0');
+        for (unsigned k = head; k < n; ++k) st8(dst + out++, (u8)field[k]);
+        if (left) for (unsigned k = 0; k < pad; ++k) st8(dst + out++, (u8)' ');
     }
     st8(dst + out, 0);
     stub_done(0, out);
@@ -1819,13 +1830,18 @@ TS_END
 
 TS_BEGIN(dd_GetDisplayMode)
     // DDSURFACEDESC: +0 dwSize, +4 dwFlags, +8 dwHeight, +12 dwWidth,
-    // +104 ddpfPixelFormat.dwRGBBitCount.
+    // +104 ddpfPixelFormat.dwRGBBitCount. The mode is the screen this model
+    // reports from GetSystemMetrics: a program that asks both and is told
+    // different sizes sizes its surfaces for the wrong screen.
     u32 p = arg(1);
-    for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
-    st32(p + 0u, 108u);
-    st32(p + 8u, 480u);
-    st32(p + 12u, 640u);
-    st32(p + 104u, 16u);
+    if (p) {
+        for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
+        st32(p + 0u, 108u);
+        st32(p + 4u, 0x00000041u);   // DDSD_WIDTH|DDSD_HEIGHT|DDSD_PIXELFORMAT
+        st32(p + 8u, SCREEN_H);
+        st32(p + 12u, SCREEN_W);
+        st32(p + 104u, SCREEN_BPP);
+    }
     stub_done(2, 0u);
 TS_END
 
@@ -2119,9 +2135,12 @@ TS_BEGIN(com_QueryInterface)
     stub_done(3, 0u);   // S_OK
 TS_END
 
-// Build a fake COM object: an object block whose first dword points at a
-// freshly allocated vtable. Each slot gets its own registered stub VA.
-inline u32 make_com_object(const char *const *names, const u8 *nargs,
+// Build a vtable of registered stubs: one SlotDef per slot (so a slot stub
+// knows its own name and argument count) and one registered VA per slot. The
+// vtable is built once per interface SHAPE and shared by every object of that
+// shape, because slot_defs() is a fixed table and a vtable per surface would
+// exhaust it after eleven surfaces.
+inline u32 make_com_vtable(const char *const *names, const u8 *nargs,
                            const Fn *override_fns, unsigned slots) {
     u32 base = slot_next();
     for (unsigned i = 0; i < slots; ++i) {
@@ -2139,6 +2158,13 @@ inline u32 make_com_object(const char *const *names, const u8 *nargs,
         st32(vt + i * 4u, va);
     }
     slot_next() = base + slots;
+    return vt;
+}
+
+// A fake COM object: an object block whose first dword points at its vtable.
+inline u32 make_com_object(const char *const *names, const u8 *nargs,
+                           const Fn *override_fns, unsigned slots) {
+    u32 vt = make_com_vtable(names, nargs, override_fns, slots);
     u32 obj = alloc_block(16u, 4u);
     st32(obj, vt);
     return obj;
@@ -2186,7 +2212,13 @@ inline u32 make_surface() {
     over[25] = &k_sfs_Lock;          // Lock
     over[22] = &k_sfs_GetSurfaceDesc;
     over[12] = &k_sfs_GetAttachedSurface;
-    return make_com_object(names, nargs, over, 45);
+    // One vtable, one object per surface: slot_defs() is a fixed table, so the
+    // 45 slot definitions are built once and every surface shares them.
+    static u32 vt = 0;
+    if (!vt) vt = make_com_vtable(names, nargs, over, 45);
+    u32 obj = alloc_block(16u, 4u);
+    st32(obj, vt);
+    return obj;
 }
 
 TS_BEGIN(sfs_GetSurfaceDesc)
@@ -2195,9 +2227,10 @@ TS_BEGIN(sfs_GetSurfaceDesc)
     if (p) {
         for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
         st32(p + 0u, 108u);
-        st32(p + 8u, 480u);
-        st32(p + 12u, 640u);
-        st32(p + 104u, 16u);
+        st32(p + 4u, 0x00000041u);
+        st32(p + 8u, SCREEN_H);
+        st32(p + 12u, SCREEN_W);
+        st32(p + 104u, SCREEN_BPP);
     }
     stub_done(2, 0u);
 TS_END
@@ -2208,15 +2241,16 @@ TS_BEGIN(sfs_Lock)
     // then writes somewhere that exists.
     u32 p = arg(2);
     static u32 buffer = 0;
-    if (!buffer) buffer = zero_block(640u * 480u * 2u, 0x1000u);
+    if (!buffer) buffer = zero_block(SCREEN_W * SCREEN_H * 2u, 0x1000u);
     if (p) {
         for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
         st32(p + 0u, 108u);
-        st32(p + 8u, 480u);
-        st32(p + 12u, 640u);
-        st32(p + 16u, 1280u);        // lPitch = 640 * 2 bytes
-        st32(p + 20u, buffer);       // lpSurface
-        st32(p + 104u, 16u);
+        st32(p + 4u, 0x00000041u);
+        st32(p + 8u, SCREEN_H);
+        st32(p + 12u, SCREEN_W);
+        st32(p + 16u, SCREEN_W * 2u);   // lPitch: the surface's stride in bytes
+        st32(p + 20u, buffer);          // lpSurface
+        st32(p + 104u, SCREEN_BPP);
     }
     stub_done(4, 0u);
 TS_END
@@ -2254,7 +2288,11 @@ inline u32 make_directdraw() {
     over[15] = &k_dd_GetMonitorFrequency;
     over[16] = &k_dd_GetScanLine;
     over[17] = &k_dd_GetVerticalBlankStatus;
-    return make_com_object(names, nargs, over, 23);
+    static u32 vt = 0;
+    if (!vt) vt = make_com_vtable(names, nargs, over, 23);
+    u32 obj = alloc_block(16u, 4u);
+    st32(obj, vt);
+    return obj;
 }
 
 TS_BEGIN(DirectDrawCreate)
