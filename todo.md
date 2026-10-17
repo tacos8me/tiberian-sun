@@ -58,7 +58,7 @@ CALLER as well as the target, so the source of the bad pointer is nameable.
 The stub table keyed an ordinal by its raw ILT value (`"ord_2147483681"`) while
 the loader asks for `"#161"`, so all 32 silently fell back to a stub with
 `nargs=0` -- a stub that cannot pop. Every such call left the stack imbalanced.
-Now 341/341 resolved, 0 fallbacks, 314 with a body, 27 generic. Argument counts
+Now 342/342 resolved, 0 fallbacks, 315 with a body, 27 generic. Argument counts
 are derived from the recovered instruction stream (count the pushes reaching each
 `call [slot]`, stop at a branch target/call/ret/pop/ESP-adjust, skip the
 prologue); 12 measured, 20 with no call site tagged `"doc"` and printed as
@@ -488,12 +488,18 @@ Fixed, and the fix was two separate defects:
     bodies returned with their frame abandoned.
 Both are recorded below. The memset itself was a symptom of the second.
 
-### [x] Reach a window and a message loop
-**Reached.** `CreateWindowExA=1`, `PeekMessage=137,295`, `DispatchMessage=1`.
-The unlock was `comctl32!DllGetVersion`: the CRT startup checks the comctl32
-version and calls `ExitProcess(1)` below 4.00.70, and it reaches that function
-through `GetProcAddress` rather than the import table, so there was no stub and
-the version read as 0. One export reporting 4.72 fixed it.
+### [ ] Reach a window and a message loop
+**NOT reached.** This entry previously said "Reached. CreateWindowExA=1,
+PeekMessage=137,295" -- that was false, and it was false for an instructive
+reason: the model let `ExitProcess` return, so execution walked past a fatal exit
+and the "loop" was one the real game never ran. `ExitProcess` now halts the run,
+and the measurement is `GetMessage=0 PeekMessage=0 DispatchMessage=0
+CreateWindowExA=0`.
+
+The one real unlock on this path is worth keeping: `comctl32!DllGetVersion` was
+reached through `GetProcAddress` rather than the import table, so there was no
+stub, the version read as 0, the CRT's version check failed and the game called
+`ExitProcess(1)` before initialising anything. One export reporting 4.72 fixed it.
 
 ### [x] The 2 unmapped calls, and the argument that arrives as a return address
 **Diagnosed and measured, not yet fixed.** The atexit walk over the 3,311-entry

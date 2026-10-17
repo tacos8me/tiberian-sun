@@ -161,7 +161,7 @@ a header under `src/include/`.
 
 ## Verification
 
-`python3 tools/verify.py src/include build/shim` runs eight checks and is
+`python3 tools/verify.py src/include build/shim` runs nine checks and is
 fail-closed: a missing artifact under `out/` makes it exit non-zero naming what
 is missing, rather than running a subset and printing `VERIFICATION PASSED`.
 Current output:
