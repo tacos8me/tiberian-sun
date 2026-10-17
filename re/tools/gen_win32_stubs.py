@@ -501,6 +501,17 @@ inline void stub_report() {
         unsigned long c = w32::counts()[i];
         if (c) std::printf("  %8lu  %s!%s\\n", c, t[i].dll, t[i].fn);
     }
+    // COM methods are not imports, so the ones served by a generic slot stub
+    // are reported from the slot table: a DirectDraw wrapper's Blt, Flip and
+    // Unlock calls land there, and a DirectDraw phase needs to see them by
+    // name. A slot with a hand-written body above counts under that body's
+    // name in the import table's shared bucket instead.
+    unsigned slots = w32::slot_next();
+    for (unsigned i = 0; i < slots; ++i) {
+        unsigned long c = w32::slot_counts()[i];
+        if (c) std::printf("  %8lu  %s (vtable slot %u)\\n", c,
+                           w32::slot_defs()[i].name ? w32::slot_defs()[i].name : "com", i);
+    }
 }
 
 }  // namespace ts

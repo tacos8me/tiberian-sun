@@ -2047,9 +2047,15 @@ struct SlotDef { const char *name; u8 nargs; u32 ret; };
 inline SlotDef *slot_defs() { static SlotDef s[512]; return s; }
 inline u32 &slot_next() { static u32 n = 0; return n; }
 
+// Per-slot call counts. A COM method is not an import, so it has no row in the
+// import table; without this the calls a DirectDraw wrapper makes would be
+// counted in total and attributed to nothing.
+inline unsigned long *slot_counts() { static unsigned long c[512]; return c; }
+
 template<unsigned I> void slot_stub() {
     const SlotDef &d = slot_defs()[I];
     note(d.name ? d.name : "com");
+    slot_counts()[I]++;
     stub_done(d.nargs, d.ret);
 }
 
@@ -2964,6 +2970,17 @@ inline void stub_report() {
     for (unsigned i = 0; i < n; ++i) {
         unsigned long c = w32::counts()[i];
         if (c) std::printf("  %8lu  %s!%s\n", c, t[i].dll, t[i].fn);
+    }
+    // COM methods are not imports, so the ones served by a generic slot stub
+    // are reported from the slot table: a DirectDraw wrapper's Blt, Flip and
+    // Unlock calls land there, and a DirectDraw phase needs to see them by
+    // name. A slot with a hand-written body above counts under that body's
+    // name in the import table's shared bucket instead.
+    unsigned slots = w32::slot_next();
+    for (unsigned i = 0; i < slots; ++i) {
+        unsigned long c = w32::slot_counts()[i];
+        if (c) std::printf("  %8lu  %s (vtable slot %u)\n", c,
+                           w32::slot_defs()[i].name ? w32::slot_defs()[i].name : "com", i);
     }
 }
 
