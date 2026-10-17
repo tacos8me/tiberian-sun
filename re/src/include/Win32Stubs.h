@@ -222,6 +222,27 @@ inline u32 tick_advance(u32 ms) { tick() += ms; return tick(); }
 // Defined with the table: name -> stub VA, ignoring the DLL.
 inline u32 find_by_name(const char *fn);
 
+// -- module handles ----------------------------------------------------------
+// A handle a caller gets from LoadLibraryA has to be identifiable by module
+// name, because GetProcAddress's whole job is "the export of THIS module". The
+// old body ignored its argument and returned a counter, so every handle meant
+// "some DLL" and GetProcAddress could only search one global name space. That
+// made a GetProcAddress-only export impossible to model: blowfish.dll's
+// DllRegisterServer is not in the import directory, so there was no row for it
+// and the game's registration path saw a null and took its error box.
+//
+// A handle is now the address of a loaded-module row; the row names the module
+// and carries its export table. The exports are registered as ordinary stubs,
+// so a caller that gets one back can call it.
+struct ExportDef { const char *fn; u8 nargs; u32 ret; Fn real; u32 va; };
+struct ModuleDef { const char *name; ExportDef *exports; unsigned nexports; };
+
+inline ModuleDef *module_defs(unsigned *count);
+inline u32 module_load(const char *name);
+inline u32 module_find_export(u32 handle, const char *fn);
+inline void register_module_exports();
+inline bool same_dll(const char *a, const char *b);
+
 // ===========================================================================
 // KERNEL32
 // ===========================================================================
@@ -266,9 +287,18 @@ TS_BEGIN(GetModuleFileNameA)
 TS_END
 
 TS_BEGIN(LoadLibraryA)
-    (void)arg(0);
-    static u32 n = 0;
-    stub_done(1, 0x00500000u + (n++));
+    // The name is the handle's identity now, not a counter's. A module the
+    // model knows (blowfish.dll, comctl32.dll) gets its row and its exports; an
+    // unknown DLL still gets a non-null handle so a caller that only checks for
+    // failure keeps running, but it is named in the log and its GetProcAddress
+    // will resolve nothing.
+    const char *name = ld_cstr(arg(0));
+    u32 h = module_load(name);
+    if (!h) {
+        std::printf("win32stubs: LoadLibraryA(\"%s\") -> 0 -- module table full; "
+                    "the caller takes its failure path\n", name);
+    }
+    stub_done(1, h);
 TS_END
 
 TS_RET(FreeLibrary, 1, 1u)
@@ -279,13 +309,14 @@ TS_BEGIN(GetProcAddress)
     // silent 0 reads as "this DLL does not export that", which is a claim the
     // caller acts on: the game asks comctl32 for DllGetVersion, and on a 0 it
     // decides the system is too old, puts up a message box and exits.
+    u32 handle = arg(0);
     const char *name = ld_cstr(arg(1));
-    u32 va = find_by_name(name);
+    u32 va = module_find_export(handle, name);
     if (!va) {
         state().proc_address_misses++;
         std::printf("win32stubs: GetProcAddress(module 0x%08x, \"%s\") -> 0 -- no "
                     "stub for it; a caller that tests this takes its failure path\n",
-                    arg(0), name);
+                    handle, name);
     }
     stub_done(2, va);
 TS_END
@@ -2076,7 +2107,6 @@ TS_RET(dd_QueryInterface, 3, 0u)
 TS_RET(dd_AddRef, 1, 1u)
 TS_RET(dd_Release, 1, 1u)
 TS_RET(dd_Compact, 1, 0u)
-TS_RET(dd_CreateClipper, 4, 0u)
 TS_RET(dd_DuplicateSurface, 3, 0u)
 TS_RET(dd_EnumDisplayModes, 5, 0u)
 TS_RET(dd_EnumSurfaces, 5, 0u)
@@ -2090,6 +2120,17 @@ TS_RET(dd_SetDisplayMode, 4, 0u)
 TS_RET(dd_WaitForVerticalBlank, 3, 0u)
 
 inline u32 make_dd_palette();
+inline u32 make_dd_clipper();
+
+TS_BEGIN(dd_CreateClipper)
+    // arg(0)=this, arg(1)=dwFlags, arg(2)=**lplpClipper, arg(3)=pUnkOuter.
+    // The old body was TS_RET(...,4,0): DD_OK with the out pointer untouched.
+    // FUN_004874c0 then calls (*lpClipper)->SetHWnd through a null, which is
+    // the 0x4876e4 call to address 0 in the boot. Writing the object is the
+    // whole contract of this method.
+    if (arg(2)) st32(arg(2), make_dd_clipper());
+    stub_done(4, 0u);   // DD_OK
+TS_END
 
 TS_BEGIN(dd_CreatePalette)
     // arg(0)=this, arg(1)=dwFlags, arg(2)=lpColorTable, arg(3)=**lplpPalette
@@ -2196,8 +2237,11 @@ TS_BEGIN(RegQueryInfoKeyA)
 TS_END
 
 // -- ole32 / OLEAUT32 --------------------------------------------------------
-// CoCreateInstance is handed a fake COM object rather than a null: a null is
-// dereferenced immediately, a fake object at least answers AddRef/Release.
+// CoCreateInstance has a body of its own (below, next to the IBlowfish object):
+// it writes a fake COM object into *ppv, because a null is dereferenced
+// immediately and an S_OK with an unwritten out pointer is worse than a
+// failure -- the caller believes it has an object and calls through whatever
+// the slot held.
 TS_RET(OleInitialize, 1, 0u)
 TS_RET(OleUninitialize, 0, 0u)
 TS_RET(CoDisconnectObject, 2, 0u)
@@ -2494,6 +2538,333 @@ inline u32 make_com_object(const char *const *names, const u8 *nargs,
     return obj;
 }
 
+inline u32 make_dd_clipper() {
+    // IDirectDrawClipper, DirectX 6 slot order: QueryInterface/AddRef/Release/
+    // GetClipList/GetHWnd/Initialize/IsClipListChanged/SetClipList/SetHWnd.
+    // Only SetHWnd is called here (FUN_004874c0 attaches the clipper to the
+    // window), but the whole shape is modelled so an interface pointer handed
+    // out is never a short vtable.
+    static const char *const names[9] = {
+        "IDirectDrawClipper::QueryInterface", "IDirectDrawClipper::AddRef",
+        "IDirectDrawClipper::Release", "IDirectDrawClipper::GetClipList",
+        "IDirectDrawClipper::GetHWnd", "IDirectDrawClipper::Initialize",
+        "IDirectDrawClipper::IsClipListChanged", "IDirectDrawClipper::SetClipList",
+        "IDirectDrawClipper::SetHWnd",
+    };
+    static const u8 nargs[9] = { 3, 1, 1, 4, 2, 3, 2, 3, 3 };
+    Fn over[9] = { 0 };
+    static u32 obj = 0;
+    if (!obj) obj = make_com_object(names, nargs, over, 9);
+    return obj;
+}
+
+// ===========================================================================
+// IBlowfish -- the class BLOWFISH.DLL registers for CLSID 1440AD10-...
+// ===========================================================================
+// Recovered from the DLL itself, not guessed: its class factory vtable is at
+// 0x1101d070 and its CreateInstance (0x11001251) constructs an object whose
+// vtable is 0x1101e480. That vtable has EIGHT slots, and each body below was
+// read from the corresponding function in BLOWFISH.DLL:
+//
+//   slot 3  0x11002011  SetKey(this, int len, const void *key)   len 0..56
+//   slot 4  0x1100204d  GetMaxKeyLength(this, int *out)          *out = 56
+//   slot 5  0x1100206c  GetBlockSize(this, int *out)             *out = 8
+//   slot 6  0x1100208b  Encrypt(this, int len, src, dst)         ret 0x10
+//   slot 7  0x110020cb  Decrypt(this, int len, src, dst)         ret 0x10
+//
+// The game's own wrapper (GAME.EXE 0x4233e0/0x423410/0x423440) calls exactly
+// slots 3, 6 and 7, with the argument order above. The class is created
+// lazily by 0x423360, which is reached from the MIX decryption path, not from
+// registration.
+//
+// Encrypt/Decrypt are honest copies for now: the model has no Blowfish cipher,
+// and a caller that decrypts with this gets its input back rather than a crash
+// or a plausible-looking wrong plaintext. They say so once, by name.
+inline u8 *blowfish_key() { static u8 k[56]; return k; }
+inline u32 &blowfish_key_len() { static u32 n = 0; return n; }
+
+TS_BEGIN(bf_SetKey)
+    u32 len = arg(1), key = arg(2);
+    if ((int)len < 0 || len > 56u) {
+        stub_done(3, 0x80070057u);   // E_INVALIDARG: the DLL checks 0..0x38
+    } else {
+        if (key) for (u32 i = 0; i < len; ++i) blowfish_key()[i] = ld8(key + i);
+        blowfish_key_len() = len;
+        stub_done(3, 0u);
+    }
+TS_END
+
+TS_BEGIN(bf_GetMaxKeyLength)
+    u32 out = arg(1);
+    if (!out) { stub_done(2, 0x80004003u); }
+    else { st32(out, 56u); stub_done(2, 0u); }
+TS_END
+
+TS_BEGIN(bf_GetBlockSize)
+    u32 out = arg(1);
+    if (!out) { stub_done(2, 0x80004003u); }
+    else { st32(out, 8u); stub_done(2, 0u); }
+TS_END
+
+TS_BEGIN(bf_Encrypt)
+    u32 len = arg(1), src = arg(2), dst = arg(3);
+    if (!src || !dst) { stub_done(4, 0x80004003u); }
+    else if ((int)len < 0) { stub_done(4, 0x80070057u); }
+    else {
+        static bool said = false;
+        if (!said) { said = true;
+            std::printf("win32stubs: IBlowfish::Encrypt -- no cipher in the "
+                        "model; the block is copied unchanged\n"); }
+        for (u32 i = 0; i < len; ++i) st8(dst + i, ld8(src + i));
+        stub_done(4, 0u);
+    }
+TS_END
+
+TS_BEGIN(bf_Decrypt)
+    u32 len = arg(1), src = arg(2), dst = arg(3);
+    if (!src || !dst) { stub_done(4, 0x80004003u); }
+    else if ((int)len < 0) { stub_done(4, 0x80070057u); }
+    else {
+        static bool said = false;
+        if (!said) { said = true;
+            std::printf("win32stubs: IBlowfish::Decrypt -- no cipher in the "
+                        "model; the block is copied unchanged\n"); }
+        for (u32 i = 0; i < len; ++i) st8(dst + i, ld8(src + i));
+        stub_done(4, 0u);
+    }
+TS_END
+
+void k_bf_SetKey();
+void k_bf_GetMaxKeyLength();
+void k_bf_GetBlockSize();
+void k_bf_Encrypt();
+void k_bf_Decrypt();
+
+inline u32 make_blowfish_object() {
+    static const char *const names[8] = {
+        "IBlowfish::QueryInterface", "IBlowfish::AddRef", "IBlowfish::Release",
+        "IBlowfish::SetKey", "IBlowfish::GetMaxKeyLength",
+        "IBlowfish::GetBlockSize", "IBlowfish::Encrypt", "IBlowfish::Decrypt",
+    };
+    static const u8 nargs[8] = { 3, 1, 1, 3, 2, 2, 4, 4 };
+    Fn over[8] = { 0, 0, 0, &k_bf_SetKey, &k_bf_GetMaxKeyLength,
+                   &k_bf_GetBlockSize, &k_bf_Encrypt, &k_bf_Decrypt };
+    static u32 obj = 0;
+    if (!obj) obj = make_com_object(names, nargs, over, 8);
+    return obj;
+}
+
+// A generic object for a CLSID the model does not know. It answers
+// QueryInterface/AddRef/Release so a caller is never handed a null it
+// dereferences, but it is not the class that was asked for and says so.
+inline u32 make_generic_unknown() {
+    static const char *const names[3] = {
+        "IUnknown::QueryInterface", "IUnknown::AddRef", "IUnknown::Release",
+    };
+    static const u8 nargs[3] = { 3, 1, 1 };
+    Fn over[3] = { 0, 0, 0 };
+    static u32 obj = 0;
+    if (!obj) obj = make_com_object(names, nargs, over, 3);
+    return obj;
+}
+
+// CLSID 1440AD10-6AA8-11D1-B6F9-00A024DDAFD1 -- the class blowfish.dll
+// registers. Its bytes, not a string: the model compares what the caller
+// passed at 0x69e960.
+inline const u8 *clsid_blowfish() {
+    static const u8 b[16] = { 0x10,0xad,0x40,0x14, 0xa8,0x6a, 0xd1,0x11,
+                               0xb6,0xf9,0x00,0xa0, 0x24,0xdd,0xaf,0xd1 };
+    return b;
+}
+// IID E0113100-6A7C-11D1-B6F9-00A024DDAFD1 -- IBlowfish, from the game's
+// QueryInterface at 0x4233ed (the IID lives at 0x6c0430).
+inline const u8 *iid_blowfish() {
+    static const u8 b[16] = { 0x00,0x31,0x11,0xe0, 0x7c,0x6a, 0xd1,0x11,
+                               0xb6,0xf9,0x00,0xa0, 0x24,0xdd,0xaf,0xd1 };
+    return b;
+}
+// IID_IUnknown -- 00000000-0000-0000-C000-000000000046, at 0x6bf5f8.
+inline const u8 *iid_iunknown() {
+    static const u8 b[16] = { 0x00,0x00,0x00,0x00, 0x00,0x00, 0x00,0x00,
+                               0xc0,0x00,0x00,0x00, 0x00,0x00,0x00,0x46 };
+    return b;
+}
+
+inline bool guid_bytes_are(u32 p, const u8 *b) {
+    if (!p) return false;
+    for (unsigned i = 0; i < 16u; ++i)
+        if (ld8(p + i) != b[i]) return false;
+    return true;
+}
+
+inline u32 make_com_for_clsid(u32 clsid) {
+    if (guid_bytes_are(clsid, clsid_blowfish())) return make_blowfish_object();
+    std::printf("win32stubs: CoCreateInstance(CLSID %08x-%04x-%04x-%02x%02x%02x%02x%02x%02x%02x%02x)"
+                " -- no modelled class; handing back a generic IUnknown object\n",
+                (unsigned)ld32(clsid), (unsigned)ld16(clsid + 4),
+                (unsigned)ld16(clsid + 6), (unsigned)ld8(clsid + 8),
+                (unsigned)ld8(clsid + 9), (unsigned)ld8(clsid + 10),
+                (unsigned)ld8(clsid + 11), (unsigned)ld8(clsid + 12),
+                (unsigned)ld8(clsid + 13), (unsigned)ld8(clsid + 14),
+                (unsigned)ld8(clsid + 15));
+    return make_generic_unknown();
+}
+
+TS_BEGIN(CoCreateInstance)
+    // CoCreateInstance(rclsid, pUnkOuter, dwClsContext, riid, ppv). The old row
+    // had no body: it returned S_OK and wrote NOTHING to ppv, so a caller that
+    // checked the HRESULT then called through the uninitialised pointer. That
+    // is exactly what FUN_005e87a0 does (OleRun, then QueryInterface), and it
+    // is why the registration path failed even before the DLL export mattered.
+    u32 clsid = arg(0);
+    u32 riid = arg(3);
+    u32 out = arg(4);
+    if (!out) {
+        stub_done(5, 0x80004003u);   // E_POINTER
+    } else if (!guid_bytes_are(riid, iid_iunknown()) &&
+               !guid_bytes_are(riid, iid_blowfish())) {
+        st32(out, 0u);
+        std::printf("win32stubs: CoCreateInstance -> E_NOINTERFACE: the model "
+                    "has no object for that IID\n");
+        stub_done(5, 0x80004002u);   // E_NOINTERFACE
+    } else {
+        u32 obj = make_com_for_clsid(clsid);
+        st32(out, obj);
+        stub_done(5, 0u);            // S_OK, and *ppv is a real object
+    }
+TS_END
+
+// ===========================================================================
+// Module export tables
+// ===========================================================================
+// The exports that are not in the import directory. blowfish.dll is loaded by
+// name and its DllRegisterServer is called through GetProcAddress; comctl32's
+// DllGetVersion is the same shape. Each is a registered stub with a measured
+// argument count, so a caller that gets one back can call it and the stack
+// stays balanced.
+TS_BEGIN(blowfish_DllRegisterServer)
+    std::printf("win32stubs: blowfish.dll!DllRegisterServer -> S_OK; the "
+                "Blowfish class is registered in the model\n");
+    stub_done(0, 0u);
+TS_END
+
+TS_BEGIN(blowfish_DllUnregisterServer)
+    std::printf("win32stubs: blowfish.dll!DllUnregisterServer -> S_OK\n");
+    stub_done(0, 0u);
+TS_END
+
+// S_FALSE: the module stays loaded. The real DLL answers this from its own
+// object count; nothing in the model unloads it.
+TS_RET(blowfish_DllCanUnloadNow, 0, 1u)
+
+TS_BEGIN(blowfish_DllGetClassObject)
+    // Not reached by this game: its COM calls go through CoCreateInstance,
+    // which the model serves directly. Answering with a class factory that
+    // does not exist would be a worse lie than the real error code.
+    u32 out = arg(2);
+    if (out) st32(out, 0u);
+    std::printf("win32stubs: blowfish.dll!DllGetClassObject -> "
+                "CLASS_E_CLASSNOTAVAILABLE (CoCreateInstance is served directly)\n");
+    stub_done(3, 0x80040111u);
+TS_END
+
+inline ModuleDef *module_defs(unsigned *count) {
+    static ExportDef blowfish_exports[] = {
+        { "DllCanUnloadNow",     0, 1u,          &k_blowfish_DllCanUnloadNow,     0 },
+        { "DllGetClassObject",   3, 0x80040111u, &k_blowfish_DllGetClassObject,   0 },
+        { "DllRegisterServer",   0, 0u,          &k_blowfish_DllRegisterServer,   0 },
+        { "DllUnregisterServer", 0, 0u,          &k_blowfish_DllUnregisterServer, 0 },
+    };
+    static ExportDef comctl32_exports[] = {
+        { "DllGetVersion",       1, 0u,          &k_DllGetVersion,                0 },
+    };
+    static ModuleDef t[] = {
+        { "blowfish.dll", blowfish_exports, 4 },
+        { "comctl32.dll", comctl32_exports, 1 },
+    };
+    *count = 2;
+    return t;
+}
+
+struct LoadedModule { u32 handle; char name[64]; const ModuleDef *def; };
+inline LoadedModule *loaded_modules() { static LoadedModule m[32]; return m; }
+inline unsigned &loaded_module_count() { static unsigned n = 0; return n; }
+
+inline u32 module_load(const char *name) {
+    register_module_exports();
+    unsigned n = loaded_module_count();
+    for (unsigned i = 0; i < n; ++i)
+        if (same_dll(loaded_modules()[i].name, name))
+            return loaded_modules()[i].handle;
+    if (n >= 32u) return 0;
+    unsigned ndefs = 0;
+    ModuleDef *defs = module_defs(&ndefs);
+    const ModuleDef *def = 0;
+    for (unsigned i = 0; i < ndefs; ++i)
+        if (same_dll(defs[i].name, name)) { def = &defs[i]; break; }
+    LoadedModule &m = loaded_modules()[n];
+    m.handle = 0x00500000u + n * 0x10u;
+    unsigned j = 0;
+    for (; name[j] && j + 1u < sizeof(m.name); ++j) m.name[j] = name[j];
+    m.name[j] = 0;
+    m.def = def;
+    loaded_module_count() = n + 1u;
+    if (def) {
+        std::printf("win32stubs: LoadLibraryA(\"%s\") -> 0x%08x (%u modelled "
+                    "export(s):", name, m.handle, def->nexports);
+        for (unsigned i = 0; i < def->nexports; ++i)
+            std::printf(" %s", def->exports[i].fn);
+        std::printf(")\n");
+    } else {
+        // Keep the old behaviour -- a non-null handle -- but say what it is.
+        std::printf("win32stubs: LoadLibraryA(\"%s\") -> 0x%08x -- no exports "
+                    "are modelled for this module; GetProcAddress on it "
+                    "resolves nothing\n", name, m.handle);
+    }
+    return m.handle;
+}
+
+inline u32 module_find_export(u32 handle, const char *fn) {
+    register_module_exports();
+    unsigned n = loaded_module_count();
+    for (unsigned i = 0; i < n; ++i) {
+        const LoadedModule &m = loaded_modules()[i];
+        if (m.handle != handle) continue;
+        if (!m.def) return 0;
+        for (unsigned j = 0; j < m.def->nexports; ++j)
+            if (!std::strcmp(m.def->exports[j].fn, fn))
+                return m.def->exports[j].va;
+        return 0;
+    }
+    // A handle that did not come from LoadLibraryA is the image itself
+    // (GetModuleHandleA returns 0x00400000). Its exports are not modelled, so
+    // fall back to the global import names -- the behaviour GetProcAddress had
+    // before handles meant anything.
+    return find_by_name(fn);
+}
+
+inline void register_module_exports() {
+    // Idempotent, and called lazily from module_load/module_find_export rather
+    // than from register_impl: register_impl is in the generated tail of this
+    // header (tools/gen_win32_stubs.py owns everything after "// the import
+    // table"), so a call placed there is removed the next time the table is
+    // regenerated. This machinery lives in the hand-written head, which the
+    // generator keeps byte-for-byte.
+    static bool done = false;
+    if (done) return;
+    done = true;
+    unsigned n = 0;
+    ModuleDef *defs = module_defs(&n);
+    for (unsigned i = 0; i < n; ++i) {
+        for (unsigned j = 0; j < defs[i].nexports; ++j) {
+            ExportDef &e = defs[i].exports[j];
+            if (!e.real) continue;
+            e.va = alloc_stub_va();
+            ts_register(e.va, e.real);
+        }
+    }
+}
+
 inline u32 make_dd_palette() {
     // IDirectDrawPalette: QueryInterface/AddRef/Release/GetCaps/GetEntries/
     // SetEntries/Initialize. FUN_0046f670 checks only that CreatePalette returned
@@ -2640,6 +3011,7 @@ inline u32 make_directdraw() {
         4, 3,
     };
     Fn over[25] = { 0 };
+    over[4] = &k_dd_CreateClipper;
     over[5] = &k_dd_CreatePalette;
     over[6] = &k_dd_CreateSurface;
     over[11] = &k_dd_GetCaps;
@@ -2662,9 +3034,19 @@ TS_BEGIN(DirectDrawCreate)
 TS_END
 
 TS_ORD_BEGIN(dsound_ord_2147483649, "DSOUND", 0x80000001u)   // DirectSoundCreate
+    // The retail game on this machine has no audio device: it reports
+    // "Unable to create Direct Sound Object. Proceeding with audio disabled."
+    // and continues. The old body returned DS_OK and handed back an
+    // IDirectDraw object, which is a lie twice over -- the game then built a
+    // primary sound buffer through an interface that has no CreateSoundBuffer,
+    // left the buffer pointer null, and released it, which is the call to
+    // address 0 at 0x484839. A stub that fails the way the environment does is
+    // the honest model, and it takes the game's own audio-disabled path.
     u32 out = arg(1);
-    if (out) st32(out, make_directdraw());
-    stub_done_for("DSOUND", ord, 0u);   // DS_OK
+    if (out) st32(out, 0u);
+    std::printf("win32stubs: DirectSoundCreate -> DSERR_NODRIVER; audio is "
+                "disabled, as it is in the retail environment here\n");
+    stub_done_for("DSOUND", ord, 0x88780078u);   // DSERR_NODRIVER
 TS_ORD_END
 
 // the import table
@@ -2972,7 +3354,7 @@ inline const ImportDef *imports(unsigned *count) {
 	{ "ole32", "CLSIDFromString", 2, 0x00000000u, &k_CLSIDFromString },
 	{ "ole32", "OleSaveToStream", 2, 0x00000000u, &k_OleSaveToStream },
 	{ "ole32", "OleLoadFromStream", 3, 0x00000000u, &k_OleLoadFromStream },
-	{ "ole32", "CoCreateInstance", 5, 0x00000000u, 0 },
+	{ "ole32", "CoCreateInstance", 5, 0x00000000u, &k_CoCreateInstance },
 	{ "ole32", "OleRun", 1, 0x00000000u, &k_OleRun },
 	{ "OLEAUT32", "#2", 1, 0x00000000u, &k_oleaut_ord_2147483650 },
 	{ "OLEAUT32", "#161", 2, 0x00000000u, &k_oleaut_ord_2147483809 },

@@ -22,6 +22,7 @@ adding one: if it cannot fail, it is not worth the runtime.
   Machine mmx lanes       -- differential against lane-array reference code
   Machine boot regressions -- call_ptr balance, rep ECX, jmp_indirect, maps
   gen_code tails          -- cross-function tail targets are found
+  Win32 module exports    -- handles name modules, CoCreateInstance writes *ppv
 
 Usage:
   python3 tools/test_tools.py
@@ -662,13 +663,201 @@ int main() {
     eq("machine-boot-regress", r.stdout.decode().strip(), "0")
 
 
+def test_win32_module_exports():
+    """Regression test for the COM registration blocker, at the model level.
+
+    Two shipped defects are exercised. LoadLibraryA ignored its argument and
+    returned a counter, so a handle meant "some DLL" and GetProcAddress could
+    not resolve a GetProcAddress-only export: blowfish.dll's DllRegisterServer
+    read as null and the game took its error box. CoCreateInstance was a
+    generic row that returned S_OK WITHOUT writing its out pointer, so
+    FUN_005e87a0 called OleRun and QueryInterface through an uninitialised
+    stack slot.
+
+    The test calls the stubs through the same dispatch table the boot uses, so
+    it also checks that every stub pops exactly its argument count: the
+    project has shipped a 4-byte over-pop that corrupted _initterm.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+static void put_guid(ts::u32 p, const unsigned char *b) {
+    for (unsigned i = 0; i < 16u; ++i) ts::st8(p + i, b[i]);
+}
+
+int main() {
+    ts::register_win32_stubs();
+
+    // A handle identifies a module by name; the modelled modules are distinct.
+    ts::u32 hb = ts::w32::module_load("blowfish.dll");
+    ts::u32 hc = ts::w32::module_load("comctl32.dll");
+    ck("blowfish handle", hb != 0);
+    ck("comctl32 handle", hc != 0);
+    ck("distinct handles", hb != hc);
+    ck("same name, same handle", ts::w32::module_load("BLOWFISH.DLL") == hb);
+
+    // blowfish.dll exports DllRegisterServer as a callable stub, and its table
+    // is per module: it must not serve comctl32's DllGetVersion.
+    ts::u32 rs = ts::w32::module_find_export(hb, "DllRegisterServer");
+    ts::u32 us = ts::w32::module_find_export(hb, "DllUnregisterServer");
+    ck("DllRegisterServer resolved", rs != 0 && ts::ts_lookup(rs) != 0);
+    ck("DllUnregisterServer resolved", us != 0 && ts::ts_lookup(us) != 0);
+    ck("blowfish has no DllGetVersion",
+       ts::w32::module_find_export(hb, "DllGetVersion") == 0);
+    ck("comctl32 has DllGetVersion",
+       ts::w32::module_find_export(hc, "DllGetVersion") != 0);
+
+    // The LoadLibraryA stub itself must hand back the module's handle, not a
+    // counter. Call it for comctl32 AFTER two module_load calls so a counter
+    // (0x00500000) would not coincidentally equal the right handle.
+    ts::u32 ll = ts::stub_va("KERNEL32", "LoadLibraryA");
+    ts::u32 gpa = ts::stub_va("KERNEL32", "GetProcAddress");
+    ck("LoadLibraryA resolved", ll != 0 && ts::ts_lookup(ll) != 0);
+    ck("GetProcAddress resolved", gpa != 0 && ts::ts_lookup(gpa) != 0);
+    ts::u32 pcomctl = ts::w32::lit("comctl32.dll");
+    ts::u32 sp = 0x002ff000u;
+    ESP.d = sp;
+    ts::st32(sp + 0u, pcomctl);
+    ts::ts_call_at(ll, 0x11111111u);
+    ck("LoadLibraryA names the module", EAX.d == hc);
+    ck("LoadLibraryA stack balanced", ESP.d == sp + 4u);
+    // GetProcAddress through that handle resolves the module's own export.
+    ts::u32 pdgv = ts::w32::lit("DllGetVersion");
+    ESP.d = sp;
+    ts::st32(sp + 0u, EAX.d);
+    ts::st32(sp + 4u, pdgv);
+    ts::ts_call_at(gpa, 0x11111112u);
+    ck("GetProcAddress resolves comctl32!DllGetVersion",
+       EAX.d == ts::w32::module_find_export(hc, "DllGetVersion"));
+    ck("GetProcAddress stack balanced", ESP.d == sp + 8u);
+    // And the GetProcAddress-only export is reachable through blowfish's
+    // handle. The old global name lookup returned 0 here: DllRegisterServer is
+    // not in the import directory.
+    ts::u32 pblow = ts::w32::lit("blowfish.dll");
+    ESP.d = sp;
+    ts::st32(sp + 0u, pblow);
+    ts::ts_call_at(ll, 0x11111113u);
+    ts::u32 hb2 = EAX.d;
+    ts::u32 pdrs = ts::w32::lit("DllRegisterServer");
+    ESP.d = sp;
+    ts::st32(sp + 0u, hb2);
+    ts::st32(sp + 4u, pdrs);
+    ts::ts_call_at(gpa, 0x11111114u);
+    ck("GetProcAddress resolves blowfish!DllRegisterServer", EAX.d == rs);
+    ck("GetProcAddress blowfish stack balanced", ESP.d == sp + 8u);
+
+    // Calling it pops exactly 0 arguments and returns S_OK.
+    ESP.d = sp;
+    ts::ts_call_at(rs, 0x11111111u);
+    ck("DllRegisterServer returns S_OK", EAX.d == 0);
+    ck("DllRegisterServer stack balanced", ESP.d == sp);
+
+    // An unknown DLL keeps the old non-null handle, but resolves nothing.
+    ts::u32 hu = ts::w32::module_load("nosuch.dll");
+    ck("unknown module handle", hu != 0);
+    ck("unknown module exports nothing",
+       ts::w32::module_find_export(hu, "DllRegisterServer") == 0);
+
+    // CoCreateInstance writes a real object with a real vtable and returns
+    // S_OK. The old row returned S_OK and wrote nothing.
+    static const unsigned char clsid[16] = {
+        0x10,0xad,0x40,0x14, 0xa8,0x6a, 0xd1,0x11,
+        0xb6,0xf9,0x00,0xa0, 0x24,0xdd,0xaf,0xd1 };
+    static const unsigned char iid_unk[16] = {
+        0x00,0x00,0x00,0x00, 0x00,0x00, 0x00,0x00,
+        0xc0,0x00,0x00,0x00, 0x00,0x00,0x00,0x46 };
+    ts::u32 pclsid = ts::w32::alloc_block(16u, 4u);
+    ts::u32 piid = ts::w32::alloc_block(16u, 4u);
+    ts::u32 out = ts::w32::alloc_block(4u, 4u);
+    put_guid(pclsid, clsid);
+    put_guid(piid, iid_unk);
+    ts::st32(out, 0u);
+
+    ts::u32 cc = ts::stub_va("ole32", "CoCreateInstance");
+    ck("CoCreateInstance resolved", cc != 0 && ts::ts_lookup(cc) != 0);
+    sp = 0x002ff000u;
+    ESP.d = sp;
+    ts::st32(sp + 0u, pclsid);
+    ts::st32(sp + 4u, 0u);        // pUnkOuter
+    ts::st32(sp + 8u, 7u);        // CLSCTX
+    ts::st32(sp + 12u, piid);
+    ts::st32(sp + 16u, out);
+    ts::ts_call_at(cc, 0x22222222u);
+    ck("CoCreateInstance returns S_OK", EAX.d == 0);
+    ck("CoCreateInstance stack balanced", ESP.d == sp + 20u);
+    ts::u32 obj = ts::ld32(out);
+    ck("CoCreateInstance writes the object", obj != 0);
+    ts::u32 vt = obj ? ts::ld32(obj) : 0;
+    ck("object has a vtable", vt != 0);
+    ck("QueryInterface is callable", vt && ts::ts_lookup(ts::ld32(vt)) != 0);
+    ck("AddRef is callable", vt && ts::ts_lookup(ts::ld32(vt + 4u)) != 0);
+    ck("Release is callable", vt && ts::ts_lookup(ts::ld32(vt + 8u)) != 0);
+
+    // QueryInterface fills its out pointer with the same object: the wrapper
+    // at 0x5e87a0 asks for IUnknown and then calls OleRun on the result.
+    ts::u32 qi = vt ? ts::ld32(vt) : 0;
+    ts::u32 out2 = ts::w32::alloc_block(4u, 4u);
+    ts::st32(out2, 0u);
+    sp = 0x002ff000u;
+    ESP.d = sp;
+    ts::st32(sp + 0u, obj);
+    ts::st32(sp + 4u, piid);
+    ts::st32(sp + 8u, out2);
+    ts::ts_call_at(qi, 0x33333333u);
+    ck("QueryInterface returns S_OK", EAX.d == 0);
+    ck("QueryInterface writes the object", ts::ld32(out2) == obj);
+    ck("QueryInterface stack balanced", ESP.d == sp + 12u);
+
+    // IBlowfish's own methods, from BLOWFISH.DLL's vtable 0x1101e480:
+    // slot 4 GetMaxKeyLength = 56, slot 5 GetBlockSize = 8.
+    ts::u32 gmk = vt ? ts::ld32(vt + 16u) : 0;
+    ts::u32 gbs = vt ? ts::ld32(vt + 20u) : 0;
+    ts::u32 n = ts::w32::alloc_block(4u, 4u);
+    ts::st32(n, 0u);
+    sp = 0x002ff000u;
+    ESP.d = sp;
+    ts::st32(sp + 0u, obj);
+    ts::st32(sp + 4u, n);
+    ts::ts_call_at(gmk, 0x44444444u);
+    ck("GetMaxKeyLength returns S_OK", EAX.d == 0);
+    ck("GetMaxKeyLength is 56", ts::ld32(n) == 56u);
+    ts::st32(n, 0u);
+    ESP.d = sp;
+    ts::st32(sp + 0u, obj);
+    ts::st32(sp + 4u, n);
+    ts::ts_call_at(gbs, 0x55555555u);
+    ck("GetBlockSize is 8", ts::ld32(n) == 8u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_exports.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_exports",
+                        "/tmp/ts_win32_exports.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-module-exports-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_win32_exports"], capture_output=True)
+    eq("win32-module-exports", r.stdout.decode().strip().splitlines()[-1]
+       if r.stdout.strip() else "", "0")
+
+
 def main():
     for fn in (test_emit_masking, test_emit_in_out, test_emit_loop_tail,
                test_emit_ret, test_decl_destructor, test_slot_va,
                test_slot0_shared, test_reduce_bases, test_tail_entries,
                test_machine_mul, test_machine_flags, test_machine_stack,
                test_machine_mmx, test_machine_depth_guard,
-               test_machine_boot_regressions):
+               test_machine_boot_regressions, test_win32_module_exports):
         try:
             fn()
         except Exception as exc:  # a tool that raises is a failure, not a skip
