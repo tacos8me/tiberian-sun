@@ -43,15 +43,27 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   `offsetof`
 - `verify_members_binary.py` — re-derives member offsets from the binary's own
   code (4,285 of 4,289 confirmed, 99.9%)
-- `link_test.py` — links all 492 translation units into a program and runs it
-- `test_tools.py` — 39 unit tests for the tools themselves
+- `link_test.py` — links all 492 translation units into a program and runs it;
+  measured **OK, exit 0**, message loop not reached
+- `test_tools.py` — 40 unit tests for the tools themselves
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
   (`determinism`)
 - `gen_win32_stubs.py` — generates `Win32Stubs.h` from the PE import directory
   (341 imports across 13 DLLs; the stub table has 342 rows because it also
-  carries `COMCTL32!DllGetVersion`, reached through `GetProcAddress`)
-- `boot.py` — builds and runs the image against the model (boot-status figures
-  are being re-measured; see `PROGRESS.md`)
+  carries `COMCTL32!DllGetVersion`, reached through `GetProcAddress`). It
+  refuses to write when a `TS_RET` body's argument count disagrees with `NARGS`;
+  `--evidence` reports per-ordinal agreement.
+- `boot.py` — builds and runs the image against the model. Measured:
+  **7,038,765 instructions**, `MessageBoxA` type `0x30`, `ExitProcess(1)`,
+  message loop not reached, 2 unmapped calls (0 in `.text`), coverage
+  44,246 distinct instructions / 4,211 of 46,008 functions. `--strict` exits 4
+  on the 2 outside-`.text` targets.
+- `wine_run.sh` / `wine_env.sh` — run the **retail** binary under Wine.
+  `wine_env.sh` supplies the CD (`d:`, label `TS1`, `TS1.DSK`) and a
+  640x480x16 screen; measured, the retail game reaches its **main menu**
+  (screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s).
+- `oracle.py` — attach gdb to the retail binary, parse its registers and stack,
+  and `--compare` against the model at the same address
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the

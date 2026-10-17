@@ -20,7 +20,17 @@ The recovered **machine code is transcribed**, not stubbed: 46,008 functions
 instruction lines (100%, 0 unmodelled), rendered against the machine model in
 `src/handwritten/Machine.h`. The whole tree — 492 translation units — **links
 into a program**, and that program runs the original PE entry point against the
-model.
+model: **7,038,765 instructions**, reaching the game's own error box with
+`MessageBoxA` type `0x30` and calling `ExitProcess(1)`, with **0 unmapped calls
+inside `.text`** (2 remain outside it: `0x002fffe8`, `0xa000f9b6`). The message
+loop is **not reached**. `tools/link_test.py` exits 0; a full
+`./tools/pipeline.sh` run completed exit 0 in `d23d1bf`.
+
+The **retail** binary, run under Wine with the CD and a 640x480x16 screen
+(`tools/wine_env.sh`), reaches its **main menu** (screenshot md5
+`58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s). That is the
+differential oracle: the model still stops at the error box, the retail game
+gets to the menu.
 
 **What that does *not* mean is stated under [Verification](#verification)
 below.** In short: the gate proves the declaration tree compiles, that the

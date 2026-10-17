@@ -5,10 +5,11 @@ estimated; the commands that produce them are named. Re-measure before trusting
 this file (`python3 tools/harness.py metrics --no-append`).
 
 Figures in this file were re-measured on 2026-10-17 with `harness.py metrics`,
-`verify.py`, `verify_members_binary.py`, `test_tools.py`, and direct counts over
-`out/` and `src/generated/`. Boot-status figures (instructions executed,
-`ExitProcess` argument, message-loop state) are **being re-measured by a
-concurrent lane** and are marked where they appear; do not treat them as final.
+`verify.py`, `verify_members_binary.py`, `test_tools.py`, `boot.py` (and
+`--strict`), `link_test.py`, `wine_env.sh`, and direct counts over `out/` and
+`src/generated/`. The boot and oracle figures were re-measured after the
+boot-lane merge; the full `pipeline.sh` run recorded in `d23d1bf` was not re-run
+here.
 
 The point of this document is to say **what is actually left**, what the
 *smallest* honest size of that work is, and in what order it can be done — not to
@@ -283,31 +284,38 @@ loop" with `PeekMessage=137,295`. That was retracted: the model let `ExitProcess
 return, so execution continued past a fatal exit and the "loop" was one the real
 game never ran.**
 
-What is true: the game maps at its real VAs and resolves **341/341** PE
-import-directory thunks (309 by name, 32 by ordinal, across 13 DLLs). The stub
-table holds 342 rows because it also carries `COMCTL32!DllGetVersion`, which is
-not an import — the CRT reaches it through `GetProcAddress`. Boot-status figures
-below (1,011,817 instructions, the `ExitProcess` argument, message-loop state)
-are **being re-measured by a concurrent lane**; the cause recorded here is the
-atexit walk over the 3,311-entry static-constructor table leaking **108 bytes**,
-so ESI holds a return address and `call *%esi` at `0x5e72cf` calls into
-`ExitProcess`, which makes the game take its "Direct X" error box.
+What is true, measured after the boot-lane merge: the game maps at its real VAs
+and resolves **341/341** PE import-directory thunks (309 by name, 32 by ordinal,
+across 13 DLLs). The stub table holds 342 rows because it also carries
+`COMCTL32!DllGetVersion`, which is not an import — the CRT reaches it through
+`GetProcAddress`. The game runs **7,038,765 instructions**, reaches **its own
+error box** with `MessageBoxA` type `0x30`, and calls **`ExitProcess(1)`** — the
+arguments the code pushed, not stub addresses. The 108-byte atexit leak that
+corrupted them is fixed (`ts_call_ptr` now delegates to `ts_call_at`). Coverage:
+**44,246 distinct instructions; 4,211 of 46,008 recovered functions entered**.
+Message loop **not reached**. **2 unmapped calls remain, both outside `.text`**
+(`0x002fffe8`, `0xa000f9b6`); 0 remain inside `.text`. `boot.py --strict` exits
+4 on them.
 
-**The oracle changed the premise.** `tools/oracle.py` shows the retail binary also
-exits with code 01 before DirectDraw surface creation on this host, because there
-is no audio device, no CD and no install registry. So the next work is not "fix the
-model until it matches a working game" -- the game does not work here yet either.
-It is: give both of them a real environment, and fix the model where it genuinely
-diverges from the retail binary.
+**The oracle premise is now inverted.** `tools/wine_env.sh` gives the retail
+binary an X screen at 640x480x16 and a `DRIVE_CDROM` `d:` labelled `TS1` holding
+`TS1.DSK`; measured this session, it dismisses the DirectSound warning, plays
+`WWLOGO.VQA`/`STARTUP.VQA`, and reaches its **main menu**, still running after
+60 s (screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`). The earlier claim that
+it "gives up early" is retracted. Remaining oracle limits: main-menu buttons/text
+are not drawn because the PCX assets live inside a nested MIX entry, and there is
+no audio. So the model is now the half that stops early, and the oracle is the
+target.
 
 Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
-  1. Name the constructor(s) that leak, by comparing ESP at each one's own entry
-     against ESP at its `ret`. A plain "ESP must return" check also flags
-     `_alloca_probe` (0x684230), which moves ESP by design.
-  2. Extend the oracle past startup by mounting the CD and satisfying the install,
-     so the retail binary gets further than the model and becomes a real oracle.
-  3. Real rendering: per-surface memory and real `Blt`/`Flip`, with
-     `boot.py --dump-frame=N` writing a PNG to diff against a Wine screenshot.
+  1. Name or remove the 2 unmapped calls outside `.text` (`0x002fffe8`, a stack
+     address; `0xa000f9b6`, an unregistered address in the synthetic thunk
+     region), so `boot.py --strict` exits 0.
+  2. Make the model reach the main menu: real rendering (per-surface memory and
+     real `Blt`/`Flip`), the nested-MIX PCX assets, and the stubs the menu path
+     needs. The retail oracle now shows the target.
+  3. Instruction-level differential: `tools/oracle.py 0xADDR --compare` at
+     checkpoints the model and the retail binary both reach.
 
 **The lesson worth keeping from this phase.** The game exits immediately unless
 `comctl32!DllGetVersion` reports >= 4.00.70, and it reaches that function through
@@ -319,9 +327,9 @@ wrong value is harder to diagnose than one that fails loudly.
 
 The honest measure of progress here is not "does it run" but **how far into the
 game's own code it gets before it needs something we have not modelled**. The
-last measured figure was 1,011,817 instructions ending in an `ExitProcess`
-(boot numbers are being re-measured). Each stop is a precise, actionable finding
-rather than a wall, because the
+measured figure is **7,038,765 instructions** ending in `ExitProcess(1)` with
+`MessageBoxA` type `0x30` (it was 1,011,817 before the stack-leak fix). Each
+stop is a precise, actionable finding rather than a wall, because the
 harness reports the faulting EIP, the instruction bytes there, the containing
 function and generated source line, and the ordered import calls -- and
 `tools/oracle.py` can read the same registers from the retail binary.

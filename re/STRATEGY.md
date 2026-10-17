@@ -4,8 +4,9 @@ Written against HEAD `8ce1ebe`; the figures below were re-measured on
 2026-10-17 with the commands named in each row. Numbers quoted from a document
 instead of measured say so. Anything I could not verify says **unverified**.
 Re-measure before trusting this file: `python3 tools/harness.py metrics
---no-append`. Boot-status figures (instructions executed, `ExitProcess`
-argument, message-loop state) are being re-measured by a concurrent lane.
+--no-append`. The boot, link-test and oracle figures were re-measured after the
+boot-lane merge (`boot.py`, `link_test.py`, `wine_env.sh`); the full
+`pipeline.sh` run recorded in `d23d1bf` was not re-run here.
 
 This is not a status report (`PROGRESS.md` is). It is the argument about what to
 do next and what it costs.
@@ -46,7 +47,9 @@ documentation says cannot exist.
 | functions with no direct caller | **31,834 (73.1%)** | direct-edge graph from `callees` |
 | functions reachable from entry `0x6854e3` by direct edges | **69 (0.16%)** | BFS over `callees` |
 | functions declared by the reconstructed headers | **3,024 of 43,564 (6.9%)** | unique `sub_*` in `src/generated/*.cpp` |
-| boot | 1,011,817 instructions, 0.1 s, 721 import calls, 53 distinct imports, depth 15, **34 unmapped indirect targets (0 in `.text`)**, message loop **not reached** — **being re-measured by a concurrent lane** | `tools/boot.py` |
+| boot | **7,038,765 instructions**, 0.2 s, **2,046 import calls, 64 distinct imports**, depth 15, **2 unmapped targets (0 in `.text`: `0x002fffe8`, `0xa000f9b6`)**, message loop **not reached**, **44,246 distinct instructions / 4,211 of 46,008 functions entered** | `tools/boot.py` (default `../gamedir`) |
+| link test | **OK, exit 0**, 492 TUs, 7,038,765 instructions, message loop not reached, 2 unmapped (0 in `.text`), 0 unmodelled | `tools/link_test.py` |
+| retail oracle | reaches the **main menu**, 640x480, screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s | `tools/wine_env.sh` |
 | Win32 surface | **341** PE import-directory thunks, all resolved; the stub table has **342** rows (the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`): **315 with a body, 27 generic** | `link_test.py` / boot |
 
 In words:
@@ -57,45 +60,52 @@ In words:
    direct call graph reaches 69 functions from `main`, and the headers bind to
    3,024 of 43,564 functions. Whatever "named" means in the metrics, the tree a
    reader can *call* is 6.9% of the program.
-3. **The runtime is the product.** What exists is a 1.01-million-instruction run
-   of the game's own startup that ends in 34 indirect calls into garbage
-   (`0x00000011` repeatedly, `.rdata` addresses like `0x006a4850`) — the machine
-   saying a value is not a function pointer.
-4. **The Win32 layer is fiction exactly where it matters** (`Win32Stubs.h`, read):
-   - File I/O: *"There is no real file system ... A file 'exists' ... and reads as
-     empty. That is a lie, but it is a consistent one"* (578). No `rules.ini`, no
-     `.mix`, no `.shp`, no map, no sound — ever.
-   - Input: `GetAsyncKeyState`/`GetKeyState` return 0 (1467). No key can arrive.
-   - Timers: `timeSetEvent` returns 1 and never fires its callback (2098).
-   - Surfaces: `Lock` returns a real 800x600x16 buffer (2381) that nothing ever
-     reads; `Blt`/`Fill`/`Flip` are no-ops. There is no way to see a frame.
-   - Strings: `LoadStringA` returns 0 (1465) — which is why the boot's MessageBox
-     has empty text. (Its pointer `0x715524` also lies past `.data`'s raw extent,
-     so it would read zero in a real process too.)
+3. **The runtime is the product.** What exists is a **7.04-million-instruction**
+   run of the game's own startup that reaches its own error box and exits 1.
+   Only **2 unmapped calls remain, both outside `.text`** (`0x002fffe8`, a stack
+   address; `0xa000f9b6`, an unregistered address in the synthetic thunk region).
+   The message loop is not reached.
+4. **The Win32 layer is real where the game has been, and fiction where it has
+   not** (`Win32Stubs.h`, read):
+   - File I/O: **real** — a host root, case-insensitive paths, a 64-entry handle
+     table, real `CreateFileA`/`ReadFile`/`WriteFile`/`SetFilePointer`/
+     `GetFileSize`/`CloseHandle`. The old "there is no real file system" text is
+     gone.
+   - Input: `GetAsyncKeyState`/`GetKeyState` return 0. No key can arrive.
+   - Timers: `timeSetEvent` returns 1 and never fires its callback.
+   - Surfaces: `Lock` returns a real buffer that nothing reads; `Blt`/`Fill`/`Flip`
+     are no-ops. There is no way to see a frame.
+   - Strings: `LoadStringA` now has the correct arity (4) and returns 0; the
+     MessageBox text is empty because the string table is empty at that point.
 
 So: **structure recovered, instructions transcribed, layout compiler-confirmed,
-and a runtime that has executed ~1.2× the 848,822 static instructions through a
-depth-15 slice of startup, on a Win32 layer that cannot load a file, read a key,
-fire a timer, or show a pixel.**
+and a runtime that has executed 7,038,765 instructions through a depth-15 slice
+of startup, on a Win32 layer that can load a file but cannot read a key, fire a
+timer, or show a pixel.**
 
 ### The fact the docs do not contain
 
 ```
-$ wine --version                -> wine-9.0
+$ ./tools/wine_env.sh
 $ /proc/<GAME.EXE>/maps         -> 00400000-00698000 r-xp ... GAME.EXE
-$ xdotool getwindowname         -> "Tiberian Sun" (two windows)
-screenshot                      -> the game's own dialog: "Warning - Unable to
-                                   create Direct Sound Object. Proceeding with
-                                   audio disabled."
+$ xdotool getwindowname         -> "Tiberian Sun" (640x480)
+screenshot                      -> the GDI/Nod main menu, 640x480
+                                   md5 58cb9c0bb64a1bf11c6e9b28e96eca11
+                                   still running after 60 s (exit 124 = a loop)
 ```
 
-The retail binary **runs under Wine here, maps at exactly 0x00400000, creates its
-windows, and reaches its own DirectSound init path.** Every recovered VA is live
-in a real process: `gdb -p`, `break *0xVA`, read EAX/ESP/EBP and 64 bytes of
-stack, compare with the model at the same VA. That is a differential oracle at
-instruction granularity. `AGENTS.md` asserts the opposite — *"Semantic
-equivalence with the original cannot be proven here (there is no MSVC 6
-toolchain, only g++)"* — true about compiling, wrong about observing.
+The retail binary **runs under Wine here, maps at exactly 0x00400000, and reaches
+its main menu.** `tools/wine_env.sh` is the reproduction: an X screen at
+640x480x16 (the mode the game asks DirectDraw for) and a `DRIVE_CDROM` `d:`
+labelled `TS1` holding `TS1.DSK`. It dismisses the DirectSound warning and plays
+`WWLOGO.VQA`/`STARTUP.VQA`. Every recovered VA is live in a real process:
+`gdb -p`, `break *0xVA`, read EAX/ESP/EBP and 64 bytes of stack, compare with the
+model at the same VA. That is a differential oracle at instruction granularity.
+`AGENTS.md` used to assert the opposite — *"Semantic equivalence with the
+original cannot be proven here (there is no MSVC 6 toolchain, only g++)"* — true
+about compiling, wrong about observing. The remaining oracle limits: the menu's
+buttons/text are not drawn (the PCX assets live inside a nested MIX entry) and
+audio is absent.
 
 Caveat: Wine is not Windows, so it cannot adjudicate a *Win32 stub's* behaviour.
 It can adjudicate the x86 model, because that is the real CPU running the same
@@ -116,8 +126,11 @@ bytes.
    span's instruction and 13 land in unrecovered bytes. The control-flow gate
    now **fails** on a span that ends with neither a transfer nor a registered
    continuation, and is proven by mutation. This item is closed; keep it closed.
-2. **The Wine oracle.** → every later fidelity claim, including 1. Cheap, proven
-   to work, and it turns "the arguments look wrong" into a diff.
+2. **The Wine oracle.** → every later fidelity claim, including 1. **Done and
+   past startup:** `tools/wine_env.sh` reaches the retail main menu (640x480,
+   still running after 60 s). `tools/oracle.py` reads the real registers and
+   `--compare` diffs them against the model. It turns "the arguments look wrong"
+   into a diff.
 3. **Real file I/O + MIX + a virtual file system.** → every content path: INI,
    art, maps, audio, movies. **File I/O is now real** (`Win32Stubs.h`: a host
    root, case-insensitive path resolution, a 64-entry handle table, real
@@ -133,7 +146,7 @@ bytes.
 7. **Fidelity at scale.** Unbounded in principle, bounded by the oracle: run
    both, diff at checkpoints, fix the first divergence. This is where the months
    are, and it is only tractable with 2.
-8. **Speed.** 1,011,817 instructions in 0.1 s wall is order 10M instructions/s —
+8. **Speed.** 7,038,765 instructions in 0.2 s wall is order 35M instructions/s —
    and that includes image mapping, so treat it as an upper bound on cost, not a
    clean throughput. A 30 fps budget is ~330k instructions/frame. If a TS frame
    costs millions, the interpreter is 10–30× too slow. Measure before promising.
@@ -168,15 +181,18 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
   direct caller, 30% of call sites indirect. A lifter's only real check is
   behavioural equivalence — which needs the oracle. Months, unbounded, and it
   makes nothing run.
-- **Graphics has no oracle except the one you can now build.** Without a
-  screenshot diff, "the renderer works" is a human squinting at a PNG.
+- **Graphics now has an oracle, but a partial one.** `tools/wine_env.sh` gives a
+  real main-menu screenshot (640x480, md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`),
+  so a model frame can be diffed against it. The menu's buttons/text are not
+  drawn in that screenshot because the PCX assets live inside a nested MIX
+  entry, so the oracle cannot yet adjudicate the UI layer.
 - **Sound stays silent without a mixer.** `DirectSoundCreate` returns a fake
   object; buffers are never filled or mixed. Low priority, but do not discover it
   at the end.
 - **The 27 generic stubs are silent holes**, and the project's own lesson
   applies: a stub returning a plausible wrong value is worse than one that fails.
-  `LoadStringA` returning 0 is exactly that — the box renders blank and nothing
-  says why.
+  `LoadStringA` now has the correct arity but returns 0 because the string table
+  is empty; the box renders blank and nothing says why.
 - **x87 is right; FPU control state is unverified.** `Machine.h` keeps the x87
   stack in host `long double` (80-bit here), which is correct. The rounding-mode
   and precision-control bits of the FPU control word are **unverified**; a game
@@ -191,35 +207,31 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
 
 ## 4. The next ten units of work
 
-Each has an exit criterion a command can decide. **Units 1, 2 and 5 are done**
-(the Wine oracle exists, the stack leak is diagnosed to 108 bytes but not yet
-named to a constructor, and file I/O is real); units 3–4 and 6–10 remain.
+Each has an exit criterion a command can decide. **Units 1, 2, 3, 4 and 5 are
+done** (the Wine oracle reaches the main menu, the stack leak is fixed and the
+exit arguments are correct, the control-flow gate is in `gen_code.py`, boot
+reports coverage and target classification, and file I/O is real); units 6–10
+remain.
 
-1. **Wine oracle (`tools/oracle.py`).** `xvfb-run wine GAME.EXE` in
-   `work/cd1/INSTALL`, wait for the "Tiberian Sun" window, dismiss dialogs with
-   `xdotool`, attach `gdb`, `break *0xVA`, print registers + 64 bytes of stack.
-   Feasibility verified (wine 9.0, image at 0x400000, windows created, Xvfb and
-   xdotool present). *Exit:* `python3 tools/oracle.py 0x00684529` prints the real
-   ESP/EBP/EBX at the `ExitProcess` call site beside the model's, and `--diff`
-   exits non-zero when they differ.
-2. **The stack imbalance (owned by the parent).** With 1 available it is one
-   breakpoint: real ESP vs model ESP at `0x00684529`. *Exit:* `ExitProcess`
-   receives `1` and `MessageBoxA` type `0x30`; the 34 garbage call targets fall to
-   0 or each is named.
-3. **Gate control-flow completeness.** `gen_code.py` already counts
-   continuations, overlaps and defects; fail the pipeline unless every span ends
-   on a transfer or a registered continuation, and prove the gate by deleting one.
-   *Exit:* 0 spans with neither, and exit 1 when a continuation is removed.
-4. **Make the boot report coverage.** Distinct functions entered, distinct basic
-   blocks, and a hard fail on any indirect target below `0x1000` or inside
-   `.rdata`. Today it reports 34 garbage targets and no coverage figure. *Exit:*
-   `boot.py` prints "functions entered: N of 43,564", with 0 garbage targets or
-   each named.
-5. **Real file I/O.** `CreateFileA`, `ReadFile`, `WriteFile`, `SetFilePointer`,
-   `GetFileSize`, `FindFirstFileA`/`FindNextFileA`, `CloseHandle` over a root
-   directory, handles as real objects. *Exit:* a unit test opens
-   `TIBSUN.MIX` and reads 1,024 bytes at offset 0, and the game's own INI reader
-   returns >0 bytes for `rules.ini` during a boot.
+1. **Wine oracle (`tools/oracle.py`).** `tools/wine_env.sh` runs the retail game
+   with the CD and a 640x480x16 screen; `oracle.py` attaches gdb, breaks at an
+   address, and prints registers + 64 bytes of stack. *Exit:* the oracle reaches
+   the main menu and `--compare` diffs the registers against the model.
+   **Done.**
+2. **The stack imbalance (owned by the parent).** Fixed: `ts_call_ptr` delegates
+   to `ts_call_at`, and the model now reaches `ExitProcess(1)` with `MessageBoxA`
+   type `0x30`. *Exit:* met; 2 unmapped targets remain, both outside `.text`.
+3. **Gate control-flow completeness.** `gen_code.py` fails when a span ends with
+   neither a transfer nor a registered continuation, proven by mutation.
+   **Done.**
+4. **Make the boot report coverage.** `boot.py` prints `coverage: N distinct
+   instructions; N of 46,008 recovered functions entered` and classifies unmapped
+   targets (`below 0x1000`, `.rdata`, `elsewhere`); `--strict` exits non-zero
+   while any remain. Measured: 44,246 distinct instructions / 4,211 functions,
+   2 unmapped (0 in `.text`). **Done**, with the 2 targets still open.
+5. **Real file I/O.** Real `CreateFileA`/`ReadFile`/`WriteFile`/`SetFilePointer`/
+   `GetFileSize`/`CloseHandle` over a host root, handles as real objects.
+   **Done.**
 6. **MIX in C++.** Port `tools/mix.py` (proven: both index variants decode,
    header+index+body equals file size) and route `MixFileClass` through it.
    *Exit:* the model opens `TIBSUN.MIX` and entry count and offsets match
@@ -257,13 +269,11 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
 
 1. **RESOLVED — `AGENTS.md`'s retracted boot block.** The false
    `budget 5000000 / message loop: reached (PeekMessage=137295)` block is gone;
-   the file now reports the 1,011,817-instruction stop and `message loop:
-   not-reached` (commit `b968950`, swept again in `c858273`). Boot figures are
-   currently being re-measured by another lane, so treat the numbers as pending,
-   not as the retracted ones.
+   the file now reports the measured stop and `message loop: not-reached`
+   (commit `b968950`, swept again in `c858273`; figures superseded by item 17).
 2. **RESOLVED — `ROADMAP.md` P4's "4.2 is DONE ... frame loop".** The section now
    states 4.2 is **not** done, records the retraction and the 108-byte leak, and
-   marks the boot figures as being re-measured (`8467f84`).
+   reports the measured boot (item 17).
 3. **RESOLVED — `ROADMAP.md` §2.2/§2.3/P0 described a completed phase as the top
    priority.** §2.2 is now marked RESOLVED and its 2,313 `unsigned long` /
    `ObjectClass` 248-byte figures are explicitly retracted as LP64-host history.
@@ -309,7 +319,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     headerless = 1,216). Measured this session.
 11. **RESOLVED — `CONTEXT.md` called `verify.py` "the 8-check gate".** It now
     says nine, describes check 9, and lists `link_test.py` (492 TUs),
-    `test_tools.py` (39 checks) and the import distinction (`8467f84`).
+    `test_tools.py` (40 checks) and the import distinction (`8467f84`).
 12. **OPEN — the framing error, which is the expensive one.** `ROADMAP.md` §2.3
     used to close with "for a decompilation that is the difference between 'it
     builds' and 'it is the game'". The sentence is gone and §4 now cross-
@@ -327,21 +337,42 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     labelled as such); 492 TUs (not 482); 4,289 member claims, 4,285 confirmed
     (not 4,326 / 4,322); check 7 1,317 offsets across 206 classes (not 2,186
     across 248); 2,458 `vfunc_N` and 291 named members (not 5,420 unnamed
-    virtuals / ~4,190 unnamed members); 39 tool tests (not 36). The
+    virtuals / ~4,190 unnamed members); 40 tool tests (not 36). The
     "3,409 distinct slots" claim is retracted and replaced with the measured
     slot-instance/named-pair/distinct-name set. Commit `27e7f59`.
-14. **OPEN (new) — boot figures are not currently reproducible in this tree.**
-    `tools/boot.py` fails to build after `sync_handwritten()` copies the
-    hand-written headers over the generated set (140 of 492 TUs fail on missing
-    COM types). A concurrent lane owns the boot; no figure here should be
-    re-quoted until it builds again.
+14. **RESOLVED — `tools/boot.py` did not build on a fresh checkout.**
+    `60dac16` runs reconcile + self-contained after `sync_handwritten()` copies
+    the hand-written headers, so the fresh-checkout build no longer fails on
+    missing COM types. Measured: `boot.py --rebuild` compiles 492/492 units and
+    reports the boot.
+15. **RESOLVED — "pipeline red at the link test" is now false.** The link test's
+    `ExitProcess` stub returned instead of halting, which produced the same
+    retracted `MESSAGE LOOP: reached` artifact as `boot_driver`. `db612d1` wires
+    `m.halt`, and the link test now exits **0** with `MESSAGE LOOP: not reached`.
+    A full `./tools/pipeline.sh` run completed exit 0 in `d23d1bf` (40 tool
+    tests, `VERIFICATION PASSED`, 4,285/4,289 member claims, no code/header
+    diffs). `AGENTS.md`, `PROGRESS.md`, `ROADMAP.md` and `REPORT.md` now say the
+    pipeline is green.
+16. **RESOLVED — the oracle "gives up early" was false.** `tools/wine_env.sh`
+    reaches the retail **main menu** (640x480, screenshot md5
+    `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s). The remaining
+    limits are stated: main-menu buttons/text are not drawn (PCX assets inside a
+    nested MIX entry) and audio is absent.
+17. **RESOLVED — the boot's corrupted exit arguments were a model defect, not a
+    stub lie.** The 108-byte atexit leak is fixed (`ts_call_ptr` delegates to
+    `ts_call_at`); `jmp_indirect` and conditional `rep`/`repne` `scas`/`cmps`
+    were also fixed. Measured: 7,038,765 instructions, `MessageBoxA` type `0x30`,
+    `ExitProcess(1)`, 0 in-`.text` unmapped calls, coverage 44,246/4,211 of
+    46,008. **OPEN:** 2 unmapped targets outside `.text` (`0x002fffe8`,
+    `0xa000f9b6`); `boot.py --strict` exits 4.
 
 ---
 
 ## 6. If you only do three things
 
-1. Build the Wine oracle. **Done** (`tools/wine_run.sh`, `tools/oracle.py`); it
-   makes every other claim checkable instead of arguable.
+1. Build the Wine oracle. **Done** (`tools/wine_env.sh` reaches the retail main
+   menu; `tools/oracle.py` reads its registers). It makes every other claim
+   checkable instead of arguable.
 2. Give the model a file system. **Done** (`Win32Stubs.h` real file I/O over a
    host root, plus `tools/mix.py` decoding both index variants). The remaining
    step is routing `MixFileClass` through the real reader.

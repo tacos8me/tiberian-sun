@@ -79,16 +79,15 @@ the original program, so it is evidence, not a guess.
 
 Current measured state: 43,564 spans, 46,008 transcriptions, 918,438/918,438
 instructions modelled at 100%, 0 unmodelled, `.text` code coverage 96.09%, and
-**2 unmapped calls inside .text** (link test). The historical progression quoted
-in the previous version of this entry (41,822 -> 43,564 spans; 897,193 -> 918,438
-instructions) is kept only as history.
+**0 unmapped calls inside `.text`** (link test). The historical progression
+quoted in the previous version of this entry (41,822 -> 43,564 spans; 897,193 ->
+918,438 instructions) is kept only as history.
 
-The residual 2 are `0x6844df` (from `0x5e7317`) and `0x46f3f8` (from `0x674bf6`)
--- both RETURN ADDRESSES of indirect calls, so the model is calling a return
-address. That is a garbage function pointer, not a recovery gap: EBP is a code
-address at the stop (`0x004876e7`). Next step is to name the caller of each and
-fix the corruption.
-*Done when:* that is fixed and the link test passes.
+The two residual in-`.text` targets this entry used to name — `0x6844df` (from
+`0x5e7317`) and `0x46f3f8` (from `0x674bf6`), both RETURN ADDRESSES of indirect
+calls — disappeared with the 108-byte stack-leak fix. The link test now passes;
+the 2 remaining unmapped calls are outside `.text` (see the P4 entry).
+*Done when:* that is fixed and the link test passes. **Met.**
 
 ### [x] The 32 ordinal imports could not pop their arguments
 The stub table keyed an ordinal by its raw ILT value (`"ord_2147483681"`) while
@@ -391,7 +390,7 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: **39 checks passed** (measured this session). Not
+`tools/test_tools.py`: **40 checks passed** (measured this session). Not
 golden-count assertions -- every one is a regression test for a defect that
 actually shipped, or a differential test against an independent implementation.
 Four are proven to fail when the defect is reintroduced (mutating
@@ -457,13 +456,12 @@ inventory in `realdata/README.md`), which lifted member-name confirmation from
 85.2% to 98.2% and left only 2 names unconfirmed.
 
 ### [x] Decrypt the encrypted TS MIX index
-`tools/mix.py` reads the headerless TD/RA1 variant exactly (`SETUP/SETUP.MIX`,
-61 entries) and fails *explicitly* on the encrypted TS variant rather than
-reporting garbage. The published Westwood RSA/Blowfish scheme is implemented but
-does not yet produce a self-consistent index for the archives on these CDs;
-`python3 tools/mix.py probe <archive>` prints every key derivation and the bytes
-it produces. Closing this would give exact entry sizes for every file in
-TIBSUN.MIX instead of the content-derived ranges realdata currently uses.
+**Solved, and this entry was a stale duplicate of the P2 item above.** The
+headerless TD/RA1 variant was already exact (`SETUP/SETUP.MIX`, 61 entries), and
+the TS/RA2 encrypted variant now decodes too: header + padded index + body size
+equals the file size on TIBSUN.MIX, MULTI.MIX, SCORES.MIX and MOVIES02.MIX, and
+TIBSUN.MIX yields the `[PublicKey]` entry naming the modulus used to decrypt it.
+`tools/mix.py probe <archive>` remains available for diagnostics.
 
 ### [ ] Byte-level validation against the original binary
 Recompile and diff where a matching compiler is available.
@@ -507,52 +505,94 @@ ECX=0x08000004 dwords, `calloc(n,4)` at 0x6845b4 and the bad count in the global
 at 0x836280. That was the pre-fix state; the two defects above are the fix. The
 duplicate entry has been collapsed into this one.
 
+### [x] The 108-byte stack leak across the atexit walk — fixed
+The CRT's atexit walk over the 3,311-entry static-constructor table leaked
+**108 bytes**: ESP was 0x002ff56c at `push %esi` (0x6844cf) and 0x002ff4fc at the
+matching `pop %esi` (0x6844ea). `pop %esi` therefore loaded a return address,
+ESI became 0x6844df, and `call *%esi` at 0x5e72cf called into `ExitProcess`
+instead of the function whose result decides whether the "Direct X" error box
+appears. The fix is `ts_call_ptr` delegating to `ts_call_at` (`Machine.h:863`),
+so the two call paths balance the same way. Measured after the fix: the game
+reaches its own error box with `MessageBoxA` type **0x30**, calls
+**`ExitProcess(1)`**, and stops after **7,038,765 instructions** with **0
+unmapped calls inside `.text`**. The old corrupted values (`0x6844df` for `1`,
+`0x00a00201` for `0x30`) are gone; exit 1 is now the game's legitimate failure
+path, not a corrupted one.
+
+### [x] `jmp_indirect` was a no-op — fixed
+`Machine.h:1368` is now `inline void jmp_indirect(u32 target) { ts_tail(target); }`.
+Before the fix it discarded the target, so an indirect jump fell through to the
+next instruction instead of transferring. Found by the boot lane while chasing
+the leak.
+
+### [x] Conditional `rep`/`repne` `scas`/`cmps` zeroed ECX — fixed
+`Machine.h:895-902` now leave ECX holding the count that did not run. The
+sequence `repne scasb; not ecx` depends on it: zeroing ECX made `not ecx` return
+the wrong length. The unconditional repeats still legitimately finish with
+ECX == 0.
+
+### [x] `LoadStringA`'s arity was 5 — fixed
+`Win32Stubs.h:1634` is `TS_RET(LoadStringA, 4, 0u)` and the table row is 4
+(`gen_win32_stubs.py:102`). The body used to pop 5, shifting the caller's stack.
+`gen_win32_stubs.py` now **refuses to write** when a `TS_RET` body's count and
+`NARGS` disagree, so this class of defect fails the generator instead of
+shipping. The MessageBox text is still empty, but now because the string table
+is empty at that point, not because the stack was wrong.
+
+### [x] The link test's `ExitProcess` stub returned — fixed
+`build/ts_link_test.cpp` set `g_halt` but not `m.halt`, so `insn()` did not
+longjmp and the run walked past the fatal exit; that is why it printed
+`MESSAGE LOOP: reached` after a fatal exit — the same retracted false positive
+`boot_driver` had already fixed. Commit `db612d1` makes it call `ts::fault(...)`.
+Measured: `link_test.py` exits **0**, reports `MESSAGE LOOP: not reached (no
+GetMessage/PeekMessage call)`, 7,038,765 instructions, 2 unmapped calls (0 in
+`.text`), `ts_link_test: OK`.
+
+### [x] `boot.py`'s fresh-checkout header sync — fixed
+`60dac16` runs reconcile + self-contained after copying the hand-written headers,
+so a fresh checkout no longer gets 140 raw headers copied over the reconciled
+ones. Measured: `python3 tools/boot.py` builds (0 of 492 units compiled on a warm
+cache) and reports.
+
 ### [ ] Reach a window and a message loop
 **NOT reached.** This entry previously said "Reached. CreateWindowExA=1,
 PeekMessage=137,295" -- that was false, and it was false for an instructive
 reason: the model let `ExitProcess` return, so execution walked past a fatal exit
-and the "loop" was one the real game never ran. `ExitProcess` now halts the run,
-and the measurement is `GetMessage=0 PeekMessage=0 DispatchMessage=0
-CreateWindowExA=0`.
+and the "loop" was one the real game never ran. `ExitProcess` now halts the run
+in both `boot_driver` and the link test, and the measurement is
+`GetMessage=0 PeekMessage=0 DispatchMessage=0 CreateWindowExA=0`.
 
 The one real unlock on this path is worth keeping: `comctl32!DllGetVersion` was
 reached through `GetProcAddress` rather than the import table, so there was no
 stub, the version read as 0, the CRT's version check failed and the game called
 `ExitProcess(1)` before initialising anything. One export reporting 4.72 fixed it.
 
-The stubs that matter next: `RegisterClassA`, `CreateWindowExA`, `PeekMessageA`
-(must return 0 when there is no message -- that is what keeps a game loop
-running), `GetMessageA` (must not return 0 immediately, which looks like
-WM_QUIT), `GetSystemMetrics`, `DirectDrawCreate` (must return a plausible object
-with a vtable, because the game's own wrapper calls through it).
+Measured coverage now: **44,246 distinct instructions; 4,211 of 46,008 recovered
+functions entered**; 2,046 import calls over 341 traced imports (64 distinct);
+2,046 calls over 25 distinct imports in the link test. The next stubs that
+matter: `RegisterClassA`, `CreateWindowExA`, `PeekMessageA` (must return 0 when
+there is no message -- that is what keeps a game loop running), `GetMessageA`
+(must not return 0 immediately, which looks like WM_QUIT), `GetSystemMetrics`,
+`DirectDrawCreate` (must return a plausible object with a vtable, because the
+game's own wrapper calls through it).
 *Done when:* the run reaches a message loop and keeps executing frames rather
-than returning. **A second copy of this entry existed with the same status and
-the same "not reached" conclusion; it is collapsed into this one.**
+than returning.
 
-### [ ] The 2 unmapped calls, and the argument that arrives as a return address
-**Diagnosed and measured, not yet fixed.** The link test's two in-`.text`
-targets are `0x6844df` (from `0x5e7317`, `call *%esi`) and `0x46f3f8` (from
-`0x674bf6`, `call *0x58(%edx)`). Both targets are RETURN ADDRESSES, so a data
-pointer slot holds a code address. The same corruption is visible without the
-link test: `ExitProcess` receives `0x6844df` where the code passed `1`, and EBP
-is a code address at the stop (`0x004876e7`).
+### [ ] The 2 unmapped calls, now outside `.text`
+**The two in-`.text` targets are gone.** `0x6844df` and `0x46f3f8` disappeared
+with the stack-leak fix; the link test now reports **0 unmapped calls inside
+`.text`** and passes. Two unmapped targets remain, both outside `.text`:
 
-The cause is measured: the atexit walk over the 3,311-entry static-constructor
-table leaks **108 bytes** -- ESP is 0x002ff56c at `push %esi` (0x6844cf) and
-0x002ff4fc at the matching `pop %esi` (0x6844ea). So `pop %esi` loads a return
-address, ESI becomes 0x6844df, and `call *%esi` at 0x5e72cf calls into
-`ExitProcess`. That call's result sets `bl`, which decides whether the game shows
-its "Direct X" error box -- so the error box, the corrupted exit code (0x6844df
-for 1) and the corrupted MessageBox type (0x00a00201 for 0x30) are all one
-symptom.
-*Remaining:* name the constructor(s) that leak. The check must compare ESP at a
-constructor's own entry with ESP at its `ret`; a plain "ESP must return" check
-also flags `_alloca_probe` (0x684230), which moves ESP by design
-(`mov %ecx,%esp`). **This file used to carry the same title twice, once `[x]`
-and once `[ ]`; the `[x]` copy said "not yet fixed", so it was a status error as
-well as a duplicate. They are now one `[ ]` entry.**
-*Done when:* the caller of each is identified, the corruption fixed, and the link
-test passes.
+- `0x002fffe8` -- a stack address (the entry ESP is 0x002ffffc), so a data slot
+  holds a stack pointer where a code pointer was expected.
+- `0xa000f9b6` -- inside the synthetic traced-thunk region (`kWrapperBase =
+  0x00a00000`) but not a registered thunk, so it is a computed stub address
+  that nothing bound.
+
+`python3 tools/boot.py --strict` exits **4** on them
+(`boot: --strict: 2 garbage call target(s) remain`); the boot reports
+`unmapped targets: below 0x1000=0 .rdata=0 elsewhere=2`.
+*Done when:* both are named or gone, and `boot.py --strict` exits 0.
 
 ### [x] Real file I/O
 The stub layer used to make every file "exist" and read as empty, with
@@ -564,28 +604,34 @@ the game could never load `rules.ini`, `TIBSUN.MIX` or the CD. Now: a host root
 `ReadFile` / `WriteFile` / `SetFilePointer` / `GetFileSize` / `CloseHandle` /
 `GetFileAttributesA` / `DeleteFileA`. A miss returns INVALID_HANDLE_VALUE and says
 so, so a caller takes its real failure path instead of reading zeroes.
-First run: `CreateFileA("\\.\MONO")` -- the sound device name, and the only file
-the game opens before it exits.
-*Note:* this did NOT change the outcome (still 1,011,817 instructions), which is
-what localized the blocker to the stack leak rather than missing files.
+First run: `CreateFileA("\\.\MONO")` -- the sound device name.
+*Note:* this did not itself move the stop; the instruction count rose from
+1,011,817 to 7,038,765 only when the stack leak was fixed.
 
-### [~] Make the boot a one-command measurement
+### [x] Make the boot a one-command measurement
 `tools/boot.py` builds (cached), runs with a budget and a timeout, and prints
 instructions, depth, faults with EIP and instruction bytes, import calls by name,
-and the last N call targets so a stop is bisectable. **Boot status is being
-re-measured by a concurrent lane**, and `boot.py` currently fails to build in
-this worktree after `sync_handwritten()` copies the hand-written headers over the
-generated set (140 of 492 translation units fail on missing COM types). That is
-a boot-lane defect, not a documentation one; do not quote a boot figure from this
-tree until it is fixed.
-*Done when:* `python3 tools/boot.py` reproduces the boot and reports it.
+the last N call targets, and (new) coverage and unmapped-target classification.
+Measured: `python3 tools/boot.py` builds (0 of 492 units compiled on a warm
+cache), runs in 0.2 s wall, and reports 7,038,765 instructions, message loop not
+reached, 44,246 distinct instructions, 4,211 of 46,008 functions entered, and 2
+unmapped calls (0 in `.text`). `--strict` is the gate: it exits 4 while those 2
+remain. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild` and
+`--no-build` are documented in the tool's header.
+*Done when:* `python3 tools/boot.py` reproduces the boot and reports it. **Met.**
 
 ## Standing caveats
 
 - `VERIFICATION PASSED` means the tree compiles and that the generated headers
   agree with the recovered tables. It does **not** prove the disassembly is
-  correct, and only check 4 and the binary member verifier are anchored to the
-  binary.
+  correct. Check 4 reads the binary, check 9 makes the compiler adjudicate
+  layout, and `verify_members_binary.py` is a separate binary-anchored gate.
+- The link test now **passes** (exit 0, 492 TUs, message loop not reached), but
+  the boot still has **2 unmapped calls outside `.text`**
+  (`0x002fffe8`, `0xa000f9b6`); `boot.py --strict` exits 4 on them.
+- The retail oracle reaches the **main menu** (`tools/wine_env.sh`), but the
+  main-menu buttons/text are not drawn because the PCX assets live inside a
+  nested MIX entry, and there is no audio.
 - Member offsets are 99.9% confirmed against the binary, but **layout is not
   verified**: whether the types and ordering are right is unchecked.
 - Member names exist only where an INI key or string provides evidence. Never
