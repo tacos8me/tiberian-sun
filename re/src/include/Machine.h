@@ -835,14 +835,19 @@ inline void ts_rep_stosd() { u32 n = ECX.d; i32 s = rep_step() * 4; while (n--) 
 inline void ts_rep_lodsb() { u32 n = ECX.d; i32 s = rep_step(); while (n--) { AL = ld8(ESI.d); ESI.d += s; } ECX.d = 0; }
 inline void ts_rep_lodsw() { u32 n = ECX.d; i32 s = rep_step() * 2; while (n--) { AX = ld16(ESI.d); ESI.d += s; } ECX.d = 0; }
 inline void ts_rep_lodsd() { u32 n = ECX.d; i32 s = rep_step() * 4; while (n--) { EAX.d = ld32(ESI.d); ESI.d += s; } ECX.d = 0; }
-inline void ts_rep_scasb() { u32 n = ECX.d; i32 s = rep_step(); while (n--) { cmp8(AL, ld8(EDI.d)); EDI.d += s; if (!M.zf) break; } ECX.d = 0; }
-inline void ts_repne_scasb() { u32 n = ECX.d; i32 s = rep_step(); while (n--) { cmp8(AL, ld8(EDI.d)); EDI.d += s; if (M.zf) break; } ECX.d = 0; }
-inline void ts_rep_scasd() { u32 n = ECX.d; i32 s = rep_step() * 4; while (n--) { cmp32(EAX.d, ld32(EDI.d)); EDI.d += s; if (!M.zf) break; } ECX.d = 0; }
-inline void ts_repne_scasd() { u32 n = ECX.d; i32 s = rep_step() * 4; while (n--) { cmp32(EAX.d, ld32(EDI.d)); EDI.d += s; if (M.zf) break; } ECX.d = 0; }
-inline void ts_repe_cmpsb() { u32 n = ECX.d; i32 s = rep_step(); while (n--) { cmp8(ld8(ESI.d), ld8(EDI.d)); ESI.d += s; EDI.d += s; if (!M.zf) break; } ECX.d = 0; }
-inline void ts_repe_cmpsw() { u32 n = ECX.d; i32 s = rep_step() * 2; while (n--) { cmp16(ld16(ESI.d), ld16(EDI.d)); ESI.d += s; EDI.d += s; if (!M.zf) break; } ECX.d = 0; }
-inline void ts_repe_cmpsd() { u32 n = ECX.d; i32 s = rep_step() * 4; while (n--) { cmp32(ld32(ESI.d), ld32(EDI.d)); ESI.d += s; EDI.d += s; if (!M.zf) break; } ECX.d = 0; }
-inline void ts_repne_cmpsb() { u32 n = ECX.d; i32 s = rep_step(); while (n--) { cmp8(ld8(ESI.d), ld8(EDI.d)); ESI.d += s; EDI.d += s; if (M.zf) break; } ECX.d = 0; }
+// The conditional repeats (REP/REPNE with SCAS/CMPS) must leave ECX holding
+// the iterations that did NOT run. The standard inline `strlen` is
+// `repne scasb; not ecx`, so zeroing ECX here makes `not ecx` return
+// 0xffffffff and the following `rep movsd` copy 4 GB. The unconditional
+// repeats above legitimately finish with ECX == 0.
+inline void ts_rep_scasb() { i32 s = rep_step(); while (ECX.d) { cmp8(AL, ld8(EDI.d)); EDI.d += s; --ECX.d; if (!M.zf) break; } }
+inline void ts_repne_scasb() { i32 s = rep_step(); while (ECX.d) { cmp8(AL, ld8(EDI.d)); EDI.d += s; --ECX.d; if (M.zf) break; } }
+inline void ts_rep_scasd() { i32 s = rep_step() * 4; while (ECX.d) { cmp32(EAX.d, ld32(EDI.d)); EDI.d += s; --ECX.d; if (!M.zf) break; } }
+inline void ts_repne_scasd() { i32 s = rep_step() * 4; while (ECX.d) { cmp32(EAX.d, ld32(EDI.d)); EDI.d += s; --ECX.d; if (M.zf) break; } }
+inline void ts_repe_cmpsb() { i32 s = rep_step(); while (ECX.d) { cmp8(ld8(ESI.d), ld8(EDI.d)); ESI.d += s; EDI.d += s; --ECX.d; if (!M.zf) break; } }
+inline void ts_repe_cmpsw() { i32 s = rep_step() * 2; while (ECX.d) { cmp16(ld16(ESI.d), ld16(EDI.d)); ESI.d += s; EDI.d += s; --ECX.d; if (!M.zf) break; } }
+inline void ts_repe_cmpsd() { i32 s = rep_step() * 4; while (ECX.d) { cmp32(ld32(ESI.d), ld32(EDI.d)); ESI.d += s; EDI.d += s; --ECX.d; if (!M.zf) break; } }
+inline void ts_repne_cmpsb() { i32 s = rep_step(); while (ECX.d) { cmp8(ld8(ESI.d), ld8(EDI.d)); ESI.d += s; EDI.d += s; --ECX.d; if (M.zf) break; } }
 inline void ts_cmpsb() { cmp8(ld8(ESI.d), ld8(EDI.d)); }
 inline void ts_cmpsw() { cmp16(ld16(ESI.d), ld16(EDI.d)); }
 inline void ts_cmpsd() { cmp32(ld32(ESI.d), ld32(EDI.d)); }
@@ -1296,9 +1301,19 @@ inline void ts_rep_outsb() {
     ECX.d = 0;
 }
 
-// An indirect jump whose table could not be resolved from the image. The
-// rendering records the target instead of guessing; see emit_x86.py.
-inline void jmp_indirect(u32 target) { (void)target; mach().unmapped_calls++; }
+// A `jmp dword ptr [reg*4 + table]` the emitter could not resolve statically:
+// the table is real, but its entries land in tail spans outside the enclosing
+// function's recorded extent, which is the property the static resolver tests
+// for. The instruction still reads a real target out of image memory at run
+// time, so this is an ordinary tail transfer, not an unmapped call.
+//
+// It used to count the jump and do nothing. That silently skipped the target
+// span -- and with it the function's epilogue: `memcpy` at 0x68cde0 dispatches
+// here after `rep movsd`, so its `pop esi/edi; leave; ret` never ran, leaving
+// ESP 16 bytes low and ESI holding the source pointer. The static-constructor
+// walk calls memcpy, so the corruption surfaced as _initterm walking .text as
+// a function table.
+inline void jmp_indirect(u32 target) { ts_tail(target); }
 
 }  // namespace ts
 
