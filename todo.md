@@ -798,6 +798,26 @@ original 108-byte leak), so the corruption happens before or during `_onexit`
 registration. Peek `TS_PEEK=0x83628c,0x836290` and scan the table with
 `TS_SCAN` before assuming the walk is at fault.
 
+**The table is heap memory, not an atexit table.** `TS_PEEK` at the end of the
+run:
+
+```
+0x0083628c = 0x50006f28   (end)
+0x00836290 = 0x50006c70   (start)   -> 174 entries
+```
+
+At the stop (`0x006844db`, the walk), `ebx = 0x50006f24`, `eax = 0`,
+`esp = 0xfffffff1`, `ebp = 0x005e7d68`. Watching the first entry
+(`TS_WATCH=0x50006c70`) reports **one write of `0x00000020` from `0x0068ce13`**
+— a heap header, not a function pointer. The bounds point at a reused heap
+block, so the walk is calling whatever the heap holds. The ESP corruption
+(`0xfffffff1` at the stop, `0x2fff84` at WinMain entry) is the root cause; the
+walk is the symptom.
+
+*Next:* first fix the stack-imbalance tracker (the entry below), because the
+current false positive hides the callee that moves ESP; then trace WinMain's
+return (`0x5e5b80` entry, caller at `0x6855b1`) and the `_onexit` registration
+path. Do not chase the walk's targets individually.
 *Done when:* WinMain returns with ESP where its caller left it and the CRT exit
 path completes (or faults at a named instruction).
 
