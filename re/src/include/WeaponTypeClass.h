@@ -47,11 +47,13 @@ public:
     unsigned int m_068;  // +0x068 (gap member); 4-byte store: mov dword ptr [esi + 0x68], ebx
     int   Damage;             // 0x6C  INI "Damage"         (0x6BFEE4)
     int   Speed;              // 0x70  INI "Speed"          (0x6C3334) GetInt
+    // float, not double: the recovered table has the next store at +0x80,
+    // and a double at +0x7c would push it to +0x84.
     unsigned int m_074;  // +0x074 (gap member); 4-byte store: mov dword ptr [esi + 0x74], ebx
     unsigned int m_078;  // +0x078 (gap member); 4-byte store: mov dword ptr [esi + 0x78], ebx
-    double Range;             // 0x7C  INI "Range"          (0x6DEDF8) GetDouble
+    float Range;              // 0x7C  INI "Range"          (0x6DEDF8) GetDouble
     double MinimumRange;      // 0x80  INI "MinimumRange"   (0x6DEDE8) GetDouble
-    unsigned char pad_doc_gap_08c[0x30];  // holds the gap before IsSonic, which documents 0xd0 (the compiler would put it at 0x8c)
+    unsigned char pad_doc_gap_088[0x34];  // holds the gap before IsSonic, which documents 0xd0 (the compiler would put it at 0x88)
     unsigned int m_0bc;  // +0x0bc (gap member); 4-byte store: mov dword ptr [esi + 0xbc], ebx
     unsigned char m_0c0;  // +0x0c0 (gap member); 1-byte store: mov byte ptr [esi + 0xc0], bl
     unsigned char m_0c1;  // +0x0c1 (gap member); 1-byte store: mov byte ptr [esi + 0xc1], bl
@@ -90,10 +92,6 @@ public:
     // The machine block begins at +0x193: the compiled end of the
     // base sub-object region (+0x2e) and of the curated block
     // above. Base evidence: AbstractTypeClass at +0x0 (ends +0x2e).
-    // 1 curated declaration(s) do not sit at the offset their comment
-    // documents -- a comment does not move a member -- so the machine
-    // block below is padded from where the compiler actually puts them:
-    // MinimumRange documented +0x80, compiler +0x84
     // 1 recovered offset(s) below +0x2e lie inside the base
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0

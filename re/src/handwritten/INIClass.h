@@ -28,20 +28,29 @@
 class GenericNode
 {
 public:
-    GenericNode* Next;   // /* ? */ list link
-    GenericNode* Prev;   // /* ? */
+    // The class has a vtable of its own (RTTI 0x006988C4, one slot) and its
+    // constructor 0x00403960 writes it at +0x0, so the vptr is not optional
+    // here: without it the compiler puts the links at +0x0 and +0x4 and every
+    // derived class's base sub-object is 4 bytes low (INIClass::INISection's
+    // recovered +0x8 and +0x3c landed at +0xc and +0x40).
+    virtual ~GenericNode();
+    GenericNode* Next;   // +0x4 /* ? */ list link
+    GenericNode* Prev;   // +0x8 /* ? */ list link
 
     // ---- data members (offsets from ctor 0x00403960) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
-    // The machine block begins at +0x8: the compiled end of the
-    // base sub-object region. Evidence: no base: the compiler's own vptr occupies +0x0.
+    // The machine block begins at +0xc: the compiled end of the
+    // base sub-object region (+0x4) and of the curated block
+    // above. Base evidence: no base: the compiler's own vptr occupies +0x0.
+    // 1 recovered offset(s) below +0x4 lie inside the base
+    // sub-object region and are NOT declared here: they are declared and
+    // compiler-checked in the base's own header -- +0x0
     // 2 recovered offset(s) are inside the curated hand-written block
-    // above (its span is +0x0..+0x8) and are NOT repeated here:
-    // the curated block wins -- +0x0, +0x4
-    unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
+    // above (its span is +0x4..+0xc) and are NOT repeated here:
+    // the curated block wins -- +0x4, +0x8
 
 };
 

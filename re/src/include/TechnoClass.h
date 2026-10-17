@@ -192,7 +192,10 @@ public:
     // Evidence: constructor 0x60e7b0 writes these offsets.
     //<UNCOMMENT>    int   m_TechnoType;         // +0x7c  ctor: mov dword ptr [esi+0x7c], ebx (0)  // commented out: it documents 0x7c, which C++ supplies itself (the compiler's own vptr or base sub-object is already there)
     //<UNCOMMENT>    bool  m_IsSelected;         // +0x80  ctor: mov byte ptr [esi+0x80], bl (0)  // commented out: it documents 0x80, which C++ supplies itself (the compiler's own vptr or base sub-object is already there)
-    int   m_Owner;              // +0x84  ctor: mov dword ptr [esi+0x84], ebx (0)
+    // NOT m_Owner: ObjectClass already declares an m_Owner at +0x28 and the
+    // nearest declaration wins for name lookup, so a second m_Owner here
+    // cannot be reached by offsetof on any class derived from both.
+    int   m_Field84;            // +0x84  ctor: mov dword ptr [esi+0x84], ebx (0)
     int   m_Field88;            // +0x88  ctor: mov dword ptr [esi+0x88], eax
     unsigned char pad_doc_gap_08c[0x4];  // holds the gap before m_Field90, which documents 0x90 (the compiler would put it at 0x8c)
     int   m_Field90;            // +0x90  ctor: mov dword ptr [esi+0x90], ebx (0)
