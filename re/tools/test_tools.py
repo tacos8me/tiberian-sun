@@ -22,6 +22,7 @@ adding one: if it cannot fail, it is not worth the runtime.
   Machine mmx lanes       -- differential against lane-array reference code
   Machine boot regressions -- call_ptr balance, rep ECX, jmp_indirect, maps
   gen_code tails          -- cross-function tail targets are found
+  disasm jump tables      -- table bytes are data, their entries are starts
   Win32 module exports    -- handles name modules, CoCreateInstance writes *ppv
   Win32 message queue     -- WM_ACTIVATEAPP was never queued, so PeekMessageA
                              returned 0 forever and DispatchMessageA never ran
@@ -270,6 +271,124 @@ def test_indirect_tail_targets():
     check("indirect-start-not-tail", 0x1000 not in tails, str(tails))
     # No image means no resolution: the computed dispatch is kept, unchanged.
     eq("indirect-no-image", C.indirect_jump_targets(fns, None), {})
+
+
+# ---------------------------------------------------------------------------
+# disasm: switch-table bytes are data, not code
+# ---------------------------------------------------------------------------
+class _FakeImage(object):
+    """The slice of disasm.Binary that `recover` reads, over a synthetic .text."""
+
+    def __init__(self, base, blob):
+        self.base = base
+        self.blob = bytes(blob)
+        self.data = self.blob
+        self.text = {"name": ".text", "va": base, "vsize": len(self.blob),
+                     "raw": 0, "rawsize": len(self.blob), "flags": 0}
+        self.sections = [self.text]
+
+    def in_text(self, va):
+        return self.base <= va < self.base + len(self.blob)
+
+    def section_of(self, va):
+        return self.text if self.in_text(va) else None
+
+    def read(self, va, n):
+        if not self.in_text(va):
+            return None
+        off = va - self.base
+        return self.blob[off:off + n]
+
+    def u32(self, va):
+        import struct
+        b = self.read(va, 4)
+        return struct.unpack("<I", b)[0] if b and len(b) == 4 else None
+
+
+def test_jump_table_data():
+    """A switch table is data; its entries are entry points.
+
+    The memcpy tail tables carry an unreachable index-0 hole, so the run of
+    entries starts at base+4. The recovery used to sweep the gap linearly and
+    decode those entries as code, which left entry 1 (the real unaligned-copy
+    loop) not on an instruction boundary; `ts::jmp_indirect` dispatches by exact
+    VA and abandoned memcpy's frame. This test is mutation-proven in both
+    directions: it asserts the table is detected, and it asserts that without
+    the data region the very same bytes ARE decoded as a span.
+    """
+    import struct
+    import disasm
+
+    base = 0x1000
+    blob = bytearray(b"\xcc" * 0x100)
+    def put(va, bs):
+        blob[va - base:va - base + len(bs)] = bs
+
+    put(0x1000, b"\x8b\xc1")                                    # mov eax, ecx
+    put(0x1002, b"\x83\xe0\x03")                                # and eax, 3
+    put(0x1005, b"\xff\x24\x85" + struct.pack("<I", 0x1010))    # jmp [eax*4+1010]
+    put(0x100c, b"\x90")                                        # nop
+    # The next instruction's displacement bytes overlap the table's index-0
+    # hole, exactly as in the binary: the dword at 0x1010 is not a code pointer.
+    put(0x100d, b"\xff\x24\x8d" + struct.pack("<I", 0x2000))
+    put(0x1014, struct.pack("<III", 0x1040, 0x1050, 0x1060))
+    put(0x1040, b"\xb8\x01\x00\x00\x00\xc3")                    # mov eax,1; ret
+    put(0x1050, b"\xb8\x02\x00\x00\x00\xc3")
+    put(0x1060, b"\xb8\x03\x00\x00\x00\xc3")
+    img = _FakeImage(base, blob)
+
+    # Without the data region the gap sweep decodes the table bytes as code.
+    plain = disasm.recover(img, {0x1000}, set())
+    check("jumptable-false-span-without-data", 0x1014 in plain,
+          "expected the table bytes decoded as a span at 0x1014")
+
+    regions, targets = disasm.static_jump_table_data(img, plain)
+    eq("jumptable-synth-region", regions.get(0x1014), 0x1020)
+    for t in (0x1040, 0x1050, 0x1060):
+        check("jumptable-synth-target-%x" % t, targets.get(t) == 0x1010,
+              str(targets))
+    check("jumptable-synth-hole-not-target", 0x2000 not in targets, str(targets))
+
+    fixed = disasm.recover(img, {0x1000}, set(), regions)
+    check("jumptable-no-false-span", 0x1014 not in fixed,
+          "table bytes were decoded as code despite the data region")
+    for t in (0x1040, 0x1050, 0x1060):
+        check("jumptable-synth-entry-%x" % t, t in fixed, str(sorted(fixed)))
+    inside = [i["va"] for f in fixed.values() for i in f["insns"]
+              if 0x1014 <= i["va"] < 0x1020]
+    eq("jumptable-no-instruction-in-table", inside, [])
+
+    # The real binary's three unaligned-copy tables: base, hole, entry 1.
+    bin_path = os.path.join(HERE, "..", "bin", "GAME.EXE")
+    if os.path.exists(bin_path):
+        b = disasm.Binary(bin_path)
+        fns = {
+            0x683bec: {"va": 0x683bec, "size": 0x19, "insns": [
+                {"va": 0x683bfd, "mnem": "jmp",
+                 "op": "dword ptr [eax*4 + 0x683c10]"}]},
+            0x683c14: {"va": 0x683c14, "size": 0x35, "insns": [
+                {"va": 0x683c14, "mnem": "and",
+                 "op": "byte ptr [eax + ebp*2], bh"}]},
+            0x683d80: {"va": 0x683d80, "size": 0x20, "insns": [
+                {"va": 0x683d8d, "mnem": "jmp",
+                 "op": "dword ptr [eax*4 + 0x683d98]"}]},
+            0x683d9c: {"va": 0x683d9c, "size": 0x1b, "insns": [
+                {"va": 0x683d9c, "mnem": "test", "op": "al, 0x3d"}]},
+            0x68ce20: {"va": 0x68ce20, "size": 0x20, "insns": [
+                {"va": 0x68ce2d, "mnem": "jmp",
+                 "op": "dword ptr [eax*4 + 0x68ce40]"}]},
+            0x68ce44: {"va": 0x68ce44, "size": 0x21, "insns": [
+                {"va": 0x68ce44, "mnem": "push", "op": "eax"}]},
+        }
+        r, t = disasm.static_jump_table_data(b, fns)
+        eq("jumptable-memcpy-region", r.get(0x683c14), 0x683c20)
+        eq("jumptable-memcpy-entry1", t.get(0x683c20), 0x683c10)
+        check("jumptable-memcpy-entry2", t.get(0x683c4c) == 0x683c10, str(t))
+        check("jumptable-memcpy-entry3", t.get(0x683c70) == 0x683c10, str(t))
+        eq("jumptable-memmove-region", r.get(0x683d9c), 0x683da8)
+        eq("jumptable-memmove-entry1", t.get(0x683da8), 0x683d98)
+        eq("jumptable-third-region", r.get(0x68ce44), 0x68ce50)
+        eq("jumptable-third-entry1", t.get(0x68ce50), 0x68ce40)
 
 
 # ---------------------------------------------------------------------------
@@ -1280,7 +1399,7 @@ def main():
     for fn in (test_emit_masking, test_emit_in_out, test_emit_loop_tail,
                test_emit_ret, test_decl_destructor, test_slot_va,
                test_slot0_shared, test_reduce_bases, test_tail_entries,
-               test_indirect_tail_targets,
+               test_indirect_tail_targets, test_jump_table_data,
                test_machine_mul, test_machine_flags, test_machine_stack,
                test_machine_mmx, test_machine_depth_guard,
                test_machine_boot_regressions, test_win32_module_exports,

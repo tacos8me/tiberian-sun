@@ -20,6 +20,7 @@ This is the substrate for source reconstruction.
 import bisect
 import json
 import os
+import re
 import struct
 import sys
 from collections import defaultdict, deque
@@ -199,7 +200,15 @@ def find_prologues(bin_):
 # a .text VA, which is where the next table/rodata begins.
 JUMP_TABLE_MAX = 4096  # dwords; the largest real table in this binary is < 600
 
+# `jmp dword ptr [reg*4 + 0xTABLE]` as the disassembler renders it. The same
+# grammar tools/gen_code.py uses to find the table an indirect dispatch reads.
+TABLE_DISPATCH = re.compile(
+    r"dword ptr \[[a-z]{2,3}\*4 \+ (0x[0-9a-fA-F]+)\]")
 
+# How far past a table base to look for its entries. A run is read from the base
+# and stops at the first dword that is not a .text VA, so the bound is only a
+# guard; the longest run in this binary is 100 dwords (the table at 0x5ffab8).
+JUMP_TABLE_WINDOW = 256
 
 
 def read_jump_table(bin_, base):
@@ -674,7 +683,112 @@ def fill_prefixed_entries(bin_, funcs):
     return out
 
 
-def recover(bin_, seeds, vtable_code):
+def static_jump_table_data(bin_, funcs):
+    """Static switch tables in .text: their bytes are data, their entries code.
+
+    `recover` sweeps a gap linearly, so a table that sits after a function's
+    alignment padding is decoded as instructions. 0x683c14 is the case that
+    named this: the 12 bytes there are the entries of the memcpy dispatch at
+    0x683c10, but the gap seeder started a span on them, and entry 1
+    (0x683c20, the real unaligned-copy loop) was then not an instruction
+    boundary. `ts::jmp_indirect` dispatches by exact VA, so it could not reach
+    it and abandoned memcpy's frame.
+
+    A table is accepted only from evidence: a recovered `jmp dword ptr
+    [reg*4 + base]` names the base, and the dwords from the base are a run of at
+    least two .text VAs. That run is the table, and its bytes are returned as a
+    data interval. The compiler leaves one unreachable index-0 hole in the
+    unaligned-copy tables -- the dword there is the tail of the preceding `jmp`
+    -- so `base + 4` is tried when the dword at `base` is not a code pointer.
+
+    Two gates keep the classification from shrinking real code:
+
+      * every entry must be a function start, an instruction boundary of a
+        recovered span, or in an unattributed gap. An entry strictly inside a
+        span and not on a boundary is allowed only when that span starts at the
+        table: that is this very table decoded as code.
+      * the table's own start must be safe to stop a sweep at -- a function
+        start, a span start, an instruction boundary, or a gap -- so a region
+        can never cut a real instruction in half.
+
+    Returns ({start_va: end_va}, {entry_va: table_base}).
+    """
+    starts = set(funcs)
+    bounds = sorted((f["va"], f["va"] + f["size"]) for f in funcs.values()
+                    if bin_.in_text(f["va"]))
+    los = [b[0] for b in bounds]
+    insn_cache = {}
+
+    def host_of(va):
+        i = bisect.bisect_right(los, va) - 1
+        return bounds[i] if i >= 0 and va < bounds[i][1] else None
+
+    def is_boundary(host_start, va):
+        vas = insn_cache.get(host_start)
+        if vas is None:
+            vas = insn_cache[host_start] = set(
+                i["va"] for i in funcs[host_start]["insns"])
+        return va in vas
+
+    def entries_ok(run, start):
+        if len(run) < 2:
+            return False
+        for t in run:
+            if t in starts:
+                continue
+            host = host_of(t)
+            if host is None or is_boundary(host[0], t):
+                continue
+            if host[0] == start:
+                continue          # this table decoded as code
+            return False
+        return True
+
+    def start_ok(start):
+        if start in starts:
+            return True
+        host = host_of(start)
+        if host is None or host[0] == start:
+            return True
+        return is_boundary(host[0], start)
+
+    bases = set()
+    for f in funcs.values():
+        for i in f.get("insns") or []:
+            if (i.get("mnem") or "").strip() != "jmp":
+                continue
+            m = TABLE_DISPATCH.search((i.get("op") or "").strip())
+            if m:
+                bases.add(int(m.group(1), 16))
+
+    regions = {}
+    targets = {}
+    for base in sorted(bases):
+        if not bin_.in_text(base):
+            continue
+        for start in (base, base + 4):
+            if not bin_.in_text(start):
+                continue
+            run = []
+            for k in range(JUMP_TABLE_WINDOW):
+                p = bin_.u32(start + 4 * k)
+                if p is None or not bin_.in_text(p):
+                    break
+                run.append(p)
+            if not entries_ok(run, start):
+                continue
+            if any(s < start < e for s, e in regions.items()):
+                break              # nested base: the same bytes are already data
+            if not start_ok(start):
+                break              # stopping here would cut a real instruction
+            regions[start] = start + 4 * len(run)
+            for t in run:
+                targets.setdefault(t, base)
+            break
+    return regions, targets
+
+
+def recover(bin_, seeds, vtable_code, data_regions=None):
     """Run the worklist to a fixpoint and return the recovered bodies.
 
     Every body feeds its successors back in (direct call/jmp targets, branch
@@ -696,6 +810,17 @@ def recover(bin_, seeds, vtable_code):
     text_end = text_va + bin_.text["vsize"]
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
     md.detail = True
+
+    # Switch-table bytes are data, not code: a sweep stops before them and the
+    # gap seeder steps over them. `data_regions` is a {start: end} map produced
+    # by static_jump_table_data from an earlier pass; the caller re-runs this
+    # whole function with it rather than patching a body after the fact.
+    data = sorted((data_regions or {}).items())
+    data_los = [a for a, _ in data]
+
+    def data_end(va):
+        i = bisect.bisect_right(data_los, va) - 1
+        return data[i][1] if i >= 0 and va < data[i][1] else None
 
     # 1. SEH handler immediates (`push -1; push <handler>`).
     seh_handlers = find_seh_handlers(bin_)
@@ -760,6 +885,8 @@ def recover(bin_, seeds, vtable_code):
         worklist.append((va, source))
 
     def _gate(va, source):
+        if data_end(va) is not None:
+            return False
         if source in ("seed", "call", "jmp"):
             return True
         if va in direct_branch_targets:
@@ -779,8 +906,11 @@ def recover(bin_, seeds, vtable_code):
         end = start
         for ins in md.disasm(code, start):
             # Stop at the start of any other known function so a body can never
-            # swallow a real entry point.
+            # swallow a real entry point, and at switch-table bytes: they are
+            # data, and decoding them as code is what hid the memcpy entries.
             if ins.address != start and ins.address in admitted:
+                break
+            if data_end(ins.address) is not None:
                 break
             insns.append({
                 "va": ins.address,
@@ -870,6 +1000,8 @@ def recover(bin_, seeds, vtable_code):
             if b - a < GAP_MIN and not short_gap_body(md, bin_, a, b):
                 continue
             s = strip_leading_padding(bin_, a, b)
+            while s < b and data_end(s) is not None:
+                s = strip_leading_padding(bin_, data_end(s), b)
             if s >= b or s in seen or s in gap_tried:
                 continue
             gap_tried.add(s)
@@ -951,37 +1083,52 @@ def main():
                         break
     print(f"seeds after vtables: {len(seeds)}")
 
-    # --- Entry points the pointer tables name -------------------------------
+    # --- Entry points the pointer tables name, and switch-table data ---------
     #
     # A recovered body is the only place a swallowed entry point is visible, so the
     # seed set grows by re-running the whole worklist: a start added between rounds
     # is in `admitted` before any sweep begins, so the body that contained it stops
-    # at it instead of being truncated afterwards. Each round is deterministic and
-    # the seed set only grows, so this terminates; the loop is unbounded rather than
-    # capped because a cap would silently leave the last batch unseeded.
+    # at it instead of being truncated afterwards. The same is true of a switch
+    # table: its bytes are only recognisable once a recovered `jmp` names its base,
+    # and the table's entries are only known to be code once the bytes are data.
+    # Each round is deterministic and both the seed set and the data set only grow,
+    # so this terminates; the loop is unbounded rather than capped because a cap
+    # would silently leave the last batch unseeded.
+    data_regions = {}
     round_no = 0
     while True:
-        funcs = recover(bin_, seeds, vtable_code)
+        funcs = recover(bin_, seeds, vtable_code, data_regions)
+        regions, table_targets = static_jump_table_data(bin_, funcs)
+        new_regions = {s: e for s, e in regions.items() if s not in data_regions}
+        new_targets = set(table_targets) - seeds
         found, unbounded = pointer_table_targets(bin_, funcs, iat)
         extra = {va: slot for va, slot in found.items() if va not in seeds}
         after_fill = {va: span for va, span in
                       fill_prefixed_entries(bin_, funcs).items()
                       if va not in seeds and va not in extra}
-        if not extra and not after_fill:
-            print(f"pointer-table rounds: {round_no}; no further entry point named")
+        if not new_regions and not new_targets and not extra and not after_fill:
+            print(f"entry-point rounds: {round_no}; no further entry point or "
+                  f"switch table named")
             break
         round_no += 1
-        print(f"round {round_no}: {len(extra)} entry point(s) named by a data-section "
-              f"code-pointer table, {len(after_fill)} named by the end of a span's "
-              f"leading fill; {len(unbounded)} candidate(s) rejected as not an "
-              f"instruction boundary")
+        print(f"round {round_no}: {len(new_regions)} switch-table data region(s), "
+              f"{len(new_targets)} table entr(ies), {len(extra)} entry point(s) "
+              f"named by a data-section code-pointer table, {len(after_fill)} "
+              f"named by the end of a span's leading fill; {len(unbounded)} "
+              f"candidate(s) rejected as not an instruction boundary")
+        for s in sorted(new_regions)[:8]:
+            print(f"  data 0x{s:08x}..0x{new_regions[s]:08x}")
+        for va in sorted(new_targets)[:8]:
+            print(f"  0x{va:08x} <- switch-table entry at 0x{table_targets[va]:08x}")
         for va in sorted(extra)[:8]:
             print(f"  0x{va:08x} <- dword at 0x{extra[va]:08x}")
         for va in sorted(after_fill)[:8]:
             print(f"  0x{va:08x} <- first real instruction of span 0x{after_fill[va]:08x}")
-        if len(extra) + len(after_fill) > 16:
-            print(f"  ... {len(extra) + len(after_fill) - 16} more")
-        seeds |= set(extra) | set(after_fill)
+        total = len(new_regions) + len(new_targets) + len(extra) + len(after_fill)
+        if total > 16:
+            print(f"  ... {total - 16} more")
+        data_regions.update(regions)
+        seeds |= set(table_targets) | set(extra) | set(after_fill)
 
 
     # --- Remaining unattributed .text: jump tables, padding, and what is left
