@@ -88,10 +88,13 @@ struct StubState {
     // call to one of those. Either one is a hole a reader has to see.
     unsigned long unbalanced_at_resolution;
     unsigned long unbalanced;       // fallback calls that could not pop
+    unsigned long exit_calls;       // ExitProcess invocations the model walked past
+    unsigned long proc_address_misses;  // GetProcAddress names nothing implements
     char last[64];                  // name of the most recent stub called
     bool verbose;                   // print each stub call
     StubState() : calls(0), fallbacks(0), resolved(0), fallback_names(0),
-                  unbalanced_at_resolution(0), unbalanced(0), verbose(false) {
+                  unbalanced_at_resolution(0), unbalanced(0), exit_calls(0),
+                  proc_address_misses(0), verbose(false) {
         last[0] = 0;
     }
 };
@@ -181,6 +184,26 @@ inline u32 zero_block(u32 size, u32 align) {
     return p;
 }
 
+// A C string printed so that every byte is visible. A stub that shows a program
+// a message box has to report the text, and a boot that has not loaded the
+// game's string table yet hands over a pointer into zeroed memory or into
+// whatever the model happened to leave there: `%s` turns that into a mojibake
+// line, and a reader cannot tell "empty" from "garbled" from "a control code".
+// Escaping every byte makes the difference legible, and the length makes an
+// unterminated buffer visible instead of a read that runs off the page.
+inline void print_escaped(const char *label, u32 p, unsigned max) {
+    std::printf("  %s 0x%08x: \"", label, p);
+    unsigned i = 0;
+    for (; i < max; ++i) {
+        u8 c = ld8(p + i);
+        if (!c) break;
+        if (c >= 0x20u && c < 0x7fu) std::printf("%c", (char)c);
+        else std::printf("\\x%02x", (unsigned)c);
+    }
+    std::printf("\" (%u byte%s%s)\n", i, i == 1u ? "" : "s",
+                i == max ? ", no terminator in range" : "");
+}
+
 // -- clock -------------------------------------------------------------------
 // A monotonic millisecond counter. The original reads the real clock; a
 // monotonic counter is what every caller actually depends on, and it makes a
@@ -243,11 +266,20 @@ TS_END
 TS_RET(FreeLibrary, 1, 1u)
 
 TS_BEGIN(GetProcAddress)
-    // The returned address must be a registered stub or the caller's first
-    // call lands on nothing. An unknown name gets the fallback, which is
-    // registered and therefore callable, and which logs the miss.
-    u32 va = find_by_name(ld_cstr(arg(1)));
-    stub_done(2, va ? va : 0u);
+    // The returned address must be a registered stub or the caller's first call
+    // lands on nothing, so a name with no stub returns 0 -- and says so. A
+    // silent 0 reads as "this DLL does not export that", which is a claim the
+    // caller acts on: the game asks comctl32 for DllGetVersion, and on a 0 it
+    // decides the system is too old, puts up a message box and exits.
+    const char *name = ld_cstr(arg(1));
+    u32 va = find_by_name(name);
+    if (!va) {
+        state().proc_address_misses++;
+        std::printf("win32stubs: GetProcAddress(module 0x%08x, \"%s\") -> 0 -- no "
+                    "stub for it; a caller that tests this takes its failure path\n",
+                    arg(0), name);
+    }
+    stub_done(2, va);
 TS_END
 
 TS_BEGIN(GetCommandLineA)
@@ -399,9 +431,16 @@ TS_RET(GetCurrentProcessId, 0, 1234u)
 TS_RET(GetCurrentThreadId, 0, 1234u)
 
 TS_BEGIN(ExitProcess)
-    // There is no way to unwind the modelled stack from here, so ExitProcess
-    // returns and the frames above it run to their own `ret`. That is wrong
-    // about control flow but it never loses the caller.
+    // The program has decided to stop, and it says with what code. The model
+    // cannot unwind to its caller from here, so the stub returns and the frames
+    // above it run to their own `ret`: that is wrong about control flow, and
+    // leaving it unspoken is worse, because a run that walks on after an
+    // ExitProcess looks like a run that is making progress. It is printed, and
+    // counted, so the log says which it is.
+    std::printf("win32stubs: ExitProcess(%u) from 0x%08x -- the program has "
+                "decided to stop; the model keeps executing anyway\n",
+                (unsigned)arg(0), (unsigned)ld32(ESP.d));
+    state().exit_calls++;
     stub_done(1, 0u);
 TS_END
 TS_RET(TerminateProcess, 2, 1u)
@@ -1454,11 +1493,16 @@ TS_BEGIN(MessageBoxA)
     // Nothing here can show one, so the text goes to the run's log -- that log
     // is the only place the reason survives -- and the answer is IDOK, because
     // the alternative is a caller that treats the failure as fatal.
-    const char *text = ld_cstr(arg(1));
-    char cap[96];
-    win_copy(cap, sizeof(cap), arg(2));
-    std::printf("win32stubs: MessageBoxA(hwnd 0x%08x) \"%s\" / \"%s\" -> IDOK\n",
-                arg(0), cap, text);
+    // The call site and the raw pointers are printed too: the text is fetched
+    // at runtime from the game's own string table, so on a boot that has not
+    // filled that table the "message" is whatever the model holds at the
+    // pointer, and the only way to tell that apart from a real message is to
+    // see the address it came from.
+    std::printf("win32stubs: MessageBoxA(hwnd 0x%08x, text 0x%08x, caption 0x%08x, "
+                "type 0x%08x) called from 0x%08x (ebp 0x%08x esp 0x%08x) -> IDOK\n",
+                arg(0), arg(1), arg(2), arg(3), ld32(ESP.d), EBP.d, ESP.d);
+    print_escaped("text", arg(1), 64u);
+    print_escaped("caption", arg(2), 64u);
     stub_done(4, 1u);
 TS_END
 
