@@ -8,6 +8,8 @@
 #   ./tools/wine_run.sh                    # plain run, 90s, headless
 #   ./tools/wine_run.sh --trace ddraw      # WINEDEBUG=+ddraw, the DirectDraw calls
 #   ./tools/wine_run.sh --trace relay --secs 20
+#   ./tools/wine_run.sh --dismiss      # walk the startup dialog chain
+#   ./tools/wine_run.sh --shot out.png # grab the screen with ffmpeg
 #
 # Prerequisites (Ubuntu 24.04, done once):
 #   sudo dpkg --add-architecture i386 && sudo apt-get update
@@ -26,11 +28,15 @@ PREFIX=${WINEPREFIX:-$ROOT/../.wine32}
 GAMEDIR=${GAMEDIR:-$ROOT/../gamedir}
 SECS=90
 TRACE=""
+DISMISS=0
+SHOT=""
 
 while [ $# -gt 0 ]; do
     case "$1" in
         --trace) TRACE="$2"; shift 2 ;;
         --secs)  SECS="$2";  shift 2 ;;
+        --dismiss) DISMISS=1; shift ;;
+        --shot)  SHOT="$2";  shift 2 ;;
         *) echo "usage: $0 [--trace CHANNEL] [--secs N]" >&2; exit 2 ;;
     esac
 done
@@ -57,8 +63,40 @@ cd "$GAMEDIR"
 # -a picks a free X display; the game needs one even when nothing is watching,
 # because it creates a real window and asks DirectDraw for a cooperative level.
 set +e
-timeout "$SECS" xvfb-run -a wine GAME.EXE > /tmp/wine_run.log 2>&1
-rc=$?
+if [ "$DISMISS" = "1" ] || [ -n "$SHOT" ]; then
+    # Run on a private display so the dialogs can be found and dismissed while
+    # the game is still alive. The retail game walks a CHAIN of startup dialogs;
+    # one Return dismisses one and reveals the next.
+    Xvfb :77 -screen 0 1024x768x16 >/dev/null 2>&1 &
+    xvfb_pid=$!
+    sleep 2
+    export DISPLAY=:77
+    timeout "$SECS" wine GAME.EXE > /tmp/wine_run.log 2>&1 &
+    game_pid=$!
+    sleep 20
+    if [ "$DISMISS" = "1" ]; then
+        for _ in 1 2 3 4 5 6 7 8; do
+            small=$(xwininfo -root -tree 2>/dev/null | grep '"Tiberian Sun"' \
+                    | grep -vE "1024x768" | grep -oE "0x[0-9a-f]+" | head -1)
+            [ -z "$small" ] && break
+            xdotool key --window "$small" Return 2>/dev/null
+            sleep 2
+        done
+        echo "wine_run: windows now"
+        xwininfo -root -tree 2>/dev/null | grep -E '"Tiberian Sun"' | sed 's/^/  /'
+    fi
+    if [ -n "$SHOT" ]; then
+        ffmpeg -loglevel error -f x11grab -video_size 1024x768 -i :77 \
+               -frames:v 1 -y "$SHOT" 2>/dev/null
+        echo "wine_run: screenshot $SHOT ($(stat -c%s "$SHOT" 2>/dev/null || echo 0) bytes; a few KB means a blank screen)"
+    fi
+    wait "$game_pid" 2>/dev/null
+    rc=$?
+    kill "$xvfb_pid" 2>/dev/null
+else
+    timeout "$SECS" xvfb-run -a wine GAME.EXE > /tmp/wine_run.log 2>&1
+    rc=$?
+fi
 set -e
 
 echo "wine_run: exit=$rc (124 = still running when the timeout hit, i.e. a loop)"

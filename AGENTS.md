@@ -202,12 +202,15 @@ What the boot does today, measured:
 
 ```
 $ python3 tools/boot.py            # 0.4s build (cached), 0.2s run
-image:  3227799 bytes in 4 sections; 341 of 341 imports resolved, 341 traced
-run:    budget 5000000 instructions, depth limit 20000
-stop:   instruction budget exhausted at 0x0055f788 after 5000001 instructions
-message loop: reached   (GetMessage=1 PeekMessage=137295 DispatchMessage=1
-                         CreateWindowExA=1)
+image:  3227799 bytes in 4 sections; 342 of 342 imports resolved, 342 traced
+stop:   fault at 0x00684529 after 1,011,817 instructions, depth 15
+why:    the program called ExitProcess
+message loop: not-reached   (GetMessage=0 PeekMessage=0 DispatchMessage=0
+                             CreateWindowExA=0)
 ```
+
+So: the game starts, initialises, and exits. It does **not** reach a message
+loop, and it creates no window.
 
 **A correction that matters more than any of this.** An earlier version of this
 file reported `message loop: reached` with `PeekMessage=137,295`. That was wrong,
@@ -215,9 +218,10 @@ and the way it was wrong is worth keeping: the model let `ExitProcess` *return*,
 so the frames above it ran to their own `ret` and execution continued past a fatal
 exit. Everything observed after that point was a loop the real game never ran.
 
-`ExitProcess` now halts the run, and the honest picture is the one above: the game
-starts, initialises, and exits. It is **not** a playable game and it does not
-reach a message loop.
+**And this block kept reporting the retracted number for a while after the
+correction was written** — the correction sat ten lines below a measurement that
+contradicted it. If you are reading a figure here that disagrees with
+`python3 tools/boot.py`, the tool is right and this file is stale.
 
 **The defect that explains it.** At the exit the arguments are stub addresses
 rather than the numbers the code pushed: `ExitProcess(0x6844df)` where the code
@@ -529,9 +533,28 @@ keep in mind:
   deleting an instruction gives `1/4 records match`, swapping two gives
   `2/4 records match`, and corrupting `push32(0x19u)` to `0x1au` with the comment
   intact gives `code does not match the recovered instructions at line 0`. All
-  three exit 1. Semantic equivalence with the original cannot be proven here
-  (there is no MSVC 6 toolchain, only g++), so faithful rendering is the strongest
-  claim available — and it is checkable.
+  three exit 1. Semantic equivalence with the original cannot be proven by
+  *compiling* it (there is no MSVC 6 toolchain, only g++), so faithful rendering
+  is the strongest claim available from the generator alone.
+
+  **But it can be checked against the running original, and that is new.**
+  `tools/wine_run.sh` runs the retail `GAME.EXE` under Wine on this host, at its
+  preferred base, headless, with `WINEDEBUG` channels. That is a differential
+  oracle at instruction granularity -- the thing this file used to say could not
+  exist. Wine's `+ddraw` trace is what exposed the 23-vs-25 slot `IDirectDraw`
+  vtable: it listed the retail call sequence, and `GetAvailableVidMem` was a slot
+  we did not have.
+
+  **What it actually does here, verified with a screenshot:** it creates a
+  1024x768 "Tiberian Sun" window, shows `Warning - Unable to create Direct Sound
+  Object. Proceeding with audio disabled.`, walks a second dialog after that is
+  dismissed, and then **exits**. So the oracle is real but bounded: it reports the
+  retail call sequence up to the point where the game gives up, and it gives up
+  early in this environment because there is no audio device, no CD mounted and no
+  install registry. Do not read "runs under Wine" as "is playable under Wine".
+  Mounting the CD and satisfying the install is the work needed to extend the
+  oracle past startup, and it is worth doing before trusting any claim here about
+  what the game does after init.
 - **Test the tools, not only their output.** `tools/verify.py` checks artifacts;
   a tool can be wrong in a way that produces self-consistent output and nothing
   notices. `tools/test_tools.py` holds 36 checks, each a regression test for a
