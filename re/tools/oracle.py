@@ -37,8 +37,8 @@ import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPO = os.path.dirname(ROOT)
-GAMEDIR = os.path.join(REPO, "gamedir")
-PREFIX = os.path.join(REPO, ".wine32")
+GAMEDIR = os.environ.get("GAMEDIR") or os.path.join(REPO, "gamedir")
+PREFIX = os.environ.get("WINEPREFIX") or os.path.join(REPO, ".wine32")
 DISPLAY = ":78"
 IMAGE_LO, IMAGE_HI = 0x00400000, 0x00698000
 
@@ -73,9 +73,13 @@ def env():
 
 
 def start_display():
+    # 640x480x16 is not a preference: the game asks DirectDraw for 640x400x16
+    # then 640x480x16, and Xvfb cannot change modes. On a 1024x768 screen both
+    # SetDisplayMode calls fail and the game exits (code 01) before most of the
+    # code worth breaking on runs. See tools/wine_run.sh.
     subprocess.run(["pkill", "-x", "Xvfb"], capture_output=True)
     time.sleep(1)
-    subprocess.Popen(["Xvfb", DISPLAY, "-screen", "0", "1024x768x16"],
+    subprocess.Popen(["Xvfb", DISPLAY, "-screen", "0", "640x480x16"],
                      stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     time.sleep(2)
 
@@ -132,7 +136,13 @@ def dismiss_loop(stop, secs=90):
             tree = subprocess.run(["xwininfo", "-root", "-tree"], env=env(),
                                   capture_output=True, text=True, timeout=10).stdout
             for line in tree.splitlines():
-                if '"Tiberian Sun"' not in line or "1024x768" in line:
+                if '"Tiberian Sun"' not in line:
+                    continue
+                # Only modal dialogs are narrower than 500 px. The main game
+                # window is screen-sized; sending Return to it presses a menu
+                # button (on 640x480 it can hit Exit).
+                size = re.search(r"(\d+)x(\d+)\+", line)
+                if not size or int(size.group(1)) >= 500:
                     continue
                 m = re.search(r"(0x[0-9a-f]+)", line)
                 if m:
@@ -235,7 +245,18 @@ def main(argv):
         out = gdb_at(pid, addr, opt.gdb_timeout)
     finally:
         stop.set()
-    real = [l for l in out.splitlines() if l.startswith("REAL ") or l.startswith("STACK")]
+    # gdb_at returns the raw transcript; parse_gdb is what turns `info registers`
+    # and `x/8wx $esp` into the REAL/STACK lines this tool reports. The previous
+    # version filtered the raw transcript for lines nothing ever printed, so it
+    # always reported "no breakpoint hit" even when the breakpoint fired.
+    regs, stack = parse_gdb(out)
+    real = []
+    if regs:
+        order = ("eip", "esp", "ebp", "ebx", "esi", "edi", "eax", "ecx", "edx")
+        real.append("REAL " + " ".join("%s=0x%08x" % (k, regs[k])
+                                       for k in order if k in regs))
+    if stack:
+        real.append("STACK " + " ".join("0x%08x" % w for w in stack))
     if not real:
         print(out[-1500:], file=sys.stderr)
         return die("no breakpoint hit at 0x%08x -- the game did not reach it "
