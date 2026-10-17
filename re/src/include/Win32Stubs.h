@@ -350,6 +350,13 @@ TS_RET(GetProcessHeap, 0, 0x00010000u)
 
 TS_BEGIN(HeapAlloc)
     u32 size = arg(2);
+    // A size this large is never a real request: it is a length the caller
+    // computed from data it did not get (a failed stream read leaves the
+    // stack slot it was read from uninitialised). Naming it here turns the
+    // model's page-table exhaustion into the value that caused it.
+    if (std::getenv("TS_FILE_TRACE") && size > 0x08000000u)
+        std::fprintf(stderr, "win32stubs: HeapAlloc(size=0x%08x) -- implausible "
+                             "allocation, step %lu\n", size, mach().steps);
     u32 p = alloc_block(size, 8u);
     st32(p, size);
     u32 q = p + 16u;
@@ -727,8 +734,9 @@ TS_BEGIN(CreateFileA)
             long sz = std::ftell(f);
             t[slot].size = sz < 0 ? 0 : (unsigned long)sz;
             std::fseek(f, 0, SEEK_SET);
-            std::printf("win32stubs: CreateFileA(\"%s\") -> %s (%lu bytes)\n",
-                        name, hp, t[slot].size);
+            std::printf("win32stubs: CreateFileA(\"%s\") -> %s (%lu bytes, "
+                        "handle 0x%08x)\n", name, hp, t[slot].size,
+                        0x00080000u + slot);
             state().file_opens++;
             stub_done(7, 0x00080000u + slot);
         }
@@ -746,6 +754,14 @@ TS_BEGIN(ReadFile)
         model_wr(buf, tmp, n);
     }
     if (got) st32(got, n);
+    // TS_FILE_TRACE -- what each read actually returned, and where the file
+    // pointer was afterwards. A short read at a non-EOF position is the shape
+    // of a file-layer defect, and the caller's next move (a size computed from
+    // the bytes it expected) is otherwise impossible to attribute.
+    if (std::getenv("TS_FILE_TRACE"))
+        std::fprintf(stderr, "win32stubs: ReadFile(h=0x%08x want=%u) -> %u "
+                             "(pos=%ld, step=%lu)\n", h, want, n,
+                     f ? std::ftell(f->f) : -1L, mach().steps);
     stub_done(5, 1u);
 TS_END
 
@@ -1343,6 +1359,14 @@ TS_BEGIN(CreateWindowExA)
         st32(cs + 40u, clsname);
         st32(cs + 44u, arg(0));      // dwExStyle
         call_wndproc(proc, h, 0x0001u, 0u, cs);   // WM_CREATE
+        // WM_ACTIVATEAPP is a POSTED message, not a synchronous send: the
+        // window manager queues it when the window becomes the active one, and
+        // the program's own message loop delivers it. A program that gates its
+        // frame loop on "am I the active application" -- as this game does,
+        // spinning on the flag its WM_ACTIVATEAPP handler sets -- never leaves
+        // that spin if the message is not queued. wParam is TRUE for the
+        // window being activated. lParam is the thread id; nothing reads it.
+        msg_push(h, 0x001cu, 1u, 0u);             // WM_ACTIVATEAPP, active
     }
     stub_done(12, h);
 TS_END
@@ -2580,6 +2604,22 @@ inline u32 make_dd_clipper() {
 // Encrypt/Decrypt are honest copies for now: the model has no Blowfish cipher,
 // and a caller that decrypts with this gets its input back rather than a crash
 // or a plausible-looking wrong plaintext. They say so once, by name.
+//
+// MEASURED CONSEQUENCE -- this is the blocker after the message queue. Once
+// WM_ACTIVATEAPP is delivered, the game reaches TIBSUN.MIX's index:
+//
+//   step 1881678  IBlowfish::SetKey(56, key=82060323...)  from 0x423404
+//   step 1881870  ReadFile(8) at MIX offset 84
+//   step 1881940  IBlowfish::Decrypt(8, src=2ce3171b...)  from 0x423469
+//   step 1882051  HeapAlloc(0xfffea610)                   from 0x68511c
+//
+// The key the game computes with its own RSA code is byte-for-byte the key
+// tools/mix.py derives from the same 80-byte block, and decrypting the first
+// index block with it gives count=17, body=75,094,416 -- a valid index. The
+// identity copy leaves the ciphertext, so the PKStraw (vtable 0x6a3270) read
+// returns 0; FUN_00547290 then reads a 6-byte header from the uninitialised
+// stack (count=0xe32c), and operator_new(-88560) wraps to a 4 GB allocation.
+// Implementing Blowfish-ECB in slots 6/7 is what unblocks the next stage.
 inline u8 *blowfish_key() { static u8 k[56]; return k; }
 inline u32 &blowfish_key_len() { static u32 n = 0; return n; }
 
@@ -2590,6 +2630,11 @@ TS_BEGIN(bf_SetKey)
     } else {
         if (key) for (u32 i = 0; i < len; ++i) blowfish_key()[i] = ld8(key + i);
         blowfish_key_len() = len;
+        if (key && std::getenv("TS_FILE_TRACE"))
+            std::fprintf(stderr, "win32stubs: IBlowfish::SetKey len=%u key=%02x%02x%02x%02x "
+                                 "(caller 0x%08x, step %lu)\n", len,
+                         ld8(key), ld8(key + 1u), ld8(key + 2u), ld8(key + 3u),
+                         ld32(ESP.d), mach().steps);
         stub_done(3, 0u);
     }
 TS_END
@@ -2629,6 +2674,11 @@ TS_BEGIN(bf_Decrypt)
         if (!said) { said = true;
             std::printf("win32stubs: IBlowfish::Decrypt -- no cipher in the "
                         "model; the block is copied unchanged\n"); }
+        if (std::getenv("TS_FILE_TRACE"))
+            std::fprintf(stderr, "win32stubs: IBlowfish::Decrypt len=%u src=%02x%02x%02x%02x "
+                                 "(caller 0x%08x, step %lu)\n", len,
+                         ld8(src), ld8(src + 1u), ld8(src + 2u), ld8(src + 3u),
+                         ld32(ESP.d), mach().steps);
         for (u32 i = 0; i < len; ++i) st8(dst + i, ld8(src + i));
         stub_done(4, 0u);
     }

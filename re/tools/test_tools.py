@@ -23,6 +23,8 @@ adding one: if it cannot fail, it is not worth the runtime.
   Machine boot regressions -- call_ptr balance, rep ECX, jmp_indirect, maps
   gen_code tails          -- cross-function tail targets are found
   Win32 module exports    -- handles name modules, CoCreateInstance writes *ppv
+  Win32 message queue     -- WM_ACTIVATEAPP was never queued, so PeekMessageA
+                             returned 0 forever and DispatchMessageA never ran
 
 Usage:
   python3 tools/test_tools.py
@@ -851,13 +853,182 @@ int main() {
        if r.stdout.strip() else "", "0")
 
 
+def test_win32_message_queue():
+    """The USER32 queue, driven through the dispatch table the boot uses.
+
+    Regression test for the message-loop blocker: RegisterClassA recorded the
+    class name but CreateWindowExA never queued WM_ACTIVATEAPP, so PeekMessageA
+    always returned 0, DispatchMessageA was never called, and the game spun on
+    the "app active" flag its WndProc sets from WM_ACTIVATEAPP. A message that
+    is queued but never dispatched, a MSG written at the wrong offsets, a
+    PM_NOREMOVE that consumes the message, and a stub that pops the wrong
+    number of argument words are all defects this exercises. It also checks
+    the model's stack convention: after a __stdcall stub with N arguments ESP
+    must be the caller's ESP + 4*N.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+
+// What the game's own window procedure would record.
+static ts::u32 g_calls, g_hwnd, g_msg, g_wp, g_lp;
+static void fake_wndproc() {
+    ++g_calls;
+    g_hwnd = ts::ld32(ESP.d + 4u);
+    g_msg  = ts::ld32(ESP.d + 8u);
+    g_wp   = ts::ld32(ESP.d + 12u);
+    g_lp   = ts::ld32(ESP.d + 16u);
+    ESP.d += 4u + 16u;   // __stdcall: pop the return address and 4 args
+}
+
+// Call a stub exactly as a transcription does: arguments at the caller's ESP,
+// ts_call_at pushes the return address, the stub pops ret + its own args.
+static ts::u32 call_stub(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
+    for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
+    ESP.d = sp;
+    ts::ts_call_at(fn, 0x00c0ffeeu);
+    return EAX.d;
+}
+
+static void put_cstr(ts::u32 at, const char *s) {
+    unsigned i = 0;
+    for (; s[i]; ++i) ts::st8(at + i, (ts::u8)s[i]);
+    ts::st8(at + i, 0);
+}
+
+int main() {
+    ts::register_win32_stubs();
+    const ts::u32 sp = 0x002ff000u;
+    const ts::u32 wc = 0x00300000u, name = 0x00300100u, msg = 0x00300200u;
+    const ts::u32 proc_va = 0x00c0de01u;
+    ts::ts_register(proc_va, &fake_wndproc);
+    put_cstr(name, "TSTCLASS");
+    for (unsigned i = 0; i < 40u; i += 4u) ts::st32(wc + i, 0u);
+    ts::st32(wc + 4u, proc_va);    // lpfnWndProc
+    ts::st32(wc + 36u, name);      // lpszClassName
+
+    ts::u32 reg = ts::stub_va("USER32", "RegisterClassA");
+    ts::u32 cwe = ts::stub_va("USER32", "CreateWindowExA");
+    ts::u32 peek = ts::stub_va("USER32", "PeekMessageA");
+    ts::u32 getm = ts::stub_va("USER32", "GetMessageA");
+    ts::u32 disp = ts::stub_va("USER32", "DispatchMessageA");
+    ts::u32 post = ts::stub_va("USER32", "PostMessageA");
+    ts::u32 send = ts::stub_va("USER32", "SendMessageA");
+    ts::u32 quit = ts::stub_va("USER32", "PostQuitMessage");
+    ck("stubs resolve", reg && cwe && peek && getm && disp && post && send && quit);
+
+    // RegisterClassA records the class name and its procedure.
+    ts::u32 a1[1] = { wc };
+    ts::u32 atom = call_stub(reg, a1, 1, sp);
+    ck("RegisterClassA returns an atom", atom != 0);
+    ck("RegisterClassA pops 1 arg", ESP.d == sp + 4u);
+
+    // CreateWindowExA sends WM_CREATE synchronously and queues WM_ACTIVATEAPP.
+    ts::u32 a12[12] = { 0u, name, 0u, 0x00cf0000u,
+                        0x80000000u, 0x80000000u, 800u, 600u, 0u, 0u, 0u, 0u };
+    g_calls = 0;
+    ts::u32 hwnd = call_stub(cwe, a12, 12, sp);
+    ck("CreateWindowExA returns a handle", hwnd != 0);
+    ck("CreateWindowExA pops 12 args", ESP.d == sp + 48u);
+    ck("WM_CREATE was sent", g_calls == 1u && g_msg == 0x0001u);
+    ck("WM_CREATE hwnd", g_hwnd == hwnd);
+    ck("WM_CREATE has a CREATESTRUCT", g_lp != 0u);
+
+    // PM_NOREMOVE must fill the MSG and leave it queued.
+    ts::u32 pm[5] = { msg, 0u, 0u, 0u, 0u };   // wRemoveMsg = PM_NOREMOVE
+    ts::u32 r = call_stub(peek, pm, 5, sp);
+    ck("PeekMessage PM_NOREMOVE sees WM_ACTIVATEAPP", r == 1u);
+    ck("PeekMessage pops 5 args", ESP.d == sp + 20u);
+    ck("MSG.hwnd at +0", ts::ld32(msg + 0u) == hwnd);
+    ck("MSG.message at +4", ts::ld32(msg + 4u) == 0x001cu);
+    ck("MSG.wParam at +8", ts::ld32(msg + 8u) == 1u);
+    ck("MSG.lParam at +12", ts::ld32(msg + 12u) == 0u);
+    ck("MSG.pt at +20/+24", ts::ld32(msg + 20u) == 0u && ts::ld32(msg + 24u) == 0u);
+    r = call_stub(peek, pm, 5, sp);
+    ck("PM_NOREMOVE leaves it queued", r == 1u);
+
+    // DispatchMessageA must call the recorded procedure with the MSG fields.
+    ts::u32 a1m[1] = { msg };
+    g_calls = 0;
+    call_stub(disp, a1m, 1, sp);
+    ck("DispatchMessageA pops 1 arg", ESP.d == sp + 4u);
+    ck("DispatchMessageA calls the WndProc once", g_calls == 1u);
+    ck("dispatched hwnd", g_hwnd == hwnd);
+    ck("dispatched message", g_msg == 0x001cu);
+    ck("dispatched wParam", g_wp == 1u);
+    ck("dispatched lParam", g_lp == 0u);
+
+    // PM_REMOVE consumes it; the queue is then empty.
+    pm[4] = 1u;
+    r = call_stub(peek, pm, 5, sp);
+    ck("PM_REMOVE returns the message", r == 1u && ts::ld32(msg + 4u) == 0x001cu);
+    r = call_stub(peek, pm, 5, sp);
+    ck("queue is empty after PM_REMOVE", r == 0u);
+
+    // PostMessageA queues; GetMessageA returns it and removes it.
+    ts::u32 a4[4] = { hwnd, 0x0400u, 7u, 9u };
+    ck("PostMessageA succeeds", call_stub(post, a4, 4, sp) == 1u);
+    ck("PostMessageA pops 4 args", ESP.d == sp + 16u);
+    ts::u32 gm[4] = { msg, 0u, 0u, 0u };
+    ck("GetMessageA returns a queued message", call_stub(getm, gm, 4, sp) == 1u);
+    ck("GetMessageA pops 4 args", ESP.d == sp + 16u);
+    ck("GetMessageA MSG.message", ts::ld32(msg + 4u) == 0x0400u);
+    ck("GetMessageA MSG.wParam", ts::ld32(msg + 8u) == 7u);
+    ck("GetMessageA MSG.lParam", ts::ld32(msg + 12u) == 9u);
+    // An empty queue is NOT an immediate WM_QUIT: it yields a benign WM_NULL.
+    ck("GetMessageA empty queue does not quit", call_stub(getm, gm, 4, sp) == 1u);
+    ck("idle message is WM_NULL", ts::ld32(msg + 4u) == 0u);
+
+    // WM_QUIT is the one message that makes GetMessageA return 0.
+    ts::u32 a1q[1] = { 0u };
+    call_stub(quit, a1q, 1, sp);
+    ck("GetMessageA returns 0 for WM_QUIT", call_stub(getm, gm, 4, sp) == 0u);
+    ck("WM_QUIT message delivered", ts::ld32(msg + 4u) == 0x0012u);
+
+    // SendMessageA is synchronous and returns the procedure's value.
+    ts::u32 a4s[4] = { hwnd, 0x0401u, 3u, 4u };
+    g_calls = 0;
+    call_stub(send, a4s, 4, sp);
+    ck("SendMessageA pops 4 args", ESP.d == sp + 16u);
+    ck("SendMessageA calls synchronously", g_calls == 1u);
+    ck("SendMessageA message", g_msg == 0x0401u);
+    ck("SendMessageA wParam", g_wp == 3u);
+    ck("SendMessageA lParam", g_lp == 4u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_queue.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_queue",
+                        "/tmp/ts_win32_queue.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-message-queue-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_win32_queue"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-message-queue", False, out)
+    else:
+        eq("win32-message-queue", out.splitlines()[-1] if out else "", "0")
+
+
 def main():
     for fn in (test_emit_masking, test_emit_in_out, test_emit_loop_tail,
                test_emit_ret, test_decl_destructor, test_slot_va,
                test_slot0_shared, test_reduce_bases, test_tail_entries,
                test_machine_mul, test_machine_flags, test_machine_stack,
                test_machine_mmx, test_machine_depth_guard,
-               test_machine_boot_regressions, test_win32_module_exports):
+               test_machine_boot_regressions, test_win32_module_exports,
+               test_win32_message_queue):
         try:
             fn()
         except Exception as exc:  # a tool that raises is a failure, not a skip
