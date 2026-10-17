@@ -111,6 +111,13 @@ struct Machine {
     // kernel32) or recovered functions that went missing (a defect).
     u32 unmapped_sample[16];
     unsigned unmapped_sample_n;
+    // The 16-slot ring above fills with whatever comes first, and in practice that
+    // is non-.text garbage (a stack value used as a function pointer) long before
+    // the in-.text defect you are chasing. Keep the in-.text ones separately so a
+    // report can name them: "2 unmapped inside .text" is not actionable, "0x68d781
+    // and 0x5dcd40" is.
+    u32 unmapped_text_sample[16];
+    unsigned unmapped_text_sample_n;
     // .text bounds, set by the caller. They let an unmapped call be classified:
     // outside .text it is an import (expected -- the model has no Windows),
     // inside .text it is a recovered function nothing registered (a defect).
@@ -234,6 +241,7 @@ inline void reset() {
     m.call_depth = 0;
     m.depth_exceeded = 0;
     m.unmapped_sample_n = 0;
+    m.unmapped_text_sample_n = 0;
     if (m.call_depth_limit == 0) m.call_depth_limit = 4096;
 }
 
@@ -563,8 +571,13 @@ inline bool in_recovered_span(u32 va) {
 // accidentally pass by classifying every defect as a gap.
 inline void count_unmapped_target(Machine &m, u32 va) {
     if (!m.text_hi || va < m.text_lo || va >= m.text_hi) return;
-    if (span_count() == 0 || in_recovered_span(va)) ++m.unmapped_in_text;
-    else ++m.unmapped_in_gap;
+    if (span_count() == 0 || in_recovered_span(va)) {
+        ++m.unmapped_in_text;
+        if (m.unmapped_text_sample_n < 16)
+            m.unmapped_text_sample[m.unmapped_text_sample_n++] = va;
+    } else {
+        ++m.unmapped_in_gap;
+    }
 }
 
 inline void ts_call(u32 va) {

@@ -22,6 +22,48 @@ the value is current.
 
 ## P0 — correctness of the transcription  [REOPENED]
 
+### [x] Spans that do not end on a transfer drop their continuation
+**Fixed.** 10,477 spans now continue into another span by tail transfer; the 15
+that do not are itemised (2 overlap another span's instruction, 13 land in bytes
+never recovered). A control-flow gate now fails on a span that falls through onto
+an instruction boundary with nothing registered, proven by mutation (126 spans
+reported, exit 1). Instruction coverage went UP, not down: 897,193 -> 918,438,
+because 139 continuations needed an entry of their own.
+
+### [x] Recovery missed ~1,700 entry points that the game actually calls
+**Found by running the code, not by reading it.** The disassembler's prologue
+heuristics had never recovered entry points with no prologue (a 13-byte leaf like
+`push [0x834c60]; call [0x698108]; ret`) or ones that begin inside alignment fill.
+The boot called them, and the link test reported 13.1M unmapped calls inside
+`.text`.
+
+`tools/disasm.py` now recovers entry points to a FIXPOINT from three evidence
+sources, all read out of the binary: data-section code-pointer tables (a run of
+>= 2 dwords pointing into .text whose peers are recovered starts), table entries
+landing in a gap, and spans that begin in alignment fill. Every seed was CALLED by
+the original program, so it is evidence, not a guess.
+
+Result: spans 41,822 -> 43,564, functions transcribed 43,807 -> 46,008,
+instructions 897,193 -> 918,438 at 100%, 0 unmodelled, `.text` code coverage
+96.06% -> 96.09%, and **unmapped calls inside .text 13,108,943 -> 2**.
+
+The residual 2 are `0x6844df` and `0x46f3f8` -- both RETURN ADDRESSES of indirect
+calls, so the model is calling a return address. That is a garbage function
+pointer, not a recovery gap: EBP is a code address at the stop (`0x004876e7`),
+which is independently what the import lane found. Next step is to record the
+CALLER as well as the target, so the source of the bad pointer is nameable.
+*Done when:* that is fixed and the link test passes.
+
+### [x] The 32 ordinal imports could not pop their arguments
+The stub table keyed an ordinal by its raw ILT value (`"ord_2147483681"`) while
+the loader asks for `"#161"`, so all 32 silently fell back to a stub with
+`nargs=0` -- a stub that cannot pop. Every such call left the stack imbalanced.
+Now 341/341 resolved, 0 fallbacks, 314 with a body, 27 generic. Argument counts
+are derived from the recovered instruction stream (count the pushes reaching each
+`call [slot]`, stop at a branch target/call/ret/pop/ESP-adjust, skip the
+prologue); 12 measured, 20 with no call site tagged `"doc"` and printed as
+unmeasured. `--stack-check`: 341 driven, 0 imbalanced.
+
 ### [~] Spans that do not end on a transfer drop their continuation
 **Found by chasing a boot fault, and it is the largest defect found in the
 generated code.**

@@ -682,6 +682,11 @@ int main(int argc, char **argv) {
     if (m.unmapped_in_text) {
         std::printf("ts_link_test: FAILED (%lu unmapped calls inside .text: a "
                     "recovered function nothing registered)\n", m.unmapped_in_text);
+        std::printf("  distinct in-.text targets (first %u):",
+                    (unsigned)m.unmapped_text_sample_n);
+        for (unsigned i = 0; i < m.unmapped_text_sample_n; ++i)
+            std::printf(" 0x%08x", m.unmapped_text_sample[i]);
+        std::printf("\n");
         return 1;
     }
     std::printf("ts_link_test: OK\n");
