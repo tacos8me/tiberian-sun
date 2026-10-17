@@ -3258,7 +3258,7 @@ inline u32 make_surface() {
     };
     static const u8 nargs[45] = {
         3, 1, 1, 2, 2, 5, 3, 6, 3, 4, 4, 3, 3, 2, 2, 2, 3, 2, 2, 3,
-        2, 2, 2, 3, 1, 4, 2, 1, 2, 3, 3, 2, 2, 4, 2, 3, 2, 2, 2, 3,
+        2, 2, 2, 3, 1, 5, 2, 1, 2, 3, 3, 2, 2, 4, 2, 3, 2, 2, 2, 3,
         4, 3, 2, 2, 1,
     };
     Fn over[45] = { 0 };
@@ -3295,9 +3295,14 @@ TS_BEGIN(sfs_GetSurfaceDesc)
 TS_END
 
 TS_BEGIN(sfs_Lock)
-    // Lock(this, lpDestRect, lpDDSurfaceDesc, dwFlags). Handing back a real
-    // buffer is the whole point: a caller that locks and blits into lpSurface
-    // then writes somewhere that exists.
+    // Lock(this, lpDestRect, lpDDSurfaceDesc, dwFlags, hEvent). COM is
+    // __stdcall, so `this` is the FIRST STACK ARGUMENT, not ECX: five words are
+    // pushed, and the stub must pop all five. It used to pop four, leaking four
+    // bytes on every Lock; the leak walked the caller's frame until EBP was
+    // zero and the game called through a null surface in its teardown. The
+    // game's own call site (0x487b31) pushes hEvent first, then flags, desc,
+    // rect and this, and has no add-esp cleanup, so the count is visible in
+    // the binary.
     u32 p = arg(2);
     static u32 buffer = 0;
     if (!buffer) buffer = zero_block(SCREEN_W * SCREEN_H * 2u, 0x1000u);
@@ -3311,7 +3316,7 @@ TS_BEGIN(sfs_Lock)
         st32(p + 0x24u, buffer);        // lpSurface: the wrapper reads +0x24
         st32(p + 0x54u, SCREEN_BPP);    // ddpfPixelFormat.dwRGBBitCount
     }
-    stub_done(4, 0u);
+    stub_done(5, 0u);
 TS_END
 
 TS_BEGIN(sfs_GetAttachedSurface)
