@@ -169,9 +169,14 @@ class StoreWidths:
         return wmap
 
 
-# Declared type for each store width the binary uses. `unsigned long` is the
-# widest form; nothing here is inferred beyond the store instruction itself.
-_WIDTH_TYPE = {1: "unsigned char", 2: "unsigned short", 4: "unsigned long"}
+# Declared type for each store width the binary uses. The 4-byte form is
+# `unsigned int`, not `unsigned long`: `long` is 8 bytes on an LP64 host but 4
+# in the game, so declaring every recovered member `unsigned long` inflates
+# every generated struct (2,313 of 2,918 member declarations) and no recovered
+# offset can be reproduced. `unsigned int` is 4 bytes on both, so the emitted
+# layout matches the target ABI on this host. Nothing here is inferred beyond
+# the store instruction itself.
+_WIDTH_TYPE = {1: "unsigned char", 2: "unsigned short", 4: "unsigned int"}
 
 
 def member_width(widths, off):
@@ -179,7 +184,7 @@ def member_width(widths, off):
 
     The declared type follows the store width the constructor uses at that
     displacement. A record whose width could not be determined keeps
-    `unsigned long` and is annotated `/* width ? */` rather than guessed at.
+    `unsigned int` and is annotated `/* width ? */` rather than guessed at.
     """
     rec = widths.get(off)
     if rec:
@@ -187,7 +192,7 @@ def member_width(widths, off):
         typ = _WIDTH_TYPE.get(w)
         if typ:
             return typ, w, f"{w}-byte store: {insn}"
-    return "unsigned long", 4, "/* width ? */"
+    return "unsigned int", 4, "/* width ? */"
 
 
 def member_block(rtti_class, members, member_names, widths):
@@ -202,6 +207,10 @@ def member_block(rtti_class, members, member_names, widths):
     being generated here, or append it to the header that already defines the
     class (nested types and template instantiations have no standalone header
     of their own).
+
+    Vtable-pointer stores (`"vptr": true` in the offset table) are NOT emitted
+    as members: the compiler supplies the vptr, so a member for it would be a
+    second copy. Their slot is skipped and the cursor advanced past it.
 
     Returns [] when no offsets were recovered for the class.
     """
@@ -219,6 +228,7 @@ def member_block(rtti_class, members, member_names, widths):
     L.append("    // Offsets are exact. Each member is declared at the access width")
     L.append("    // the constructor stores it with; the store instruction is quoted")
     L.append("    // as evidence. `/* width ? */` means no store could be classified.")
+    L.append("    // vtable-pointer stores are omitted: the compiler supplies the vptr.")
     prev_end = 0
     for mem in md["members"]:
         off = mem["off"]
@@ -228,10 +238,18 @@ def member_block(rtti_class, members, member_names, widths):
             L.append(f"    unsigned char pad_{prev_end:03x}[0x{off - prev_end:x}];")
         kind = mem["kind"]
         nm = named.get(str(off), {}).get("name")
-        if kind == "vtable":
-            L.append(f"    void* vptr_{off:03x};  // vtable 0x{mem['value']:08x}")
+        if mem.get("vptr"):
+            # A vtable-pointer store is not a data member. C++ inserts the
+            # vptr itself for a polymorphic class (and for each polymorphic
+            # base subobject), so emitting the constructor's store as a member
+            # counts the slot twice and displaces every member after it
+            # (measured: offsetof(AbstractClass, m_000) == 20 while the
+            # recovered table says 0). The slot is left to the compiler and
+            # prev_end is advanced past it so the members that follow keep
+            # their recovered offsets.
             prev_end = off + 4
-        elif nm and nm not in _used_names:
+            continue
+        if nm and nm not in _used_names:
             _used_names.add(nm)
             typ, size, ann = member_width(widths, off)
             L.append(f"    {typ} {nm};  // +0x{off:03x} (INI key); {ann}")

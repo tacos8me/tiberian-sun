@@ -69,7 +69,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a2d58; 4-byte store: mov dword ptr [esi], 0x6a2d58
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
     unsigned char pad_004[0xc4];
     unsigned char m_0c8;  // +0x0c8 init 0x1; 1-byte store: mov byte ptr [esi + 0xc8], 1
     unsigned char m_0c9;  // +0x0c9 /* ? */; 1-byte store: mov byte ptr [esi + 0xc9], bl
@@ -78,11 +78,11 @@ public:
     unsigned char pad_0cc[0x2];
     unsigned char m_0ce;  // +0x0ce /* ? */; 1-byte store: mov byte ptr [esi + 0xce], bl
     unsigned char pad_0cf[0x55];
-    unsigned long m_124;  // +0x124 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x124], 0xffffffff
-    unsigned long m_128;  // +0x128 /* ? */; 4-byte store: mov dword ptr [esi + 0x128], ebx
-    unsigned long m_12c;  // +0x12c /* ? */; 4-byte store: mov dword ptr [esi + 0x12c], ebx
-    unsigned long m_130;  // +0x130 /* ? */; 4-byte store: mov dword ptr [esi + 0x130], eax
-    unsigned long m_134;  // +0x134 /* ? */; 4-byte store: mov dword ptr [esi + 0x134], eax
+    unsigned int m_124;  // +0x124 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x124], 0xffffffff
+    unsigned int m_128;  // +0x128 /* ? */; 4-byte store: mov dword ptr [esi + 0x128], ebx
+    unsigned int m_12c;  // +0x12c /* ? */; 4-byte store: mov dword ptr [esi + 0x12c], ebx
+    unsigned int m_130;  // +0x130 /* ? */; 4-byte store: mov dword ptr [esi + 0x130], eax
+    unsigned int m_134;  // +0x134 /* ? */; 4-byte store: mov dword ptr [esi + 0x134], eax
     unsigned char Wall;  // +0x138 (INI key); 1-byte store: mov byte ptr [esi + 0x138], bl
     unsigned char High;  // +0x139 (INI key); 1-byte store: mov byte ptr [esi + 0x139], bl
     unsigned char m_13a;  // +0x13a /* ? */; 1-byte store: mov byte ptr [esi + 0x13a], bl

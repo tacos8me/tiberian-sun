@@ -44,7 +44,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0938; 4-byte store: mov dword ptr [esi], 0x6a0938
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -68,7 +68,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a04a0; 4-byte store: mov dword ptr [eax], 0x6a04a0
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -87,7 +87,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a04bc; 4-byte store: mov dword ptr [eax], 0x6a04bc
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -106,7 +106,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a04d8; 4-byte store: mov dword ptr [eax], 0x6a04d8
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -125,7 +125,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a04f4; 4-byte store: mov dword ptr [eax], 0x6a04f4
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -144,7 +144,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0510; 4-byte store: mov dword ptr [eax], 0x6a0510
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -163,7 +163,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a052c; 4-byte store: mov dword ptr [eax], 0x6a052c
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -182,7 +182,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0548; 4-byte store: mov dword ptr [eax], 0x6a0548
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -201,7 +201,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0564; 4-byte store: mov dword ptr [eax], 0x6a0564
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -220,7 +220,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0580; 4-byte store: mov dword ptr [eax], 0x6a0580
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -239,7 +239,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a059c; 4-byte store: mov dword ptr [eax], 0x6a059c
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -258,7 +258,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a05b8; 4-byte store: mov dword ptr [eax], 0x6a05b8
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -277,7 +277,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a05d4; 4-byte store: mov dword ptr [eax], 0x6a05d4
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -296,7 +296,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a05f0; 4-byte store: mov dword ptr [eax], 0x6a05f0
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -315,7 +315,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a060c; 4-byte store: mov dword ptr [eax], 0x6a060c
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -334,7 +334,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0628; 4-byte store: mov dword ptr [eax], 0x6a0628
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -353,7 +353,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0644; 4-byte store: mov dword ptr [eax], 0x6a0644
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -372,7 +372,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0660; 4-byte store: mov dword ptr [eax], 0x6a0660
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -391,7 +391,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a067c; 4-byte store: mov dword ptr [eax], 0x6a067c
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -410,7 +410,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0698; 4-byte store: mov dword ptr [eax], 0x6a0698
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -429,7 +429,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a06b4; 4-byte store: mov dword ptr [eax], 0x6a06b4
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -448,7 +448,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a06d0; 4-byte store: mov dword ptr [eax], 0x6a06d0
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -467,7 +467,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a06ec; 4-byte store: mov dword ptr [eax], 0x6a06ec
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -486,7 +486,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0708; 4-byte store: mov dword ptr [eax], 0x6a0708
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -505,7 +505,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0724; 4-byte store: mov dword ptr [eax], 0x6a0724
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -524,7 +524,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0740; 4-byte store: mov dword ptr [eax], 0x6a0740
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -543,7 +543,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a075c; 4-byte store: mov dword ptr [eax], 0x6a075c
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -562,7 +562,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0778; 4-byte store: mov dword ptr [eax], 0x6a0778
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -581,7 +581,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0794; 4-byte store: mov dword ptr [eax], 0x6a0794
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -600,7 +600,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a07b0; 4-byte store: mov dword ptr [eax], 0x6a07b0
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -619,7 +619,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a07cc; 4-byte store: mov dword ptr [eax], 0x6a07cc
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -638,7 +638,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a07e8; 4-byte store: mov dword ptr [eax], 0x6a07e8
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -657,7 +657,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0804; 4-byte store: mov dword ptr [eax], 0x6a0804
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -676,7 +676,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0820; 4-byte store: mov dword ptr [eax], 0x6a0820
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -695,7 +695,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a083c; 4-byte store: mov dword ptr [eax], 0x6a083c
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -714,7 +714,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0858; 4-byte store: mov dword ptr [eax], 0x6a0858
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -733,7 +733,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0874; 4-byte store: mov dword ptr [eax], 0x6a0874
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -752,7 +752,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0890; 4-byte store: mov dword ptr [eax], 0x6a0890
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -771,7 +771,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a08ac; 4-byte store: mov dword ptr [eax], 0x6a08ac
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -790,7 +790,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a08c8; 4-byte store: mov dword ptr [eax], 0x6a08c8
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -809,7 +809,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a08e4; 4-byte store: mov dword ptr [eax], 0x6a08e4
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -828,7 +828,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0900; 4-byte store: mov dword ptr [eax], 0x6a0900
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -847,8 +847,8 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a091c; 4-byte store: mov dword ptr [eax], 0x6a091c
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
 
 };
 
@@ -867,8 +867,8 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0954; 4-byte store: mov dword ptr [eax], 0x6a0954
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
 
 };
 
@@ -887,8 +887,8 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a0970; 4-byte store: mov dword ptr [eax], 0x6a0970
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
 
 };
 
@@ -907,8 +907,8 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a098c; 4-byte store: mov dword ptr [eax], 0x6a098c
-    unsigned long m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
+    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
 
 };
 
@@ -927,7 +927,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a09a8; 4-byte store: mov dword ptr [eax], 0x6a09a8
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -946,7 +946,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a09c4; 4-byte store: mov dword ptr [eax], 0x6a09c4
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -965,7 +965,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a09e0; 4-byte store: mov dword ptr [eax], 0x6a09e0
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 
@@ -984,7 +984,7 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a09fc; 4-byte store: mov dword ptr [eax], 0x6a09fc
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
 
 };
 

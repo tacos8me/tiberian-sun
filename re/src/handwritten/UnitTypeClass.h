@@ -108,15 +108,15 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a6a90; 4-byte store: mov dword ptr [esi], 0x6a6a90
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
     unsigned char pad_004[0x378];
-    unsigned long m_37c;  // +0x37c init 0x20; 4-byte store: mov dword ptr [esi + 0x37c], 0x20
+    unsigned int m_37c;  // +0x37c init 0x20; 4-byte store: mov dword ptr [esi + 0x37c], 0x20
     unsigned char pad_380[0xf0];
-    unsigned long m_470;  // +0x470 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x470], 0xffffffff
-    unsigned long m_474;  // +0x474 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x474], 0xffffffff
-    unsigned long m_478;  // +0x478 /* ? */; 4-byte store: mov dword ptr [esi + 0x478], ebx
-    unsigned long m_47c;  // +0x47c /* ? */; 4-byte store: mov dword ptr [esi + 0x47c], ebx
-    unsigned long m_480;  // +0x480 /* ? */; 4-byte store: mov dword ptr [esi + 0x480], ebx
+    unsigned int m_470;  // +0x470 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x470], 0xffffffff
+    unsigned int m_474;  // +0x474 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x474], 0xffffffff
+    unsigned int m_478;  // +0x478 /* ? */; 4-byte store: mov dword ptr [esi + 0x478], ebx
+    unsigned int m_47c;  // +0x47c /* ? */; 4-byte store: mov dword ptr [esi + 0x47c], ebx
+    unsigned int m_480;  // +0x480 /* ? */; 4-byte store: mov dword ptr [esi + 0x480], ebx
     unsigned char m_484;  // +0x484 /* ? */; 1-byte store: mov byte ptr [esi + 0x484], bl
     unsigned char CrateGoodie;  // +0x485 (INI key); 1-byte store: mov byte ptr [esi + 0x485], bl
     unsigned char Harvester;  // +0x486 (INI key); 1-byte store: mov byte ptr [esi + 0x486], bl
@@ -132,7 +132,7 @@ public:
     unsigned char LargeVisceroid;  // +0x490 (INI key); 1-byte store: mov byte ptr [esi + 0x490], bl
     unsigned char CarriesCrate;  // +0x491 (INI key); 1-byte store: mov byte ptr [esi + 0x491], bl
     unsigned char pad_492[0x2];
-    unsigned long m_494;  // +0x494 /* ? */; 4-byte store: mov dword ptr [esi + 0x494], ebx
+    unsigned int m_494;  // +0x494 /* ? */; 4-byte store: mov dword ptr [esi + 0x494], ebx
     unsigned char WalkFrames;  // +0x498 (INI key); 1-byte store: mov byte ptr [esi + 0x498], 0xc
     unsigned char FiringFrames;  // +0x499 (INI key); 1-byte store: mov byte ptr [esi + 0x499], bl
     unsigned char m_49a;  // +0x49a /* ? */; 1-byte store: mov byte ptr [esi + 0x49a], bl

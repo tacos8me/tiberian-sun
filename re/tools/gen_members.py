@@ -10,7 +10,10 @@ Method:
      constructors that were never seeded.
   3. Disassemble that function and collect stores to [this+disp], where `this`
      is the register the vtable was stored through.
-  4. Classify each member by the value stored.
+  4. Classify each member by the value stored: zero, immediate, register, and
+     whether an immediate is a vtable address (a vptr store, not a data
+     member). Vtable addresses are resolved through the binary's own RTTI COL
+     chain by vtable_addresses().
 
 Output: out/members.json
 """
@@ -54,6 +57,65 @@ class Bin:
             if raw <= off < raw + rs:
                 return vs + (off - raw)
         return None
+
+def vtable_addresses(bin_):
+    """Set of vtable start VAs, resolved from the binary's own RTTI.
+
+    A vtable start is the dword immediately after a Complete Object Locator
+    pointer. A COL is accepted when its signature is 0 and its
+    pTypeDescriptor field (+0x0c) points at a type_info descriptor -- a VA
+    whose first dword is the type_info vftable, located as the dword preceding
+    the inline ".?AVtype_info@@" name. This is the same COL chain tools/rtti.py
+    walks to bind vtables to classes; it is re-derived here from the binary so
+    the vptr classification below does not trust out/classes.json. On this
+    binary it resolves the same 843 vtables.
+
+    Cached on `bin_` so the scan runs once per process.
+    """
+    cached = getattr(bin_, "_vtables", None)
+    if cached is not None:
+        return cached
+    data = bin_.data
+    ti_name = data.find(b".?AVtype_info@@")
+    if ti_name < 0:
+        bin_._vtables = set()
+        return bin_._vtables
+    ti_vftable = struct.unpack("<I", data[ti_name - 8:ti_name - 4])[0]
+    descs = set()
+    pat = struct.pack("<I", ti_vftable)
+    start = 0
+    while True:
+        j = data.find(pat, start)
+        if j < 0:
+            break
+        start = j + 1
+        va = bin_.va_of(j)
+        if va is None:
+            continue
+        nm = bin_.rd(va + 8, 4)
+        if nm and nm[:3] == b".?A":
+            descs.add(va)
+    cols = set()
+    for off in range(0, len(data) - 20, 4):
+        if struct.unpack("<I", data[off:off + 4])[0] != 0:
+            continue
+        td = struct.unpack("<I", data[off + 12:off + 16])[0]
+        if td not in descs:
+            continue
+        va = bin_.va_of(off)
+        if va is not None:
+            cols.add(va)
+    vts = set()
+    for vs, ve, raw, rs, nm in bin_.secs:
+        if nm not in (".rdata", ".data"):
+            continue
+        blob = data[raw:raw + rs]
+        for i in range(0, len(blob) - 4, 4):
+            p = struct.unpack("<I", blob[i:i + 4])[0]
+            if p in cols:
+                vts.add(vs + i + 4)
+    bin_._vtables = vts
+    return vts
 
 
 def enclosing_fn(bin_, site):
@@ -133,6 +195,7 @@ def disasm_func(bin_, start, maxlen=0x1000):
 
 def recover(bin_, vtva):
     """Return (ctor_va, members) for a vtable, or (None, [])."""
+    vtables = vtable_addresses(bin_)
     pat = struct.pack("<I", vtva)
     sites = []
     start = 0
@@ -214,15 +277,24 @@ def recover(bin_, vtva):
             kind, val = "unknown", None
             if src.type == capstone.x86.X86_OP_IMM:
                 val = src.imm
-                if bin_.in_text(val):
-                    kind = "vtable"
-                elif val == 0:
+                if val == 0:
                     kind = "zero"
                 else:
                     kind = "imm"
             elif src.type == capstone.x86.X86_OP_REG:
                 kind = "reg"
-            members.append({"off": off, "kind": kind, "value": val})
+            rec = {"off": off, "kind": kind, "value": val}
+            # A vtable-pointer store is not a data member. `kind` stays the
+            # store form (it is still an imm store, which is what
+            # verify_members_binary.py checks); `vptr` marks the semantic role
+            # so the header emitter can leave the slot to the compiler. Only
+            # the stored value being a vtable ADDRESS -- resolved through the
+            # binary's own COL chain -- makes it a vptr; a small constant or a
+            # function pointer at the same offset is a real initialised member
+            # (e.g. AbstractClass +0x08 holds 0xffffffff, not a vtable).
+            if kind == "imm" and val in vtables:
+                rec["vptr"] = True
+            members.append(rec)
 
         if members:
             seen = {}

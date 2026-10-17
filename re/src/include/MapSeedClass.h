@@ -32,23 +32,23 @@ public:
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
-    unsigned long m_000;  // +0x000 init 0x6a1e24; 4-byte store: mov dword ptr [ebx], 0x6a1e24
+    // vtable-pointer stores are omitted: the compiler supplies the vptr.
     unsigned char pad_004[0x4];
-    unsigned long m_008;  // +0x008 init 0x6cd9cc; 4-byte store: mov dword ptr [ebx + 8], 0x6cd9cc
-    unsigned long m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [ebx + 0xc], ebp
+    unsigned int m_008;  // +0x008 init 0x6cd9cc; 4-byte store: mov dword ptr [ebx + 8], 0x6cd9cc
+    unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [ebx + 0xc], ebp
     unsigned char pad_010[0x24];
-    unsigned long m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [ebx + 0x34], eax
-    unsigned long m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [ebx + 0x38], eax
-    unsigned long Time;  // +0x03c (INI key); 4-byte store: mov dword ptr [ebx + 0x3c], 1
-    unsigned long WaterAmount;  // +0x040 (INI key); 4-byte store: mov dword ptr [ebx + 0x40], eax
-    unsigned long NumPlayers;  // +0x044 (INI key); 4-byte store: mov dword ptr [ebx + 0x44], 2
-    unsigned long m_048;  // +0x048 /* ? */; 4-byte store: mov dword ptr [ebx + 0x48], eax
-    unsigned long TiberiumLayout;  // +0x04c (INI key); 4-byte store: mov dword ptr [ebx + 0x4c], eax
-    unsigned long Vegetation;  // +0x050 (INI key); 4-byte store: mov dword ptr [ebx + 0x50], eax
-    unsigned long UrbanPresence;  // +0x054 (INI key); 4-byte store: mov dword ptr [ebx + 0x54], eax
-    unsigned long Width;  // +0x058 (INI key); 4-byte store: mov dword ptr [ebx + 0x58], eax
-    unsigned long m_05c;  // +0x05c /* ? */; 4-byte store: mov dword ptr [ebx + 0x5c], eax
-    unsigned long Accessibility;  // +0x060 (INI key); 4-byte store: mov dword ptr [ebx + 0x60], eax
-    unsigned long RegionSize;  // +0x064 (INI key); 4-byte store: mov dword ptr [ebx + 0x64], eax
-    unsigned long Seed;  // +0x068 (INI key); 4-byte store: mov dword ptr [ebx + 0x68], 0xffffffff
+    unsigned int m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [ebx + 0x34], eax
+    unsigned int m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [ebx + 0x38], eax
+    unsigned int Time;  // +0x03c (INI key); 4-byte store: mov dword ptr [ebx + 0x3c], 1
+    unsigned int WaterAmount;  // +0x040 (INI key); 4-byte store: mov dword ptr [ebx + 0x40], eax
+    unsigned int NumPlayers;  // +0x044 (INI key); 4-byte store: mov dword ptr [ebx + 0x44], 2
+    unsigned int m_048;  // +0x048 /* ? */; 4-byte store: mov dword ptr [ebx + 0x48], eax
+    unsigned int TiberiumLayout;  // +0x04c (INI key); 4-byte store: mov dword ptr [ebx + 0x4c], eax
+    unsigned int Vegetation;  // +0x050 (INI key); 4-byte store: mov dword ptr [ebx + 0x50], eax
+    unsigned int UrbanPresence;  // +0x054 (INI key); 4-byte store: mov dword ptr [ebx + 0x54], eax
+    unsigned int Width;  // +0x058 (INI key); 4-byte store: mov dword ptr [ebx + 0x58], eax
+    unsigned int m_05c;  // +0x05c /* ? */; 4-byte store: mov dword ptr [ebx + 0x5c], eax
+    unsigned int Accessibility;  // +0x060 (INI key); 4-byte store: mov dword ptr [ebx + 0x60], eax
+    unsigned int RegionSize;  // +0x064 (INI key); 4-byte store: mov dword ptr [ebx + 0x64], eax
+    unsigned int Seed;  // +0x068 (INI key); 4-byte store: mov dword ptr [ebx + 0x68], 0xffffffff
 };
