@@ -87,6 +87,18 @@ int main(int argc, char **argv) {
     std::printf("idempotent: total=%u (was %u), resolved=%u\n", total2, total,
                 ts::import_resolved());
 
+    // Show the parsed table really names the DLLs and functions.
+    {
+        const std::vector<ts::pe::Import> &im = ts::pe::image().imports;
+        std::printf("first 3 parsed: ");
+        for (size_t i = 0; i < 3 && i < im.size(); ++i)
+            std::printf("%s!%s@0x%08x ", im[i].dll, im[i].fn, im[i].slot);
+        std::printf("\nlast 2 parsed: ");
+        for (size_t i = im.size() >= 2 ? im.size() - 2 : 0; i < im.size(); ++i)
+            std::printf("%s!%s@0x%08x ", im[i].dll, im[i].fn, im[i].slot);
+        std::printf("\n");
+    }
+
     // The point of the exercise: `call dword ptr [IAT]` now reaches a stub
     // instead of address zero. ts_call is what a transcribed indirect call does.
     const ts::u32 esp0 = ts::mach().r[4].d;
