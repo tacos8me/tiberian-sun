@@ -135,6 +135,28 @@ struct Machine {
     u32 watch_hits;
     u32 watch_from[8];
     u32 watch_val[8];
+    // STACK BALANCE at stub calls. A __stdcall stub owns its arguments: it pops
+    // the return address AND them, so ESP after the stub must equal ESP before the
+    // call pushed anything. Any stub whose row under- or over-states its argument
+    // count breaks that, and the damage is not local -- every later argument in
+    // the caller is read from the wrong slot. That is exactly the shape of the
+    // defect that has the game calling ExitProcess(0x6844df) for 1 and passing
+    // 0x00a00201 as a MessageBoxA type.
+    // Trace one address: when EIP reaches trace_va, record ESP/EAX/ECX so a
+    // question like "is ESP right at this push?" is answered by the machine
+    // rather than by counting pushes in a disassembly by hand. insn() sees every
+    // instruction, so this costs nothing when trace_va is 0.
+    u32 trace_va;
+    u32 trace_n;
+    u32 trace_esp[8];
+    u32 trace_eax[8];
+    u32 trace_ecx[8];
+    u32 trace_edx[8];
+    unsigned long stub_dispatches;
+    unsigned long stack_imbalances;
+    u32 stack_imbalance_n;
+    u32 stack_imbalance_site[16];
+    int stack_imbalance_delta[16];
     u32 bad_call_from[16];
     u32 bad_call_to[16];
     unsigned bad_call_n;
@@ -265,6 +287,8 @@ inline void reset() {
     m.unmapped_text_sample_n = 0;
     m.bad_call_n = 0;
     m.watch_va = 0; m.watch_hits = 0;
+    m.stub_dispatches = 0; m.stack_imbalances = 0; m.stack_imbalance_n = 0;
+    m.trace_va = 0; m.trace_n = 0;
     m.bad_calls = 0;
     if (m.call_depth_limit == 0) m.call_depth_limit = 4096;
 }
@@ -297,6 +321,13 @@ inline void insn(u32 va) {
     Machine &m = mach();
     m.eip = va;
     ++m.steps;
+    if (m.trace_va && va == m.trace_va && m.trace_n < 8u) {
+        m.trace_esp[m.trace_n] = ESP.d;
+        m.trace_eax[m.trace_n] = EAX.d;
+        m.trace_ecx[m.trace_n] = ECX.d;
+        m.trace_edx[m.trace_n] = EDX.d;
+        ++m.trace_n;
+    }
     if (m.step_limit && m.steps > m.step_limit) {
         if (!m.faulted) { m.step_limit_hit = true; fault("instruction budget exhausted"); }
     }
@@ -702,14 +733,30 @@ inline void ts_call(u32 va) {
 // address inside ExitProcess and the link test saw an unmapped call from
 // 0x5e7317. One leaked return address, four layers of confusion.
 inline void ts_call_at(u32 target, u32 ret) {
+    Machine &m = mach();
+    u32 site = m.eip;              // the call instruction, for the report
+    u32 esp_before = ESP.d;
+    unsigned long stubs_before = m.stub_dispatches;
     push32(ret);
     if (!ts_lookup(target)) {
         ESP.d += 4u;       // the callee is a no-op, so the call still returns
         ts_call(target);   // records it: unmapped, and outside-.text if it is
-        mach().eip = ret;  // the caller really does continue here
+        m.eip = ret;       // the caller really does continue here
         return;
     }
     ts_call(target);
+    // If the callee was a stub, ESP must be exactly where it started: stub_done
+    // pops the return address plus the argument count its table row declares.
+    // A mismatch means the row is wrong, and the caller's next argument reads
+    // come from the wrong slots.
+    if (m.stub_dispatches != stubs_before && ESP.d != esp_before) {
+        ++m.stack_imbalances;
+        if (m.stack_imbalance_n < 16) {
+            m.stack_imbalance_site[m.stack_imbalance_n] = site;
+            m.stack_imbalance_delta[m.stack_imbalance_n] = (int)(ESP.d - esp_before);
+            ++m.stack_imbalance_n;
+        }
+    }
 }
 
 // A transfer that does NOT push a return address, so the callee's `ret` pops the

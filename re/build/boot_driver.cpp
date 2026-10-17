@@ -399,6 +399,18 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
         }
         std::printf("scan: %u of %u entries are not .text VAs\n", bad, count);
     }
+    if (m.trace_n) {
+        std::printf("trace 0x%08x: %u hit(s)\n", m.trace_va, m.trace_n);
+        for (u32 i = 0; i < m.trace_n; ++i)
+            std::printf("  esp=0x%08x eax=0x%08x ecx=0x%08x edx=0x%08x\n",
+                        m.trace_esp[i], m.trace_eax[i], m.trace_ecx[i], m.trace_edx[i]);
+    }
+    if (m.stack_imbalances) {
+        std::printf("STACK IMBALANCE at %lu stub call(s)\n", m.stack_imbalances);
+        for (u32 i = 0; i < m.stack_imbalance_n; ++i)
+            std::printf("  call at 0x%08x left ESP %+d bytes\n",
+                        m.stack_imbalance_site[i], m.stack_imbalance_delta[i]);
+    }
     if (m.watch_hits) {
         std::printf("watch 0x%08x: %u write(s)\n", m.watch_va, m.watch_hits);
         for (unsigned i = 0; i < m.watch_hits; ++i)
@@ -505,6 +517,7 @@ int main(int argc, char **argv) {
     bind_traced_imports();
 
     ts::Machine &m = ts::mach();
+    if (const char *t = std::getenv("TS_TRACE")) m.trace_va = (ts::u32)std::strtoul(t, 0, 0);
     if (const char *w = std::getenv("TS_WATCH")) m.watch_va = (ts::u32)std::strtoul(w, 0, 0);
     m.text_lo = kTextLo;
     m.text_hi = kTextHi;

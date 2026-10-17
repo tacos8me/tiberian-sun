@@ -121,6 +121,7 @@ inline void note(const char *name) {
 // -- calling convention ------------------------------------------------------
 inline u32 arg(unsigned i) { return ld32(ESP.d + 4u + i * 4u); }
 inline void stub_done(unsigned nargs, u32 value) {
+    mach().stub_dispatches++;   // the stack-balance gate in ts_call_at watches this
     ESP.d += 4u + nargs * 4u;
     EAX.d = value;
 }
@@ -1920,6 +1921,17 @@ TS_RET(dd_SetCooperativeLevel, 3, 0u)
 TS_RET(dd_SetDisplayMode, 4, 0u)
 TS_RET(dd_WaitForVerticalBlank, 3, 0u)
 
+TS_BEGIN(dd_GetAvailableVidMem)
+    // Wine's trace of the REAL game (WINEDEBUG=+ddraw) shows this is called
+    // before SetCooperativeLevel, with the DDSCAPS of the memory class the game
+    // intends to use. It reads *total and *free to size its own texture budget,
+    // so a zero here reads as "this card has no video memory" and the game sizes
+    // everything to nothing. Report a plausible 4 MB.
+    if (arg(2)) st32(arg(2), 0x00400000u);   // *lpdwTotal
+    if (arg(3)) st32(arg(3), 0x00400000u);   // *lpdwFree
+    stub_done(4, 0u);
+TS_END
+
 TS_BEGIN(dd_GetCaps)
     // The game reads dwCaps/dwCaps2 to decide what it may ask for. Zeroing
     // them means "no hardware anything", which is true of this stub.
@@ -2400,7 +2412,7 @@ TS_END
 inline u32 make_directdraw() {
     // IDirectDraw, DirectX 6 slot order. Slots whose out-parameter the game
     // reads (display mode, caps, monitor) are the ones with real bodies.
-    static const char *const names[23] = {
+    static const char *const names[25] = {
         "IDirectDraw::QueryInterface", "IDirectDraw::AddRef",
         "IDirectDraw::Release", "IDirectDraw::Compact",
         "IDirectDraw::CreateClipper", "IDirectDraw::CreatePalette",
@@ -2413,19 +2425,28 @@ inline u32 make_directdraw() {
         "IDirectDraw::Initialize", "IDirectDraw::RestoreDisplayMode",
         "IDirectDraw::SetCooperativeLevel", "IDirectDraw::SetDisplayMode",
         "IDirectDraw::WaitForVerticalBlank",
+        // 23 and 24 exist on the real interface and the game CALLS 23. Wine's
+        // +ddraw trace of the retail binary shows GetAvailableVidMem right after
+        // GetCaps, before SetCooperativeLevel. With a 23-slot table that call
+        // read one entry past the end of the array and landed on whatever
+        // followed it, so the game called a non-function and the failure showed
+        // up much later as an argument holding a stub address.
+        "IDirectDraw::GetAvailableVidMem", "IDirectDraw::GetDeviceIdentifier",
     };
-    static const u8 nargs[23] = {
+    static const u8 nargs[25] = {
         3, 1, 1, 1, 4, 4, 4, 3, 5, 5, 1, 3, 2, 3, 2, 2, 2, 2, 2, 1, 3, 4, 3,
+        4, 3,
     };
-    Fn over[23] = { 0 };
+    Fn over[25] = { 0 };
     over[6] = &k_dd_CreateSurface;
     over[11] = &k_dd_GetCaps;
     over[12] = &k_dd_GetDisplayMode;
     over[15] = &k_dd_GetMonitorFrequency;
     over[16] = &k_dd_GetScanLine;
     over[17] = &k_dd_GetVerticalBlankStatus;
+    over[23] = &k_dd_GetAvailableVidMem;
     static u32 vt = 0;
-    if (!vt) vt = make_com_vtable(names, nargs, over, 23);
+    if (!vt) vt = make_com_vtable(names, nargs, over, 25);
     u32 obj = alloc_block(16u, 4u);
     st32(obj, vt);
     return obj;
