@@ -775,6 +775,29 @@ then consumes the remaining ~12.3M instructions. This is the same class as the
 original 108-byte leak, but on the shutdown path: find the call or tail
 continuation that does not restore ESP, using the per-callee ESP tracker
 (`TS_TRACE`, `leak_va`/`leak_delta`) rather than counting pushes.
+**The walk itself, decompiled** (`FUN_00684486`, Ghidra MCP):
+
+```c
+if (param_2 == 0) {
+  if ((DAT_00836290 != 0) && (puVar1 = DAT_0083628c - 4, DAT_00836290 <= puVar1)) {
+    do {
+      if ((code *)*puVar1 != 0) (*(code *)*puVar1)();
+      puVar1--;
+    } while (DAT_00836290 <= puVar1);
+  }
+  ...
+}
+```
+
+`DAT_0083628c` is the table end and `DAT_00836290` the start. Nine of the ten
+in-text unmapped targets come from the walk's `call eax` at `0x6844dd`, and they
+are **return addresses**, not constructor pointers: `0x6844df`, `0x5e867e`,
+`0x5e864a`, `0x682995`, `0x683fce`, `0x5e7d68`, `0x6864ba`, `0x46f8e9`. The
+table has been populated with return addresses (the same signature as the
+original 108-byte leak), so the corruption happens before or during `_onexit`
+registration. Peek `TS_PEEK=0x83628c,0x836290` and scan the table with
+`TS_SCAN` before assuming the walk is at fault.
+
 *Done when:* WinMain returns with ESP where its caller left it and the CRT exit
 path completes (or faults at a named instruction).
 
@@ -786,9 +809,18 @@ The original five `this == NULL` sites still fire twice each: `0x4b312b`,
 10 inside `.text`** (it was 5, none in `.text`), and `boot.py --strict` exits
 non-zero. They are a teardown defect, not a consequence of the undecryptable
 index.
-*Next:* name the caller and the object whose construction failed for each
-in-text target; fix the null `this` or the missing registration. Re-run
-`boot.py --strict` until it exits 0.
+
+**The 10 in-text targets split into two groups:**
+- **9 are the CRT atexit walk** at `0x6844dd`, calling return addresses stored
+  in the table (`0x6844df`, `0x5e867e`, `0x5e864a`, `0x682995`, `0x683fce`,
+  `0x5e7d68`, `0x6864ba`, `0x46f8e9`). They are a symptom of the shutdown ESP
+  corruption above; fix that first and re-measure before chasing them.
+- **1 is `0x683c4c` from `0x423679`** (`sub_00423660 +0x19`), in the MIX/pipe
+  read path. That one belongs with the short-index-read lane.
+
+*Next:* fix the shutdown ESP corruption, re-run `boot.py --strict`, and see how
+many remain. Then name the caller and the object whose construction failed for
+each survivor; fix the null `this` or the missing registration.
 *Done when:* 0 in-text unmapped calls and each null site named or fixed.
 
 ### [ ] The stack-imbalance tracker flags correct `__stdcall` stubs
