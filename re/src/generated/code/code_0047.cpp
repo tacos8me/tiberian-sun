@@ -13,6 +13,260 @@ namespace ts {
 namespace sub {
 
 // ---------------------------------------------------------------------------
+// sub_004aac2e -- transcription of 9 instructions at 0x004aac2e
+// size 16 bytes
+// callees: none
+//
+void sub_004aac2e(void)
+{
+    ts::insn(0x004aac2eu); EDX.d = ts::ld32(ESI.d);   //   0x004aac2e  mov      edx, dword ptr [esi]
+    ts::insn(0x004aac30u); ECX.d = ESI.d;   //   0x004aac30  mov      ecx, esi
+    ts::insn(0x004aac32u); ts::ts_call_ptr(ts::ld32(EDX.d + 0xc), 0x4aac35u);   //   0x004aac32  call     dword ptr [edx + 0xc]
+    ts::insn(0x004aac35u); EDI.d = ts::pop32();   //   0x004aac35  pop      edi
+    ts::insn(0x004aac36u); ESI.d = ts::pop32();   //   0x004aac36  pop      esi
+    ts::insn(0x004aac37u); EBP.d = ts::pop32();   //   0x004aac37  pop      ebp
+    ts::insn(0x004aac38u); AL = 0x1u;   //   0x004aac38  mov      al, 1
+    ts::insn(0x004aac3au); EBX.d = ts::pop32();   //   0x004aac3a  pop      ebx
+    ts::insn(0x004aac3bu); ts::ret_pop(0x8u); return;   //   0x004aac3b  ret      8
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aac40 -- transcription of 18 instructions at 0x004aac40
+// size 39 bytes
+// callees: 0x0068298c
+//
+void sub_004aac40(void)
+{
+    ts::insn(0x004aac40u); ts::push32(EBX.d);   //   0x004aac40  push     ebx
+    ts::insn(0x004aac41u); ts::push32(ESI.d);   //   0x004aac41  push     esi
+    ts::insn(0x004aac42u); ESI.d = ECX.d;   //   0x004aac42  mov      esi, ecx
+    ts::insn(0x004aac44u); EBX.d = ts::xor32(EBX.d, EBX.d);   //   0x004aac44  xor      ebx, ebx
+    ts::insn(0x004aac46u); EAX.d = ts::ld32(ESI.d + 0x4);   //   0x004aac46  mov      eax, dword ptr [esi + 4]
+    ts::insn(0x004aac49u); ts::cmp32(EAX.d, EBX.d);   //   0x004aac49  cmp      eax, ebx
+    ts::insn(0x004aac4bu); if (M.zf) { goto L_004aac5e; }   //   0x004aac4b  je       0x4aac5e
+    ts::insn(0x004aac4du); ts::cmp8(ts::ld8(ESI.d + 0xd), BL);   //   0x004aac4d  cmp      byte ptr [esi + 0xd], bl
+    ts::insn(0x004aac50u); if (M.zf) { goto L_004aac5e; }   //   0x004aac50  je       0x4aac5e
+    ts::insn(0x004aac52u); ts::push32(EAX.d);   //   0x004aac52  push     eax
+    ts::insn(0x004aac53u); ts::ts_call_at(0x68298cu, 0x4aac58u);   //   0x004aac53  call     0x68298c
+    ts::insn(0x004aac58u); ESP.d = ts::add32(ESP.d, 0x4u);   //   0x004aac58  add      esp, 4
+    ts::insn(0x004aac5bu); ts::st32(ESI.d + 0x4, EBX.d);   //   0x004aac5b  mov      dword ptr [esi + 4], ebx
+    L_004aac5e:;
+    ts::insn(0x004aac5eu); ts::st8(ESI.d + 0xd, BL);   //   0x004aac5e  mov      byte ptr [esi + 0xd], bl
+    ts::insn(0x004aac61u); ts::st32(ESI.d + 0x8, EBX.d);   //   0x004aac61  mov      dword ptr [esi + 8], ebx
+    ts::insn(0x004aac64u); ESI.d = ts::pop32();   //   0x004aac64  pop      esi
+    ts::insn(0x004aac65u); EBX.d = ts::pop32();   //   0x004aac65  pop      ebx
+    ts::insn(0x004aac66u); ts::ret_pop(0x0u); return;   //   0x004aac66  ret      
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aac70 -- transcription of 7 instructions at 0x004aac70
+// size 14 bytes
+// callees: none
+//
+void sub_004aac70(void)
+{
+    ts::insn(0x004aac70u); AL = ts::ld8(ECX.d + 0xc);   //   0x004aac70  mov      al, byte ptr [ecx + 0xc]
+    ts::insn(0x004aac73u); ts::push32(ESI.d);   //   0x004aac73  push     esi
+    ts::insn(0x004aac74u); ts::test8(AL, AL);   //   0x004aac74  test     al, al
+    ts::insn(0x004aac76u); if (!M.zf) { ts::ts_tail(0x4aac7eu); return; }   //   0x004aac76  jne      0x4aac7e
+    ts::insn(0x004aac78u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004aac78  xor      eax, eax
+    ts::insn(0x004aac7au); ESI.d = ts::pop32();   //   0x004aac7a  pop      esi
+    ts::insn(0x004aac7bu); ts::ret_pop(0x4u); return;   //   0x004aac7b  ret      4
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aac7e -- transcription of 16 instructions at 0x004aac7e
+// size 37 bytes
+// callees: none
+//
+void sub_004aac7e(void)
+{
+    ts::insn(0x004aac7eu); EDX.d = ts::ld32(ECX.d + 0x8);   //   0x004aac7e  mov      edx, dword ptr [ecx + 8]
+    ts::insn(0x004aac81u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004aac81  xor      eax, eax
+    ts::insn(0x004aac83u); ts::test32(EDX.d, EDX.d);   //   0x004aac83  test     edx, edx
+    ts::insn(0x004aac85u); if ((M.zf || (M.sf != M.of))) { goto L_004aac9c; }   //   0x004aac85  jle      0x4aac9c
+    ts::insn(0x004aac87u); ESI.d = ts::ld32(ESP.d + 0x8);   //   0x004aac87  mov      esi, dword ptr [esp + 8]
+    ts::insn(0x004aac8bu); ECX.d = ts::ld32(ECX.d + 0x4);   //   0x004aac8b  mov      ecx, dword ptr [ecx + 4]
+    ts::insn(0x004aac8eu); ESI.d = ts::ld32(ESI.d);   //   0x004aac8e  mov      esi, dword ptr [esi]
+    L_004aac90:;
+    ts::insn(0x004aac90u); ts::cmp32(ts::ld32(ECX.d), ESI.d);   //   0x004aac90  cmp      dword ptr [ecx], esi
+    ts::insn(0x004aac92u); if (M.zf) { goto L_004aac9f; }   //   0x004aac92  je       0x4aac9f
+    ts::insn(0x004aac94u); EAX.d = ts::inc32(EAX.d);   //   0x004aac94  inc      eax
+    ts::insn(0x004aac95u); ECX.d = ts::add32(ECX.d, 0x4u);   //   0x004aac95  add      ecx, 4
+    ts::insn(0x004aac98u); ts::cmp32(EAX.d, EDX.d);   //   0x004aac98  cmp      eax, edx
+    ts::insn(0x004aac9au); if ((M.sf != M.of)) { goto L_004aac90; }   //   0x004aac9a  jl       0x4aac90
+    L_004aac9c:;
+    ts::insn(0x004aac9cu); EAX.d = ts::or32(EAX.d, 0xffffffffu);   //   0x004aac9c  or       eax, 0xffffffff
+    L_004aac9f:;
+    ts::insn(0x004aac9fu); ESI.d = ts::pop32();   //   0x004aac9f  pop      esi
+    ts::insn(0x004aaca0u); ts::ret_pop(0x4u); return;   //   0x004aaca0  ret      4
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aacb0 -- transcription of 5 instructions at 0x004aacb0
+// size 12 bytes
+// callees: none
+//
+void sub_004aacb0(void)
+{
+    ts::insn(0x004aacb0u); AL = ts::ld8(ECX.d + 0xc);   //   0x004aacb0  mov      al, byte ptr [ecx + 0xc]
+    ts::insn(0x004aacb3u); ts::test8(AL, AL);   //   0x004aacb3  test     al, al
+    ts::insn(0x004aacb5u); if (!M.zf) { ts::ts_tail(0x4aacbcu); return; }   //   0x004aacb5  jne      0x4aacbc
+    ts::insn(0x004aacb7u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004aacb7  xor      eax, eax
+    ts::insn(0x004aacb9u); ts::ret_pop(0x4u); return;   //   0x004aacb9  ret      4
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aacbc -- transcription of 5 instructions at 0x004aacbc
+// size 15 bytes
+// callees: none
+//
+void sub_004aacbc(void)
+{
+    ts::insn(0x004aacbcu); EAX.d = ts::ld32(ESP.d + 0x4);   //   0x004aacbc  mov      eax, dword ptr [esp + 4]
+    ts::insn(0x004aacc0u); EDX.d = ts::ld32(ECX.d + 0x4);   //   0x004aacc0  mov      edx, dword ptr [ecx + 4]
+    ts::insn(0x004aacc3u); EAX.d = ts::sub32(EAX.d, EDX.d);   //   0x004aacc3  sub      eax, edx
+    ts::insn(0x004aacc5u); EAX.d = ts::shr32(EAX.d, 0x2u);   //   0x004aacc5  shr      eax, 2
+    ts::insn(0x004aacc8u); ts::ret_pop(0x4u); return;   //   0x004aacc8  ret      4
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aacd0 -- transcription of 18 instructions at 0x004aacd0
+// size 46 bytes
+// callees: 0x004aad00, 0x00682997
+//
+void sub_004aacd0(void)
+{
+    ts::insn(0x004aacd0u); ts::push32(EBX.d);   //   0x004aacd0  push     ebx
+    ts::insn(0x004aacd1u); ts::push32(EBP.d);   //   0x004aacd1  push     ebp
+    ts::insn(0x004aacd2u); EBP.d = ts::ld32(ESP.d + 0xc);   //   0x004aacd2  mov      ebp, dword ptr [esp + 0xc]
+    ts::insn(0x004aacd6u); ts::push32(ESI.d);   //   0x004aacd6  push     esi
+    ts::insn(0x004aacd7u); ts::test32(EBP.d, EBP.d);   //   0x004aacd7  test     ebp, ebp
+    ts::insn(0x004aacd9u); ts::push32(EDI.d);   //   0x004aacd9  push     edi
+    ts::insn(0x004aacdau); ESI.d = ECX.d;   //   0x004aacda  mov      esi, ecx
+    ts::insn(0x004aacdcu); if (M.zf) { ts::ts_tail(0x4aad5au); return; }   //   0x004aacdc  je       0x4aad5a
+    ts::insn(0x004aacdeu); EBX.d = ts::ld32(ESP.d + 0x18);   //   0x004aacde  mov      ebx, dword ptr [esp + 0x18]
+    ts::insn(0x004aace2u); ts::st8(ESI.d + 0xc, 0x0u);   //   0x004aace2  mov      byte ptr [esi + 0xc], 0
+    ts::insn(0x004aace6u); ts::test32(EBX.d, EBX.d);   //   0x004aace6  test     ebx, ebx
+    ts::insn(0x004aace8u); if (!M.zf) { ts::ts_tail(0x4aacfeu); return; }   //   0x004aace8  jne      0x4aacfe
+    ts::insn(0x004aaceau); EAX.d = EBP.d * 4;   //   0x004aacea  lea      eax, [ebp*4]
+    ts::insn(0x004aacf1u); ts::push32(EAX.d);   //   0x004aacf1  push     eax
+    ts::insn(0x004aacf2u); ts::ts_call_at(0x682997u, 0x4aacf7u);   //   0x004aacf2  call     0x682997
+    ts::insn(0x004aacf7u); ESP.d = ts::add32(ESP.d, 0x4u);   //   0x004aacf7  add      esp, 4
+    ts::insn(0x004aacfau); EDI.d = EAX.d;   //   0x004aacfa  mov      edi, eax
+    ts::insn(0x004aacfcu); ts::ts_tail(0x4aad00u); return;   //   0x004aacfc  jmp      0x4aad00
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aacfe -- transcription of 1 instructions at 0x004aacfe
+// size 2 bytes
+// callees: none
+//
+void sub_004aacfe(void)
+{
+    ts::insn(0x004aacfeu); EDI.d = EBX.d;   //   0x004aacfe  mov      edi, ebx
+    ts::ts_tail(0x004aad00u);   // span end 0x004aad00: the last instruction
+    return;                //   here does not transfer control
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aad00 -- transcription of 34 instructions at 0x004aad00
+// size 90 bytes
+// callees: 0x004aad61, 0x0068298c
+//
+void sub_004aad00(void)
+{
+    ts::insn(0x004aad00u); ts::test32(EDI.d, EDI.d);   //   0x004aad00  test     edi, edi
+    ts::insn(0x004aad02u); ts::st8(ESI.d + 0xc, 0x1u);   //   0x004aad02  mov      byte ptr [esi + 0xc], 1
+    ts::insn(0x004aad06u); if (M.zf) { ts::ts_tail(0x4aad77u); return; }   //   0x004aad06  je       0x4aad77
+    ts::insn(0x004aad08u); EAX.d = ts::ld32(ESI.d + 0x4);   //   0x004aad08  mov      eax, dword ptr [esi + 4]
+    ts::insn(0x004aad0bu); ts::test32(EAX.d, EAX.d);   //   0x004aad0b  test     eax, eax
+    ts::insn(0x004aad0du); if (M.zf) { goto L_004aad48; }   //   0x004aad0d  je       0x4aad48
+    ts::insn(0x004aad0fu); ECX.d = ts::ld32(ESI.d + 0x8);   //   0x004aad0f  mov      ecx, dword ptr [esi + 8]
+    ts::insn(0x004aad12u); ts::cmp32(EBP.d, ECX.d);   //   0x004aad12  cmp      ebp, ecx
+    ts::insn(0x004aad14u); if ((M.sf == M.of)) { goto L_004aad18; }   //   0x004aad14  jge      0x4aad18
+    ts::insn(0x004aad16u); ECX.d = EBP.d;   //   0x004aad16  mov      ecx, ebp
+    L_004aad18:;
+    ts::insn(0x004aad18u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004aad18  xor      eax, eax
+    ts::insn(0x004aad1au); ts::test32(ECX.d, ECX.d);   //   0x004aad1a  test     ecx, ecx
+    ts::insn(0x004aad1cu); if ((M.zf || (M.sf != M.of))) { goto L_004aad2e; }   //   0x004aad1c  jle      0x4aad2e
+    L_004aad1e:;
+    ts::insn(0x004aad1eu); EDX.d = ts::ld32(ESI.d + 0x4);   //   0x004aad1e  mov      edx, dword ptr [esi + 4]
+    ts::insn(0x004aad21u); EAX.d = ts::inc32(EAX.d);   //   0x004aad21  inc      eax
+    ts::insn(0x004aad22u); ts::cmp32(EAX.d, ECX.d);   //   0x004aad22  cmp      eax, ecx
+    ts::insn(0x004aad24u); EDX.d = ts::ld32(EDX.d + EAX.d * 4 - 0x4);   //   0x004aad24  mov      edx, dword ptr [edx + eax*4 - 4]
+    ts::insn(0x004aad28u); ts::st32(EDI.d + EAX.d * 4 - 0x4, EDX.d);   //   0x004aad28  mov      dword ptr [edi + eax*4 - 4], edx
+    ts::insn(0x004aad2cu); if ((M.sf != M.of)) { goto L_004aad1e; }   //   0x004aad2c  jl       0x4aad1e
+    L_004aad2e:;
+    ts::insn(0x004aad2eu); AL = ts::ld8(ESI.d + 0xd);   //   0x004aad2e  mov      al, byte ptr [esi + 0xd]
+    ts::insn(0x004aad31u); ts::test8(AL, AL);   //   0x004aad31  test     al, al
+    ts::insn(0x004aad33u); if (M.zf) { goto L_004aad48; }   //   0x004aad33  je       0x4aad48
+    ts::insn(0x004aad35u); EAX.d = ts::ld32(ESI.d + 0x4);   //   0x004aad35  mov      eax, dword ptr [esi + 4]
+    ts::insn(0x004aad38u); ts::push32(EAX.d);   //   0x004aad38  push     eax
+    ts::insn(0x004aad39u); ts::ts_call_at(0x68298cu, 0x4aad3eu);   //   0x004aad39  call     0x68298c
+    ts::insn(0x004aad3eu); ESP.d = ts::add32(ESP.d, 0x4u);   //   0x004aad3e  add      esp, 4
+    ts::insn(0x004aad41u); ts::st32(ESI.d + 0x4, 0x0u);   //   0x004aad41  mov      dword ptr [esi + 4], 0
+    L_004aad48:;
+    ts::insn(0x004aad48u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004aad48  xor      eax, eax
+    ts::insn(0x004aad4au); ts::st32(ESI.d + 0x4, EDI.d);   //   0x004aad4a  mov      dword ptr [esi + 4], edi
+    ts::insn(0x004aad4du); ts::test32(EBX.d, EBX.d);   //   0x004aad4d  test     ebx, ebx
+    ts::insn(0x004aad4fu); AL = (M.zf) ? 1u : 0u;   //   0x004aad4f  sete     al
+    ts::insn(0x004aad52u); ts::st32(ESI.d + 0x8, EBP.d);   //   0x004aad52  mov      dword ptr [esi + 8], ebp
+    ts::insn(0x004aad55u); ts::st8(ESI.d + 0xd, AL);   //   0x004aad55  mov      byte ptr [esi + 0xd], al
+    ts::insn(0x004aad58u); ts::ts_tail(0x4aad61u); return;   //   0x004aad58  jmp      0x4aad61
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aad5a -- transcription of 3 instructions at 0x004aad5a
+// size 7 bytes
+// callees: none
+//
+void sub_004aad5a(void)
+{
+    ts::insn(0x004aad5au); EDX.d = ts::ld32(ESI.d);   //   0x004aad5a  mov      edx, dword ptr [esi]
+    ts::insn(0x004aad5cu); ECX.d = ESI.d;   //   0x004aad5c  mov      ecx, esi
+    ts::insn(0x004aad5eu); ts::ts_call_ptr(ts::ld32(EDX.d + 0xc), 0x4aad5eu);   //   0x004aad5e  call     dword ptr [edx + 0xc]
+    ts::ts_tail(0x004aad61u);   // span end 0x004aad61: the last instruction
+    return;                //   here does not transfer control
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aad61 -- transcription of 11 instructions at 0x004aad61
+// size 22 bytes
+// callees: none
+//
+void sub_004aad61(void)
+{
+    ts::insn(0x004aad61u); EAX.d = ts::ld32(ESI.d + 0x8);   //   0x004aad61  mov      eax, dword ptr [esi + 8]
+    ts::insn(0x004aad64u); ECX.d = ts::ld32(ESI.d + 0x10);   //   0x004aad64  mov      ecx, dword ptr [esi + 0x10]
+    ts::insn(0x004aad67u); ts::cmp32(EAX.d, ECX.d);   //   0x004aad67  cmp      eax, ecx
+    ts::insn(0x004aad69u); if ((M.sf == M.of)) { goto L_004aad6e; }   //   0x004aad69  jge      0x4aad6e
+    ts::insn(0x004aad6bu); ts::st32(ESI.d + 0x10, EAX.d);   //   0x004aad6b  mov      dword ptr [esi + 0x10], eax
+    L_004aad6e:;
+    ts::insn(0x004aad6eu); EDI.d = ts::pop32();   //   0x004aad6e  pop      edi
+    ts::insn(0x004aad6fu); ESI.d = ts::pop32();   //   0x004aad6f  pop      esi
+    ts::insn(0x004aad70u); EBP.d = ts::pop32();   //   0x004aad70  pop      ebp
+    ts::insn(0x004aad71u); AL = 0x1u;   //   0x004aad71  mov      al, 1
+    ts::insn(0x004aad73u); EBX.d = ts::pop32();   //   0x004aad73  pop      ebx
+    ts::insn(0x004aad74u); ts::ret_pop(0x8u); return;   //   0x004aad74  ret      8
+}
+
+// ---------------------------------------------------------------------------
+// sub_004aad77 -- transcription of 6 instructions at 0x004aad77
+// size 9 bytes
+// callees: none
+//
+void sub_004aad77(void)
+{
+    ts::insn(0x004aad77u); EDI.d = ts::pop32();   //   0x004aad77  pop      edi
+    ts::insn(0x004aad78u); ESI.d = ts::pop32();   //   0x004aad78  pop      esi
+    ts::insn(0x004aad79u); EBP.d = ts::pop32();   //   0x004aad79  pop      ebp
+    ts::insn(0x004aad7au); AL = ts::xor8(AL, AL);   //   0x004aad7a  xor      al, al
+    ts::insn(0x004aad7cu); EBX.d = ts::pop32();   //   0x004aad7c  pop      ebx
+    ts::insn(0x004aad7du); ts::ret_pop(0x8u); return;   //   0x004aad7d  ret      8
+}
+
+// ---------------------------------------------------------------------------
 // sub_004aad80 -- transcription of 17 instructions at 0x004aad80
 // size 38 bytes
 // callees: none
@@ -5653,271 +5907,6 @@ void sub_004acbb0(void)
     ts::insn(0x004acbe0u); AL = 0x1u;   //   0x004acbe0  mov      al, 1
     ts::insn(0x004acbe2u); EBX.d = ts::pop32();   //   0x004acbe2  pop      ebx
     ts::insn(0x004acbe3u); ts::ret_pop(0x4u); return;   //   0x004acbe3  ret      4
-}
-
-// ---------------------------------------------------------------------------
-// sub_004acbe6 -- transcription of 5 instructions at 0x004acbe6
-// size 8 bytes
-// callees: none
-//
-void sub_004acbe6(void)
-{
-    ts::insn(0x004acbe6u); EDI.d = ts::pop32();   //   0x004acbe6  pop      edi
-    ts::insn(0x004acbe7u); ESI.d = ts::pop32();   //   0x004acbe7  pop      esi
-    ts::insn(0x004acbe8u); AL = ts::xor8(AL, AL);   //   0x004acbe8  xor      al, al
-    ts::insn(0x004acbeau); EBX.d = ts::pop32();   //   0x004acbea  pop      ebx
-    ts::insn(0x004acbebu); ts::ret_pop(0x4u); return;   //   0x004acbeb  ret      4
-}
-
-// ---------------------------------------------------------------------------
-// sub_004acbf0 -- transcription of 18 instructions at 0x004acbf0
-// size 50 bytes
-// callees: 0x004acc24, 0x00682997
-//
-void sub_004acbf0(void)
-{
-    ts::insn(0x004acbf0u); ts::push32(EBX.d);   //   0x004acbf0  push     ebx
-    ts::insn(0x004acbf1u); ts::push32(EBP.d);   //   0x004acbf1  push     ebp
-    ts::insn(0x004acbf2u); EBP.d = ts::ld32(ESP.d + 0xc);   //   0x004acbf2  mov      ebp, dword ptr [esp + 0xc]
-    ts::insn(0x004acbf6u); ts::push32(ESI.d);   //   0x004acbf6  push     esi
-    ts::insn(0x004acbf7u); ts::test32(EBP.d, EBP.d);   //   0x004acbf7  test     ebp, ebp
-    ts::insn(0x004acbf9u); ts::push32(EDI.d);   //   0x004acbf9  push     edi
-    ts::insn(0x004acbfau); ESI.d = ECX.d;   //   0x004acbfa  mov      esi, ecx
-    ts::insn(0x004acbfcu); if (M.zf) { ts::ts_tail(0x4acc8eu); return; }   //   0x004acbfc  je       0x4acc8e
-    ts::insn(0x004acc02u); EBX.d = ts::ld32(ESP.d + 0x18);   //   0x004acc02  mov      ebx, dword ptr [esp + 0x18]
-    ts::insn(0x004acc06u); ts::st8(ESI.d + 0xc, 0x0u);   //   0x004acc06  mov      byte ptr [esi + 0xc], 0
-    ts::insn(0x004acc0au); ts::test32(EBX.d, EBX.d);   //   0x004acc0a  test     ebx, ebx
-    ts::insn(0x004acc0cu); if (!M.zf) { ts::ts_tail(0x4acc22u); return; }   //   0x004acc0c  jne      0x4acc22
-    ts::insn(0x004acc0eu); EAX.d = EBP.d * 4;   //   0x004acc0e  lea      eax, [ebp*4]
-    ts::insn(0x004acc15u); ts::push32(EAX.d);   //   0x004acc15  push     eax
-    ts::insn(0x004acc16u); ts::ts_call_at(0x682997u, 0x4acc1bu);   //   0x004acc16  call     0x682997
-    ts::insn(0x004acc1bu); ESP.d = ts::add32(ESP.d, 0x4u);   //   0x004acc1b  add      esp, 4
-    ts::insn(0x004acc1eu); EDI.d = EAX.d;   //   0x004acc1e  mov      edi, eax
-    ts::insn(0x004acc20u); ts::ts_tail(0x4acc24u); return;   //   0x004acc20  jmp      0x4acc24
-}
-
-// ---------------------------------------------------------------------------
-// sub_004acc22 -- transcription of 1 instructions at 0x004acc22
-// size 2 bytes
-// callees: none
-//
-void sub_004acc22(void)
-{
-    ts::insn(0x004acc22u); EDI.d = EBX.d;   //   0x004acc22  mov      edi, ebx
-    ts::ts_tail(0x004acc24u);   // span end 0x004acc24: the last instruction
-    return;                //   here does not transfer control
-}
-
-// ---------------------------------------------------------------------------
-// sub_004acc24 -- transcription of 9 instructions at 0x004acc24
-// size 17 bytes
-// callees: none
-//
-void sub_004acc24(void)
-{
-    ts::insn(0x004acc24u); ts::test32(EDI.d, EDI.d);   //   0x004acc24  test     edi, edi
-    ts::insn(0x004acc26u); ts::st8(ESI.d + 0xc, 0x1u);   //   0x004acc26  mov      byte ptr [esi + 0xc], 1
-    ts::insn(0x004acc2au); if (!M.zf) { ts::ts_tail(0x4acc35u); return; }   //   0x004acc2a  jne      0x4acc35
-    ts::insn(0x004acc2cu); EDI.d = ts::pop32();   //   0x004acc2c  pop      edi
-    ts::insn(0x004acc2du); ESI.d = ts::pop32();   //   0x004acc2d  pop      esi
-    ts::insn(0x004acc2eu); EBP.d = ts::pop32();   //   0x004acc2e  pop      ebp
-    ts::insn(0x004acc2fu); AL = ts::xor8(AL, AL);   //   0x004acc2f  xor      al, al
-    ts::insn(0x004acc31u); EBX.d = ts::pop32();   //   0x004acc31  pop      ebx
-    ts::insn(0x004acc32u); ts::ret_pop(0x8u); return;   //   0x004acc32  ret      8
-}
-
-// ---------------------------------------------------------------------------
-// sub_004acc35 -- transcription of 36 instructions at 0x004acc35
-// size 89 bytes
-// callees: 0x0068298c
-//
-void sub_004acc35(void)
-{
-    ts::insn(0x004acc35u); EAX.d = ts::ld32(ESI.d + 0x4);   //   0x004acc35  mov      eax, dword ptr [esi + 4]
-    ts::insn(0x004acc38u); ts::test32(EAX.d, EAX.d);   //   0x004acc38  test     eax, eax
-    ts::insn(0x004acc3au); if (M.zf) { goto L_004acc75; }   //   0x004acc3a  je       0x4acc75
-    ts::insn(0x004acc3cu); ECX.d = ts::ld32(ESI.d + 0x8);   //   0x004acc3c  mov      ecx, dword ptr [esi + 8]
-    ts::insn(0x004acc3fu); ts::cmp32(EBP.d, ECX.d);   //   0x004acc3f  cmp      ebp, ecx
-    ts::insn(0x004acc41u); if ((M.sf == M.of)) { goto L_004acc45; }   //   0x004acc41  jge      0x4acc45
-    ts::insn(0x004acc43u); ECX.d = EBP.d;   //   0x004acc43  mov      ecx, ebp
-    L_004acc45:;
-    ts::insn(0x004acc45u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004acc45  xor      eax, eax
-    ts::insn(0x004acc47u); ts::test32(ECX.d, ECX.d);   //   0x004acc47  test     ecx, ecx
-    ts::insn(0x004acc49u); if ((M.zf || (M.sf != M.of))) { goto L_004acc5b; }   //   0x004acc49  jle      0x4acc5b
-    L_004acc4b:;
-    ts::insn(0x004acc4bu); EDX.d = ts::ld32(ESI.d + 0x4);   //   0x004acc4b  mov      edx, dword ptr [esi + 4]
-    ts::insn(0x004acc4eu); EAX.d = ts::inc32(EAX.d);   //   0x004acc4e  inc      eax
-    ts::insn(0x004acc4fu); ts::cmp32(EAX.d, ECX.d);   //   0x004acc4f  cmp      eax, ecx
-    ts::insn(0x004acc51u); EDX.d = ts::ld32(EDX.d + EAX.d * 4 - 0x4);   //   0x004acc51  mov      edx, dword ptr [edx + eax*4 - 4]
-    ts::insn(0x004acc55u); ts::st32(EDI.d + EAX.d * 4 - 0x4, EDX.d);   //   0x004acc55  mov      dword ptr [edi + eax*4 - 4], edx
-    ts::insn(0x004acc59u); if ((M.sf != M.of)) { goto L_004acc4b; }   //   0x004acc59  jl       0x4acc4b
-    L_004acc5b:;
-    ts::insn(0x004acc5bu); AL = ts::ld8(ESI.d + 0xd);   //   0x004acc5b  mov      al, byte ptr [esi + 0xd]
-    ts::insn(0x004acc5eu); ts::test8(AL, AL);   //   0x004acc5e  test     al, al
-    ts::insn(0x004acc60u); if (M.zf) { goto L_004acc75; }   //   0x004acc60  je       0x4acc75
-    ts::insn(0x004acc62u); EAX.d = ts::ld32(ESI.d + 0x4);   //   0x004acc62  mov      eax, dword ptr [esi + 4]
-    ts::insn(0x004acc65u); ts::push32(EAX.d);   //   0x004acc65  push     eax
-    ts::insn(0x004acc66u); ts::ts_call_at(0x68298cu, 0x4acc6bu);   //   0x004acc66  call     0x68298c
-    ts::insn(0x004acc6bu); ESP.d = ts::add32(ESP.d, 0x4u);   //   0x004acc6b  add      esp, 4
-    ts::insn(0x004acc6eu); ts::st32(ESI.d + 0x4, 0x0u);   //   0x004acc6e  mov      dword ptr [esi + 4], 0
-    L_004acc75:;
-    ts::insn(0x004acc75u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004acc75  xor      eax, eax
-    ts::insn(0x004acc77u); ts::st32(ESI.d + 0x4, EDI.d);   //   0x004acc77  mov      dword ptr [esi + 4], edi
-    ts::insn(0x004acc7au); ts::test32(EBX.d, EBX.d);   //   0x004acc7a  test     ebx, ebx
-    ts::insn(0x004acc7cu); AL = (M.zf) ? 1u : 0u;   //   0x004acc7c  sete     al
-    ts::insn(0x004acc7fu); ts::st32(ESI.d + 0x8, EBP.d);   //   0x004acc7f  mov      dword ptr [esi + 8], ebp
-    ts::insn(0x004acc82u); ts::st8(ESI.d + 0xd, AL);   //   0x004acc82  mov      byte ptr [esi + 0xd], al
-    ts::insn(0x004acc85u); EDI.d = ts::pop32();   //   0x004acc85  pop      edi
-    ts::insn(0x004acc86u); ESI.d = ts::pop32();   //   0x004acc86  pop      esi
-    ts::insn(0x004acc87u); EBP.d = ts::pop32();   //   0x004acc87  pop      ebp
-    ts::insn(0x004acc88u); AL = 0x1u;   //   0x004acc88  mov      al, 1
-    ts::insn(0x004acc8au); EBX.d = ts::pop32();   //   0x004acc8a  pop      ebx
-    ts::insn(0x004acc8bu); ts::ret_pop(0x8u); return;   //   0x004acc8b  ret      8
-}
-
-// ---------------------------------------------------------------------------
-// sub_004acc8e -- transcription of 9 instructions at 0x004acc8e
-// size 16 bytes
-// callees: none
-//
-void sub_004acc8e(void)
-{
-    ts::insn(0x004acc8eu); EDX.d = ts::ld32(ESI.d);   //   0x004acc8e  mov      edx, dword ptr [esi]
-    ts::insn(0x004acc90u); ECX.d = ESI.d;   //   0x004acc90  mov      ecx, esi
-    ts::insn(0x004acc92u); ts::ts_call_ptr(ts::ld32(EDX.d + 0xc), 0x4acc95u);   //   0x004acc92  call     dword ptr [edx + 0xc]
-    ts::insn(0x004acc95u); EDI.d = ts::pop32();   //   0x004acc95  pop      edi
-    ts::insn(0x004acc96u); ESI.d = ts::pop32();   //   0x004acc96  pop      esi
-    ts::insn(0x004acc97u); EBP.d = ts::pop32();   //   0x004acc97  pop      ebp
-    ts::insn(0x004acc98u); AL = 0x1u;   //   0x004acc98  mov      al, 1
-    ts::insn(0x004acc9au); EBX.d = ts::pop32();   //   0x004acc9a  pop      ebx
-    ts::insn(0x004acc9bu); ts::ret_pop(0x8u); return;   //   0x004acc9b  ret      8
-}
-
-// ---------------------------------------------------------------------------
-// sub_004acca0 -- transcription of 18 instructions at 0x004acca0
-// size 39 bytes
-// callees: 0x0068298c
-//
-void sub_004acca0(void)
-{
-    ts::insn(0x004acca0u); ts::push32(EBX.d);   //   0x004acca0  push     ebx
-    ts::insn(0x004acca1u); ts::push32(ESI.d);   //   0x004acca1  push     esi
-    ts::insn(0x004acca2u); ESI.d = ECX.d;   //   0x004acca2  mov      esi, ecx
-    ts::insn(0x004acca4u); EBX.d = ts::xor32(EBX.d, EBX.d);   //   0x004acca4  xor      ebx, ebx
-    ts::insn(0x004acca6u); EAX.d = ts::ld32(ESI.d + 0x4);   //   0x004acca6  mov      eax, dword ptr [esi + 4]
-    ts::insn(0x004acca9u); ts::cmp32(EAX.d, EBX.d);   //   0x004acca9  cmp      eax, ebx
-    ts::insn(0x004accabu); if (M.zf) { goto L_004accbe; }   //   0x004accab  je       0x4accbe
-    ts::insn(0x004accadu); ts::cmp8(ts::ld8(ESI.d + 0xd), BL);   //   0x004accad  cmp      byte ptr [esi + 0xd], bl
-    ts::insn(0x004accb0u); if (M.zf) { goto L_004accbe; }   //   0x004accb0  je       0x4accbe
-    ts::insn(0x004accb2u); ts::push32(EAX.d);   //   0x004accb2  push     eax
-    ts::insn(0x004accb3u); ts::ts_call_at(0x68298cu, 0x4accb8u);   //   0x004accb3  call     0x68298c
-    ts::insn(0x004accb8u); ESP.d = ts::add32(ESP.d, 0x4u);   //   0x004accb8  add      esp, 4
-    ts::insn(0x004accbbu); ts::st32(ESI.d + 0x4, EBX.d);   //   0x004accbb  mov      dword ptr [esi + 4], ebx
-    L_004accbe:;
-    ts::insn(0x004accbeu); ts::st8(ESI.d + 0xd, BL);   //   0x004accbe  mov      byte ptr [esi + 0xd], bl
-    ts::insn(0x004accc1u); ts::st32(ESI.d + 0x8, EBX.d);   //   0x004accc1  mov      dword ptr [esi + 8], ebx
-    ts::insn(0x004accc4u); ESI.d = ts::pop32();   //   0x004accc4  pop      esi
-    ts::insn(0x004accc5u); EBX.d = ts::pop32();   //   0x004accc5  pop      ebx
-    ts::insn(0x004accc6u); ts::ret_pop(0x0u); return;   //   0x004accc6  ret      
-}
-
-// ---------------------------------------------------------------------------
-// sub_004accd0 -- transcription of 7 instructions at 0x004accd0
-// size 14 bytes
-// callees: none
-//
-void sub_004accd0(void)
-{
-    ts::insn(0x004accd0u); AL = ts::ld8(ECX.d + 0xc);   //   0x004accd0  mov      al, byte ptr [ecx + 0xc]
-    ts::insn(0x004accd3u); ts::push32(ESI.d);   //   0x004accd3  push     esi
-    ts::insn(0x004accd4u); ts::test8(AL, AL);   //   0x004accd4  test     al, al
-    ts::insn(0x004accd6u); if (!M.zf) { ts::ts_tail(0x4accdeu); return; }   //   0x004accd6  jne      0x4accde
-    ts::insn(0x004accd8u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004accd8  xor      eax, eax
-    ts::insn(0x004accdau); ESI.d = ts::pop32();   //   0x004accda  pop      esi
-    ts::insn(0x004accdbu); ts::ret_pop(0x4u); return;   //   0x004accdb  ret      4
-}
-
-// ---------------------------------------------------------------------------
-// sub_004accde -- transcription of 16 instructions at 0x004accde
-// size 37 bytes
-// callees: none
-//
-void sub_004accde(void)
-{
-    ts::insn(0x004accdeu); EDX.d = ts::ld32(ECX.d + 0x8);   //   0x004accde  mov      edx, dword ptr [ecx + 8]
-    ts::insn(0x004acce1u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004acce1  xor      eax, eax
-    ts::insn(0x004acce3u); ts::test32(EDX.d, EDX.d);   //   0x004acce3  test     edx, edx
-    ts::insn(0x004acce5u); if ((M.zf || (M.sf != M.of))) { goto L_004accfc; }   //   0x004acce5  jle      0x4accfc
-    ts::insn(0x004acce7u); ESI.d = ts::ld32(ESP.d + 0x8);   //   0x004acce7  mov      esi, dword ptr [esp + 8]
-    ts::insn(0x004accebu); ECX.d = ts::ld32(ECX.d + 0x4);   //   0x004acceb  mov      ecx, dword ptr [ecx + 4]
-    ts::insn(0x004acceeu); ESI.d = ts::ld32(ESI.d);   //   0x004accee  mov      esi, dword ptr [esi]
-    L_004accf0:;
-    ts::insn(0x004accf0u); ts::cmp32(ts::ld32(ECX.d), ESI.d);   //   0x004accf0  cmp      dword ptr [ecx], esi
-    ts::insn(0x004accf2u); if (M.zf) { goto L_004accff; }   //   0x004accf2  je       0x4accff
-    ts::insn(0x004accf4u); EAX.d = ts::inc32(EAX.d);   //   0x004accf4  inc      eax
-    ts::insn(0x004accf5u); ECX.d = ts::add32(ECX.d, 0x4u);   //   0x004accf5  add      ecx, 4
-    ts::insn(0x004accf8u); ts::cmp32(EAX.d, EDX.d);   //   0x004accf8  cmp      eax, edx
-    ts::insn(0x004accfau); if ((M.sf != M.of)) { goto L_004accf0; }   //   0x004accfa  jl       0x4accf0
-    L_004accfc:;
-    ts::insn(0x004accfcu); EAX.d = ts::or32(EAX.d, 0xffffffffu);   //   0x004accfc  or       eax, 0xffffffff
-    L_004accff:;
-    ts::insn(0x004accffu); ESI.d = ts::pop32();   //   0x004accff  pop      esi
-    ts::insn(0x004acd00u); ts::ret_pop(0x4u); return;   //   0x004acd00  ret      4
-}
-
-// ---------------------------------------------------------------------------
-// sub_004acd10 -- transcription of 5 instructions at 0x004acd10
-// size 12 bytes
-// callees: none
-//
-void sub_004acd10(void)
-{
-    ts::insn(0x004acd10u); AL = ts::ld8(ECX.d + 0xc);   //   0x004acd10  mov      al, byte ptr [ecx + 0xc]
-    ts::insn(0x004acd13u); ts::test8(AL, AL);   //   0x004acd13  test     al, al
-    ts::insn(0x004acd15u); if (!M.zf) { ts::ts_tail(0x4acd1cu); return; }   //   0x004acd15  jne      0x4acd1c
-    ts::insn(0x004acd17u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x004acd17  xor      eax, eax
-    ts::insn(0x004acd19u); ts::ret_pop(0x4u); return;   //   0x004acd19  ret      4
-}
-
-// ---------------------------------------------------------------------------
-// sub_004acd1c -- transcription of 5 instructions at 0x004acd1c
-// size 15 bytes
-// callees: none
-//
-void sub_004acd1c(void)
-{
-    ts::insn(0x004acd1cu); EAX.d = ts::ld32(ESP.d + 0x4);   //   0x004acd1c  mov      eax, dword ptr [esp + 4]
-    ts::insn(0x004acd20u); EDX.d = ts::ld32(ECX.d + 0x4);   //   0x004acd20  mov      edx, dword ptr [ecx + 4]
-    ts::insn(0x004acd23u); EAX.d = ts::sub32(EAX.d, EDX.d);   //   0x004acd23  sub      eax, edx
-    ts::insn(0x004acd25u); EAX.d = ts::shr32(EAX.d, 0x2u);   //   0x004acd25  shr      eax, 2
-    ts::insn(0x004acd28u); ts::ret_pop(0x4u); return;   //   0x004acd28  ret      4
-}
-
-// ---------------------------------------------------------------------------
-// sub_004acd30 -- transcription of 18 instructions at 0x004acd30
-// size 46 bytes
-// callees: 0x004acd60, 0x00682997
-//
-void sub_004acd30(void)
-{
-    ts::insn(0x004acd30u); ts::push32(EBX.d);   //   0x004acd30  push     ebx
-    ts::insn(0x004acd31u); ts::push32(EBP.d);   //   0x004acd31  push     ebp
-    ts::insn(0x004acd32u); EBP.d = ts::ld32(ESP.d + 0xc);   //   0x004acd32  mov      ebp, dword ptr [esp + 0xc]
-    ts::insn(0x004acd36u); ts::push32(ESI.d);   //   0x004acd36  push     esi
-    ts::insn(0x004acd37u); ts::test32(EBP.d, EBP.d);   //   0x004acd37  test     ebp, ebp
-    ts::insn(0x004acd39u); ts::push32(EDI.d);   //   0x004acd39  push     edi
-    ts::insn(0x004acd3au); ESI.d = ECX.d;   //   0x004acd3a  mov      esi, ecx
-    ts::insn(0x004acd3cu); if (M.zf) { ts::ts_tail(0x4acdbau); return; }   //   0x004acd3c  je       0x4acdba
-    ts::insn(0x004acd3eu); EBX.d = ts::ld32(ESP.d + 0x18);   //   0x004acd3e  mov      ebx, dword ptr [esp + 0x18]
-    ts::insn(0x004acd42u); ts::st8(ESI.d + 0xc, 0x0u);   //   0x004acd42  mov      byte ptr [esi + 0xc], 0
-    ts::insn(0x004acd46u); ts::test32(EBX.d, EBX.d);   //   0x004acd46  test     ebx, ebx
-    ts::insn(0x004acd48u); if (!M.zf) { ts::ts_tail(0x4acd5eu); return; }   //   0x004acd48  jne      0x4acd5e
-    ts::insn(0x004acd4au); EAX.d = EBP.d * 4;   //   0x004acd4a  lea      eax, [ebp*4]
-    ts::insn(0x004acd51u); ts::push32(EAX.d);   //   0x004acd51  push     eax
-    ts::insn(0x004acd52u); ts::ts_call_at(0x682997u, 0x4acd57u);   //   0x004acd52  call     0x682997
-    ts::insn(0x004acd57u); ESP.d = ts::add32(ESP.d, 0x4u);   //   0x004acd57  add      esp, 4
-    ts::insn(0x004acd5au); EDI.d = EAX.d;   //   0x004acd5a  mov      edi, eax
-    ts::insn(0x004acd5cu); ts::ts_tail(0x4acd60u); return;   //   0x004acd5c  jmp      0x4acd60
 }
 
 }  // namespace sub
