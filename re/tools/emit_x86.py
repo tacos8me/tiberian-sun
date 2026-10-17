@@ -882,15 +882,21 @@ def _goto(target, ctx, cond=None):
 
     A target inside this function becomes a label. A target outside it is a tail
     transfer: the original has already pushed whatever return address it wants,
-    so the transcription dispatches without pushing another one and returns.
+    so the transcription transfers without pushing another one and returns.
     Emitting a `goto` for that case would name a label that does not exist, which
     is a compile error rather than a wrong answer -- but a wrong answer is what
     the reader would have got.
+
+    The transfer is `ts::ts_tail`, not a nested `ts::ts_call`: a `jmp` replaces
+    the current frame, so a jump chain costs no host stack. A nested call also
+    returns to the wrong place when the target is a span end that continues into
+    another span -- see gen_code.render, which emits the same transfer for that
+    case.
     """
     if ctx.local_targets is None or target in ctx.local_targets:
         stmt = 'goto L_%08x;' % target
     else:
-        stmt = 'ts::ts_call(0x%xu); %s' % (target, _ret_stmt(ctx))
+        stmt = 'ts::ts_tail(0x%xu); %s' % (target, _ret_stmt(ctx))
     return 'if (%s) { %s }' % (cond, stmt) if cond else stmt
 
 

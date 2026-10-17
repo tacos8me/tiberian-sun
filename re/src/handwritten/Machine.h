@@ -116,6 +116,12 @@ struct Machine {
     // inside .text it is a recovered function nothing registered (a defect).
     u32 text_lo, text_hi;
     unsigned long unmapped_in_text;
+    // A tail transfer in flight: the VA a transcribed span continues at after
+    // it returns. A recovered `jmp` to another span, and a span whose last
+    // instruction does not transfer control, both continue the SAME invocation
+    // -- the original pushes no return address -- so the dispatcher in ts_call
+    // picks this up in place instead of nesting another host frame.
+    u32 tail;
     u16 fpu_status;
     // Segment registers and the interrupt-enable flag. This model is flat, so
     // segments never affect an address, but the recovered code does push, pop
@@ -214,6 +220,7 @@ inline void reset() {
     for (int i = 0; i < 8; ++i) { m.fault_reg[i].d = 0; m.fault_calls[i] = 0; }
     m.fault_calls_n = 0; m.call_depth_max = 0; m.recent_call_n = 0;
     m.unmapped_in_text = 0;
+    m.tail = 0;
     m.unmodelled_insns = 0;
     m.call_depth = 0;
     m.depth_exceeded = 0;
@@ -536,12 +543,40 @@ inline void ts_call(u32 va) {
     if (m.call_depth >= m.call_depth_limit) { m.depth_exceeded++; return; }
     m.call_depth++;
     if (m.call_depth > m.call_depth_max) m.call_depth_max = m.call_depth;
-    f();
+    // Run the body, then honour any tail transfer it left behind. A tail
+    // transfer replaces the current frame rather than nesting one, so a chain of
+    // continuations -- or a loop that crosses a span boundary -- costs no host
+    // stack. Without this the continuation would have to be a nested ts_call,
+    // and such a loop would grow the host stack once per iteration.
+    m.tail = 0;
+    for (;;) {
+        f();
+        if (!m.tail) break;
+        va = m.tail;
+        m.tail = 0;
+        m.eip = va;
+        m.recent_calls[m.recent_call_n & 7u] = va;
+        ++m.recent_call_n;
+        f = ts_lookup(va);
+        if (!f) {
+            if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
+            m.unmapped_calls++;
+            if (m.text_hi && va >= m.text_lo && va < m.text_hi) ++m.unmapped_in_text;
+            break;
+        }
+    }
     m.call_depth--;
 }
 // A `call` pushes its return address before transferring, so the modelled stack
 // stays the shape the callee's transcription expects.
 inline void ts_call_at(u32 target, u32 ret) { push32(ret); ts_call(target); }
+
+// A transfer that does NOT push a return address, so the callee's `ret` pops the
+// caller's. Two cases in the recovered code are exactly that: a `jmp` to another
+// span, and the end of a span whose last instruction is not a transfer (the
+// original simply continues at the next address). Both name where to continue
+// and return; ts_call dispatches it in the frame already running.
+inline void ts_tail(u32 target) { mach().tail = target; }
 
 // Invoke a recovered function from hand-written code.
 //
