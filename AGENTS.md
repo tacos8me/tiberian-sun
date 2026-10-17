@@ -29,6 +29,10 @@ re/
   src/handwritten/Win32Stubs.h    what the 341 imported Windows functions DO, so
                                   `call dword ptr [IAT]` reaches code
   build/image_selftest.cpp        load the image and resolve imports, standalone
+  build/boot_driver.cpp           the boot harness behind tools/boot.py
+  tools/ghidra_scripts/           Ghidra post-scripts (DecompileAt.java)
+ghidra-proj/                      analysed Ghidra project (gitignored, 544 MB);
+                                  recreate with tools/ghidra.sh's documented command
   src/generated/code/             the transcription: one ts::sub_XXXXXXXX(void)
                                   per recovered function VA, plus the dispatch
                                   registration unit and recovered.h
@@ -98,7 +102,9 @@ is generated too.
 | `tools/emit_x86.py` | the operand grammar and per-mnemonic rendering used by both generators; the only place that knows the disassembler's operand text |
 | `tools/link_test.py` | link the whole tree into a program and run it; the only check that can see an undefined symbol |
 | `tools/check_compile.py` | compile a set of generated TUs standalone and fail if any does |
-| `tools/gen_win32_stubs.py` | generates `Win32Stubs.h` from the image's own import directory, so the stub table cannot drift from the 341 thunks |
+| `tools/gen_win32_stubs.py` | generates `Win32Stubs.h` from the image's own import directory, so the stub table cannot drift from the 341 thunks; `--evidence` derives argument counts from the recovered instruction stream |
+| `tools/boot.py` | one command that builds (cached: 0.4s), boots the image and reports it -- imports called by name, fault EIP with instruction bytes, containing function and generated source line, and whether a message loop was reached |
+| `tools/ghidra.sh` | decompile the function containing each given address, from a saved Ghidra project (seconds, no re-analysis) |
 | `tools/test_tools.py` | unit tests for the load-bearing tools; every one is a regression test for a shipped defect |
 | `tools/verify_members_binary.py` | re-derive member offsets from the binary's own code; the only member check not trusting `out/` |
 | `tools/extract_realdata.py` | extract the shipped INI control files from `TIBSUN.MIX` with disjoint byte ranges |
@@ -195,21 +201,30 @@ address 0 and the run stops at the first one.
 What the boot does today, measured:
 
 ```
-reading bin/GAME.EXE ... ok, 3235840 bytes, image base 0x00400000
-imports: 341 across 13 DLLs
-load_image() ... ok          3,227,799 bytes mapped at real VAs
-resolve_imports() ... 341 of 341 IAT slots written
-running entry point 0x006854e3
-  instructions executed: 237     deepest ts_call nesting: 10
-  calls to an address nothing registered: 0    unmodelled: 0
-  import thunk calls: 12 -- GetVersion, HeapCreate, HeapAlloc x2,
-    InitializeCriticalSection x4, TlsAlloc, EnterCriticalSection,
-    VirtualAlloc, LeaveCriticalSection
-  MESSAGE LOOP: not reached
+$ python3 tools/boot.py            # 0.4s build (cached), 0.2s run
+image:  3227799 bytes in 4 sections; 341 of 341 imports resolved, 341 traced
+run:    budget 5000000 instructions, depth limit 20000
+stop:   instruction budget exhausted at 0x0055f788 after 5000001 instructions
+message loop: reached   (GetMessage=1 PeekMessage=137295 DispatchMessage=1
+                         CreateWindowExA=1)
 ```
 
-So the game's own CRT startup runs. It is **not** a playable game: there is no
-window, no message loop, no renderer. It currently stops at a 512 MB `memset`.
+So the game creates a window and pumps frames. It is **not** a playable game:
+there is no renderer, and 2 unmapped calls remain (see below).
+
+**Why it used to exit immediately, and the shape of the answer.** The CRT startup
+reads the comctl32 version and, if it is below 4.00.70, shows an error box and
+calls `ExitProcess(1)`. It reaches `DllGetVersion` through `GetProcAddress`, not
+through the import table, so there was no stub for it, the version read as 0, and
+the game exited before initialising anything. It was telling us why it would not
+start, in a message box whose text is unreadable because the string table is empty
+at that point. One export reporting 4.72 fixed it.
+
+The lesson generalises: **the game's own failure paths are the best diagnostic
+there is**, but only if the thing it fails on is modelled well enough to be
+believed. A stub that returns 0 where the real Windows returns a version does not
+produce an error -- it produces the game taking a legitimate-looking branch that
+exits.
 
 Three things are worth knowing before touching this, because each cost real time
 to find:
@@ -225,6 +240,17 @@ to find:
 - **A stub that lies is worse than a stub that fails.** An unimplemented import
   goes through a fallback that logs its name and returns 0, and every call is
   counted, so an unimplemented import is visible rather than silently plausible.
+  The same applies to a stub that returns a *plausible* wrong value: returning 0
+  from `DllGetVersion` did not look like an error, it looked like an old DLL.
+- **Know which gate is slow.** `tools/verify.py` is **6 seconds**; `pipeline.sh`
+  is **471 seconds** and the cost is the whole-tree compile and link. Iterate with
+  `tools/boot.py` (sub-second after a cached build) and `verify.py`, and spend the
+  471s only when something is ready to land. Most of the time lost in this project
+  was lanes running the full pipeline to check a six-line change.
+- **Use Ghidra for semantics.** `./tools/ghidra.sh 0x478e60 0x684446` prints the
+  decompiled C for those addresses in seconds against a saved, already-analysed
+  project. Reading `objdump` to work out what a function is *for* is the slowest
+  thing you can do here; the decompiler answers it directly.
 
 ## Key technical facts
 
@@ -322,10 +348,10 @@ measurable exit criterion rather than a percentage.
 | Binary recovery | **effectively closed** | 41,822 functions, 96.06% of `.text` as recovered code; the remaining 104 KB is classified — 11 jump tables (256 B) and 356 B of switch index tables emitted as data, 105,808 B of alignment padding, and 554 B in 90 runs reported verbatim rather than forced into a category (`out/text_data.json`) |
 | Structural reconstruction | **strong** | 749/749 classes, 9,780 vtable slots, 0 unseeded, every constructor a real entry point |
 | Code transcription | **complete** | 43,668 functions, 897,193 of 897,193 instructions (100%) |
-| Verification | **green and bounded** | 9 checks, all passing, fail-closed, 2 anchored to the binary, whole-tree link, idempotent pipeline. Check 8 (arity) is reported, not gated |
-| **Semantics** | **~9%** | 827 genuinely semantic virtual names across 920 distinct names, and 384 of 3,273 real members named. `e2e_rules.py` resolves 83.1% of member names against the shipped `rules.ini` |
+| Verification | **9 checks green, pipeline red** | `verify.py` passes all nine in **6 seconds** (263/263, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS). `pipeline.sh` is red at the **link test** on 2 unmapped calls, and takes **471s** — the link is the expensive stage, not verification |
+| **Semantics** | **~9%** | 5,557 of 9,810 slots carry a name (56.6%), but only **917 distinct names** and **281 distinct semantic** ones — most of the coverage is shared-stub propagation. 291 members named across 20 classes; `e2e_rules.py` resolves 96.2% of them against the shipped `rules.ini` |
 | **Modifiability** | **minimal** | there is still no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is the hand-written headers |
-| **Behaviour** | **booting** | the image maps at its real VAs, all 341 imports resolve, and the game's own CRT startup **executes** -- GetVersion, HeapCreate, HeapAlloc, 4x InitializeCriticalSection, TlsAlloc, VirtualAlloc. 237 instructions, 0 unmapped calls. It faults at a 512 MB `memset` before reaching a window or a message loop |
+| **Behaviour** | **runs a frame loop** | the image maps at its real VAs, 341/341 imports resolve, and the game **creates a window and pumps messages**: `CreateWindowExA=1`, `PeekMessage=137,295`, `DispatchMessage=1`. A 5,000,000-instruction run ends on budget, not a fault. No renderer, and 2 unmapped calls remain |
 
 So: *the binary is explained, its instructions are transcribed, the layout is
 compiler-confirmed, and the game's own startup now executes.* It is not a

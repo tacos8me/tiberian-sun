@@ -12,20 +12,22 @@ what to work on. The one thing this file does not say clearly enough is that
 
 ## Status summary
 
-**`tools/verify.py` prints VERIFICATION PASSED across nine checks**, the whole
-tree links into a program, and the pipeline is reproducible from a clean
-checkout. Check 9 is the one that matters most and the one that was added last:
-it makes the compiler confirm every recovered member offset, and it passes
-3109/3109.
+**`tools/verify.py` prints VERIFICATION PASSED across nine checks in 6 seconds.**
+Check 9 is the one that matters most: it makes the compiler confirm every
+recovered member offset, and it passes. **`pipeline.sh` is red at the link test**
+on 2 unmapped calls, and takes 471 seconds -- the link is the expensive stage.
 
-**The game boots.** The image maps at its real VAs, all 341 imports resolve, and
-the original entry point 0x6854e3 executes the game's own CRT startup -- 237
-instructions, 12 import calls (GetVersion, HeapCreate, HeapAlloc x2,
-InitializeCriticalSection x4, TlsAlloc, EnterCriticalSection, VirtualAlloc,
-LeaveCriticalSection), 0 unmapped calls, 0 unmodelled instructions. It does not
-reach a window or a message loop; it currently stops at a 512 MB `memset`.
+**The game runs a frame loop.** The image maps at its real VAs, 341/341 imports
+resolve, and the original entry point 0x6854e3 creates a window and pumps
+messages: `CreateWindowExA=1`, `PeekMessage=137,295`, `DispatchMessage=1`. A
+5,000,000-instruction run ends on budget rather than a fault. There is no
+renderer, and 2 unmapped calls remain.
+
 `Image.h` and `Win32Stubs.h` are what make this possible; neither does anything
-alone.
+alone. The single change that unblocked startup was giving `comctl32!DllGetVersion`
+an export: the CRT startup checks the comctl32 version and calls `ExitProcess(1)`
+if it is below 4.00.70, and it reaches that function through `GetProcAddress`
+rather than the import table.
 
 Measured state:
 

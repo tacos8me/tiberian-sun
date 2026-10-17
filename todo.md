@@ -480,6 +480,31 @@ been quietly wrong. Found with `perf` (99.67% in `ts::page`). Now 32,768 slots a
 exhaustion is a hard reported fault.
 *Done when:* a full table is a reported fault, not silent aliasing. **Met.**
 
+### [x] Get past the 512 MB memset
+Fixed, and the fix was two separate defects:
+  - `ret` did not pop the return address, so every call leaked 4 bytes and ESP
+    drifted until code read a stale `[esp]` as a return address.
+  - Spans that did not end on a transfer dropped their continuation, so ~10,450
+    bodies returned with their frame abandoned.
+Both are recorded below. The memset itself was a symptom of the second.
+
+### [x] Reach a window and a message loop
+**Reached.** `CreateWindowExA=1`, `PeekMessage=137,295`, `DispatchMessage=1`.
+The unlock was `comctl32!DllGetVersion`: the CRT startup checks the comctl32
+version and calls `ExitProcess(1)` below 4.00.70, and it reaches that function
+through `GetProcAddress` rather than the import table, so there was no stub and
+the version read as 0. One export reporting 4.72 fixed it.
+
+### [ ] The 2 unmapped calls, and the argument that arrives as a return address
+`0x6844df` (from `0x5e7317`, `call *%esi`) and `0x46f3f8` (from `0x674bf6`,
+`call *0x58(%edx)`). Both targets are RETURN ADDRESSES, so a data pointer slot
+holds a code address. The same corruption is visible without the link test:
+`ExitProcess` receives `0x6844df` where the code passed `1`, and EBP is a code
+address at the stop (`0x004876e7`). A value that should be an argument arrives as
+a return address.
+*Done when:* the caller of each is identified and the corruption fixed, and the
+link test passes.
+
 ### [ ] Get past the 512 MB memset
 Faults at `rep stos` 0x0068d781 with ECX=0x08000004 dwords. The caller is
 `calloc(n,4)` at 0x6845b4 and `n` is read from the global at 0x836280, which

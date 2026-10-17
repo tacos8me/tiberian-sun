@@ -274,12 +274,25 @@ recovered statements, every lifted function passing the differential test.
 Exit: a documented command that shows the model doing something the original
 does, and that fails if it stops doing it.
 
-**4.2 is now in progress, and further along than the roadmap expected.** The
-entry point executes: the image maps at its real VAs, all 341 imports resolve, and
-the game's own CRT startup runs (GetVersion, HeapCreate, HeapAlloc,
-InitializeCriticalSection x4, TlsAlloc, VirtualAlloc). 16,383 unmapped calls
-became 0. What is left is to get past a 512 MB `memset` and then out of startup
-into a window and a message loop.
+**4.2 is DONE in the sense that matters: the game runs a frame loop.** It maps
+the image at its real VAs, resolves 341/341 imports, creates a window and pumps
+messages (`PeekMessage=137,295`). 16,383 unmapped calls became 2.
+
+What is left is not "does it run" but three specific things:
+  1. The 2 unmapped calls (`0x6844df`, `0x46f3f8`) -- both return addresses used
+     as call targets. The same corruption is visible in the run itself:
+     `ExitProcess` receives `0x6844df` where the code passed `1`. A value that
+     should be an argument arrives as a return address.
+  2. No renderer. The window exists; nothing draws into it.
+  3. 27 imports are still generic (18 WSOCK32, 8 OLEAUT32, 1 ole32).
+
+**The lesson worth keeping from this phase.** The game exits immediately unless
+`comctl32!DllGetVersion` reports >= 4.00.70, and it reaches that function through
+`GetProcAddress`, not the import table -- so there was no stub, the version read
+as 0, and the game took its own legitimate-looking failure path. It was telling us
+why it would not start the whole time, in a message box whose text is unreadable
+because the string table is empty at that point. A stub returning a plausible
+wrong value is harder to diagnose than one that fails loudly.
 
 The honest measure of progress here is not "does it run" but **how far into the
 game's own code it gets before it needs something we have not modelled**. Today
