@@ -644,6 +644,28 @@ inline const char *ts_root() {
     return (r && *r) ? r : "../gamedir";
 }
 
+// The CD is a second host root, because it is a second *drive* to the game.
+// GetCDClass (0x4a7600) scans c:..z: with GetDriveTypeA and keeps the letters
+// that answer DRIVE_CDROM; Force_CD_Available then requires one of them to
+// carry the volume label "TS%d" and to hold TS%d.dsk. TS_CD names the host
+// directory that stands in for that drive, and D: is the letter it is given.
+inline const char *ts_cd_root() {
+    const char *r = std::getenv("TS_CD");
+    return (r && *r) ? r : "";
+}
+enum { CD_DRIVE_INDEX = 3 };   // 'D'
+inline int drive_index_of(const char *path) {
+    if (path && path[0] && path[1] == ':') {
+        char c = path[0];
+        if (c >= 'a' && c <= 'z') c = (char)(c - 32);
+        if (c >= 'A' && c <= 'Z') return c - 'A';
+    }
+    return -1;
+}
+inline bool path_is_cd_drive(const char *path) {
+    return ts_cd_root()[0] && drive_index_of(path) == (int)CD_DRIVE_INDEX;
+}
+
 inline void model_rd(void *dst, u32 va, u32 n) {
     u8 *d = (u8 *)dst;
     for (u32 i = 0; i < n; ++i) d[i] = ld8(va + i);
@@ -677,16 +699,21 @@ inline bool resolve_ci(const char *dir, const char *want, char *out, size_t outn
     return ok;
 }
 
-// Map a Windows path to a host path under ts_root(). Strips a drive prefix and
-// any leading separators, then resolves each component case-insensitively.
+// Map a Windows path to a host path. A drive prefix selects the root: D: is
+// the CD when TS_CD names one, and every other drive is the install root.
+// Then each component is resolved case-insensitively.
 inline bool host_path(const char *win, char *out, size_t outn) {
     if (!win || !*win) return false;
     char buf[512];
     std::snprintf(buf, sizeof buf, "%s", win);
     char *p = buf;
-    if (p[0] && p[1] == ':') p += 2;
+    const char *base = ts_root();
+    if (p[0] && p[1] == ':') {
+        if (path_is_cd_drive(p)) base = ts_cd_root();
+        p += 2;
+    }
     while (*p == '\\' || *p == '/') ++p;
-    std::snprintf(out, outn, "%s", ts_root());
+    std::snprintf(out, outn, "%s", base);
     char *save = 0;
     for (char *tok = strtok_r(p, "\\/", &save); tok; tok = strtok_r(0, "\\/", &save)) {
         if (!*tok) continue;
@@ -1227,7 +1254,14 @@ TS_END
 TS_BEGIN(LockResource) stub_done(1, arg(0)); TS_END
 
 // -- drives, volumes, filesystem information ---------------------------------
-TS_RET(GetDriveTypeA, 1, 3u)   // DRIVE_FIXED
+TS_BEGIN(GetDriveTypeA)
+    // GetCDClass (0x4a7600) finds the CD by asking this for every letter, and
+    // Force_CD_Available (0x4dc670) then requires the answer to carry the
+    // label "TS%d" and to hold TS%d.dsk. Reporting DRIVE_CDROM for the drive
+    // backed by TS_CD is what lets the game see its disc; every other drive is
+    // a fixed disk.
+    stub_done(1, path_is_cd_drive(ld_cstr(arg(0))) ? 5u : 3u);   // DRIVE_CDROM / DRIVE_FIXED
+TS_END
 
 TS_BEGIN(GetDiskFreeSpaceA)
     st32(arg(1), 0x10000u); st32(arg(2), 512u);
@@ -1236,14 +1270,29 @@ TS_BEGIN(GetDiskFreeSpaceA)
 TS_END
 
 TS_BEGIN(GetLogicalDriveStringsA)
-    u32 buf = arg(1);
-    if (buf) { st8(buf, 'C'); st8(buf + 1u, ':'); st8(buf + 2u, '\\'); st8(buf + 3u, 0); st8(buf + 4u, 0); }
-    stub_done(2, 4u);
+    // "C:\D:\" when a CD is configured. FUN_00647a70 walks this list and
+    // checks every DRIVE_CDROM entry for the Tiberian Sun label.
+    u32 buf = arg(1), cch = arg(0), n = 4u;
+    if (buf && cch >= 4u) {
+        st8(buf, 'C'); st8(buf + 1u, ':'); st8(buf + 2u, '\\'); st8(buf + 3u, 0);
+        if (ts_cd_root()[0]) {
+            if (cch >= 8u) {
+                st8(buf + 4u, 'D'); st8(buf + 5u, ':'); st8(buf + 6u, '\\'); st8(buf + 7u, 0);
+                n = 8u;
+            }
+        }
+        st8(buf + n, 0);
+    }
+    stub_done(2, n);
 TS_END
 
 TS_BEGIN(GetVolumeInformationA)
+    // The volume label is what identifies the disc: the game formats "TS%d"
+    // and compares it with this answer before it will use the drive. Only the
+    // CD root carries that label; a fixed drive gets a neutral one.
     u32 name = arg(1);
-    if (name) c_strcpy(name, lit("TSVOL"));
+    const char *label = path_is_cd_drive(ld_cstr(arg(0))) ? "TS1" : "TSVOL";
+    if (name) c_strcpy(name, lit(label));
     stub_done(8, 1u);
 TS_END
 TS_RET(SetVolumeLabelA, 2, 1u)

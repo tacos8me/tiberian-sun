@@ -1359,6 +1359,166 @@ int main() {
         eq("win32-message-queue", out.splitlines()[-1] if out else "", "0")
 
 
+def test_win32_dialog():
+    """The dialog layer: template controls, WM_INITDIALOG, and scripted input.
+
+    Regression test for the dialog-setup loop. CreateDialogIndirectParamA used
+    to be a constant return: no window, no controls, no WM_INITDIALOG, and
+    GetDlgItem a fixed handle, so the game re-ran the same setup forever.
+    This checks the parts that make the loop break: a real dialog record, the
+    template's own control IDs and text, WM_INITDIALOG sent before the call
+    returns, a stable per-control handle (and 0 for an ID the template does
+    not declare), window extra bytes at DWLP_USER (8), and a WM_COMMAND for
+    the default button that the game's own PeekMessage/DispatchMessage loop
+    carries to the dialog procedure. It also pins the four-argument arity of
+    SetViewportOrgEx/SetWindowOrgEx: with three, two calls leaked 8 bytes and
+    a caller four frames away restored a stale EBX.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+
+static ts::u32 g_calls, g_hwnd, g_msg, g_wp, g_lp;
+static void fake_dlgproc() {
+    ++g_calls;
+    g_hwnd = ts::ld32(ESP.d + 4u);
+    g_msg  = ts::ld32(ESP.d + 8u);
+    g_wp   = ts::ld32(ESP.d + 12u);
+    g_lp   = ts::ld32(ESP.d + 16u);
+    ESP.d += 4u + 16u;   // __stdcall: pop the return address and 4 args
+}
+
+static ts::u32 call_stub(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
+    for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
+    ESP.d = sp;
+    ts::ts_call_at(fn, 0x00c0ffeeu);
+    return EAX.d;
+}
+
+int main() {
+    ts::register_win32_stubs();
+    const ts::u32 sp = 0x002ff000u;
+    const ts::u32 tpl = 0x00300000u, msg = 0x00300100u;
+    const ts::u32 proc_va = 0x00c0de02u;
+    ts::ts_register(proc_va, &fake_dlgproc);
+
+    // DLGTEMPLATE: style, exstyle, cdit=1, rect, then menu/class/title = 0.
+    ts::st32(tpl + 0u, 0u);
+    ts::st32(tpl + 4u, 0u);
+    ts::st16(tpl + 8u, 1u);
+    ts::st16(tpl + 10u, 0u); ts::st16(tpl + 12u, 0u);
+    ts::st16(tpl + 14u, 100u); ts::st16(tpl + 16u, 50u);
+    ts::st16(tpl + 18u, 0u); ts::st16(tpl + 20u, 0u); ts::st16(tpl + 22u, 0u);
+    // DLGITEMTEMPLATE at +24: a visible button, id 1, class 0x80, text "OK".
+    ts::st32(tpl + 24u, 0x50000001u);   // WS_CHILD|WS_VISIBLE|BS_DEFPUSHBUTTON
+    ts::st32(tpl + 28u, 0u);
+    ts::st16(tpl + 32u, 0u); ts::st16(tpl + 34u, 0u);
+    ts::st16(tpl + 36u, 50u); ts::st16(tpl + 38u, 14u);
+    ts::st16(tpl + 40u, 1u);            // control id = IDOK
+    ts::st16(tpl + 42u, 0xffffu); ts::st16(tpl + 44u, 0x0080u);   // "Button"
+    ts::st16(tpl + 46u, 'O'); ts::st16(tpl + 48u, 'K'); ts::st16(tpl + 50u, 0u);
+    ts::st16(tpl + 52u, 0u);            // cbCreationData
+
+    ts::u32 cd = ts::stub_va("USER32", "CreateDialogIndirectParamA");
+    ts::u32 gdi = ts::stub_va("USER32", "GetDlgItem");
+    ts::u32 swl = ts::stub_va("USER32", "SetWindowLongA");
+    ts::u32 gwl = ts::stub_va("USER32", "GetWindowLongA");
+    ts::u32 enw = ts::stub_va("USER32", "EnableWindow");
+    ts::u32 isw = ts::stub_va("USER32", "IsWindowEnabled");
+    ts::u32 peek = ts::stub_va("USER32", "PeekMessageA");
+    ts::u32 disp = ts::stub_va("USER32", "DispatchMessageA");
+    ts::u32 dw = ts::stub_va("USER32", "DestroyWindow");
+    ts::u32 vp = ts::stub_va("GDI32", "SetViewportOrgEx");
+    ts::u32 wo = ts::stub_va("GDI32", "SetWindowOrgEx");
+    ck("dialog stubs resolve", cd && gdi && swl && gwl && enw && isw && peek &&
+                               disp && dw && vp && wo);
+
+    // WM_INITDIALOG is sent synchronously, before CreateDialog returns.
+    ts::u32 a5[5] = { 0x00400000u, tpl, 0u, proc_va, 0x1234u };
+    g_calls = 0;
+    ts::u32 dlg = call_stub(cd, a5, 5, sp);
+    ck("CreateDialogIndirectParamA returns a handle", dlg != 0);
+    ck("CreateDialogIndirectParamA pops 5 args", ESP.d == sp + 20u);
+    ck("WM_INITDIALOG was sent once", g_calls == 1u && g_msg == 0x0110u);
+    ck("WM_INITDIALOG hwnd", g_hwnd == dlg);
+    ck("WM_INITDIALOG wParam is 0", g_wp == 0u);
+    ck("WM_INITDIALOG lParam is dwInitParam", g_lp == 0x1234u);
+
+    // The template's control has a stable handle; an undeclared ID does not.
+    ts::u32 a2[2] = { dlg, 1u };
+    ts::u32 ok = call_stub(gdi, a2, 2, sp);
+    ck("GetDlgItem returns a control handle", ok != 0u && ok != dlg);
+    ck("GetDlgItem is stable", call_stub(gdi, a2, 2, sp) == ok);
+    ts::u32 a2b[2] = { dlg, 99u };
+    ck("GetDlgItem returns 0 for an undeclared id", call_stub(gdi, a2b, 2, sp) == 0u);
+    ck("GetDlgItem pops 2 args", ESP.d == sp + 8u);
+
+    // DWLP_USER lives in the window's extra bytes at index 8.
+    ts::u32 a3[3] = { dlg, 8u, 0x00badbeeu };
+    ck("SetWindowLongA pops 3 args", call_stub(swl, a3, 3, sp) == 0u && ESP.d == sp + 12u);
+    ts::u32 a2w[2] = { dlg, 8u };
+    ck("GetWindowLongA returns DWLP_USER", call_stub(gwl, a2w, 2, sp) == 0x00badbeeu);
+
+    // EnableWindow records state and returns the previous one.
+    ts::u32 a2e[2] = { ok, 0u };
+    ck("EnableWindow returns the previous state", call_stub(enw, a2e, 2, sp) == 1u);
+    ts::u32 a1i[1] = { ok };
+    ck("IsWindowEnabled reads it back", call_stub(isw, a1i, 1, sp) == 0u);
+
+    // The scripted WM_COMMAND is queued for the default button, not sent.
+    ts::u32 pm[5] = { msg, 0u, 0u, 0u, 1u };
+    ck("PeekMessage sees the scripted WM_COMMAND", call_stub(peek, pm, 5, sp) == 1u);
+    ck("WM_COMMAND hwnd", ts::ld32(msg + 0u) == dlg);
+    ck("WM_COMMAND message", ts::ld32(msg + 4u) == 0x0111u);
+    ck("WM_COMMAND control id is IDOK", ts::ld32(msg + 8u) == 1u);
+    ck("WM_COMMAND lParam is the control", ts::ld32(msg + 12u) == ok);
+
+    // Dispatching it runs the dialog procedure the game stored.
+    ts::u32 a1m[1] = { msg };
+    g_calls = 0;
+    call_stub(disp, a1m, 1, sp);
+    ck("DispatchMessageA reaches the dialog proc", g_calls == 1u);
+    ck("dispatched WM_COMMAND", g_msg == 0x0111u && g_wp == 1u && g_lp == ok);
+
+    // SetViewportOrgEx/SetWindowOrgEx take four arguments.
+    ts::u32 a4[4] = { 0x00030001u, 0u, 0u, 0u };
+    call_stub(vp, a4, 4, sp);
+    ck("SetViewportOrgEx pops 4 args", ESP.d == sp + 16u);
+    call_stub(wo, a4, 4, sp);
+    ck("SetWindowOrgEx pops 4 args", ESP.d == sp + 16u);
+
+    // Destroying the dialog frees its controls.
+    ts::u32 a1d[1] = { dlg };
+    call_stub(dw, a1d, 1, sp);
+    ck("DestroyWindow pops 1 arg", ESP.d == sp + 4u);
+    ck("GetDlgItem on a destroyed dialog is 0", call_stub(gdi, a2, 2, sp) == 0u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_dialog.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_dialog",
+                        "/tmp/ts_win32_dialog.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-dialog-build", False,
+              r.stderr.decode("utf-8", "replace")[:400])
+        return
+    r = subprocess.run(["/tmp/ts_win32_dialog"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-dialog", False, out)
+    else:
+        eq("win32-dialog", out.splitlines()[-1] if out else "", "0")
+
+
 def test_win32_surface_lock():
     """IDirectDrawSurface::Lock pops all five words the game pushes.
 
@@ -1650,6 +1810,7 @@ def main():
                test_machine_stack, test_machine_mmx,
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,
+               test_win32_dialog,
                test_win32_surface_lock, test_win32_blowfish):
         try:
             fn()
