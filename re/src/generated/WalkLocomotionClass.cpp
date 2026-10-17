@@ -85,8 +85,8 @@ bool WalkLocomotionClass::Is_Moving()
 
 // -------------------------------------------------------------------------
 // WalkLocomotionClass::Head_To -- the body is the canonical transcription of
-// 19 instructions at 0x0064f200, in src/generated/code/.
-// size 44 bytes; callees: none
+// 3 instructions at 0x0064f200, in src/generated/code/.
+// size 6 bytes; callees: none
 //
 void WalkLocomotionClass::Head_To(CoordStruct* pDest)
 {

@@ -5757,15 +5757,26 @@ void sub_00412714(void)
 }
 
 // ---------------------------------------------------------------------------
-// sub_0041271d -- transcription of 32 instructions at 0x0041271d
-// size 85 bytes
-// callees: 0x0041277f
+// sub_0041271d -- transcription of 3 instructions at 0x0041271d
+// size 3 bytes
+// callees: none
 //
 void sub_0041271d(void)
 {
     ts::insn(0x0041271du); ts::nop();   //   0x0041271d  nop      
     ts::insn(0x0041271eu); ts::nop();   //   0x0041271e  nop      
     ts::insn(0x0041271fu); ts::nop();   //   0x0041271f  nop      
+    ts::ts_tail(0x00412720u);   // span end 0x00412720: the last instruction
+    return;                //   here does not transfer control
+}
+
+// ---------------------------------------------------------------------------
+// sub_00412720 -- transcription of 29 instructions at 0x00412720
+// size 82 bytes
+// callees: 0x0041277f
+//
+void sub_00412720(void)
+{
     ts::insn(0x00412720u); ts::push32(ESI.d);   //   0x00412720  push     esi
     ts::insn(0x00412721u); ts::st8(7493076, 0x1u);   //   0x00412721  mov      byte ptr [0x7255d4], 1
     ts::insn(0x00412728u); ESI.d = ts::xor32(ESI.d, ESI.d);   //   0x00412728  xor      esi, esi
@@ -5803,7 +5814,7 @@ void sub_0041271d(void)
 // size 72 bytes
 // tail entry: not a function start. Reached by a branch from
 // outside; transcribed from here to the end of the function at
-// 0x0041271d, which contains it.
+// 0x00412720, which contains it.
 // callees: 0x0041277f
 //
 void sub_0041272a(void)
@@ -6666,21 +6677,6 @@ void sub_00412cb8(void)
     ts::insn(0x00412cc8u); ts::st32(EDX.d + 0xc, ECX.d);   //   0x00412cc8  mov      dword ptr [edx + 0xc], ecx
     ts::insn(0x00412ccbu); ESP.d = ts::add32(ESP.d, 0x18u);   //   0x00412ccb  add      esp, 0x18
     ts::insn(0x00412cceu); ts::ret_pop(0xcu); return;   //   0x00412cce  ret      0xc
-}
-
-// ---------------------------------------------------------------------------
-// sub_00412ce0 -- transcription of 6 instructions at 0x00412ce0
-// size 23 bytes
-// callees: none
-//
-void sub_00412ce0(void)
-{
-    ts::insn(0x00412ce0u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x00412ce0  xor      eax, eax
-    ts::insn(0x00412ce2u); ts::st32(7493088, EAX.d);   //   0x00412ce2  mov      dword ptr [0x7255e0], eax
-    ts::insn(0x00412ce7u); ts::st32(7493092, EAX.d);   //   0x00412ce7  mov      dword ptr [0x7255e4], eax
-    ts::insn(0x00412cecu); ts::st32(7493096, EAX.d);   //   0x00412cec  mov      dword ptr [0x7255e8], eax
-    ts::insn(0x00412cf1u); ts::st32(7493100, EAX.d);   //   0x00412cf1  mov      dword ptr [0x7255ec], eax
-    ts::insn(0x00412cf6u); ts::ret_pop(0x0u); return;   //   0x00412cf6  ret      
 }
 
 }  // namespace sub

@@ -71,8 +71,8 @@ void BufferIOFileClass::vfunc_5(int a0)
 
 // -------------------------------------------------------------------------
 // BufferIOFileClass::vfunc_6 -- the body is the canonical transcription of
-// 8 instructions at 0x00420540, in src/generated/code/.
-// size 17 bytes; callees: none
+// 3 instructions at 0x00420540, in src/generated/code/.
+// size 7 bytes; callees: none
 //
 void BufferIOFileClass::vfunc_6()
 {
@@ -161,8 +161,8 @@ void BufferIOFileClass::vfunc_14()
 
 // -------------------------------------------------------------------------
 // BufferIOFileClass::vfunc_15 -- the body is the canonical transcription of
-// 36 instructions at 0x005a6940, in src/generated/code/.
-// size 92 bytes; callees: none
+// 34 instructions at 0x005a6940, in src/generated/code/.
+// size 86 bytes; callees: none
 //
 void BufferIOFileClass::vfunc_15(int a0)
 {

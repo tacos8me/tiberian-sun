@@ -69,8 +69,8 @@ void TerrainTypeClass::vfunc_5(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // TerrainTypeClass::vfunc_6 -- the body is the canonical transcription of
-// 11 instructions at 0x006255f0, in src/generated/code/.
-// size 29 bytes; callees: 0x00572b80
+// 8 instructions at 0x006255f0, in src/generated/code/.
+// size 22 bytes; callees: 0x00572b80
 //
 void TerrainTypeClass::vfunc_6(int a0, int a1, int a2)
 {

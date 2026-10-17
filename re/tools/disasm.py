@@ -640,6 +640,40 @@ def pointer_table_targets(bin_, funcs, iat):
     return found, unbounded
 
 
+def fill_prefixed_entries(bin_, funcs):
+    """The real entry of a span that begins in alignment fill.
+
+    A start that lands on a fill byte is not the entry point: the entry is the
+    first instruction after the fill. 0x5dcd3d is `nop; nop; nop; mov eax, ecx;
+    ret` -- a start admitted by a branch into the padding -- and the program calls
+    0x5dcd40, the `mov`, through the jump table at 0x5d8784. The span beginning at
+    0x5dcd3d hid that entry, and the boot then spent 32 million calls on it.
+
+    Only spans that already begin on 0x00/0x90/0xcc are considered, so a function
+    whose body merely contains fill bytes is untouched, and the first instruction
+    that does not begin on a fill byte is the only candidate. Splitting there
+    leaves the fill prefix as its own span, which has no such candidate and so
+    cannot recurse.
+
+    Returns {entry_va: span_va}.
+    """
+    out = {}
+    for f in funcs.values():
+        insns = f["insns"]
+        if not insns:
+            continue
+        b = bin_.read(f["va"], 1)
+        if not b or b[0] not in _FILL:
+            continue
+        for ins in insns:
+            first = bin_.read(ins["va"], 1)
+            if first and first[0] not in _FILL:
+                if ins["va"] != f["va"]:
+                    out[ins["va"]] = f["va"]
+                break
+    return out
+
+
 def recover(bin_, seeds, vtable_code):
     """Run the worklist to a fixpoint and return the recovered bodies.
 
@@ -930,18 +964,24 @@ def main():
         funcs = recover(bin_, seeds, vtable_code)
         found, unbounded = pointer_table_targets(bin_, funcs, iat)
         extra = {va: slot for va, slot in found.items() if va not in seeds}
-        if not extra:
+        after_fill = {va: span for va, span in
+                      fill_prefixed_entries(bin_, funcs).items()
+                      if va not in seeds and va not in extra}
+        if not extra and not after_fill:
             print(f"pointer-table rounds: {round_no}; no further entry point named")
             break
         round_no += 1
-        print(f"pointer-table round {round_no}: {len(extra)} entry point(s) named "
-              f"by a data-section code-pointer table; {len(unbounded)} candidate(s) "
-              f"rejected as not an instruction boundary")
-        for va in sorted(extra)[:12]:
+        print(f"round {round_no}: {len(extra)} entry point(s) named by a data-section "
+              f"code-pointer table, {len(after_fill)} named by the end of a span's "
+              f"leading fill; {len(unbounded)} candidate(s) rejected as not an "
+              f"instruction boundary")
+        for va in sorted(extra)[:8]:
             print(f"  0x{va:08x} <- dword at 0x{extra[va]:08x}")
-        if len(extra) > 12:
-            print(f"  ... {len(extra) - 12} more")
-        seeds |= set(extra)
+        for va in sorted(after_fill)[:8]:
+            print(f"  0x{va:08x} <- first real instruction of span 0x{after_fill[va]:08x}")
+        if len(extra) + len(after_fill) > 16:
+            print(f"  ... {len(extra) + len(after_fill) - 16} more")
+        seeds |= set(extra) | set(after_fill)
 
 
     # --- Remaining unattributed .text: jump tables, padding, and what is left

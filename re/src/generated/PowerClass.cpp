@@ -128,8 +128,8 @@ void PowerClass::vfunc_14()
 
 // -------------------------------------------------------------------------
 // PowerClass::vfunc_15 -- the body is the canonical transcription of
-// 220 instructions at 0x00593f30, in src/generated/code/.
-// size 634 bytes; callees: 0x00478f00, 0x005a0b90, 0x005dca90
+// 198 instructions at 0x00593f30, in src/generated/code/.
+// size 575 bytes; callees: 0x00478f00, 0x005dca90
 //
 void PowerClass::vfunc_15(int a0)
 {
@@ -239,8 +239,8 @@ void PowerClass::vfunc_29(int a0)
 
 // -------------------------------------------------------------------------
 // PowerClass::vfunc_30 -- the body is the canonical transcription of
-// 72 instructions at 0x005a3c60, in src/generated/code/.
-// size 175 bytes; callees: 0x00477960
+// 67 instructions at 0x005a3c60, in src/generated/code/.
+// size 167 bytes; callees: 0x00477960
 //
 void PowerClass::vfunc_30(int a0)
 {

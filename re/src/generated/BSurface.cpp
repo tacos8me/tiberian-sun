@@ -45,8 +45,8 @@ void BSurface::vfunc_3(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 
 // -------------------------------------------------------------------------
 // BSurface::vfunc_4 -- the body is the canonical transcription of
-// 142 instructions at 0x00674dd0, in src/generated/code/.
-// size 377 bytes; callees: 0x00412bb0, 0x00423340, 0x0045a950
+// 129 instructions at 0x00674dd0, in src/generated/code/.
+// size 351 bytes; callees: 0x00412bb0, 0x00423340, 0x0045a950
 //
 void BSurface::vfunc_4(int a0, int a1, int a2)
 {
@@ -85,8 +85,8 @@ void BSurface::vfunc_7(int a0, int a1, int a2)
 
 // -------------------------------------------------------------------------
 // BSurface::vfunc_8 -- the body is the canonical transcription of
-// 139 instructions at 0x006750d0, in src/generated/code/.
-// size 402 bytes; callees: 0x00675266
+// 56 instructions at 0x006750d0, in src/generated/code/.
+// size 150 bytes; callees: none
 //
 void BSurface::vfunc_8(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12)
 {

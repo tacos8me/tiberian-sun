@@ -103,8 +103,8 @@ void TriggerClass::Slot7()
 
 // -------------------------------------------------------------------------
 // TriggerClass::Slot8 -- the body is the canonical transcription of
-// 84 instructions at 0x0062d180, in src/generated/code/.
-// size 273 bytes; callees: 0x00405730, 0x0062c210, 0x0068298c
+// 61 instructions at 0x0062d180, in src/generated/code/.
+// size 206 bytes; callees: 0x0062c210
 //
 void TriggerClass::Slot8()
 {

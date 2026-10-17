@@ -375,7 +375,7 @@ void OverlayClass::Limbo()
 
 // OverlayClass::Unlimbo -- ALIAS of AnimClass::vfunc_49 (same machine code at 0x0056f810); the
 // forwarder is written once, at that declaration.
-void OverlayClass::Unlimbo(int a0, int a1)
+void OverlayClass::Unlimbo(int a0)
 {
     ts::sub::sub_0056f810();
 }
@@ -452,7 +452,7 @@ void OverlayClass::Render(int a0, int a1, int a2)
 
 // OverlayClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void OverlayClass::Occupy_List(int a0)
+void OverlayClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }

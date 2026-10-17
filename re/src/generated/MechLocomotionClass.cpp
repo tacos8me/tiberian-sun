@@ -123,8 +123,8 @@ void MechLocomotionClass::Slot29()
 
 // -------------------------------------------------------------------------
 // MechLocomotionClass::Slot30 -- the body is the canonical transcription of
-// 11 instructions at 0x00543c50, in src/generated/code/.
-// size 32 bytes; callees: none
+// 2 instructions at 0x00543c50, in src/generated/code/.
+// size 8 bytes; callees: none
 //
 void MechLocomotionClass::Slot30()
 {
@@ -143,8 +143,8 @@ void MechLocomotionClass::Slot32()
 
 // -------------------------------------------------------------------------
 // MechLocomotionClass::Slot39 -- the body is the canonical transcription of
-// 25 instructions at 0x00545460, in src/generated/code/.
-// size 70 bytes; callees: none
+// 8 instructions at 0x00545460, in src/generated/code/.
+// size 22 bytes; callees: none
 //
 void MechLocomotionClass::Slot39()
 {

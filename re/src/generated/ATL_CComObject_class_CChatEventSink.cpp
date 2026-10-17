@@ -21,8 +21,8 @@
 
 // -------------------------------------------------------------------------
 // ATL_CComObject_class_CChatEventSink::vfunc_0 -- the body is the canonical transcription of
-// 14 instructions at 0x0066c5b0, in src/generated/code/.
-// size 29 bytes; callees: none
+// 13 instructions at 0x0066c5b0, in src/generated/code/.
+// size 26 bytes; callees: none
 //
 void ATL_CComObject_class_CChatEventSink::vfunc_0(int a0, int a1, int a2)
 {
@@ -71,10 +71,10 @@ void ATL_CComObject_class_CChatEventSink::vfunc_5(int a0, int a1, int a2)
 
 // -------------------------------------------------------------------------
 // ATL_CComObject_class_CChatEventSink::vfunc_6 -- the body is the canonical transcription of
-// 41 instructions at 0x00669db0, in src/generated/code/.
-// size 122 bytes; callees: 0x0046ebd0
+// 12 instructions at 0x00669db0, in src/generated/code/.
+// size 39 bytes; callees: none
 //
-void ATL_CComObject_class_CChatEventSink::vfunc_6(int a0, int a1, int a2)
+void ATL_CComObject_class_CChatEventSink::vfunc_6(int a0, int a1)
 {
     ts::sub::sub_00669db0();
 }
@@ -231,10 +231,10 @@ void ATL_CComObject_class_CChatEventSink::vfunc_21(int a0, int a1, int a2, int a
 
 // -------------------------------------------------------------------------
 // ATL_CComObject_class_CChatEventSink::vfunc_22 -- the body is the canonical transcription of
-// 67 instructions at 0x0066b3f0, in src/generated/code/.
-// size 230 bytes; callees: 0x005682b0, 0x005f0b30, 0x0066b4e1, 0x00682610, 0x00683fa4, 0x006849b0, 0x0068be26
+// 7 instructions at 0x0066b3f0, in src/generated/code/.
+// size 25 bytes; callees: none
 //
-void ATL_CComObject_class_CChatEventSink::vfunc_22(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void ATL_CComObject_class_CChatEventSink::vfunc_22()
 {
     ts::sub::sub_0066b3f0();
 }

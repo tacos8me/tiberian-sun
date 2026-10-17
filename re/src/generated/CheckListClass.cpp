@@ -122,8 +122,8 @@ void CheckListClass::Draw_All(int a0)
 
 // -------------------------------------------------------------------------
 // CheckListClass::Delete_List -- the body is the canonical transcription of
-// 37 instructions at 0x004a5b20, in src/generated/code/.
-// size 74 bytes; callees: none
+// 5 instructions at 0x004a5b20, in src/generated/code/.
+// size 10 bytes; callees: none
 //
 void CheckListClass::Delete_List()
 {
@@ -482,8 +482,8 @@ void CheckListClass::vfunc_47(int a0)
 
 // -------------------------------------------------------------------------
 // CheckListClass::vfunc_48 -- the body is the canonical transcription of
-// 24 instructions at 0x004f7340, in src/generated/code/.
-// size 68 bytes; callees: none
+// 23 instructions at 0x004f7340, in src/generated/code/.
+// size 65 bytes; callees: none
 //
 void CheckListClass::vfunc_48(int a0)
 {

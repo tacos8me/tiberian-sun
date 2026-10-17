@@ -72,8 +72,8 @@ void FlyLocomotionClass::Mark_All_Occupation_Bits(int mark)
 
 // -------------------------------------------------------------------------
 // FlyLocomotionClass::Is_Moving_Now -- the body is the canonical transcription of
-// 83 instructions at 0x00498d20, in src/generated/code/.
-// size 249 bytes; callees: 0x00492960, 0x00502060, 0x00542c40, 0x0064a1e0
+// 56 instructions at 0x00498d20, in src/generated/code/.
+// size 176 bytes; callees: 0x00492960, 0x00502060, 0x00542c40, 0x0064a1e0
 //
 bool FlyLocomotionClass::Is_Moving_Now()
 {

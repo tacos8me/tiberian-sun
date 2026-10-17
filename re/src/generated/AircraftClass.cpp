@@ -249,8 +249,8 @@ void AircraftClass::Is_Players_Army()
 
 // -------------------------------------------------------------------------
 // AircraftClass::Visual_Character -- the body is the canonical transcription of
-// 26 instructions at 0x004a1690, in src/generated/code/.
-// size 67 bytes; callees: 0x00617cf0, 0x006939b0
+// 23 instructions at 0x004a1690, in src/generated/code/.
+// size 62 bytes; callees: 0x00617cf0, 0x006939b0
 //
 void AircraftClass::Visual_Character(int a0, int a1)
 {
@@ -599,18 +599,18 @@ void AircraftClass::Render(int a0, int a1, int a2)
 
 // -------------------------------------------------------------------------
 // AircraftClass::Occupy_List -- the body is the canonical transcription of
-// 27 instructions at 0x005701b0, in src/generated/code/.
-// size 87 bytes; callees: 0x00682610
+// 10 instructions at 0x005701b0, in src/generated/code/.
+// size 25 bytes; callees: none
 //
-void AircraftClass::Occupy_List(int a0)
+void AircraftClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }
 
 // -------------------------------------------------------------------------
 // AircraftClass::Draw_Pre_Render -- the body is the canonical transcription of
-// 57 instructions at 0x00610880, in src/generated/code/.
-// size 163 bytes; callees: 0x00610933
+// 4 instructions at 0x00610880, in src/generated/code/.
+// size 8 bytes; callees: none
 //
 void AircraftClass::Draw_Pre_Render()
 {
@@ -909,8 +909,8 @@ void AircraftClass::Repair(int a0)
 
 // -------------------------------------------------------------------------
 // AircraftClass::Sell_Back -- the body is the canonical transcription of
-// 34 instructions at 0x004a1160, in src/generated/code/.
-// size 117 bytes; callees: 0x004b71b0, 0x004c4fb0, 0x006470b0, 0x00647f00
+// 26 instructions at 0x004a1160, in src/generated/code/.
+// size 93 bytes; callees: 0x004b71b0, 0x004c4fb0, 0x006470b0, 0x00647f00
 //
 void AircraftClass::Sell_Back(int a0)
 {
@@ -1429,8 +1429,8 @@ void AircraftClass::Is_Ready_To_Cloak()
 
 // -------------------------------------------------------------------------
 // AircraftClass::Should_Uncloak -- the body is the canonical transcription of
-// 82 instructions at 0x00613c60, in src/generated/code/.
-// size 246 bytes; callees: 0x00459d80, 0x005020d0, 0x006468b0, 0x00646930
+// 38 instructions at 0x00613c60, in src/generated/code/.
+// size 118 bytes; callees: 0x006468b0, 0x00646930
 //
 void AircraftClass::Should_Uncloak()
 {
@@ -1519,8 +1519,8 @@ void AircraftClass::Risk()
 
 // -------------------------------------------------------------------------
 // AircraftClass::Is_In_Same_Zone_As -- the body is the canonical transcription of
-// 39 instructions at 0x004a2340, in src/generated/code/.
-// size 117 bytes; callees: none
+// 20 instructions at 0x004a2340, in src/generated/code/.
+// size 57 bytes; callees: none
 //
 void AircraftClass::Is_In_Same_Zone_As(int a0)
 {
@@ -1629,8 +1629,8 @@ void AircraftClass::Turret_Coord(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // AircraftClass::Desired_Load_Dir -- the body is the canonical transcription of
-// 89 instructions at 0x0040c240, in src/generated/code/.
-// size 260 bytes; callees: 0x004563e0, 0x005020d0, 0x00503e00
+// 2 instructions at 0x0040c240, in src/generated/code/.
+// size 8 bytes; callees: none
 //
 void AircraftClass::Desired_Load_Dir(int a0, int a1)
 {
@@ -1719,8 +1719,8 @@ void AircraftClass::Is_Radar_Visible(int a0)
 
 // -------------------------------------------------------------------------
 // AircraftClass::Is_Sensed_By_Player -- the body is the canonical transcription of
-// 18 instructions at 0x0061db90, in src/generated/code/.
-// size 54 bytes; callees: 0x00459da0, 0x00502060
+// 15 instructions at 0x0061db90, in src/generated/code/.
+// size 45 bytes; callees: 0x00502060
 //
 void AircraftClass::Is_Sensed_By_Player()
 {
@@ -1749,8 +1749,8 @@ void AircraftClass::Advance_Waypoint_Path()
 
 // -------------------------------------------------------------------------
 // AircraftClass::Response_Select -- the body is the canonical transcription of
-// 27 instructions at 0x0061b2e0, in src/generated/code/.
-// size 88 bytes; callees: 0x005a5ec0, 0x006470b0
+// 5 instructions at 0x0061b2e0, in src/generated/code/.
+// size 12 bytes; callees: none
 //
 void AircraftClass::Response_Select()
 {
@@ -1969,8 +1969,8 @@ void AircraftClass::Try_To_Cloak()
 
 // -------------------------------------------------------------------------
 // AircraftClass::Draw_Action_Line -- the body is the canonical transcription of
-// 47 instructions at 0x004a2880, in src/generated/code/.
-// size 159 bytes; callees: 0x004a29fb, 0x0061c9b0
+// 3 instructions at 0x004a2880, in src/generated/code/.
+// size 9 bytes; callees: none
 //
 void AircraftClass::Draw_Action_Line()
 {
@@ -2039,8 +2039,8 @@ void AircraftClass::Do_Uncloak(int a0)
 
 // -------------------------------------------------------------------------
 // AircraftClass::Do_Cloak -- the body is the canonical transcription of
-// 41 instructions at 0x00617c30, in src/generated/code/.
-// size 162 bytes; callees: 0x00647220
+// 17 instructions at 0x00617c30, in src/generated/code/.
+// size 67 bytes; callees: none
 //
 void AircraftClass::Do_Cloak(int a0)
 {

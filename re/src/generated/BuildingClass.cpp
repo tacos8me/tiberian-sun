@@ -434,8 +434,8 @@ void BuildingClass::Occupies_Cells()
 
 // -------------------------------------------------------------------------
 // BuildingClass::Limbo -- the body is the canonical transcription of
-// 69 instructions at 0x0042cca0, in src/generated/code/.
-// size 208 bytes; callees: 0x0042cd75, 0x00435bb0, 0x00437e40, 0x00438cd0
+// 68 instructions at 0x0042cca0, in src/generated/code/.
+// size 206 bytes; callees: 0x00435bb0, 0x00437e40, 0x00438cd0
 //
 void BuildingClass::Limbo()
 {
@@ -542,7 +542,7 @@ void BuildingClass::Render(int a0, int a1, int a2)
 
 // BuildingClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Occupy_List(int a0)
+void BuildingClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }
@@ -573,8 +573,8 @@ void BuildingClass::Draw_It(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // BuildingClass::Editor_Draw_It -- the body is the canonical transcription of
-// 188 instructions at 0x00426760, in src/generated/code/.
-// size 538 bytes; callees: 0x004283f0, 0x00470580, 0x005020d0, 0x005f5030, 0x00618dd0
+// 186 instructions at 0x00426760, in src/generated/code/.
+// size 532 bytes; callees: 0x004283f0, 0x00470580, 0x005020d0, 0x005f5030, 0x00618dd0
 //
 void BuildingClass::Editor_Draw_It(int a0, int a1)
 {
@@ -1615,7 +1615,7 @@ void BuildingClass::Can_Fire(int a0, int a1)
 // 17 instructions at 0x0042d230, in src/generated/code/.
 // size 46 bytes; callees: 0x0042d262, 0x006572d0
 //
-void BuildingClass::Greatest_Threat(int a0, int a1, int a2)
+void BuildingClass::Greatest_Threat(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0042d230();
 }
@@ -1642,8 +1642,8 @@ void BuildingClass::Fire_At(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // BuildingClass::Captured -- the body is the canonical transcription of
-// 177 instructions at 0x0042e7f0, in src/generated/code/.
-// size 615 bytes; callees: 0x0040e980, 0x0042ea7d, 0x00435bb0, 0x00446e70, 0x00494170, 0x004b2e90, 0x004c4fb0, 0x0063fd30, 0x00647f00, 0x0067faf0
+// 176 instructions at 0x0042e7f0, in src/generated/code/.
+// size 613 bytes; callees: 0x0040e980, 0x00435bb0, 0x00446e70, 0x00494170, 0x004b2e90, 0x004c4fb0, 0x0063fd30, 0x00647f00, 0x0067faf0
 //
 void BuildingClass::Captured(int a0)
 {
@@ -1843,8 +1843,8 @@ void BuildingClass::Radar_Untrack()
 
 // -------------------------------------------------------------------------
 // BuildingClass::Plot_On_Radar -- the body is the canonical transcription of
-// 37 instructions at 0x004391d0, in src/generated/code/.
-// size 102 bytes; callees: 0x005a34e0, 0x005a3780
+// 29 instructions at 0x004391d0, in src/generated/code/.
+// size 90 bytes; callees: 0x005a34e0, 0x005a3780
 //
 void BuildingClass::Plot_On_Radar()
 {
@@ -1900,10 +1900,10 @@ void BuildingClass::Aim_Direction(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // BuildingClass::Do_Destruction -- the body is the canonical transcription of
-// 155 instructions at 0x00429ce0, in src/generated/code/.
-// size 571 bytes; callees: 0x00429f80, 0x00435bb0, 0x0043e6f0, 0x0043e700, 0x004b2e90, 0x005a5f10, 0x005e1c10, 0x0061a3e0, 0x00647220
+// 83 instructions at 0x00429ce0, in src/generated/code/.
+// size 313 bytes; callees: 0x00435bb0, 0x0043e6f0, 0x004b2e90, 0x0061a3e0, 0x00647220
 //
-void BuildingClass::Do_Destruction(int a0, int a1, int a2, int a3, int a4, int a5)
+void BuildingClass::Do_Destruction(int a0, int a1)
 {
     ts::sub::sub_00429ce0();
 }

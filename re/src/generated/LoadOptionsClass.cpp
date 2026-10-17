@@ -21,8 +21,8 @@
 
 // -------------------------------------------------------------------------
 // LoadOptionsClass::vfunc_1 -- the body is the canonical transcription of
-// 26 instructions at 0x004f9100, in src/generated/code/.
-// size 79 bytes; callees: 0x0046ebd0, 0x005894a0, 0x005895c0, 0x00589a00, 0x005bd790
+// 11 instructions at 0x004f9100, in src/generated/code/.
+// size 29 bytes; callees: 0x0046ebd0, 0x00589a00
 //
 void LoadOptionsClass::vfunc_1(int a0)
 {

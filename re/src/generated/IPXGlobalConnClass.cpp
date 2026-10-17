@@ -21,7 +21,7 @@
 
 // IPXGlobalConnClass::vfunc_1 -- ALIAS of IPXConnClass::vfunc_1 (same machine code at 0x004e6f10); the
 // forwarder is written once, at that declaration.
-void IPXGlobalConnClass::vfunc_1()
+void IPXGlobalConnClass::vfunc_1(int a0)
 {
     ts::sub::sub_004e6f10();
 }

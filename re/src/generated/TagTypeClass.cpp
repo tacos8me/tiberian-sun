@@ -223,10 +223,10 @@ void TagTypeClass::Read_INI(int a0)
 
 // -------------------------------------------------------------------------
 // TagTypeClass::Write_INI -- the body is the canonical transcription of
-// 20 instructions at 0x00604470, in src/generated/code/.
-// size 56 bytes; callees: 0x006044d7
+// 8 instructions at 0x00604470, in src/generated/code/.
+// size 23 bytes; callees: none
 //
-void TagTypeClass::Write_INI(int a0)
+void TagTypeClass::Write_INI()
 {
     ts::sub::sub_00604470();
 }

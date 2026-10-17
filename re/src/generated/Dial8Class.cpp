@@ -206,7 +206,7 @@ void Dial8Class::Set_Size(int a0, int a1)
 // 60 instructions at 0x00470b60, in src/generated/code/.
 // size 197 bytes; callees: 0x00460620, 0x00470c31, 0x00470d90, 0x004a5940
 //
-void Dial8Class::Draw_Me(int a0)
+void Dial8Class::Draw_Me(int a0, int a1)
 {
     ts::sub::sub_00470b60();
 }
@@ -244,8 +244,8 @@ void Dial8Class::vfunc_31(int a0)
 
 // -------------------------------------------------------------------------
 // Dial8Class::Dial8Class -- the body is the canonical transcription of
-// 233 instructions at 0x00470760, in src/generated/code/.
-// size 688 bytes; callees: 0x00460520
+// 202 instructions at 0x00470760, in src/generated/code/.
+// size 581 bytes; callees: 0x00460520
 //
 Dial8Class::Dial8Class()
 {

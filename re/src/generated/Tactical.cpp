@@ -193,8 +193,8 @@ void Tactical::As_Coord(int a0)
 
 // -------------------------------------------------------------------------
 // Tactical::AI -- the body is the canonical transcription of
-// 77 instructions at 0x005f55d0, in src/generated/code/.
-// size 279 bytes; callees: 0x005f56ed, 0x005fa150, 0x00652ed0
+// 53 instructions at 0x005f55d0, in src/generated/code/.
+// size 203 bytes; callees: 0x00652ed0
 //
 void Tactical::AI()
 {

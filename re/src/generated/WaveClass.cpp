@@ -59,8 +59,8 @@ void WaveClass::IsDirty(int a0)
 
 // -------------------------------------------------------------------------
 // WaveClass::Load -- the body is the canonical transcription of
-// 115 instructions at 0x00652f60, in src/generated/code/.
-// size 332 bytes; callees: 0x00492750, 0x0056e5f0, 0x005702f0, 0x005f36e0, 0x00655340
+// 105 instructions at 0x00652f60, in src/generated/code/.
+// size 315 bytes; callees: 0x00492750, 0x0056e5f0, 0x005702f0, 0x005f36e0, 0x00655340
 //
 void WaveClass::Load(int a0, int a1)
 {
@@ -467,7 +467,7 @@ void WaveClass::Render(int a0, int a1, int a2)
 
 // WaveClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void WaveClass::Occupy_List(int a0)
+void WaveClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }

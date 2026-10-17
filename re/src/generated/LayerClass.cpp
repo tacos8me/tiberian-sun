@@ -21,8 +21,8 @@
 
 // -------------------------------------------------------------------------
 // LayerClass::vfunc_1 -- the body is the canonical transcription of
-// 26 instructions at 0x00402540, in src/generated/code/.
-// size 54 bytes; callees: none
+// 8 instructions at 0x00402540, in src/generated/code/.
+// size 17 bytes; callees: none
 //
 void LayerClass::vfunc_1(int a0)
 {

@@ -24,7 +24,7 @@
 // 1 instructions at 0x004e6f10, in src/generated/code/.
 // size 5 bytes; callees: 0x0045eb50
 //
-void IPXConnClass::vfunc_1()
+void IPXConnClass::vfunc_1(int a0)
 {
     ts::sub::sub_004e6f10();
 }

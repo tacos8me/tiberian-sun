@@ -210,8 +210,8 @@ void OverlayTypeClass::Init_Theater(int a0)
 
 // -------------------------------------------------------------------------
 // OverlayTypeClass::Read_INI -- the body is the canonical transcription of
-// 89 instructions at 0x00577090, in src/generated/code/.
-// size 319 bytes; callees: 0x00418d20, 0x00448c20, 0x004d60b0, 0x004d6ed0, 0x004d70b0, 0x00572610, 0x005771d1
+// 74 instructions at 0x00577090, in src/generated/code/.
+// size 264 bytes; callees: 0x00448c20, 0x004d60b0, 0x004d70b0, 0x00572610
 //
 void OverlayTypeClass::Read_INI(int a0)
 {
@@ -333,10 +333,10 @@ void OverlayTypeClass::Get_Image_Data()
 
 // -------------------------------------------------------------------------
 // OverlayTypeClass::vfunc_40 -- the body is the canonical transcription of
-// 54 instructions at 0x00576f10, in src/generated/code/.
-// size 139 bytes; callees: 0x00478f00
+// 14 instructions at 0x00576f10, in src/generated/code/.
+// size 39 bytes; callees: none
 //
-void OverlayTypeClass::vfunc_40(int a0, int a1, int a2)
+void OverlayTypeClass::vfunc_40(int a0, int a1)
 {
     ts::sub::sub_00576f10();
 }

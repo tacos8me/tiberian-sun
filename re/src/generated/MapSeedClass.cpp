@@ -30,11 +30,11 @@ void MapSeedClass::Read_INI(int a0)
 }
 
 // -------------------------------------------------------------------------
-// MapSeedClass::Read_INI -- the body is the canonical transcription of
-// 160 instructions at 0x0052d4f0, in src/generated/code/.
-// size 574 bytes; callees: 0x00403980, 0x00407a60, 0x00420190, 0x00425170, 0x004473c0, 0x004d4430, 0x004d50f0, 0x004d6030, 0x004d6b50
+// MapSeedClass::vfunc_2 -- the body is the canonical transcription of
+// 86 instructions at 0x0052d4f0, in src/generated/code/.
+// size 304 bytes; callees: 0x00403980, 0x00407a60, 0x004473c0, 0x004d6030, 0x004d6b50
 //
-void MapSeedClass::Read_INI(int a0, int a1)
+void MapSeedClass::vfunc_2(int a0, int a1)
 {
     ts::sub::sub_0052d4f0();
 }
@@ -51,8 +51,8 @@ void MapSeedClass::vfunc_3(int a0)
 
 // -------------------------------------------------------------------------
 // MapSeedClass::vfunc_4 -- the body is the canonical transcription of
-// 63 instructions at 0x0052da30, in src/generated/code/.
-// size 244 bytes; callees: 0x00403960, 0x00403980, 0x004473c0, 0x004d4700, 0x004d6ed0, 0x0052db33, 0x006829b0, 0x006849b0
+// 52 instructions at 0x0052da30, in src/generated/code/.
+// size 203 bytes; callees: 0x00403960, 0x00403980, 0x004473c0, 0x004d4700, 0x004d6ed0, 0x006849b0
 //
 void MapSeedClass::vfunc_4(int a0, int a1)
 {
@@ -61,12 +61,12 @@ void MapSeedClass::vfunc_4(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // MapSeedClass::MapSeedClass -- the body is the canonical transcription of
-// 47 instructions at 0x0052c500, in src/generated/code/.
-// size 134 bytes; callees: 0x0046ebd0, 0x004f8000
+// 36 instructions at 0x0052c51f, in src/generated/code/.
+// size 103 bytes; callees: 0x0046ebd0
 //
 MapSeedClass::MapSeedClass()
 {
-    ts::sub::sub_0052c500();
+    ts::sub::sub_0052c51f();
 }
 
 // MapSeedClass::~MapSeedClass -- the header declares this destructor but no

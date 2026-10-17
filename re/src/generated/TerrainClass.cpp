@@ -196,8 +196,8 @@ void TerrainClass::As_Coord(int a0)
 
 // -------------------------------------------------------------------------
 // TerrainClass::AI -- the body is the canonical transcription of
-// 75 instructions at 0x00623a00, in src/generated/code/.
-// size 237 bytes; callees: 0x0043a3a0, 0x0056e860, 0x005a5ec0
+// 69 instructions at 0x00623a00, in src/generated/code/.
+// size 223 bytes; callees: 0x0043a3a0, 0x0056e860, 0x005a5ec0
 //
 void TerrainClass::AI()
 {
@@ -377,8 +377,8 @@ void TerrainClass::Occupies_Cells()
 
 // -------------------------------------------------------------------------
 // TerrainClass::Limbo -- the body is the canonical transcription of
-// 90 instructions at 0x00623c60, in src/generated/code/.
-// size 295 bytes; callees: 0x00450750, 0x00502060, 0x005020d0, 0x00508840, 0x0051c870, 0x0056f6a0, 0x005a25c0
+// 58 instructions at 0x00623c60, in src/generated/code/.
+// size 194 bytes; callees: 0x00502060, 0x005020d0
 //
 void TerrainClass::Limbo()
 {
@@ -476,7 +476,7 @@ void TerrainClass::Render(int a0, int a1, int a2)
 
 // TerrainClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Occupy_List(int a0)
+void TerrainClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }

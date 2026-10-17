@@ -151,8 +151,8 @@ long HouseTypeClass::IsDirty()
 
 // -------------------------------------------------------------------------
 // HouseTypeClass::Load -- the body is the canonical transcription of
-// 84 instructions at 0x004c7790, in src/generated/code/.
-// size 244 bytes; callees: 0x00405fe0, 0x0046d540, 0x0046d5d0, 0x0046d680, 0x0046d6c0, 0x0046d710
+// 65 instructions at 0x004c7790, in src/generated/code/.
+// size 196 bytes; callees: 0x00405fe0, 0x0046d680, 0x0046d6c0
 //
 long HouseTypeClass::Load(IStream* pStm)
 {

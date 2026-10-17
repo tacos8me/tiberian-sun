@@ -21,8 +21,8 @@
 
 // -------------------------------------------------------------------------
 // RulesClass::ReadGeneral -- the body is the canonical transcription of
-// 540 instructions at 0x005b3451, in src/generated/code/.
-// size 2066 bytes; callees: 0x00449400, 0x0044abe0, 0x0044b970, 0x004d60b0, 0x004d6960, 0x005b9430, 0x005b94b0, 0x005bb340, 0x0068298c
+// 522 instructions at 0x005b3451, in src/generated/code/.
+// size 2010 bytes; callees: 0x00449400, 0x0044abe0, 0x0044b970, 0x004d60b0, 0x004d6960, 0x005b9430, 0x005b94b0, 0x005bb340, 0x0068298c
 //
 bool RulesClass::ReadGeneral(CCINIClass& ini)
 {
@@ -32,8 +32,8 @@ bool RulesClass::ReadGeneral(CCINIClass& ini)
 
 // -------------------------------------------------------------------------
 // RulesClass::ReadAI -- the body is the canonical transcription of
-// 419 instructions at 0x005b504f, in src/generated/code/.
-// size 1620 bytes; callees: 0x00447f70, 0x004c5600, 0x004d60b0, 0x004d6960, 0x004d70b0, 0x005b9560, 0x005bb0d0
+// 210 instructions at 0x005b504f, in src/generated/code/.
+// size 821 bytes; callees: 0x00447f70, 0x004c5600, 0x004d60b0, 0x004d6960, 0x005b9560, 0x005bb0d0
 //
 bool RulesClass::ReadAI(CCINIClass& ini)
 {
@@ -65,8 +65,8 @@ bool RulesClass::ReadLand(CCINIClass& ini)
 
 // -------------------------------------------------------------------------
 // RulesClass::ReadAudio -- the body is the canonical transcription of
-// 468 instructions at 0x005c7410, in src/generated/code/.
-// size 1689 bytes; callees: 0x00448d60, 0x00448eb0, 0x00448fe0, 0x004495c0, 0x00449d80, 0x004d44c0, 0x004d5c60, 0x004d6030, 0x004d6b00, 0x004d6b50, 0x004d7070, 0x005e2e90
+// 16 instructions at 0x005c7410, in src/generated/code/.
+// size 46 bytes; callees: 0x004d44c0
 //
 bool RulesClass::ReadAudio(CCINIClass& ini)
 {
@@ -76,8 +76,8 @@ bool RulesClass::ReadAudio(CCINIClass& ini)
 
 // -------------------------------------------------------------------------
 // RulesClass::ReadVisual -- the body is the canonical transcription of
-// 894 instructions at 0x004eaa00, in src/generated/code/.
-// size 4003 bytes; callees: 0x00403960, 0x00403980, 0x004473c0, 0x00447490, 0x00447580, 0x004475d0, 0x00447b40, 0x0044e320, 0x0045f960, 0x004d60b0, 0x004ea8b0, 0x004eb9ad, 0x005f0b30, 0x0068298c, 0x00682997, 0x00682aae
+// 643 instructions at 0x004eaa00, in src/generated/code/.
+// size 2848 bytes; callees: 0x00403960, 0x00403980, 0x004473c0, 0x00447490, 0x00447580, 0x004475d0, 0x00447b40, 0x0044e320, 0x004d60b0, 0x004ea8b0, 0x005f0b30, 0x0068298c, 0x00682997, 0x00682aae
 //
 bool RulesClass::ReadVisual(CCINIClass& ini)
 {
@@ -87,8 +87,8 @@ bool RulesClass::ReadVisual(CCINIClass& ini)
 
 // -------------------------------------------------------------------------
 // RulesClass::ReadBuilding -- the body is the canonical transcription of
-// 1810 instructions at 0x0043fb5d, in src/generated/code/.
-// size 6068 bytes; callees: 0x0043eb20, 0x004486f0, 0x004d60b0, 0x004d6ed0, 0x004d70b0, 0x004d72b0, 0x00682aae, 0x00683f70
+// 129 instructions at 0x0043fb5d, in src/generated/code/.
+// size 518 bytes; callees: 0x004486f0, 0x004d60b0, 0x004d70b0, 0x004d72b0
 //
 bool RulesClass::ReadBuilding(CCINIClass& ini)
 {
@@ -109,8 +109,8 @@ bool RulesClass::ReadInfantry(CCINIClass& ini)
 
 // -------------------------------------------------------------------------
 // RulesClass::ReadUnit -- the body is the canonical transcription of
-// 249 instructions at 0x00620a13, in src/generated/code/.
-// size 946 bytes; callees: 0x00448030, 0x00448790, 0x004d60b0, 0x004d6960, 0x004d6ed0, 0x004d70b0, 0x004d7490, 0x00547660, 0x00571870, 0x00683b18
+// 82 instructions at 0x00620a13, in src/generated/code/.
+// size 320 bytes; callees: 0x00448030, 0x004d60b0, 0x004d6960, 0x004d70b0, 0x00547660, 0x00683b18
 //
 bool RulesClass::ReadUnit(CCINIClass& ini)
 {

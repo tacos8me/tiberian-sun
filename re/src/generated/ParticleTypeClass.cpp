@@ -123,8 +123,8 @@ void ParticleTypeClass::Fetch_Object_Size()
 
 // -------------------------------------------------------------------------
 // ParticleTypeClass::Compute_CRC -- the body is the canonical transcription of
-// 93 instructions at 0x00598280, in src/generated/code/.
-// size 310 bytes; callees: 0x00405fe0, 0x0046d540, 0x0046d5d0, 0x0046d680, 0x0046d6a0, 0x0046d6c0
+// 67 instructions at 0x00598280, in src/generated/code/.
+// size 226 bytes; callees: 0x00405fe0, 0x0046d540, 0x0046d5d0, 0x0046d680, 0x0046d6a0
 //
 void ParticleTypeClass::Compute_CRC(int a0)
 {
@@ -324,12 +324,12 @@ void ParticleTypeClass::Get_Image_Data()
 
 // -------------------------------------------------------------------------
 // ParticleTypeClass::ParticleTypeClass -- the body is the canonical transcription of
-// 115 instructions at 0x005979c0, in src/generated/code/.
-// size 470 bytes; callees: 0x0044baa0, 0x00571220
+// 98 instructions at 0x005979f7, in src/generated/code/.
+// size 415 bytes; callees: 0x0044baa0
 //
 ParticleTypeClass::ParticleTypeClass()
 {
-    ts::sub::sub_005979c0();
+    ts::sub::sub_005979f7();
 }
 
 // ParticleTypeClass::~ParticleTypeClass -- the header declares this destructor but no

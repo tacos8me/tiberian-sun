@@ -12,10 +12,10 @@ The per-class `.cpp` files here hold **forwarders**: the out-of-line definitions
 
 | scope | functions |
 |---|---|
-| recovered from the binary | 41822 |
-| transcribed in `code/` | 43807 |
-| forwarders emitted (every declaring name) | 6961 |
-| distinct machine functions among those | 3023 |
+| recovered from the binary | 43543 |
+| transcribed in `code/` | 45995 |
+| forwarders emitted (every declaring name) | 6962 |
+| distinct machine functions among those | 3024 |
 | alias definitions (same machine code) | 3938 |
 | destructor stubs (declared, no recovered VA) | 229 |
 | skipped: duplicate | 0 |
@@ -24,7 +24,7 @@ The per-class `.cpp` files here hold **forwarders**: the out-of-line definitions
 | skipped: not_in_code_tree | 0 |
 | skipped: not_in_text | 0 |
 
-7.23% of the recovered functions have a transcription; the rest are the ones
+6.94% of the recovered functions have a transcription; the rest are the ones
 the headers do not declare, and they are transcribed in `code/`
 regardless -- see `code/` and `tools/gen_code.py`.
 

@@ -122,8 +122,8 @@ void RawFileClass::vfunc_11()
 
 // -------------------------------------------------------------------------
 // RawFileClass::vfunc_12 -- the body is the canonical transcription of
-// 18 instructions at 0x005a64d0, in src/generated/code/.
-// size 51 bytes; callees: none
+// 5 instructions at 0x005a64d0, in src/generated/code/.
+// size 22 bytes; callees: none
 //
 void RawFileClass::vfunc_12(int a0, int a1)
 {

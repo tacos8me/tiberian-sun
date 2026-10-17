@@ -20,31 +20,31 @@
 #include "Machine.h"   // ts:: machine model, for ts::EAX
 
 // -------------------------------------------------------------------------
-// TClassFactory_class_ParticleClass::QueryInterface -- the body is the canonical transcription of
-// 7 instructions at 0x005edf40, in src/generated/code/.
-// size 18 bytes; callees: none
+// TClassFactory_class_ParticleClass::vfunc_0 -- the body is the canonical transcription of
+// 2 instructions at 0x005edf40, in src/generated/code/.
+// size 5 bytes; callees: none
 //
-void TClassFactory_class_ParticleClass::QueryInterface(int a0, int a1, int a2)
+void TClassFactory_class_ParticleClass::vfunc_0(int a0, int a1, int a2)
 {
     ts::sub::sub_005edf40();
 }
 
 // -------------------------------------------------------------------------
-// TClassFactory_class_ParticleClass::AddRef -- the body is the canonical transcription of
+// TClassFactory_class_ParticleClass::vfunc_1 -- the body is the canonical transcription of
 // 5 instructions at 0x005edfb0, in src/generated/code/.
 // size 17 bytes; callees: none
 //
-void TClassFactory_class_ParticleClass::AddRef(int a0)
+void TClassFactory_class_ParticleClass::vfunc_1(int a0)
 {
     ts::sub::sub_005edfb0();
 }
 
 // -------------------------------------------------------------------------
-// TClassFactory_class_ParticleClass::Release -- the body is the canonical transcription of
+// TClassFactory_class_ParticleClass::vfunc_2 -- the body is the canonical transcription of
 // 16 instructions at 0x005edfd0, in src/generated/code/.
 // size 38 bytes; callees: 0x0068298c
 //
-void TClassFactory_class_ParticleClass::Release(int a0)
+void TClassFactory_class_ParticleClass::vfunc_2(int a0)
 {
     ts::sub::sub_005edfd0();
 }

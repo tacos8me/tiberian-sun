@@ -254,8 +254,8 @@ void MyButton::vfunc_32(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // MyButton::vfunc_33 -- the body is the canonical transcription of
-// 31 instructions at 0x00626eb0, in src/generated/code/.
-// size 76 bytes; callees: 0x00471560
+// 22 instructions at 0x00626eb0, in src/generated/code/.
+// size 55 bytes; callees: 0x00471560
 //
 void MyButton::vfunc_33(int a0, int a1)
 {
@@ -274,8 +274,8 @@ void MyButton::vfunc_34(int a0)
 
 // -------------------------------------------------------------------------
 // MyButton::vfunc_35 -- the body is the canonical transcription of
-// 191 instructions at 0x005a90a0, in src/generated/code/.
-// size 581 bytes; callees: 0x005e44a0, 0x005e4590, 0x00682aae
+// 67 instructions at 0x005a90a0, in src/generated/code/.
+// size 204 bytes; callees: 0x005e44a0, 0x00682aae
 //
 void MyButton::vfunc_35()
 {
@@ -294,8 +294,8 @@ void MyButton::vfunc_36(int a0)
 
 // -------------------------------------------------------------------------
 // MyButton::MyButton -- the body is the canonical transcription of
-// 38 instructions at 0x005a8a20, in src/generated/code/.
-// size 110 bytes; callees: 0x00626dc0, 0x00682997
+// 25 instructions at 0x005a8a20, in src/generated/code/.
+// size 69 bytes; callees: 0x00626dc0, 0x00682997
 //
 MyButton::MyButton()
 {

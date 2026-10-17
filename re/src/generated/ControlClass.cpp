@@ -256,12 +256,12 @@ void ControlClass::vfunc_31(int a0)
 
 // -------------------------------------------------------------------------
 // ControlClass::ControlClass -- the body is the canonical transcription of
-// 23 instructions at 0x00460520, in src/generated/code/.
-// size 66 bytes; callees: 0x004a5960
+// 19 instructions at 0x0046052b, in src/generated/code/.
+// size 55 bytes; callees: 0x004a5960
 //
 ControlClass::ControlClass()
 {
-    ts::sub::sub_00460520();
+    ts::sub::sub_0046052b();
 }
 
 // ControlClass::~ControlClass -- the header declares this destructor but no

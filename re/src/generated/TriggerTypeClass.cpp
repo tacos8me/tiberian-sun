@@ -21,8 +21,8 @@
 
 // -------------------------------------------------------------------------
 // TriggerTypeClass::TriggerTypeClass -- the body is the canonical transcription of
-// 104 instructions at 0x0062d640, in src/generated/code/.
-// size 309 bytes; callees: 0x00405eb0, 0x0062c210
+// 45 instructions at 0x0062d640, in src/generated/code/.
+// size 132 bytes; callees: 0x0062c210
 //
 TriggerTypeClass::TriggerTypeClass()
 {

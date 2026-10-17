@@ -378,7 +378,7 @@ void ParticleClass::Limbo()
 
 // ParticleClass::Unlimbo -- ALIAS of AnimClass::vfunc_49 (same machine code at 0x0056f810); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Unlimbo(int a0, int a1)
+void ParticleClass::Unlimbo(int a0)
 {
     ts::sub::sub_0056f810();
 }
@@ -479,10 +479,10 @@ void ParticleClass::Draw_Post_Render(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // ParticleClass::Draw_It -- the body is the canonical transcription of
-// 65 instructions at 0x0058d250, in src/generated/code/.
-// size 220 bytes; callees: 0x0051e760, 0x0058d342, 0x005f5030
+// 21 instructions at 0x0058d250, in src/generated/code/.
+// size 63 bytes; callees: none
 //
-void ParticleClass::Draw_It(int a0, int a1)
+void ParticleClass::Draw_It()
 {
     ts::sub::sub_0058d250();
 }
@@ -789,12 +789,12 @@ void ParticleClass::Shape_Number()
 
 // -------------------------------------------------------------------------
 // ParticleClass::ParticleClass -- the body is the canonical transcription of
-// 154 instructions at 0x0058ba30, in src/generated/code/.
-// size 571 bytes; callees: 0x00405760, 0x0056e420, 0x0058bc93, 0x005a5ec0
+// 97 instructions at 0x0058baf1, in src/generated/code/.
+// size 378 bytes; callees: 0x00405760, 0x0058bc93, 0x005a5ec0
 //
 ParticleClass::ParticleClass()
 {
-    ts::sub::sub_0058ba30();
+    ts::sub::sub_0058baf1();
 }
 
 // ParticleClass::~ParticleClass -- the header declares this destructor but no

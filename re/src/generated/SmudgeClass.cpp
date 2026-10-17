@@ -375,7 +375,7 @@ void SmudgeClass::Limbo()
 
 // SmudgeClass::Unlimbo -- ALIAS of AnimClass::vfunc_49 (same machine code at 0x0056f810); the
 // forwarder is written once, at that declaration.
-void SmudgeClass::Unlimbo(int a0, int a1)
+void SmudgeClass::Unlimbo(int a0)
 {
     ts::sub::sub_0056f810();
 }
@@ -452,7 +452,7 @@ void SmudgeClass::Render(int a0, int a1, int a2)
 
 // SmudgeClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void SmudgeClass::Occupy_List(int a0)
+void SmudgeClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }
@@ -773,8 +773,8 @@ void SmudgeClass::Get_Height()
 
 // -------------------------------------------------------------------------
 // SmudgeClass::SmudgeClass -- the body is the canonical transcription of
-// 62 instructions at 0x005e0d80, in src/generated/code/.
-// size 201 bytes; callees: 0x00405760, 0x0056e420, 0x0056f810, 0x005709b0
+// 26 instructions at 0x005e0d80, in src/generated/code/.
+// size 86 bytes; callees: 0x00405760, 0x0056e420
 //
 SmudgeClass::SmudgeClass()
 {

@@ -74,8 +74,8 @@ const char* StopCommandClass::Get_Description()
 
 // -------------------------------------------------------------------------
 // StopCommandClass::Get_UI_Description -- the body is the canonical transcription of
-// 67 instructions at 0x004e10f0, in src/generated/code/.
-// size 218 bytes; callees: 0x00490100, 0x00604d90, 0x006470b0
+// 38 instructions at 0x004e10f0, in src/generated/code/.
+// size 117 bytes; callees: 0x00490100, 0x00604d90
 //
 const char* StopCommandClass::Get_UI_Description()
 {

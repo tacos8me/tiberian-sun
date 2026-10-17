@@ -244,8 +244,8 @@ void StaticButtonClass::vfunc_31(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // StaticButtonClass::vfunc_32 -- the body is the canonical transcription of
-// 56 instructions at 0x005ef100, in src/generated/code/.
-// size 166 bytes; callees: 0x00422740, 0x00422800, 0x004250e0
+// 55 instructions at 0x005ef100, in src/generated/code/.
+// size 165 bytes; callees: 0x00422740, 0x00422800, 0x004250e0
 //
 void StaticButtonClass::vfunc_32()
 {
@@ -264,8 +264,8 @@ void StaticButtonClass::vfunc_33(int a0)
 
 // -------------------------------------------------------------------------
 // StaticButtonClass::StaticButtonClass -- the body is the canonical transcription of
-// 57 instructions at 0x005eeee0, in src/generated/code/.
-// size 146 bytes; callees: 0x00425020, 0x00471560, 0x004a5960, 0x005ef030
+// 45 instructions at 0x005eeee0, in src/generated/code/.
+// size 122 bytes; callees: 0x00425020, 0x00471560, 0x004a5960, 0x005ef030
 //
 StaticButtonClass::StaticButtonClass()
 {

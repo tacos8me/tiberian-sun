@@ -42,10 +42,10 @@ void MSVQAnim::vfunc_3()
 
 // -------------------------------------------------------------------------
 // MSVQAnim::vfunc_4 -- the body is the canonical transcription of
-// 127 instructions at 0x00558c70, in src/generated/code/.
-// size 327 bytes; callees: 0x005515d0
+// 58 instructions at 0x00558c70, in src/generated/code/.
+// size 153 bytes; callees: 0x005515d0
 //
-void MSVQAnim::vfunc_4(int a0, int a1)
+void MSVQAnim::vfunc_4(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00558c70();
 }

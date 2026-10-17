@@ -390,7 +390,7 @@ void ParticleSystemClass::Limbo()
 
 // ParticleSystemClass::Unlimbo -- ALIAS of AnimClass::vfunc_49 (same machine code at 0x0056f810); the
 // forwarder is written once, at that declaration.
-void ParticleSystemClass::Unlimbo(int a0, int a1)
+void ParticleSystemClass::Unlimbo(int a0)
 {
     ts::sub::sub_0056f810();
 }
@@ -470,7 +470,7 @@ void ParticleSystemClass::Render(int a0, int a1, int a2)
 
 // ParticleSystemClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemClass::Occupy_List(int a0)
+void ParticleSystemClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }

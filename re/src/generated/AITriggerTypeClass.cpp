@@ -224,8 +224,8 @@ void AITriggerTypeClass::Slot24()
 
 // -------------------------------------------------------------------------
 // AITriggerTypeClass::Slot25 -- the body is the canonical transcription of
-// 95 instructions at 0x00410730, in src/generated/code/.
-// size 322 bytes; callees: 0x004108a1, 0x004d6ed0, 0x0060d0c0, 0x0062e450, 0x006829b0, 0x006837ea, 0x006849b0
+// 9 instructions at 0x00410730, in src/generated/code/.
+// size 27 bytes; callees: none
 //
 void AITriggerTypeClass::Slot25()
 {

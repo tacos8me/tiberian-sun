@@ -464,7 +464,7 @@ void IsometricTileClass::Render(int a0, int a1, int a2)
 
 // IsometricTileClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Occupy_List(int a0)
+void IsometricTileClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }

@@ -202,8 +202,8 @@ void TechnoClass::vfunc_22()
 
 // -------------------------------------------------------------------------
 // TechnoClass::vfunc_23 -- the body is the canonical transcription of
-// 155 instructions at 0x00612e10, in src/generated/code/.
-// size 472 bytes; callees: 0x0045d580, 0x0045d910, 0x004927b0, 0x00494170, 0x004b7370, 0x004c4ff0, 0x00613059, 0x0061c9b0, 0x0061dc60, 0x0067faf0
+// 93 instructions at 0x00612e10, in src/generated/code/.
+// size 290 bytes; callees: 0x004927b0, 0x004b7370, 0x004c4ff0
 //
 void TechnoClass::vfunc_23()
 {

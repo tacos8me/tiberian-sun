@@ -61,8 +61,8 @@ void TClassFactory_class_FlyLocomotionClass::vfunc_3(int a0, int a1, int a2, int
 
 // -------------------------------------------------------------------------
 // TClassFactory_class_FlyLocomotionClass::vfunc_4 -- the body is the canonical transcription of
-// 9 instructions at 0x005ed600, in src/generated/code/.
-// size 24 bytes; callees: none
+// 8 instructions at 0x005ed600, in src/generated/code/.
+// size 21 bytes; callees: none
 //
 void TClassFactory_class_FlyLocomotionClass::vfunc_4(int a0, int a1)
 {

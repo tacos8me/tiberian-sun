@@ -148,8 +148,8 @@ long BulletClass::GetSizeMax(unsigned long* pcbSize)
 
 // -------------------------------------------------------------------------
 // BulletClass::Compute_CRC -- the body is the canonical transcription of
-// 90 instructions at 0x00570630, in src/generated/code/.
-// size 237 bytes; callees: 0x00405940, 0x0046d5d0, 0x0046d680
+// 37 instructions at 0x00570630, in src/generated/code/.
+// size 92 bytes; callees: 0x00405940, 0x0046d5d0, 0x0046d680
 //
 void BulletClass::Compute_CRC()
 {
@@ -518,8 +518,8 @@ void BulletClass::vfunc_62()
 
 // -------------------------------------------------------------------------
 // BulletClass::vfunc_63 -- the body is the canonical transcription of
-// 123 instructions at 0x00443d10, in src/generated/code/.
-// size 414 bytes; callees: 0x00445000, 0x00494170, 0x00494360, 0x0051e760, 0x00542300, 0x00542b20, 0x00542c40, 0x00543420, 0x006494c0, 0x0067faf0
+// 119 instructions at 0x00443d10, in src/generated/code/.
+// size 407 bytes; callees: 0x00445000, 0x00494170, 0x00494360, 0x0051e760, 0x00542300, 0x00542b20, 0x00542c40, 0x00543420, 0x006494c0, 0x0067faf0
 //
 void BulletClass::vfunc_63()
 {

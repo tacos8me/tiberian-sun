@@ -63,7 +63,7 @@ void CChatEventSink::vfunc_5(int a0, int a1, int a2)
 
 // CChatEventSink::vfunc_6 -- ALIAS of ATL_CComObject_class_CChatEventSink::vfunc_6 (same machine code at 0x00669db0); the
 // forwarder is written once, at that declaration.
-void CChatEventSink::vfunc_6(int a0, int a1, int a2)
+void CChatEventSink::vfunc_6(int a0, int a1)
 {
     ts::sub::sub_00669db0();
 }
@@ -175,7 +175,7 @@ void CChatEventSink::vfunc_21(int a0, int a1, int a2, int a3)
 
 // CChatEventSink::vfunc_22 -- ALIAS of ATL_CComObject_class_CChatEventSink::vfunc_22 (same machine code at 0x0066b3f0); the
 // forwarder is written once, at that declaration.
-void CChatEventSink::vfunc_22(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void CChatEventSink::vfunc_22()
 {
     ts::sub::sub_0066b3f0();
 }

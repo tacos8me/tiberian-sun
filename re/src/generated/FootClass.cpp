@@ -470,7 +470,7 @@ void FootClass::Render(int a0, int a1, int a2)
 
 // FootClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void FootClass::Occupy_List(int a0)
+void FootClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }
@@ -868,8 +868,8 @@ void FootClass::Do_MISSION_GUARD()
 
 // -------------------------------------------------------------------------
 // FootClass::Do_MISSION_GUARD_AREA -- the body is the canonical transcription of
-// 198 instructions at 0x0049e7f0, in src/generated/code/.
-// size 637 bytes; callees: 0x0044fa70, 0x004a4be0, 0x004b72d0, 0x004c4ff0, 0x00502060, 0x005020d0, 0x00508650, 0x00508fe0, 0x005a5f10, 0x0061cf90
+// 95 instructions at 0x0049e7f0, in src/generated/code/.
+// size 318 bytes; callees: 0x0044fa70, 0x004a4be0, 0x004b72d0, 0x004c4ff0, 0x00502060
 //
 void FootClass::Do_MISSION_GUARD_AREA()
 {
@@ -1768,8 +1768,8 @@ void FootClass::Is_LZ_Clear(int a0)
 
 // -------------------------------------------------------------------------
 // FootClass::FootClass -- the body is the canonical transcription of
-// 144 instructions at 0x0049c0f0, in src/generated/code/.
-// size 661 bytes; callees: 0x00445640, 0x0060e7b0
+// 112 instructions at 0x0049c0f0, in src/generated/code/.
+// size 561 bytes; callees: 0x00445640, 0x0060e7b0
 //
 FootClass::FootClass()
 {

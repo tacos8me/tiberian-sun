@@ -21,10 +21,10 @@
 
 // -------------------------------------------------------------------------
 // BaseClass::vfunc_0 -- the body is the canonical transcription of
-// 209 instructions at 0x0041ef90, in src/generated/code/.
-// size 544 bytes; callees: 0x0041f600, 0x0041fbb0, 0x005f36e0
+// 51 instructions at 0x0041ef90, in src/generated/code/.
+// size 153 bytes; callees: 0x0041f600, 0x0041fbb0
 //
-void BaseClass::vfunc_0(int a0, int a1)
+void BaseClass::vfunc_0(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0041ef90();
 }
@@ -41,8 +41,8 @@ void BaseClass::vfunc_1(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // BaseClass::vfunc_2 -- the body is the canonical transcription of
-// 36 instructions at 0x0041f2b0, in src/generated/code/.
-// size 89 bytes; callees: 0x0046d660, 0x0046d680
+// 13 instructions at 0x0041f2b0, in src/generated/code/.
+// size 29 bytes; callees: 0x0046d680
 //
 void BaseClass::vfunc_2(int a0)
 {

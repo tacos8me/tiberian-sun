@@ -61,8 +61,8 @@ unsigned long BuildingTypeClass::AddRef()
 
 // -------------------------------------------------------------------------
 // BuildingTypeClass::Read_INI -- the body is the canonical transcription of
-// 49 instructions at 0x00441740, in src/generated/code/.
-// size 197 bytes; callees: 0x0043eb20, 0x0043eed0, 0x005724a0, 0x005f36e0, 0x0061f060, 0x006213b0
+// 18 instructions at 0x00441740, in src/generated/code/.
+// size 65 bytes; callees: 0x0061f060, 0x006213b0
 //
 long BuildingTypeClass::Read_INI(void* ini, const char* section)
 {
@@ -230,8 +230,8 @@ int BuildingTypeClass::GetType_2()
 
 // -------------------------------------------------------------------------
 // BuildingTypeClass::Read_INI_2 -- the body is the canonical transcription of
-// 151 instructions at 0x0043f250, in src/generated/code/.
-// size 525 bytes; callees: 0x0043f45f, 0x00448960, 0x004d60b0, 0x004d6ed0, 0x004d70b0, 0x004d7490, 0x0061f590, 0x0063ede0
+// 52 instructions at 0x0043f250, in src/generated/code/.
+// size 159 bytes; callees: 0x004d70b0, 0x004d7490, 0x0061f590
 //
 long BuildingTypeClass::Read_INI_2(void* ini, const char* section)
 {
@@ -358,8 +358,8 @@ void BuildingTypeClass::vfunc_39()
 
 // -------------------------------------------------------------------------
 // BuildingTypeClass::vfunc_40 -- the body is the canonical transcription of
-// 33 instructions at 0x0043eaa0, in src/generated/code/.
-// size 122 bytes; callees: 0x00420190, 0x00425170, 0x004473c0, 0x004475d0, 0x0046ea70
+// 32 instructions at 0x0043eaa0, in src/generated/code/.
+// size 121 bytes; callees: 0x00420190, 0x00425170, 0x004473c0, 0x004475d0, 0x0046ea70
 //
 void BuildingTypeClass::vfunc_40()
 {

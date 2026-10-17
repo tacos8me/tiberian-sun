@@ -491,7 +491,7 @@ void UnitClass::Render(int a0, int a1, int a2)
 
 // UnitClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void UnitClass::Occupy_List(int a0)
+void UnitClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }
@@ -643,8 +643,8 @@ void UnitClass::Take_Damage(int a0, int a1, int a2, int a3, int a4, int a5)
 
 // -------------------------------------------------------------------------
 // UnitClass::Scatter -- the body is the canonical transcription of
-// 98 instructions at 0x0063bc30, in src/generated/code/.
-// size 321 bytes; callees: 0x00492a10, 0x00508fe0, 0x00547100, 0x0063c100
+// 31 instructions at 0x0063bc30, in src/generated/code/.
+// size 103 bytes; callees: 0x00492a10, 0x00547100
 //
 void UnitClass::Scatter(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
@@ -753,7 +753,7 @@ void UnitClass::Move(int a0)
 // 23 instructions at 0x00638400, in src/generated/code/.
 // size 72 bytes; callees: 0x0063844d
 //
-void UnitClass::Can_Enter_Cell(int a0, int a1, int a2, int a3, int a4)
+void UnitClass::Can_Enter_Cell(int a0, int a1, int a2)
 {
     ts::sub::sub_00638400();
 }
@@ -1281,8 +1281,8 @@ void UnitClass::Turret_Coord(int a0, int a1)
 
 // -------------------------------------------------------------------------
 // UnitClass::Desired_Load_Dir -- the body is the canonical transcription of
-// 26 instructions at 0x00639890, in src/generated/code/.
-// size 58 bytes; callees: 0x004d2ed0, 0x006398eb
+// 6 instructions at 0x00639890, in src/generated/code/.
+// size 12 bytes; callees: none
 //
 void UnitClass::Desired_Load_Dir(int a0, int a1)
 {

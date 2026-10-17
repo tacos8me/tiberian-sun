@@ -13,6 +13,21 @@ namespace ts {
 namespace sub {
 
 // ---------------------------------------------------------------------------
+// sub_00412ce0 -- transcription of 6 instructions at 0x00412ce0
+// size 23 bytes
+// callees: none
+//
+void sub_00412ce0(void)
+{
+    ts::insn(0x00412ce0u); EAX.d = ts::xor32(EAX.d, EAX.d);   //   0x00412ce0  xor      eax, eax
+    ts::insn(0x00412ce2u); ts::st32(7493088, EAX.d);   //   0x00412ce2  mov      dword ptr [0x7255e0], eax
+    ts::insn(0x00412ce7u); ts::st32(7493092, EAX.d);   //   0x00412ce7  mov      dword ptr [0x7255e4], eax
+    ts::insn(0x00412cecu); ts::st32(7493096, EAX.d);   //   0x00412cec  mov      dword ptr [0x7255e8], eax
+    ts::insn(0x00412cf1u); ts::st32(7493100, EAX.d);   //   0x00412cf1  mov      dword ptr [0x7255ec], eax
+    ts::insn(0x00412cf6u); ts::ret_pop(0x0u); return;   //   0x00412cf6  ret      
+}
+
+// ---------------------------------------------------------------------------
 // sub_00412d00 -- transcription of 4 instructions at 0x00412d00
 // size 19 bytes
 // callees: none
@@ -8714,19 +8729,6 @@ void sub_00417620(void)
     ts::insn(0x00417626u); ts::f_arith_mem(2, (long double)ts::ld_f64(6915568), false);   //   0x00417626  fmul     qword ptr [0x6985f0]
     ts::insn(0x0041762cu); ts::st_f64(7493320, (double)ts::f_pop());   //   0x0041762c  fstp     qword ptr [0x7256c8]
     ts::insn(0x00417632u); ts::ret_pop(0x0u); return;   //   0x00417632  ret      
-}
-
-// ---------------------------------------------------------------------------
-// sub_00417640 -- transcription of 4 instructions at 0x00417640
-// size 19 bytes
-// callees: none
-//
-void sub_00417640(void)
-{
-    ts::insn(0x00417640u); ts::f_push((long double)ts::ld_f64(6920880));   //   0x00417640  fld      qword ptr [0x699ab0]
-    ts::insn(0x00417646u); ts::f_arith_mem(2, (long double)ts::ld_f64(6915576), false);   //   0x00417646  fmul     qword ptr [0x6985f8]
-    ts::insn(0x0041764cu); ts::st_f64(7493280, (double)ts::f_pop());   //   0x0041764c  fstp     qword ptr [0x7256a0]
-    ts::insn(0x00417652u); ts::ret_pop(0x0u); return;   //   0x00417652  ret      
 }
 
 }  // namespace sub

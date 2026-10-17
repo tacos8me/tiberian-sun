@@ -491,7 +491,7 @@ void InfantryClass::Render(int a0, int a1, int a2)
 
 // InfantryClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::Occupy_List(int a0)
+void InfantryClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }
@@ -1664,8 +1664,8 @@ void InfantryClass::On_Movement_Blocked()
 
 // -------------------------------------------------------------------------
 // InfantryClass::JumpJet_To_Walk -- the body is the canonical transcription of
-// 178 instructions at 0x004d2950, in src/generated/code/.
-// size 537 bytes; callees: 0x0040e9d0, 0x0043a340, 0x0043a370, 0x0043ae10, 0x0047eb00, 0x004a4bd0, 0x004d2f40, 0x006939b0
+// 43 instructions at 0x004d2950, in src/generated/code/.
+// size 129 bytes; callees: 0x004d2f40, 0x006939b0
 //
 void InfantryClass::JumpJet_To_Walk()
 {

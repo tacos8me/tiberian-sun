@@ -61,8 +61,8 @@ void DSurface::vfunc_4(int a0, int a1, int a2)
 
 // -------------------------------------------------------------------------
 // DSurface::vfunc_5 -- the body is the canonical transcription of
-// 18 instructions at 0x00488260, in src/generated/code/.
-// size 43 bytes; callees: 0x00488290
+// 1 instructions at 0x00488260, in src/generated/code/.
+// size 4 bytes; callees: none
 //
 void DSurface::vfunc_5(int a0, int a1)
 {

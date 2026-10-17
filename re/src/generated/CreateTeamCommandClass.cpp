@@ -74,8 +74,8 @@ const char* CreateTeamCommandClass::Get_Description()
 
 // -------------------------------------------------------------------------
 // CreateTeamCommandClass::Get_UI_Description -- the body is the canonical transcription of
-// 39 instructions at 0x004e0990, in src/generated/code/.
-// size 105 bytes; callees: 0x004c4fb0
+// 32 instructions at 0x004e0990, in src/generated/code/.
+// size 96 bytes; callees: 0x004c4fb0
 //
 const char* CreateTeamCommandClass::Get_UI_Description()
 {

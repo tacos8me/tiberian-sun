@@ -123,8 +123,8 @@ void BuildingLightClass::Fetch_Object_Size()
 
 // -------------------------------------------------------------------------
 // BuildingLightClass::Compute_CRC -- the body is the canonical transcription of
-// 73 instructions at 0x00422470, in src/generated/code/.
-// size 193 bytes; callees: 0x0046d5d0, 0x0046d680, 0x0046d6c0, 0x00570630
+// 49 instructions at 0x00422470, in src/generated/code/.
+// size 127 bytes; callees: 0x0046d5d0, 0x0046d680, 0x0046d6c0, 0x00570630
 //
 void BuildingLightClass::Compute_CRC(int a0)
 {
@@ -470,7 +470,7 @@ void BuildingLightClass::Render(int a0, int a1, int a2)
 
 // BuildingLightClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void BuildingLightClass::Occupy_List(int a0)
+void BuildingLightClass::Occupy_List()
 {
     ts::sub::sub_005701b0();
 }

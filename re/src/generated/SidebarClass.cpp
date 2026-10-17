@@ -140,8 +140,8 @@ void SidebarClass::vfunc_14()
 
 // -------------------------------------------------------------------------
 // SidebarClass::vfunc_15 -- the body is the canonical transcription of
-// 106 instructions at 0x005d9990, in src/generated/code/.
-// size 389 bytes; callees: 0x00478f00, 0x00593f30, 0x005d9b1a
+// 57 instructions at 0x005d9990, in src/generated/code/.
+// size 222 bytes; callees: 0x00593f30
 //
 void SidebarClass::vfunc_15()
 {

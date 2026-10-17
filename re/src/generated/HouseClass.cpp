@@ -70,8 +70,8 @@ unsigned long HouseClass::AddRef()
 
 // -------------------------------------------------------------------------
 // HouseClass::vfunc_5 -- the body is the canonical transcription of
-// 546 instructions at 0x004be0b0, in src/generated/code/.
-// size 1605 bytes; callees: 0x004058b0, 0x0046b480, 0x00480990, 0x004b3940, 0x005f36e0
+// 306 instructions at 0x004be0b0, in src/generated/code/.
+// size 946 bytes; callees: 0x004058b0, 0x0046b480, 0x00480990, 0x004b3940, 0x005f36e0
 //
 void HouseClass::vfunc_5()
 {
@@ -490,8 +490,8 @@ void HouseClass::vfunc_49()
 
 // -------------------------------------------------------------------------
 // HouseClass::vfunc_50 -- the body is the canonical transcription of
-// 18 instructions at 0x004c61b0, in src/generated/code/.
-// size 46 bytes; callees: 0x004c61e0, 0x00682997
+// 12 instructions at 0x004c61b0, in src/generated/code/.
+// size 26 bytes; callees: none
 //
 void HouseClass::vfunc_50()
 {
@@ -597,8 +597,8 @@ void HouseClass::vfunc_60()
 
 // -------------------------------------------------------------------------
 // HouseClass::vfunc_61 -- the body is the canonical transcription of
-// 26 instructions at 0x004c5510, in src/generated/code/.
-// size 54 bytes; callees: none
+// 25 instructions at 0x004c5510, in src/generated/code/.
+// size 51 bytes; callees: none
 //
 void HouseClass::vfunc_61()
 {

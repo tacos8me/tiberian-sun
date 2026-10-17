@@ -465,8 +465,8 @@ void AnimClass::vfunc_48()
 
 // -------------------------------------------------------------------------
 // AnimClass::vfunc_49 -- the body is the canonical transcription of
-// 229 instructions at 0x0056f810, in src/generated/code/.
-// size 718 bytes; callees: 0x004119f0, 0x00459610, 0x00473150, 0x004fad40, 0x00502060, 0x005020d0, 0x0056fa6e, 0x005f5120, 0x005f5820, 0x00682997, 0x0068309c
+// 213 instructions at 0x0056f810, in src/generated/code/.
+// size 660 bytes; callees: 0x004119f0, 0x00473150, 0x004fad40, 0x00502060, 0x005f5120, 0x005f5820, 0x00682997, 0x0068309c
 //
 void AnimClass::vfunc_49()
 {

@@ -58,6 +58,16 @@ void TiberiumClass::IsDirty(int a0)
 }
 
 // -------------------------------------------------------------------------
+// TiberiumClass::vfunc_5 -- the body is the canonical transcription of
+// 67 instructions at 0x00628940, in src/generated/code/.
+// size 199 bytes; callees: 0x005402f0, 0x0068298c
+//
+void TiberiumClass::vfunc_5(int a0)
+{
+    ts::sub::sub_00628940();
+}
+
+// -------------------------------------------------------------------------
 // TiberiumClass::vfunc_6 -- the body is the canonical transcription of
 // 41 instructions at 0x00628b80, in src/generated/code/.
 // size 97 bytes; callees: 0x00405850
@@ -86,8 +96,8 @@ void TiberiumClass::Init()
 
 // -------------------------------------------------------------------------
 // TiberiumClass::Detach -- the body is the canonical transcription of
-// 35 instructions at 0x00628bf0, in src/generated/code/.
-// size 105 bytes; callees: none
+// 32 instructions at 0x00628bf0, in src/generated/code/.
+// size 90 bytes; callees: none
 //
 void TiberiumClass::Detach(int a0, int a1)
 {
@@ -206,8 +216,8 @@ void TiberiumClass::Init_Theater(int a0)
 
 // -------------------------------------------------------------------------
 // TiberiumClass::Read_INI -- the body is the canonical transcription of
-// 111 instructions at 0x00628540, in src/generated/code/.
-// size 366 bytes; callees: 0x00405f20, 0x00418d20, 0x004483e0, 0x004d60b0, 0x004d6960, 0x004d6ed0, 0x005ba380, 0x005ba410, 0x005ba520, 0x005bb7d0, 0x006286be, 0x006837ea
+// 23 instructions at 0x00628540, in src/generated/code/.
+// size 66 bytes; callees: 0x00405f20, 0x004d60b0
 //
 void TiberiumClass::Read_INI(int a0)
 {
@@ -223,8 +233,8 @@ void TiberiumClass::Write_INI(int a0)
 
 // -------------------------------------------------------------------------
 // TiberiumClass::TiberiumClass -- the body is the canonical transcription of
-// 107 instructions at 0x006281e0, in src/generated/code/.
-// size 408 bytes; callees: 0x00405d50, 0x005bbc10
+// 86 instructions at 0x006281e0, in src/generated/code/.
+// size 351 bytes; callees: 0x00405d50, 0x005bbc10
 //
 TiberiumClass::TiberiumClass()
 {

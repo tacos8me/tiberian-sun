@@ -369,10 +369,10 @@ void ListClass::vfunc_48(int a0)
 
 // -------------------------------------------------------------------------
 // ListClass::vfunc_49 -- the body is the canonical transcription of
-// 25 instructions at 0x004f75f0, in src/generated/code/.
-// size 74 bytes; callees: 0x004a5940, 0x004f7640
+// 6 instructions at 0x004f75f0, in src/generated/code/.
+// size 9 bytes; callees: none
 //
-void ListClass::vfunc_49(int a0, int a1, int a2, int a3, int a4)
+void ListClass::vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_004f75f0();
 }

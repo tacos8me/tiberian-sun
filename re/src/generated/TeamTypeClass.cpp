@@ -247,8 +247,8 @@ void TeamTypeClass::Slot25()
 
 // -------------------------------------------------------------------------
 // TeamTypeClass::Slot26 -- the body is the canonical transcription of
-// 217 instructions at 0x0060d510, in src/generated/code/.
-// size 634 bytes; callees: 0x00405fb0, 0x00448d60, 0x004d6030, 0x004d6b50, 0x004d7070, 0x006556c0
+// 126 instructions at 0x0060d510, in src/generated/code/.
+// size 356 bytes; callees: 0x00405fb0, 0x00448d60, 0x004d6030, 0x004d7070
 //
 void TeamTypeClass::Slot26()
 {

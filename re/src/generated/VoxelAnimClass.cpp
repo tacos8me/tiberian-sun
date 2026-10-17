@@ -384,7 +384,7 @@ void VoxelAnimClass::Limbo()
 
 // VoxelAnimClass::Unlimbo -- ALIAS of AnimClass::vfunc_49 (same machine code at 0x0056f810); the
 // forwarder is written once, at that declaration.
-void VoxelAnimClass::Unlimbo(int a0, int a1)
+void VoxelAnimClass::Unlimbo(int a0)
 {
     ts::sub::sub_0056f810();
 }

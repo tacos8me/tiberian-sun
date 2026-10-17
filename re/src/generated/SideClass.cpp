@@ -59,8 +59,8 @@ void SideClass::IsDirty(int a0)
 
 // -------------------------------------------------------------------------
 // SideClass::vfunc_5 -- the body is the canonical transcription of
-// 90 instructions at 0x005d8040, in src/generated/code/.
-// size 235 bytes; callees: 0x004058b0, 0x00405e90
+// 72 instructions at 0x005d8040, in src/generated/code/.
+// size 194 bytes; callees: 0x004058b0, 0x00405e90
 //
 void SideClass::vfunc_5(int a0, int a1)
 {

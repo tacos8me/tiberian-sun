@@ -58,8 +58,8 @@ unsigned long TechnoTypeClass::AddRef()
 
 // -------------------------------------------------------------------------
 // TechnoTypeClass::Read_INI -- the body is the canonical transcription of
-// 502 instructions at 0x006213b0, in src/generated/code/.
-// size 1481 bytes; callees: 0x004d6ed0, 0x00547660, 0x005729b0, 0x005b94e0, 0x005b95f0, 0x005b96c0, 0x005b9820, 0x005b9e50, 0x005ba1a0, 0x005ba520, 0x005ba600, 0x005f36e0, 0x006221c0, 0x00622380, 0x00683b18, 0x006849b0
+// 39 instructions at 0x006213b0, in src/generated/code/.
+// size 178 bytes; callees: none
 //
 long TechnoTypeClass::Read_INI(void* ini, const char* section)
 {

@@ -320,10 +320,10 @@ void IsometricTileTypeClass::Create_One_Of(int a0)
 
 // -------------------------------------------------------------------------
 // IsometricTileTypeClass::Occupy_List -- the body is the canonical transcription of
-// 61 instructions at 0x004ea600, in src/generated/code/.
-// size 177 bytes; callees: 0x00682610
+// 22 instructions at 0x004ea600, in src/generated/code/.
+// size 67 bytes; callees: 0x00682610
 //
-void IsometricTileTypeClass::Occupy_List(int a0)
+void IsometricTileTypeClass::Occupy_List()
 {
     ts::sub::sub_004ea600();
 }
@@ -357,12 +357,12 @@ void IsometricTileTypeClass::Get_Image_Data()
 
 // -------------------------------------------------------------------------
 // IsometricTileTypeClass::IsometricTileTypeClass -- the body is the canonical transcription of
-// 109 instructions at 0x004ea0c0, in src/generated/code/.
-// size 459 bytes; callees: 0x004ea29f, 0x00571220
+// 78 instructions at 0x004ea14e, in src/generated/code/.
+// size 317 bytes; callees: 0x004ea29f
 //
 IsometricTileTypeClass::IsometricTileTypeClass()
 {
-    ts::sub::sub_004ea0c0();
+    ts::sub::sub_004ea14e();
 }
 
 // IsometricTileTypeClass::~IsometricTileTypeClass -- the header declares this destructor but no

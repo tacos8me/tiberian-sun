@@ -41,8 +41,8 @@ void WWMouseClass::vfunc_2()
 
 // -------------------------------------------------------------------------
 // WWMouseClass::vfunc_3 -- the body is the canonical transcription of
-// 12 instructions at 0x00673900, in src/generated/code/.
-// size 28 bytes; callees: none
+// 5 instructions at 0x00673900, in src/generated/code/.
+// size 11 bytes; callees: none
 //
 void WWMouseClass::vfunc_3()
 {
@@ -61,8 +61,8 @@ void WWMouseClass::vfunc_4()
 
 // -------------------------------------------------------------------------
 // WWMouseClass::vfunc_5 -- the body is the canonical transcription of
-// 57 instructions at 0x00673ab0, in src/generated/code/.
-// size 173 bytes; callees: 0x00407a60
+// 45 instructions at 0x00673ab0, in src/generated/code/.
+// size 146 bytes; callees: 0x00407a60
 //
 void WWMouseClass::vfunc_5()
 {
@@ -154,7 +154,7 @@ void WWMouseClass::vfunc_13(int a0)
 // 33 instructions at 0x00673150, in src/generated/code/.
 // size 97 bytes; callees: 0x006731ff
 //
-void WWMouseClass::vfunc_14(int a0, int a1)
+void WWMouseClass::vfunc_14(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00673150();
 }

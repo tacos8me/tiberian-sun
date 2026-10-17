@@ -100,8 +100,8 @@ long AbstractTypeClass::IsDirty()
 
 // -------------------------------------------------------------------------
 // AbstractTypeClass::Load -- the body is the canonical transcription of
-// 17 instructions at 0x00405fe0, in src/generated/code/.
-// size 41 bytes; callees: 0x00405940, 0x0046d6e0
+// 4 instructions at 0x00405fe0, in src/generated/code/.
+// size 8 bytes; callees: none
 //
 long AbstractTypeClass::Load(IStream* pStm)
 {
