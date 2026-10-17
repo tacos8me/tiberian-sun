@@ -20,31 +20,31 @@
 #include "Machine.h"   // ts:: machine model, for ts::EAX
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_0 -- the body is the canonical transcription of
+// AircraftClass::QueryInterface -- the body is the canonical transcription of
 // 32 instructions at 0x00408050, in src/generated/code/.
 // size 74 bytes; callees: 0x00405790
 //
-void AircraftClass::vfunc_0(int a0, int a1, int a2)
+void AircraftClass::QueryInterface(int a0, int a1, int a2)
 {
     ts::sub::sub_00408050();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_1 -- the body is the canonical transcription of
+// AircraftClass::Init -- the body is the canonical transcription of
 // 4 instructions at 0x004080b0, in src/generated/code/.
 // size 13 bytes; callees: 0x00405830
 //
-void AircraftClass::vfunc_1(int a0)
+void AircraftClass::Init(int a0)
 {
     ts::sub::sub_004080b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_2 -- the body is the canonical transcription of
+// AircraftClass::Shutdown -- the body is the canonical transcription of
 // 4 instructions at 0x004080c0, in src/generated/code/.
 // size 13 bytes; callees: 0x00405840
 //
-void AircraftClass::vfunc_2(int a0)
+void AircraftClass::Shutdown(int a0)
 {
     ts::sub::sub_004080c0();
 }
@@ -94,81 +94,71 @@ void AircraftClass::GetType(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x0040e940, in src/generated/code/.
-// size 30 bytes; callees: 0x0040cff0, 0x0068298c
-//
-void AircraftClass::vfunc_8(int a0)
-{
-    ts::sub::sub_0040e940();
-}
-
-// -------------------------------------------------------------------------
-// AircraftClass::vfunc_9 -- the body is the canonical transcription of
+// AircraftClass::Set_ID -- the body is the canonical transcription of
 // 49 instructions at 0x00407fb0, in src/generated/code/.
 // size 157 bytes; callees: 0x00492890, 0x00492960, 0x00492c10, 0x004bb850, 0x0060f180
 //
-void AircraftClass::vfunc_9(int a0)
+void AircraftClass::Set_ID(int a0)
 {
     ts::sub::sub_00407fb0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_10 -- the body is the canonical transcription of
+// AircraftClass::Get_RTTI -- the body is the canonical transcription of
 // 14 instructions at 0x0040e230, in src/generated/code/.
 // size 42 bytes; callees: 0x004a0ca0
 //
-void AircraftClass::vfunc_10(int a0, int a1)
+void AircraftClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_0040e230();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_11 -- the body is the canonical transcription of
+// AircraftClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x0040e8b0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_11()
+void AircraftClass::What_Am_I()
 {
     ts::sub::sub_0040e8b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_12 -- the body is the canonical transcription of
+// AircraftClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x0040e8a0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_12()
+void AircraftClass::Get_Heap()
 {
     ts::sub::sub_0040e8a0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_13 -- the body is the canonical transcription of
+// AircraftClass::Load -- the body is the canonical transcription of
 // 28 instructions at 0x0040e1b0, in src/generated/code/.
 // size 89 bytes; callees: 0x0040e20b, 0x0046d5d0, 0x004a23c0
 //
-void AircraftClass::vfunc_13(int a0)
+void AircraftClass::Load(int a0)
 {
     ts::sub::sub_0040e1b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_14 -- the body is the canonical transcription of
+// AircraftClass::Save -- the body is the canonical transcription of
 // 3 instructions at 0x00612db0, in src/generated/code/.
 // size 10 bytes; callees: none
 //
-void AircraftClass::vfunc_14()
+void AircraftClass::Save()
 {
     ts::sub::sub_00612db0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_15 -- the body is the canonical transcription of
+// AircraftClass::GetSizeMax -- the body is the canonical transcription of
 // 2 instructions at 0x00612dc0, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void AircraftClass::vfunc_15()
+void AircraftClass::GetSizeMax()
 {
     ts::sub::sub_00612dc0();
 }
@@ -338,11 +328,11 @@ void AircraftClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_33 -- the body is the canonical transcription of
+// AircraftClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x0040e930, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void AircraftClass::vfunc_33()
+void AircraftClass::Get_Type()
 {
     ts::sub::sub_0040e930();
 }

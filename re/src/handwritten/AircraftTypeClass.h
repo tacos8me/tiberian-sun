@@ -85,7 +85,7 @@ public:
     unsigned char pad_004[0x378];
     unsigned int m_37c;  // +0x37c init 0x20; 4-byte store: mov dword ptr [esi + 0x37c], 0x20
     unsigned char pad_380[0xb5];
-    unsigned char m_435;  // +0x435 /* ? */; 1-byte store: mov byte ptr [esi + 0x435], bl
+    unsigned char MoveToShroud;  // +0x435 (INI key); 1-byte store: mov byte ptr [esi + 0x435], bl
     unsigned char pad_436[0x3a];
     unsigned int m_470;  // +0x470 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x470], 0xffffffff
     unsigned char m_474;  // +0x474 /* ? */; 1-byte store: mov byte ptr [esi + 0x474], bl

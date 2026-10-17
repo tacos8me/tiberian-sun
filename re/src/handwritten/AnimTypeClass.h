@@ -68,10 +68,10 @@ public:
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
     unsigned char pad_004[0xc4];
     unsigned char m_0c8;  // +0x0c8 init 0x1; 1-byte store: mov byte ptr [esi + 0xc8], 1
-    unsigned char m_0c9;  // +0x0c9 /* ? */; 1-byte store: mov byte ptr [esi + 0xc9], bl
-    unsigned char m_0ca;  // +0x0ca /* ? */; 1-byte store: mov byte ptr [esi + 0xca], bl
+    unsigned char Selectable;  // +0x0c9 (INI key); 1-byte store: mov byte ptr [esi + 0xc9], bl
+    unsigned char LegalTarget;  // +0x0ca (INI key); 1-byte store: mov byte ptr [esi + 0xca], bl
     unsigned char m_0cb;  // +0x0cb init 0x1; 1-byte store: mov byte ptr [esi + 0xcb], 1
-    unsigned char m_0cc;  // +0x0cc init 0x1; 1-byte store: mov byte ptr [esi + 0xcc], 1
+    unsigned char Immune;  // +0x0cc (INI key); 1-byte store: mov byte ptr [esi + 0xcc], 1
     unsigned char m_0cd;  // +0x0cd init 0x1; 1-byte store: mov byte ptr [esi + 0xcd], 1
     unsigned char m_0ce;  // +0x0ce /* ? */; 1-byte store: mov byte ptr [esi + 0xce], bl
     unsigned char pad_0cf[0x55];

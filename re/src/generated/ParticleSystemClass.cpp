@@ -84,16 +84,6 @@ void ParticleSystemClass::GetType(int a0, int a1)
     ts::sub::sub_00405910();
 }
 
-// -------------------------------------------------------------------------
-// ParticleSystemClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x00590390, in src/generated/code/.
-// size 30 bytes; callees: 0x0058e320, 0x0068298c
-//
-void ParticleSystemClass::vfunc_8(int a0)
-{
-    ts::sub::sub_00590390();
-}
-
 // ParticleSystemClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
 void ParticleSystemClass::Set_ID()
@@ -102,41 +92,41 @@ void ParticleSystemClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemClass::vfunc_10 -- the body is the canonical transcription of
+// ParticleSystemClass::Get_RTTI -- the body is the canonical transcription of
 // 48 instructions at 0x00590020, in src/generated/code/.
 // size 131 bytes; callees: 0x0056fb00
 //
-void ParticleSystemClass::vfunc_10(int a0, int a1)
+void ParticleSystemClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_00590020();
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemClass::vfunc_11 -- the body is the canonical transcription of
+// ParticleSystemClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00590370, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleSystemClass::vfunc_11()
+void ParticleSystemClass::What_Am_I()
 {
     ts::sub::sub_00590370();
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemClass::vfunc_12 -- the body is the canonical transcription of
+// ParticleSystemClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00590360, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleSystemClass::vfunc_12()
+void ParticleSystemClass::Get_Heap()
 {
     ts::sub::sub_00590360();
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemClass::vfunc_13 -- the body is the canonical transcription of
+// ParticleSystemClass::Load -- the body is the canonical transcription of
 // 56 instructions at 0x00590270, in src/generated/code/.
 // size 145 bytes; callees: 0x0046d680, 0x0046d6a0, 0x00570630
 //
-void ParticleSystemClass::vfunc_13(int a0)
+void ParticleSystemClass::Load(int a0)
 {
     ts::sub::sub_00590270();
 }
@@ -284,11 +274,11 @@ void ParticleSystemClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemClass::vfunc_33 -- the body is the canonical transcription of
+// ParticleSystemClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x00590380, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void ParticleSystemClass::vfunc_33()
+void ParticleSystemClass::Get_Type()
 {
     ts::sub::sub_00590380();
 }

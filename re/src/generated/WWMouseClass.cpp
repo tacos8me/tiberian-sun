@@ -20,16 +20,6 @@
 #include "Machine.h"   // ts:: machine model, for ts::EAX
 
 // -------------------------------------------------------------------------
-// WWMouseClass::vfunc_0 -- the body is the canonical transcription of
-// 11 instructions at 0x00674130, in src/generated/code/.
-// size 30 bytes; callees: 0x00672930, 0x0068298c
-//
-void WWMouseClass::vfunc_0(int a0)
-{
-    ts::sub::sub_00674130();
-}
-
-// -------------------------------------------------------------------------
 // WWMouseClass::vfunc_1 -- the body is the canonical transcription of
 // 86 instructions at 0x00672a60, in src/generated/code/.
 // size 256 bytes; callees: 0x00407a60, 0x0041e5c0, 0x00672b66

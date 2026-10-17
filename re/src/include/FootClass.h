@@ -27,14 +27,13 @@ public:
     virtual void vfunc_5(int a0, int a1);  // [5] 0x004a1d80  // __stdcall
     virtual void vfunc_6(int a0, int a1, int a2, int a3, int a4, int a5);  // [6] 0x004a1ff0
     virtual void GetType(int a0, int a1);  // [7] 0x00405910  // __stdcall, returns int
-    virtual void vfunc_8(int a0);  // [8] 0x004a4b40  // __thiscall
-    virtual void vfunc_9();  // [9] 0x0060f180  // __cdecl
-    virtual void vfunc_10(int a0, int a1);  // [10] 0x004a0ca0  // __thiscall
-    virtual void vfunc_11();  // [11] 0x006829a5  // __cdecl
-    virtual void vfunc_12();  // [12] 0x006829a5  // __cdecl
-    virtual void vfunc_13(int a0, int a1, int a2);  // [13] 0x004a23c0  // __thiscall
-    virtual void vfunc_14();  // [14] 0x00612db0  // __cdecl
-    virtual void vfunc_15();  // [15] 0x00612dc0  // __cdecl
+    virtual void Set_ID();  // [9] 0x0060f180  // __cdecl
+    virtual void Get_RTTI(int a0, int a1);  // [10] 0x004a0ca0  // __thiscall
+    virtual void What_Am_I();  // [11] 0x006829a5  // __cdecl
+    virtual void Get_Heap();  // [12] 0x006829a5  // __cdecl
+    virtual void Load(int a0, int a1, int a2);  // [13] 0x004a23c0  // __thiscall
+    virtual void Save();  // [14] 0x00612db0  // __cdecl
+    virtual void GetSizeMax();  // [15] 0x00612dc0  // __cdecl
     virtual void Compute_CRC();  // [16] 0x004059f0  // __cdecl, returns int
     virtual void vfunc_17();  // [17] 0x00570a20  // __cdecl, returns int
     virtual void vfunc_18(int a0);  // [18] 0x00570960  // __stdcall
@@ -52,7 +51,7 @@ public:
     virtual void vfunc_30();  // [30] 0x00570ef0  // __cdecl
     virtual void vfunc_31();  // [31] 0x004167d0  // __cdecl
     virtual void vfunc_32();  // [32] 0x0060eb10  // __thiscall
-    virtual void vfunc_33();  // [33] 0x004a4b00  // __cdecl, returns int
+    virtual void Get_Type();  // [33] 0x004a4b00  // __cdecl, returns int
     virtual void vfunc_34();  // [34] 0x0061b1b0  // __cdecl
     virtual void vfunc_35();  // [35] 0x004167e0  // __cdecl, returns int
     virtual void vfunc_36();  // [36] 0x00616470  // __thiscall

@@ -26,15 +26,15 @@ public:
     virtual void Release(int a0);  // [4] 0x00405990  // __stdcall
     virtual void vfunc_5(int a0, int a1);  // [5] 0x00625590  // __stdcall, returns int
     virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x006255f0  // __stdcall, returns int
-    virtual void vfunc_7(int a0, int a1);  // [7] 0x00572ba0  // __stdcall, returns int
+    virtual void GetType(int a0, int a1);  // [7] 0x00572ba0  // __stdcall, returns int
     virtual void Set_ID();  // [9] 0x004059b0  // __cdecl
     virtual void Get_RTTI(int a0, int a1);  // [10] 0x004059c0  // __stdcall
-    virtual void vfunc_11();  // [11] 0x006256e0  // __cdecl, returns int
-    virtual void vfunc_12();  // [12] 0x006256f0  // __cdecl, returns int
-    virtual void vfunc_13(int a0);  // [13] 0x00625500  // __thiscall
+    virtual void What_Am_I();  // [11] 0x006256e0  // __cdecl, returns int
+    virtual void Get_Heap();  // [12] 0x006256f0  // __cdecl, returns int
+    virtual void Load(int a0);  // [13] 0x00625500  // __thiscall
     virtual void Save();  // [14] 0x004059d0  // __cdecl
     virtual void GetSizeMax();  // [15] 0x004059e0  // __cdecl, returns int
-    virtual void vfunc_16();  // [16] 0x00625700  // __cdecl
+    virtual void Compute_CRC();  // [16] 0x00625700  // __cdecl
     virtual void vfunc_17();  // [17] 0x00405970  // __cdecl
     virtual void vfunc_18(int a0);  // [18] 0x00405a00  // __stdcall
     virtual void vfunc_19(int a0);  // [19] 0x00405a30  // __stdcall
@@ -71,11 +71,11 @@ public:
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
     unsigned char pad_004[0x60];
     unsigned int m_064;  // +0x064 init 0x1; 4-byte store: mov dword ptr [esi + 0x64], 1
-    unsigned int m_068;  // +0x068 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x68], 0xffffffff
+    unsigned int Strength;  // +0x068 (INI key); 4-byte store: mov dword ptr [esi + 0x68], 0xffffffff
     unsigned char pad_06c[0x5c];
     unsigned char m_0c8;  // +0x0c8 init 0x1; 1-byte store: mov byte ptr [esi + 0xc8], 1
-    unsigned char m_0c9;  // +0x0c9 /* ? */; 1-byte store: mov byte ptr [esi + 0xc9], bl
-    unsigned char m_0ca;  // +0x0ca /* ? */; 1-byte store: mov byte ptr [esi + 0xca], bl
+    unsigned char Selectable;  // +0x0c9 (INI key); 1-byte store: mov byte ptr [esi + 0xc9], bl
+    unsigned char LegalTarget;  // +0x0ca (INI key); 1-byte store: mov byte ptr [esi + 0xca], bl
     unsigned char m_0cb;  // +0x0cb init 0x1; 1-byte store: mov byte ptr [esi + 0xcb], 1
     unsigned char pad_0cc[0x1];
     unsigned char m_0cd;  // +0x0cd init 0x1; 1-byte store: mov byte ptr [esi + 0xcd], 1

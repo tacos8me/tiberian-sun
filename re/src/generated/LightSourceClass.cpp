@@ -99,31 +99,31 @@ void LightSourceClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// LightSourceClass::vfunc_11 -- the body is the canonical transcription of
+// LightSourceClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x004f55d0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void LightSourceClass::vfunc_11()
+void LightSourceClass::What_Am_I()
 {
     ts::sub::sub_004f55d0();
 }
 
 // -------------------------------------------------------------------------
-// LightSourceClass::vfunc_12 -- the body is the canonical transcription of
+// LightSourceClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x004f55c0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void LightSourceClass::vfunc_12()
+void LightSourceClass::Get_Heap()
 {
     ts::sub::sub_004f55c0();
 }
 
 // -------------------------------------------------------------------------
-// LightSourceClass::vfunc_13 -- the body is the canonical transcription of
+// LightSourceClass::Load -- the body is the canonical transcription of
 // 33 instructions at 0x004f54c0, in src/generated/code/.
 // size 85 bytes; callees: 0x00405940, 0x0046d5d0, 0x0046d680
 //
-void LightSourceClass::vfunc_13(int a0)
+void LightSourceClass::Load(int a0)
 {
     ts::sub::sub_004f54c0();
 }

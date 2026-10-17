@@ -19,7 +19,6 @@ class IPXManagerClass : public ConnManClass
 {
 public:
     // ---- vtable 0x006a0b34 (17 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x004e8ac0  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10);  // [1] 0x004e8510  // __thiscall
     virtual void vfunc_2(int a0, int a1, int a2, int a3);  // [2] 0x004e83a0  // __thiscall, returns int
     virtual void vfunc_3(int a0, int a1, int a2);  // [3] 0x004e8480  // __thiscall, returns int

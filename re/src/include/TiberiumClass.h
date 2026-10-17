@@ -25,16 +25,15 @@ public:
     virtual void vfunc_3(int a0, int a1);  // [3] 0x00628900  // __stdcall, returns int
     virtual void Release(int a0);  // [4] 0x00405990  // __stdcall
     virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x00628b80  // __stdcall
-    virtual void vfunc_7(int a0, int a1);  // [7] 0x00628b50  // __stdcall, returns int
-    virtual void vfunc_8(int a0);  // [8] 0x0062a100  // __thiscall
+    virtual void GetType(int a0, int a1);  // [7] 0x00628b50  // __stdcall, returns int
     virtual void Set_ID();  // [9] 0x004059b0  // __cdecl
-    virtual void vfunc_10(int a0, int a1);  // [10] 0x00628bf0  // __stdcall
-    virtual void vfunc_11();  // [11] 0x0062a0e0  // __cdecl, returns int
-    virtual void vfunc_12();  // [12] 0x0062a0d0  // __cdecl, returns int
-    virtual void vfunc_13(int a0);  // [13] 0x00628890  // __thiscall
+    virtual void Get_RTTI(int a0, int a1);  // [10] 0x00628bf0  // __stdcall
+    virtual void What_Am_I();  // [11] 0x0062a0e0  // __cdecl, returns int
+    virtual void Get_Heap();  // [12] 0x0062a0d0  // __cdecl, returns int
+    virtual void Load(int a0);  // [13] 0x00628890  // __thiscall
     virtual void Save();  // [14] 0x004059d0  // __cdecl
     virtual void GetSizeMax();  // [15] 0x004059e0  // __cdecl, returns int
-    virtual void vfunc_16();  // [16] 0x0062a0f0  // __cdecl
+    virtual void Compute_CRC();  // [16] 0x0062a0f0  // __cdecl
     virtual void vfunc_17();  // [17] 0x00405970  // __cdecl
     virtual void vfunc_18(int a0);  // [18] 0x00405a00  // __stdcall
     virtual void vfunc_19(int a0);  // [19] 0x00405a30  // __stdcall
@@ -43,7 +42,7 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
     virtual void vfunc_24(int a0);  // [24] 0x00406010  // __stdcall
-    virtual void vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [25] 0x00628540  // __thiscall  // refs "Spread"
+    virtual void Fetch_ID(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [25] 0x00628540  // __thiscall  // refs "Spread"
     virtual void Set_ID(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
 
     TiberiumClass();  // 0x006281e0

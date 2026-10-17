@@ -415,8 +415,11 @@ void InfantryTypeClass::vfunc_47()
     ts::sub::sub_004d7ed0();
 }
 
-// InfantryTypeClass::vfunc_48 -- ALIAS of INIClass_INISection::vfunc_0 (same machine code at 0x004d7f80); the
-// forwarder is written once, at that declaration.
+// -------------------------------------------------------------------------
+// InfantryTypeClass::vfunc_48 -- the body is the canonical transcription of
+// 11 instructions at 0x004d7f80, in src/generated/code/.
+// size 30 bytes; callees: 0x004d7c90, 0x0068298c
+//
 void InfantryTypeClass::vfunc_48()
 {
     ts::sub::sub_004d7f80();

@@ -77,9 +77,9 @@ void TerrainTypeClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_006255f0();
 }
 
-// TerrainTypeClass::vfunc_7 -- ALIAS of IsometricTileTypeClass::vfunc_7 (same machine code at 0x00572ba0); the
+// TerrainTypeClass::GetType -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
-void TerrainTypeClass::vfunc_7(int a0, int a1)
+void TerrainTypeClass::GetType(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
 }
@@ -99,31 +99,31 @@ void TerrainTypeClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// TerrainTypeClass::vfunc_11 -- the body is the canonical transcription of
+// TerrainTypeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x006256e0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TerrainTypeClass::vfunc_11()
+void TerrainTypeClass::What_Am_I()
 {
     ts::sub::sub_006256e0();
 }
 
 // -------------------------------------------------------------------------
-// TerrainTypeClass::vfunc_12 -- the body is the canonical transcription of
+// TerrainTypeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x006256f0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TerrainTypeClass::vfunc_12()
+void TerrainTypeClass::Get_Heap()
 {
     ts::sub::sub_006256f0();
 }
 
 // -------------------------------------------------------------------------
-// TerrainTypeClass::vfunc_13 -- the body is the canonical transcription of
+// TerrainTypeClass::Load -- the body is the canonical transcription of
 // 41 instructions at 0x00625500, in src/generated/code/.
 // size 131 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680, 0x0046d6a0
 //
-void TerrainTypeClass::vfunc_13(int a0)
+void TerrainTypeClass::Load(int a0)
 {
     ts::sub::sub_00625500();
 }
@@ -143,11 +143,11 @@ void TerrainTypeClass::GetSizeMax()
 }
 
 // -------------------------------------------------------------------------
-// TerrainTypeClass::vfunc_16 -- the body is the canonical transcription of
+// TerrainTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 2 instructions at 0x00625700, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void TerrainTypeClass::vfunc_16()
+void TerrainTypeClass::Compute_CRC()
 {
     ts::sub::sub_00625700();
 }

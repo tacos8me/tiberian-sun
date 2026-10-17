@@ -26,15 +26,15 @@ public:
     virtual void Release(int a0);  // [4] 0x00405990  // __stdcall
     virtual void vfunc_5(int a0, int a1, int a2);  // [5] 0x005773f0
     virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x005774e0  // __stdcall, returns int
-    virtual void vfunc_7(int a0, int a1);  // [7] 0x00572ba0  // __stdcall, returns int
+    virtual void GetType(int a0, int a1);  // [7] 0x00572ba0  // __stdcall, returns int
     virtual void Set_ID();  // [9] 0x004059b0  // __cdecl
     virtual void Get_RTTI(int a0, int a1);  // [10] 0x004059c0  // __stdcall
-    virtual void vfunc_11();  // [11] 0x00577820  // __cdecl, returns int
-    virtual void vfunc_12();  // [12] 0x00577830  // __cdecl, returns int
-    virtual void vfunc_13(int a0);  // [13] 0x00577350  // __thiscall
+    virtual void What_Am_I();  // [11] 0x00577820  // __cdecl, returns int
+    virtual void Get_Heap();  // [12] 0x00577830  // __cdecl, returns int
+    virtual void Load(int a0);  // [13] 0x00577350  // __thiscall
     virtual void Save();  // [14] 0x004059d0  // __cdecl
     virtual void GetSizeMax();  // [15] 0x004059e0  // __cdecl, returns int
-    virtual void vfunc_16();  // [16] 0x00577840  // __cdecl
+    virtual void Compute_CRC();  // [16] 0x00577840  // __cdecl
     virtual void vfunc_17();  // [17] 0x00405970  // __cdecl
     virtual void vfunc_18(int a0);  // [18] 0x00405a00  // __stdcall
     virtual void vfunc_19(int a0);  // [19] 0x00405a30  // __stdcall
@@ -72,7 +72,7 @@ public:
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
     unsigned char pad_004[0xc4];
     unsigned char m_0c8;  // +0x0c8 init 0x1; 1-byte store: mov byte ptr [esi + 0xc8], 1
-    unsigned char m_0c9;  // +0x0c9 /* ? */; 1-byte store: mov byte ptr [esi + 0xc9], bl
+    unsigned char Selectable;  // +0x0c9 (INI key); 1-byte store: mov byte ptr [esi + 0xc9], bl
     unsigned char pad_0ca[0x1];
     unsigned char m_0cb;  // +0x0cb init 0x1; 1-byte store: mov byte ptr [esi + 0xcb], 1
     unsigned char pad_0cc[0x2];
@@ -89,12 +89,12 @@ public:
     unsigned char Crate;  // +0x13b (INI key); 1-byte store: mov byte ptr [esi + 0x13b], bl
     unsigned char CrateTrigger;  // +0x13c (INI key); 1-byte store: mov byte ptr [esi + 0x13c], bl
     unsigned char m_13d;  // +0x13d /* ? */; 1-byte store: mov byte ptr [esi + 0x13d], al
-    unsigned char m_13e;  // +0x13e /* ? */; 1-byte store: mov byte ptr [esi + 0x13e], bl
-    unsigned char m_13f;  // +0x13f /* ? */; 1-byte store: mov byte ptr [esi + 0x13f], bl
-    unsigned char m_140;  // +0x140 /* ? */; 1-byte store: mov byte ptr [esi + 0x140], bl
+    unsigned char IsVeinholeMonster;  // +0x13e (INI key); 1-byte store: mov byte ptr [esi + 0x13e], bl
+    unsigned char IsVeins;  // +0x13f (INI key); 1-byte store: mov byte ptr [esi + 0x13f], bl
+    unsigned char DemandLoad;  // +0x140 (INI key); 1-byte store: mov byte ptr [esi + 0x140], bl
     unsigned char m_141;  // +0x141 /* ? */; 1-byte store: mov byte ptr [esi + 0x141], bl
     unsigned char m_142;  // +0x142 /* ? */; 1-byte store: mov byte ptr [esi + 0x142], bl
     unsigned char Overrides;  // +0x143 (INI key); 1-byte store: mov byte ptr [esi + 0x143], bl
-    unsigned char m_144;  // +0x144 /* ? */; 1-byte store: mov byte ptr [esi + 0x144], al
-    unsigned char m_145;  // +0x145 /* ? */; 1-byte store: mov byte ptr [esi + 0x145], bl
+    unsigned char DrawFlat;  // +0x144 (INI key); 1-byte store: mov byte ptr [esi + 0x144], al
+    unsigned char IsARock;  // +0x145 (INI key); 1-byte store: mov byte ptr [esi + 0x145], bl
 };

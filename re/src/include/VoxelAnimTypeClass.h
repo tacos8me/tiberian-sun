@@ -26,12 +26,12 @@ public:
     virtual void Release(int a0);  // [4] 0x00405990  // __stdcall
     virtual void vfunc_5(int a0, int a1);  // [5] 0x00642590  // __stdcall, returns int
     virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x00642640  // __stdcall, returns int
-    virtual void vfunc_7(int a0, int a1);  // [7] 0x00572ba0  // __stdcall, returns int
+    virtual void GetType(int a0, int a1);  // [7] 0x00572ba0  // __stdcall, returns int
     virtual void Set_ID();  // [9] 0x004059b0  // __cdecl
-    virtual void vfunc_10(int a0, int a1);  // [10] 0x00642660  // __stdcall
-    virtual void vfunc_11();  // [11] 0x00642760  // __cdecl, returns int
-    virtual void vfunc_12();  // [12] 0x00642770  // __cdecl, returns int
-    virtual void vfunc_13(int a0);  // [13] 0x00642400  // __thiscall
+    virtual void Get_RTTI(int a0, int a1);  // [10] 0x00642660  // __stdcall
+    virtual void What_Am_I();  // [11] 0x00642760  // __cdecl, returns int
+    virtual void Get_Heap();  // [12] 0x00642770  // __cdecl, returns int
+    virtual void Load(int a0);  // [13] 0x00642400  // __thiscall
     virtual void Save();  // [14] 0x004059d0  // __cdecl
     virtual void GetSizeMax();  // [15] 0x004059e0  // __cdecl, returns int
     virtual void Compute_CRC();  // [16] 0x004059f0  // __cdecl, returns int
@@ -71,10 +71,10 @@ public:
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
     unsigned char pad_004[0xc4];
     unsigned char m_0c8;  // +0x0c8 /* ? */; 1-byte store: mov byte ptr [esi + 0xc8], al
-    unsigned char m_0c9;  // +0x0c9 /* ? */; 1-byte store: mov byte ptr [esi + 0xc9], al
-    unsigned char m_0ca;  // +0x0ca /* ? */; 1-byte store: mov byte ptr [esi + 0xca], bl
+    unsigned char Selectable;  // +0x0c9 (INI key); 1-byte store: mov byte ptr [esi + 0xc9], al
+    unsigned char LegalTarget;  // +0x0ca (INI key); 1-byte store: mov byte ptr [esi + 0xca], bl
     unsigned char m_0cb;  // +0x0cb /* ? */; 1-byte store: mov byte ptr [esi + 0xcb], al
-    unsigned char m_0cc;  // +0x0cc /* ? */; 1-byte store: mov byte ptr [esi + 0xcc], al
+    unsigned char Immune;  // +0x0cc (INI key); 1-byte store: mov byte ptr [esi + 0xcc], al
     unsigned char m_0cd;  // +0x0cd /* ? */; 1-byte store: mov byte ptr [esi + 0xcd], al
     unsigned char m_0ce;  // +0x0ce /* ? */; 1-byte store: mov byte ptr [esi + 0xce], bl
     unsigned char pad_0cf[0x55];

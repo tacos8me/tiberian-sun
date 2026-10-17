@@ -85,75 +85,65 @@ void BuildingClass::GetType(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x0043a230, in src/generated/code/.
-// size 30 bytes; callees: 0x004259f0, 0x0068298c
-//
-void BuildingClass::vfunc_8(int a0)
-{
-    ts::sub::sub_0043a230();
-}
-
-// -------------------------------------------------------------------------
-// BuildingClass::vfunc_9 -- the body is the canonical transcription of
+// BuildingClass::Set_ID -- the body is the canonical transcription of
 // 30 instructions at 0x0042adc0, in src/generated/code/.
 // size 108 bytes; callees: 0x00492c10, 0x004bb850, 0x0060f180
 //
-void BuildingClass::vfunc_9()
+void BuildingClass::Set_ID()
 {
     ts::sub::sub_0042adc0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_10 -- the body is the canonical transcription of
+// BuildingClass::Get_RTTI -- the body is the canonical transcription of
 // 43 instructions at 0x00432dd0, in src/generated/code/.
 // size 137 bytes; callees: 0x00432ea4, 0x0061a290
 //
-void BuildingClass::vfunc_10(int a0, int a1)
+void BuildingClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_00432dd0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_11 -- the body is the canonical transcription of
+// BuildingClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x0043a1c0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::vfunc_11()
+void BuildingClass::What_Am_I()
 {
     ts::sub::sub_0043a1c0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_12 -- the body is the canonical transcription of
+// BuildingClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x0043a170, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::vfunc_12()
+void BuildingClass::Get_Heap()
 {
     ts::sub::sub_0043a170();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_13 -- the body is the canonical transcription of
+// BuildingClass::Load -- the body is the canonical transcription of
 // 16 instructions at 0x00436eb0, in src/generated/code/.
 // size 47 bytes; callees: 0x00436ee1, 0x0061ccf0
 //
-void BuildingClass::vfunc_13(int a0)
+void BuildingClass::Load(int a0)
 {
     ts::sub::sub_00436eb0();
 }
 
-// BuildingClass::vfunc_14 -- ALIAS of AircraftClass::vfunc_14 (same machine code at 0x00612db0); the
+// BuildingClass::Save -- ALIAS of AircraftClass::Save (same machine code at 0x00612db0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_14()
+void BuildingClass::Save()
 {
     ts::sub::sub_00612db0();
 }
 
-// BuildingClass::vfunc_15 -- ALIAS of AircraftClass::vfunc_15 (same machine code at 0x00612dc0); the
+// BuildingClass::GetSizeMax -- ALIAS of AircraftClass::GetSizeMax (same machine code at 0x00612dc0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_15()
+void BuildingClass::GetSizeMax()
 {
     ts::sub::sub_00612dc0();
 }
@@ -305,11 +295,11 @@ void BuildingClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_33 -- the body is the canonical transcription of
+// BuildingClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x0043a1e0, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void BuildingClass::vfunc_33()
+void BuildingClass::Get_Type()
 {
     ts::sub::sub_0043a1e0();
 }

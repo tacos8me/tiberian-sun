@@ -92,31 +92,31 @@ void Tactical::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// Tactical::vfunc_10 -- the body is the canonical transcription of
+// Tactical::Get_RTTI -- the body is the canonical transcription of
 // 9 instructions at 0x005fbbb0, in src/generated/code/.
 // size 32 bytes; callees: none
 //
-void Tactical::vfunc_10(int a0, int a1)
+void Tactical::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_005fbbb0();
 }
 
 // -------------------------------------------------------------------------
-// Tactical::vfunc_11 -- the body is the canonical transcription of
+// Tactical::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x005fd260, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void Tactical::vfunc_11()
+void Tactical::What_Am_I()
 {
     ts::sub::sub_005fd260();
 }
 
 // -------------------------------------------------------------------------
-// Tactical::vfunc_12 -- the body is the canonical transcription of
+// Tactical::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x005fd270, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void Tactical::vfunc_12()
+void Tactical::Get_Heap()
 {
     ts::sub::sub_005fd270();
 }

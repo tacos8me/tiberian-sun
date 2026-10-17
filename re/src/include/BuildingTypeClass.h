@@ -176,14 +176,14 @@ public:
     unsigned char pad_47c[0x1c];
     unsigned int m_498;  // +0x498 /* ? */; 4-byte store: mov dword ptr [esi + 0x498], ebx
     unsigned int m_49c;  // +0x49c /* ? */; 4-byte store: mov dword ptr [esi + 0x49c], ebx
-    unsigned int m_4a0;  // +0x4a0 init 0x1388; 4-byte store: mov dword ptr [esi + 0x4a0], 0x1388
-    unsigned int m_4a4;  // +0x4a4 /* ? */; 4-byte store: mov dword ptr [esi + 0x4a4], ebx
-    unsigned int m_4a8;  // +0x4a8 /* ? */; 4-byte store: mov dword ptr [esi + 0x4a8], eax
-    unsigned int m_4ac;  // +0x4ac /* ? */; 4-byte store: mov dword ptr [esi + 0x4ac], eax
-    unsigned int m_4b0;  // +0x4b0 /* ? */; 4-byte store: mov dword ptr [esi + 0x4b0], eax
-    unsigned int m_4b4;  // +0x4b4 /* ? */; 4-byte store: mov dword ptr [esi + 0x4b4], eax
+    unsigned int LightVisibility;  // +0x4a0 (INI key); 4-byte store: mov dword ptr [esi + 0x4a0], 0x1388
+    unsigned int LightIntensity;  // +0x4a4 (INI key); 4-byte store: mov dword ptr [esi + 0x4a4], ebx
+    unsigned int LightRedTint;  // +0x4a8 (INI key); 4-byte store: mov dword ptr [esi + 0x4a8], eax
+    unsigned int LightGreenTint;  // +0x4ac (INI key); 4-byte store: mov dword ptr [esi + 0x4ac], eax
+    unsigned int LightBlueTint;  // +0x4b0 (INI key); 4-byte store: mov dword ptr [esi + 0x4b0], eax
+    unsigned int PrimaryFirePixelOffset;  // +0x4b4 (INI key); 4-byte store: mov dword ptr [esi + 0x4b4], eax
     unsigned int m_4b8;  // +0x4b8 /* ? */; 4-byte store: mov dword ptr [esi + 0x4b8], ecx
-    unsigned int m_4bc;  // +0x4bc /* ? */; 4-byte store: mov dword ptr [esi + 0x4bc], eax
+    unsigned int SecondaryFirePixelOffset;  // +0x4bc (INI key); 4-byte store: mov dword ptr [esi + 0x4bc], eax
     unsigned int m_4c0;  // +0x4c0 /* ? */; 4-byte store: mov dword ptr [esi + 0x4c0], ecx
     unsigned int m_4c4;  // +0x4c4 /* ? */; 4-byte store: mov dword ptr [esi + 0x4c4], ebx
     unsigned int m_4c8;  // +0x4c8 /* ? */; 4-byte store: mov dword ptr [esi + 0x4c8], ebx
@@ -205,7 +205,7 @@ public:
     unsigned int m_520;  // +0x520 /* ? */; 4-byte store: mov dword ptr [esi + 0x520], ebx
     unsigned int m_524;  // +0x524 /* ? */; 4-byte store: mov dword ptr [esi + 0x524], ebp
     unsigned int m_528;  // +0x528 /* ? */; 4-byte store: mov dword ptr [esi + 0x528], ebx
-    unsigned int m_52c;  // +0x52c /* ? */; 4-byte store: mov dword ptr [esi + 0x52c], ebx
+    unsigned int DoorStages;  // +0x52c (INI key); 4-byte store: mov dword ptr [esi + 0x52c], ebx
     unsigned int m_530;  // +0x530 /* ? */; 4-byte store: mov dword ptr [esi + 0x530], ebx
     unsigned int m_534;  // +0x534 /* ? */; 4-byte store: mov dword ptr [esi + 0x534], ebp
     unsigned int m_538;  // +0x538 /* ? */; 4-byte store: mov dword ptr [esi + 0x538], ebx
@@ -228,21 +228,21 @@ public:
     unsigned int m_7bc;  // +0x7bc /* ? */; 4-byte store: mov dword ptr [esi + 0x7bc], ebx
     unsigned int m_7c0;  // +0x7c0 /* ? */; 4-byte store: mov dword ptr [esi + 0x7c0], ebx
     unsigned int m_7c4;  // +0x7c4 /* ? */; 4-byte store: mov dword ptr [esi + 0x7c4], ebx
-    unsigned int m_7c8;  // +0x7c8 /* ? */; 4-byte store: mov dword ptr [esi + 0x7c8], ebx
+    unsigned int SpecialZOverlayZAdjust;  // +0x7c8 (INI key); 4-byte store: mov dword ptr [esi + 0x7c8], ebx
     unsigned int m_7cc;  // +0x7cc /* ? */; 4-byte store: mov dword ptr [esi + 0x7cc], ebx
-    unsigned int m_7d0;  // +0x7d0 /* ? */; 4-byte store: mov dword ptr [esi + 0x7d0], ebx
+    unsigned int NormalZAdjust;  // +0x7d0 (INI key); 4-byte store: mov dword ptr [esi + 0x7d0], ebx
     unsigned int m_7d4;  // +0x7d4 /* ? */; 4-byte store: mov dword ptr [esi + 0x7d4], ebx
     unsigned int m_7d8;  // +0x7d8 /* ? */; 4-byte store: mov dword ptr [esi + 0x7d8], ebx
     unsigned int m_7dc;  // +0x7dc /* ? */; 4-byte store: mov dword ptr [esi + 0x7dc], ebx
-    unsigned int m_7e0;  // +0x7e0 /* ? */; 4-byte store: mov dword ptr [esi + 0x7e0], eax
+    unsigned int ZShapePointMove;  // +0x7e0 (INI key); 4-byte store: mov dword ptr [esi + 0x7e0], eax
     unsigned int m_7e4;  // +0x7e4 /* ? */; 4-byte store: mov dword ptr [esi + 0x7e4], ebx
     unsigned char pad_7e8[0x10];
-    unsigned short m_7f8;  // +0x7f8 /* ? */; 2-byte store: mov word ptr [esi + 0x7f8], bx
-    unsigned char m_7fa;  // +0x7fa init 0x1; 1-byte store: mov byte ptr [esi + 0x7fa], 1
+    unsigned short ExtraLight;  // +0x7f8 (INI key); 2-byte store: mov word ptr [esi + 0x7f8], bx
+    unsigned char TogglePower;  // +0x7fa (INI key); 1-byte store: mov byte ptr [esi + 0x7fa], 1
     unsigned char m_7fb;  // +0x7fb /* ? */; 1-byte store: mov byte ptr [esi + 0x7fb], bl
-    unsigned char m_7fc;  // +0x7fc /* ? */; 1-byte store: mov byte ptr [esi + 0x7fc], bl
-    unsigned char m_7fd;  // +0x7fd /* ? */; 1-byte store: mov byte ptr [esi + 0x7fd], bl
-    unsigned char m_7fe;  // +0x7fe /* ? */; 1-byte store: mov byte ptr [esi + 0x7fe], bl
+    unsigned char IsTemple;  // +0x7fc (INI key); 1-byte store: mov byte ptr [esi + 0x7fc], bl
+    unsigned char IsPlug;  // +0x7fd (INI key); 1-byte store: mov byte ptr [esi + 0x7fd], bl
+    unsigned char HoverPad;  // +0x7fe (INI key); 1-byte store: mov byte ptr [esi + 0x7fe], bl
     unsigned char BaseNormal;  // +0x7ff (INI key); 1-byte store: mov byte ptr [esi + 0x7ff], 1
     unsigned char Bib;  // +0x800 (INI key); 1-byte store: mov byte ptr [esi + 0x800], bl
     unsigned char Wall;  // +0x801 (INI key); 1-byte store: mov byte ptr [esi + 0x801], bl
@@ -252,51 +252,51 @@ public:
     unsigned char Radar;  // +0x805 (INI key); 1-byte store: mov byte ptr [esi + 0x805], bl
     unsigned char m_806;  // +0x806 /* ? */; 1-byte store: mov byte ptr [esi + 0x806], bl
     unsigned char m_807;  // +0x807 /* ? */; 1-byte store: mov byte ptr [esi + 0x807], bl
-    unsigned char m_808;  // +0x808 /* ? */; 1-byte store: mov byte ptr [esi + 0x808], bl
-    unsigned char m_809;  // +0x809 /* ? */; 1-byte store: mov byte ptr [esi + 0x809], bl
+    unsigned char UnitRepair;  // +0x808 (INI key); 1-byte store: mov byte ptr [esi + 0x808], bl
+    unsigned char UnitReload;  // +0x809 (INI key); 1-byte store: mov byte ptr [esi + 0x809], bl
     unsigned char m_80a;  // +0x80a /* ? */; 1-byte store: mov byte ptr [esi + 0x80a], bl
-    unsigned char m_80b;  // +0x80b /* ? */; 1-byte store: mov byte ptr [esi + 0x80b], bl
+    unsigned char DockUnload;  // +0x80b (INI key); 1-byte store: mov byte ptr [esi + 0x80b], bl
     unsigned char m_80c;  // +0x80c /* ? */; 1-byte store: mov byte ptr [esi + 0x80c], bl
     unsigned char m_80d;  // +0x80d init 0x1; 1-byte store: mov byte ptr [esi + 0x80d], 1
     unsigned char m_80e;  // +0x80e /* ? */; 1-byte store: mov byte ptr [esi + 0x80e], bl
-    unsigned char m_80f;  // +0x80f /* ? */; 1-byte store: mov byte ptr [esi + 0x80f], bl
-    unsigned char m_810;  // +0x810 /* ? */; 1-byte store: mov byte ptr [esi + 0x810], bl
-    unsigned char m_811;  // +0x811 /* ? */; 1-byte store: mov byte ptr [esi + 0x811], bl
-    unsigned char m_812;  // +0x812 /* ? */; 1-byte store: mov byte ptr [esi + 0x812], bl
-    unsigned char m_813;  // +0x813 /* ? */; 1-byte store: mov byte ptr [esi + 0x813], bl
+    unsigned char Gate;  // +0x80f (INI key); 1-byte store: mov byte ptr [esi + 0x80f], bl
+    unsigned char SAM;  // +0x810 (INI key); 1-byte store: mov byte ptr [esi + 0x810], bl
+    unsigned char ConstructionYard;  // +0x811 (INI key); 1-byte store: mov byte ptr [esi + 0x811], bl
+    unsigned char NukeSilo;  // +0x812 (INI key); 1-byte store: mov byte ptr [esi + 0x812], bl
+    unsigned char Refinery;  // +0x813 (INI key); 1-byte store: mov byte ptr [esi + 0x813], bl
     unsigned char Weeder;  // +0x814 (INI key); 1-byte store: mov byte ptr [esi + 0x814], bl
-    unsigned char m_815;  // +0x815 /* ? */; 1-byte store: mov byte ptr [esi + 0x815], bl
-    unsigned char m_816;  // +0x816 /* ? */; 1-byte store: mov byte ptr [esi + 0x816], bl
-    unsigned char m_817;  // +0x817 /* ? */; 1-byte store: mov byte ptr [esi + 0x817], bl
-    unsigned char m_818;  // +0x818 /* ? */; 1-byte store: mov byte ptr [esi + 0x818], bl
-    unsigned char m_819;  // +0x819 /* ? */; 1-byte store: mov byte ptr [esi + 0x819], bl
-    unsigned char m_81a;  // +0x81a /* ? */; 1-byte store: mov byte ptr [esi + 0x81a], bl
-    unsigned char m_81b;  // +0x81b /* ? */; 1-byte store: mov byte ptr [esi + 0x81b], bl
-    unsigned char m_81c;  // +0x81c /* ? */; 1-byte store: mov byte ptr [esi + 0x81c], bl
+    unsigned char WeaponsFactory;  // +0x815 (INI key); 1-byte store: mov byte ptr [esi + 0x815], bl
+    unsigned char LaserFencePost;  // +0x816 (INI key); 1-byte store: mov byte ptr [esi + 0x816], bl
+    unsigned char LaserFence;  // +0x817 (INI key); 1-byte store: mov byte ptr [esi + 0x817], bl
+    unsigned char FirestormWall;  // +0x818 (INI key); 1-byte store: mov byte ptr [esi + 0x818], bl
+    unsigned char Hospital;  // +0x819 (INI key); 1-byte store: mov byte ptr [esi + 0x819], bl
+    unsigned char Armory;  // +0x81a (INI key); 1-byte store: mov byte ptr [esi + 0x81a], bl
+    unsigned char EMPulseCannon;  // +0x81b (INI key); 1-byte store: mov byte ptr [esi + 0x81b], bl
+    unsigned char TickTank;  // +0x81c (INI key); 1-byte store: mov byte ptr [esi + 0x81c], bl
     unsigned char m_81d;  // +0x81d /* ? */; 1-byte store: mov byte ptr [esi + 0x81d], bl
-    unsigned char m_81e;  // +0x81e /* ? */; 1-byte store: mov byte ptr [esi + 0x81e], bl
-    unsigned char m_81f;  // +0x81f /* ? */; 1-byte store: mov byte ptr [esi + 0x81f], bl
+    unsigned char CloakGenerator;  // +0x81e (INI key); 1-byte store: mov byte ptr [esi + 0x81e], bl
+    unsigned char SensorArray;  // +0x81f (INI key); 1-byte store: mov byte ptr [esi + 0x81f], bl
     unsigned char m_820;  // +0x820 /* ? */; 1-byte store: mov byte ptr [esi + 0x820], bl
     unsigned char m_821;  // +0x821 /* ? */; 1-byte store: mov byte ptr [esi + 0x821], bl
     unsigned char Helipad;  // +0x822 (INI key); 1-byte store: mov byte ptr [esi + 0x822], bl
-    unsigned char m_823;  // +0x823 /* ? */; 1-byte store: mov byte ptr [esi + 0x823], bl
-    unsigned char m_824;  // +0x824 /* ? */; 1-byte store: mov byte ptr [esi + 0x824], bl
+    unsigned char GDIBarracks;  // +0x823 (INI key); 1-byte store: mov byte ptr [esi + 0x823], bl
+    unsigned char NODBarracks;  // +0x824 (INI key); 1-byte store: mov byte ptr [esi + 0x824], bl
     unsigned char pad_825[0x3];
     unsigned int m_828;  // +0x828 /* ? */; 4-byte store: mov dword ptr [esi + 0x828], edi
     unsigned int m_82c;  // +0x82c /* ? */; 4-byte store: mov dword ptr [esi + 0x82c], edi
-    unsigned int m_830;  // +0x830 init 0x9; 4-byte store: mov dword ptr [esi + 0x830], 9
+    unsigned int GateStages;  // +0x830 (INI key); 4-byte store: mov dword ptr [esi + 0x830], 9
     unsigned int m_834;  // +0x834 /* ? */; 4-byte store: mov dword ptr [esi + 0x834], edi
-    unsigned char m_838;  // +0x838 /* ? */; 1-byte store: mov byte ptr [esi + 0x838], bl
-    unsigned char m_839;  // +0x839 /* ? */; 1-byte store: mov byte ptr [esi + 0x839], bl
+    unsigned char DamagedDoor;  // +0x838 (INI key); 1-byte store: mov byte ptr [esi + 0x838], bl
+    unsigned char InvisibleInGame;  // +0x839 (INI key); 1-byte store: mov byte ptr [esi + 0x839], bl
     unsigned char m_83a;  // +0x83a /* ? */; 1-byte store: mov byte ptr [esi + 0x83a], bl
     unsigned char m_83b;  // +0x83b /* ? */; 1-byte store: mov byte ptr [esi + 0x83b], bl
-    unsigned char m_83c;  // +0x83c init 0x1; 1-byte store: mov byte ptr [esi + 0x83c], 1
+    unsigned char ExtraDamageStage;  // +0x83c (INI key); 1-byte store: mov byte ptr [esi + 0x83c], 1
     unsigned char m_83d;  // +0x83d /* ? */; 1-byte store: mov byte ptr [esi + 0x83d], bl
     unsigned char m_83e;  // +0x83e /* ? */; 1-byte store: mov byte ptr [esi + 0x83e], bl
-    unsigned char m_83f;  // +0x83f init 0x14; 1-byte store: mov byte ptr [esi + 0x83f], 0x14
+    unsigned char CloakRadiusInCells;  // +0x83f (INI key); 1-byte store: mov byte ptr [esi + 0x83f], 0x14
     unsigned char m_840;  // +0x840 /* ? */; 1-byte store: mov byte ptr [esi + 0x840], bl
-    unsigned char m_841;  // +0x841 /* ? */; 1-byte store: mov byte ptr [esi + 0x841], bl
-    unsigned char m_842;  // +0x842 /* ? */; 1-byte store: mov byte ptr [esi + 0x842], bl
+    unsigned char DemandLoadBuildup;  // +0x841 (INI key); 1-byte store: mov byte ptr [esi + 0x841], bl
+    unsigned char FreeBuildup;  // +0x842 (INI key); 1-byte store: mov byte ptr [esi + 0x842], bl
     unsigned char m_843;  // +0x843 /* ? */; 1-byte store: mov byte ptr [esi + 0x843], bl
     unsigned char m_844;  // +0x844 /* ? */; 1-byte store: mov byte ptr [esi + 0x844], bl
 

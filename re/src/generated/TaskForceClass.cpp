@@ -99,31 +99,31 @@ void TaskForceClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// TaskForceClass::vfunc_11 -- the body is the canonical transcription of
+// TaskForceClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00606cc0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TaskForceClass::vfunc_11()
+void TaskForceClass::What_Am_I()
 {
     ts::sub::sub_00606cc0();
 }
 
 // -------------------------------------------------------------------------
-// TaskForceClass::vfunc_12 -- the body is the canonical transcription of
+// TaskForceClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00606cd0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TaskForceClass::vfunc_12()
+void TaskForceClass::Get_Heap()
 {
     ts::sub::sub_00606cd0();
 }
 
 // -------------------------------------------------------------------------
-// TaskForceClass::vfunc_13 -- the body is the canonical transcription of
+// TaskForceClass::Load -- the body is the canonical transcription of
 // 17 instructions at 0x00606c60, in src/generated/code/.
 // size 41 bytes; callees: 0x00405fe0, 0x0046d680
 //
-void TaskForceClass::vfunc_13(int a0)
+void TaskForceClass::Load(int a0)
 {
     ts::sub::sub_00606c60();
 }
@@ -206,21 +206,21 @@ void TaskForceClass::vfunc_24(int a0)
 }
 
 // -------------------------------------------------------------------------
-// TaskForceClass::vfunc_25 -- the body is the canonical transcription of
+// TaskForceClass::Fetch_ID -- the body is the canonical transcription of
 // 63 instructions at 0x006068d0, in src/generated/code/.
 // size 178 bytes; callees: 0x00405f20, 0x0048ea00, 0x004d60b0, 0x004d6ed0, 0x00682aae
 //
-void TaskForceClass::vfunc_25(int a0)
+void TaskForceClass::Fetch_ID(int a0)
 {
     ts::sub::sub_006068d0();
 }
 
 // -------------------------------------------------------------------------
-// TaskForceClass::vfunc_26 -- the body is the canonical transcription of
+// TaskForceClass::Set_ID -- the body is the canonical transcription of
 // 32 instructions at 0x00606990, in src/generated/code/.
 // size 80 bytes; callees: 0x00405fb0, 0x0048eaa0, 0x004d6b50, 0x006069f0, 0x00682aae
 //
-void TaskForceClass::vfunc_26(int a0, int a1, int a2)
+void TaskForceClass::Set_ID(int a0, int a1, int a2)
 {
     ts::sub::sub_00606990();
 }

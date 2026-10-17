@@ -129,7 +129,7 @@ public:
     // as evidence. `/* width ? */` means no store could be classified.
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
     unsigned char pad_004[0xc3];
-    unsigned char m_0c7;  // +0x0c7 init 0x1; 1-byte store: mov byte ptr [esi + 0xc7], 1
+    unsigned char Crushable;  // +0x0c7 (INI key); 1-byte store: mov byte ptr [esi + 0xc7], 1
     unsigned char pad_0c8[0x2b4];
     unsigned int m_37c;  // +0x37c init 0x8; 4-byte store: mov dword ptr [esi + 0x37c], 8
     unsigned char pad_380[0xc3];

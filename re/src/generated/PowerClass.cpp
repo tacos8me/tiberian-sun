@@ -48,16 +48,6 @@ void PowerClass::vfunc_3(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// PowerClass::vfunc_4 -- the body is the canonical transcription of
-// 11 instructions at 0x00594870, in src/generated/code/.
-// size 30 bytes; callees: 0x005a0980, 0x0068298c
-//
-void PowerClass::vfunc_4(int a0)
-{
-    ts::sub::sub_00594870();
-}
-
-// -------------------------------------------------------------------------
 // PowerClass::vfunc_5 -- the body is the canonical transcription of
 // 1 instructions at 0x00593ba0, in src/generated/code/.
 // size 5 bytes; callees: 0x005a0a50

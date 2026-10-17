@@ -29,9 +29,9 @@ public:
     virtual void GetType(int a0, int a1);  // [7] 0x00405910  // __stdcall, returns int
     virtual void Set_ID();  // [9] 0x004059b0  // __cdecl
     virtual void Get_RTTI(int a0, int a1);  // [10] 0x004059c0  // __stdcall
-    virtual void vfunc_11();  // [11] 0x00446ae0  // __cdecl, returns int
-    virtual void vfunc_12();  // [12] 0x00446ad0  // __cdecl, returns int
-    virtual void vfunc_13(int a0);  // [13] 0x00446a20  // __thiscall
+    virtual void What_Am_I();  // [11] 0x00446ae0  // __cdecl, returns int
+    virtual void Get_Heap();  // [12] 0x00446ad0  // __cdecl, returns int
+    virtual void Load(int a0);  // [13] 0x00446a20  // __thiscall
     virtual void Save();  // [14] 0x004059d0  // __cdecl
     virtual void GetSizeMax();  // [15] 0x004059e0  // __cdecl, returns int
     virtual void Compute_CRC();  // [16] 0x004059f0  // __cdecl, returns int
@@ -43,7 +43,7 @@ public:
     virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
     virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
     virtual void vfunc_24(int a0);  // [24] 0x00406010  // __stdcall
-    virtual void vfunc_25(int a0);  // [25] 0x004467d0  // __thiscall  // refs "FinalMovie"
+    virtual void Fetch_ID(int a0);  // [25] 0x004467d0  // __thiscall  // refs "FinalMovie"
     virtual void Set_ID(int a0);  // [26] 0x00405fb0  // __thiscall  // refs "Name"
 
     CampaignClass();  // 0x00446670

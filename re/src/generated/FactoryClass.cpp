@@ -92,41 +92,41 @@ void FactoryClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::vfunc_10 -- the body is the canonical transcription of
+// FactoryClass::Get_RTTI -- the body is the canonical transcription of
 // 6 instructions at 0x00493ad0, in src/generated/code/.
 // size 21 bytes; callees: none
 //
-void FactoryClass::vfunc_10(int a0, int a1)
+void FactoryClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_00493ad0();
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::vfunc_11 -- the body is the canonical transcription of
+// FactoryClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00493c90, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void FactoryClass::vfunc_11()
+void FactoryClass::What_Am_I()
 {
     ts::sub::sub_00493c90();
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::vfunc_12 -- the body is the canonical transcription of
+// FactoryClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00493ca0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void FactoryClass::vfunc_12()
+void FactoryClass::Get_Heap()
 {
     ts::sub::sub_00493ca0();
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::vfunc_13 -- the body is the canonical transcription of
+// FactoryClass::Load -- the body is the canonical transcription of
 // 110 instructions at 0x00493980, in src/generated/code/.
 // size 323 bytes; callees: 0x00405940, 0x00407a60, 0x0046d5d0, 0x0046d680
 //
-void FactoryClass::vfunc_13(int a0)
+void FactoryClass::Load(int a0)
 {
     ts::sub::sub_00493980();
 }

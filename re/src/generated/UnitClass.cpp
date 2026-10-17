@@ -84,73 +84,63 @@ void UnitClass::GetType(int a0, int a1)
     ts::sub::sub_00405910();
 }
 
-// -------------------------------------------------------------------------
-// UnitClass::vfunc_8 -- the body is the canonical transcription of
-// 11 instructions at 0x0063e1f0, in src/generated/code/.
-// size 30 bytes; callees: 0x00630fb0, 0x0068298c
-//
-void UnitClass::vfunc_8(int a0)
-{
-    ts::sub::sub_0063e1f0();
-}
-
-// UnitClass::vfunc_9 -- ALIAS of FootClass::vfunc_9 (same machine code at 0x0060f180); the
+// UnitClass::Set_ID -- ALIAS of FootClass::Set_ID (same machine code at 0x0060f180); the
 // forwarder is written once, at that declaration.
-void UnitClass::vfunc_9()
+void UnitClass::Set_ID()
 {
     ts::sub::sub_0060f180();
 }
 
 // -------------------------------------------------------------------------
-// UnitClass::vfunc_10 -- the body is the canonical transcription of
+// UnitClass::Get_RTTI -- the body is the canonical transcription of
 // 19 instructions at 0x0063c6a0, in src/generated/code/.
 // size 56 bytes; callees: 0x004a0ca0
 //
-void UnitClass::vfunc_10(int a0, int a1)
+void UnitClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_0063c6a0();
 }
 
 // -------------------------------------------------------------------------
-// UnitClass::vfunc_11 -- the body is the canonical transcription of
+// UnitClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x0063e180, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void UnitClass::vfunc_11()
+void UnitClass::What_Am_I()
 {
     ts::sub::sub_0063e180();
 }
 
 // -------------------------------------------------------------------------
-// UnitClass::vfunc_12 -- the body is the canonical transcription of
+// UnitClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x0063e130, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void UnitClass::vfunc_12()
+void UnitClass::Get_Heap()
 {
     ts::sub::sub_0063e130();
 }
 
 // -------------------------------------------------------------------------
-// UnitClass::vfunc_13 -- the body is the canonical transcription of
+// UnitClass::Load -- the body is the canonical transcription of
 // 16 instructions at 0x0063c5d0, in src/generated/code/.
 // size 47 bytes; callees: 0x004a23c0, 0x0063c601
 //
-void UnitClass::vfunc_13(int a0)
+void UnitClass::Load(int a0)
 {
     ts::sub::sub_0063c5d0();
 }
 
-// UnitClass::vfunc_14 -- ALIAS of AircraftClass::vfunc_14 (same machine code at 0x00612db0); the
+// UnitClass::Save -- ALIAS of AircraftClass::Save (same machine code at 0x00612db0); the
 // forwarder is written once, at that declaration.
-void UnitClass::vfunc_14()
+void UnitClass::Save()
 {
     ts::sub::sub_00612db0();
 }
 
-// UnitClass::vfunc_15 -- ALIAS of AircraftClass::vfunc_15 (same machine code at 0x00612dc0); the
+// UnitClass::GetSizeMax -- ALIAS of AircraftClass::GetSizeMax (same machine code at 0x00612dc0); the
 // forwarder is written once, at that declaration.
-void UnitClass::vfunc_15()
+void UnitClass::GetSizeMax()
 {
     ts::sub::sub_00612dc0();
 }
@@ -287,11 +277,11 @@ void UnitClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// UnitClass::vfunc_33 -- the body is the canonical transcription of
+// UnitClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x0063a090, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void UnitClass::vfunc_33()
+void UnitClass::Get_Type()
 {
     ts::sub::sub_0063a090();
 }

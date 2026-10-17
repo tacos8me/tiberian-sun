@@ -19,16 +19,6 @@
 // transcriptions each body below forwards to.
 #include "Machine.h"   // ts:: machine model, for ts::EAX
 
-// -------------------------------------------------------------------------
-// SliderClass::vfunc_0 -- the body is the canonical transcription of
-// 11 instructions at 0x004f7a50, in src/generated/code/.
-// size 30 bytes; callees: 0x005de030, 0x0068298c
-//
-void SliderClass::vfunc_0(int a0)
-{
-    ts::sub::sub_004f7a50();
-}
-
 // SliderClass::vfunc_1 -- ALIAS of CheckListClass::vfunc_1 (same machine code at 0x004a5b00); the
 // forwarder is written once, at that declaration.
 void SliderClass::vfunc_1()

@@ -99,22 +99,47 @@ def main():
     result = {}
     total = 0
 
-    for m in man:
-        # candidate readers: vtable slots that reference INI keys
-        readers = []
-        for e in m["entries"]:
-            f = fns.get(e)
-            if not f:
+    def key_count(f):
+        return sum(1 for s in f.get("strings", []) if is_ini_key(s["text"]))
+
+    def reader_set(roots):
+        """The class's INI readers: its own high-key vtable slots plus the
+        high-key functions they call.
+
+        A class's Read_INI is frequently a small virtual that delegates the
+        field parsing to a non-virtual helper, and only the helper carries the
+        key strings.  The helper's stores still target this class's object
+        because it is entered with the class's `this` in ecx, so its key/offset
+        bindings are this class's members.
+        """
+        out = {}
+        stack = [r for r in roots if r in fns]
+        seen = set()
+        while stack:
+            va = stack.pop()
+            if va in seen:
                 continue
-            nk = sum(1 for s in f.get("strings", []) if is_ini_key(s["text"]))
+            seen.add(va)
+            f = fns[va]
+            nk = key_count(f)
             if nk >= 3:
-                readers.append((nk, e))
+                out[va] = nk
+            for c in f.get("callees", []):
+                g = fns.get(c)
+                if g is not None and c not in seen and key_count(g) >= 3:
+                    stack.append(c)
+        return out
+
+    for m in man:
+        # candidate readers: vtable slots that reference INI keys, and the
+        # readers those slots delegate to
+        readers = reader_set(m["entries"])
         if not readers:
             continue
-        readers.sort(reverse=True)
+        ordered = sorted(readers.items(), key=lambda kv: (-kv[1], kv[0]))
 
         named = {}
-        for _, rva in readers[:3]:
+        for rva, _ in ordered[:8]:
             f = fns[rva]
             # re-disassemble with detail so we can read operands
             code = bin_.rd(f["va"], f["size"] + 16)

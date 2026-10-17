@@ -48,16 +48,6 @@ void ScrollClass::vfunc_3(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// ScrollClass::vfunc_4 -- the body is the canonical transcription of
-// 11 instructions at 0x005d04e0, in src/generated/code/.
-// size 30 bytes; callees: 0x005a0980, 0x0068298c
-//
-void ScrollClass::vfunc_4(int a0)
-{
-    ts::sub::sub_005d04e0();
-}
-
-// -------------------------------------------------------------------------
 // ScrollClass::vfunc_5 -- the body is the canonical transcription of
 // 1 instructions at 0x005f46f0, in src/generated/code/.
 // size 5 bytes; callees: 0x005d8a40

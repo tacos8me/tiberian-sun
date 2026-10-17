@@ -92,38 +92,38 @@ void WaveClass::Set_ID()
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::vfunc_10 -- the body is the canonical transcription of
+// WaveClass::Get_RTTI -- the body is the canonical transcription of
 // 19 instructions at 0x00652f20, in src/generated/code/.
 // size 50 bytes; callees: 0x0056fb00
 //
-void WaveClass::vfunc_10(int a0, int a1)
+void WaveClass::Get_RTTI(int a0, int a1)
 {
     ts::sub::sub_00652f20();
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::vfunc_11 -- the body is the canonical transcription of
+// WaveClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x00655220, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void WaveClass::vfunc_11()
+void WaveClass::What_Am_I()
 {
     ts::sub::sub_00655220();
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::vfunc_12 -- the body is the canonical transcription of
+// WaveClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x00653160, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void WaveClass::vfunc_12()
+void WaveClass::Get_Heap()
 {
     ts::sub::sub_00653160();
 }
 
-// WaveClass::vfunc_13 -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
+// WaveClass::Load -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_13(int a0)
+void WaveClass::Load(int a0)
 {
     ts::sub::sub_00570630();
 }
@@ -268,11 +268,11 @@ void WaveClass::vfunc_32()
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::vfunc_33 -- the body is the canonical transcription of
+// WaveClass::Get_Type -- the body is the canonical transcription of
 // 2 instructions at 0x00653180, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void WaveClass::vfunc_33()
+void WaveClass::Get_Type()
 {
     ts::sub::sub_00653180();
 }

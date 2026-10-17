@@ -99,31 +99,31 @@ void SuperWeaponTypeClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// SuperWeaponTypeClass::vfunc_11 -- the body is the canonical transcription of
+// SuperWeaponTypeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x005f2e90, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SuperWeaponTypeClass::vfunc_11()
+void SuperWeaponTypeClass::What_Am_I()
 {
     ts::sub::sub_005f2e90();
 }
 
 // -------------------------------------------------------------------------
-// SuperWeaponTypeClass::vfunc_12 -- the body is the canonical transcription of
+// SuperWeaponTypeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x005f2ea0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SuperWeaponTypeClass::vfunc_12()
+void SuperWeaponTypeClass::Get_Heap()
 {
     ts::sub::sub_005f2ea0();
 }
 
 // -------------------------------------------------------------------------
-// SuperWeaponTypeClass::vfunc_13 -- the body is the canonical transcription of
+// SuperWeaponTypeClass::Load -- the body is the canonical transcription of
 // 53 instructions at 0x005f2eb0, in src/generated/code/.
 // size 152 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680
 //
-void SuperWeaponTypeClass::vfunc_13(int a0)
+void SuperWeaponTypeClass::Load(int a0)
 {
     ts::sub::sub_005f2eb0();
 }
@@ -143,11 +143,11 @@ void SuperWeaponTypeClass::GetSizeMax()
 }
 
 // -------------------------------------------------------------------------
-// SuperWeaponTypeClass::vfunc_16 -- the body is the canonical transcription of
+// SuperWeaponTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 2 instructions at 0x005f2f50, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void SuperWeaponTypeClass::vfunc_16()
+void SuperWeaponTypeClass::Compute_CRC()
 {
     ts::sub::sub_005f2f50();
 }
@@ -209,11 +209,11 @@ void SuperWeaponTypeClass::vfunc_24(int a0)
 }
 
 // -------------------------------------------------------------------------
-// SuperWeaponTypeClass::vfunc_25 -- the body is the canonical transcription of
+// SuperWeaponTypeClass::Fetch_ID -- the body is the canonical transcription of
 // 26 instructions at 0x005f2f60, in src/generated/code/.
 // size 82 bytes; callees: 0x00405f20, 0x004d6ed0, 0x005f2fb4, 0x006576f0
 //
-void SuperWeaponTypeClass::vfunc_25(int a0, int a1, int a2, int a3, int a4, int a5)
+void SuperWeaponTypeClass::Fetch_ID(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_005f2f60();
 }

@@ -19,7 +19,6 @@ class WWMouseClass : public Mouse
 {
 public:
     // ---- vtable 0x006a7b84 (17 slots) ----
-    virtual void vfunc_0(int a0);  // [0] 0x00674130  // __thiscall
     virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [1] 0x00672a60  // __thiscall
     virtual void vfunc_2();  // [2] 0x006740d0  // __cdecl, returns int
     virtual void vfunc_3();  // [3] 0x00673900  // __thiscall

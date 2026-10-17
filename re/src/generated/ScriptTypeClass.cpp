@@ -99,31 +99,31 @@ void ScriptTypeClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// ScriptTypeClass::vfunc_11 -- the body is the canonical transcription of
+// ScriptTypeClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x005cecd0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ScriptTypeClass::vfunc_11()
+void ScriptTypeClass::What_Am_I()
 {
     ts::sub::sub_005cecd0();
 }
 
 // -------------------------------------------------------------------------
-// ScriptTypeClass::vfunc_12 -- the body is the canonical transcription of
+// ScriptTypeClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x005cece0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ScriptTypeClass::vfunc_12()
+void ScriptTypeClass::Get_Heap()
 {
     ts::sub::sub_005cece0();
 }
 
 // -------------------------------------------------------------------------
-// ScriptTypeClass::vfunc_13 -- the body is the canonical transcription of
+// ScriptTypeClass::Load -- the body is the canonical transcription of
 // 13 instructions at 0x005cec10, in src/generated/code/.
 // size 30 bytes; callees: 0x00405fe0, 0x0046d680
 //
-void ScriptTypeClass::vfunc_13(int a0)
+void ScriptTypeClass::Load(int a0)
 {
     ts::sub::sub_005cec10();
 }
@@ -143,11 +143,11 @@ void ScriptTypeClass::GetSizeMax()
 }
 
 // -------------------------------------------------------------------------
-// ScriptTypeClass::vfunc_16 -- the body is the canonical transcription of
+// ScriptTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 2 instructions at 0x005cecf0, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void ScriptTypeClass::vfunc_16()
+void ScriptTypeClass::Compute_CRC()
 {
     ts::sub::sub_005cecf0();
 }
@@ -209,21 +209,21 @@ void ScriptTypeClass::vfunc_24(int a0)
 }
 
 // -------------------------------------------------------------------------
-// ScriptTypeClass::vfunc_25 -- the body is the canonical transcription of
+// ScriptTypeClass::Fetch_ID -- the body is the canonical transcription of
 // 57 instructions at 0x005ce700, in src/generated/code/.
 // size 167 bytes; callees: 0x00405f20, 0x004d6ed0, 0x0062a6c0, 0x0062e450, 0x00682aae
 //
-void ScriptTypeClass::vfunc_25(int a0)
+void ScriptTypeClass::Fetch_ID(int a0)
 {
     ts::sub::sub_005ce700();
 }
 
 // -------------------------------------------------------------------------
-// ScriptTypeClass::vfunc_26 -- the body is the canonical transcription of
+// ScriptTypeClass::Set_ID -- the body is the canonical transcription of
 // 36 instructions at 0x005ce660, in src/generated/code/.
 // size 102 bytes; callees: 0x00405fb0, 0x004d6b50, 0x005ce6d6, 0x0062a700, 0x0062e450, 0x00682aae
 //
-void ScriptTypeClass::vfunc_26(int a0, int a1, int a2, int a3)
+void ScriptTypeClass::Set_ID(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_005ce660();
 }

@@ -99,31 +99,31 @@ void ScriptClass::Get_RTTI(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// ScriptClass::vfunc_11 -- the body is the canonical transcription of
+// ScriptClass::What_Am_I -- the body is the canonical transcription of
 // 2 instructions at 0x005cec30, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ScriptClass::vfunc_11()
+void ScriptClass::What_Am_I()
 {
     ts::sub::sub_005cec30();
 }
 
 // -------------------------------------------------------------------------
-// ScriptClass::vfunc_12 -- the body is the canonical transcription of
+// ScriptClass::Get_Heap -- the body is the canonical transcription of
 // 2 instructions at 0x005cec40, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ScriptClass::vfunc_12()
+void ScriptClass::Get_Heap()
 {
     ts::sub::sub_005cec40();
 }
 
 // -------------------------------------------------------------------------
-// ScriptClass::vfunc_13 -- the body is the canonical transcription of
+// ScriptClass::Load -- the body is the canonical transcription of
 // 13 instructions at 0x005ce3a0, in src/generated/code/.
 // size 30 bytes; callees: 0x00405940, 0x0046d680
 //
-void ScriptClass::vfunc_13(int a0)
+void ScriptClass::Load(int a0)
 {
     ts::sub::sub_005ce3a0();
 }
