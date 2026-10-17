@@ -108,6 +108,23 @@ def sync_handwritten():
             n += 1
         except OSError:
             pass
+    if n:
+        # A raw hand-written header is not self-contained: it has no includes
+        # and may define a type the prelude also defines. The pipeline copies
+        # it and then runs reconcile_prelude.py and make_selfcontained.py
+        # (stages 10 and 10b). Copying without those steps is not equivalent,
+        # and on a fresh checkout -- where checkout mtimes make the hand-written
+        # file newer -- it copied 140 raw headers over the reconciled ones and
+        # 140 of 492 translation units failed on missing COM types. Mirror the
+        # pipeline; the copy only happens after an edit, so this is not paid on
+        # every boot.
+        for args in (["tools/reconcile_prelude.py", dst],
+                     ["tools/make_selfcontained.py", dst, "build/shim"]):
+            r = subprocess.run([sys.executable] + args, capture_output=True)
+            text = r.stdout.decode("utf-8", "replace")
+            if r.returncode != 0 or "failing:" in text:
+                print("boot: %s reported a problem after the header copy" % args[0])
+                print("  " + text.strip().replace("\n", "\n  ")[:800])
     return n
 CXXFLAGS = ["-std=c++03", "-O0", "-m32"] + INCLUDE
 
