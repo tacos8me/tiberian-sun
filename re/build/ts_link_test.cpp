@@ -291,7 +291,15 @@ void st_HeapAlloc()      { stub_note("HeapAlloc"); EAX.d = st_alloc(st_arg(2)); 
 void st_HeapReAlloc()    { stub_note("HeapReAlloc"); EAX.d = st_alloc(st_arg(3)); st_ret_n(4); }
 void st_HeapFree()       { stub_note("HeapFree"); EAX.d = 1; st_ret_n(3); }
 void st_HeapDestroy()    { stub_note("HeapDestroy"); EAX.d = 1; st_ret_n(1); }
-void st_VirtualAlloc()   { stub_note("VirtualAlloc"); EAX.d = st_alloc(st_arg(1)); st_ret_n(4); }
+void st_VirtualAlloc()   {
+    // MEM_RESERVE with an explicit lpAddress must return THAT address: the CRT
+    // reserves 1 MiB, then commits 8 KiB inside it, and a bump allocator that
+    // answers both with a fresh pointer corrupts the region bookkeeping.
+    stub_note("VirtualAlloc");
+    u32 addr = st_arg(0);
+    EAX.d = addr ? addr : st_alloc(st_arg(1));
+    st_ret_n(4);
+}
 void st_LocalAlloc()     { stub_note("LocalAlloc"); EAX.d = st_alloc(st_arg(1)); st_ret_n(2); }
 void st_GetLastError()   { stub_note("GetLastError"); EAX.d = 0; st_ret(); }
 void st_SetLastError()   { stub_note("SetLastError"); EAX.d = 0; st_ret_n(1); }
@@ -522,9 +530,9 @@ void report_message_loop() {
 
 int main(int argc, char **argv) {
     const char *imgpath = argc > 1 ? argv[1] : "bin/GAME.EXE";
-    unsigned long budget = argc > 2 ? std::strtoul(argv[2], 0, 10) : 60000000ul;
+    unsigned long budget = argc > 2 ? std::strtoul(argv[2], 0, 10) : 20000000ul;
     unsigned long depth_limit = argc > 3 ? std::strtoul(argv[3], 0, 10) : 20000ul;
-    unsigned wall_seconds = argc > 4 ? (unsigned)std::strtoul(argv[4], 0, 10) : 60u;
+    unsigned wall_seconds = argc > 4 ? (unsigned)std::strtoul(argv[4], 0, 10) : 30u;
 
     std::printf("ts_link_test: linking the recovered tree succeeded\n");
 

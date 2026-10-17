@@ -267,7 +267,7 @@ inline void unmodelled(u32 va, const char *mnem) {
 // .bss does. Accesses are assembled byte-wise so that a multi-byte access
 // straddling a page boundary is still correct.
 struct PageTable {
-    enum { SLOTS = 8192 };
+    enum { SLOTS = 32768 };
     u32 key[SLOTS];
     u8 *val[SLOTS];
     PageTable() { for (int i = 0; i < SLOTS; ++i) { key[i] = 0xffffffffu; val[i] = 0; } }
