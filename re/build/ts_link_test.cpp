@@ -308,7 +308,17 @@ void st_GetProcAddress() { stub_note("GetProcAddress"); EAX.d = 0; st_ret_n(2); 
 void st_SetUnhandledExceptionFilter() {
     stub_note("SetUnhandledExceptionFilter"); EAX.d = 0; st_ret_n(1);
 }
-void st_ExitProcess()    { stub_note("ExitProcess"); g_exit_called = true; EAX.d = 0; st_ret_n(1); }
+void st_ExitProcess() {
+    stub_note("ExitProcess");
+    g_exit_called = true;
+    // A process that exits is finished. Returning here let the frames above
+    // run to their own `ret`, and the "MESSAGE LOOP: reached" this harness
+    // printed was a loop the real game never ran -- the same retracted result
+    // boot_driver fixed by halting. fault() makes the next insn() longjmp.
+    ts::fault("the program called ExitProcess");
+    EAX.d = 0;
+    st_ret_n(1);
+}
 void st_WriteFile() {                 // the game's own output becomes visible
     stub_note("WriteFile");
     u32 buf = st_arg(1), n = st_arg(2), out = st_arg(3);
@@ -613,6 +623,7 @@ int main(int argc, char **argv) {
     m.step_limit = budget;
     jmp_buf halt;
     g_halt = &halt;
+    m.halt = &halt;                       // stop AT a fault, machine intact
     g_timed_out = false;
     std::signal(SIGALRM, on_watchdog);
     alarm(wall_seconds);
