@@ -13,66 +13,6 @@ namespace ts {
 namespace sub {
 
 // ---------------------------------------------------------------------------
-// sub_0045687e -- transcription of 6 instructions at 0x0045687e
-// size 17 bytes
-// callees: none
-//
-void sub_0045687e(void)
-{
-    ts::insn(0x0045687eu); ts::test32(ESI.d, ESI.d);   //   0x0045687e  test     esi, esi
-    ts::insn(0x00456880u); if (M.zf) { ts::ts_tail(0x45688fu); return; }   //   0x00456880  je       0x45688f
-    ts::insn(0x00456882u); ECX.d = ts::ld32(ESI.d + 0x64);   //   0x00456882  mov      ecx, dword ptr [esi + 0x64]
-    ts::insn(0x00456885u); AL = ts::ld8(ECX.d + 0x141);   //   0x00456885  mov      al, byte ptr [ecx + 0x141]
-    ts::insn(0x0045688bu); ts::test8(AL, AL);   //   0x0045688b  test     al, al
-    ts::insn(0x0045688du); if (!M.zf) { ts::ts_tail(0x4568eeu); return; }   //   0x0045688d  jne      0x4568ee
-    ts::ts_tail(0x0045688fu);   // span end 0x0045688f: the last instruction
-    return;                //   here does not transfer control
-}
-
-// ---------------------------------------------------------------------------
-// sub_0045688f -- transcription of 32 instructions at 0x0045688f
-// size 95 bytes
-// callees: none
-//
-void sub_0045688f(void)
-{
-    ts::insn(0x0045688fu); EDX.d = ts::ld32(EDI.d + 0x78);   //   0x0045688f  mov      edx, dword ptr [edi + 0x78]
-    ts::insn(0x00456892u); EDX.d = ts::shl32(EDX.d, 0x5u);   //   0x00456892  shl      edx, 5
-    ts::insn(0x00456895u); AL = ts::ld8(EDX.d + 0x72977c);   //   0x00456895  mov      al, byte ptr [edx + 0x72977c]
-    ts::insn(0x0045689bu); ts::test8(AL, AL);   //   0x0045689b  test     al, al
-    ts::insn(0x0045689du); if (M.zf) { ts::ts_tail(0x4568eeu); return; }   //   0x0045689d  je       0x4568ee
-    ts::insn(0x0045689fu); ts::cmp32(ts::ld32(EDI.d + 0x30), 0xffffffffu);   //   0x0045689f  cmp      dword ptr [edi + 0x30], -1
-    ts::insn(0x004568a3u); if (!M.zf) { ts::ts_tail(0x4568eeu); return; }   //   0x004568a3  jne      0x4568ee
-    ts::insn(0x004568a5u); AL = ts::ld8(EDI.d + 0x94);   //   0x004568a5  mov      al, byte ptr [edi + 0x94]
-    ts::insn(0x004568abu); ts::cmp8(AL, 0x4u);   //   0x004568ab  cmp      al, 4
-    ts::insn(0x004568adu); if ((!M.cf && !M.zf)) { ts::ts_tail(0x4568eeu); return; }   //   0x004568ad  ja       0x4568ee
-    ts::insn(0x004568afu); ts::test8(AL, AL);   //   0x004568af  test     al, al
-    ts::insn(0x004568b1u); if (M.zf) { goto L_004568c5; }   //   0x004568b1  je       0x4568c5
-    ts::insn(0x004568b3u); EAX.d = ts::ld32(ESP.d + 0xc);   //   0x004568b3  mov      eax, dword ptr [esp + 0xc]
-    ts::insn(0x004568b7u); ts::test32(EAX.d, EAX.d);   //   0x004568b7  test     eax, eax
-    ts::insn(0x004568b9u); if (M.zf) { goto L_004568c5; }   //   0x004568b9  je       0x4568c5
-    ts::insn(0x004568bbu); ECX.d = ts::ld32(EAX.d + 0xb4);   //   0x004568bb  mov      ecx, dword ptr [eax + 0xb4]
-    ts::insn(0x004568c1u); ts::test32(ECX.d, ECX.d);   //   0x004568c1  test     ecx, ecx
-    ts::insn(0x004568c3u); if (M.zf) { ts::ts_tail(0x4568eeu); return; }   //   0x004568c3  je       0x4568ee
-    L_004568c5:;
-    ts::insn(0x004568c5u); EAX.d = ts::ld32(EDI.d + 0x28);   //   0x004568c5  mov      eax, dword ptr [edi + 0x28]
-    ts::insn(0x004568c8u); ts::test32(EAX.d, EAX.d);   //   0x004568c8  test     eax, eax
-    ts::insn(0x004568cau); if ((M.sf != M.of)) { goto L_004568e7; }   //   0x004568ca  jl       0x4568e7
-    ts::insn(0x004568ccu); ts::cmp32(EAX.d, ts::ld32(8072712));   //   0x004568cc  cmp      eax, dword ptr [0x7b2e08]
-    ts::insn(0x004568d2u); if ((M.sf == M.of)) { goto L_004568e7; }   //   0x004568d2  jge      0x4568e7
-    ts::insn(0x004568d4u); ECX.d = ts::ld32(8072700);   //   0x004568d4  mov      ecx, dword ptr [0x7b2dfc]
-    ts::insn(0x004568dau); EDX.d = ts::ld32(ECX.d + EAX.d * 4);   //   0x004568da  mov      edx, dword ptr [ecx + eax*4]
-    ts::insn(0x004568ddu); AL = ts::ld8(EDX.d + 0x196);   //   0x004568dd  mov      al, byte ptr [edx + 0x196]
-    ts::insn(0x004568e3u); ts::test8(AL, AL);   //   0x004568e3  test     al, al
-    ts::insn(0x004568e5u); if (M.zf) { ts::ts_tail(0x4568eeu); return; }   //   0x004568e5  je       0x4568ee
-    L_004568e7:;
-    ts::insn(0x004568e7u); EDI.d = ts::pop32();   //   0x004568e7  pop      edi
-    ts::insn(0x004568e8u); AL = 0x1u;   //   0x004568e8  mov      al, 1
-    ts::insn(0x004568eau); ESI.d = ts::pop32();   //   0x004568ea  pop      esi
-    ts::insn(0x004568ebu); ts::ret_pop(0x4u); return;   //   0x004568eb  ret      4
-}
-
-// ---------------------------------------------------------------------------
 // sub_004568ee -- transcription of 4 instructions at 0x004568ee
 // size 7 bytes
 // callees: none
@@ -7591,6 +7531,32 @@ void sub_00459d72(void)
     ts::insn(0x00459d74u); if (!M.zf) { ts::ts_tail(0x459d7bu); return; }   //   0x00459d74  jne      0x459d7b
     ts::ts_tail(0x00459d76u);   // span end 0x00459d76: the last instruction
     return;                //   here does not transfer control
+}
+
+// ---------------------------------------------------------------------------
+// sub_00459d76 -- transcription of 4 instructions at 0x00459d76
+// size 5 bytes
+// callees: none
+//
+void sub_00459d76(void)
+{
+    ts::insn(0x00459d76u); EDI.d = ts::pop32();   //   0x00459d76  pop      edi
+    ts::insn(0x00459d77u); AL = 0x1u;   //   0x00459d77  mov      al, 1
+    ts::insn(0x00459d79u); ESI.d = ts::pop32();   //   0x00459d79  pop      esi
+    ts::insn(0x00459d7au); ts::ret_pop(0x0u); return;   //   0x00459d7a  ret      
+}
+
+// ---------------------------------------------------------------------------
+// sub_00459d7b -- transcription of 4 instructions at 0x00459d7b
+// size 5 bytes
+// callees: none
+//
+void sub_00459d7b(void)
+{
+    ts::insn(0x00459d7bu); EDI.d = ts::pop32();   //   0x00459d7b  pop      edi
+    ts::insn(0x00459d7cu); AL = ts::xor8(AL, AL);   //   0x00459d7c  xor      al, al
+    ts::insn(0x00459d7eu); ESI.d = ts::pop32();   //   0x00459d7e  pop      esi
+    ts::insn(0x00459d7fu); ts::ret_pop(0x0u); return;   //   0x00459d7f  ret      
 }
 
 }  // namespace sub
