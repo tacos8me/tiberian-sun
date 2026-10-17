@@ -164,6 +164,18 @@ struct Machine {
     u32 trace_esi[8];
     u32 trace_edi[8];
     unsigned long stub_dispatches;
+    // The argument count the most recent stub popped, recorded by stub_done in
+    // Win32Stubs.h. A __stdcall stub owns its arguments, so a correct call ends
+    // at esp_before + 4*nargs -- not at esp_before. Without this field the
+    // tracker compared every stub to the caller's ESP and reported 111,682
+    // correct calls as leaks, burying the real signal.
+    u32 stub_last_nargs;
+    // The call depth stub_done ran at. A recovered callee that calls a stub
+    // somewhere inside itself also changes stub_dispatches, but IT must still
+    // return to esp_before; only a stub dispatched DIRECTLY at the call's own
+    // depth owns arguments. Without the depth, 54,527 recovered callers were
+    // still misreported.
+    u32 stub_last_depth;
     unsigned long stack_imbalances;
     u32 stack_imbalance_n;
     u32 stack_imbalance_site[16];
@@ -314,7 +326,8 @@ inline void reset() {
     m.unmapped_text_sample_n = 0;
     m.bad_call_n = 0;
     m.watch_va = 0; m.watch_hits = 0;
-    m.stub_dispatches = 0; m.stack_imbalances = 0; m.stack_imbalance_n = 0;
+    m.stub_dispatches = 0; m.stub_last_nargs = 0; m.stub_last_depth = 0;
+    m.stack_imbalances = 0; m.stack_imbalance_n = 0;
     m.trace_va = 0; m.trace_n = 0; m.leak_n = 0;
     m.bad_calls = 0;
     if (m.exec_map && m.exec_map_hi > m.exec_map_lo)
@@ -792,6 +805,7 @@ inline void ts_call_at(u32 target, u32 ret) {
     Machine &m = mach();
     u32 site = m.eip;              // the call instruction, for the report
     u32 esp_before = ESP.d;
+    u32 depth_before = m.call_depth;
     unsigned long stubs_before = m.stub_dispatches;
     push32(ret);
     if (!ts_lookup(target)) {
@@ -801,11 +815,24 @@ inline void ts_call_at(u32 target, u32 ret) {
         return;
     }
     ts_call(target);
-    // If the callee was a stub, ESP must be exactly where it started: stub_done
-    // pops the return address plus the argument count its table row declares.
-    // A mismatch means the row is wrong, and the caller's next argument reads
-    // come from the wrong slots.
-    if (ESP.d != esp_before && m.leak_n < 64u) {
+    // A __stdcall stub owns its arguments: stub_done pops the return address AND
+    // the nargs words its table row declares, so a correct stub call ends at
+    // esp_before + 4*nargs. Comparing it to esp_before made every correct stub
+    // look like a leak (111,682 of them) and hid the real signal. A recovered
+    // (non-stub) callee pushed nothing and popped only the return address, so it
+    // must still end exactly at esp_before.
+    if (m.stub_dispatches != stubs_before &&
+        m.stub_last_depth == depth_before + 1u) {
+        u32 expected = esp_before + 4u * m.stub_last_nargs;
+        if (ESP.d != expected) {
+            ++m.stack_imbalances;
+            if (m.stack_imbalance_n < 16) {
+                m.stack_imbalance_site[m.stack_imbalance_n] = site;
+                m.stack_imbalance_delta[m.stack_imbalance_n] = (int)(ESP.d - esp_before);
+                ++m.stack_imbalance_n;
+            }
+        }
+    } else if (ESP.d != esp_before && m.leak_n < 64u) {
         u32 callee = target;
         unsigned i = 0;
         for (; i < m.leak_n; ++i)
@@ -818,14 +845,6 @@ inline void ts_call_at(u32 target, u32 ret) {
             ++m.leak_n;
         }
         ++m.leak_count[i];
-    }
-    if (m.stub_dispatches != stubs_before && ESP.d != esp_before) {
-        ++m.stack_imbalances;
-        if (m.stack_imbalance_n < 16) {
-            m.stack_imbalance_site[m.stack_imbalance_n] = site;
-            m.stack_imbalance_delta[m.stack_imbalance_n] = (int)(ESP.d - esp_before);
-            ++m.stack_imbalance_n;
-        }
     }
 }
 
