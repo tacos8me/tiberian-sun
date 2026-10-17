@@ -121,6 +121,17 @@ struct Machine {
     // The CALL SITE of each in-.text unmapped target. The target alone says the
     // stack is wrong; the caller says WHICH call pushed the bad pointer.
     u32 unmapped_text_from[16];
+    // Calls whose target is OUTSIDE .text and which no registered stub answers.
+    // These are the loudest defect the model can report: the game asked to run
+    // something that is not code at all, so a value reached a call instruction
+    // that was never a function pointer. `0x11` is the SetCooperativeLevel flags
+    // argument arriving in a slot that held a vtable; `0x6a4e08` is a data table
+    // being walked as if it held function pointers. Recording the CALL SITE turns
+    // "the game is spinning on garbage" into a line number to read.
+    u32 bad_call_from[16];
+    u32 bad_call_to[16];
+    unsigned bad_call_n;
+    unsigned bad_calls;
     // .text bounds, set by the caller. They let an unmapped call be classified:
     // outside .text it is an import (expected -- the model has no Windows),
     // inside .text it is a recovered function nothing registered (a defect).
@@ -245,6 +256,8 @@ inline void reset() {
     m.depth_exceeded = 0;
     m.unmapped_sample_n = 0;
     m.unmapped_text_sample_n = 0;
+    m.bad_call_n = 0;
+    m.bad_calls = 0;
     if (m.call_depth_limit == 0) m.call_depth_limit = 4096;
 }
 
@@ -595,6 +608,14 @@ inline void ts_call(u32 va) {
     if (!f) {
         if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
         m.unmapped_calls++;
+        if (!m.text_hi || va < m.text_lo || va >= m.text_hi) {
+            ++m.bad_calls;
+            if (m.bad_call_n < 16) {
+                m.bad_call_from[m.bad_call_n] = from;
+                m.bad_call_to[m.bad_call_n] = va;
+                ++m.bad_call_n;
+            }
+        }
         count_unmapped_target(m, va, from);
         return;
     }
@@ -625,6 +646,14 @@ inline void ts_call(u32 va) {
         if (!f) {
             if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
             m.unmapped_calls++;
+            if (!m.text_hi || va < m.text_lo || va >= m.text_hi) {
+                ++m.bad_calls;
+                if (m.bad_call_n < 16) {
+                    m.bad_call_from[m.bad_call_n] = from;
+                    m.bad_call_to[m.bad_call_n] = va;
+                    ++m.bad_call_n;
+                }
+            }
             count_unmapped_target(m, va, from);
             break;
         }

@@ -77,6 +77,37 @@ MANIFEST = os.path.join(OBJDIR, "manifest.json")
 BINARY = os.path.join("build", "boot_driver")
 INDEX_CACHE = os.path.join(OBJDIR, "function_index.json")
 INCLUDE = ["-Isrc/include", "-Isrc/generated", "-Ibuild/shim"]
+
+# src/include wins, because that is where the prelude lives -- putting
+# src/handwritten first makes generated code pick up a raw header with no
+# HRESULT and no forward declarations, and 492 translation units fail at once.
+# So instead of reordering, mirror the pipeline's rule: the hand-written header
+# always wins, and it wins by being COPIED into src/include before the build.
+# Without this an edit to src/handwritten/ is invisible until the 8-minute
+# pipeline runs, and the symptom is a change that appears to do nothing. That
+# cost a cycle on Win32Stubs.h and another on Machine.h.
+def sync_handwritten():
+    src, dst = "src/handwritten", "src/include"
+    if not os.path.isdir(src):
+        return 0
+    os.makedirs(dst, exist_ok=True)
+    n = 0
+    for name in os.listdir(src):
+        if not name.endswith(".h"):
+            continue
+        a = os.path.join(src, name)
+        b = os.path.join(dst, name)
+        try:
+            if os.path.exists(b) and os.stat(b).st_mtime_ns >= os.stat(a).st_mtime_ns:
+                continue
+            with open(a, "rb") as fh:
+                data = fh.read()
+            with open(b, "wb") as fh:
+                fh.write(data)
+            n += 1
+        except OSError:
+            pass
+    return n
 CXXFLAGS = ["-std=c++03", "-O0", "-m32"] + INCLUDE
 
 
@@ -167,6 +198,7 @@ def compile_one(src):
 def build(rebuild):
     """Compile what changed, link the rest. Returns (ok, seconds, stats)."""
     started = time.time()
+    copied = sync_handwritten()
     srcs = sources()
     man = load_manifest()
     objects = man["objects"]
@@ -174,7 +206,12 @@ def build(rebuild):
     todo = []
     for src in srcs:
         obj = objects.get(src) or object_path(src)
-        if rebuild or obj != object_path(src) or stale(obj):
+        # A source with no manifest entry MUST be compiled. Without this the link
+        # step below indexes objects[s] for a file nothing ever built, and the
+        # failure surfaces as a KeyError in the linker's argument list rather than
+        # as "this file was never compiled" -- which is what it is. It bit when a
+        # flags change invalidated the cache and left a one-entry manifest.
+        if rebuild or src not in objects or obj != object_path(src) or stale(obj):
             todo.append(src)
 
     if todo:

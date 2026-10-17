@@ -375,6 +375,12 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
     std::printf("\n");
     std::printf("unmapped-calls: %lu\n", m.unmapped_calls);
     std::printf("unmapped-in-text: %lu\n", m.unmapped_in_text);
+    if (m.bad_calls) {
+        std::printf("calls outside .text (not a stub, not code): %u\n", m.bad_calls);
+        for (unsigned i = 0; i < m.bad_call_n; ++i)
+            std::printf("  call 0x%08x from 0x%08x\n",
+                        m.bad_call_to[i], m.bad_call_from[i]);
+    }
     std::printf("unmodelled: %lu\n", m.unmodelled_insns);
     std::printf("import-calls: %lu\n", g_import_calls);
     std::printf("distinct-imports: %lu\n", distinct_imports());
