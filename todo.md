@@ -495,6 +495,19 @@ version and calls `ExitProcess(1)` below 4.00.70, and it reaches that function
 through `GetProcAddress` rather than the import table, so there was no stub and
 the version read as 0. One export reporting 4.72 fixed it.
 
+### [x] The 2 unmapped calls, and the argument that arrives as a return address
+**Diagnosed and measured, not yet fixed.** The atexit walk over the 3,311-entry
+static-constructor table leaks **108 bytes**: ESP is 0x002ff56c at `push %esi`
+(0x6844cf) and 0x002ff4fc at the matching `pop %esi` (0x6844ea). So `pop %esi`
+loads a return address, ESI becomes 0x6844df, and `call *%esi` at 0x5e72cf calls
+into `ExitProcess`. That call's result sets `bl`, which decides whether the game
+shows its "Direct X" error box -- so the error box, the corrupted exit code
+(0x6844df for 1) and the corrupted MessageBox type (0x00a00201 for 0x30) are all
+one symptom.
+*Remaining:* name the constructor(s) that leak. The check must compare ESP at a
+constructor's own entry with ESP at its `ret`; a plain "ESP must return" check also
+flags `_alloca_probe` (0x684230), which moves ESP by design (`mov %ecx,%esp`).
+
 ### [ ] The 2 unmapped calls, and the argument that arrives as a return address
 `0x6844df` (from `0x5e7317`, `call *%esi`) and `0x46f3f8` (from `0x674bf6`,
 `call *0x58(%edx)`). Both targets are RETURN ADDRESSES, so a data pointer slot
@@ -504,6 +517,21 @@ address at the stop (`0x004876e7`). A value that should be an argument arrives a
 a return address.
 *Done when:* the caller of each is identified and the corruption fixed, and the
 link test passes.
+
+### [x] Real file I/O
+The stub layer used to make every file "exist" and read as empty, with
+`GetFileSize`/`SetFilePointer` agreeing, so the lie was internally consistent and
+the game could never load `rules.ini`, `TIBSUN.MIX` or the CD. Now: a host root
+(`TS_ROOT`, default `../gamedir`), case-insensitive per-component path resolution
+(Windows is case-insensitive; the game asks for `rules.ini` when the disk may hold
+`RULES.INI`), a 64-entry handle table over `std::FILE*`, and real `CreateFileA` /
+`ReadFile` / `WriteFile` / `SetFilePointer` / `GetFileSize` / `CloseHandle` /
+`GetFileAttributesA` / `DeleteFileA`. A miss returns INVALID_HANDLE_VALUE and says
+so, so a caller takes its real failure path instead of reading zeroes.
+First run: `CreateFileA("\\.\MONO")` -- the sound device name, and the only file
+the game opens before it exits.
+*Note:* this did NOT change the outcome (still 1,011,817 instructions), which is
+what localized the blocker to the stack leak rather than missing files.
 
 ### [ ] Get past the 512 MB memset
 Faults at `rep stos` 0x0068d781 with ECX=0x08000004 dwords. The caller is

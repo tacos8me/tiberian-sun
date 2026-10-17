@@ -274,17 +274,32 @@ recovered statements, every lifted function passing the differential test.
 Exit: a documented command that shows the model doing something the original
 does, and that fails if it stops doing it.
 
-**4.2 is DONE in the sense that matters: the game runs a frame loop.** It maps
-the image at its real VAs, resolves 341/341 imports, creates a window and pumps
-messages (`PeekMessage=137,295`). 16,383 unmapped calls became 2.
+**4.2 is NOT done. A previous version of this file claimed the game "runs a frame
+loop" with `PeekMessage=137,295`. That was retracted: the model let `ExitProcess`
+return, so execution continued past a fatal exit and the "loop" was one the real
+game never ran.**
 
-What is left is not "does it run" but three specific things:
-  1. The 2 unmapped calls (`0x6844df`, `0x46f3f8`) -- both return addresses used
-     as call targets. The same corruption is visible in the run itself:
-     `ExitProcess` receives `0x6844df` where the code passed `1`. A value that
-     should be an argument arrives as a return address.
-  2. No renderer. The window exists; nothing draws into it.
-  3. 27 imports are still generic (18 WSOCK32, 8 OLEAUT32, 1 ole32).
+What is true, measured: the game maps at its real VAs, resolves 342/342 imports,
+runs 1,011,817 instructions of CRT startup and init, and exits. The cause is
+measured: the atexit walk over the 3,311-entry static-constructor table leaks
+**108 bytes**, so ESI holds a return address and `call *%esi` at `0x5e72cf` calls
+into `ExitProcess`, which makes the game take its "Direct X" error box.
+
+**The oracle changed the premise.** `tools/oracle.py` shows the retail binary also
+exits with code 01 before DirectDraw surface creation on this host, because there
+is no audio device, no CD and no install registry. So the next work is not "fix the
+model until it matches a working game" -- the game does not work here yet either.
+It is: give both of them a real environment, and fix the model where it genuinely
+diverges from the retail binary.
+
+Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
+  1. Name the constructor(s) that leak, by comparing ESP at each one's own entry
+     against ESP at its `ret`. A plain "ESP must return" check also flags
+     `_alloca_probe` (0x684230), which moves ESP by design.
+  2. Extend the oracle past startup by mounting the CD and satisfying the install,
+     so the retail binary gets further than the model and becomes a real oracle.
+  3. Real rendering: per-surface memory and real `Blt`/`Flip`, with
+     `boot.py --dump-frame=N` writing a PNG to diff against a Wine screenshot.
 
 **The lesson worth keeping from this phase.** The game exits immediately unless
 `comctl32!DllGetVersion` reports >= 4.00.70, and it reaches that function through

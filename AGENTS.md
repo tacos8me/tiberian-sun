@@ -31,6 +31,13 @@ re/
   build/image_selftest.cpp        load the image and resolve imports, standalone
   build/boot_driver.cpp           the boot harness behind tools/boot.py
   tools/ghidra_scripts/           Ghidra post-scripts (DecompileAt.java)
+  tools/wine_run.sh               run the RETAIL binary under Wine (headless,
+                                  --trace CHANNEL, --dismiss, --shot PNG)
+  tools/oracle.py                 attach gdb to the retail binary and print the
+                                  real registers at an address, for diffing
+                                  against the model's TS_TRACE
+  STRATEGY.md                     the shortest credible path to a working game,
+                                  measured and ranked. Read with ROADMAP.md
 ghidra-proj/                      analysed Ghidra project (gitignored, 544 MB);
                                   recreate with tools/ghidra.sh's documented command
   src/generated/code/             the transcription: one ts::sub_XXXXXXXX(void)
@@ -105,6 +112,8 @@ is generated too.
 | `tools/gen_win32_stubs.py` | generates `Win32Stubs.h` from the image's own import directory, so the stub table cannot drift from the 341 thunks; `--evidence` derives argument counts from the recovered instruction stream |
 | `tools/boot.py` | one command that builds (cached: 0.4s), boots the image and reports it -- imports called by name, fault EIP with instruction bytes, containing function and generated source line, and whether a message loop was reached |
 | `tools/ghidra.sh` | decompile the function containing each given address, from a saved Ghidra project (seconds, no re-analysis) |
+| `tools/wine_run.sh` | run the **retail** `GAME.EXE` under Wine, headless: plain, `--trace ddraw`, `--dismiss` the startup dialog chain, `--shot` a PNG. The only oracle this project has |
+| `tools/oracle.py` | attach gdb to the retail binary, break at an address, print real ESP/EBP/EBX/EAX and the stack top; `--compare` diffs against the model at the same address |
 | `tools/test_tools.py` | unit tests for the load-bearing tools; every one is a regression test for a shipped defect |
 | `tools/verify_members_binary.py` | re-derive member offsets from the binary's own code; the only member check not trusting `out/` |
 | `tools/extract_realdata.py` | extract the shipped INI control files from `TIBSUN.MIX` with disjoint byte ranges |
@@ -223,14 +232,33 @@ correction was written** — the correction sat ten lines below a measurement th
 contradicted it. If you are reading a figure here that disagrees with
 `python3 tools/boot.py`, the tool is right and this file is stale.
 
-**The defect that explains it.** At the exit the arguments are stub addresses
-rather than the numbers the code pushed: `ExitProcess(0x6844df)` where the code
-passed `1`, and a `MessageBoxA` type of `0x00a00201` (inside the import-thunk
-region) where the code passed `0x30`. Both are reads from a stack slot that holds
-a return address or a thunk pointer, so a call in the init path leaves ESP wrong
-by one slot and every argument after it is read from the wrong place. Chasing that
-imbalance is the next step, and it is a single question: which call pushes and pops
-different amounts.
+**The defect that explains it, now measured.** At the exit the arguments are stub
+addresses rather than the numbers the code pushed: `ExitProcess(0x6844df)` where
+the code passed `1`, and a `MessageBoxA` type of `0x00a00201` (inside the
+import-thunk region) where the code passed `0x30`. Tracing the CRT's atexit walk
+over the 3,311-entry static-constructor table shows why:
+
+```
+at 0x6844cf (push %esi, the atexit walk):  esp=0x002ff56c
+at 0x6844ea (pop  %esi, the same walk):    esp=0x002ff4fc
+```
+
+**108 bytes — 27 dwords — leaked across the walk.** After it, `pop %esi` reads a
+return address instead of the saved register, ESI becomes `0x6844df`, and
+
+```asm
+5e72cf: call *%esi        ; goes to an address inside ExitProcess
+5e72d1: mov  -0x5f4(%ebp),%bl
+5e72d7: test %bl,%bl
+5e72d9: je   0x5e7306     ; zero would skip the error box; it is not zero
+```
+
+so the game shows its "Direct X" error box and exits. The corrupted exit code, the
+corrupted MessageBox type and the error box are all downstream of those 108 bytes.
+The leak is inside one or more of the 3,311 constructors; the diagnostic that names
+it must compare ESP at a constructor's own entry against ESP at its `ret`, because
+a plain "ESP must return where it started" check also flags `_alloca_probe`
+(`0x684230`), which moves ESP by design with `mov %ecx,%esp`.
 
 **Why it used to exit immediately, and the shape of the answer.** The CRT startup
 reads the comctl32 version and, if it is below 4.00.70, shows an error box and
@@ -262,11 +290,34 @@ to find:
   counted, so an unimplemented import is visible rather than silently plausible.
   The same applies to a stub that returns a *plausible* wrong value: returning 0
   from `DllGetVersion` did not look like an error, it looked like an old DLL.
+- **The model has diagnostics; use them instead of reading disassembly.**
+  `TS_TRACE=0xADDR` records ESP/ESI/EDI/EAX/ECX/EDX at the first 8 executions of an
+  address; `TS_PEEK=0xADDR[,..]` reads globals at the end of a run (which state is
+  the game in?); `TS_SCAN=start,count` reports table entries that are not `.text`
+  VAs (a corrupted table); `TS_WATCH=0xADDR` gives the EIP of the first non-zero
+  byte store to an address. `bad_calls` names calls whose target is outside `.text`
+  with no stub, plus the call site; `stack_imbalances` catches a stub whose
+  argument count is wrong; the leak tracker names callees that leave ESP moved.
+  "Is ESP right at this push?" is a question the machine answers in one run and
+  counting pushes by hand answers wrongly.
 - **Know which gate is slow.** `tools/verify.py` is **6 seconds**; `pipeline.sh`
   is **471 seconds** and the cost is the whole-tree compile and link. Iterate with
   `tools/boot.py` (sub-second after a cached build) and `verify.py`, and spend the
   471s only when something is ready to land. Most of the time lost in this project
   was lanes running the full pipeline to check a six-line change.
+- **Use the oracle before believing the model.** `tools/wine_run.sh` runs the
+  retail binary; `tools/oracle.py 0xADDR` reads its real registers. The first thing
+  the oracle ever said was that the retail game exits with code 01 before
+  DirectDraw surface creation here too -- which invalidated the premise that the
+  model was diverging from a *working* game. Check what the real binary does before
+  spending a day on a "divergence".
+- **A stub that says a file exists and reads as empty is the worst kind of lie.**
+  The file layer did exactly that: every file "existed", `GetFileSize` said 0 and
+  `SetFilePointer` agreed, so the lie was internally consistent and nothing ever
+  read past an end that was never written. The game cannot load `rules.ini`,
+  `TIBSUN.MIX` or the CD, so it exits during init, and no amount of DirectDraw work
+  changes that. It is now real file I/O over a host root with case-insensitive
+  path resolution.
 - **Use Ghidra for semantics.** `./tools/ghidra.sh 0x478e60 0x684446` prints the
   decompiled C for those addresses in seconds against a saved, already-analysed
   project. Reading `objdump` to work out what a function is *for* is the slowest
@@ -371,7 +422,7 @@ measurable exit criterion rather than a percentage.
 | Verification | **9 checks green, pipeline red** | `verify.py` passes all nine in **6 seconds** (263/263, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS). `pipeline.sh` is red at the **link test** on 2 unmapped calls, and takes **471s** — the link is the expensive stage, not verification |
 | **Semantics** | **~9%** | 5,557 of 9,810 slots carry a name (56.6%), but only **917 distinct names** and **281 distinct semantic** ones — most of the coverage is shared-stub propagation. 291 members named across 20 classes; `e2e_rules.py` resolves 96.2% of them against the shipped `rules.ini` |
 | **Modifiability** | **minimal** | there is still no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is the hand-written headers |
-| **Behaviour** | **boots, then exits** | the image maps at its real VAs, 342/342 imports resolve, and the game runs **1,011,817 instructions** of its own CRT startup and init before calling `ExitProcess` -- with a corrupted exit code and a corrupted MessageBox type, both of which are stub addresses where numbers belong. It does **not** get to a message loop: see the correction below |
+| **Behaviour** | **boots, then exits** | the image maps at its real VAs, 342/342 imports resolve, and the game runs **1,011,817 instructions** of its own CRT startup and init before calling `ExitProcess`. The cause is measured: the atexit walk leaks **108 bytes** across the static-constructor table, so ESI holds a return address and `call *%esi` at `0x5e72cf` goes to garbage. The **retail binary does the same thing here** (exits code 01, before DirectDraw surface creation), so this is not a divergence from a working game |
 
 So: *the binary is explained, its instructions are transcribed, the layout is
 compiler-confirmed, and the game's own startup now executes.* It is not a

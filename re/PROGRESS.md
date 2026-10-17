@@ -19,7 +19,28 @@ on 2 unmapped calls, and takes 471 seconds -- the link is the expensive stage.
 
 **The game boots, initialises, and exits.** The image maps at its real VAs,
 342/342 imports resolve, and the original entry point 0x6854e3 runs 1,011,817
-instructions of CRT startup and game init before calling `ExitProcess`.
+instructions of CRT startup and game init before calling `ExitProcess`. The cause
+is measured rather than guessed: the CRT's atexit walk over the 3,311-entry
+static-constructor table leaks **108 bytes** (ESP 0x002ff56c at `push %esi`,
+0x002ff4fc at the matching `pop %esi`), so `pop %esi` reads a return address, ESI
+becomes 0x6844df, and `call *%esi` at 0x5e72cf calls into `ExitProcess` instead of
+the function whose result decides whether the "Direct X" error box appears.
+
+**There is now an oracle, and it changed the premise.** `tools/wine_run.sh` runs
+the retail binary under Wine; `tools/oracle.py` reads its real registers with gdb.
+The first thing it established is that the **retail game exits with code 01 before
+reaching DirectDraw surface creation here too** -- so the model is not diverging
+from a working game, it is failing the same way. It also produced the retail
+`IDirectDraw` call sequence from a `+ddraw` trace, which exposed our 23-slot vtable
+against the real 25 slots (the game calls slot 23, `GetAvailableVidMem`).
+
+**File I/O is real.** The stub layer used to make every file "exist" and read as
+empty, with `GetFileSize` and `SetFilePointer` agreeing -- consistent and useless,
+because the game could never load `rules.ini`, `TIBSUN.MIX` or the CD. It is now a
+real filesystem behind a host root (`TS_ROOT`, default `../gamedir`) with
+case-insensitive per-component path resolution, a 64-entry handle table and real
+`CreateFileA`/`ReadFile`/`WriteFile`/`SetFilePointer`/`GetFileSize`/`CloseHandle`/
+`GetFileAttributesA`/`DeleteFileA`. `IDirectDrawPalette` is a real object too.
 
 **This paragraph previously claimed a message loop. That was false.** The model
 let `ExitProcess` return, so execution continued past a fatal exit and the
