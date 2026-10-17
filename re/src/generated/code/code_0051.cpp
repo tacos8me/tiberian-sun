@@ -47,7 +47,7 @@ void sub_004bc4a5(void)
     if (!M.sf) { ts::ts_call(0x4bc46eu); return; }   //   0x004bc4a8  jns      0x4bc46e
     EBX.d = ts::dec32(EBX.d);   //   0x004bc4aa  dec      ebx
     ts::st8(ECX.d - 0x6effb43c, ts::add8(ts::ld8(ECX.d - 0x6effb43c), AL));   //   0x004bc4ab  add      byte ptr [ecx - 0x6effb43c], al
-    ts::unmodelled(0x4bc4b1u, "les");   //   0x004bc4b1  les      ecx, ptr [ebx]
+    { ts::u32 a = EBX.d; ECX.d = ts::ld32(a); ES = ts::ld16(a + 4); }   //   0x004bc4b1  les      ecx, ptr [ebx]
     ESP.d = EAX.d;   //   0x004bc4b4  mov      esp, eax
     EBX.d = ts::dec32(EBX.d);   //   0x004bc4b6  dec      ebx
     ts::st8(EAX.d + 0x4bc4, ts::add8(ts::ld8(EAX.d + 0x4bc4), AH));   //   0x004bc4b7  add      byte ptr [eax + 0x4bc4], ah

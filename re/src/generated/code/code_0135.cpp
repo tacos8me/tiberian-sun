@@ -378,7 +378,7 @@ void sub_006262dc(void)
     ts::bound_op(EAX.d, EAX.d);   //   0x00626312  bound    eax, qword ptr [eax]
     ts::popad();   //   0x00626314  popal    
     ts::bound_op(EAX.d, EAX.d);   //   0x00626316  bound    eax, qword ptr [eax]
-    ts::unmodelled(0x626318u, "pushaw");   //   0x00626318  pushaw   
+    ts::pushaw();   //   0x00626318  pushaw   
     ts::bound_op(EAX.d, EAX.d);   //   0x0062631a  bound    eax, qword ptr [eax]
     ts::st8(EAX.d + 0x62, ts::shl8(ts::ld8(EAX.d + 0x62), 0x0u));   //   0x0062631c  shl      byte ptr [eax + 0x62], 0
     ts::cli();   //   0x00626320  cli      

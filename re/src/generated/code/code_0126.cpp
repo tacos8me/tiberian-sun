@@ -4200,7 +4200,7 @@ void sub_00602680(void)
     ts::st8(EAX.d, ts::add8(ts::ld8(EAX.d), AL));   //   0x00602714  add      byte ptr [eax], al
     AL = ts::add8(AL, 0xdu);   //   0x00602716  add      al, 0xd
     ts::push32(CS);   //   0x00602718  push     cs
-    ts::unmodelled(0x602719u, "movups");   //   0x00602719  movups   xmm0, xmmword ptr [ebx + ebx]
+    XMM0 = ts::ld128(EBX.d + EBX.d);   //   0x00602719  movups   xmm0, xmmword ptr [ebx + ebx]
     EBX.d = ts::sbb32(EBX.d, ts::ld32(EBX.d));   //   0x0060271d  sbb      ebx, dword ptr [ebx]
     ts::st32(EBX.d, ts::adc32(ts::ld32(EBX.d), EBX.d));   //   0x0060271f  adc      dword ptr [ebx], ebx
     EBX.d = ts::sbb32(EBX.d, ts::ld32(EBX.d));   //   0x00602721  sbb      ebx, dword ptr [ebx]

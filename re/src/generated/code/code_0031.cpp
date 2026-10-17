@@ -3072,7 +3072,7 @@ void sub_00474ece(void)
     ts::st32(EDX.d, ts::sbb32(ts::ld32(EDX.d), ECX.d));   //   0x00474f96  sbb      dword ptr [edx], ecx
     AL = ts::or8(AL, 0xdu);   //   0x00474f98  or       al, 0xd
     ts::push32(CS);   //   0x00474f9a  push     cs
-    ts::unmodelled(0x474f9bu, "movups");   //   0x00474f9b  movups   xmm2, xmmword ptr [ecx]
+    XMM2 = ts::ld128(ECX.d);   //   0x00474f9b  movups   xmm2, xmmword ptr [ecx]
     DL = ts::adc8(DL, ts::ld8(EBX.d));   //   0x00474f9e  adc      dl, byte ptr [ebx]
     AL = ts::adc8(AL, 0x15u);   //   0x00474fa0  adc      al, 0x15
     ts::st32(ESI.d, ts::sbb32(ts::ld32(ESI.d), EDX.d));   //   0x00474fa2  sbb      dword ptr [esi], edx

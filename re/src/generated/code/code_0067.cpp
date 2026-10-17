@@ -6053,7 +6053,7 @@ void sub_004fd54d(void)
 void sub_004fd569(void)
 {
     ECX.d = ECX.d;   //   0x004fd569  lea      ecx, [ecx]
-    ts::unmodelled(0x4fd56cu, "fcmovnbe");   //   0x004fd56c  fcmovnbe st(0), st(3)
+    if ((!M.cf && !M.zf)) ts::f_set(0, ts::f_peek(3));   //   0x004fd56c  fcmovnbe st(0), st(3)
     EDI.d = ts::dec32(EDI.d);   //   0x004fd56e  dec      edi
     DH = ts::add8(DH, DL);   //   0x004fd56f  add      dh, dl
     ts::nop();   //   0x004fd571  aam      0x4f

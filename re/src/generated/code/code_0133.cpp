@@ -7939,13 +7939,13 @@ void sub_00620f66(void)
 void sub_00620f68(void)
 {
     ECX.d = ts::dec32(ECX.d);   //   0x00620f68  dec      ecx
-    ts::unmodelled(0x620f69u, "punpckldq");   //   0x00620f69  punpckldq mm0, dword ptr [eax]
+    MM0 = ts::mmx_punpckldq(MM0, ts::ld32(EAX.d));   //   0x00620f69  punpckldq mm0, dword ptr [eax]
     ESI.d = ts::pop32();   //   0x00620f6c  pop      esi
-    ts::unmodelled(0x620f6du, "punpckldq");   //   0x00620f6d  punpckldq mm0, dword ptr [eax]
+    MM0 = ts::mmx_punpckldq(MM0, ts::ld32(EAX.d));   //   0x00620f6d  punpckldq mm0, dword ptr [eax]
     ts::push32(ECX.d);   //   0x00620f70  push     ecx
-    ts::unmodelled(0x620f71u, "punpckldq");   //   0x00620f71  punpckldq mm0, dword ptr [eax]
+    MM0 = ts::mmx_punpckldq(MM0, ts::ld32(EAX.d));   //   0x00620f71  punpckldq mm0, dword ptr [eax]
     EBX.d = ts::inc32(EBX.d);   //   0x00620f74  inc      ebx
-    ts::unmodelled(0x620f75u, "punpckldq");   //   0x00620f75  punpckldq mm0, dword ptr [eax]
+    MM0 = ts::mmx_punpckldq(MM0, ts::ld32(EAX.d));   //   0x00620f75  punpckldq mm0, dword ptr [eax]
     ts::nop();   //   0x00620f78  nop      
     ts::nop();   //   0x00620f79  nop      
     ts::nop();   //   0x00620f7a  nop      

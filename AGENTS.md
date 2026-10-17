@@ -258,9 +258,9 @@ measurable exit criterion rather than a percentage.
 | Layer | State | Note |
 |---|---|---|
 | **ABI / layout** | **not reproduced** | host build is LP64 and the reconstructed classes model the vptr as a data member, so the compiled structs do not have the game's offsets. `-m32` fixes the width problem and is already proven to compile, link and run; the vptr problem is the real one |
-| Binary recovery | **effectively closed** | 41,822 functions, 96.06% of `.text`; the remaining 104 KB is verified jump tables and padding, not unknown code |
+| Binary recovery | **effectively closed** | 41,822 functions, 96.06% of `.text` as recovered code; the remaining 104 KB is classified — 11 jump tables (256 B) and 356 B of switch index tables emitted as data, 105,808 B of alignment padding, and 554 B in 90 runs reported verbatim rather than forced into a category (`out/text_data.json`) |
 | Structural reconstruction | **strong** | 749/749 classes, 9,780 vtable slots, 0 unseeded, every constructor a real entry point |
-| Code transcription | **complete** | 43,668 functions, 897,027 of 897,193 instructions (99.98%) |
+| Code transcription | **complete** | 43,668 functions, 897,193 of 897,193 instructions (100%) |
 | Verification | **strong but bounded** | 8 checks, fail-closed, 2 anchored to the binary, whole-tree link, determinism over 497 artifacts |
 | **Semantics** | **~5%** | 497 of 9,780 slots have a genuinely semantic virtual name (1,500 total minus 600 destructors and 403 COM boilerplate); 135 of 3,273 real members named |
 | **Modifiability** | **minimal** | there is no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is 47 headers |
@@ -301,10 +301,14 @@ because no check looked.
 
 Honest limits, all stated in `src/generated/README.md`:
 
-- 166 instructions (0.02%) have no faithful rendering and are emitted as
-  `ts::unmodelled(va, "mnem")` rather than approximated: MMX/SSE, the x87
-  environment save/restore (`fnsave`/`frstor`/`fnstenv`/`fldenv`), far pointers
-  (`les`/`lds`) and `lar`.
+- 0 instructions have no faithful rendering. The last 166 (MMX/SSE, the x87
+  environment save/restore, far pointers, `lar`, `fbld`, `fcmovnbe`, `pushaw`)
+  are rendered against the machine model: 897,193 of 897,193 instructions are
+  modelled and the transcription gate still verifies every function
+  instruction-for-instruction. Two limits of the *model* remain, stated where
+  they live in `Machine.h`: `lar` reports the flat ring-3 code segment because
+  the model has no descriptor table, and `fnsave`/`fnstenv` write zero into the
+  two x87 pointer fields because the model does not track them.
 - 228 destructors are **labelled stubs**. The headers declare them; no comment
   records where they are, so there is no transcription to forward to.
 - The entry-point run stops at import thunks, because the model never loads the

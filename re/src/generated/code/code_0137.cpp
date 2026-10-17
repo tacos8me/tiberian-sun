@@ -950,9 +950,9 @@ void sub_0062c4d4(void)
     ts::st8(ESP.d + EAX.d * 8, ts::add8(ts::ld8(ESP.d + EAX.d * 8), AH));   //   0x0062c4d7  add      byte ptr [esp + eax*8], ah
     ts::bound_op(EAX.d, EAX.d);   //   0x0062c4da  bound    eax, qword ptr [eax]
     ts::push32(EAX.d);   //   0x0062c4dc  push     eax
-    ts::unmodelled(0x62c4ddu, "les");   //   0x0062c4dd  les      esp, ptr [edx]
+    { ts::u32 a = EDX.d; ESP.d = ts::ld32(a); ES = ts::ld16(a + 4); }   //   0x0062c4dd  les      esp, ptr [edx]
     AL = ts::ld8(3288359620);   //   0x0062c4e0  mov      al, byte ptr [0xc40062c4]
-    ts::unmodelled(0x62c4e5u, "les");   //   0x0062c4e5  les      esp, ptr [edx]
+    { ts::u32 a = EDX.d; ESP.d = ts::ld32(a); ES = ts::ld16(a + 4); }   //   0x0062c4e5  les      esp, ptr [edx]
     ts::st8(EDI.d, ts::add8(ts::ld8(EDI.d), AL));   //   0x0062c4e8  add      byte ptr [edi], al
     ES = ts::pop32();   //   0x0062c4ea  pop      es
     ES = ts::pop32();   //   0x0062c4eb  pop      es

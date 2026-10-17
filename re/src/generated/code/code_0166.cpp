@@ -525,10 +525,10 @@ void sub_0068e150(void)
     ts::f_swap(1);   //   0x0068e199  fxch     st(1)
     EAX.d = ts::and32(EAX.d, 0x4300u);   //   0x0068e19b  and      eax, 0x4300
     ESP.d = ts::sub32(ESP.d, 0x1cu);   //   0x0068e1a0  sub      esp, 0x1c
-    ts::unmodelled(0x68e1a3u, "fnstenv");   //   0x0068e1a3  fnstenv  [esp]
+    ts::f_stenv(ESP.d);   //   0x0068e1a3  fnstenv  [esp]
     ts::st32(ESP.d + 0x4, ts::and32(ts::ld32(ESP.d + 0x4), 0xbcffu));   //   0x0068e1a6  and      dword ptr [esp + 4], 0xbcff
     ts::st32(ESP.d + 0x4, ts::or32(ts::ld32(ESP.d + 0x4), EAX.d));   //   0x0068e1ae  or       dword ptr [esp + 4], eax
-    ts::unmodelled(0x68e1b2u, "fldenv");   //   0x0068e1b2  fldenv   [esp]
+    ts::f_ldenv(ESP.d);   //   0x0068e1b2  fldenv   [esp]
     ESP.d = ts::add32(ESP.d, 0x1cu);   //   0x0068e1b5  add      esp, 0x1c
     L_0068e1b8:;
     ECX.d = ts::pop32();   //   0x0068e1b8  pop      ecx
@@ -575,10 +575,10 @@ void sub_0068e18d(void)
     ts::f_swap(1);   //   0x0068e199  fxch     st(1)
     EAX.d = ts::and32(EAX.d, 0x4300u);   //   0x0068e19b  and      eax, 0x4300
     ESP.d = ts::sub32(ESP.d, 0x1cu);   //   0x0068e1a0  sub      esp, 0x1c
-    ts::unmodelled(0x68e1a3u, "fnstenv");   //   0x0068e1a3  fnstenv  [esp]
+    ts::f_stenv(ESP.d);   //   0x0068e1a3  fnstenv  [esp]
     ts::st32(ESP.d + 0x4, ts::and32(ts::ld32(ESP.d + 0x4), 0xbcffu));   //   0x0068e1a6  and      dword ptr [esp + 4], 0xbcff
     ts::st32(ESP.d + 0x4, ts::or32(ts::ld32(ESP.d + 0x4), EAX.d));   //   0x0068e1ae  or       dword ptr [esp + 4], eax
-    ts::unmodelled(0x68e1b2u, "fldenv");   //   0x0068e1b2  fldenv   [esp]
+    ts::f_ldenv(ESP.d);   //   0x0068e1b2  fldenv   [esp]
     ESP.d = ts::add32(ESP.d, 0x1cu);   //   0x0068e1b5  add      esp, 0x1c
     ECX.d = ts::pop32();   //   0x0068e1b8  pop      ecx
     EBX.d = ts::pop32();   //   0x0068e1b9  pop      ebx
@@ -901,10 +901,10 @@ void sub_0068e408(void)
     ts::f_swap(1);   //   0x0068e451  fxch     st(1)
     EAX.d = ts::and32(EAX.d, 0x4300u);   //   0x0068e453  and      eax, 0x4300
     ESP.d = ts::sub32(ESP.d, 0x1cu);   //   0x0068e458  sub      esp, 0x1c
-    ts::unmodelled(0x68e45bu, "fnstenv");   //   0x0068e45b  fnstenv  [esp]
+    ts::f_stenv(ESP.d);   //   0x0068e45b  fnstenv  [esp]
     ts::st32(ESP.d + 0x4, ts::and32(ts::ld32(ESP.d + 0x4), 0xbcffu));   //   0x0068e45e  and      dword ptr [esp + 4], 0xbcff
     ts::st32(ESP.d + 0x4, ts::or32(ts::ld32(ESP.d + 0x4), EAX.d));   //   0x0068e466  or       dword ptr [esp + 4], eax
-    ts::unmodelled(0x68e46au, "fldenv");   //   0x0068e46a  fldenv   [esp]
+    ts::f_ldenv(ESP.d);   //   0x0068e46a  fldenv   [esp]
     ESP.d = ts::add32(ESP.d, 0x1cu);   //   0x0068e46d  add      esp, 0x1c
     L_0068e470:;
     ECX.d = ts::pop32();   //   0x0068e470  pop      ecx
@@ -951,10 +951,10 @@ void sub_0068e445(void)
     ts::f_swap(1);   //   0x0068e451  fxch     st(1)
     EAX.d = ts::and32(EAX.d, 0x4300u);   //   0x0068e453  and      eax, 0x4300
     ESP.d = ts::sub32(ESP.d, 0x1cu);   //   0x0068e458  sub      esp, 0x1c
-    ts::unmodelled(0x68e45bu, "fnstenv");   //   0x0068e45b  fnstenv  [esp]
+    ts::f_stenv(ESP.d);   //   0x0068e45b  fnstenv  [esp]
     ts::st32(ESP.d + 0x4, ts::and32(ts::ld32(ESP.d + 0x4), 0xbcffu));   //   0x0068e45e  and      dword ptr [esp + 4], 0xbcff
     ts::st32(ESP.d + 0x4, ts::or32(ts::ld32(ESP.d + 0x4), EAX.d));   //   0x0068e466  or       dword ptr [esp + 4], eax
-    ts::unmodelled(0x68e46au, "fldenv");   //   0x0068e46a  fldenv   [esp]
+    ts::f_ldenv(ESP.d);   //   0x0068e46a  fldenv   [esp]
     ESP.d = ts::add32(ESP.d, 0x1cu);   //   0x0068e46d  add      esp, 0x1c
     ECX.d = ts::pop32();   //   0x0068e470  pop      ecx
     EBX.d = ts::pop32();   //   0x0068e471  pop      ebx

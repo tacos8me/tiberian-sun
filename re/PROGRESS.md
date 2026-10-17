@@ -20,7 +20,7 @@ checkout. Measured state:
 |---|---|
 | headers | 262 (261 standalone-compilable + prelude) |
 | functions recovered | 41,822 (96.06% of `.text`) |
-| `.text` unattributed | 104 KB |
+| `.text` residual | 104 KB classified (99.98% attributed): 11 jump tables (256 B), 356 B of switch index tables, 105,808 B of alignment padding; 554 B in 90 runs reported unclassified in `out/text_data.json` |
 | classes / vtable slots | 749 / 9,810 (`vtable_slots_unseeded` 0) |
 | constructors that are real function starts | 100% |
 | virtuals named | 1,567 of 6,987 (22.4%) |
@@ -28,7 +28,7 @@ checkout. Measured state:
 | member offsets recovered | 4,326 |
 | member claims confirmed in the binary | 99.9% |
 | **machine functions transcribed** | **43,668 (41,822 starts + 1,846 tail entries)** |
-| **instructions transcribed** | **897,027 of 897,193 (99.98%)** |
+| **instructions transcribed** | **897,193 of 897,193 (100%)** |
 | forwarder definitions | 6,996 across 309 translation units |
 | destructor stubs (declared, no recovered address) | 228 |
 
@@ -127,11 +127,13 @@ Coverage is achieved in three tiers:
       header with recovered layout). 2 classes still show unresolved bases for
       it: `INIClass::INIEntry` and `MixFileClass`.
 - [ ] Reconstruct the MS* multimedia classes and the WOL/ATL COM layer.
-- [ ] Recover the remaining 104 KB of unattributed `.text`.
-- [ ] 166 instructions (0.02%) have no faithful rendering and are emitted as
-      `ts::unmodelled(va, "mnem")`: MMX/SSE, the x87 environment save/restore
-      (`fnsave`/`frstor`/`fnstenv`/`fldenv`), far pointers (`les`/`lds`) and
-      `lar`.
+- [x] Classify the remaining 104 KB of residual `.text`. It is 11 jump tables
+      (256 B) and 356 B of switch index tables, emitted as data in
+      `out/text_data.json`, plus 105,808 B of alignment padding. 554 B in 90
+      runs are neither and are listed verbatim, not forced into a category.
+- [x] 0 instructions have no faithful rendering. The last 166 (MMX/SSE, the x87
+      environment save/restore, far pointers, `lar`, `fbld`, `fcmovnbe`,
+      `pushaw`) are modelled in `src/handwritten/Machine.h`.
 - [ ] Load the image's data sections into the model. The entry-point run stops
       at import thunks because `call dword ptr [IAT]` reads 0 from modelled
       memory; the model never loads `.idata`.

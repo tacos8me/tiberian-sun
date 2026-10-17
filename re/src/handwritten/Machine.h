@@ -39,6 +39,12 @@ typedef unsigned int   u32;
 typedef signed   char  i8;
 typedef signed   short i16;
 typedef signed   int   i32;
+typedef unsigned long long u64;
+
+// An MMX register is 64 bits and an XMM register 16 bytes. C++03 cannot return
+// an array or assign one by value, so the SSE register file is addressed
+// through this POD pair.
+struct u128 { u64 lo, hi; };
 
 // x86 general registers in encoding order, with the sub-register views the
 // instruction stream addresses (al/ah/ax and friends). This target is
@@ -85,6 +91,14 @@ struct Machine {
     // the stack.
     u16 seg[6];            // 0 es 1 cs 2 ss 3 ds 4 fs 5 gs
     u8  iff;
+    // MMX and SSE state. On the original, mm0..mm7 are the low 64 bits of the
+    // x87 data registers, so an MMX write is visible to a later x87 read until
+    // `emms` marks the x87 stack empty. The model keeps the two files apart and
+    // `emms` empties the x87 stack (see mmx_emms below), which is faithful for
+    // every sequence the hardware defines: mixing MMX and x87 without an
+    // intervening emms is architecturally undefined.
+    u64 mm[8];
+    u128 xmm[8];
 };
 
 // The machine is a function-local static so this header stays header-only and
@@ -138,9 +152,27 @@ inline u32 ret_eax() { return mach().r[0].d; }
 #define FS   M.seg[4]
 #define GS   M.seg[5]
 
+#define MM0  M.mm[0]
+#define MM1  M.mm[1]
+#define MM2  M.mm[2]
+#define MM3  M.mm[3]
+#define MM4  M.mm[4]
+#define MM5  M.mm[5]
+#define MM6  M.mm[6]
+#define MM7  M.mm[7]
+#define XMM0 M.xmm[0]
+#define XMM1 M.xmm[1]
+#define XMM2 M.xmm[2]
+#define XMM3 M.xmm[3]
+#define XMM4 M.xmm[4]
+#define XMM5 M.xmm[5]
+#define XMM6 M.xmm[6]
+#define XMM7 M.xmm[7]
 inline void reset() {
     Machine &m = mach();
     std::memset(m.r, 0, sizeof(m.r));
+    std::memset(m.mm, 0, sizeof(m.mm));
+    std::memset(m.xmm, 0, sizeof(m.xmm));
     m.eip = 0; m.cf = m.pf = m.af = m.zf = m.sf = m.df = m.of = 0;
     for (int i = 0; i < 8; ++i) m.st[i] = 0.0L;
     m.st_top = 0; m.fcw = 0x037f;
@@ -676,6 +708,223 @@ inline long double ld_f80(u32 a) {
 inline void st_f80(u32 a, long double v) {
     u8 b[10]; std::memcpy(b, &v, 10);
     for (int i = 0; i < 10; ++i) st8(a + (u32)i, b[i]);
+}
+
+// -- MMX, SSE and the x87 environment ---------------------------------------
+// The MMX instructions the binary uses, each modelled per lane with the
+// hardware's semantics: saturating adds and packs, interleaves, and the two
+// multiplies that keep only part of each product. A lane operand is 64 bits;
+// the m32 forms of the interleaves and of pmullw read only the low 32 bits of
+// the source, which is what the instruction definitions do with a 32-bit
+// memory operand, so a u32 argument is widened rather than rejected.
+inline u64 ld64(u32 a) { return (u64)ld_i64(a); }
+inline void st64(u32 a, u64 v) { st_i64(a, (long long)v); }
+
+inline u128 ld128(u32 a) { u128 v; v.lo = ld64(a); v.hi = ld64(a + 8); return v; }
+inline void st128(u32 a, u128 v) { st64(a, v.lo); st64(a + 8, v.hi); }
+
+inline u64 mmx_pxor(u64 a, u64 b) { return a ^ b; }
+
+inline u8 mmx_sat_u8(i32 v) { return (u8)(v < 0 ? 0 : (v > 255 ? 255 : v)); }
+inline u16 mmx_sat_i16(i32 v) {
+    return (u16)(v < -32768 ? -32768 : (v > 32767 ? 32767 : v));
+}
+
+inline u64 mmx_paddusb(u64 a, u64 b) {
+    u64 r = 0;
+    for (int i = 0; i < 8; ++i) {
+        u32 x = (u32)((a >> (8 * i)) & 0xffu) + (u32)((b >> (8 * i)) & 0xffu);
+        r |= (u64)(x > 255u ? 255u : x) << (8 * i);
+    }
+    return r;
+}
+inline u64 mmx_packuswb(u64 a, u64 b) {
+    u64 r = 0;
+    for (int i = 0; i < 4; ++i) {
+        r |= (u64)mmx_sat_u8((i16)((a >> (16 * i)) & 0xffffu)) << (8 * i);
+        r |= (u64)mmx_sat_u8((i16)((b >> (16 * i)) & 0xffffu)) << (8 * (i + 4));
+    }
+    return r;
+}
+inline u64 mmx_packssdw(u64 a, u64 b) {
+    u64 r = 0;
+    for (int i = 0; i < 2; ++i) {
+        r |= (u64)mmx_sat_i16((i32)((a >> (32 * i)) & 0xffffffffu)) << (16 * i);
+        r |= (u64)mmx_sat_i16((i32)((b >> (32 * i)) & 0xffffffffu)) << (16 * (i + 2));
+    }
+    return r;
+}
+inline u64 mmx_pmullw(u64 a, u64 b) {
+    u64 r = 0;
+    for (int i = 0; i < 4; ++i) {
+        u32 x = (u32)((a >> (16 * i)) & 0xffffu);
+        u32 y = (u32)((b >> (16 * i)) & 0xffffu);
+        r |= (u64)((x * y) & 0xffffu) << (16 * i);
+    }
+    return r;
+}
+inline u64 mmx_pmulhw(u64 a, u64 b) {
+    u64 r = 0;
+    for (int i = 0; i < 4; ++i) {
+        i32 x = (i16)((a >> (16 * i)) & 0xffffu);
+        i32 y = (i16)((b >> (16 * i)) & 0xffffu);
+        r |= (u64)(u16)((x * y) >> 16) << (16 * i);
+    }
+    return r;
+}
+// PSRLW: a count above the lane width clears the lane, which is what the
+// 64-bit form of the instruction specifies.
+inline u64 mmx_psrlw(u64 a, u32 n) {
+    u64 r = 0;
+    if (n > 15) return 0;
+    for (int i = 0; i < 4; ++i)
+        r |= (u64)(((a >> (16 * i)) & 0xffffu) >> n) << (16 * i);
+    return r;
+}
+// PSRAD: an arithmetic shift, so the sign fills. A count of 32 or more leaves
+// every lane at the sign.
+inline u64 mmx_psrad(u64 a, u32 n) {
+    u64 r = 0;
+    for (int i = 0; i < 2; ++i) {
+        i32 x = (i32)((a >> (32 * i)) & 0xffffffffu);
+        i32 s = (n > 31) ? (x >> 31) : (x >> n);
+        r |= (u64)(u32)s << (32 * i);
+    }
+    return r;
+}
+inline u64 mmx_punpcklbw(u64 a, u64 b) {
+    u64 r = 0;
+    for (int i = 0; i < 4; ++i) {
+        r |= (u64)((a >> (8 * i)) & 0xffu) << (16 * i);
+        r |= (u64)((b >> (8 * i)) & 0xffu) << (16 * i + 8);
+    }
+    return r;
+}
+inline u64 mmx_punpckhbw(u64 a, u64 b) {
+    u64 r = 0;
+    for (int i = 0; i < 4; ++i) {
+        r |= (u64)((a >> (8 * (i + 4))) & 0xffu) << (16 * i);
+        r |= (u64)((b >> (8 * (i + 4))) & 0xffu) << (16 * i + 8);
+    }
+    return r;
+}
+inline u64 mmx_punpcklwd(u64 a, u64 b) {
+    u64 r = 0;
+    for (int i = 0; i < 2; ++i) {
+        r |= (u64)((a >> (16 * i)) & 0xffffu) << (32 * i);
+        r |= (u64)((b >> (16 * i)) & 0xffffu) << (32 * i + 16);
+    }
+    return r;
+}
+inline u64 mmx_punpckhwd(u64 a, u64 b) {
+    u64 r = 0;
+    for (int i = 0; i < 2; ++i) {
+        r |= (u64)((a >> (16 * (i + 2))) & 0xffffu) << (32 * i);
+        r |= (u64)((b >> (16 * (i + 2))) & 0xffffu) << (32 * i + 16);
+    }
+    return r;
+}
+inline u64 mmx_punpckldq(u64 a, u64 b) {
+    return (a & 0xffffffffull) | ((b & 0xffffffffull) << 32);
+}
+// EMMS marks every x87 register empty, which is what st_top models here. The
+// data registers keep their values but are inaccessible until an x87 load.
+inline void mmx_emms() { mach().st_top = 0; }
+
+// The x87 environment area. FNSAVE writes the full 108-byte 32-bit
+// protected-mode image: control word, status word with TOP, tag word, the
+// instruction and data pointers, then the eight 80-bit data registers at offset
+// 28. The model does not track the two pointer fields, so those are written as
+// zero; the binary only round-trips the area through FRSTOR/FLDENV or reads the
+// control and status words back, and every other field is real. The registers
+// are written in the model's own physical order with TOP naming the logical
+// top, which is the same image the hardware writes up to a rotation.
+inline u16 f_top_field() {
+    Machine &m = mach();
+    return (u16)(m.st_top ? (m.st_top - 1) : 0);
+}
+inline u16 f_tag_field() {
+    Machine &m = mach();
+    u16 t = 0;
+    for (int i = 0; i < 8; ++i)
+        t |= (u16)((i < m.st_top ? 0 : 3) << (2 * i));
+    return t;
+}
+inline u16 f_status_field() {
+    Machine &m = mach();
+    return (u16)((m.fpu_status & ~0x3800u) | (f_top_field() << 11));
+}
+inline int f_tag_count(u16 tag) {
+    int n = 0;
+    for (int i = 0; i < 8; ++i)
+        if (((tag >> (2 * i)) & 3u) != 3u) n = i + 1;
+    return n;
+}
+inline void f_save(u32 a) {
+    Machine &m = mach();
+    st32(a, m.fcw);
+    st32(a + 4, f_status_field());
+    st32(a + 8, f_tag_field());
+    st32(a + 12, 0); st32(a + 16, 0); st32(a + 20, 0); st32(a + 24, 0);
+    for (int i = 0; i < 8; ++i) st_f80(a + 28 + 10 * i, m.st[i]);
+    // FNSAVE re-initialises the FPU, as the hardware does.
+    m.fcw = 0x037f; m.fpu_status = 0; m.st_top = 0;
+}
+inline void f_restore(u32 a) {
+    Machine &m = mach();
+    m.fcw = ld16(a);
+    m.fpu_status = ld16(a + 4);
+    m.st_top = f_tag_count(ld16(a + 8));
+    for (int i = 0; i < 8; ++i) m.st[i] = ld_f80(a + 28 + 10 * i);
+}
+// FNSTENV/FLDENV: the 28-byte environment, which is the first part of the
+// FNSAVE image and does not touch the data registers.
+inline void f_stenv(u32 a) {
+    Machine &m = mach();
+    st32(a, m.fcw);
+    st32(a + 4, f_status_field());
+    st32(a + 8, f_tag_field());
+    st32(a + 12, 0); st32(a + 16, 0); st32(a + 20, 0); st32(a + 24, 0);
+}
+inline void f_ldenv(u32 a) {
+    Machine &m = mach();
+    m.fcw = ld16(a);
+    m.fpu_status = ld16(a + 4);
+    m.st_top = f_tag_count(ld16(a + 8));
+}
+// FBLOAD: ten bytes of packed BCD; the sign is bit 7 of the tenth byte.
+inline void f_bcd_push(u32 a) {
+    long double v = 0.0L;
+    for (int i = 8; i >= 0; --i) {
+        u8 b = ld8(a + (u32)i);
+        v = v * 100.0L + (long double)(b >> 4) * 10.0L + (long double)(b & 0x0fu);
+    }
+    if (ld8(a + 9) & 0x80u) v = -v;
+    f_push(v);
+}
+
+// PUSHAW: the 16-bit form of PUSHA. The saved SP is the value from before the
+// first push, as the hardware does.
+inline void pushaw() {
+    u16 s = SP;
+    ESP.d -= 2; st16(ESP.d, AX);
+    ESP.d -= 2; st16(ESP.d, CX);
+    ESP.d -= 2; st16(ESP.d, DX);
+    ESP.d -= 2; st16(ESP.d, BX);
+    ESP.d -= 2; st16(ESP.d, s);
+    ESP.d -= 2; st16(ESP.d, BP);
+    ESP.d -= 2; st16(ESP.d, SI);
+    ESP.d -= 2; st16(ESP.d, DI);
+}
+
+// LAR: the model has no descriptor table -- it is flat, and so is the original
+// -- so a selector with a non-zero index is reported as the flat ring-3 code
+// segment the binary runs under, with ZF clear. A null selector is the one case
+// the hardware rejects: ZF set, destination unchanged.
+inline void lar_op(u32 &dst, u16 sel) {
+    if ((sel & 0xfff8u) == 0) { M.zf = 1; return; }
+    dst = 0x00cffb00u;
+    M.zf = 0;
 }
 
 // -- port I/O and segment bookkeeping ---------------------------------------

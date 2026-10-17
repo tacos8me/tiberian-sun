@@ -116,7 +116,7 @@ void sub_004034c9(void)
 {
     ECX.d = ECX.d;   //   0x004034c9  lea      ecx, [ecx]
     ts::st32(EAX.d + EAX.d * 2, ts::shl32(ts::ld32(EAX.d + EAX.d * 2), 0x0u));   //   0x004034cc  sal      dword ptr [eax + eax*2], 0
-    ts::unmodelled(0x4034d0u, "lds");   //   0x004034d0  lds      esi, ptr [eax + eax*2]
+    { ts::u32 a = EAX.d + EAX.d * 2; ESI.d = ts::ld32(a); DS = ts::ld16(a + 4); }   //   0x004034d0  lds      esi, ptr [eax + eax*2]
     ts::st8(EAX.d, ts::add8(ts::ld8(EAX.d), AL));   //   0x004034d3  add      byte ptr [eax], al
     ts::st8(ECX.d, ts::add8(ts::ld8(ECX.d), AL));   //   0x004034d5  add      byte ptr [ecx], al
     ts::st32(ECX.d, ts::add32(ts::ld32(ECX.d), EAX.d));   //   0x004034d7  add      dword ptr [ecx], eax

@@ -1750,7 +1750,7 @@ void sub_00432908(void)
 void sub_00432922(void)
 {
     EDI.d = EDI.d;   //   0x00432922  mov      edi, edi
-    ts::unmodelled(0x432924u, "fbld");   //   0x00432924  fbld     tbyte ptr [ebx + eax*2]
+    ts::f_bcd_push(EBX.d + EAX.d * 2);   //   0x00432924  fbld     tbyte ptr [ebx + eax*2]
     ts::st8(EBX.d + 0x25, ts::add8(ts::ld8(EBX.d + 0x25), DL));   //   0x00432927  add      byte ptr [ebx + 0x25], dl
     EBX.d = ts::inc32(EBX.d);   //   0x0043292a  inc      ebx
     ts::st8(EBX.d + 0x25, ts::add8(ts::ld8(EBX.d + 0x25), BH));   //   0x0043292b  add      byte ptr [ebx + 0x25], bh

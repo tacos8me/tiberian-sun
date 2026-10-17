@@ -1099,7 +1099,7 @@ void sub_0042cac5(void)
     ts::st32(EBX.d - 0x482bffbe, ts::sub32(ts::ld32(EBX.d - 0x482bffbe), EDI.d));   //   0x0042cac8  sub      dword ptr [ebx - 0x482bffbe], edi
     EDX.d = ts::inc32(EDX.d);   //   0x0042cace  inc      edx
     AL = ts::add8(AL, CH);   //   0x0042cacf  add      al, ch
-    ts::unmodelled(0x42cad1u, "les");   //   0x0042cad1  les      eax, ptr [edx]
+    { ts::u32 a = EDX.d; EAX.d = ts::ld32(a); ES = ts::ld16(a + 4); }   //   0x0042cad1  les      eax, ptr [edx]
     DH = 0xcau;   //   0x0042cad4  mov      dh, 0xca
     EDX.d = ts::inc32(EDX.d);   //   0x0042cad6  inc      edx
     ts::st8(EAX.d, ts::add8(ts::ld8(EAX.d), AL));   //   0x0042cad7  add      byte ptr [eax], al
