@@ -105,11 +105,17 @@ def test_emit_ret():
     import emit_x86 as E
     ctx = E.Ctx(0x1000, 0x1004, 0x1000, 0x1004, None, "", set())
     # void: pop and return, never `return <value>` (illegal in a constructor).
-    eq("ret-void", E._ret(0, ctx), "return;")
+    # Even a `ret` with no immediate pops -- it pops the RETURN ADDRESS the
+    # caller pushed. Emitting a bare `return;` leaked 4 bytes per call and made
+    # ESP drift, so both forms are asserted here.
+    eq("ret-void", E._ret(0, ctx), "ts::ret_pop(0x0u); return;")
     eq("ret-void-imm", E._ret(4, ctx), "ts::ret_pop(0x4u); return;")
-    # a value-returning function yields EAX.
+    # a value-returning function yields EAX, and also pops.
     ctx2 = E.Ctx(0x1000, 0x1004, 0x1000, 0x1004, None, "HRESULT", set())
-    eq("ret-typed", E._ret(0, ctx2), "return (HRESULT)(size_t)EAX.d;")
+    eq("ret-typed", E._ret(0, ctx2),
+       "return (HRESULT)(size_t)ts::ret_pop_val(0x0u, EAX.d);")
+    eq("ret-typed-imm", E._ret(8, ctx2),
+       "return (HRESULT)(size_t)ts::ret_pop_val(0x8u, EAX.d);")
 
 
 # ---------------------------------------------------------------------------

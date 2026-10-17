@@ -997,7 +997,7 @@ void sub_0052f949(void)
     ts::insn(0x0052f956u); EBX.d = ts::pop32();   //   0x0052f956  pop      ebx
     ts::insn(0x0052f957u); ESP.d = EBP.d;   //   0x0052f957  mov      esp, ebp
     ts::insn(0x0052f959u); EBP.d = ts::pop32();   //   0x0052f959  pop      ebp
-    ts::insn(0x0052f95au); return;   //   0x0052f95a  ret      
+    ts::insn(0x0052f95au); ts::ret_pop(0x0u); return;   //   0x0052f95a  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -1016,7 +1016,7 @@ void sub_0052f95b(void)
     ts::insn(0x0052f967u); EBX.d = ts::pop32();   //   0x0052f967  pop      ebx
     ts::insn(0x0052f968u); ESP.d = EBP.d;   //   0x0052f968  mov      esp, ebp
     ts::insn(0x0052f96au); EBP.d = ts::pop32();   //   0x0052f96a  pop      ebp
-    ts::insn(0x0052f96bu); return;   //   0x0052f96b  ret      
+    ts::insn(0x0052f96bu); ts::ret_pop(0x0u); return;   //   0x0052f96b  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -4387,7 +4387,7 @@ void sub_00531480(void)
     ts::insn(0x005314a8u); ts::st32(ESP.d, EAX.d);   //   0x005314a8  mov      dword ptr [esp], eax
     ts::insn(0x005314acu); if (!M.zf) { ts::ts_tail(0x5314b2u); return; }   //   0x005314ac  jne      0x5314b2
     ts::insn(0x005314aeu); ESP.d = ts::add32(ESP.d, 0x14u);   //   0x005314ae  add      esp, 0x14
-    ts::insn(0x005314b1u); return;   //   0x005314b1  ret      
+    ts::insn(0x005314b1u); ts::ret_pop(0x0u); return;   //   0x005314b1  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -4406,7 +4406,7 @@ void sub_005314b2(void)
     ts::insn(0x005314cfu); ts::f_arith_mem(0, (long double)ts::ld_f64(6918848), false);   //   0x005314cf  fadd     qword ptr [0x6992c0]
     ts::insn(0x005314d5u); ts::ts_call_at(0x67faf0u, 0x5314dau);   //   0x005314d5  call     0x67faf0
     ts::insn(0x005314dau); ESP.d = ts::add32(ESP.d, 0x14u);   //   0x005314da  add      esp, 0x14
-    ts::insn(0x005314ddu); return;   //   0x005314dd  ret      
+    ts::insn(0x005314ddu); ts::ret_pop(0x0u); return;   //   0x005314dd  ret      
 }
 
 // ---------------------------------------------------------------------------

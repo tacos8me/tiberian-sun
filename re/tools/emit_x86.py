@@ -918,14 +918,17 @@ def _ret(imm, ctx):
     a 64-bit host.
     """
     rt = (ctx.ret_type or 'void').strip()
+    # EVERY `ret` pops, including one with no immediate: it still pops the return
+    # address that the caller's `ts_call_at` pushed, and `ret_pop` accounts for
+    # that 4 bytes. An earlier version emitted a bare `return;` when imm was 0,
+    # which leaked exactly 4 bytes on every call -- 8,436 of the 12,000-odd `ret`
+    # sites -- so ESP drifted upward and code that read [esp] as a return address
+    # read a stale value. That is what produced calls to garbage like 0x68649620.
     if rt in ('void', ''):
         # Two statements rather than `return ts::ret_pop(n);`: a constructor
-        # cannot return a value, and a constructor's `ret` still has to pop its
-        # arguments off the modelled stack.
-        return ('ts::ret_pop(0x%xu); return;' % imm) if imm else 'return;'
-    if imm:
-        return 'return (%s)(size_t)ts::ret_pop_val(0x%xu, EAX.d);' % (rt, imm)
-    return 'return (%s)(size_t)EAX.d;' % rt
+        # cannot return a value.
+        return 'ts::ret_pop(0x%xu); return;' % imm
+    return 'return (%s)(size_t)ts::ret_pop_val(0x%xu, EAX.d);' % (rt, imm)
 
 
 def _indirect_jmp(mem, ctx):

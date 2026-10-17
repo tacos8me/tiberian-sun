@@ -276,7 +276,7 @@ void sub_004bc425(void)
     ts::insn(0x004bc428u); EAX.d = ts::add32(EAX.d, ESP.d);   //   0x004bc428  add      eax, esp
     ts::insn(0x004bc42au); EBX.d = ts::dec32(EBX.d);   //   0x004bc42a  dec      ebx
     ts::insn(0x004bc42bu); DH = ts::add8(DH, DH);   //   0x004bc42b  add      dh, dh
-    ts::insn(0x004bc42du); return;   //   0x004bc42d  ret      
+    ts::insn(0x004bc42du); ts::ret_pop(0x0u); return;   //   0x004bc42d  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -614,7 +614,7 @@ void sub_004bc5ae(void)
     ts::insn(0x004bc5aeu); EDI.d = ts::pop32();   //   0x004bc5ae  pop      edi
     ts::insn(0x004bc5afu); ESI.d = ts::pop32();   //   0x004bc5af  pop      esi
     ts::insn(0x004bc5b0u); EBX.d = ts::pop32();   //   0x004bc5b0  pop      ebx
-    ts::insn(0x004bc5b1u); return;   //   0x004bc5b1  ret      
+    ts::insn(0x004bc5b1u); ts::ret_pop(0x0u); return;   //   0x004bc5b1  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -895,7 +895,7 @@ void sub_004bc860(void)
     ts::insn(0x004bc8dau); EDI.d = ts::pop32();   //   0x004bc8da  pop      edi
     ts::insn(0x004bc8dbu); ESI.d = ts::pop32();   //   0x004bc8db  pop      esi
     ts::insn(0x004bc8dcu); ESP.d = ts::add32(ESP.d, 0x20u);   //   0x004bc8dc  add      esp, 0x20
-    ts::insn(0x004bc8dfu); return;   //   0x004bc8df  ret      
+    ts::insn(0x004bc8dfu); ts::ret_pop(0x0u); return;   //   0x004bc8df  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -1614,7 +1614,7 @@ void sub_004bcda4(void)
 void sub_004bcdaf(void)
 {
     ts::insn(0x004bcdafu); EBP.d = ts::pop32();   //   0x004bcdaf  pop      ebp
-    ts::insn(0x004bcdb0u); return;   //   0x004bcdb0  ret      
+    ts::insn(0x004bcdb0u); ts::ret_pop(0x0u); return;   //   0x004bcdb0  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -2115,7 +2115,7 @@ void sub_004bd090(void)
     L_004bd102:;
     ts::insn(0x004bd102u); EDI.d = ts::pop32();   //   0x004bd102  pop      edi
     ts::insn(0x004bd103u); EBX.d = ts::pop32();   //   0x004bd103  pop      ebx
-    ts::insn(0x004bd104u); return;   //   0x004bd104  ret      
+    ts::insn(0x004bd104u); ts::ret_pop(0x0u); return;   //   0x004bd104  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -4073,7 +4073,7 @@ void sub_004bdde0(void)
     ts::insn(0x004bde09u); EDI.d = ts::pop32();   //   0x004bde09  pop      edi
     ts::insn(0x004bde0au); ESI.d = ts::pop32();   //   0x004bde0a  pop      esi
     ts::insn(0x004bde0bu); EBX.d = ts::pop32();   //   0x004bde0b  pop      ebx
-    ts::insn(0x004bde0cu); return;   //   0x004bde0c  ret      
+    ts::insn(0x004bde0cu); ts::ret_pop(0x0u); return;   //   0x004bde0c  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -5273,7 +5273,7 @@ void sub_004be9e0(void)
 void sub_004bea10(void)
 {
     ts::insn(0x004bea10u); EAX.d = 0x10e50u;   //   0x004bea10  mov      eax, 0x10e50
-    ts::insn(0x004bea15u); return;   //   0x004bea15  ret      
+    ts::insn(0x004bea15u); ts::ret_pop(0x0u); return;   //   0x004bea15  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -5439,7 +5439,7 @@ void sub_004bea70(void)
     L_004bebb4:;
     ts::insn(0x004bebb4u); EBX.d = ts::pop32();   //   0x004bebb4  pop      ebx
     ts::insn(0x004bebb5u); ESP.d = ts::add32(ESP.d, 0x28u);   //   0x004bebb5  add      esp, 0x28
-    ts::insn(0x004bebb8u); return;   //   0x004bebb8  ret      
+    ts::insn(0x004bebb8u); ts::ret_pop(0x0u); return;   //   0x004bebb8  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -5610,7 +5610,7 @@ void sub_004bed3c(void)
 {
     ts::insn(0x004bed3cu); EBP.d = ts::pop32();   //   0x004bed3c  pop      ebp
     ts::insn(0x004bed3du); ESP.d = ts::add32(ESP.d, 0x28u);   //   0x004bed3d  add      esp, 0x28
-    ts::insn(0x004bed40u); return;   //   0x004bed40  ret      
+    ts::insn(0x004bed40u); ts::ret_pop(0x0u); return;   //   0x004bed40  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -5694,7 +5694,7 @@ void sub_004bed50(void)
     ts::insn(0x004bee19u); EBP.d = ts::pop32();   //   0x004bee19  pop      ebp
     ts::insn(0x004bee1au); EBX.d = ts::pop32();   //   0x004bee1a  pop      ebx
     ts::insn(0x004bee1bu); ECX.d = ts::pop32();   //   0x004bee1b  pop      ecx
-    ts::insn(0x004bee1cu); return;   //   0x004bee1c  ret      
+    ts::insn(0x004bee1cu); ts::ret_pop(0x0u); return;   //   0x004bee1c  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -5844,7 +5844,7 @@ void sub_004bef30(void)
     ts::insn(0x004bef50u); ts::st32(8071372, ESI.d);   //   0x004bef50  mov      dword ptr [0x7b28cc], esi
     ts::insn(0x004bef56u); ESI.d = ts::pop32();   //   0x004bef56  pop      esi
     L_004bef57:;
-    ts::insn(0x004bef57u); return;   //   0x004bef57  ret      
+    ts::insn(0x004bef57u); ts::ret_pop(0x0u); return;   //   0x004bef57  ret      
 }
 
 // ---------------------------------------------------------------------------
@@ -8136,7 +8136,7 @@ void sub_004bfdea(void)
     ts::insn(0x004bfeb1u); EBX.d = ts::pop32();   //   0x004bfeb1  pop      ebx
     ts::insn(0x004bfeb2u); ESP.d = EBP.d;   //   0x004bfeb2  mov      esp, ebp
     ts::insn(0x004bfeb4u); EBP.d = ts::pop32();   //   0x004bfeb4  pop      ebp
-    ts::insn(0x004bfeb5u); return;   //   0x004bfeb5  ret      
+    ts::insn(0x004bfeb5u); ts::ret_pop(0x0u); return;   //   0x004bfeb5  ret      
 }
 
 // ---------------------------------------------------------------------------

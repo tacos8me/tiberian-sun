@@ -1063,7 +1063,7 @@ void sub_00463330(void)
     ts::insn(0x00463354u); ts::st32(ESI.d + 0x8, EBX.d);   //   0x00463354  mov      dword ptr [esi + 8], ebx
     ts::insn(0x00463357u); ESI.d = ts::pop32();   //   0x00463357  pop      esi
     ts::insn(0x00463358u); EBX.d = ts::pop32();   //   0x00463358  pop      ebx
-    ts::insn(0x00463359u); return;   //   0x00463359  ret      
+    ts::insn(0x00463359u); ts::ret_pop(0x0u); return;   //   0x00463359  ret      
 }
 
 // ---------------------------------------------------------------------------

@@ -783,11 +783,17 @@ inline void flags_unpack(u32 f) {
 inline void pushfd() { push32(flags_pack()); }
 inline void popfd()  { flags_unpack(pop32()); }
 inline void leave_op() { ESP.d = EBP.d; EBP.d = pop32(); }
-inline void ret_pop(u32 n) { ESP.d += n; }
+// `ret` and `ret N` both pop the RETURN ADDRESS (4 bytes) as well as N bytes of
+// arguments. Popping only N leaves the stack 4 bytes high on every single call,
+// so ESP drifts upward and anything that reads [esp] as a return address reads a
+// stale value -- which is what produced calls to garbage like 0x68649620. The
+// stub layer always discarded the return address explicitly; the transcriptions
+// did not, and the two have to agree.
+inline void ret_pop(u32 n) { ESP.d += n + 4u; }
 // A `ret imm` on a function that returns a value: pop the arguments and yield
 // what the machine has in EAX. The transcription reads its result from the
 // machine, not from a C++ expression.
-inline u32 ret_pop_val(u32 n, u32 v) { ESP.d += n; return v; }
+inline u32 ret_pop_val(u32 n, u32 v) { ESP.d += n + 4u; return v; }
 inline void nop() {}
 inline void trap(u32 n) { (void)n; }
 inline u32  bswap32(u32 v) {
