@@ -26,16 +26,16 @@ void SideClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// SideClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// SideClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void SideClass::Init(int a0)
+void SideClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// SideClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// SideClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void SideClass::Shutdown(int a0)
+void SideClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,9 +50,9 @@ void SideClass::vfunc_3(int a0, int a1)
     ts::sub::sub_005d8000();
 }
 
-// SideClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// SideClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void SideClass::Release(int a0)
+void SideClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
@@ -77,23 +77,23 @@ void SideClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_005d8130();
 }
 
-// SideClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// SideClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void SideClass::GetType(int a0, int a1)
+void SideClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// SideClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// SideClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void SideClass::Set_ID()
+void SideClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// SideClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// SideClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void SideClass::Get_RTTI(int a0, int a1)
+void SideClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,112 +109,112 @@ void SideClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// SideClass::Get_Heap -- the body is the canonical transcription of
+// SideClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x005d8190, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SideClass::Get_Heap()
+void SideClass::Fetch_Object_Size()
 {
     ts::sub::sub_005d8190();
 }
 
 // -------------------------------------------------------------------------
-// SideClass::Load -- the body is the canonical transcription of
+// SideClass::Compute_CRC -- the body is the canonical transcription of
 // 13 instructions at 0x005d7fe0, in src/generated/code/.
 // size 30 bytes; callees: 0x00405fe0, 0x0046d680
 //
-void SideClass::Load(int a0)
+void SideClass::Compute_CRC(int a0)
 {
     ts::sub::sub_005d7fe0();
 }
 
-// SideClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// SideClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void SideClass::Save()
+void SideClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// SideClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// SideClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void SideClass::GetSizeMax()
+void SideClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// SideClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// SideClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void SideClass::Compute_CRC()
+void SideClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// SideClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// SideClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void SideClass::vfunc_17()
+void SideClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// SideClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// SideClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void SideClass::vfunc_18(int a0)
+void SideClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// SideClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// SideClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void SideClass::vfunc_19(int a0)
+void SideClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// SideClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// SideClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void SideClass::vfunc_20()
+void SideClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// SideClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// SideClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void SideClass::vfunc_21()
+void SideClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// SideClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// SideClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void SideClass::vfunc_22(int a0)
+void SideClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// SideClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// SideClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void SideClass::vfunc_23()
+void SideClass::AI()
 {
     ts::sub::sub_00405ab0();
 }
 
-// SideClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
+// SideClass::Init_Theater -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
 // forwarder is written once, at that declaration.
-void SideClass::vfunc_24(int a0)
+void SideClass::Init_Theater(int a0)
 {
     ts::sub::sub_00406010();
 }
 
-// SideClass::Fetch_ID -- ALIAS of AbstractClass::Fetch_ID_2 (same machine code at 0x00405f20); the
+// SideClass::Read_INI -- ALIAS of AbstractClass::Fetch_ID_2 (same machine code at 0x00405f20); the
 // forwarder is written once, at that declaration.
-void SideClass::Fetch_ID(int a0, int a1, int a2, int a3, int a4)
+void SideClass::Read_INI(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00405f20();
 }
 
-// SideClass::Set_ID -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
+// SideClass::Write_INI -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
 // forwarder is written once, at that declaration.
-void SideClass::Set_ID(int a0)
+void SideClass::Write_INI(int a0)
 {
     ts::sub::sub_00405fb0();
 }

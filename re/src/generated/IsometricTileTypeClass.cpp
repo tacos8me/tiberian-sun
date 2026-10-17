@@ -26,16 +26,16 @@ void IsometricTileTypeClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// IsometricTileTypeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// IsometricTileTypeClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::Init(int a0)
+void IsometricTileTypeClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// IsometricTileTypeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// IsometricTileTypeClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::Shutdown(int a0)
+void IsometricTileTypeClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,9 +50,9 @@ void IsometricTileTypeClass::vfunc_3(int a0, int a1)
     ts::sub::sub_004ef540();
 }
 
-// IsometricTileTypeClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// IsometricTileTypeClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::Release(int a0)
+void IsometricTileTypeClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
@@ -78,28 +78,28 @@ void IsometricTileTypeClass::vfunc_6(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::GetType -- the body is the canonical transcription of
+// IsometricTileTypeClass::GetSizeMax -- the body is the canonical transcription of
 // 9 instructions at 0x00572ba0, in src/generated/code/.
 // size 24 bytes; callees: 0x00405910
 //
-void IsometricTileTypeClass::GetType(int a0, int a1)
+void IsometricTileTypeClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
 }
 
-// IsometricTileTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// IsometricTileTypeClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::Set_ID()
+void IsometricTileTypeClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::Get_RTTI -- the body is the canonical transcription of
+// IsometricTileTypeClass::Detach -- the body is the canonical transcription of
 // 18 instructions at 0x004ef580, in src/generated/code/.
 // size 65 bytes; callees: none
 //
-void IsometricTileTypeClass::Get_RTTI(int a0, int a1)
+void IsometricTileTypeClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004ef580();
 }
@@ -115,101 +115,101 @@ void IsometricTileTypeClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::Get_Heap -- the body is the canonical transcription of
+// IsometricTileTypeClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x004ef930, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void IsometricTileTypeClass::Get_Heap()
+void IsometricTileTypeClass::Fetch_Object_Size()
 {
     ts::sub::sub_004ef930();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::Load -- the body is the canonical transcription of
+// IsometricTileTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 83 instructions at 0x004ef330, in src/generated/code/.
 // size 271 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680
 //
-void IsometricTileTypeClass::Load(int a0)
+void IsometricTileTypeClass::Compute_CRC(int a0)
 {
     ts::sub::sub_004ef330();
 }
 
-// IsometricTileTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// IsometricTileTypeClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::Save()
+void IsometricTileTypeClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// IsometricTileTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// IsometricTileTypeClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::GetSizeMax()
+void IsometricTileTypeClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::Compute_CRC -- the body is the canonical transcription of
+// IsometricTileTypeClass::Fetch_Heap_ID -- the body is the canonical transcription of
 // 2 instructions at 0x004ef940, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void IsometricTileTypeClass::Compute_CRC()
+void IsometricTileTypeClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004ef940();
 }
 
-// IsometricTileTypeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// IsometricTileTypeClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::vfunc_17()
+void IsometricTileTypeClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// IsometricTileTypeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// IsometricTileTypeClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::vfunc_18(int a0)
+void IsometricTileTypeClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// IsometricTileTypeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// IsometricTileTypeClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::vfunc_19(int a0)
+void IsometricTileTypeClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// IsometricTileTypeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// IsometricTileTypeClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::vfunc_20()
+void IsometricTileTypeClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// IsometricTileTypeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// IsometricTileTypeClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::vfunc_21()
+void IsometricTileTypeClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// IsometricTileTypeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// IsometricTileTypeClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::vfunc_22(int a0)
+void IsometricTileTypeClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// IsometricTileTypeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// IsometricTileTypeClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::vfunc_23()
+void IsometricTileTypeClass::AI()
 {
     ts::sub::sub_00405ab0();
 }
 
-// IsometricTileTypeClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
+// IsometricTileTypeClass::Init_Theater -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::vfunc_24(int a0)
+void IsometricTileTypeClass::Init_Theater(int a0)
 {
     ts::sub::sub_00406010();
 }
@@ -224,133 +224,133 @@ void IsometricTileTypeClass::Read_INI(int a0)
     ts::sub::sub_00572610();
 }
 
-// IsometricTileTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
+// IsometricTileTypeClass::Write_INI -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::Set_ID(int a0)
+void IsometricTileTypeClass::Write_INI(int a0)
 {
     ts::sub::sub_00405fb0();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_27 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Coord_Fixup -- the body is the canonical transcription of
 // 12 instructions at 0x004ef310, in src/generated/code/.
 // size 31 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_27(int a0, int a1)
+void IsometricTileTypeClass::Coord_Fixup(int a0, int a1)
 {
     ts::sub::sub_004ef310();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_28 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Get_Ownable -- the body is the canonical transcription of
 // 2 instructions at 0x00418f40, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_28()
+void IsometricTileTypeClass::Get_Ownable()
 {
     ts::sub::sub_00418f40();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_29 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Max_Pips -- the body is the canonical transcription of
 // 2 instructions at 0x005715e0, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_29()
+void IsometricTileTypeClass::Max_Pips()
 {
     ts::sub::sub_005715e0();
 }
 
-// IsometricTileTypeClass::vfunc_30 -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); the
+// IsometricTileTypeClass::Pixel_Dimensions -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::vfunc_30(int a0)
+void IsometricTileTypeClass::Pixel_Dimensions(int a0)
 {
     ts::sub::sub_005715f0();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_31 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Lepton_Dimensions -- the body is the canonical transcription of
 // 13 instructions at 0x00571610, in src/generated/code/.
 // size 33 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_31(int a0)
+void IsometricTileTypeClass::Lepton_Dimensions(int a0)
 {
     ts::sub::sub_00571610();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_32 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Create_And_Place -- the body is the canonical transcription of
 // 18 instructions at 0x004ef260, in src/generated/code/.
 // size 46 bytes; callees: 0x004e9090, 0x00682997
 //
-void IsometricTileTypeClass::vfunc_32(int a0, int a1)
+void IsometricTileTypeClass::Create_And_Place(int a0, int a1)
 {
     ts::sub::sub_004ef260();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_33 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Cost_Of -- the body is the canonical transcription of
 // 2 instructions at 0x00571640, in src/generated/code/.
 // size 5 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_33(int a0)
+void IsometricTileTypeClass::Cost_Of(int a0)
 {
     ts::sub::sub_00571640();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_34 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Time_To_Build -- the body is the canonical transcription of
 // 2 instructions at 0x00571650, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_34()
+void IsometricTileTypeClass::Time_To_Build()
 {
     ts::sub::sub_00571650();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_35 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Create_One_Of -- the body is the canonical transcription of
 // 21 instructions at 0x004ef2a0, in src/generated/code/.
 // size 62 bytes; callees: 0x004e9090, 0x004ec7d0, 0x00682997
 //
-void IsometricTileTypeClass::vfunc_35(int a0)
+void IsometricTileTypeClass::Create_One_Of(int a0)
 {
     ts::sub::sub_004ef2a0();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_36 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Occupy_List -- the body is the canonical transcription of
 // 61 instructions at 0x004ea600, in src/generated/code/.
 // size 177 bytes; callees: 0x00682610
 //
-void IsometricTileTypeClass::vfunc_36(int a0)
+void IsometricTileTypeClass::Occupy_List(int a0)
 {
     ts::sub::sub_004ea600();
 }
 
-// IsometricTileTypeClass::vfunc_37 -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
+// IsometricTileTypeClass::Who_Can_Build_Me -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
 // forwarder is written once, at that declaration.
-void IsometricTileTypeClass::vfunc_37(int a0, int a1, int a2, int a3, int a4, int a5)
+void IsometricTileTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00571710();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_38 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Get_Cameo_Data -- the body is the canonical transcription of
 // 2 instructions at 0x00571660, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void IsometricTileTypeClass::vfunc_38()
+void IsometricTileTypeClass::Get_Cameo_Data()
 {
     ts::sub::sub_00571660();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileTypeClass::vfunc_39 -- the body is the canonical transcription of
+// IsometricTileTypeClass::Get_Image_Data -- the body is the canonical transcription of
 // 13 instructions at 0x004ea590, in src/generated/code/.
 // size 32 bytes; callees: 0x004ec7d0
 //
-void IsometricTileTypeClass::vfunc_39()
+void IsometricTileTypeClass::Get_Image_Data()
 {
     ts::sub::sub_004ea590();
 }

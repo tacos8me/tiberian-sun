@@ -26,74 +26,74 @@ void TubeClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// TubeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// TubeClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void TubeClass::Init(int a0)
+void TubeClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// TubeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// TubeClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void TubeClass::Shutdown(int a0)
+void TubeClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// TubeClass::vfunc_3 -- the body is the canonical transcription of
+// TubeClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x0062edf0, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void TubeClass::vfunc_3(int a0, int a1)
+void TubeClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_0062edf0();
 }
 
-// TubeClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// TubeClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void TubeClass::Release(int a0)
+void TubeClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// TubeClass::vfunc_5 -- the body is the canonical transcription of
+// TubeClass::Load -- the body is the canonical transcription of
 // 17 instructions at 0x0062e8c0, in src/generated/code/.
 // size 50 bytes; callees: 0x004056f0, 0x004058b0
 //
-void TubeClass::vfunc_5(int a0, int a1)
+void TubeClass::Load(int a0, int a1)
 {
     ts::sub::sub_0062e8c0();
 }
 
 // -------------------------------------------------------------------------
-// TubeClass::vfunc_6 -- the body is the canonical transcription of
+// TubeClass::Save -- the body is the canonical transcription of
 // 11 instructions at 0x0062e900, in src/generated/code/.
 // size 29 bytes; callees: 0x00405850
 //
-void TubeClass::vfunc_6(int a0, int a1, int a2)
+void TubeClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_0062e900();
 }
 
-// TubeClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// TubeClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void TubeClass::GetType(int a0, int a1)
+void TubeClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// TubeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// TubeClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void TubeClass::Set_ID()
+void TubeClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// TubeClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// TubeClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void TubeClass::Get_RTTI(int a0, int a1)
+void TubeClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,91 +109,91 @@ void TubeClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// TubeClass::Get_Heap -- the body is the canonical transcription of
+// TubeClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x0062edd0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TubeClass::Get_Heap()
+void TubeClass::Fetch_Object_Size()
 {
     ts::sub::sub_0062edd0();
 }
 
 // -------------------------------------------------------------------------
-// TubeClass::Load -- the body is the canonical transcription of
+// TubeClass::Compute_CRC -- the body is the canonical transcription of
 // 46 instructions at 0x0062ed50, in src/generated/code/.
 // size 120 bytes; callees: 0x00405940, 0x0046d660, 0x0046d680
 //
-void TubeClass::Load(int a0)
+void TubeClass::Compute_CRC(int a0)
 {
     ts::sub::sub_0062ed50();
 }
 
-// TubeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// TubeClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void TubeClass::Save()
+void TubeClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// TubeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// TubeClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void TubeClass::GetSizeMax()
+void TubeClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// TubeClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// TubeClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void TubeClass::Compute_CRC()
+void TubeClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// TubeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// TubeClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void TubeClass::vfunc_17()
+void TubeClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// TubeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// TubeClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void TubeClass::vfunc_18(int a0)
+void TubeClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// TubeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// TubeClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void TubeClass::vfunc_19(int a0)
+void TubeClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// TubeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// TubeClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void TubeClass::vfunc_20()
+void TubeClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// TubeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// TubeClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void TubeClass::vfunc_21()
+void TubeClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// TubeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// TubeClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void TubeClass::vfunc_22(int a0)
+void TubeClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// TubeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// TubeClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void TubeClass::vfunc_23()
+void TubeClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

@@ -82,152 +82,152 @@ void TextLabelClass::vfunc_9()
     ts::sub::sub_004a5ae0();
 }
 
-// TextLabelClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// TextLabelClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_10(int a0, int a1)
+void TextLabelClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// TextLabelClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// TextLabelClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_11(int a0)
+void TextLabelClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// TextLabelClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// TextLabelClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_12()
+void TextLabelClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// TextLabelClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// TextLabelClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_13(int a0)
+void TextLabelClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// TextLabelClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// TextLabelClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_14()
+void TextLabelClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// TextLabelClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// TextLabelClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_15()
+void TextLabelClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// TextLabelClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// TextLabelClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_16()
+void TextLabelClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// TextLabelClass::vfunc_17 -- ALIAS of DisplayClass_TacticalClass::vfunc_17 (same machine code at 0x004788d0); the
+// TextLabelClass::Get_ID -- ALIAS of DisplayClass_TacticalClass::Get_ID (same machine code at 0x004788d0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_17()
+void TextLabelClass::Get_ID()
 {
     ts::sub::sub_004788d0();
 }
 
-// TextLabelClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); the
+// TextLabelClass::Flag_To_Redraw -- ALIAS of ControlClass::Flag_To_Redraw (same machine code at 0x004a5e20); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_18()
+void TextLabelClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
-// TextLabelClass::vfunc_19 -- ALIAS of ControlClass::vfunc_19 (same machine code at 0x00460650); the
+// TextLabelClass::Peer_To_Peer -- ALIAS of ControlClass::Peer_To_Peer (same machine code at 0x00460650); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_19(int a0, int a1, int a2)
+void TextLabelClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_00460650();
 }
 
-// TextLabelClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); the
+// TextLabelClass::Set_Focus -- ALIAS of CheckListClass::Set_Focus (same machine code at 0x004a5e60); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_20()
+void TextLabelClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
-// TextLabelClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// TextLabelClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_21()
+void TextLabelClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// TextLabelClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// TextLabelClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_22()
+void TextLabelClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// TextLabelClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// TextLabelClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_23()
+void TextLabelClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// TextLabelClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// TextLabelClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_24()
+void TextLabelClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
-// TextLabelClass::vfunc_25 -- ALIAS of ControlClass::vfunc_25 (same machine code at 0x004a5ee0); the
+// TextLabelClass::Set_Position -- ALIAS of ControlClass::Set_Position (same machine code at 0x004a5ee0); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_25(int a0, int a1)
+void TextLabelClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004a5ee0();
 }
 
-// TextLabelClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// TextLabelClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_26(int a0, int a1)
+void TextLabelClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
 // -------------------------------------------------------------------------
-// TextLabelClass::vfunc_27 -- the body is the canonical transcription of
+// TextLabelClass::Draw_Me -- the body is the canonical transcription of
 // 40 instructions at 0x00630930, in src/generated/code/.
 // size 120 bytes; callees: 0x00471280, 0x004a5b90
 //
-void TextLabelClass::vfunc_27(int a0)
+void TextLabelClass::Draw_Me(int a0)
 {
     ts::sub::sub_00630930();
 }
 
-// TextLabelClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// TextLabelClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_28(int a0)
+void TextLabelClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
-// TextLabelClass::vfunc_29 -- ALIAS of GadgetClass::vfunc_29 (same machine code at 0x004a5b70); the
+// TextLabelClass::Action -- ALIAS of GadgetClass::Action (same machine code at 0x004a5b70); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_29(int a0, int a1)
+void TextLabelClass::Action(int a0, int a1)
 {
     ts::sub::sub_004a5b70();
 }
 
-// TextLabelClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// TextLabelClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void TextLabelClass::vfunc_30(int a0, int a1, int a2, int a3)
+void TextLabelClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

@@ -173,7 +173,7 @@ void AnimClass::vfunc_16()
     ts::sub::sub_004059f0();
 }
 
-// AnimClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); the
+// AnimClass::vfunc_17 -- ALIAS of AircraftClass::Is_Inactive (same machine code at 0x00570a20); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_17()
 {
@@ -197,7 +197,7 @@ void AnimClass::vfunc_19()
     ts::sub::sub_00405a30();
 }
 
-// AnimClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); the
+// AnimClass::vfunc_20 -- ALIAS of AircraftClass::On_Ground (same machine code at 0x00570e80); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_20()
 {
@@ -251,7 +251,7 @@ void AnimClass::vfunc_25()
     ts::sub::sub_004167c0();
 }
 
-// AnimClass::vfunc_26 -- ALIAS of AircraftClass::vfunc_26 (same machine code at 0x0056e820); the
+// AnimClass::vfunc_26 -- ALIAS of AircraftClass::Get_Image_Data (same machine code at 0x0056e820); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_26()
 {
@@ -288,7 +288,7 @@ void AnimClass::vfunc_29()
     ts::sub::sub_004150e0();
 }
 
-// AnimClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); the
+// AnimClass::vfunc_30 -- ALIAS of AircraftClass::Not_Underground (same machine code at 0x00570ef0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_30()
 {
@@ -385,21 +385,21 @@ void AnimClass::vfunc_39()
     ts::sub::sub_0056ebe0();
 }
 
-// AnimClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); the
+// AnimClass::vfunc_40 -- ALIAS of AircraftClass::Target_Coord (same machine code at 0x0040e5d0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_40()
 {
     ts::sub::sub_0040e5d0();
 }
 
-// AnimClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); the
+// AnimClass::vfunc_41 -- ALIAS of AircraftClass::Docking_Coord (same machine code at 0x0040e600); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_41()
 {
     ts::sub::sub_0040e600();
 }
 
-// AnimClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); the
+// AnimClass::vfunc_42 -- ALIAS of AircraftClass::Render_Coord (same machine code at 0x0040e630); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_42()
 {
@@ -416,7 +416,7 @@ void AnimClass::vfunc_43()
     ts::sub::sub_004167f0();
 }
 
-// AnimClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); the
+// AnimClass::vfunc_44 -- ALIAS of AircraftClass::Exit_Coord (same machine code at 0x0040e660); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_44()
 {
@@ -493,28 +493,28 @@ void AnimClass::vfunc_51()
     ts::sub::sub_0056ebf0();
 }
 
-// AnimClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); the
+// AnimClass::vfunc_52 -- ALIAS of AircraftClass::Paradrop (same machine code at 0x005700c0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_52()
 {
     ts::sub::sub_005700c0();
 }
 
-// AnimClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); the
+// AnimClass::vfunc_53 -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_53()
 {
     ts::sub::sub_0056ea70();
 }
 
-// AnimClass::vfunc_54 -- ALIAS of AircraftClass::vfunc_54 (same machine code at 0x00570480); the
+// AnimClass::vfunc_54 -- ALIAS of AircraftClass::Set_Occupy_Bit (same machine code at 0x00570480); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_54()
 {
     ts::sub::sub_00570480();
 }
 
-// AnimClass::vfunc_55 -- ALIAS of AircraftClass::vfunc_55 (same machine code at 0x00570500); the
+// AnimClass::vfunc_55 -- ALIAS of AircraftClass::Clear_Occupy_Bit (same machine code at 0x00570500); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_55()
 {
@@ -601,7 +601,7 @@ void AnimClass::vfunc_63()
     ts::sub::sub_004139c0();
 }
 
-// AnimClass::vfunc_64 -- ALIAS of AircraftClass::vfunc_64 (same machine code at 0x00570990); the
+// AnimClass::vfunc_64 -- ALIAS of AircraftClass::Editor_Draw_It (same machine code at 0x00570990); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_64()
 {
@@ -638,28 +638,28 @@ void AnimClass::vfunc_67()
     ts::sub::sub_00414030();
 }
 
-// AnimClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); the
+// AnimClass::vfunc_68 -- ALIAS of AircraftClass::Get_Visual_Rect (same machine code at 0x0056f000); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_68()
 {
     ts::sub::sub_0056f000();
 }
 
-// AnimClass::vfunc_69 -- ALIAS of AircraftClass::vfunc_69 (same machine code at 0x0056f160); the
+// AnimClass::vfunc_69 -- ALIAS of AircraftClass::Get_Render_Rect (same machine code at 0x0056f160); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_69()
 {
     ts::sub::sub_0056f160();
 }
 
-// AnimClass::vfunc_70 -- ALIAS of AircraftClass::vfunc_70 (same machine code at 0x0040e690); the
+// AnimClass::vfunc_70 -- ALIAS of AircraftClass::Draw_Radial_Indicator (same machine code at 0x0040e690); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_70()
 {
     ts::sub::sub_0040e690();
 }
 
-// AnimClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); the
+// AnimClass::vfunc_71 -- ALIAS of AircraftClass::Mark_For_Redraw (same machine code at 0x0056f680); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_71()
 {
@@ -706,7 +706,7 @@ void AnimClass::vfunc_75()
     ts::sub::sub_0056ee20();
 }
 
-// AnimClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); the
+// AnimClass::vfunc_76 -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_76()
 {
@@ -753,14 +753,14 @@ void AnimClass::vfunc_80()
     ts::sub::sub_0056ec90();
 }
 
-// AnimClass::vfunc_81 -- ALIAS of AircraftClass::vfunc_81 (same machine code at 0x0056eca0); the
+// AnimClass::vfunc_81 -- ALIAS of AircraftClass::Catch_Fire (same machine code at 0x0056eca0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_81()
 {
     ts::sub::sub_0056eca0();
 }
 
-// AnimClass::vfunc_82 -- ALIAS of AircraftClass::vfunc_82 (same machine code at 0x0056ecb0); the
+// AnimClass::vfunc_82 -- ALIAS of AircraftClass::Fire_Out (same machine code at 0x0056ecb0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_82()
 {
@@ -807,7 +807,7 @@ void AnimClass::vfunc_86()
     ts::sub::sub_00416870();
 }
 
-// AnimClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); the
+// AnimClass::vfunc_87 -- ALIAS of AircraftClass::Who_Can_Build_Me (same machine code at 0x00570240); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_87()
 {
@@ -834,7 +834,7 @@ void AnimClass::vfunc_89()
     ts::sub::sub_005700b0();
 }
 
-// AnimClass::vfunc_90 -- ALIAS of AircraftClass::vfunc_90 (same machine code at 0x0056ece0); the
+// AnimClass::vfunc_90 -- ALIAS of AircraftClass::Repair (same machine code at 0x0056ece0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_90()
 {
@@ -861,7 +861,7 @@ void AnimClass::vfunc_92()
     ts::sub::sub_00570e70();
 }
 
-// AnimClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); the
+// AnimClass::vfunc_93 -- ALIAS of AircraftClass::Move (same machine code at 0x0056ed00); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_93()
 {
@@ -888,7 +888,7 @@ void AnimClass::vfunc_95()
     ts::sub::sub_00416890();
 }
 
-// AnimClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); the
+// AnimClass::vfunc_96 -- ALIAS of AircraftClass::Get_Coord (same machine code at 0x0040e6a0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_96()
 {
@@ -905,42 +905,42 @@ void AnimClass::vfunc_97()
     ts::sub::sub_00570cc0();
 }
 
-// AnimClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); the
+// AnimClass::vfunc_98 -- ALIAS of AircraftClass::Get_Cell (same machine code at 0x0040e6c0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_98()
 {
     ts::sub::sub_0040e6c0();
 }
 
-// AnimClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); the
+// AnimClass::vfunc_99 -- ALIAS of AircraftClass::Get_Cell_Ptr (same machine code at 0x00570ce0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_99()
 {
     ts::sub::sub_00570ce0();
 }
 
-// AnimClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); the
+// AnimClass::vfunc_100 -- ALIAS of AircraftClass::Get_Target_Cell (same machine code at 0x00570d00); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_100()
 {
     ts::sub::sub_00570d00();
 }
 
-// AnimClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); the
+// AnimClass::vfunc_101 -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_101()
 {
     ts::sub::sub_00570d50();
 }
 
-// AnimClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); the
+// AnimClass::vfunc_102 -- ALIAS of AircraftClass::Get_Height_AGL (same machine code at 0x00570370); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_102()
 {
     ts::sub::sub_00570370();
 }
 
-// AnimClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); the
+// AnimClass::vfunc_103 -- ALIAS of AircraftClass::Set_Height_AGL (same machine code at 0x005703b0); the
 // forwarder is written once, at that declaration.
 void AnimClass::vfunc_103()
 {

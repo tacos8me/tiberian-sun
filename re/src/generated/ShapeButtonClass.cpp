@@ -82,152 +82,152 @@ void ShapeButtonClass::vfunc_9()
     ts::sub::sub_004a5ae0();
 }
 
-// ShapeButtonClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// ShapeButtonClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_10(int a0, int a1)
+void ShapeButtonClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// ShapeButtonClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// ShapeButtonClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_11(int a0)
+void ShapeButtonClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// ShapeButtonClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// ShapeButtonClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_12()
+void ShapeButtonClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// ShapeButtonClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// ShapeButtonClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_13(int a0)
+void ShapeButtonClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// ShapeButtonClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// ShapeButtonClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_14()
+void ShapeButtonClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// ShapeButtonClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// ShapeButtonClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_15()
+void ShapeButtonClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// ShapeButtonClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// ShapeButtonClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_16()
+void ShapeButtonClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// ShapeButtonClass::vfunc_17 -- ALIAS of CheckListClass::vfunc_17 (same machine code at 0x00460610); the
+// ShapeButtonClass::Get_ID -- ALIAS of CheckListClass::Get_ID (same machine code at 0x00460610); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_17()
+void ShapeButtonClass::Get_ID()
 {
     ts::sub::sub_00460610();
 }
 
-// ShapeButtonClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); the
+// ShapeButtonClass::Flag_To_Redraw -- ALIAS of ControlClass::Flag_To_Redraw (same machine code at 0x004a5e20); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_18()
+void ShapeButtonClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
-// ShapeButtonClass::vfunc_19 -- ALIAS of ControlClass::vfunc_19 (same machine code at 0x00460650); the
+// ShapeButtonClass::Peer_To_Peer -- ALIAS of ControlClass::Peer_To_Peer (same machine code at 0x00460650); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_19(int a0, int a1, int a2)
+void ShapeButtonClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_00460650();
 }
 
-// ShapeButtonClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); the
+// ShapeButtonClass::Set_Focus -- ALIAS of CheckListClass::Set_Focus (same machine code at 0x004a5e60); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_20()
+void ShapeButtonClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
-// ShapeButtonClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// ShapeButtonClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_21()
+void ShapeButtonClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// ShapeButtonClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// ShapeButtonClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_22()
+void ShapeButtonClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// ShapeButtonClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// ShapeButtonClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_23()
+void ShapeButtonClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// ShapeButtonClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// ShapeButtonClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_24()
+void ShapeButtonClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
-// ShapeButtonClass::vfunc_25 -- ALIAS of ControlClass::vfunc_25 (same machine code at 0x004a5ee0); the
+// ShapeButtonClass::Set_Position -- ALIAS of ControlClass::Set_Position (same machine code at 0x004a5ee0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_25(int a0, int a1)
+void ShapeButtonClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004a5ee0();
 }
 
-// ShapeButtonClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// ShapeButtonClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_26(int a0, int a1)
+void ShapeButtonClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
 // -------------------------------------------------------------------------
-// ShapeButtonClass::vfunc_27 -- the body is the canonical transcription of
+// ShapeButtonClass::Draw_Me -- the body is the canonical transcription of
 // 19 instructions at 0x005d7ad0, in src/generated/code/.
 // size 52 bytes; callees: 0x00460620, 0x005d7b20
 //
-void ShapeButtonClass::vfunc_27()
+void ShapeButtonClass::Draw_Me()
 {
     ts::sub::sub_005d7ad0();
 }
 
-// ShapeButtonClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// ShapeButtonClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_28(int a0)
+void ShapeButtonClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
-// ShapeButtonClass::vfunc_29 -- ALIAS of MyButton::vfunc_29 (same machine code at 0x0062a8c0); the
+// ShapeButtonClass::Action -- ALIAS of MyButton::Action (same machine code at 0x0062a8c0); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_29(int a0)
+void ShapeButtonClass::Action(int a0)
 {
     ts::sub::sub_0062a8c0();
 }
 
-// ShapeButtonClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// ShapeButtonClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void ShapeButtonClass::vfunc_30(int a0, int a1, int a2, int a3)
+void ShapeButtonClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

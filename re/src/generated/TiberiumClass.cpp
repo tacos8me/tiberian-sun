@@ -26,16 +26,16 @@ void TiberiumClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// TiberiumClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// TiberiumClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::Init(int a0)
+void TiberiumClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// TiberiumClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// TiberiumClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::Shutdown(int a0)
+void TiberiumClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,9 +50,9 @@ void TiberiumClass::vfunc_3(int a0, int a1)
     ts::sub::sub_00628900();
 }
 
-// TiberiumClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// TiberiumClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::Release(int a0)
+void TiberiumClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
@@ -68,28 +68,28 @@ void TiberiumClass::vfunc_6(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::GetType -- the body is the canonical transcription of
+// TiberiumClass::GetSizeMax -- the body is the canonical transcription of
 // 18 instructions at 0x00628b50, in src/generated/code/.
 // size 47 bytes; callees: 0x00405910
 //
-void TiberiumClass::GetType(int a0, int a1)
+void TiberiumClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00628b50();
 }
 
-// TiberiumClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// TiberiumClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::Set_ID()
+void TiberiumClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::Get_RTTI -- the body is the canonical transcription of
+// TiberiumClass::Detach -- the body is the canonical transcription of
 // 35 instructions at 0x00628bf0, in src/generated/code/.
 // size 105 bytes; callees: none
 //
-void TiberiumClass::Get_RTTI(int a0, int a1)
+void TiberiumClass::Detach(int a0, int a1)
 {
     ts::sub::sub_00628bf0();
 }
@@ -105,118 +105,118 @@ void TiberiumClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::Get_Heap -- the body is the canonical transcription of
+// TiberiumClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x0062a0d0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TiberiumClass::Get_Heap()
+void TiberiumClass::Fetch_Object_Size()
 {
     ts::sub::sub_0062a0d0();
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::Load -- the body is the canonical transcription of
+// TiberiumClass::Compute_CRC -- the body is the canonical transcription of
 // 37 instructions at 0x00628890, in src/generated/code/.
 // size 111 bytes; callees: 0x00405fe0, 0x0046d680
 //
-void TiberiumClass::Load(int a0)
+void TiberiumClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00628890();
 }
 
-// TiberiumClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// TiberiumClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::Save()
+void TiberiumClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// TiberiumClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// TiberiumClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::GetSizeMax()
+void TiberiumClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::Compute_CRC -- the body is the canonical transcription of
+// TiberiumClass::Fetch_Heap_ID -- the body is the canonical transcription of
 // 2 instructions at 0x0062a0f0, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void TiberiumClass::Compute_CRC()
+void TiberiumClass::Fetch_Heap_ID()
 {
     ts::sub::sub_0062a0f0();
 }
 
-// TiberiumClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// TiberiumClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::vfunc_17()
+void TiberiumClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// TiberiumClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// TiberiumClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::vfunc_18(int a0)
+void TiberiumClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// TiberiumClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// TiberiumClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::vfunc_19(int a0)
+void TiberiumClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// TiberiumClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// TiberiumClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::vfunc_20()
+void TiberiumClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// TiberiumClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// TiberiumClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::vfunc_21()
+void TiberiumClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// TiberiumClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// TiberiumClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::vfunc_22(int a0)
+void TiberiumClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// TiberiumClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// TiberiumClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::vfunc_23()
+void TiberiumClass::AI()
 {
     ts::sub::sub_00405ab0();
 }
 
-// TiberiumClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
+// TiberiumClass::Init_Theater -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::vfunc_24(int a0)
+void TiberiumClass::Init_Theater(int a0)
 {
     ts::sub::sub_00406010();
 }
 
 // -------------------------------------------------------------------------
-// TiberiumClass::Fetch_ID -- the body is the canonical transcription of
+// TiberiumClass::Read_INI -- the body is the canonical transcription of
 // 111 instructions at 0x00628540, in src/generated/code/.
 // size 366 bytes; callees: 0x00405f20, 0x00418d20, 0x004483e0, 0x004d60b0, 0x004d6960, 0x004d6ed0, 0x005ba380, 0x005ba410, 0x005ba520, 0x005bb7d0, 0x006286be, 0x006837ea
 //
-void TiberiumClass::Fetch_ID(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void TiberiumClass::Read_INI(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_00628540();
 }
 
-// TiberiumClass::Set_ID -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
+// TiberiumClass::Write_INI -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
 // forwarder is written once, at that declaration.
-void TiberiumClass::Set_ID(int a0)
+void TiberiumClass::Write_INI(int a0)
 {
     ts::sub::sub_00405fb0();
 }

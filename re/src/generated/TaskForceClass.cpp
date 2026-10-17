@@ -26,16 +26,16 @@ void TaskForceClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// TaskForceClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// TaskForceClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::Init(int a0)
+void TaskForceClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// TaskForceClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// TaskForceClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::Shutdown(int a0)
+void TaskForceClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,9 +50,9 @@ void TaskForceClass::vfunc_3(int a0, int a1)
     ts::sub::sub_00606c20();
 }
 
-// TaskForceClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// TaskForceClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::Release(int a0)
+void TaskForceClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
@@ -77,23 +77,23 @@ void TaskForceClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_00606ba0();
 }
 
-// TaskForceClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// TaskForceClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::GetType(int a0, int a1)
+void TaskForceClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// TaskForceClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// TaskForceClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::Set_ID()
+void TaskForceClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// TaskForceClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// TaskForceClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::Get_RTTI(int a0, int a1)
+void TaskForceClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,118 +109,118 @@ void TaskForceClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// TaskForceClass::Get_Heap -- the body is the canonical transcription of
+// TaskForceClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00606cd0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TaskForceClass::Get_Heap()
+void TaskForceClass::Fetch_Object_Size()
 {
     ts::sub::sub_00606cd0();
 }
 
 // -------------------------------------------------------------------------
-// TaskForceClass::Load -- the body is the canonical transcription of
+// TaskForceClass::Compute_CRC -- the body is the canonical transcription of
 // 17 instructions at 0x00606c60, in src/generated/code/.
 // size 41 bytes; callees: 0x00405fe0, 0x0046d680
 //
-void TaskForceClass::Load(int a0)
+void TaskForceClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00606c60();
 }
 
-// TaskForceClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// TaskForceClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::Save()
+void TaskForceClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// TaskForceClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// TaskForceClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::GetSizeMax()
+void TaskForceClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// TaskForceClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// TaskForceClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::Compute_CRC()
+void TaskForceClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// TaskForceClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// TaskForceClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::vfunc_17()
+void TaskForceClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// TaskForceClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// TaskForceClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::vfunc_18(int a0)
+void TaskForceClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// TaskForceClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// TaskForceClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::vfunc_19(int a0)
+void TaskForceClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// TaskForceClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// TaskForceClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::vfunc_20()
+void TaskForceClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// TaskForceClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// TaskForceClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::vfunc_21()
+void TaskForceClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// TaskForceClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// TaskForceClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::vfunc_22(int a0)
+void TaskForceClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// TaskForceClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// TaskForceClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::vfunc_23()
+void TaskForceClass::AI()
 {
     ts::sub::sub_00405ab0();
 }
 
-// TaskForceClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
+// TaskForceClass::Init_Theater -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
 // forwarder is written once, at that declaration.
-void TaskForceClass::vfunc_24(int a0)
+void TaskForceClass::Init_Theater(int a0)
 {
     ts::sub::sub_00406010();
 }
 
 // -------------------------------------------------------------------------
-// TaskForceClass::Fetch_ID -- the body is the canonical transcription of
+// TaskForceClass::Read_INI -- the body is the canonical transcription of
 // 63 instructions at 0x006068d0, in src/generated/code/.
 // size 178 bytes; callees: 0x00405f20, 0x0048ea00, 0x004d60b0, 0x004d6ed0, 0x00682aae
 //
-void TaskForceClass::Fetch_ID(int a0)
+void TaskForceClass::Read_INI(int a0)
 {
     ts::sub::sub_006068d0();
 }
 
 // -------------------------------------------------------------------------
-// TaskForceClass::Set_ID -- the body is the canonical transcription of
+// TaskForceClass::Write_INI -- the body is the canonical transcription of
 // 32 instructions at 0x00606990, in src/generated/code/.
 // size 80 bytes; callees: 0x00405fb0, 0x0048eaa0, 0x004d6b50, 0x006069f0, 0x00682aae
 //
-void TaskForceClass::Set_ID(int a0, int a1, int a2)
+void TaskForceClass::Write_INI(int a0, int a1, int a2)
 {
     ts::sub::sub_00606990();
 }

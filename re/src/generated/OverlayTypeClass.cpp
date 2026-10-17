@@ -26,16 +26,16 @@ void OverlayTypeClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// OverlayTypeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// OverlayTypeClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::Init(int a0)
+void OverlayTypeClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// OverlayTypeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// OverlayTypeClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::Shutdown(int a0)
+void OverlayTypeClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,9 +50,9 @@ void OverlayTypeClass::vfunc_3(int a0, int a1)
     ts::sub::sub_00577500();
 }
 
-// OverlayTypeClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// OverlayTypeClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::Release(int a0)
+void OverlayTypeClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
@@ -77,23 +77,23 @@ void OverlayTypeClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_005774e0();
 }
 
-// OverlayTypeClass::GetType -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
+// OverlayTypeClass::GetSizeMax -- ALIAS of IsometricTileTypeClass::GetSizeMax (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::GetType(int a0, int a1)
+void OverlayTypeClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
 }
 
-// OverlayTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// OverlayTypeClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::Set_ID()
+void OverlayTypeClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// OverlayTypeClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// OverlayTypeClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::Get_RTTI(int a0, int a1)
+void OverlayTypeClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,101 +109,101 @@ void OverlayTypeClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::Get_Heap -- the body is the canonical transcription of
+// OverlayTypeClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00577830, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void OverlayTypeClass::Get_Heap()
+void OverlayTypeClass::Fetch_Object_Size()
 {
     ts::sub::sub_00577830();
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::Load -- the body is the canonical transcription of
+// OverlayTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 49 instructions at 0x00577350, in src/generated/code/.
 // size 159 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680
 //
-void OverlayTypeClass::Load(int a0)
+void OverlayTypeClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00577350();
 }
 
-// OverlayTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// OverlayTypeClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::Save()
+void OverlayTypeClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// OverlayTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// OverlayTypeClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::GetSizeMax()
+void OverlayTypeClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::Compute_CRC -- the body is the canonical transcription of
+// OverlayTypeClass::Fetch_Heap_ID -- the body is the canonical transcription of
 // 2 instructions at 0x00577840, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void OverlayTypeClass::Compute_CRC()
+void OverlayTypeClass::Fetch_Heap_ID()
 {
     ts::sub::sub_00577840();
 }
 
-// OverlayTypeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// OverlayTypeClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_17()
+void OverlayTypeClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// OverlayTypeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// OverlayTypeClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_18(int a0)
+void OverlayTypeClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// OverlayTypeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// OverlayTypeClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_19(int a0)
+void OverlayTypeClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// OverlayTypeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// OverlayTypeClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_20()
+void OverlayTypeClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// OverlayTypeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// OverlayTypeClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_21()
+void OverlayTypeClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// OverlayTypeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// OverlayTypeClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_22(int a0)
+void OverlayTypeClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// OverlayTypeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// OverlayTypeClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_23()
+void OverlayTypeClass::AI()
 {
     ts::sub::sub_00405ab0();
 }
 
-// OverlayTypeClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
+// OverlayTypeClass::Init_Theater -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_24(int a0)
+void OverlayTypeClass::Init_Theater(int a0)
 {
     ts::sub::sub_00406010();
 }
@@ -218,115 +218,115 @@ void OverlayTypeClass::Read_INI(int a0, int a1)
     ts::sub::sub_00577090();
 }
 
-// OverlayTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
+// OverlayTypeClass::Write_INI -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::Set_ID(int a0)
+void OverlayTypeClass::Write_INI(int a0)
 {
     ts::sub::sub_00405fb0();
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::vfunc_27 -- the body is the canonical transcription of
+// OverlayTypeClass::Coord_Fixup -- the body is the canonical transcription of
 // 12 instructions at 0x00577330, in src/generated/code/.
 // size 31 bytes; callees: none
 //
-void OverlayTypeClass::vfunc_27(int a0, int a1)
+void OverlayTypeClass::Coord_Fixup(int a0, int a1)
 {
     ts::sub::sub_00577330();
 }
 
-// OverlayTypeClass::vfunc_28 -- ALIAS of IsometricTileTypeClass::vfunc_28 (same machine code at 0x00418f40); the
+// OverlayTypeClass::Get_Ownable -- ALIAS of IsometricTileTypeClass::Get_Ownable (same machine code at 0x00418f40); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_28()
+void OverlayTypeClass::Get_Ownable()
 {
     ts::sub::sub_00418f40();
 }
 
-// OverlayTypeClass::vfunc_29 -- ALIAS of IsometricTileTypeClass::vfunc_29 (same machine code at 0x005715e0); the
+// OverlayTypeClass::Max_Pips -- ALIAS of IsometricTileTypeClass::Max_Pips (same machine code at 0x005715e0); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_29()
+void OverlayTypeClass::Max_Pips()
 {
     ts::sub::sub_005715e0();
 }
 
-// OverlayTypeClass::vfunc_30 -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); the
+// OverlayTypeClass::Pixel_Dimensions -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_30(int a0)
+void OverlayTypeClass::Pixel_Dimensions(int a0)
 {
     ts::sub::sub_005715f0();
 }
 
-// OverlayTypeClass::vfunc_31 -- ALIAS of IsometricTileTypeClass::vfunc_31 (same machine code at 0x00571610); the
+// OverlayTypeClass::Lepton_Dimensions -- ALIAS of IsometricTileTypeClass::Lepton_Dimensions (same machine code at 0x00571610); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_31(int a0)
+void OverlayTypeClass::Lepton_Dimensions(int a0)
 {
     ts::sub::sub_00571610();
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::vfunc_32 -- the body is the canonical transcription of
+// OverlayTypeClass::Create_And_Place -- the body is the canonical transcription of
 // 18 instructions at 0x00576eb0, in src/generated/code/.
 // size 42 bytes; callees: 0x00575080, 0x00682997
 //
-void OverlayTypeClass::vfunc_32(int a0, int a1)
+void OverlayTypeClass::Create_And_Place(int a0, int a1)
 {
     ts::sub::sub_00576eb0();
 }
 
-// OverlayTypeClass::vfunc_33 -- ALIAS of IsometricTileTypeClass::vfunc_33 (same machine code at 0x00571640); the
+// OverlayTypeClass::Cost_Of -- ALIAS of IsometricTileTypeClass::Cost_Of (same machine code at 0x00571640); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_33(int a0)
+void OverlayTypeClass::Cost_Of(int a0)
 {
     ts::sub::sub_00571640();
 }
 
-// OverlayTypeClass::vfunc_34 -- ALIAS of IsometricTileTypeClass::vfunc_34 (same machine code at 0x00571650); the
+// OverlayTypeClass::Time_To_Build -- ALIAS of IsometricTileTypeClass::Time_To_Build (same machine code at 0x00571650); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_34()
+void OverlayTypeClass::Time_To_Build()
 {
     ts::sub::sub_00571650();
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::vfunc_35 -- the body is the canonical transcription of
+// OverlayTypeClass::Create_One_Of -- the body is the canonical transcription of
 // 14 instructions at 0x00576ee0, in src/generated/code/.
 // size 36 bytes; callees: 0x00575080, 0x00682997
 //
-void OverlayTypeClass::vfunc_35(int a0)
+void OverlayTypeClass::Create_One_Of(int a0)
 {
     ts::sub::sub_00576ee0();
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::vfunc_36 -- the body is the canonical transcription of
+// OverlayTypeClass::Occupy_List -- the body is the canonical transcription of
 // 24 instructions at 0x00576e40, in src/generated/code/.
 // size 91 bytes; callees: 0x00682610
 //
-void OverlayTypeClass::vfunc_36(int a0)
+void OverlayTypeClass::Occupy_List(int a0)
 {
     ts::sub::sub_00576e40();
 }
 
-// OverlayTypeClass::vfunc_37 -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
+// OverlayTypeClass::Who_Can_Build_Me -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_37(int a0, int a1, int a2, int a3, int a4, int a5)
+void OverlayTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00571710();
 }
 
-// OverlayTypeClass::vfunc_38 -- ALIAS of IsometricTileTypeClass::vfunc_38 (same machine code at 0x00571660); the
+// OverlayTypeClass::Get_Cameo_Data -- ALIAS of IsometricTileTypeClass::Get_Cameo_Data (same machine code at 0x00571660); the
 // forwarder is written once, at that declaration.
-void OverlayTypeClass::vfunc_38()
+void OverlayTypeClass::Get_Cameo_Data()
 {
     ts::sub::sub_00571660();
 }
 
 // -------------------------------------------------------------------------
-// OverlayTypeClass::vfunc_39 -- the body is the canonical transcription of
+// OverlayTypeClass::Get_Image_Data -- the body is the canonical transcription of
 // 31 instructions at 0x00577720, in src/generated/code/.
 // size 110 bytes; callees: 0x00407a60, 0x005777ce, 0x00683b18
 //
-void OverlayTypeClass::vfunc_39(int a0, int a1)
+void OverlayTypeClass::Get_Image_Data(int a0, int a1)
 {
     ts::sub::sub_00577720();
 }

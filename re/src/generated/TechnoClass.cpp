@@ -91,7 +91,7 @@ void TechnoClass::vfunc_8()
     ts::sub::sub_0061e1d0();
 }
 
-// TechnoClass::vfunc_9 -- ALIAS of FootClass::Set_ID (same machine code at 0x0060f180); the
+// TechnoClass::vfunc_9 -- ALIAS of FootClass::Init (same machine code at 0x0060f180); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_9()
 {
@@ -135,7 +135,7 @@ long TechnoClass::Load(IStream* pStm)
     return (long)(size_t)ts::ret_eax();
 }
 
-// TechnoClass::Save -- ALIAS of AircraftClass::Save (same machine code at 0x00612db0); the
+// TechnoClass::Save -- ALIAS of AircraftClass::Owner (same machine code at 0x00612db0); the
 // forwarder is written once, at that declaration.
 long TechnoClass::Save(IStream* pStm, int fClearDirty)
 {
@@ -143,7 +143,7 @@ long TechnoClass::Save(IStream* pStm, int fClearDirty)
     return (long)(size_t)ts::ret_eax();
 }
 
-// TechnoClass::GetSizeMax -- ALIAS of AircraftClass::GetSizeMax (same machine code at 0x00612dc0); the
+// TechnoClass::GetSizeMax -- ALIAS of AircraftClass::Owner_HouseClass (same machine code at 0x00612dc0); the
 // forwarder is written once, at that declaration.
 long TechnoClass::GetSizeMax(unsigned long* pcbSize)
 {
@@ -158,14 +158,14 @@ void TechnoClass::Compute_CRC()
     ts::sub::sub_004059f0();
 }
 
-// TechnoClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); the
+// TechnoClass::vfunc_17 -- ALIAS of AircraftClass::Is_Inactive (same machine code at 0x00570a20); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_17()
 {
     ts::sub::sub_00570a20();
 }
 
-// TechnoClass::vfunc_18 -- ALIAS of AircraftClass::vfunc_18 (same machine code at 0x00570960); the
+// TechnoClass::vfunc_18 -- ALIAS of AircraftClass::Center_Coord (same machine code at 0x00570960); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_18()
 {
@@ -179,7 +179,7 @@ void TechnoClass::vfunc_19()
     ts::sub::sub_00405a30();
 }
 
-// TechnoClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); the
+// TechnoClass::vfunc_20 -- ALIAS of AircraftClass::On_Ground (same machine code at 0x00570e80); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_20()
 {
@@ -210,7 +210,7 @@ void TechnoClass::vfunc_23()
     ts::sub::sub_00612e10();
 }
 
-// TechnoClass::vfunc_24 -- ALIAS of AircraftClass::vfunc_24 (same machine code at 0x0060eb70); the
+// TechnoClass::vfunc_24 -- ALIAS of AircraftClass::Is_Players_Army (same machine code at 0x0060eb70); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_24()
 {
@@ -227,7 +227,7 @@ void TechnoClass::vfunc_25()
     ts::sub::sub_00617cf0();
 }
 
-// TechnoClass::vfunc_26 -- ALIAS of AircraftClass::vfunc_26 (same machine code at 0x0056e820); the
+// TechnoClass::vfunc_26 -- ALIAS of AircraftClass::Get_Image_Data (same machine code at 0x0056e820); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_26()
 {
@@ -254,14 +254,14 @@ void TechnoClass::vfunc_28()
     ts::sub::sub_006158d0();
 }
 
-// TechnoClass::vfunc_29 -- ALIAS of BuildingClass::vfunc_29 (same machine code at 0x0056eb60); the
+// TechnoClass::vfunc_29 -- ALIAS of BuildingClass::In_Which_Layer (same machine code at 0x0056eb60); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_29()
 {
     ts::sub::sub_0056eb60();
 }
 
-// TechnoClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); the
+// TechnoClass::vfunc_30 -- ALIAS of AircraftClass::Not_Underground (same machine code at 0x00570ef0); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_30()
 {
@@ -275,21 +275,21 @@ void TechnoClass::vfunc_31()
     ts::sub::sub_004167d0();
 }
 
-// TechnoClass::vfunc_32 -- ALIAS of AircraftClass::vfunc_32 (same machine code at 0x0060eb10); the
+// TechnoClass::vfunc_32 -- ALIAS of AircraftClass::Techno_Type_Class (same machine code at 0x0060eb10); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_32()
 {
     ts::sub::sub_0060eb10();
 }
 
-// TechnoClass::vfunc_33 -- ALIAS of FootClass::Get_Type (same machine code at 0x004a4b00); the
+// TechnoClass::vfunc_33 -- ALIAS of FootClass::Class_Of (same machine code at 0x004a4b00); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_33()
 {
     ts::sub::sub_004a4b00();
 }
 
-// TechnoClass::vfunc_34 -- ALIAS of AircraftClass::vfunc_34 (same machine code at 0x0061b1b0); the
+// TechnoClass::vfunc_34 -- ALIAS of AircraftClass::Get_Ownable (same machine code at 0x0061b1b0); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_34()
 {
@@ -303,7 +303,7 @@ void TechnoClass::vfunc_35()
     ts::sub::sub_004167e0();
 }
 
-// TechnoClass::vfunc_36 -- ALIAS of AircraftClass::vfunc_36 (same machine code at 0x00616470); the
+// TechnoClass::vfunc_36 -- ALIAS of AircraftClass::Can_Repair (same machine code at 0x00616470); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_36()
 {
@@ -317,56 +317,56 @@ void TechnoClass::vfunc_37()
     ts::sub::sub_0056ebc0();
 }
 
-// TechnoClass::vfunc_38 -- ALIAS of AircraftClass::vfunc_38 (same machine code at 0x00616410); the
+// TechnoClass::vfunc_38 -- ALIAS of AircraftClass::Can_Player_Fire (same machine code at 0x00616410); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_38()
 {
     ts::sub::sub_00616410();
 }
 
-// TechnoClass::vfunc_39 -- ALIAS of AircraftClass::vfunc_39 (same machine code at 0x00616130); the
+// TechnoClass::vfunc_39 -- ALIAS of AircraftClass::Can_Player_Move (same machine code at 0x00616130); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_39()
 {
     ts::sub::sub_00616130();
 }
 
-// TechnoClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); the
+// TechnoClass::vfunc_40 -- ALIAS of AircraftClass::Target_Coord (same machine code at 0x0040e5d0); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_40()
 {
     ts::sub::sub_0040e5d0();
 }
 
-// TechnoClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); the
+// TechnoClass::vfunc_41 -- ALIAS of AircraftClass::Docking_Coord (same machine code at 0x0040e600); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_41()
 {
     ts::sub::sub_0040e600();
 }
 
-// TechnoClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); the
+// TechnoClass::vfunc_42 -- ALIAS of AircraftClass::Render_Coord (same machine code at 0x0040e630); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_42()
 {
     ts::sub::sub_0040e630();
 }
 
-// TechnoClass::vfunc_43 -- ALIAS of AircraftClass::vfunc_43 (same machine code at 0x0060edd0); the
+// TechnoClass::vfunc_43 -- ALIAS of AircraftClass::Fire_Coord (same machine code at 0x0060edd0); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_43()
 {
     ts::sub::sub_0060edd0();
 }
 
-// TechnoClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); the
+// TechnoClass::vfunc_44 -- ALIAS of AircraftClass::Exit_Coord (same machine code at 0x0040e660); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_44()
 {
     ts::sub::sub_0040e660();
 }
 
-// TechnoClass::vfunc_45 -- ALIAS of AircraftClass::vfunc_45 (same machine code at 0x00570ed0); the
+// TechnoClass::vfunc_45 -- ALIAS of AircraftClass::Sort_Y (same machine code at 0x00570ed0); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_45()
 {
@@ -414,84 +414,84 @@ void TechnoClass::vfunc_50()
     ts::sub::sub_0056fb40();
 }
 
-// TechnoClass::vfunc_51 -- ALIAS of AircraftClass::vfunc_51 (same machine code at 0x00617760); the
+// TechnoClass::vfunc_51 -- ALIAS of AircraftClass::Record_The_Kill (same machine code at 0x00617760); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_51()
 {
     ts::sub::sub_00617760();
 }
 
-// TechnoClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); the
+// TechnoClass::vfunc_52 -- ALIAS of AircraftClass::Paradrop (same machine code at 0x005700c0); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_52()
 {
     ts::sub::sub_005700c0();
 }
 
-// TechnoClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); the
+// TechnoClass::vfunc_53 -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_53()
 {
     ts::sub::sub_0056ea70();
 }
 
-// TechnoClass::vfunc_54 -- ALIAS of AircraftClass::vfunc_54 (same machine code at 0x00570480); the
+// TechnoClass::vfunc_54 -- ALIAS of AircraftClass::Set_Occupy_Bit (same machine code at 0x00570480); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_54()
 {
     ts::sub::sub_00570480();
 }
 
-// TechnoClass::vfunc_55 -- ALIAS of AircraftClass::vfunc_55 (same machine code at 0x00570500); the
+// TechnoClass::vfunc_55 -- ALIAS of AircraftClass::Clear_Occupy_Bit (same machine code at 0x00570500); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_55()
 {
     ts::sub::sub_00570500();
 }
 
-// TechnoClass::vfunc_56 -- ALIAS of BuildingClass::vfunc_56 (same machine code at 0x005709b0); the
+// TechnoClass::vfunc_56 -- ALIAS of BuildingClass::Delete_Me (same machine code at 0x005709b0); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_56()
 {
     ts::sub::sub_005709b0();
 }
 
-// TechnoClass::vfunc_57 -- ALIAS of AircraftClass::vfunc_57 (same machine code at 0x00617ce0); the
+// TechnoClass::vfunc_57 -- ALIAS of AircraftClass::Do_Shimmer (same machine code at 0x00617ce0); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_57()
 {
     ts::sub::sub_00617ce0();
 }
 
-// TechnoClass::vfunc_58 -- ALIAS of FootClass::vfunc_58 (same machine code at 0x0061b480); the
+// TechnoClass::vfunc_58 -- ALIAS of FootClass::Exit_Object (same machine code at 0x0061b480); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_58()
 {
     ts::sub::sub_0061b480();
 }
 
-// TechnoClass::vfunc_59 -- ALIAS of AircraftClass::vfunc_59 (same machine code at 0x0056f480); the
+// TechnoClass::vfunc_59 -- ALIAS of AircraftClass::Render (same machine code at 0x0056f480); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_59()
 {
     ts::sub::sub_0056f480();
 }
 
-// TechnoClass::vfunc_60 -- ALIAS of AircraftClass::vfunc_60 (same machine code at 0x005701b0); the
+// TechnoClass::vfunc_60 -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_60()
 {
     ts::sub::sub_005701b0();
 }
 
-// TechnoClass::vfunc_61 -- ALIAS of AircraftClass::vfunc_61 (same machine code at 0x00610880); the
+// TechnoClass::vfunc_61 -- ALIAS of AircraftClass::Draw_Pre_Render (same machine code at 0x00610880); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_61()
 {
     ts::sub::sub_00610880();
 }
 
-// TechnoClass::vfunc_62 -- ALIAS of AircraftClass::vfunc_62 (same machine code at 0x0060fb90); the
+// TechnoClass::vfunc_62 -- ALIAS of AircraftClass::Draw_Post_Render (same machine code at 0x0060fb90); the
 // forwarder is written once, at that declaration.
 void TechnoClass::vfunc_62()
 {

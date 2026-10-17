@@ -26,77 +26,77 @@ void Tactical::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// Tactical::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// Tactical::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void Tactical::Init(int a0)
+void Tactical::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// Tactical::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// Tactical::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void Tactical::Shutdown(int a0)
+void Tactical::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// Tactical::vfunc_3 -- the body is the canonical transcription of
+// Tactical::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x005fd160, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void Tactical::vfunc_3(int a0, int a1)
+void Tactical::GetClassID(int a0, int a1)
 {
     ts::sub::sub_005fd160();
 }
 
-// Tactical::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// Tactical::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void Tactical::Release(int a0)
+void Tactical::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// Tactical::vfunc_5 -- the body is the canonical transcription of
+// Tactical::Load -- the body is the canonical transcription of
 // 28 instructions at 0x005fd1a0, in src/generated/code/.
 // size 79 bytes; callees: 0x004058b0, 0x005f36e0, 0x005f4d00
 //
-void Tactical::vfunc_5(int a0, int a1)
+void Tactical::Load(int a0, int a1)
 {
     ts::sub::sub_005fd1a0();
 }
 
 // -------------------------------------------------------------------------
-// Tactical::vfunc_6 -- the body is the canonical transcription of
+// Tactical::Save -- the body is the canonical transcription of
 // 11 instructions at 0x005fd1f0, in src/generated/code/.
 // size 29 bytes; callees: 0x00405850
 //
-void Tactical::vfunc_6(int a0, int a1, int a2)
+void Tactical::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_005fd1f0();
 }
 
-// Tactical::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// Tactical::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void Tactical::GetType(int a0, int a1)
+void Tactical::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// Tactical::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// Tactical::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void Tactical::Set_ID()
+void Tactical::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// Tactical::Get_RTTI -- the body is the canonical transcription of
+// Tactical::Detach -- the body is the canonical transcription of
 // 9 instructions at 0x005fbbb0, in src/generated/code/.
 // size 32 bytes; callees: none
 //
-void Tactical::Get_RTTI(int a0, int a1)
+void Tactical::Detach(int a0, int a1)
 {
     ts::sub::sub_005fbbb0();
 }
@@ -112,91 +112,91 @@ void Tactical::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// Tactical::Get_Heap -- the body is the canonical transcription of
+// Tactical::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x005fd270, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void Tactical::Get_Heap()
+void Tactical::Fetch_Object_Size()
 {
     ts::sub::sub_005fd270();
 }
 
-// Tactical::Load -- ALIAS of AbstractClass::Load (same machine code at 0x00405940); the
+// Tactical::Compute_CRC -- ALIAS of AbstractClass::Load (same machine code at 0x00405940); the
 // forwarder is written once, at that declaration.
-void Tactical::Load(int a0)
+void Tactical::Compute_CRC(int a0)
 {
     ts::sub::sub_00405940();
 }
 
-// Tactical::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// Tactical::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void Tactical::Save()
+void Tactical::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// Tactical::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// Tactical::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void Tactical::GetSizeMax()
+void Tactical::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// Tactical::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// Tactical::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void Tactical::Compute_CRC()
+void Tactical::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// Tactical::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// Tactical::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void Tactical::vfunc_17()
+void Tactical::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// Tactical::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// Tactical::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void Tactical::vfunc_18(int a0)
+void Tactical::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// Tactical::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// Tactical::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void Tactical::vfunc_19(int a0)
+void Tactical::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// Tactical::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// Tactical::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void Tactical::vfunc_20()
+void Tactical::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// Tactical::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// Tactical::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void Tactical::vfunc_21()
+void Tactical::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// Tactical::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// Tactical::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void Tactical::vfunc_22(int a0)
+void Tactical::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
 // -------------------------------------------------------------------------
-// Tactical::vfunc_23 -- the body is the canonical transcription of
+// Tactical::AI -- the body is the canonical transcription of
 // 77 instructions at 0x005f55d0, in src/generated/code/.
 // size 279 bytes; callees: 0x005f56ed, 0x005fa150, 0x00652ed0
 //
-void Tactical::vfunc_23(int a0, int a1, int a2, int a3, int a4)
+void Tactical::AI(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_005f55d0();
 }

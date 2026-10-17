@@ -82,152 +82,152 @@ void ColorListClass::vfunc_9()
     ts::sub::sub_004f77d0();
 }
 
-// ColorListClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// ColorListClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_10(int a0, int a1)
+void ColorListClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// ColorListClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// ColorListClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_11(int a0)
+void ColorListClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// ColorListClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// ColorListClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_12()
+void ColorListClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// ColorListClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// ColorListClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_13(int a0)
+void ColorListClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// ColorListClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// ColorListClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_14()
+void ColorListClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// ColorListClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// ColorListClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_15()
+void ColorListClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// ColorListClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// ColorListClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_16()
+void ColorListClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// ColorListClass::vfunc_17 -- ALIAS of CheckListClass::vfunc_17 (same machine code at 0x00460610); the
+// ColorListClass::Get_ID -- ALIAS of CheckListClass::Get_ID (same machine code at 0x00460610); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_17()
+void ColorListClass::Get_ID()
 {
     ts::sub::sub_00460610();
 }
 
-// ColorListClass::vfunc_18 -- ALIAS of CheckListClass::vfunc_18 (same machine code at 0x004f78a0); the
+// ColorListClass::Flag_To_Redraw -- ALIAS of CheckListClass::Flag_To_Redraw (same machine code at 0x004f78a0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_18()
+void ColorListClass::Flag_To_Redraw()
 {
     ts::sub::sub_004f78a0();
 }
 
-// ColorListClass::vfunc_19 -- ALIAS of CheckListClass::vfunc_19 (same machine code at 0x004f73e0); the
+// ColorListClass::Peer_To_Peer -- ALIAS of CheckListClass::Peer_To_Peer (same machine code at 0x004f73e0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_19(int a0, int a1, int a2)
+void ColorListClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_004f73e0();
 }
 
-// ColorListClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); the
+// ColorListClass::Set_Focus -- ALIAS of CheckListClass::Set_Focus (same machine code at 0x004a5e60); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_20()
+void ColorListClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
-// ColorListClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// ColorListClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_21()
+void ColorListClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// ColorListClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// ColorListClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_22()
+void ColorListClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// ColorListClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// ColorListClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_23()
+void ColorListClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// ColorListClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// ColorListClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_24()
+void ColorListClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
-// ColorListClass::vfunc_25 -- ALIAS of CheckListClass::vfunc_25 (same machine code at 0x004f6e10); the
+// ColorListClass::Set_Position -- ALIAS of CheckListClass::Set_Position (same machine code at 0x004f6e10); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_25(int a0, int a1)
+void ColorListClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004f6e10();
 }
 
-// ColorListClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// ColorListClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_26(int a0, int a1)
+void ColorListClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
-// ColorListClass::vfunc_27 -- ALIAS of CheckListClass::vfunc_27 (same machine code at 0x004f71f0); the
+// ColorListClass::Draw_Me -- ALIAS of CheckListClass::Draw_Me (same machine code at 0x004f71f0); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_27(int a0)
+void ColorListClass::Draw_Me(int a0)
 {
     ts::sub::sub_004f71f0();
 }
 
-// ColorListClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// ColorListClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_28(int a0)
+void ColorListClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
 // -------------------------------------------------------------------------
-// ColorListClass::vfunc_29 -- the body is the canonical transcription of
+// ColorListClass::Action -- the body is the canonical transcription of
 // 16 instructions at 0x004f7100, in src/generated/code/.
 // size 43 bytes; callees: 0x004605a0
 //
-void ColorListClass::vfunc_29(int a0, int a1)
+void ColorListClass::Action(int a0, int a1)
 {
     ts::sub::sub_004f7100();
 }
 
-// ColorListClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// ColorListClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void ColorListClass::vfunc_30(int a0, int a1, int a2, int a3)
+void ColorListClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

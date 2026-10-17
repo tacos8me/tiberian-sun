@@ -26,16 +26,16 @@ void IsometricTileClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// IsometricTileClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// IsometricTileClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Init(int a0)
+void IsometricTileClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// IsometricTileClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// IsometricTileClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Shutdown(int a0)
+void IsometricTileClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,19 +50,19 @@ void IsometricTileClass::vfunc_3(int a0, int a1)
     ts::sub::sub_004e9390();
 }
 
-// IsometricTileClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// IsometricTileClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Release(int a0)
+void IsometricTileClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::vfunc_5 -- the body is the canonical transcription of
+// IsometricTileClass::Load -- the body is the canonical transcription of
 // 26 instructions at 0x004e9280, in src/generated/code/.
 // size 73 bytes; callees: 0x0056e5f0, 0x005702f0, 0x005f36e0
 //
-void IsometricTileClass::vfunc_5(int a0, int a1)
+void IsometricTileClass::Load(int a0, int a1)
 {
     ts::sub::sub_004e9280();
 }
@@ -77,26 +77,26 @@ void IsometricTileClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_004e92d0();
 }
 
-// IsometricTileClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// IsometricTileClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::GetType(int a0, int a1)
+void IsometricTileClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// IsometricTileClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// IsometricTileClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Set_ID()
+void IsometricTileClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::Get_RTTI -- the body is the canonical transcription of
+// IsometricTileClass::Detach -- the body is the canonical transcription of
 // 23 instructions at 0x0056fb00, in src/generated/code/.
 // size 59 bytes; callees: none
 //
-void IsometricTileClass::Get_RTTI(int a0, int a1)
+void IsometricTileClass::Detach(int a0, int a1)
 {
     ts::sub::sub_0056fb00();
 }
@@ -112,449 +112,449 @@ void IsometricTileClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::Get_Heap -- the body is the canonical transcription of
+// IsometricTileClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x004e9370, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void IsometricTileClass::Get_Heap()
+void IsometricTileClass::Fetch_Object_Size()
 {
     ts::sub::sub_004e9370();
 }
 
-// IsometricTileClass::Load -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
+// IsometricTileClass::Compute_CRC -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Load(int a0)
+void IsometricTileClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00570630();
 }
 
-// IsometricTileClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// IsometricTileClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Save()
+void IsometricTileClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// IsometricTileClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// IsometricTileClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::GetSizeMax()
+void IsometricTileClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// IsometricTileClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// IsometricTileClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::Compute_CRC()
+void IsometricTileClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// IsometricTileClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); the
+// IsometricTileClass::Is_Inactive -- ALIAS of AircraftClass::Is_Inactive (same machine code at 0x00570a20); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_17()
+void IsometricTileClass::Is_Inactive()
 {
     ts::sub::sub_00570a20();
 }
 
-// IsometricTileClass::vfunc_18 -- ALIAS of AircraftClass::vfunc_18 (same machine code at 0x00570960); the
+// IsometricTileClass::Center_Coord -- ALIAS of AircraftClass::Center_Coord (same machine code at 0x00570960); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_18(int a0)
+void IsometricTileClass::Center_Coord(int a0)
 {
     ts::sub::sub_00570960();
 }
 
-// IsometricTileClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// IsometricTileClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_19(int a0)
+void IsometricTileClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// IsometricTileClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); the
+// IsometricTileClass::On_Ground -- ALIAS of AircraftClass::On_Ground (same machine code at 0x00570e80); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_20()
+void IsometricTileClass::On_Ground()
 {
     ts::sub::sub_00570e80();
 }
 
-// IsometricTileClass::vfunc_21 -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); the
+// IsometricTileClass::In_Air -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_21()
+void IsometricTileClass::In_Air()
 {
     ts::sub::sub_00570ea0();
 }
 
-// IsometricTileClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// IsometricTileClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_22(int a0)
+void IsometricTileClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::vfunc_23 -- the body is the canonical transcription of
+// IsometricTileClass::AI -- the body is the canonical transcription of
 // 30 instructions at 0x0056e860, in src/generated/code/.
 // size 79 bytes; callees: 0x0056e8b2
 //
-void IsometricTileClass::vfunc_23()
+void IsometricTileClass::AI()
 {
     ts::sub::sub_0056e860();
 }
 
-// IsometricTileClass::vfunc_24 -- ALIAS of AnimClass::vfunc_24 (same machine code at 0x004167b0); the
+// IsometricTileClass::Is_Players_Army -- ALIAS of AnimClass::vfunc_24 (same machine code at 0x004167b0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_24()
+void IsometricTileClass::Is_Players_Army()
 {
     ts::sub::sub_004167b0();
 }
 
-// IsometricTileClass::vfunc_25 -- ALIAS of AnimClass::vfunc_25 (same machine code at 0x004167c0); the
+// IsometricTileClass::Visual_Character -- ALIAS of AnimClass::vfunc_25 (same machine code at 0x004167c0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_25(int a0, int a1)
+void IsometricTileClass::Visual_Character(int a0, int a1)
 {
     ts::sub::sub_004167c0();
 }
 
-// IsometricTileClass::vfunc_26 -- ALIAS of AircraftClass::vfunc_26 (same machine code at 0x0056e820); the
+// IsometricTileClass::Get_Image_Data -- ALIAS of AircraftClass::Get_Image_Data (same machine code at 0x0056e820); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_26()
+void IsometricTileClass::Get_Image_Data()
 {
     ts::sub::sub_0056e820();
 }
 
-// IsometricTileClass::vfunc_27 -- ALIAS of AnimClass::vfunc_27 (same machine code at 0x0056eb50); the
+// IsometricTileClass::What_Action -- ALIAS of AnimClass::vfunc_27 (same machine code at 0x0056eb50); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_27(int a0, int a1, int a2)
+void IsometricTileClass::What_Action(int a0, int a1, int a2)
 {
     ts::sub::sub_0056eb50();
 }
 
-// IsometricTileClass::vfunc_28 -- ALIAS of AnimClass::vfunc_28 (same machine code at 0x0056eb40); the
+// IsometricTileClass::What_Action -- ALIAS of AnimClass::vfunc_28 (same machine code at 0x0056eb40); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_28(int a0, int a1)
+void IsometricTileClass::What_Action(int a0, int a1)
 {
     ts::sub::sub_0056eb40();
 }
 
-// IsometricTileClass::vfunc_29 -- ALIAS of BuildingClass::vfunc_29 (same machine code at 0x0056eb60); the
+// IsometricTileClass::In_Which_Layer -- ALIAS of BuildingClass::In_Which_Layer (same machine code at 0x0056eb60); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_29()
+void IsometricTileClass::In_Which_Layer()
 {
     ts::sub::sub_0056eb60();
 }
 
-// IsometricTileClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); the
+// IsometricTileClass::Not_Underground -- ALIAS of AircraftClass::Not_Underground (same machine code at 0x00570ef0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_30()
+void IsometricTileClass::Not_Underground()
 {
     ts::sub::sub_00570ef0();
 }
 
-// IsometricTileClass::vfunc_31 -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); the
+// IsometricTileClass::Considered_Vehicle -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_31()
+void IsometricTileClass::Considered_Vehicle()
 {
     ts::sub::sub_004167d0();
 }
 
-// IsometricTileClass::vfunc_32 -- ALIAS of AnimClass::vfunc_32 (same machine code at 0x00570ec0); the
+// IsometricTileClass::Techno_Type_Class -- ALIAS of AnimClass::vfunc_32 (same machine code at 0x00570ec0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_32()
+void IsometricTileClass::Techno_Type_Class()
 {
     ts::sub::sub_00570ec0();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::Get_Type -- the body is the canonical transcription of
+// IsometricTileClass::Class_Of -- the body is the canonical transcription of
 // 2 instructions at 0x004e93d0, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void IsometricTileClass::Get_Type()
+void IsometricTileClass::Class_Of()
 {
     ts::sub::sub_004e93d0();
 }
 
-// IsometricTileClass::vfunc_34 -- ALIAS of AnimClass::vfunc_34 (same machine code at 0x0056eba0); the
+// IsometricTileClass::Get_Ownable -- ALIAS of AnimClass::vfunc_34 (same machine code at 0x0056eba0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_34()
+void IsometricTileClass::Get_Ownable()
 {
     ts::sub::sub_0056eba0();
 }
 
-// IsometricTileClass::vfunc_35 -- ALIAS of AnimClass::vfunc_35 (same machine code at 0x004167e0); the
+// IsometricTileClass::Full_Name -- ALIAS of AnimClass::vfunc_35 (same machine code at 0x004167e0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_35()
+void IsometricTileClass::Full_Name()
 {
     ts::sub::sub_004167e0();
 }
 
-// IsometricTileClass::vfunc_36 -- ALIAS of AnimClass::vfunc_36 (same machine code at 0x0056ebb0); the
+// IsometricTileClass::Can_Repair -- ALIAS of AnimClass::vfunc_36 (same machine code at 0x0056ebb0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_36()
+void IsometricTileClass::Can_Repair()
 {
     ts::sub::sub_0056ebb0();
 }
 
-// IsometricTileClass::vfunc_37 -- ALIAS of AnimClass::vfunc_37 (same machine code at 0x0056ebc0); the
+// IsometricTileClass::Can_Demolish -- ALIAS of AnimClass::vfunc_37 (same machine code at 0x0056ebc0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_37()
+void IsometricTileClass::Can_Demolish()
 {
     ts::sub::sub_0056ebc0();
 }
 
-// IsometricTileClass::vfunc_38 -- ALIAS of AnimClass::vfunc_38 (same machine code at 0x0056ebd0); the
+// IsometricTileClass::Can_Player_Fire -- ALIAS of AnimClass::vfunc_38 (same machine code at 0x0056ebd0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_38()
+void IsometricTileClass::Can_Player_Fire()
 {
     ts::sub::sub_0056ebd0();
 }
 
-// IsometricTileClass::vfunc_39 -- ALIAS of AnimClass::vfunc_39 (same machine code at 0x0056ebe0); the
+// IsometricTileClass::Can_Player_Move -- ALIAS of AnimClass::vfunc_39 (same machine code at 0x0056ebe0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_39()
+void IsometricTileClass::Can_Player_Move()
 {
     ts::sub::sub_0056ebe0();
 }
 
-// IsometricTileClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); the
+// IsometricTileClass::Target_Coord -- ALIAS of AircraftClass::Target_Coord (same machine code at 0x0040e5d0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_40(int a0)
+void IsometricTileClass::Target_Coord(int a0)
 {
     ts::sub::sub_0040e5d0();
 }
 
-// IsometricTileClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); the
+// IsometricTileClass::Docking_Coord -- ALIAS of AircraftClass::Docking_Coord (same machine code at 0x0040e600); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_41(int a0)
+void IsometricTileClass::Docking_Coord(int a0)
 {
     ts::sub::sub_0040e600();
 }
 
-// IsometricTileClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); the
+// IsometricTileClass::Render_Coord -- ALIAS of AircraftClass::Render_Coord (same machine code at 0x0040e630); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_42(int a0)
+void IsometricTileClass::Render_Coord(int a0)
 {
     ts::sub::sub_0040e630();
 }
 
-// IsometricTileClass::vfunc_43 -- ALIAS of AnimClass::vfunc_43 (same machine code at 0x004167f0); the
+// IsometricTileClass::Fire_Coord -- ALIAS of AnimClass::vfunc_43 (same machine code at 0x004167f0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_43(int a0, int a1)
+void IsometricTileClass::Fire_Coord(int a0, int a1)
 {
     ts::sub::sub_004167f0();
 }
 
-// IsometricTileClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); the
+// IsometricTileClass::Exit_Coord -- ALIAS of AircraftClass::Exit_Coord (same machine code at 0x0040e660); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_44(int a0)
+void IsometricTileClass::Exit_Coord(int a0)
 {
     ts::sub::sub_0040e660();
 }
 
-// IsometricTileClass::vfunc_45 -- ALIAS of AircraftClass::vfunc_45 (same machine code at 0x00570ed0); the
+// IsometricTileClass::Sort_Y -- ALIAS of AircraftClass::Sort_Y (same machine code at 0x00570ed0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_45()
+void IsometricTileClass::Sort_Y()
 {
     ts::sub::sub_00570ed0();
 }
 
-// IsometricTileClass::vfunc_46 -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
+// IsometricTileClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_46(int a0, int a1, int a2, int a3)
+void IsometricTileClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00570db0();
 }
 
-// IsometricTileClass::vfunc_47 -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); the
+// IsometricTileClass::Occupies_Cells -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_47()
+void IsometricTileClass::Occupies_Cells()
 {
     ts::sub::sub_00416830();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::vfunc_48 -- the body is the canonical transcription of
+// IsometricTileClass::Limbo -- the body is the canonical transcription of
 // 23 instructions at 0x004e9320, in src/generated/code/.
 // size 63 bytes; callees: none
 //
-void IsometricTileClass::vfunc_48()
+void IsometricTileClass::Limbo()
 {
     ts::sub::sub_004e9320();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::vfunc_49 -- the body is the canonical transcription of
+// IsometricTileClass::Unlimbo -- the body is the canonical transcription of
 // 14 instructions at 0x004e92f0, in src/generated/code/.
 // size 38 bytes; callees: none
 //
-void IsometricTileClass::vfunc_49(int a0, int a1)
+void IsometricTileClass::Unlimbo(int a0, int a1)
 {
     ts::sub::sub_004e92f0();
 }
 
-// IsometricTileClass::vfunc_50 -- ALIAS of AnimClass::vfunc_50 (same machine code at 0x0056fb40); the
+// IsometricTileClass::Detach_All -- ALIAS of AnimClass::vfunc_50 (same machine code at 0x0056fb40); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_50(int a0)
+void IsometricTileClass::Detach_All(int a0)
 {
     ts::sub::sub_0056fb40();
 }
 
-// IsometricTileClass::vfunc_51 -- ALIAS of AnimClass::vfunc_51 (same machine code at 0x0056ebf0); the
+// IsometricTileClass::Record_The_Kill -- ALIAS of AnimClass::vfunc_51 (same machine code at 0x0056ebf0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_51(int a0)
+void IsometricTileClass::Record_The_Kill(int a0)
 {
     ts::sub::sub_0056ebf0();
 }
 
-// IsometricTileClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); the
+// IsometricTileClass::Paradrop -- ALIAS of AircraftClass::Paradrop (same machine code at 0x005700c0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_52(int a0)
+void IsometricTileClass::Paradrop(int a0)
 {
     ts::sub::sub_005700c0();
 }
 
-// IsometricTileClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); the
+// IsometricTileClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_53(int a0)
+void IsometricTileClass::Fall_From_Height(int a0)
 {
     ts::sub::sub_0056ea70();
 }
 
-// IsometricTileClass::vfunc_54 -- ALIAS of AircraftClass::vfunc_54 (same machine code at 0x00570480); the
+// IsometricTileClass::Set_Occupy_Bit -- ALIAS of AircraftClass::Set_Occupy_Bit (same machine code at 0x00570480); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_54(int a0)
+void IsometricTileClass::Set_Occupy_Bit(int a0)
 {
     ts::sub::sub_00570480();
 }
 
-// IsometricTileClass::vfunc_55 -- ALIAS of AircraftClass::vfunc_55 (same machine code at 0x00570500); the
+// IsometricTileClass::Clear_Occupy_Bit -- ALIAS of AircraftClass::Clear_Occupy_Bit (same machine code at 0x00570500); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_55(int a0)
+void IsometricTileClass::Clear_Occupy_Bit(int a0)
 {
     ts::sub::sub_00570500();
 }
 
-// IsometricTileClass::vfunc_56 -- ALIAS of BuildingClass::vfunc_56 (same machine code at 0x005709b0); the
+// IsometricTileClass::Delete_Me -- ALIAS of BuildingClass::Delete_Me (same machine code at 0x005709b0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_56()
+void IsometricTileClass::Delete_Me()
 {
     ts::sub::sub_005709b0();
 }
 
-// IsometricTileClass::vfunc_57 -- ALIAS of AnimClass::vfunc_57 (same machine code at 0x0056ec00); the
+// IsometricTileClass::Do_Shimmer -- ALIAS of AnimClass::vfunc_57 (same machine code at 0x0056ec00); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_57()
+void IsometricTileClass::Do_Shimmer()
 {
     ts::sub::sub_0056ec00();
 }
 
-// IsometricTileClass::vfunc_58 -- ALIAS of AnimClass::vfunc_58 (same machine code at 0x0056ec10); the
+// IsometricTileClass::Exit_Object -- ALIAS of AnimClass::vfunc_58 (same machine code at 0x0056ec10); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_58(int a0)
+void IsometricTileClass::Exit_Object(int a0)
 {
     ts::sub::sub_0056ec10();
 }
 
-// IsometricTileClass::vfunc_59 -- ALIAS of AircraftClass::vfunc_59 (same machine code at 0x0056f480); the
+// IsometricTileClass::Render -- ALIAS of AircraftClass::Render (same machine code at 0x0056f480); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_59(int a0, int a1, int a2)
+void IsometricTileClass::Render(int a0, int a1, int a2)
 {
     ts::sub::sub_0056f480();
 }
 
-// IsometricTileClass::vfunc_60 -- ALIAS of AircraftClass::vfunc_60 (same machine code at 0x005701b0); the
+// IsometricTileClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_60(int a0)
+void IsometricTileClass::Occupy_List(int a0)
 {
     ts::sub::sub_005701b0();
 }
 
-// IsometricTileClass::vfunc_61 -- ALIAS of AnimClass::vfunc_61 (same machine code at 0x00416840); the
+// IsometricTileClass::Draw_Pre_Render -- ALIAS of AnimClass::vfunc_61 (same machine code at 0x00416840); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_61(int a0, int a1)
+void IsometricTileClass::Draw_Pre_Render(int a0, int a1)
 {
     ts::sub::sub_00416840();
 }
 
-// IsometricTileClass::vfunc_62 -- ALIAS of AnimClass::vfunc_62 (same machine code at 0x00416850); the
+// IsometricTileClass::Draw_Post_Render -- ALIAS of AnimClass::vfunc_62 (same machine code at 0x00416850); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_62(int a0, int a1)
+void IsometricTileClass::Draw_Post_Render(int a0, int a1)
 {
     ts::sub::sub_00416850();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::vfunc_63 -- the body is the canonical transcription of
+// IsometricTileClass::Draw_It -- the body is the canonical transcription of
 // 1 instructions at 0x004e93e0, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void IsometricTileClass::vfunc_63(int a0, int a1)
+void IsometricTileClass::Draw_It(int a0, int a1)
 {
     ts::sub::sub_004e93e0();
 }
 
-// IsometricTileClass::vfunc_64 -- ALIAS of AircraftClass::vfunc_64 (same machine code at 0x00570990); the
+// IsometricTileClass::Editor_Draw_It -- ALIAS of AircraftClass::Editor_Draw_It (same machine code at 0x00570990); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_64(int a0, int a1)
+void IsometricTileClass::Editor_Draw_It(int a0, int a1)
 {
     ts::sub::sub_00570990();
 }
 
-// IsometricTileClass::vfunc_65 -- ALIAS of AnimClass::vfunc_65 (same machine code at 0x0056ec20); the
+// IsometricTileClass::Hidden -- ALIAS of AnimClass::vfunc_65 (same machine code at 0x0056ec20); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_65()
+void IsometricTileClass::Hidden()
 {
     ts::sub::sub_0056ec20();
 }
 
-// IsometricTileClass::vfunc_66 -- ALIAS of AnimClass::vfunc_66 (same machine code at 0x0056ec30); the
+// IsometricTileClass::Look -- ALIAS of AnimClass::vfunc_66 (same machine code at 0x0056ec30); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_66(int a0, int a1)
+void IsometricTileClass::Look(int a0, int a1)
 {
     ts::sub::sub_0056ec30();
 }
 
 // -------------------------------------------------------------------------
-// IsometricTileClass::vfunc_67 -- the body is the canonical transcription of
+// IsometricTileClass::Mark -- the body is the canonical transcription of
 // 78 instructions at 0x004e8d50, in src/generated/code/.
 // size 290 bytes; callees: 0x004e8ff0, 0x005020d0, 0x00503e00, 0x00570000
 //
-void IsometricTileClass::vfunc_67(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void IsometricTileClass::Mark(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
 {
     ts::sub::sub_004e8d50();
 }
 
-// IsometricTileClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); the
+// IsometricTileClass::Get_Visual_Rect -- ALIAS of AircraftClass::Get_Visual_Rect (same machine code at 0x0056f000); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_68(int a0)
+void IsometricTileClass::Get_Visual_Rect(int a0)
 {
     ts::sub::sub_0056f000();
 }
 
-// IsometricTileClass::vfunc_69 -- ALIAS of AircraftClass::vfunc_69 (same machine code at 0x0056f160); the
+// IsometricTileClass::Get_Render_Rect -- ALIAS of AircraftClass::Get_Render_Rect (same machine code at 0x0056f160); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_69(int a0)
+void IsometricTileClass::Get_Render_Rect(int a0)
 {
     ts::sub::sub_0056f160();
 }
 
-// IsometricTileClass::vfunc_70 -- ALIAS of AircraftClass::vfunc_70 (same machine code at 0x0040e690); the
+// IsometricTileClass::Draw_Radial_Indicator -- ALIAS of AircraftClass::Draw_Radial_Indicator (same machine code at 0x0040e690); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_70()
+void IsometricTileClass::Draw_Radial_Indicator()
 {
     ts::sub::sub_0040e690();
 }
 
-// IsometricTileClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); the
+// IsometricTileClass::Mark_For_Redraw -- ALIAS of AircraftClass::Mark_For_Redraw (same machine code at 0x0056f680); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_71()
+void IsometricTileClass::Mark_For_Redraw()
 {
     ts::sub::sub_0056f680();
 }
 
-// IsometricTileClass::vfunc_72 -- ALIAS of AnimClass::vfunc_72 (same machine code at 0x0056ec50); the
+// IsometricTileClass::Active_Click_With -- ALIAS of AnimClass::vfunc_72 (same machine code at 0x0056ec50); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_72(int a0, int a1, int a2)
+void IsometricTileClass::Active_Click_With(int a0, int a1, int a2)
 {
     ts::sub::sub_0056ec50();
 }
@@ -566,219 +566,219 @@ void IsometricTileClass::vfunc_73(int a0, int a1, int a2)
     ts::sub::sub_0056ec40();
 }
 
-// IsometricTileClass::vfunc_74 -- ALIAS of AnimClass::vfunc_74 (same machine code at 0x0056ec60); the
+// IsometricTileClass::Clicked_As_Target -- ALIAS of AnimClass::vfunc_74 (same machine code at 0x0056ec60); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_74(int a0)
+void IsometricTileClass::Clicked_As_Target(int a0)
 {
     ts::sub::sub_0056ec60();
 }
 
-// IsometricTileClass::vfunc_75 -- ALIAS of AnimClass::vfunc_75 (same machine code at 0x0056ee20); the
+// IsometricTileClass::Select -- ALIAS of AnimClass::vfunc_75 (same machine code at 0x0056ee20); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_75()
+void IsometricTileClass::Select()
 {
     ts::sub::sub_0056ee20();
 }
 
-// IsometricTileClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); the
+// IsometricTileClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_76(int a0)
+void IsometricTileClass::Unselect(int a0)
 {
     ts::sub::sub_0056eda0();
 }
 
-// IsometricTileClass::vfunc_77 -- ALIAS of AnimClass::vfunc_77 (same machine code at 0x0056ec70); the
+// IsometricTileClass::In_Range -- ALIAS of AnimClass::vfunc_77 (same machine code at 0x0056ec70); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_77(int a0, int a1)
+void IsometricTileClass::In_Range(int a0, int a1)
 {
     ts::sub::sub_0056ec70();
 }
 
-// IsometricTileClass::vfunc_78 -- ALIAS of AnimClass::vfunc_78 (same machine code at 0x0056ec80); the
+// IsometricTileClass::Weapon_Range -- ALIAS of AnimClass::vfunc_78 (same machine code at 0x0056ec80); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_78(int a0)
+void IsometricTileClass::Weapon_Range(int a0)
 {
     ts::sub::sub_0056ec80();
 }
 
-// IsometricTileClass::vfunc_79 -- ALIAS of AnimClass::vfunc_79 (same machine code at 0x0056fbe0); the
+// IsometricTileClass::Take_Damage -- ALIAS of AnimClass::vfunc_79 (same machine code at 0x0056fbe0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_79(int a0, int a1, int a2, int a3, int a4, int a5)
+void IsometricTileClass::Take_Damage(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_0056fbe0();
 }
 
-// IsometricTileClass::vfunc_80 -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); the
+// IsometricTileClass::Scatter -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_80(int a0, int a1, int a2)
+void IsometricTileClass::Scatter(int a0, int a1, int a2)
 {
     ts::sub::sub_0056ec90();
 }
 
-// IsometricTileClass::vfunc_81 -- ALIAS of AircraftClass::vfunc_81 (same machine code at 0x0056eca0); the
+// IsometricTileClass::Catch_Fire -- ALIAS of AircraftClass::Catch_Fire (same machine code at 0x0056eca0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_81()
+void IsometricTileClass::Catch_Fire()
 {
     ts::sub::sub_0056eca0();
 }
 
-// IsometricTileClass::vfunc_82 -- ALIAS of AircraftClass::vfunc_82 (same machine code at 0x0056ecb0); the
+// IsometricTileClass::Fire_Out -- ALIAS of AircraftClass::Fire_Out (same machine code at 0x0056ecb0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_82()
+void IsometricTileClass::Fire_Out()
 {
     ts::sub::sub_0056ecb0();
 }
 
-// IsometricTileClass::vfunc_83 -- ALIAS of AnimClass::vfunc_83 (same machine code at 0x0056ecc0); the
+// IsometricTileClass::Value -- ALIAS of AnimClass::vfunc_83 (same machine code at 0x0056ecc0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_83()
+void IsometricTileClass::Value()
 {
     ts::sub::sub_0056ecc0();
 }
 
-// IsometricTileClass::vfunc_84 -- ALIAS of AnimClass::vfunc_84 (same machine code at 0x0056ecd0); the
+// IsometricTileClass::Get_Mission -- ALIAS of AnimClass::vfunc_84 (same machine code at 0x0056ecd0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_84()
+void IsometricTileClass::Get_Mission()
 {
     ts::sub::sub_0056ecd0();
 }
 
-// IsometricTileClass::vfunc_85 -- ALIAS of AnimClass::vfunc_85 (same machine code at 0x00416860); the
+// IsometricTileClass::Assign_Mission -- ALIAS of AnimClass::vfunc_85 (same machine code at 0x00416860); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_85(int a0)
+void IsometricTileClass::Assign_Mission(int a0)
 {
     ts::sub::sub_00416860();
 }
 
-// IsometricTileClass::vfunc_86 -- ALIAS of AnimClass::vfunc_86 (same machine code at 0x00416870); the
+// IsometricTileClass::Per_Cell_Process -- ALIAS of AnimClass::vfunc_86 (same machine code at 0x00416870); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_86(int a0)
+void IsometricTileClass::Per_Cell_Process(int a0)
 {
     ts::sub::sub_00416870();
 }
 
-// IsometricTileClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); the
+// IsometricTileClass::Who_Can_Build_Me -- ALIAS of AircraftClass::Who_Can_Build_Me (same machine code at 0x00570240); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_87(int a0, int a1)
+void IsometricTileClass::Who_Can_Build_Me(int a0, int a1)
 {
     ts::sub::sub_00570240();
 }
 
-// IsometricTileClass::vfunc_88 -- ALIAS of AnimClass::vfunc_88 (same machine code at 0x0056fbc0); the
+// IsometricTileClass::Receive_Message -- ALIAS of AnimClass::vfunc_88 (same machine code at 0x0056fbc0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_88(int a0, int a1, int a2)
+void IsometricTileClass::Receive_Message(int a0, int a1, int a2)
 {
     ts::sub::sub_0056fbc0();
 }
 
-// IsometricTileClass::vfunc_89 -- ALIAS of AnimClass::vfunc_89 (same machine code at 0x005700b0); the
+// IsometricTileClass::Revealed -- ALIAS of AnimClass::vfunc_89 (same machine code at 0x005700b0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_89(int a0)
+void IsometricTileClass::Revealed(int a0)
 {
     ts::sub::sub_005700b0();
 }
 
-// IsometricTileClass::vfunc_90 -- ALIAS of AircraftClass::vfunc_90 (same machine code at 0x0056ece0); the
+// IsometricTileClass::Repair -- ALIAS of AircraftClass::Repair (same machine code at 0x0056ece0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_90(int a0)
+void IsometricTileClass::Repair(int a0)
 {
     ts::sub::sub_0056ece0();
 }
 
-// IsometricTileClass::vfunc_91 -- ALIAS of AnimClass::vfunc_91 (same machine code at 0x0056ecf0); the
+// IsometricTileClass::Sell_Back -- ALIAS of AnimClass::vfunc_91 (same machine code at 0x0056ecf0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_91(int a0)
+void IsometricTileClass::Sell_Back(int a0)
 {
     ts::sub::sub_0056ecf0();
 }
 
-// IsometricTileClass::vfunc_92 -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); the
+// IsometricTileClass::Set_Waypoint_Path -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_92(int a0, int a1)
+void IsometricTileClass::Set_Waypoint_Path(int a0, int a1)
 {
     ts::sub::sub_00570e70();
 }
 
-// IsometricTileClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); the
+// IsometricTileClass::Move -- ALIAS of AircraftClass::Move (same machine code at 0x0056ed00); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_93(int a0)
+void IsometricTileClass::Move(int a0)
 {
     ts::sub::sub_0056ed00();
 }
 
-// IsometricTileClass::vfunc_94 -- ALIAS of AnimClass::vfunc_94 (same machine code at 0x00416880); the
+// IsometricTileClass::Can_Enter_Cell -- ALIAS of AnimClass::vfunc_94 (same machine code at 0x00416880); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_94(int a0, int a1, int a2, int a3, int a4)
+void IsometricTileClass::Can_Enter_Cell(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00416880();
 }
 
-// IsometricTileClass::vfunc_95 -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); the
+// IsometricTileClass::Can_Reach -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_95(int a0, int a1, int a2, int a3, int a4)
+void IsometricTileClass::Can_Reach(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00416890();
 }
 
-// IsometricTileClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); the
+// IsometricTileClass::Get_Coord -- ALIAS of AircraftClass::Get_Coord (same machine code at 0x0040e6a0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_96(int a0)
+void IsometricTileClass::Get_Coord(int a0)
 {
     ts::sub::sub_0040e6a0();
 }
 
-// IsometricTileClass::vfunc_97 -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); the
+// IsometricTileClass::Set_Coord -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_97(int a0)
+void IsometricTileClass::Set_Coord(int a0)
 {
     ts::sub::sub_00570cc0();
 }
 
-// IsometricTileClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); the
+// IsometricTileClass::Get_Cell -- ALIAS of AircraftClass::Get_Cell (same machine code at 0x0040e6c0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_98(int a0)
+void IsometricTileClass::Get_Cell(int a0)
 {
     ts::sub::sub_0040e6c0();
 }
 
-// IsometricTileClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); the
+// IsometricTileClass::Get_Cell_Ptr -- ALIAS of AircraftClass::Get_Cell_Ptr (same machine code at 0x00570ce0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_99()
+void IsometricTileClass::Get_Cell_Ptr()
 {
     ts::sub::sub_00570ce0();
 }
 
-// IsometricTileClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); the
+// IsometricTileClass::Get_Target_Cell -- ALIAS of AircraftClass::Get_Target_Cell (same machine code at 0x00570d00); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_100(int a0)
+void IsometricTileClass::Get_Target_Cell(int a0)
 {
     ts::sub::sub_00570d00();
 }
 
-// IsometricTileClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); the
+// IsometricTileClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_101(int a0)
+void IsometricTileClass::Get_Target_Cell_Ptr(int a0)
 {
     ts::sub::sub_00570d50();
 }
 
-// IsometricTileClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); the
+// IsometricTileClass::Get_Height_AGL -- ALIAS of AircraftClass::Get_Height_AGL (same machine code at 0x00570370); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_102()
+void IsometricTileClass::Get_Height_AGL()
 {
     ts::sub::sub_00570370();
 }
 
-// IsometricTileClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); the
+// IsometricTileClass::Set_Height_AGL -- ALIAS of AircraftClass::Set_Height_AGL (same machine code at 0x005703b0); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_103(int a0)
+void IsometricTileClass::Set_Height_AGL(int a0)
 {
     ts::sub::sub_005703b0();
 }
 
-// IsometricTileClass::vfunc_104 -- ALIAS of AircraftClass::vfunc_104 (same machine code at 0x00570360); the
+// IsometricTileClass::Get_Height -- ALIAS of AircraftClass::Get_Height (same machine code at 0x00570360); the
 // forwarder is written once, at that declaration.
-void IsometricTileClass::vfunc_104()
+void IsometricTileClass::Get_Height()
 {
     ts::sub::sub_00570360();
 }

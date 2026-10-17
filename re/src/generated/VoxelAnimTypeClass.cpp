@@ -26,16 +26,16 @@ void VoxelAnimTypeClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// VoxelAnimTypeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// VoxelAnimTypeClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::Init(int a0)
+void VoxelAnimTypeClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// VoxelAnimTypeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// VoxelAnimTypeClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::Shutdown(int a0)
+void VoxelAnimTypeClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,9 +50,9 @@ void VoxelAnimTypeClass::vfunc_3(int a0, int a1)
     ts::sub::sub_00642550();
 }
 
-// VoxelAnimTypeClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// VoxelAnimTypeClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::Release(int a0)
+void VoxelAnimTypeClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
@@ -77,26 +77,26 @@ void VoxelAnimTypeClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_00642640();
 }
 
-// VoxelAnimTypeClass::GetType -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
+// VoxelAnimTypeClass::GetSizeMax -- ALIAS of IsometricTileTypeClass::GetSizeMax (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::GetType(int a0, int a1)
+void VoxelAnimTypeClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
 }
 
-// VoxelAnimTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// VoxelAnimTypeClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::Set_ID()
+void VoxelAnimTypeClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// VoxelAnimTypeClass::Get_RTTI -- the body is the canonical transcription of
+// VoxelAnimTypeClass::Detach -- the body is the canonical transcription of
 // 25 instructions at 0x00642660, in src/generated/code/.
 // size 99 bytes; callees: none
 //
-void VoxelAnimTypeClass::Get_RTTI(int a0, int a1)
+void VoxelAnimTypeClass::Detach(int a0, int a1)
 {
     ts::sub::sub_00642660();
 }
@@ -112,98 +112,98 @@ void VoxelAnimTypeClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// VoxelAnimTypeClass::Get_Heap -- the body is the canonical transcription of
+// VoxelAnimTypeClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00642770, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void VoxelAnimTypeClass::Get_Heap()
+void VoxelAnimTypeClass::Fetch_Object_Size()
 {
     ts::sub::sub_00642770();
 }
 
 // -------------------------------------------------------------------------
-// VoxelAnimTypeClass::Load -- the body is the canonical transcription of
+// VoxelAnimTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 97 instructions at 0x00642400, in src/generated/code/.
 // size 327 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680, 0x0046d6c0
 //
-void VoxelAnimTypeClass::Load(int a0)
+void VoxelAnimTypeClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00642400();
 }
 
-// VoxelAnimTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// VoxelAnimTypeClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::Save()
+void VoxelAnimTypeClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// VoxelAnimTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// VoxelAnimTypeClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::GetSizeMax()
+void VoxelAnimTypeClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// VoxelAnimTypeClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// VoxelAnimTypeClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::Compute_CRC()
+void VoxelAnimTypeClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// VoxelAnimTypeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// VoxelAnimTypeClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_17()
+void VoxelAnimTypeClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// VoxelAnimTypeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// VoxelAnimTypeClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_18(int a0)
+void VoxelAnimTypeClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// VoxelAnimTypeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// VoxelAnimTypeClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_19(int a0)
+void VoxelAnimTypeClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// VoxelAnimTypeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// VoxelAnimTypeClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_20()
+void VoxelAnimTypeClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// VoxelAnimTypeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// VoxelAnimTypeClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_21()
+void VoxelAnimTypeClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// VoxelAnimTypeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// VoxelAnimTypeClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_22(int a0)
+void VoxelAnimTypeClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// VoxelAnimTypeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// VoxelAnimTypeClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_23()
+void VoxelAnimTypeClass::AI()
 {
     ts::sub::sub_00405ab0();
 }
 
-// VoxelAnimTypeClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
+// VoxelAnimTypeClass::Init_Theater -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_24(int a0)
+void VoxelAnimTypeClass::Init_Theater(int a0)
 {
     ts::sub::sub_00406010();
 }
@@ -218,106 +218,106 @@ void VoxelAnimTypeClass::Read_INI(int a0)
     ts::sub::sub_00641d80();
 }
 
-// VoxelAnimTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
+// VoxelAnimTypeClass::Write_INI -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::Set_ID(int a0)
+void VoxelAnimTypeClass::Write_INI(int a0)
 {
     ts::sub::sub_00405fb0();
 }
 
-// VoxelAnimTypeClass::vfunc_27 -- ALIAS of AircraftTypeClass::Get_RTTI_2 (same machine code at 0x0040f600); the
+// VoxelAnimTypeClass::Coord_Fixup -- ALIAS of AircraftTypeClass::Get_RTTI_2 (same machine code at 0x0040f600); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_27(int a0, int a1)
+void VoxelAnimTypeClass::Coord_Fixup(int a0, int a1)
 {
     ts::sub::sub_0040f600();
 }
 
-// VoxelAnimTypeClass::vfunc_28 -- ALIAS of IsometricTileTypeClass::vfunc_28 (same machine code at 0x00418f40); the
+// VoxelAnimTypeClass::Get_Ownable -- ALIAS of IsometricTileTypeClass::Get_Ownable (same machine code at 0x00418f40); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_28()
+void VoxelAnimTypeClass::Get_Ownable()
 {
     ts::sub::sub_00418f40();
 }
 
-// VoxelAnimTypeClass::vfunc_29 -- ALIAS of IsometricTileTypeClass::vfunc_29 (same machine code at 0x005715e0); the
+// VoxelAnimTypeClass::Max_Pips -- ALIAS of IsometricTileTypeClass::Max_Pips (same machine code at 0x005715e0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_29()
+void VoxelAnimTypeClass::Max_Pips()
 {
     ts::sub::sub_005715e0();
 }
 
-// VoxelAnimTypeClass::vfunc_30 -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); the
+// VoxelAnimTypeClass::Pixel_Dimensions -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_30(int a0)
+void VoxelAnimTypeClass::Pixel_Dimensions(int a0)
 {
     ts::sub::sub_005715f0();
 }
 
-// VoxelAnimTypeClass::vfunc_31 -- ALIAS of IsometricTileTypeClass::vfunc_31 (same machine code at 0x00571610); the
+// VoxelAnimTypeClass::Lepton_Dimensions -- ALIAS of IsometricTileTypeClass::Lepton_Dimensions (same machine code at 0x00571610); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_31(int a0)
+void VoxelAnimTypeClass::Lepton_Dimensions(int a0)
 {
     ts::sub::sub_00571610();
 }
 
 // -------------------------------------------------------------------------
-// VoxelAnimTypeClass::vfunc_32 -- the body is the canonical transcription of
+// VoxelAnimTypeClass::Create_And_Place -- the body is the canonical transcription of
 // 2 instructions at 0x00642780, in src/generated/code/.
 // size 5 bytes; callees: none
 //
-void VoxelAnimTypeClass::vfunc_32(int a0, int a1)
+void VoxelAnimTypeClass::Create_And_Place(int a0, int a1)
 {
     ts::sub::sub_00642780();
 }
 
-// VoxelAnimTypeClass::vfunc_33 -- ALIAS of IsometricTileTypeClass::vfunc_33 (same machine code at 0x00571640); the
+// VoxelAnimTypeClass::Cost_Of -- ALIAS of IsometricTileTypeClass::Cost_Of (same machine code at 0x00571640); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_33(int a0)
+void VoxelAnimTypeClass::Cost_Of(int a0)
 {
     ts::sub::sub_00571640();
 }
 
-// VoxelAnimTypeClass::vfunc_34 -- ALIAS of IsometricTileTypeClass::vfunc_34 (same machine code at 0x00571650); the
+// VoxelAnimTypeClass::Time_To_Build -- ALIAS of IsometricTileTypeClass::Time_To_Build (same machine code at 0x00571650); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_34()
+void VoxelAnimTypeClass::Time_To_Build()
 {
     ts::sub::sub_00571650();
 }
 
 // -------------------------------------------------------------------------
-// VoxelAnimTypeClass::vfunc_35 -- the body is the canonical transcription of
+// VoxelAnimTypeClass::Create_One_Of -- the body is the canonical transcription of
 // 2 instructions at 0x00642790, in src/generated/code/.
 // size 5 bytes; callees: none
 //
-void VoxelAnimTypeClass::vfunc_35(int a0)
+void VoxelAnimTypeClass::Create_One_Of(int a0)
 {
     ts::sub::sub_00642790();
 }
 
-// VoxelAnimTypeClass::vfunc_36 -- ALIAS of ObjectTypeClass::vfunc_37 (same machine code at 0x00571670); the
+// VoxelAnimTypeClass::Occupy_List -- ALIAS of ObjectTypeClass::vfunc_37 (same machine code at 0x00571670); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_36(int a0)
+void VoxelAnimTypeClass::Occupy_List(int a0)
 {
     ts::sub::sub_00571670();
 }
 
-// VoxelAnimTypeClass::vfunc_37 -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
+// VoxelAnimTypeClass::Who_Can_Build_Me -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_37(int a0, int a1, int a2, int a3, int a4, int a5)
+void VoxelAnimTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00571710();
 }
 
-// VoxelAnimTypeClass::vfunc_38 -- ALIAS of IsometricTileTypeClass::vfunc_38 (same machine code at 0x00571660); the
+// VoxelAnimTypeClass::Get_Cameo_Data -- ALIAS of IsometricTileTypeClass::Get_Cameo_Data (same machine code at 0x00571660); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_38()
+void VoxelAnimTypeClass::Get_Cameo_Data()
 {
     ts::sub::sub_00571660();
 }
 
-// VoxelAnimTypeClass::vfunc_39 -- ALIAS of AircraftTypeClass::vfunc_40 (same machine code at 0x0040f620); the
+// VoxelAnimTypeClass::Get_Image_Data -- ALIAS of AircraftTypeClass::vfunc_40 (same machine code at 0x0040f620); the
 // forwarder is written once, at that declaration.
-void VoxelAnimTypeClass::vfunc_39()
+void VoxelAnimTypeClass::Get_Image_Data()
 {
     ts::sub::sub_0040f620();
 }

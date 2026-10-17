@@ -264,7 +264,7 @@ void TechnoTypeClass::vfunc_31()
     ts::sub::sub_005715f0();
 }
 
-// TechnoTypeClass::vfunc_32 -- ALIAS of IsometricTileTypeClass::vfunc_31 (same machine code at 0x00571610); the
+// TechnoTypeClass::vfunc_32 -- ALIAS of IsometricTileTypeClass::Lepton_Dimensions (same machine code at 0x00571610); the
 // forwarder is written once, at that declaration.
 void TechnoTypeClass::vfunc_32()
 {

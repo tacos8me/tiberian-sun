@@ -26,16 +26,16 @@ void SmudgeTypeClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// SmudgeTypeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// SmudgeTypeClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::Init(int a0)
+void SmudgeTypeClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// SmudgeTypeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// SmudgeTypeClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::Shutdown(int a0)
+void SmudgeTypeClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,9 +50,9 @@ void SmudgeTypeClass::vfunc_3(int a0, int a1)
     ts::sub::sub_005e1b40();
 }
 
-// SmudgeTypeClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// SmudgeTypeClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::Release(int a0)
+void SmudgeTypeClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
@@ -77,23 +77,23 @@ void SmudgeTypeClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_005e1b20();
 }
 
-// SmudgeTypeClass::GetType -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
+// SmudgeTypeClass::GetSizeMax -- ALIAS of IsometricTileTypeClass::GetSizeMax (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::GetType(int a0, int a1)
+void SmudgeTypeClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
 }
 
-// SmudgeTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// SmudgeTypeClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::Set_ID()
+void SmudgeTypeClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// SmudgeTypeClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// SmudgeTypeClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::Get_RTTI(int a0, int a1)
+void SmudgeTypeClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,101 +109,101 @@ void SmudgeTypeClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// SmudgeTypeClass::Get_Heap -- the body is the canonical transcription of
+// SmudgeTypeClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x005e2390, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SmudgeTypeClass::Get_Heap()
+void SmudgeTypeClass::Fetch_Object_Size()
 {
     ts::sub::sub_005e2390();
 }
 
 // -------------------------------------------------------------------------
-// SmudgeTypeClass::Load -- the body is the canonical transcription of
+// SmudgeTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 29 instructions at 0x005e1a70, in src/generated/code/.
 // size 89 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680
 //
-void SmudgeTypeClass::Load(int a0)
+void SmudgeTypeClass::Compute_CRC(int a0)
 {
     ts::sub::sub_005e1a70();
 }
 
-// SmudgeTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// SmudgeTypeClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::Save()
+void SmudgeTypeClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// SmudgeTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// SmudgeTypeClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::GetSizeMax()
+void SmudgeTypeClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
 // -------------------------------------------------------------------------
-// SmudgeTypeClass::Compute_CRC -- the body is the canonical transcription of
+// SmudgeTypeClass::Fetch_Heap_ID -- the body is the canonical transcription of
 // 2 instructions at 0x005e23a0, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void SmudgeTypeClass::Compute_CRC()
+void SmudgeTypeClass::Fetch_Heap_ID()
 {
     ts::sub::sub_005e23a0();
 }
 
-// SmudgeTypeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// SmudgeTypeClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_17()
+void SmudgeTypeClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// SmudgeTypeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// SmudgeTypeClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_18(int a0)
+void SmudgeTypeClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// SmudgeTypeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// SmudgeTypeClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_19(int a0)
+void SmudgeTypeClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// SmudgeTypeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// SmudgeTypeClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_20()
+void SmudgeTypeClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// SmudgeTypeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// SmudgeTypeClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_21()
+void SmudgeTypeClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// SmudgeTypeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// SmudgeTypeClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_22(int a0)
+void SmudgeTypeClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// SmudgeTypeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// SmudgeTypeClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_23()
+void SmudgeTypeClass::AI()
 {
     ts::sub::sub_00405ab0();
 }
 
-// SmudgeTypeClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
+// SmudgeTypeClass::Init_Theater -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_24(int a0)
+void SmudgeTypeClass::Init_Theater(int a0)
 {
     ts::sub::sub_00406010();
 }
@@ -218,106 +218,106 @@ void SmudgeTypeClass::Read_INI(int a0, int a1, int a2)
     ts::sub::sub_005e1960();
 }
 
-// SmudgeTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
+// SmudgeTypeClass::Write_INI -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::Set_ID(int a0)
+void SmudgeTypeClass::Write_INI(int a0)
 {
     ts::sub::sub_00405fb0();
 }
 
-// SmudgeTypeClass::vfunc_27 -- ALIAS of AircraftTypeClass::Get_RTTI_2 (same machine code at 0x0040f600); the
+// SmudgeTypeClass::Coord_Fixup -- ALIAS of AircraftTypeClass::Get_RTTI_2 (same machine code at 0x0040f600); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_27(int a0, int a1)
+void SmudgeTypeClass::Coord_Fixup(int a0, int a1)
 {
     ts::sub::sub_0040f600();
 }
 
-// SmudgeTypeClass::vfunc_28 -- ALIAS of IsometricTileTypeClass::vfunc_28 (same machine code at 0x00418f40); the
+// SmudgeTypeClass::Get_Ownable -- ALIAS of IsometricTileTypeClass::Get_Ownable (same machine code at 0x00418f40); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_28()
+void SmudgeTypeClass::Get_Ownable()
 {
     ts::sub::sub_00418f40();
 }
 
-// SmudgeTypeClass::vfunc_29 -- ALIAS of IsometricTileTypeClass::vfunc_29 (same machine code at 0x005715e0); the
+// SmudgeTypeClass::Max_Pips -- ALIAS of IsometricTileTypeClass::Max_Pips (same machine code at 0x005715e0); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_29()
+void SmudgeTypeClass::Max_Pips()
 {
     ts::sub::sub_005715e0();
 }
 
-// SmudgeTypeClass::vfunc_30 -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); the
+// SmudgeTypeClass::Pixel_Dimensions -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_30(int a0)
+void SmudgeTypeClass::Pixel_Dimensions(int a0)
 {
     ts::sub::sub_005715f0();
 }
 
-// SmudgeTypeClass::vfunc_31 -- ALIAS of IsometricTileTypeClass::vfunc_31 (same machine code at 0x00571610); the
+// SmudgeTypeClass::Lepton_Dimensions -- ALIAS of IsometricTileTypeClass::Lepton_Dimensions (same machine code at 0x00571610); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_31(int a0)
+void SmudgeTypeClass::Lepton_Dimensions(int a0)
 {
     ts::sub::sub_00571610();
 }
 
 // -------------------------------------------------------------------------
-// SmudgeTypeClass::vfunc_32 -- the body is the canonical transcription of
+// SmudgeTypeClass::Create_And_Place -- the body is the canonical transcription of
 // 30 instructions at 0x005e17e0, in src/generated/code/.
 // size 93 bytes; callees: 0x005e0d80, 0x00682997
 //
-void SmudgeTypeClass::vfunc_32(int a0, int a1)
+void SmudgeTypeClass::Create_And_Place(int a0, int a1)
 {
     ts::sub::sub_005e17e0();
 }
 
-// SmudgeTypeClass::vfunc_33 -- ALIAS of IsometricTileTypeClass::vfunc_33 (same machine code at 0x00571640); the
+// SmudgeTypeClass::Cost_Of -- ALIAS of IsometricTileTypeClass::Cost_Of (same machine code at 0x00571640); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_33(int a0)
+void SmudgeTypeClass::Cost_Of(int a0)
 {
     ts::sub::sub_00571640();
 }
 
-// SmudgeTypeClass::vfunc_34 -- ALIAS of IsometricTileTypeClass::vfunc_34 (same machine code at 0x00571650); the
+// SmudgeTypeClass::Time_To_Build -- ALIAS of IsometricTileTypeClass::Time_To_Build (same machine code at 0x00571650); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_34()
+void SmudgeTypeClass::Time_To_Build()
 {
     ts::sub::sub_00571650();
 }
 
 // -------------------------------------------------------------------------
-// SmudgeTypeClass::vfunc_35 -- the body is the canonical transcription of
+// SmudgeTypeClass::Create_One_Of -- the body is the canonical transcription of
 // 14 instructions at 0x005e1850, in src/generated/code/.
 // size 36 bytes; callees: 0x005e0d80, 0x00682997
 //
-void SmudgeTypeClass::vfunc_35(int a0)
+void SmudgeTypeClass::Create_One_Of(int a0)
 {
     ts::sub::sub_005e1850();
 }
 
-// SmudgeTypeClass::vfunc_36 -- ALIAS of ObjectTypeClass::vfunc_37 (same machine code at 0x00571670); the
+// SmudgeTypeClass::Occupy_List -- ALIAS of ObjectTypeClass::vfunc_37 (same machine code at 0x00571670); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_36(int a0)
+void SmudgeTypeClass::Occupy_List(int a0)
 {
     ts::sub::sub_00571670();
 }
 
-// SmudgeTypeClass::vfunc_37 -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
+// SmudgeTypeClass::Who_Can_Build_Me -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_37(int a0, int a1, int a2, int a3, int a4, int a5)
+void SmudgeTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00571710();
 }
 
-// SmudgeTypeClass::vfunc_38 -- ALIAS of IsometricTileTypeClass::vfunc_38 (same machine code at 0x00571660); the
+// SmudgeTypeClass::Get_Cameo_Data -- ALIAS of IsometricTileTypeClass::Get_Cameo_Data (same machine code at 0x00571660); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_38()
+void SmudgeTypeClass::Get_Cameo_Data()
 {
     ts::sub::sub_00571660();
 }
 
-// SmudgeTypeClass::vfunc_39 -- ALIAS of AircraftTypeClass::vfunc_40 (same machine code at 0x0040f620); the
+// SmudgeTypeClass::Get_Image_Data -- ALIAS of AircraftTypeClass::vfunc_40 (same machine code at 0x0040f620); the
 // forwarder is written once, at that declaration.
-void SmudgeTypeClass::vfunc_39()
+void SmudgeTypeClass::Get_Image_Data()
 {
     ts::sub::sub_0040f620();
 }

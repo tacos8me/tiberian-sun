@@ -26,16 +26,16 @@ void BuildingClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// BuildingClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// BuildingClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Init(int a0)
+void BuildingClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// BuildingClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// BuildingClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Shutdown(int a0)
+void BuildingClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,19 +50,19 @@ void BuildingClass::vfunc_3(int a0, int a1)
     ts::sub::sub_0043a180();
 }
 
-// BuildingClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// BuildingClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Release(int a0)
+void BuildingClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_5 -- the body is the canonical transcription of
+// BuildingClass::Load -- the body is the canonical transcription of
 // 124 instructions at 0x00436cd0, in src/generated/code/.
 // size 426 bytes; callees: 0x0040ec90, 0x00425530, 0x0043ad00, 0x005f36e0, 0x0061cc30
 //
-void BuildingClass::vfunc_5(int a0, int a1)
+void BuildingClass::Load(int a0, int a1)
 {
     ts::sub::sub_00436cd0();
 }
@@ -77,29 +77,29 @@ void BuildingClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_00436e80();
 }
 
-// BuildingClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// BuildingClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void BuildingClass::GetType(int a0, int a1)
+void BuildingClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::Set_ID -- the body is the canonical transcription of
+// BuildingClass::Init -- the body is the canonical transcription of
 // 30 instructions at 0x0042adc0, in src/generated/code/.
 // size 108 bytes; callees: 0x00492c10, 0x004bb850, 0x0060f180
 //
-void BuildingClass::Set_ID()
+void BuildingClass::Init()
 {
     ts::sub::sub_0042adc0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::Get_RTTI -- the body is the canonical transcription of
+// BuildingClass::Detach -- the body is the canonical transcription of
 // 43 instructions at 0x00432dd0, in src/generated/code/.
 // size 137 bytes; callees: 0x00432ea4, 0x0061a290
 //
-void BuildingClass::Get_RTTI(int a0, int a1)
+void BuildingClass::Detach(int a0, int a1)
 {
     ts::sub::sub_00432dd0();
 }
@@ -115,539 +115,539 @@ void BuildingClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::Get_Heap -- the body is the canonical transcription of
+// BuildingClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x0043a170, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::Get_Heap()
+void BuildingClass::Fetch_Object_Size()
 {
     ts::sub::sub_0043a170();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::Load -- the body is the canonical transcription of
+// BuildingClass::Compute_CRC -- the body is the canonical transcription of
 // 16 instructions at 0x00436eb0, in src/generated/code/.
 // size 47 bytes; callees: 0x00436ee1, 0x0061ccf0
 //
-void BuildingClass::Load(int a0)
+void BuildingClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00436eb0();
 }
 
-// BuildingClass::Save -- ALIAS of AircraftClass::Save (same machine code at 0x00612db0); the
+// BuildingClass::Owner -- ALIAS of AircraftClass::Owner (same machine code at 0x00612db0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Save()
+void BuildingClass::Owner()
 {
     ts::sub::sub_00612db0();
 }
 
-// BuildingClass::GetSizeMax -- ALIAS of AircraftClass::GetSizeMax (same machine code at 0x00612dc0); the
+// BuildingClass::Owner_HouseClass -- ALIAS of AircraftClass::Owner_HouseClass (same machine code at 0x00612dc0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::GetSizeMax()
+void BuildingClass::Owner_HouseClass()
 {
     ts::sub::sub_00612dc0();
 }
 
-// BuildingClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// BuildingClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::Compute_CRC()
+void BuildingClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// BuildingClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); the
+// BuildingClass::Is_Inactive -- ALIAS of AircraftClass::Is_Inactive (same machine code at 0x00570a20); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_17()
+void BuildingClass::Is_Inactive()
 {
     ts::sub::sub_00570a20();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_18 -- the body is the canonical transcription of
+// BuildingClass::Center_Coord -- the body is the canonical transcription of
 // 37 instructions at 0x0042e3e0, in src/generated/code/.
 // size 106 bytes; callees: 0x0043e6f0, 0x0043e700
 //
-void BuildingClass::vfunc_18(int a0)
+void BuildingClass::Center_Coord(int a0)
 {
     ts::sub::sub_0042e3e0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_19 -- the body is the canonical transcription of
+// BuildingClass::Destination_Coord -- the body is the canonical transcription of
 // 11 instructions at 0x0042e540, in src/generated/code/.
 // size 35 bytes; callees: 0x0042e56b
 //
-void BuildingClass::vfunc_19(int a0)
+void BuildingClass::Destination_Coord(int a0)
 {
     ts::sub::sub_0042e540();
 }
 
-// BuildingClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); the
+// BuildingClass::On_Ground -- ALIAS of AircraftClass::On_Ground (same machine code at 0x00570e80); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_20()
+void BuildingClass::On_Ground()
 {
     ts::sub::sub_00570e80();
 }
 
-// BuildingClass::vfunc_21 -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); the
+// BuildingClass::In_Air -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_21()
+void BuildingClass::In_Air()
 {
     ts::sub::sub_00570ea0();
 }
 
-// BuildingClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// BuildingClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_22(int a0)
+void BuildingClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_23 -- the body is the canonical transcription of
+// BuildingClass::AI -- the body is the canonical transcription of
 // 82 instructions at 0x00428c30, in src/generated/code/.
 // size 288 bytes; callees: 0x00428d74, 0x00434830, 0x00612e10
 //
-void BuildingClass::vfunc_23(int a0)
+void BuildingClass::AI(int a0)
 {
     ts::sub::sub_00428c30();
 }
 
-// BuildingClass::vfunc_24 -- ALIAS of AircraftClass::vfunc_24 (same machine code at 0x0060eb70); the
+// BuildingClass::Is_Players_Army -- ALIAS of AircraftClass::Is_Players_Army (same machine code at 0x0060eb70); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_24()
+void BuildingClass::Is_Players_Army()
 {
     ts::sub::sub_0060eb70();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_25 -- the body is the canonical transcription of
+// BuildingClass::Visual_Character -- the body is the canonical transcription of
 // 46 instructions at 0x004370c0, in src/generated/code/.
 // size 150 bytes; callees: 0x00459da0, 0x005020d0
 //
-void BuildingClass::vfunc_25(int a0, int a1)
+void BuildingClass::Visual_Character(int a0, int a1)
 {
     ts::sub::sub_004370c0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_26 -- the body is the canonical transcription of
+// BuildingClass::Get_Image_Data -- the body is the canonical transcription of
 // 6 instructions at 0x00434c20, in src/generated/code/.
 // size 24 bytes; callees: none
 //
-void BuildingClass::vfunc_26(int a0, int a1)
+void BuildingClass::Get_Image_Data(int a0, int a1)
 {
     ts::sub::sub_00434c20();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_27 -- the body is the canonical transcription of
+// BuildingClass::What_Action -- the body is the canonical transcription of
 // 11 instructions at 0x0042e030, in src/generated/code/.
 // size 31 bytes; callees: none
 //
-void BuildingClass::vfunc_27(int a0, int a1, int a2)
+void BuildingClass::What_Action(int a0, int a1, int a2)
 {
     ts::sub::sub_0042e030();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_28 -- the body is the canonical transcription of
+// BuildingClass::What_Action -- the body is the canonical transcription of
 // 13 instructions at 0x0042dd30, in src/generated/code/.
 // size 33 bytes; callees: none
 //
-void BuildingClass::vfunc_28(int a0, int a1)
+void BuildingClass::What_Action(int a0, int a1)
 {
     ts::sub::sub_0042dd30();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_29 -- the body is the canonical transcription of
+// BuildingClass::In_Which_Layer -- the body is the canonical transcription of
 // 17 instructions at 0x0056eb60, in src/generated/code/.
 // size 52 bytes; callees: 0x0067faf0
 //
-void BuildingClass::vfunc_29()
+void BuildingClass::In_Which_Layer()
 {
     ts::sub::sub_0056eb60();
 }
 
-// BuildingClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); the
+// BuildingClass::Not_Underground -- ALIAS of AircraftClass::Not_Underground (same machine code at 0x00570ef0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_30()
+void BuildingClass::Not_Underground()
 {
     ts::sub::sub_00570ef0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_31 -- the body is the canonical transcription of
+// BuildingClass::Considered_Vehicle -- the body is the canonical transcription of
 // 6 instructions at 0x00439a90, in src/generated/code/.
 // size 19 bytes; callees: none
 //
-void BuildingClass::vfunc_31()
+void BuildingClass::Considered_Vehicle()
 {
     ts::sub::sub_00439a90();
 }
 
-// BuildingClass::vfunc_32 -- ALIAS of AircraftClass::vfunc_32 (same machine code at 0x0060eb10); the
+// BuildingClass::Techno_Type_Class -- ALIAS of AircraftClass::Techno_Type_Class (same machine code at 0x0060eb10); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_32()
+void BuildingClass::Techno_Type_Class()
 {
     ts::sub::sub_0060eb10();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::Get_Type -- the body is the canonical transcription of
+// BuildingClass::Class_Of -- the body is the canonical transcription of
 // 2 instructions at 0x0043a1e0, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void BuildingClass::Get_Type()
+void BuildingClass::Class_Of()
 {
     ts::sub::sub_0043a1e0();
 }
 
-// BuildingClass::vfunc_34 -- ALIAS of AircraftClass::vfunc_34 (same machine code at 0x0061b1b0); the
+// BuildingClass::Get_Ownable -- ALIAS of AircraftClass::Get_Ownable (same machine code at 0x0061b1b0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_34()
+void BuildingClass::Get_Ownable()
 {
     ts::sub::sub_0061b1b0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_35 -- the body is the canonical transcription of
+// BuildingClass::Full_Name -- the body is the canonical transcription of
 // 3 instructions at 0x0043a1d0, in src/generated/code/.
 // size 10 bytes; callees: none
 //
-void BuildingClass::vfunc_35()
+void BuildingClass::Full_Name()
 {
     ts::sub::sub_0043a1d0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_36 -- the body is the canonical transcription of
+// BuildingClass::Can_Repair -- the body is the canonical transcription of
 // 8 instructions at 0x004359c0, in src/generated/code/.
 // size 14 bytes; callees: none
 //
-void BuildingClass::vfunc_36()
+void BuildingClass::Can_Repair()
 {
     ts::sub::sub_004359c0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_37 -- the body is the canonical transcription of
+// BuildingClass::Can_Demolish -- the body is the canonical transcription of
 // 25 instructions at 0x0042f030, in src/generated/code/.
 // size 73 bytes; callees: none
 //
-void BuildingClass::vfunc_37()
+void BuildingClass::Can_Demolish()
 {
     ts::sub::sub_0042f030();
 }
 
-// BuildingClass::vfunc_38 -- ALIAS of AircraftClass::vfunc_38 (same machine code at 0x00616410); the
+// BuildingClass::Can_Player_Fire -- ALIAS of AircraftClass::Can_Player_Fire (same machine code at 0x00616410); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_38()
+void BuildingClass::Can_Player_Fire()
 {
     ts::sub::sub_00616410();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_39 -- the body is the canonical transcription of
+// BuildingClass::Can_Player_Move -- the body is the canonical transcription of
 // 8 instructions at 0x00433440, in src/generated/code/.
 // size 17 bytes; callees: none
 //
-void BuildingClass::vfunc_39()
+void BuildingClass::Can_Player_Move()
 {
     ts::sub::sub_00433440();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_40 -- the body is the canonical transcription of
+// BuildingClass::Target_Coord -- the body is the canonical transcription of
 // 18 instructions at 0x00433ef0, in src/generated/code/.
 // size 45 bytes; callees: none
 //
-void BuildingClass::vfunc_40(int a0)
+void BuildingClass::Target_Coord(int a0)
 {
     ts::sub::sub_00433ef0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_41 -- the body is the canonical transcription of
+// BuildingClass::Docking_Coord -- the body is the canonical transcription of
 // 45 instructions at 0x0042e450, in src/generated/code/.
 // size 128 bytes; callees: none
 //
-void BuildingClass::vfunc_41(int a0)
+void BuildingClass::Docking_Coord(int a0)
 {
     ts::sub::sub_0042e450();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_42 -- the body is the canonical transcription of
+// BuildingClass::Render_Coord -- the body is the canonical transcription of
 // 22 instructions at 0x0043a1f0, in src/generated/code/.
 // size 62 bytes; callees: none
 //
-void BuildingClass::vfunc_42(int a0)
+void BuildingClass::Render_Coord(int a0)
 {
     ts::sub::sub_0043a1f0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_43 -- the body is the canonical transcription of
+// BuildingClass::Fire_Coord -- the body is the canonical transcription of
 // 39 instructions at 0x00436a30, in src/generated/code/.
 // size 110 bytes; callees: 0x005f4fc0
 //
-void BuildingClass::vfunc_43(int a0, int a1)
+void BuildingClass::Fire_Coord(int a0, int a1)
 {
     ts::sub::sub_00436a30();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_44 -- the body is the canonical transcription of
+// BuildingClass::Exit_Coord -- the body is the canonical transcription of
 // 28 instructions at 0x004334c0, in src/generated/code/.
 // size 79 bytes; callees: none
 //
-void BuildingClass::vfunc_44(int a0)
+void BuildingClass::Exit_Coord(int a0)
 {
     ts::sub::sub_004334c0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_45 -- the body is the canonical transcription of
+// BuildingClass::Sort_Y -- the body is the canonical transcription of
 // 16 instructions at 0x0042ef80, in src/generated/code/.
 // size 46 bytes; callees: 0x00570ed0
 //
-void BuildingClass::vfunc_45()
+void BuildingClass::Sort_Y()
 {
     ts::sub::sub_0042ef80();
 }
 
-// BuildingClass::vfunc_46 -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
+// BuildingClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_46(int a0, int a1, int a2, int a3)
+void BuildingClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00570db0();
 }
 
-// BuildingClass::vfunc_47 -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); the
+// BuildingClass::Occupies_Cells -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_47()
+void BuildingClass::Occupies_Cells()
 {
     ts::sub::sub_00416830();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_48 -- the body is the canonical transcription of
+// BuildingClass::Limbo -- the body is the canonical transcription of
 // 69 instructions at 0x0042cca0, in src/generated/code/.
 // size 208 bytes; callees: 0x0042cd75, 0x00435bb0, 0x00437e40, 0x00438cd0
 //
-void BuildingClass::vfunc_48(int a0, int a1, int a2, int a3)
+void BuildingClass::Limbo(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_0042cca0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_49 -- the body is the canonical transcription of
+// BuildingClass::Unlimbo -- the body is the canonical transcription of
 // 44 instructions at 0x00429000, in src/generated/code/.
 // size 134 bytes; callees: 0x004290d0, 0x00502060
 //
-void BuildingClass::vfunc_49(int a0)
+void BuildingClass::Unlimbo(int a0)
 {
     ts::sub::sub_00429000();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_50 -- the body is the canonical transcription of
+// BuildingClass::Detach_All -- the body is the canonical transcription of
 // 62 instructions at 0x00432f20, in src/generated/code/.
 // size 206 bytes; callees: 0x00493550, 0x004936c0, 0x004b7f50, 0x004bc350, 0x0056fb40
 //
-void BuildingClass::vfunc_50(int a0)
+void BuildingClass::Detach_All(int a0)
 {
     ts::sub::sub_00432f20();
 }
 
-// BuildingClass::vfunc_51 -- ALIAS of AircraftClass::vfunc_51 (same machine code at 0x00617760); the
+// BuildingClass::Record_The_Kill -- ALIAS of AircraftClass::Record_The_Kill (same machine code at 0x00617760); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_51(int a0)
+void BuildingClass::Record_The_Kill(int a0)
 {
     ts::sub::sub_00617760();
 }
 
-// BuildingClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); the
+// BuildingClass::Paradrop -- ALIAS of AircraftClass::Paradrop (same machine code at 0x005700c0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_52(int a0)
+void BuildingClass::Paradrop(int a0)
 {
     ts::sub::sub_005700c0();
 }
 
-// BuildingClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); the
+// BuildingClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_53(int a0)
+void BuildingClass::Fall_From_Height(int a0)
 {
     ts::sub::sub_0056ea70();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_54 -- the body is the canonical transcription of
+// BuildingClass::Set_Occupy_Bit -- the body is the canonical transcription of
 // 24 instructions at 0x00436c10, in src/generated/code/.
 // size 85 bytes; callees: 0x005020d0
 //
-void BuildingClass::vfunc_54(int a0)
+void BuildingClass::Set_Occupy_Bit(int a0)
 {
     ts::sub::sub_00436c10();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_55 -- the body is the canonical transcription of
+// BuildingClass::Clear_Occupy_Bit -- the body is the canonical transcription of
 // 24 instructions at 0x00436c70, in src/generated/code/.
 // size 85 bytes; callees: 0x005020d0
 //
-void BuildingClass::vfunc_55(int a0)
+void BuildingClass::Clear_Occupy_Bit(int a0)
 {
     ts::sub::sub_00436c70();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_56 -- the body is the canonical transcription of
+// BuildingClass::Delete_Me -- the body is the canonical transcription of
 // 35 instructions at 0x005709b0, in src/generated/code/.
 // size 110 bytes; callees: 0x0062c210
 //
-void BuildingClass::vfunc_56()
+void BuildingClass::Delete_Me()
 {
     ts::sub::sub_005709b0();
 }
 
-// BuildingClass::vfunc_57 -- ALIAS of AircraftClass::vfunc_57 (same machine code at 0x00617ce0); the
+// BuildingClass::Do_Shimmer -- ALIAS of AircraftClass::Do_Shimmer (same machine code at 0x00617ce0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_57()
+void BuildingClass::Do_Shimmer()
 {
     ts::sub::sub_00617ce0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_58 -- the body is the canonical transcription of
+// BuildingClass::Exit_Object -- the body is the canonical transcription of
 // 20 instructions at 0x0042b790, in src/generated/code/.
 // size 68 bytes; callees: none
 //
-void BuildingClass::vfunc_58(int a0)
+void BuildingClass::Exit_Object(int a0)
 {
     ts::sub::sub_0042b790();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_59 -- the body is the canonical transcription of
+// BuildingClass::Render -- the body is the canonical transcription of
 // 115 instructions at 0x004265e0, in src/generated/code/.
 // size 338 bytes; callees: 0x00412bb0, 0x005f5120
 //
-void BuildingClass::vfunc_59(int a0, int a1, int a2)
+void BuildingClass::Render(int a0, int a1, int a2)
 {
     ts::sub::sub_004265e0();
 }
 
-// BuildingClass::vfunc_60 -- ALIAS of AircraftClass::vfunc_60 (same machine code at 0x005701b0); the
+// BuildingClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_60(int a0)
+void BuildingClass::Occupy_List(int a0)
 {
     ts::sub::sub_005701b0();
 }
 
-// BuildingClass::vfunc_61 -- ALIAS of AircraftClass::vfunc_61 (same machine code at 0x00610880); the
+// BuildingClass::Draw_Pre_Render -- ALIAS of AircraftClass::Draw_Pre_Render (same machine code at 0x00610880); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_61(int a0, int a1, int a2, int a3, int a4)
+void BuildingClass::Draw_Pre_Render(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00610880();
 }
 
-// BuildingClass::vfunc_62 -- ALIAS of AircraftClass::vfunc_62 (same machine code at 0x0060fb90); the
+// BuildingClass::Draw_Post_Render -- ALIAS of AircraftClass::Draw_Post_Render (same machine code at 0x0060fb90); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_62(int a0, int a1, int a2, int a3, int a4, int a5)
+void BuildingClass::Draw_Post_Render(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_0060fb90();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_63 -- the body is the canonical transcription of
+// BuildingClass::Draw_It -- the body is the canonical transcription of
 // 163 instructions at 0x00426980, in src/generated/code/.
 // size 531 bytes; callees: 0x0043e6f0, 0x0043e700, 0x004704c0, 0x004704e0, 0x00470560, 0x00470580, 0x004706a0, 0x005020d0, 0x00570280, 0x005f4ee0, 0x005f5030, 0x00618dd0, 0x0067faf0
 //
-void BuildingClass::vfunc_63(int a0, int a1)
+void BuildingClass::Draw_It(int a0, int a1)
 {
     ts::sub::sub_00426980();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_64 -- the body is the canonical transcription of
+// BuildingClass::Editor_Draw_It -- the body is the canonical transcription of
 // 188 instructions at 0x00426760, in src/generated/code/.
 // size 538 bytes; callees: 0x004283f0, 0x00470580, 0x005020d0, 0x005f5030, 0x00618dd0
 //
-void BuildingClass::vfunc_64(int a0, int a1)
+void BuildingClass::Editor_Draw_It(int a0, int a1)
 {
     ts::sub::sub_00426760();
 }
 
-// BuildingClass::vfunc_65 -- ALIAS of AircraftClass::vfunc_65 (same machine code at 0x0060f590); the
+// BuildingClass::Hidden -- ALIAS of AircraftClass::Hidden (same machine code at 0x0060f590); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_65()
+void BuildingClass::Hidden()
 {
     ts::sub::sub_0060f590();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_66 -- the body is the canonical transcription of
+// BuildingClass::Look -- the body is the canonical transcription of
 // 112 instructions at 0x0061c1e0, in src/generated/code/.
 // size 371 bytes; callees: 0x005039b0, 0x006468b0, 0x00646930, 0x0067faf0
 //
-void BuildingClass::vfunc_66(int a0, int a1)
+void BuildingClass::Look(int a0, int a1)
 {
     ts::sub::sub_0061c1e0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_67 -- the body is the canonical transcription of
+// BuildingClass::Mark -- the body is the canonical transcription of
 // 22 instructions at 0x00428540, in src/generated/code/.
 // size 74 bytes; callees: 0x0060f5c0
 //
-void BuildingClass::vfunc_67(int a0)
+void BuildingClass::Mark(int a0)
 {
     ts::sub::sub_00428540();
 }
 
-// BuildingClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); the
+// BuildingClass::Get_Visual_Rect -- ALIAS of AircraftClass::Get_Visual_Rect (same machine code at 0x0056f000); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_68(int a0)
+void BuildingClass::Get_Visual_Rect(int a0)
 {
     ts::sub::sub_0056f000();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_69 -- the body is the canonical transcription of
+// BuildingClass::Get_Render_Rect -- the body is the canonical transcription of
 // 40 instructions at 0x004386e0, in src/generated/code/.
 // size 130 bytes; callees: 0x004387ed
 //
-void BuildingClass::vfunc_69(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void BuildingClass::Get_Render_Rect(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_004386e0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_70 -- the body is the canonical transcription of
+// BuildingClass::Draw_Radial_Indicator -- the body is the canonical transcription of
 // 187 instructions at 0x00439240, in src/generated/code/.
 // size 661 bytes; callees: 0x00412bb0, 0x004395c1, 0x00494170, 0x004c4fb0, 0x005f5120, 0x0067faf0
 //
-void BuildingClass::vfunc_70(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17)
+void BuildingClass::Draw_Radial_Indicator(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17)
 {
     ts::sub::sub_00439240();
 }
 
-// BuildingClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); the
+// BuildingClass::Mark_For_Redraw -- ALIAS of AircraftClass::Mark_For_Redraw (same machine code at 0x0056f680); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_71()
+void BuildingClass::Mark_For_Redraw()
 {
     ts::sub::sub_0056f680();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_72 -- the body is the canonical transcription of
+// BuildingClass::Active_Click_With -- the body is the canonical transcription of
 // 24 instructions at 0x0042b410, in src/generated/code/.
 // size 58 bytes; callees: 0x005020d0
 //
-void BuildingClass::vfunc_72(int a0, int a1, int a2)
+void BuildingClass::Active_Click_With(int a0, int a1, int a2)
 {
     ts::sub::sub_0042b410();
 }
@@ -663,922 +663,922 @@ void BuildingClass::vfunc_73(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_74 -- the body is the canonical transcription of
+// BuildingClass::Clicked_As_Target -- the body is the canonical transcription of
 // 97 instructions at 0x00439650, in src/generated/code/.
 // size 305 bytes; callees: 0x00612dd0
 //
-void BuildingClass::vfunc_74(int a0)
+void BuildingClass::Clicked_As_Target(int a0)
 {
     ts::sub::sub_00439650();
 }
 
-// BuildingClass::vfunc_75 -- ALIAS of AircraftClass::vfunc_75 (same machine code at 0x00613f10); the
+// BuildingClass::Select -- ALIAS of AircraftClass::Select (same machine code at 0x00613f10); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_75()
+void BuildingClass::Select()
 {
     ts::sub::sub_00613f10();
 }
 
-// BuildingClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); the
+// BuildingClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_76(int a0)
+void BuildingClass::Unselect(int a0)
 {
     ts::sub::sub_0056eda0();
 }
 
-// BuildingClass::vfunc_77 -- ALIAS of AircraftClass::vfunc_77 (same machine code at 0x00611540); the
+// BuildingClass::In_Range -- ALIAS of AircraftClass::In_Range (same machine code at 0x00611540); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_77(int a0, int a1)
+void BuildingClass::In_Range(int a0, int a1)
 {
     ts::sub::sub_00611540();
 }
 
-// BuildingClass::vfunc_78 -- ALIAS of AircraftClass::vfunc_78 (same machine code at 0x006164c0); the
+// BuildingClass::Weapon_Range -- ALIAS of AircraftClass::Weapon_Range (same machine code at 0x006164c0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_78(int a0)
+void BuildingClass::Weapon_Range(int a0)
 {
     ts::sub::sub_006164c0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_79 -- the body is the canonical transcription of
+// BuildingClass::Take_Damage -- the body is the canonical transcription of
 // 55 instructions at 0x0042a510, in src/generated/code/.
 // size 184 bytes; callees: 0x004283f0, 0x00570280, 0x0061a780
 //
-void BuildingClass::vfunc_79(int a0, int a1, int a2, int a3, int a4, int a5)
+void BuildingClass::Take_Damage(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_0042a510();
 }
 
-// BuildingClass::vfunc_80 -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); the
+// BuildingClass::Scatter -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_80(int a0, int a1, int a2)
+void BuildingClass::Scatter(int a0, int a1, int a2)
 {
     ts::sub::sub_0056ec90();
 }
 
-// BuildingClass::vfunc_81 -- ALIAS of AircraftClass::vfunc_81 (same machine code at 0x0056eca0); the
+// BuildingClass::Catch_Fire -- ALIAS of AircraftClass::Catch_Fire (same machine code at 0x0056eca0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_81()
+void BuildingClass::Catch_Fire()
 {
     ts::sub::sub_0056eca0();
 }
 
-// BuildingClass::vfunc_82 -- ALIAS of AircraftClass::vfunc_82 (same machine code at 0x0056ecb0); the
+// BuildingClass::Fire_Out -- ALIAS of AircraftClass::Fire_Out (same machine code at 0x0056ecb0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_82()
+void BuildingClass::Fire_Out()
 {
     ts::sub::sub_0056ecb0();
 }
 
-// BuildingClass::vfunc_83 -- ALIAS of AircraftClass::vfunc_83 (same machine code at 0x0061a4d0); the
+// BuildingClass::Value -- ALIAS of AircraftClass::Value (same machine code at 0x0061a4d0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_83()
+void BuildingClass::Value()
 {
     ts::sub::sub_0061a4d0();
 }
 
-// BuildingClass::vfunc_84 -- ALIAS of AircraftClass::vfunc_84 (same machine code at 0x005468d0); the
+// BuildingClass::Get_Mission -- ALIAS of AircraftClass::Get_Mission (same machine code at 0x005468d0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_84()
+void BuildingClass::Get_Mission()
 {
     ts::sub::sub_005468d0();
 }
 
-// BuildingClass::vfunc_85 -- ALIAS of AircraftClass::vfunc_85 (same machine code at 0x00546d60); the
+// BuildingClass::Assign_Mission -- ALIAS of AircraftClass::Assign_Mission (same machine code at 0x00546d60); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_85(int a0)
+void BuildingClass::Assign_Mission(int a0)
 {
     ts::sub::sub_00546d60();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_86 -- the body is the canonical transcription of
+// BuildingClass::Per_Cell_Process -- the body is the canonical transcription of
 // 73 instructions at 0x0060faa0, in src/generated/code/.
 // size 233 bytes; callees: 0x00459610, 0x005020d0, 0x005111c0, 0x00603730
 //
-void BuildingClass::vfunc_86(int a0)
+void BuildingClass::Per_Cell_Process(int a0)
 {
     ts::sub::sub_0060faa0();
 }
 
-// BuildingClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); the
+// BuildingClass::Who_Can_Build_Me -- ALIAS of AircraftClass::Who_Can_Build_Me (same machine code at 0x00570240); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_87(int a0, int a1)
+void BuildingClass::Who_Can_Build_Me(int a0, int a1)
 {
     ts::sub::sub_00570240();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_88 -- the body is the canonical transcription of
+// BuildingClass::Receive_Message -- the body is the canonical transcription of
 // 13 instructions at 0x00425c90, in src/generated/code/.
 // size 40 bytes; callees: none
 //
-void BuildingClass::vfunc_88(int a0, int a1, int a2)
+void BuildingClass::Receive_Message(int a0, int a1, int a2)
 {
     ts::sub::sub_00425c90();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_89 -- the body is the canonical transcription of
+// BuildingClass::Revealed -- the body is the canonical transcription of
 // 55 instructions at 0x00432150, in src/generated/code/.
 // size 188 bytes; callees: 0x004c4ff0, 0x0060f490
 //
-void BuildingClass::vfunc_89(int a0)
+void BuildingClass::Revealed(int a0)
 {
     ts::sub::sub_00432150();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_90 -- the body is the canonical transcription of
+// BuildingClass::Repair -- the body is the canonical transcription of
 // 16 instructions at 0x0042db60, in src/generated/code/.
 // size 48 bytes; callees: 0x0042dbb8
 //
-void BuildingClass::vfunc_90()
+void BuildingClass::Repair()
 {
     ts::sub::sub_0042db60();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_91 -- the body is the canonical transcription of
+// BuildingClass::Sell_Back -- the body is the canonical transcription of
 // 20 instructions at 0x0042dc50, in src/generated/code/.
 // size 68 bytes; callees: 0x0042dcb9
 //
-void BuildingClass::vfunc_91(int a0)
+void BuildingClass::Sell_Back(int a0)
 {
     ts::sub::sub_0042dc50();
 }
 
-// BuildingClass::vfunc_92 -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); the
+// BuildingClass::Set_Waypoint_Path -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_92(int a0, int a1)
+void BuildingClass::Set_Waypoint_Path(int a0, int a1)
 {
     ts::sub::sub_00570e70();
 }
 
-// BuildingClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); the
+// BuildingClass::Move -- ALIAS of AircraftClass::Move (same machine code at 0x0056ed00); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_93(int a0)
+void BuildingClass::Move(int a0)
 {
     ts::sub::sub_0056ed00();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_94 -- the body is the canonical transcription of
+// BuildingClass::Can_Enter_Cell -- the body is the canonical transcription of
 // 26 instructions at 0x0042efb0, in src/generated/code/.
 // size 83 bytes; callees: 0x0044fb60, 0x005020d0
 //
-void BuildingClass::vfunc_94(int a0, int a1, int a2, int a3, int a4)
+void BuildingClass::Can_Enter_Cell(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0042efb0();
 }
 
-// BuildingClass::vfunc_95 -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); the
+// BuildingClass::Can_Reach -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_95(int a0, int a1, int a2, int a3, int a4)
+void BuildingClass::Can_Reach(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00416890();
 }
 
-// BuildingClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); the
+// BuildingClass::Get_Coord -- ALIAS of AircraftClass::Get_Coord (same machine code at 0x0040e6a0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_96(int a0)
+void BuildingClass::Get_Coord(int a0)
 {
     ts::sub::sub_0040e6a0();
 }
 
-// BuildingClass::vfunc_97 -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); the
+// BuildingClass::Set_Coord -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_97(int a0)
+void BuildingClass::Set_Coord(int a0)
 {
     ts::sub::sub_00570cc0();
 }
 
-// BuildingClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); the
+// BuildingClass::Get_Cell -- ALIAS of AircraftClass::Get_Cell (same machine code at 0x0040e6c0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_98(int a0)
+void BuildingClass::Get_Cell(int a0)
 {
     ts::sub::sub_0040e6c0();
 }
 
-// BuildingClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); the
+// BuildingClass::Get_Cell_Ptr -- ALIAS of AircraftClass::Get_Cell_Ptr (same machine code at 0x00570ce0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_99()
+void BuildingClass::Get_Cell_Ptr()
 {
     ts::sub::sub_00570ce0();
 }
 
-// BuildingClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); the
+// BuildingClass::Get_Target_Cell -- ALIAS of AircraftClass::Get_Target_Cell (same machine code at 0x00570d00); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_100(int a0)
+void BuildingClass::Get_Target_Cell(int a0)
 {
     ts::sub::sub_00570d00();
 }
 
-// BuildingClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); the
+// BuildingClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_101(int a0)
+void BuildingClass::Get_Target_Cell_Ptr(int a0)
 {
     ts::sub::sub_00570d50();
 }
 
-// BuildingClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); the
+// BuildingClass::Get_Height_AGL -- ALIAS of AircraftClass::Get_Height_AGL (same machine code at 0x00570370); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_102()
+void BuildingClass::Get_Height_AGL()
 {
     ts::sub::sub_00570370();
 }
 
-// BuildingClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); the
+// BuildingClass::Set_Height_AGL -- ALIAS of AircraftClass::Set_Height_AGL (same machine code at 0x005703b0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_103(int a0)
+void BuildingClass::Set_Height_AGL(int a0)
 {
     ts::sub::sub_005703b0();
 }
 
-// BuildingClass::vfunc_104 -- ALIAS of AircraftClass::vfunc_104 (same machine code at 0x00570360); the
+// BuildingClass::Get_Height -- ALIAS of AircraftClass::Get_Height (same machine code at 0x00570360); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_104()
+void BuildingClass::Get_Height()
 {
     ts::sub::sub_00570360();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_105 -- the body is the canonical transcription of
+// BuildingClass::Commence -- the body is the canonical transcription of
 // 20 instructions at 0x00546d20, in src/generated/code/.
 // size 57 bytes; callees: none
 //
-void BuildingClass::vfunc_105(int a0)
+void BuildingClass::Commence(int a0)
 {
     ts::sub::sub_00546d20();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_106 -- the body is the canonical transcription of
+// BuildingClass::Ready_To_Commence -- the body is the canonical transcription of
 // 4 instructions at 0x00436ea0, in src/generated/code/.
 // size 12 bytes; callees: none
 //
-void BuildingClass::vfunc_106()
+void BuildingClass::Ready_To_Commence()
 {
     ts::sub::sub_00436ea0();
 }
 
-// BuildingClass::vfunc_107 -- ALIAS of AircraftClass::vfunc_107 (same machine code at 0x00546750); the
+// BuildingClass::Do_MISSION_SLEEP -- ALIAS of AircraftClass::Do_MISSION_SLEEP (same machine code at 0x00546750); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_107()
+void BuildingClass::Do_MISSION_SLEEP()
 {
     ts::sub::sub_00546750();
 }
 
-// BuildingClass::vfunc_108 -- ALIAS of AircraftClass::vfunc_108 (same machine code at 0x00546760); the
+// BuildingClass::Do_MISSION_HARMLESS -- ALIAS of AircraftClass::Do_MISSION_HARMLESS (same machine code at 0x00546760); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_108()
+void BuildingClass::Do_MISSION_HARMLESS()
 {
     ts::sub::sub_00546760();
 }
 
-// BuildingClass::vfunc_109 -- ALIAS of AircraftClass::vfunc_109 (same machine code at 0x00546770); the
+// BuildingClass::Do_MISSION_AMBUSH -- ALIAS of AircraftClass::Do_MISSION_AMBUSH (same machine code at 0x00546770); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_109()
+void BuildingClass::Do_MISSION_AMBUSH()
 {
     ts::sub::sub_00546770();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_110 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_ATTACK -- the body is the canonical transcription of
 // 34 instructions at 0x00430290, in src/generated/code/.
 // size 97 bytes; callees: 0x00547100, 0x005a5f10, 0x0067faf0
 //
-void BuildingClass::vfunc_110()
+void BuildingClass::Do_MISSION_ATTACK()
 {
     ts::sub::sub_00430290();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_111 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_CAPTURE -- the body is the canonical transcription of
 // 2 instructions at 0x00546790, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::vfunc_111()
+void BuildingClass::Do_MISSION_CAPTURE()
 {
     ts::sub::sub_00546790();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_112 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_GUARD -- the body is the canonical transcription of
 // 49 instructions at 0x0042f210, in src/generated/code/.
 // size 184 bytes; callees: 0x0042f2d4, 0x0046b380
 //
-void BuildingClass::vfunc_112()
+void BuildingClass::Do_MISSION_GUARD()
 {
     ts::sub::sub_0042f210();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_113 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_GUARD_AREA -- the body is the canonical transcription of
 // 2 instructions at 0x0042f570, in src/generated/code/.
 // size 8 bytes; callees: none
 //
-void BuildingClass::vfunc_113()
+void BuildingClass::Do_MISSION_GUARD_AREA()
 {
     ts::sub::sub_0042f570();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_114 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_HARVEST -- the body is the canonical transcription of
 // 1 instructions at 0x004307a0, in src/generated/code/.
 // size 5 bytes; callees: 0x005467c0
 //
-void BuildingClass::vfunc_114(int a0)
+void BuildingClass::Do_MISSION_HARVEST(int a0)
 {
     ts::sub::sub_004307a0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_115 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_HUNT -- the body is the canonical transcription of
 // 2 instructions at 0x005467d0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::vfunc_115()
+void BuildingClass::Do_MISSION_HUNT()
 {
     ts::sub::sub_005467d0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_116 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_MOVE -- the body is the canonical transcription of
 // 2 instructions at 0x005467e0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::vfunc_116()
+void BuildingClass::Do_MISSION_MOVE()
 {
     ts::sub::sub_005467e0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_117 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_RETREAT -- the body is the canonical transcription of
 // 2 instructions at 0x005467f0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::vfunc_117()
+void BuildingClass::Do_MISSION_RETREAT()
 {
     ts::sub::sub_005467f0();
 }
 
-// BuildingClass::vfunc_118 -- ALIAS of AircraftClass::vfunc_118 (same machine code at 0x00546800); the
+// BuildingClass::Do_MISSION_RETURN -- ALIAS of AircraftClass::Do_MISSION_RETURN (same machine code at 0x00546800); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_118()
+void BuildingClass::Do_MISSION_RETURN()
 {
     ts::sub::sub_00546800();
 }
 
-// BuildingClass::vfunc_119 -- ALIAS of AircraftClass::vfunc_119 (same machine code at 0x00546810); the
+// BuildingClass::Do_MISSION_STOP -- ALIAS of AircraftClass::Do_MISSION_STOP (same machine code at 0x00546810); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_119()
+void BuildingClass::Do_MISSION_STOP()
 {
     ts::sub::sub_00546810();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_120 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_UNLOAD -- the body is the canonical transcription of
 // 35 instructions at 0x00432460, in src/generated/code/.
 // size 127 bytes; callees: none
 //
-void BuildingClass::vfunc_120(int a0, int a1, int a2, int a3, int a4, int a5)
+void BuildingClass::Do_MISSION_UNLOAD(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00432460();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_121 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_ENTER -- the body is the canonical transcription of
 // 2 instructions at 0x00546830, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::vfunc_121()
+void BuildingClass::Do_MISSION_ENTER()
 {
     ts::sub::sub_00546830();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_122 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_CONSTRUCTION -- the body is the canonical transcription of
 // 51 instructions at 0x0042f580, in src/generated/code/.
 // size 178 bytes; callees: 0x0042e1d0, 0x00442030, 0x00492890
 //
-void BuildingClass::vfunc_122(int a0)
+void BuildingClass::Do_MISSION_CONSTRUCTION(int a0)
 {
     ts::sub::sub_0042f580();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_123 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_DECONSTRUCTION -- the body is the canonical transcription of
 // 103 instructions at 0x0042f720, in src/generated/code/.
 // size 381 bytes; callees: 0x004927b0, 0x00492960, 0x004c4ff0, 0x00647f00
 //
-void BuildingClass::vfunc_123(int a0, int a1, int a2, int a3, int a4)
+void BuildingClass::Do_MISSION_DECONSTRUCTION(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0042f720();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_124 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_REPAIR -- the body is the canonical transcription of
 // 32 instructions at 0x004307b0, in src/generated/code/.
 // size 91 bytes; callees: 0x00435300
 //
-void BuildingClass::vfunc_124(int a0, int a1, int a2)
+void BuildingClass::Do_MISSION_REPAIR(int a0, int a1, int a2)
 {
     ts::sub::sub_004307b0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_125 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_MISSILE -- the body is the canonical transcription of
 // 17 instructions at 0x00431600, in src/generated/code/.
 // size 57 bytes; callees: none
 //
-void BuildingClass::vfunc_125()
+void BuildingClass::Do_MISSION_MISSILE()
 {
     ts::sub::sub_00431600();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_126 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_OPEN -- the body is the canonical transcription of
 // 12 instructions at 0x004329e0, in src/generated/code/.
 // size 42 bytes; callees: none
 //
-void BuildingClass::vfunc_126()
+void BuildingClass::Do_MISSION_OPEN()
 {
     ts::sub::sub_004329e0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_127 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_RESCUE -- the body is the canonical transcription of
 // 2 instructions at 0x00546890, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::vfunc_127()
+void BuildingClass::Do_MISSION_RESCUE()
 {
     ts::sub::sub_00546890();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_128 -- the body is the canonical transcription of
+// BuildingClass::Do_MISSION_PATROL -- the body is the canonical transcription of
 // 2 instructions at 0x005468a0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::vfunc_128()
+void BuildingClass::Do_MISSION_PATROL()
 {
     ts::sub::sub_005468a0();
 }
 
-// BuildingClass::vfunc_129 -- ALIAS of AircraftClass::vfunc_129 (same machine code at 0x005468b0); the
+// BuildingClass::Set_Mission -- ALIAS of AircraftClass::Set_Mission (same machine code at 0x005468b0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_129(int a0)
+void BuildingClass::Set_Mission(int a0)
 {
     ts::sub::sub_005468b0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_130 -- the body is the canonical transcription of
+// BuildingClass::Override_Mission -- the body is the canonical transcription of
 // 20 instructions at 0x006164e0, in src/generated/code/.
 // size 54 bytes; callees: 0x00546da0
 //
-void BuildingClass::vfunc_130(int a0, int a1, int a2)
+void BuildingClass::Override_Mission(int a0, int a1, int a2)
 {
     ts::sub::sub_006164e0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_131 -- the body is the canonical transcription of
+// BuildingClass::Restore_Mission -- the body is the canonical transcription of
 // 13 instructions at 0x00616520, in src/generated/code/.
 // size 33 bytes; callees: 0x00546de0
 //
-void BuildingClass::vfunc_131()
+void BuildingClass::Restore_Mission()
 {
     ts::sub::sub_00616520();
 }
 
-// BuildingClass::vfunc_132 -- ALIAS of AircraftClass::vfunc_132 (same machine code at 0x00547110); the
+// BuildingClass::Has_Suspended_Mission -- ALIAS of AircraftClass::Has_Suspended_Mission (same machine code at 0x00547110); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_132()
+void BuildingClass::Has_Suspended_Mission()
 {
     ts::sub::sub_00547110();
 }
 
-// BuildingClass::vfunc_133 -- ALIAS of AircraftClass::vfunc_133 (same machine code at 0x005a58a0); the
+// BuildingClass::Transmit_Message -- ALIAS of AircraftClass::Transmit_Message (same machine code at 0x005a58a0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_133(int a0, int a1)
+void BuildingClass::Transmit_Message(int a0, int a1)
 {
     ts::sub::sub_005a58a0();
 }
 
-// BuildingClass::vfunc_134 -- ALIAS of AircraftClass::vfunc_134 (same machine code at 0x005a57d0); the
+// BuildingClass::Transmit_Message -- ALIAS of AircraftClass::Transmit_Message (same machine code at 0x005a57d0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_134(int a0, int a1, int a2)
+void BuildingClass::Transmit_Message(int a0, int a1, int a2)
 {
     ts::sub::sub_005a57d0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_135 -- the body is the canonical transcription of
+// BuildingClass::Is_Move_Override -- the body is the canonical transcription of
 // 10 instructions at 0x00438860, in src/generated/code/.
 // size 30 bytes; callees: none
 //
-void BuildingClass::vfunc_135()
+void BuildingClass::Is_Move_Override()
 {
     ts::sub::sub_00438860();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_136 -- the body is the canonical transcription of
+// BuildingClass::Is_Allowed_To_Recloak -- the body is the canonical transcription of
 // 4 instructions at 0x0061cf80, in src/generated/code/.
 // size 12 bytes; callees: none
 //
-void BuildingClass::vfunc_136()
+void BuildingClass::Is_Allowed_To_Recloak()
 {
     ts::sub::sub_0061cf80();
 }
 
-// BuildingClass::vfunc_137 -- ALIAS of AircraftClass::vfunc_137 (same machine code at 0x0060eb20); the
+// BuildingClass::Can_Scatter -- ALIAS of AircraftClass::Can_Scatter (same machine code at 0x0060eb20); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_137()
+void BuildingClass::Can_Scatter()
 {
     ts::sub::sub_0060eb20();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_138 -- the body is the canonical transcription of
+// BuildingClass::Is_In_Team -- the body is the canonical transcription of
 // 2 instructions at 0x0043a110, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void BuildingClass::vfunc_138()
+void BuildingClass::Is_In_Team()
 {
     ts::sub::sub_0043a110();
 }
 
-// BuildingClass::vfunc_139 -- ALIAS of AircraftClass::vfunc_139 (same machine code at 0x0061cb60); the
+// BuildingClass::Should_Self_Heal_Now -- ALIAS of AircraftClass::Should_Self_Heal_Now (same machine code at 0x0061cb60); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_139()
+void BuildingClass::Should_Self_Heal_Now()
 {
     ts::sub::sub_0061cb60();
 }
 
-// BuildingClass::vfunc_140 -- ALIAS of AircraftClass::vfunc_140 (same machine code at 0x00612de0); the
+// BuildingClass::Is_Voxel_Loaded -- ALIAS of AircraftClass::Is_Voxel_Loaded (same machine code at 0x00612de0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_140()
+void BuildingClass::Is_Voxel_Loaded()
 {
     ts::sub::sub_00612de0();
 }
 
-// BuildingClass::vfunc_141 -- ALIAS of AircraftClass::vfunc_141 (same machine code at 0x0040e710); the
+// BuildingClass::Is_Ready_To_Move -- ALIAS of AircraftClass::Is_Ready_To_Move (same machine code at 0x0040e710); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_141()
+void BuildingClass::Is_Ready_To_Move()
 {
     ts::sub::sub_0040e710();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_142 -- the body is the canonical transcription of
+// BuildingClass::Is_Ready_To_Cloak -- the body is the canonical transcription of
 // 97 instructions at 0x00439bf0, in src/generated/code/.
 // size 317 bytes; callees: 0x0043e6f0, 0x0043e700, 0x0044f930, 0x00452000, 0x005020d0, 0x00613d60
 //
-void BuildingClass::vfunc_142(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10)
+void BuildingClass::Is_Ready_To_Cloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10)
 {
     ts::sub::sub_00439bf0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_143 -- the body is the canonical transcription of
+// BuildingClass::Should_Uncloak -- the body is the canonical transcription of
 // 97 instructions at 0x00439d40, in src/generated/code/.
 // size 317 bytes; callees: 0x0043e6f0, 0x0043e700, 0x0044f930, 0x00452000, 0x005020d0, 0x00613c60
 //
-void BuildingClass::vfunc_143(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10)
+void BuildingClass::Should_Uncloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10)
 {
     ts::sub::sub_00439d40();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_144 -- the body is the canonical transcription of
+// BuildingClass::Turret_Facing -- the body is the canonical transcription of
 // 46 instructions at 0x0042d180, in src/generated/code/.
 // size 140 bytes; callees: 0x00494360, 0x0067faf0
 //
-void BuildingClass::vfunc_144(int a0)
+void BuildingClass::Turret_Facing(int a0)
 {
     ts::sub::sub_0042d180();
 }
 
-// BuildingClass::vfunc_145 -- ALIAS of AircraftClass::vfunc_145 (same machine code at 0x00616450); the
+// BuildingClass::Is_Weapon_Equipped -- ALIAS of AircraftClass::Is_Weapon_Equipped (same machine code at 0x00616450); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_145()
+void BuildingClass::Is_Weapon_Equipped()
 {
     ts::sub::sub_00616450();
 }
 
-// BuildingClass::vfunc_146 -- ALIAS of AircraftClass::vfunc_146 (same machine code at 0x0061cfa0); the
+// BuildingClass::Is_On_Elevation -- ALIAS of AircraftClass::Is_On_Elevation (same machine code at 0x0061cfa0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_146(int a0, int a1)
+void BuildingClass::Is_On_Elevation(int a0, int a1)
 {
     ts::sub::sub_0061cfa0();
 }
 
-// BuildingClass::vfunc_147 -- ALIAS of AircraftClass::vfunc_147 (same machine code at 0x0061b1e0); the
+// BuildingClass::Tiberium_Load -- ALIAS of AircraftClass::Tiberium_Load (same machine code at 0x0061b1e0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_147()
+void BuildingClass::Tiberium_Load()
 {
     ts::sub::sub_0061b1e0();
 }
 
-// BuildingClass::vfunc_148 -- ALIAS of AircraftClass::vfunc_148 (same machine code at 0x0061d000); the
+// BuildingClass::Weed_Load -- ALIAS of AircraftClass::Weed_Load (same machine code at 0x0061d000); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_148()
+void BuildingClass::Weed_Load()
 {
     ts::sub::sub_0061d000();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_149 -- the body is the canonical transcription of
+// BuildingClass::Pip_Count -- the body is the canonical transcription of
 // 13 instructions at 0x00432280, in src/generated/code/.
 // size 35 bytes; callees: 0x0061b210
 //
-void BuildingClass::vfunc_149()
+void BuildingClass::Pip_Count()
 {
     ts::sub::sub_00432280();
 }
 
-// BuildingClass::vfunc_150 -- ALIAS of AircraftClass::vfunc_150 (same machine code at 0x0061bf60); the
+// BuildingClass::Refund_Amount -- ALIAS of AircraftClass::Refund_Amount (same machine code at 0x0061bf60); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_150(int a0)
+void BuildingClass::Refund_Amount(int a0)
 {
     ts::sub::sub_0061bf60();
 }
 
-// BuildingClass::vfunc_151 -- ALIAS of AircraftClass::vfunc_151 (same machine code at 0x0061b1c0); the
+// BuildingClass::Risk -- ALIAS of AircraftClass::Risk (same machine code at 0x0061b1c0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_151()
+void BuildingClass::Risk()
 {
     ts::sub::sub_0061b1c0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_152 -- the body is the canonical transcription of
+// BuildingClass::Is_In_Same_Zone_As -- the body is the canonical transcription of
 // 2 instructions at 0x0043a120, in src/generated/code/.
 // size 5 bytes; callees: none
 //
-void BuildingClass::vfunc_152(int a0)
+void BuildingClass::Is_In_Same_Zone_As(int a0)
 {
     ts::sub::sub_0043a120();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_153 -- the body is the canonical transcription of
+// BuildingClass::Barrel_Pitch -- the body is the canonical transcription of
 // 83 instructions at 0x00427d80, in src/generated/code/.
 // size 258 bytes; callees: 0x005f4fc0, 0x0061c9b0
 //
-void BuildingClass::vfunc_153(int a0, int a1)
+void BuildingClass::Barrel_Pitch(int a0, int a1)
 {
     ts::sub::sub_00427d80();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_154 -- the body is the canonical transcription of
+// BuildingClass::Is_In_Same_Zone -- the body is the canonical transcription of
 // 84 instructions at 0x0061a660, in src/generated/code/.
 // size 263 bytes; callees: 0x005020d0, 0x00508520
 //
-void BuildingClass::vfunc_154(int a0)
+void BuildingClass::Is_In_Same_Zone(int a0)
 {
     ts::sub::sub_0061a660();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_155 -- the body is the canonical transcription of
+// BuildingClass::How_Many_Survivors -- the body is the canonical transcription of
 // 36 instructions at 0x00434b80, in src/generated/code/.
 // size 131 bytes; callees: 0x0067faf0
 //
-void BuildingClass::vfunc_155()
+void BuildingClass::How_Many_Survivors()
 {
     ts::sub::sub_00434b80();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_156 -- the body is the canonical transcription of
+// BuildingClass::Scatter_Incoming_Infantry -- the body is the canonical transcription of
 // 48 instructions at 0x00439b70, in src/generated/code/.
 // size 122 bytes; callees: 0x0044fa70, 0x00502060
 //
-void BuildingClass::vfunc_156(int a0)
+void BuildingClass::Scatter_Incoming_Infantry(int a0)
 {
     ts::sub::sub_00439b70();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_157 -- the body is the canonical transcription of
+// BuildingClass::Get_Collateral_Damage -- the body is the canonical transcription of
 // 39 instructions at 0x00439a20, in src/generated/code/.
 // size 97 bytes; callees: 0x005f0dd0, 0x005f0df0, 0x0061dd70
 //
-void BuildingClass::vfunc_157(int a0)
+void BuildingClass::Get_Collateral_Damage(int a0)
 {
     ts::sub::sub_00439a20();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_158 -- the body is the canonical transcription of
+// BuildingClass::Get_Z_Adjust -- the body is the canonical transcription of
 // 16 instructions at 0x00427d40, in src/generated/code/.
 // size 49 bytes; callees: 0x005f5030
 //
-void BuildingClass::vfunc_158()
+void BuildingClass::Get_Z_Adjust()
 {
     ts::sub::sub_00427d40();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_159 -- the body is the canonical transcription of
+// BuildingClass::Get_Z_Gradient -- the body is the canonical transcription of
 // 2 instructions at 0x0043a130, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void BuildingClass::vfunc_159()
+void BuildingClass::Get_Z_Gradient()
 {
     ts::sub::sub_0043a130();
 }
 
-// BuildingClass::vfunc_160 -- ALIAS of AircraftClass::vfunc_160 (same machine code at 0x0061bd30); the
+// BuildingClass::Find_Docking_Bay -- ALIAS of AircraftClass::Find_Docking_Bay (same machine code at 0x0061bd30); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_160(int a0, int a1, int a2)
+void BuildingClass::Find_Docking_Bay(int a0, int a1, int a2)
 {
     ts::sub::sub_0061bd30();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_161 -- the body is the canonical transcription of
+// BuildingClass::Find_Exit_Cell -- the body is the canonical transcription of
 // 54 instructions at 0x00433060, in src/generated/code/.
 // size 155 bytes; callees: 0x005020d0, 0x00503e00
 //
-void BuildingClass::vfunc_161(int a0, int a1)
+void BuildingClass::Find_Exit_Cell(int a0, int a1)
 {
     ts::sub::sub_00433060();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_162 -- the body is the canonical transcription of
+// BuildingClass::Turret_Coord -- the body is the canonical transcription of
 // 39 instructions at 0x00436b20, in src/generated/code/.
 // size 110 bytes; callees: 0x005f4fc0
 //
-void BuildingClass::vfunc_162(int a0, int a1)
+void BuildingClass::Turret_Coord(int a0, int a1)
 {
     ts::sub::sub_00436b20();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_163 -- the body is the canonical transcription of
+// BuildingClass::Desired_Load_Dir -- the body is the canonical transcription of
 // 5 instructions at 0x0061b1f0, in src/generated/code/.
 // size 17 bytes; callees: none
 //
-void BuildingClass::vfunc_163(int a0, int a1)
+void BuildingClass::Desired_Load_Dir(int a0, int a1)
 {
     ts::sub::sub_0061b1f0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_164 -- the body is the canonical transcription of
+// BuildingClass::Fire_Direction -- the body is the canonical transcription of
 // 21 instructions at 0x004323b0, in src/generated/code/.
 // size 54 bytes; callees: 0x00492960
 //
-void BuildingClass::vfunc_164(int a0)
+void BuildingClass::Fire_Direction(int a0)
 {
     ts::sub::sub_004323b0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_165 -- the body is the canonical transcription of
+// BuildingClass::Crew_Type -- the body is the canonical transcription of
 // 19 instructions at 0x00432ed0, in src/generated/code/.
 // size 67 bytes; callees: 0x005a5f10
 //
-void BuildingClass::vfunc_165()
+void BuildingClass::Crew_Type()
 {
     ts::sub::sub_00432ed0();
 }
 
-// BuildingClass::vfunc_166 -- ALIAS of AircraftClass::vfunc_166 (same machine code at 0x00616160); the
+// BuildingClass::Can_Attack_Now -- ALIAS of AircraftClass::Can_Attack_Now (same machine code at 0x00616160); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_166()
+void BuildingClass::Can_Attack_Now()
 {
     ts::sub::sub_00616160();
 }
 
-// BuildingClass::vfunc_167 -- ALIAS of AircraftClass::vfunc_167 (same machine code at 0x006161b0); the
+// BuildingClass::Can_Deploy_Now -- ALIAS of AircraftClass::Can_Deploy_Now (same machine code at 0x006161b0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_167(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void BuildingClass::Can_Deploy_Now(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
 {
     ts::sub::sub_006161b0();
 }
 
-// BuildingClass::vfunc_168 -- ALIAS of AircraftClass::vfunc_168 (same machine code at 0x006143a0); the
+// BuildingClass::Rearm_Delay -- ALIAS of AircraftClass::Rearm_Delay (same machine code at 0x006143a0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_168(int a0)
+void BuildingClass::Rearm_Delay(int a0)
 {
     ts::sub::sub_006143a0();
 }
 
-// BuildingClass::vfunc_169 -- ALIAS of AircraftClass::vfunc_169 (same machine code at 0x0061a560); the
+// BuildingClass::Threat_Range -- ALIAS of AircraftClass::Threat_Range (same machine code at 0x0061a560); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_169(int a0)
+void BuildingClass::Threat_Range(int a0)
 {
     ts::sub::sub_0061a560();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_170 -- the body is the canonical transcription of
+// BuildingClass::Is_Allowed_To_Leave_Map -- the body is the canonical transcription of
 // 2 instructions at 0x0043a140, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void BuildingClass::vfunc_170()
+void BuildingClass::Is_Allowed_To_Leave_Map()
 {
     ts::sub::sub_0043a140();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_171 -- the body is the canonical transcription of
+// BuildingClass::Is_Radar_Visible -- the body is the canonical transcription of
 // 16 instructions at 0x004397c0, in src/generated/code/.
 // size 47 bytes; callees: none
 //
-void BuildingClass::vfunc_171(int a0)
+void BuildingClass::Is_Radar_Visible(int a0)
 {
     ts::sub::sub_004397c0();
 }
 
-// BuildingClass::vfunc_172 -- ALIAS of AircraftClass::vfunc_172 (same machine code at 0x0061db90); the
+// BuildingClass::Is_Sensed_By_Player -- ALIAS of AircraftClass::Is_Sensed_By_Player (same machine code at 0x0061db90); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_172()
+void BuildingClass::Is_Sensed_By_Player()
 {
     ts::sub::sub_0061db90();
 }
 
-// BuildingClass::vfunc_173 -- ALIAS of AircraftClass::vfunc_173 (same machine code at 0x0040e720); the
+// BuildingClass::Is_Renovator -- ALIAS of AircraftClass::Is_Renovator (same machine code at 0x0040e720); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_173()
+void BuildingClass::Is_Renovator()
 {
     ts::sub::sub_0040e720();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_174 -- the body is the canonical transcription of
+// BuildingClass::Advance_Waypoint_Path -- the body is the canonical transcription of
 // 1 instructions at 0x0043a150, in src/generated/code/.
 // size 1 bytes; callees: none
 //
-void BuildingClass::vfunc_174()
+void BuildingClass::Advance_Waypoint_Path()
 {
     ts::sub::sub_0043a150();
 }
 
-// BuildingClass::vfunc_175 -- ALIAS of AircraftClass::vfunc_175 (same machine code at 0x0061b2e0); the
+// BuildingClass::Response_Select -- ALIAS of AircraftClass::Response_Select (same machine code at 0x0061b2e0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_175()
+void BuildingClass::Response_Select()
 {
     ts::sub::sub_0061b2e0();
 }
 
-// BuildingClass::vfunc_176 -- ALIAS of AircraftClass::vfunc_176 (same machine code at 0x0061b340); the
+// BuildingClass::Response_Move -- ALIAS of AircraftClass::Response_Move (same machine code at 0x0061b340); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_176()
+void BuildingClass::Response_Move()
 {
     ts::sub::sub_0061b340();
 }
 
-// BuildingClass::vfunc_177 -- ALIAS of AircraftClass::vfunc_177 (same machine code at 0x0061b3a0); the
+// BuildingClass::Response_Attack -- ALIAS of AircraftClass::Response_Attack (same machine code at 0x0061b3a0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_177()
+void BuildingClass::Response_Attack()
 {
     ts::sub::sub_0061b3a0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_178 -- the body is the canonical transcription of
+// BuildingClass::Player_Assign_Mission -- the body is the canonical transcription of
 // 14 instructions at 0x00615820, in src/generated/code/.
 // size 36 bytes; callees: 0x00615882
 //
-void BuildingClass::vfunc_178(int a0)
+void BuildingClass::Player_Assign_Mission(int a0)
 {
     ts::sub::sub_00615820();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_179 -- the body is the canonical transcription of
+// BuildingClass::Reduce_Ammunition -- the body is the canonical transcription of
 // 6 instructions at 0x0061dd50, in src/generated/code/.
 // size 18 bytes; callees: none
 //
-void BuildingClass::vfunc_179()
+void BuildingClass::Reduce_Ammunition()
 {
     ts::sub::sub_0061dd50();
 }
 
-// BuildingClass::vfunc_180 -- ALIAS of AircraftClass::vfunc_180 (same machine code at 0x0061b400); the
+// BuildingClass::Target_Something_Nearby -- ALIAS of AircraftClass::Target_Something_Nearby (same machine code at 0x0061b400); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_180(int a0, int a1)
+void BuildingClass::Target_Something_Nearby(int a0, int a1)
 {
     ts::sub::sub_0061b400();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_181 -- the body is the canonical transcription of
+// BuildingClass::Stun -- the body is the canonical transcription of
 // 25 instructions at 0x00614290, in src/generated/code/.
 // size 70 bytes; callees: none
 //
-void BuildingClass::vfunc_181()
+void BuildingClass::Stun()
 {
     ts::sub::sub_00614290();
 }
@@ -1591,339 +1591,339 @@ void BuildingClass::vfunc_182(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_183 -- the body is the canonical transcription of
+// BuildingClass::Death_Announcement -- the body is the canonical transcription of
 // 36 instructions at 0x00432340, in src/generated/code/.
 // size 111 bytes; callees: 0x004c4fb0, 0x00647f00
 //
-void BuildingClass::vfunc_183(int a0)
+void BuildingClass::Death_Announcement(int a0)
 {
     ts::sub::sub_00432340();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_184 -- the body is the canonical transcription of
+// BuildingClass::Can_Fire -- the body is the canonical transcription of
 // 13 instructions at 0x0042e590, in src/generated/code/.
 // size 32 bytes; callees: none
 //
-void BuildingClass::vfunc_184(int a0, int a1)
+void BuildingClass::Can_Fire(int a0, int a1)
 {
     ts::sub::sub_0042e590();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_185 -- the body is the canonical transcription of
+// BuildingClass::Greatest_Threat -- the body is the canonical transcription of
 // 17 instructions at 0x0042d230, in src/generated/code/.
 // size 46 bytes; callees: 0x0042d262, 0x006572d0
 //
-void BuildingClass::vfunc_185(int a0)
+void BuildingClass::Greatest_Threat(int a0)
 {
     ts::sub::sub_0042d230();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_186 -- the body is the canonical transcription of
+// BuildingClass::Assign_Target -- the body is the canonical transcription of
 // 15 instructions at 0x0042b6e0, in src/generated/code/.
 // size 33 bytes; callees: 0x006142e0
 //
-void BuildingClass::vfunc_186(int a0)
+void BuildingClass::Assign_Target(int a0)
 {
     ts::sub::sub_0042b6e0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_187 -- the body is the canonical transcription of
+// BuildingClass::Fire_At -- the body is the canonical transcription of
 // 64 instructions at 0x006148b0, in src/generated/code/.
 // size 216 bytes; callees: 0x00614994, 0x0068309c
 //
-void BuildingClass::vfunc_187(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void BuildingClass::Fire_At(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_006148b0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_188 -- the body is the canonical transcription of
+// BuildingClass::Captured -- the body is the canonical transcription of
 // 177 instructions at 0x0042e7f0, in src/generated/code/.
 // size 615 bytes; callees: 0x0040e980, 0x0042ea7d, 0x00435bb0, 0x00446e70, 0x00494170, 0x004b2e90, 0x004c4fb0, 0x0063fd30, 0x00647f00, 0x0067faf0
 //
-void BuildingClass::vfunc_188(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void BuildingClass::Captured(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_0042e7f0();
 }
 
-// BuildingClass::vfunc_189 -- ALIAS of AircraftClass::vfunc_189 (same machine code at 0x00614530); the
+// BuildingClass::Laser_Zap -- ALIAS of AircraftClass::Laser_Zap (same machine code at 0x00614530); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_189(int a0, int a1, int a2, int a3, int a4, int a5)
+void BuildingClass::Laser_Zap(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00614530();
 }
 
-// BuildingClass::vfunc_190 -- ALIAS of AircraftClass::vfunc_190 (same machine code at 0x0061c360); the
+// BuildingClass::Rock -- ALIAS of AircraftClass::Rock (same machine code at 0x0061c360); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_190(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void BuildingClass::Rock(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
 {
     ts::sub::sub_0061c360();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_191 -- the body is the canonical transcription of
+// BuildingClass::Get_Class_Weapon_Data -- the body is the canonical transcription of
 // 42 instructions at 0x00435a70, in src/generated/code/.
 // size 109 bytes; callees: 0x00622130, 0x00646930
 //
-void BuildingClass::vfunc_191(int a0)
+void BuildingClass::Get_Class_Weapon_Data(int a0)
 {
     ts::sub::sub_00435a70();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_192 -- the body is the canonical transcription of
+// BuildingClass::Is_Turret_Equipped -- the body is the canonical transcription of
 // 10 instructions at 0x00435b00, in src/generated/code/.
 // size 23 bytes; callees: none
 //
-void BuildingClass::vfunc_192()
+void BuildingClass::Is_Turret_Equipped()
 {
     ts::sub::sub_00435b00();
 }
 
-// BuildingClass::vfunc_193 -- ALIAS of AircraftClass::vfunc_193 (same machine code at 0x00616550); the
+// BuildingClass::Renovate -- ALIAS of AircraftClass::Renovate (same machine code at 0x00616550); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_193()
+void BuildingClass::Renovate()
 {
     ts::sub::sub_00616550();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_194 -- the body is the canonical transcription of
+// BuildingClass::Cloaking_AI -- the body is the canonical transcription of
 // 75 instructions at 0x00437570, in src/generated/code/.
 // size 248 bytes; callees: 0x004377c4
 //
-void BuildingClass::vfunc_194(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void BuildingClass::Cloaking_AI(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_00437570();
 }
 
-// BuildingClass::vfunc_195 -- ALIAS of AircraftClass::vfunc_195 (same machine code at 0x0061c650); the
+// BuildingClass::Rocking_AI -- ALIAS of AircraftClass::Rocking_AI (same machine code at 0x0061c650); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_195()
+void BuildingClass::Rocking_AI()
 {
     ts::sub::sub_0061c650();
 }
 
-// BuildingClass::vfunc_196 -- ALIAS of AircraftClass::vfunc_196 (same machine code at 0x0060f8f0); the
+// BuildingClass::Try_To_Cloak -- ALIAS of AircraftClass::Try_To_Cloak (same machine code at 0x0060f8f0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_196(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void BuildingClass::Try_To_Cloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_0060f8f0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_197 -- the body is the canonical transcription of
+// BuildingClass::Draw_Action_Line -- the body is the canonical transcription of
 // 1 instructions at 0x0043a160, in src/generated/code/.
 // size 1 bytes; callees: none
 //
-void BuildingClass::vfunc_197()
+void BuildingClass::Draw_Action_Line()
 {
     ts::sub::sub_0043a160();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_198 -- the body is the canonical transcription of
+// BuildingClass::Draw_Voxel -- the body is the canonical transcription of
 // 19 instructions at 0x00619490, in src/generated/code/.
 // size 46 bytes; callees: none
 //
-void BuildingClass::vfunc_198(int a0, int a1)
+void BuildingClass::Draw_Voxel(int a0, int a1)
 {
     ts::sub::sub_00619490();
 }
 
-// BuildingClass::vfunc_199 -- ALIAS of AircraftClass::vfunc_199 (same machine code at 0x00610870); the
+// BuildingClass::Draw_Health_Bar_Old -- ALIAS of AircraftClass::Draw_Health_Bar_Old (same machine code at 0x00610870); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_199(int a0, int a1)
+void BuildingClass::Draw_Health_Bar_Old(int a0, int a1)
 {
     ts::sub::sub_00610870();
 }
 
-// BuildingClass::vfunc_200 -- ALIAS of AircraftClass::vfunc_200 (same machine code at 0x00610c50); the
+// BuildingClass::Draw_Health_Bar -- ALIAS of AircraftClass::Draw_Health_Bar (same machine code at 0x00610c50); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_200(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
+void BuildingClass::Draw_Health_Bar(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
 {
     ts::sub::sub_00610c50();
 }
 
-// BuildingClass::vfunc_201 -- ALIAS of AircraftClass::vfunc_201 (same machine code at 0x0061b4f0); the
+// BuildingClass::Draw_Pips -- ALIAS of AircraftClass::Draw_Pips (same machine code at 0x0061b4f0); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_201(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void BuildingClass::Draw_Pips(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
 {
     ts::sub::sub_0061b4f0();
 }
 
-// BuildingClass::vfunc_202 -- ALIAS of AircraftClass::vfunc_202 (same machine code at 0x0061bc30); the
+// BuildingClass::Draw_Text_Overlay -- ALIAS of AircraftClass::Draw_Text_Overlay (same machine code at 0x0061bc30); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_202(int a0, int a1, int a2)
+void BuildingClass::Draw_Text_Overlay(int a0, int a1, int a2)
 {
     ts::sub::sub_0061bc30();
 }
 
-// BuildingClass::vfunc_203 -- ALIAS of AircraftClass::vfunc_203 (same machine code at 0x00617b90); the
+// BuildingClass::Do_Uncloak -- ALIAS of AircraftClass::Do_Uncloak (same machine code at 0x00617b90); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_203(int a0)
+void BuildingClass::Do_Uncloak(int a0)
 {
     ts::sub::sub_00617b90();
 }
 
-// BuildingClass::vfunc_204 -- ALIAS of AircraftClass::vfunc_204 (same machine code at 0x00617c30); the
+// BuildingClass::Do_Cloak -- ALIAS of AircraftClass::Do_Cloak (same machine code at 0x00617c30); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_204(int a0)
+void BuildingClass::Do_Cloak(int a0)
 {
     ts::sub::sub_00617c30();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_205 -- the body is the canonical transcription of
+// BuildingClass::Apparent_Brightness -- the body is the canonical transcription of
 // 9 instructions at 0x00439790, in src/generated/code/.
 // size 29 bytes; callees: none
 //
-void BuildingClass::vfunc_205(int a0)
+void BuildingClass::Apparent_Brightness(int a0)
 {
     ts::sub::sub_00439790();
 }
 
-// BuildingClass::vfunc_206 -- ALIAS of AircraftClass::vfunc_206 (same machine code at 0x0061b490); the
+// BuildingClass::Is_Ready_To_Random_Animate -- ALIAS of AircraftClass::Is_Ready_To_Random_Animate (same machine code at 0x0061b490); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_206()
+void BuildingClass::Is_Ready_To_Random_Animate()
 {
     ts::sub::sub_0061b490();
 }
 
-// BuildingClass::vfunc_207 -- ALIAS of AircraftClass::vfunc_207 (same machine code at 0x0040e790); the
+// BuildingClass::Random_Animate -- ALIAS of AircraftClass::Random_Animate (same machine code at 0x0040e790); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_207()
+void BuildingClass::Random_Animate()
 {
     ts::sub::sub_0040e790();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_208 -- the body is the canonical transcription of
+// BuildingClass::Assign_Destination -- the body is the canonical transcription of
 // 25 instructions at 0x00438810, in src/generated/code/.
 // size 68 bytes; callees: 0x0061b4d0, 0x0061cf90
 //
-void BuildingClass::vfunc_208(int a0, int a1)
+void BuildingClass::Assign_Destination(int a0, int a1)
 {
     ts::sub::sub_00438810();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_209 -- the body is the canonical transcription of
+// BuildingClass::Enter_Idle_Mode -- the body is the canonical transcription of
 // 21 instructions at 0x00432220, in src/generated/code/.
 // size 58 bytes; callees: 0x0042e1d0
 //
-void BuildingClass::vfunc_209(int a0, int a1)
+void BuildingClass::Enter_Idle_Mode(int a0, int a1)
 {
     ts::sub::sub_00432220();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_210 -- the body is the canonical transcription of
+// BuildingClass::Radar_Track -- the body is the canonical transcription of
 // 35 instructions at 0x00439110, in src/generated/code/.
 // size 93 bytes; callees: 0x005a2960, 0x005a3780
 //
-void BuildingClass::vfunc_210()
+void BuildingClass::Radar_Track()
 {
     ts::sub::sub_00439110();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_211 -- the body is the canonical transcription of
+// BuildingClass::Radar_Untrack -- the body is the canonical transcription of
 // 35 instructions at 0x00439170, in src/generated/code/.
 // size 93 bytes; callees: 0x005a2b40, 0x005a3780
 //
-void BuildingClass::vfunc_211(int a0)
+void BuildingClass::Radar_Untrack(int a0)
 {
     ts::sub::sub_00439170();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_212 -- the body is the canonical transcription of
+// BuildingClass::Plot_On_Radar -- the body is the canonical transcription of
 // 37 instructions at 0x004391d0, in src/generated/code/.
 // size 102 bytes; callees: 0x005a34e0, 0x005a3780
 //
-void BuildingClass::vfunc_212(int a0, int a1)
+void BuildingClass::Plot_On_Radar(int a0, int a1)
 {
     ts::sub::sub_004391d0();
 }
 
-// BuildingClass::vfunc_213 -- ALIAS of AircraftClass::vfunc_213 (same machine code at 0x0061df20); the
+// BuildingClass::Update_Radar_Position -- ALIAS of AircraftClass::Update_Radar_Position (same machine code at 0x0061df20); the
 // forwarder is written once, at that declaration.
-void BuildingClass::vfunc_213(int a0, int a1, int a2, int a3, int a4)
+void BuildingClass::Update_Radar_Position(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0061df20();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_214 -- the body is the canonical transcription of
+// BuildingClass::Grand_Opening -- the body is the canonical transcription of
 // 23 instructions at 0x0042d2c0, in src/generated/code/.
 // size 74 bytes; callees: 0x0042d30c, 0x00570280
 //
-void BuildingClass::vfunc_214(int a0, int a1, int a2)
+void BuildingClass::Grand_Opening(int a0, int a1, int a2)
 {
     ts::sub::sub_0042d2c0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_215 -- the body is the canonical transcription of
+// BuildingClass::Update_Buildables -- the body is the canonical transcription of
 // 22 instructions at 0x0042caf0, in src/generated/code/.
 // size 99 bytes; callees: none
 //
-void BuildingClass::vfunc_215()
+void BuildingClass::Update_Buildables()
 {
     ts::sub::sub_0042caf0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_216 -- the body is the canonical transcription of
+// BuildingClass::Draw_Extras -- the body is the canonical transcription of
 // 218 instructions at 0x00426f30, in src/generated/code/.
 // size 709 bytes; callees: 0x004271fc, 0x004704c0, 0x004704e0, 0x00470560, 0x00470580, 0x004706a0, 0x005020d0, 0x0051e760, 0x00570280, 0x005f5030, 0x005f5120, 0x00618dd0, 0x0067faf0
 //
-void BuildingClass::vfunc_216(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
+void BuildingClass::Draw_Extras(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
 {
     ts::sub::sub_00426f30();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_217 -- the body is the canonical transcription of
+// BuildingClass::Aim_Direction -- the body is the canonical transcription of
 // 20 instructions at 0x00428170, in src/generated/code/.
 // size 72 bytes; callees: 0x004281de
 //
-void BuildingClass::vfunc_217(int a0, int a1, int a2)
+void BuildingClass::Aim_Direction(int a0, int a1, int a2)
 {
     ts::sub::sub_00428170();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_218 -- the body is the canonical transcription of
+// BuildingClass::Do_Destruction -- the body is the canonical transcription of
 // 155 instructions at 0x00429ce0, in src/generated/code/.
 // size 571 bytes; callees: 0x00429f80, 0x00435bb0, 0x0043e6f0, 0x0043e700, 0x004b2e90, 0x005a5f10, 0x005e1c10, 0x0061a3e0, 0x00647220
 //
-void BuildingClass::vfunc_218(int a0, int a1, int a2, int a3)
+void BuildingClass::Do_Destruction(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00429ce0();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_219 -- the body is the canonical transcription of
+// BuildingClass::Toggle_Primary -- the body is the canonical transcription of
 // 18 instructions at 0x0042e720, in src/generated/code/.
 // size 61 bytes; callees: none
 //
-void BuildingClass::vfunc_219()
+void BuildingClass::Toggle_Primary()
 {
     ts::sub::sub_0042e720();
 }
 
 // -------------------------------------------------------------------------
-// BuildingClass::vfunc_220 -- the body is the canonical transcription of
+// BuildingClass::entry_380 -- the body is the canonical transcription of
 // 2 instructions at 0x004355e0, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void BuildingClass::vfunc_220()
+void BuildingClass::entry_380()
 {
     ts::sub::sub_004355e0();
 }

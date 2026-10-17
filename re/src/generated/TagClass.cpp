@@ -26,77 +26,77 @@ void TagClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// TagClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// TagClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void TagClass::Init(int a0)
+void TagClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// TagClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// TagClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void TagClass::Shutdown(int a0)
+void TagClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// TagClass::vfunc_3 -- the body is the canonical transcription of
+// TagClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x00603a00, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void TagClass::vfunc_3(int a0, int a1)
+void TagClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_00603a00();
 }
 
-// TagClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// TagClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void TagClass::Release(int a0)
+void TagClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// TagClass::vfunc_5 -- the body is the canonical transcription of
+// TagClass::Load -- the body is the canonical transcription of
 // 27 instructions at 0x00603a90, in src/generated/code/.
 // size 83 bytes; callees: 0x00405710, 0x004058b0, 0x005f36e0
 //
-void TagClass::vfunc_5(int a0, int a1)
+void TagClass::Load(int a0, int a1)
 {
     ts::sub::sub_00603a90();
 }
 
 // -------------------------------------------------------------------------
-// TagClass::vfunc_6 -- the body is the canonical transcription of
+// TagClass::Save -- the body is the canonical transcription of
 // 11 instructions at 0x00603af0, in src/generated/code/.
 // size 29 bytes; callees: 0x00405850
 //
-void TagClass::vfunc_6(int a0, int a1, int a2)
+void TagClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_00603af0();
 }
 
-// TagClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// TagClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void TagClass::GetType(int a0, int a1)
+void TagClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// TagClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// TagClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void TagClass::Set_ID()
+void TagClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// TagClass::Get_RTTI -- the body is the canonical transcription of
+// TagClass::Detach -- the body is the canonical transcription of
 // 42 instructions at 0x00603970, in src/generated/code/.
 // size 131 bytes; callees: none
 //
-void TagClass::Get_RTTI(int a0, int a1)
+void TagClass::Detach(int a0, int a1)
 {
     ts::sub::sub_00603970();
 }
@@ -112,91 +112,91 @@ void TagClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// TagClass::Get_Heap -- the body is the canonical transcription of
+// TagClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00603bd0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TagClass::Get_Heap()
+void TagClass::Fetch_Object_Size()
 {
     ts::sub::sub_00603bd0();
 }
 
 // -------------------------------------------------------------------------
-// TagClass::Load -- the body is the canonical transcription of
+// TagClass::Compute_CRC -- the body is the canonical transcription of
 // 31 instructions at 0x00603a40, in src/generated/code/.
 // size 75 bytes; callees: 0x00405940, 0x0046d5d0, 0x0046d680
 //
-void TagClass::Load(int a0)
+void TagClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00603a40();
 }
 
-// TagClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// TagClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void TagClass::Save()
+void TagClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// TagClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// TagClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void TagClass::GetSizeMax()
+void TagClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// TagClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// TagClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void TagClass::Compute_CRC()
+void TagClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// TagClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// TagClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void TagClass::vfunc_17()
+void TagClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// TagClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// TagClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void TagClass::vfunc_18(int a0)
+void TagClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// TagClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// TagClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void TagClass::vfunc_19(int a0)
+void TagClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// TagClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// TagClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void TagClass::vfunc_20()
+void TagClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// TagClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// TagClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void TagClass::vfunc_21()
+void TagClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// TagClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// TagClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void TagClass::vfunc_22(int a0)
+void TagClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// TagClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// TagClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void TagClass::vfunc_23()
+void TagClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

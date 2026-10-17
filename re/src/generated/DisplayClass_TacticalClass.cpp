@@ -82,158 +82,158 @@ void DisplayClass_TacticalClass::vfunc_9()
     ts::sub::sub_004a5ae0();
 }
 
-// DisplayClass_TacticalClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// DisplayClass_TacticalClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_10(int a0, int a1)
+void DisplayClass_TacticalClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// DisplayClass_TacticalClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// DisplayClass_TacticalClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_11(int a0)
+void DisplayClass_TacticalClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// DisplayClass_TacticalClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// DisplayClass_TacticalClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_12()
+void DisplayClass_TacticalClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// DisplayClass_TacticalClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// DisplayClass_TacticalClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_13(int a0)
+void DisplayClass_TacticalClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// DisplayClass_TacticalClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// DisplayClass_TacticalClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_14()
+void DisplayClass_TacticalClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// DisplayClass_TacticalClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// DisplayClass_TacticalClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_15()
+void DisplayClass_TacticalClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// DisplayClass_TacticalClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// DisplayClass_TacticalClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_16()
+void DisplayClass_TacticalClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
 // -------------------------------------------------------------------------
-// DisplayClass_TacticalClass::vfunc_17 -- the body is the canonical transcription of
+// DisplayClass_TacticalClass::Get_ID -- the body is the canonical transcription of
 // 2 instructions at 0x004788d0, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void DisplayClass_TacticalClass::vfunc_17()
+void DisplayClass_TacticalClass::Get_ID()
 {
     ts::sub::sub_004788d0();
 }
 
-// DisplayClass_TacticalClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); the
+// DisplayClass_TacticalClass::Flag_To_Redraw -- ALIAS of ControlClass::Flag_To_Redraw (same machine code at 0x004a5e20); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_18()
+void DisplayClass_TacticalClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
-// DisplayClass_TacticalClass::vfunc_19 -- ALIAS of ControlClass::vfunc_19 (same machine code at 0x00460650); the
+// DisplayClass_TacticalClass::Peer_To_Peer -- ALIAS of ControlClass::Peer_To_Peer (same machine code at 0x00460650); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_19(int a0, int a1, int a2)
+void DisplayClass_TacticalClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_00460650();
 }
 
-// DisplayClass_TacticalClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); the
+// DisplayClass_TacticalClass::Set_Focus -- ALIAS of CheckListClass::Set_Focus (same machine code at 0x004a5e60); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_20()
+void DisplayClass_TacticalClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
-// DisplayClass_TacticalClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// DisplayClass_TacticalClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_21()
+void DisplayClass_TacticalClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// DisplayClass_TacticalClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// DisplayClass_TacticalClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_22()
+void DisplayClass_TacticalClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// DisplayClass_TacticalClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// DisplayClass_TacticalClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_23()
+void DisplayClass_TacticalClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// DisplayClass_TacticalClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// DisplayClass_TacticalClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_24()
+void DisplayClass_TacticalClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
-// DisplayClass_TacticalClass::vfunc_25 -- ALIAS of ControlClass::vfunc_25 (same machine code at 0x004a5ee0); the
+// DisplayClass_TacticalClass::Set_Position -- ALIAS of ControlClass::Set_Position (same machine code at 0x004a5ee0); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_25(int a0, int a1)
+void DisplayClass_TacticalClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004a5ee0();
 }
 
-// DisplayClass_TacticalClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// DisplayClass_TacticalClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_26(int a0, int a1)
+void DisplayClass_TacticalClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
 // -------------------------------------------------------------------------
-// DisplayClass_TacticalClass::vfunc_27 -- the body is the canonical transcription of
+// DisplayClass_TacticalClass::Draw_Me -- the body is the canonical transcription of
 // 8 instructions at 0x004a5b90, in src/generated/code/.
 // size 20 bytes; callees: none
 //
-void DisplayClass_TacticalClass::vfunc_27(int a0)
+void DisplayClass_TacticalClass::Draw_Me(int a0)
 {
     ts::sub::sub_004a5b90();
 }
 
-// DisplayClass_TacticalClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// DisplayClass_TacticalClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_28(int a0)
+void DisplayClass_TacticalClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
 // -------------------------------------------------------------------------
-// DisplayClass_TacticalClass::vfunc_29 -- the body is the canonical transcription of
+// DisplayClass_TacticalClass::Action -- the body is the canonical transcription of
 // 15 instructions at 0x00474410, in src/generated/code/.
 // size 58 bytes; callees: 0x0047447d
 //
-void DisplayClass_TacticalClass::vfunc_29(int a0, int a1, int a2, int a3, int a4)
+void DisplayClass_TacticalClass::Action(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00474410();
 }
 
-// DisplayClass_TacticalClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// DisplayClass_TacticalClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void DisplayClass_TacticalClass::vfunc_30(int a0, int a1, int a2, int a3)
+void DisplayClass_TacticalClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

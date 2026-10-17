@@ -20,28 +20,28 @@ class TActionClass : public AbstractClass
 public:
     // ---- vtable 0x006a5364 (24 slots) ----
     virtual void QueryInterface(int a0, int a1, int a2);  // [0] 0x00405790  // __stdcall, returns int
-    virtual void Init(int a0);  // [1] 0x00405830  // __stdcall, returns int
-    virtual void Shutdown(int a0);  // [2] 0x00405840  // __stdcall, returns int
-    virtual void vfunc_3(int a0, int a1);  // [3] 0x00602760  // __stdcall, returns int
-    virtual void Release(int a0);  // [4] 0x00405990  // __stdcall
-    virtual void vfunc_5(int a0, int a1);  // [5] 0x006027a0  // __stdcall, returns int
-    virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x00602810  // __stdcall, returns int
-    virtual void GetType(int a0, int a1);  // [7] 0x00405910  // __stdcall, returns int
-    virtual void Set_ID();  // [9] 0x004059b0  // __cdecl
-    virtual void Get_RTTI(int a0, int a1);  // [10] 0x005fe060  // __stdcall
+    virtual void AddRef(int a0);  // [1] 0x00405830  // __stdcall, returns int
+    virtual void Release(int a0);  // [2] 0x00405840  // __stdcall, returns int
+    virtual void GetClassID(int a0, int a1);  // [3] 0x00602760  // __stdcall, returns int
+    virtual void IsDirty(int a0);  // [4] 0x00405990  // __stdcall
+    virtual void Load(int a0, int a1);  // [5] 0x006027a0  // __stdcall, returns int
+    virtual void Save(int a0, int a1, int a2);  // [6] 0x00602810  // __stdcall, returns int
+    virtual void GetSizeMax(int a0, int a1);  // [7] 0x00405910  // __stdcall, returns int
+    virtual void Init();  // [9] 0x004059b0  // __cdecl
+    virtual void Detach(int a0, int a1);  // [10] 0x005fe060  // __stdcall
     virtual void What_Am_I();  // [11] 0x00602990  // __cdecl, returns int
-    virtual void Get_Heap();  // [12] 0x00602980  // __cdecl, returns int
-    virtual void Load(int a0);  // [13] 0x00602830  // __thiscall
-    virtual void Save();  // [14] 0x004059d0  // __cdecl
-    virtual void GetSizeMax();  // [15] 0x004059e0  // __cdecl, returns int
-    virtual void Compute_CRC();  // [16] 0x006029a0  // __cdecl
-    virtual void vfunc_17();  // [17] 0x00405970  // __cdecl
-    virtual void vfunc_18(int a0);  // [18] 0x00405a00  // __stdcall
-    virtual void vfunc_19(int a0);  // [19] 0x00405a30  // __stdcall
-    virtual void vfunc_20();  // [20] 0x00405a60  // __cdecl
-    virtual void vfunc_21();  // [21] 0x00405a70  // __cdecl
-    virtual void vfunc_22(int a0);  // [22] 0x00405a80  // __stdcall
-    virtual void vfunc_23();  // [23] 0x00405ab0  // __cdecl
+    virtual void Fetch_Object_Size();  // [12] 0x00602980  // __cdecl, returns int
+    virtual void Compute_CRC(int a0);  // [13] 0x00602830  // __thiscall
+    virtual void Owner();  // [14] 0x004059d0  // __cdecl
+    virtual void Owner_HouseClass();  // [15] 0x004059e0  // __cdecl, returns int
+    virtual void Fetch_Heap_ID();  // [16] 0x006029a0  // __cdecl
+    virtual void Is_Inactive();  // [17] 0x00405970  // __cdecl
+    virtual void Center_Coord(int a0);  // [18] 0x00405a00  // __stdcall
+    virtual void Destination_Coord(int a0);  // [19] 0x00405a30  // __stdcall
+    virtual void On_Ground();  // [20] 0x00405a60  // __cdecl
+    virtual void In_Air();  // [21] 0x00405a70  // __cdecl
+    virtual void As_Coord(int a0);  // [22] 0x00405a80  // __stdcall
+    virtual void AI();  // [23] 0x00405ab0  // __cdecl
 
     TActionClass();  // 0x005fddf0
     // The destructor is declared non-virtual here: slot 0 holds a stub

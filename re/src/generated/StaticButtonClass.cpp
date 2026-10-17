@@ -82,152 +82,152 @@ void StaticButtonClass::vfunc_9()
     ts::sub::sub_004a5ae0();
 }
 
-// StaticButtonClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// StaticButtonClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_10(int a0, int a1)
+void StaticButtonClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// StaticButtonClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// StaticButtonClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_11(int a0)
+void StaticButtonClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// StaticButtonClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// StaticButtonClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_12()
+void StaticButtonClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// StaticButtonClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// StaticButtonClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_13(int a0)
+void StaticButtonClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// StaticButtonClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// StaticButtonClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_14()
+void StaticButtonClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// StaticButtonClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// StaticButtonClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_15()
+void StaticButtonClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// StaticButtonClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// StaticButtonClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_16()
+void StaticButtonClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// StaticButtonClass::vfunc_17 -- ALIAS of DisplayClass_TacticalClass::vfunc_17 (same machine code at 0x004788d0); the
+// StaticButtonClass::Get_ID -- ALIAS of DisplayClass_TacticalClass::Get_ID (same machine code at 0x004788d0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_17()
+void StaticButtonClass::Get_ID()
 {
     ts::sub::sub_004788d0();
 }
 
-// StaticButtonClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); the
+// StaticButtonClass::Flag_To_Redraw -- ALIAS of ControlClass::Flag_To_Redraw (same machine code at 0x004a5e20); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_18()
+void StaticButtonClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
-// StaticButtonClass::vfunc_19 -- ALIAS of ControlClass::vfunc_19 (same machine code at 0x00460650); the
+// StaticButtonClass::Peer_To_Peer -- ALIAS of ControlClass::Peer_To_Peer (same machine code at 0x00460650); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_19(int a0, int a1, int a2)
+void StaticButtonClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_00460650();
 }
 
-// StaticButtonClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); the
+// StaticButtonClass::Set_Focus -- ALIAS of CheckListClass::Set_Focus (same machine code at 0x004a5e60); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_20()
+void StaticButtonClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
-// StaticButtonClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// StaticButtonClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_21()
+void StaticButtonClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// StaticButtonClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// StaticButtonClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_22()
+void StaticButtonClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// StaticButtonClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// StaticButtonClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_23()
+void StaticButtonClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// StaticButtonClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// StaticButtonClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_24()
+void StaticButtonClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
-// StaticButtonClass::vfunc_25 -- ALIAS of ControlClass::vfunc_25 (same machine code at 0x004a5ee0); the
+// StaticButtonClass::Set_Position -- ALIAS of ControlClass::Set_Position (same machine code at 0x004a5ee0); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_25(int a0, int a1)
+void StaticButtonClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004a5ee0();
 }
 
-// StaticButtonClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// StaticButtonClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_26(int a0, int a1)
+void StaticButtonClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
 // -------------------------------------------------------------------------
-// StaticButtonClass::vfunc_27 -- the body is the canonical transcription of
+// StaticButtonClass::Draw_Me -- the body is the canonical transcription of
 // 18 instructions at 0x005eeff0, in src/generated/code/.
 // size 50 bytes; callees: 0x004a5b90
 //
-void StaticButtonClass::vfunc_27(int a0)
+void StaticButtonClass::Draw_Me(int a0)
 {
     ts::sub::sub_005eeff0();
 }
 
-// StaticButtonClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// StaticButtonClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_28(int a0)
+void StaticButtonClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
-// StaticButtonClass::vfunc_29 -- ALIAS of GadgetClass::vfunc_29 (same machine code at 0x004a5b70); the
+// StaticButtonClass::Action -- ALIAS of GadgetClass::Action (same machine code at 0x004a5b70); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_29(int a0, int a1)
+void StaticButtonClass::Action(int a0, int a1)
 {
     ts::sub::sub_004a5b70();
 }
 
-// StaticButtonClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// StaticButtonClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void StaticButtonClass::vfunc_30(int a0, int a1, int a2, int a3)
+void StaticButtonClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

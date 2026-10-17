@@ -30,21 +30,21 @@ void AircraftClass::QueryInterface(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::Init -- the body is the canonical transcription of
+// AircraftClass::AddRef -- the body is the canonical transcription of
 // 4 instructions at 0x004080b0, in src/generated/code/.
 // size 13 bytes; callees: 0x00405830
 //
-void AircraftClass::Init(int a0)
+void AircraftClass::AddRef(int a0)
 {
     ts::sub::sub_004080b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::Shutdown -- the body is the canonical transcription of
+// AircraftClass::Release -- the body is the canonical transcription of
 // 4 instructions at 0x004080c0, in src/generated/code/.
 // size 13 bytes; callees: 0x00405840
 //
-void AircraftClass::Shutdown(int a0)
+void AircraftClass::Release(int a0)
 {
     ts::sub::sub_004080c0();
 }
@@ -59,19 +59,19 @@ void AircraftClass::vfunc_3(int a0, int a1)
     ts::sub::sub_0040e8c0();
 }
 
-// AircraftClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// AircraftClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void AircraftClass::Release(int a0)
+void AircraftClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_5 -- the body is the canonical transcription of
+// AircraftClass::Load -- the body is the canonical transcription of
 // 90 instructions at 0x0040df60, in src/generated/code/.
 // size 285 bytes; callees: 0x0040e087, 0x0040ec90, 0x0049c390, 0x004a1d80
 //
-void AircraftClass::vfunc_5(int a0, int a1, int a2)
+void AircraftClass::Load(int a0, int a1, int a2)
 {
     ts::sub::sub_0040df60();
 }
@@ -86,29 +86,29 @@ void AircraftClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_0040e160();
 }
 
-// AircraftClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// AircraftClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void AircraftClass::GetType(int a0, int a1)
+void AircraftClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::Set_ID -- the body is the canonical transcription of
+// AircraftClass::Init -- the body is the canonical transcription of
 // 49 instructions at 0x00407fb0, in src/generated/code/.
 // size 157 bytes; callees: 0x00492890, 0x00492960, 0x00492c10, 0x004bb850, 0x0060f180
 //
-void AircraftClass::Set_ID(int a0)
+void AircraftClass::Init(int a0)
 {
     ts::sub::sub_00407fb0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::Get_RTTI -- the body is the canonical transcription of
+// AircraftClass::Detach -- the body is the canonical transcription of
 // 14 instructions at 0x0040e230, in src/generated/code/.
 // size 42 bytes; callees: 0x004a0ca0
 //
-void AircraftClass::Get_RTTI(int a0, int a1)
+void AircraftClass::Detach(int a0, int a1)
 {
     ts::sub::sub_0040e230();
 }
@@ -124,155 +124,155 @@ void AircraftClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::Get_Heap -- the body is the canonical transcription of
+// AircraftClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x0040e8a0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::Get_Heap()
+void AircraftClass::Fetch_Object_Size()
 {
     ts::sub::sub_0040e8a0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::Load -- the body is the canonical transcription of
+// AircraftClass::Compute_CRC -- the body is the canonical transcription of
 // 28 instructions at 0x0040e1b0, in src/generated/code/.
 // size 89 bytes; callees: 0x0040e20b, 0x0046d5d0, 0x004a23c0
 //
-void AircraftClass::Load(int a0)
+void AircraftClass::Compute_CRC(int a0)
 {
     ts::sub::sub_0040e1b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::Save -- the body is the canonical transcription of
+// AircraftClass::Owner -- the body is the canonical transcription of
 // 3 instructions at 0x00612db0, in src/generated/code/.
 // size 10 bytes; callees: none
 //
-void AircraftClass::Save()
+void AircraftClass::Owner()
 {
     ts::sub::sub_00612db0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::GetSizeMax -- the body is the canonical transcription of
+// AircraftClass::Owner_HouseClass -- the body is the canonical transcription of
 // 2 instructions at 0x00612dc0, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void AircraftClass::GetSizeMax()
+void AircraftClass::Owner_HouseClass()
 {
     ts::sub::sub_00612dc0();
 }
 
-// AircraftClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// AircraftClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void AircraftClass::Compute_CRC()
+void AircraftClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_17 -- the body is the canonical transcription of
+// AircraftClass::Is_Inactive -- the body is the canonical transcription of
 // 5 instructions at 0x00570a20, in src/generated/code/.
 // size 11 bytes; callees: none
 //
-void AircraftClass::vfunc_17()
+void AircraftClass::Is_Inactive()
 {
     ts::sub::sub_00570a20();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_18 -- the body is the canonical transcription of
+// AircraftClass::Center_Coord -- the body is the canonical transcription of
 // 18 instructions at 0x00570960, in src/generated/code/.
 // size 48 bytes; callees: none
 //
-void AircraftClass::vfunc_18(int a0)
+void AircraftClass::Center_Coord(int a0)
 {
     ts::sub::sub_00570960();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_19 -- the body is the canonical transcription of
+// AircraftClass::Destination_Coord -- the body is the canonical transcription of
 // 28 instructions at 0x004a26e0, in src/generated/code/.
 // size 86 bytes; callees: none
 //
-void AircraftClass::vfunc_19(int a0)
+void AircraftClass::Destination_Coord(int a0)
 {
     ts::sub::sub_004a26e0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_20 -- the body is the canonical transcription of
+// AircraftClass::On_Ground -- the body is the canonical transcription of
 // 9 instructions at 0x00570e80, in src/generated/code/.
 // size 26 bytes; callees: none
 //
-void AircraftClass::vfunc_20()
+void AircraftClass::On_Ground()
 {
     ts::sub::sub_00570e80();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_21 -- the body is the canonical transcription of
+// AircraftClass::In_Air -- the body is the canonical transcription of
 // 22 instructions at 0x004a4a30, in src/generated/code/.
 // size 60 bytes; callees: 0x0047eb00, 0x004a4a7b
 //
-void AircraftClass::vfunc_21(int a0, int a1)
+void AircraftClass::In_Air(int a0, int a1)
 {
     ts::sub::sub_004a4a30();
 }
 
-// AircraftClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// AircraftClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void AircraftClass::vfunc_22(int a0)
+void AircraftClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_23 -- the body is the canonical transcription of
+// AircraftClass::AI -- the body is the canonical transcription of
 // 52 instructions at 0x00408850, in src/generated/code/.
 // size 142 bytes; callees: 0x004a16e0, 0x005111c0
 //
-void AircraftClass::vfunc_23(int a0, int a1, int a2, int a3)
+void AircraftClass::AI(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00408850();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_24 -- the body is the canonical transcription of
+// AircraftClass::Is_Players_Army -- the body is the canonical transcription of
 // 30 instructions at 0x0060eb70, in src/generated/code/.
 // size 85 bytes; callees: 0x004c4fb0
 //
-void AircraftClass::vfunc_24()
+void AircraftClass::Is_Players_Army()
 {
     ts::sub::sub_0060eb70();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_25 -- the body is the canonical transcription of
+// AircraftClass::Visual_Character -- the body is the canonical transcription of
 // 26 instructions at 0x004a1690, in src/generated/code/.
 // size 67 bytes; callees: 0x00617cf0, 0x006939b0
 //
-void AircraftClass::vfunc_25(int a0, int a1)
+void AircraftClass::Visual_Character(int a0, int a1)
 {
     ts::sub::sub_004a1690();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_26 -- the body is the canonical transcription of
+// AircraftClass::Get_Image_Data -- the body is the canonical transcription of
 // 5 instructions at 0x0056e820, in src/generated/code/.
 // size 18 bytes; callees: none
 //
-void AircraftClass::vfunc_26()
+void AircraftClass::Get_Image_Data()
 {
     ts::sub::sub_0056e820();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_27 -- the body is the canonical transcription of
+// AircraftClass::What_Action -- the body is the canonical transcription of
 // 9 instructions at 0x0040afe0, in src/generated/code/.
 // size 24 bytes; callees: 0x004c4fb0
 //
-void AircraftClass::vfunc_27(int a0, int a1, int a2)
+void AircraftClass::What_Action(int a0, int a1, int a2)
 {
     ts::sub::sub_0040afe0();
 }
@@ -288,441 +288,441 @@ void AircraftClass::vfunc_28(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_29 -- the body is the canonical transcription of
+// AircraftClass::In_Which_Layer -- the body is the canonical transcription of
 // 13 instructions at 0x0040d9b0, in src/generated/code/.
 // size 37 bytes; callees: 0x006939b0
 //
-void AircraftClass::vfunc_29()
+void AircraftClass::In_Which_Layer()
 {
     ts::sub::sub_0040d9b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_30 -- the body is the canonical transcription of
+// AircraftClass::Not_Underground -- the body is the canonical transcription of
 // 7 instructions at 0x00570ef0, in src/generated/code/.
 // size 19 bytes; callees: none
 //
-void AircraftClass::vfunc_30()
+void AircraftClass::Not_Underground()
 {
     ts::sub::sub_00570ef0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_31 -- the body is the canonical transcription of
+// AircraftClass::Considered_Vehicle -- the body is the canonical transcription of
 // 2 instructions at 0x0040e430, in src/generated/code/.
 // size 5 bytes; callees: none
 //
-void AircraftClass::vfunc_31()
+void AircraftClass::Considered_Vehicle()
 {
     ts::sub::sub_0040e430();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_32 -- the body is the canonical transcription of
+// AircraftClass::Techno_Type_Class -- the body is the canonical transcription of
 // 2 instructions at 0x0060eb10, in src/generated/code/.
 // size 8 bytes; callees: none
 //
-void AircraftClass::vfunc_32()
+void AircraftClass::Techno_Type_Class()
 {
     ts::sub::sub_0060eb10();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::Get_Type -- the body is the canonical transcription of
+// AircraftClass::Class_Of -- the body is the canonical transcription of
 // 2 instructions at 0x0040e930, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void AircraftClass::Get_Type()
+void AircraftClass::Class_Of()
 {
     ts::sub::sub_0040e930();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_34 -- the body is the canonical transcription of
+// AircraftClass::Get_Ownable -- the body is the canonical transcription of
 // 5 instructions at 0x0061b1b0, in src/generated/code/.
 // size 15 bytes; callees: none
 //
-void AircraftClass::vfunc_34()
+void AircraftClass::Get_Ownable()
 {
     ts::sub::sub_0061b1b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_35 -- the body is the canonical transcription of
+// AircraftClass::Full_Name -- the body is the canonical transcription of
 // 3 instructions at 0x0040e900, in src/generated/code/.
 // size 10 bytes; callees: none
 //
-void AircraftClass::vfunc_35()
+void AircraftClass::Full_Name()
 {
     ts::sub::sub_0040e900();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_36 -- the body is the canonical transcription of
+// AircraftClass::Can_Repair -- the body is the canonical transcription of
 // 9 instructions at 0x00616470, in src/generated/code/.
 // size 17 bytes; callees: none
 //
-void AircraftClass::vfunc_36()
+void AircraftClass::Can_Repair()
 {
     ts::sub::sub_00616470();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_37 -- the body is the canonical transcription of
+// AircraftClass::Can_Demolish -- the body is the canonical transcription of
 // 70 instructions at 0x004a1080, in src/generated/code/.
 // size 199 bytes; callees: 0x00494170, 0x0067faf0
 //
-void AircraftClass::vfunc_37(int a0, int a1, int a2, int a3, int a4)
+void AircraftClass::Can_Demolish(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_004a1080();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_38 -- the body is the canonical transcription of
+// AircraftClass::Can_Player_Fire -- the body is the canonical transcription of
 // 18 instructions at 0x00616410, in src/generated/code/.
 // size 49 bytes; callees: 0x004c4fb0
 //
-void AircraftClass::vfunc_38()
+void AircraftClass::Can_Player_Fire()
 {
     ts::sub::sub_00616410();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_39 -- the body is the canonical transcription of
+// AircraftClass::Can_Player_Move -- the body is the canonical transcription of
 // 12 instructions at 0x00616130, in src/generated/code/.
 // size 32 bytes; callees: 0x004c4fb0
 //
-void AircraftClass::vfunc_39()
+void AircraftClass::Can_Player_Move()
 {
     ts::sub::sub_00616130();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_40 -- the body is the canonical transcription of
+// AircraftClass::Target_Coord -- the body is the canonical transcription of
 // 18 instructions at 0x0040e5d0, in src/generated/code/.
 // size 45 bytes; callees: none
 //
-void AircraftClass::vfunc_40(int a0)
+void AircraftClass::Target_Coord(int a0)
 {
     ts::sub::sub_0040e5d0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_41 -- the body is the canonical transcription of
+// AircraftClass::Docking_Coord -- the body is the canonical transcription of
 // 18 instructions at 0x0040e600, in src/generated/code/.
 // size 45 bytes; callees: none
 //
-void AircraftClass::vfunc_41(int a0)
+void AircraftClass::Docking_Coord(int a0)
 {
     ts::sub::sub_0040e600();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_42 -- the body is the canonical transcription of
+// AircraftClass::Render_Coord -- the body is the canonical transcription of
 // 18 instructions at 0x0040e630, in src/generated/code/.
 // size 45 bytes; callees: none
 //
-void AircraftClass::vfunc_42(int a0)
+void AircraftClass::Render_Coord(int a0)
 {
     ts::sub::sub_0040e630();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_43 -- the body is the canonical transcription of
+// AircraftClass::Fire_Coord -- the body is the canonical transcription of
 // 142 instructions at 0x0060edd0, in src/generated/code/.
 // size 452 bytes; callees: 0x00492960, 0x00542300, 0x00542330, 0x00542b20, 0x00542c40, 0x00543620, 0x0067faf0
 //
-void AircraftClass::vfunc_43(int a0, int a1)
+void AircraftClass::Fire_Coord(int a0, int a1)
 {
     ts::sub::sub_0060edd0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_44 -- the body is the canonical transcription of
+// AircraftClass::Exit_Coord -- the body is the canonical transcription of
 // 18 instructions at 0x0040e660, in src/generated/code/.
 // size 45 bytes; callees: none
 //
-void AircraftClass::vfunc_44(int a0)
+void AircraftClass::Exit_Coord(int a0)
 {
     ts::sub::sub_0040e660();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_45 -- the body is the canonical transcription of
+// AircraftClass::Sort_Y -- the body is the canonical transcription of
 // 8 instructions at 0x00570ed0, in src/generated/code/.
 // size 23 bytes; callees: none
 //
-void AircraftClass::vfunc_45()
+void AircraftClass::Sort_Y()
 {
     ts::sub::sub_00570ed0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_46 -- the body is the canonical transcription of
+// AircraftClass::Is_Moving_Onto_Bridge -- the body is the canonical transcription of
 // 5 instructions at 0x004a4120, in src/generated/code/.
 // size 13 bytes; callees: none
 //
-void AircraftClass::vfunc_46()
+void AircraftClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_004a4120();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_47 -- the body is the canonical transcription of
+// AircraftClass::Occupies_Cells -- the body is the canonical transcription of
 // 2 instructions at 0x0040e7c0, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void AircraftClass::vfunc_47()
+void AircraftClass::Occupies_Cells()
 {
     ts::sub::sub_0040e7c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_48 -- the body is the canonical transcription of
+// AircraftClass::Limbo -- the body is the canonical transcription of
 // 57 instructions at 0x004a1cc0, in src/generated/code/.
 // size 191 bytes; callees: 0x005020d0, 0x00611220, 0x006939b0
 //
-void AircraftClass::vfunc_48(int a0, int a1, int a2, int a3, int a4)
+void AircraftClass::Limbo(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_004a1cc0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_49 -- the body is the canonical transcription of
+// AircraftClass::Unlimbo -- the body is the canonical transcription of
 // 27 instructions at 0x004080d0, in src/generated/code/.
 // size 77 bytes; callees: 0x00408140, 0x00510f70, 0x00511350
 //
-void AircraftClass::vfunc_49(int a0, int a1, int a2)
+void AircraftClass::Unlimbo(int a0, int a1, int a2)
 {
     ts::sub::sub_004080d0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_50 -- the body is the canonical transcription of
+// AircraftClass::Detach_All -- the body is the canonical transcription of
 // 27 instructions at 0x004a0a00, in src/generated/code/.
 // size 71 bytes; callees: 0x0056fb40, 0x00608820
 //
-void AircraftClass::vfunc_50(int a0)
+void AircraftClass::Detach_All(int a0)
 {
     ts::sub::sub_004a0a00();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_51 -- the body is the canonical transcription of
+// AircraftClass::Record_The_Kill -- the body is the canonical transcription of
 // 130 instructions at 0x00617760, in src/generated/code/.
 // size 361 bytes; callees: 0x00603730, 0x00646870
 //
-void AircraftClass::vfunc_51(int a0)
+void AircraftClass::Record_The_Kill(int a0)
 {
     ts::sub::sub_00617760();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_52 -- the body is the canonical transcription of
+// AircraftClass::Paradrop -- the body is the canonical transcription of
 // 33 instructions at 0x005700c0, in src/generated/code/.
 // size 100 bytes; callees: 0x00570148, 0x00682997
 //
-void AircraftClass::vfunc_52(int a0)
+void AircraftClass::Paradrop(int a0)
 {
     ts::sub::sub_005700c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_53 -- the body is the canonical transcription of
+// AircraftClass::Fall_From_Height -- the body is the canonical transcription of
 // 52 instructions at 0x0056ea70, in src/generated/code/.
 // size 156 bytes; callees: 0x00473150, 0x004731a0, 0x0068309c, 0x006939b0
 //
-void AircraftClass::vfunc_53(int a0)
+void AircraftClass::Fall_From_Height(int a0)
 {
     ts::sub::sub_0056ea70();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_54 -- the body is the canonical transcription of
+// AircraftClass::Set_Occupy_Bit -- the body is the canonical transcription of
 // 25 instructions at 0x00570480, in src/generated/code/.
 // size 84 bytes; callees: 0x00502060, 0x00510f70
 //
-void AircraftClass::vfunc_54(int a0)
+void AircraftClass::Set_Occupy_Bit(int a0)
 {
     ts::sub::sub_00570480();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_55 -- the body is the canonical transcription of
+// AircraftClass::Clear_Occupy_Bit -- the body is the canonical transcription of
 // 25 instructions at 0x00570500, in src/generated/code/.
 // size 84 bytes; callees: 0x00502060, 0x00510f70
 //
-void AircraftClass::vfunc_55(int a0)
+void AircraftClass::Clear_Occupy_Bit(int a0)
 {
     ts::sub::sub_00570500();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_56 -- the body is the canonical transcription of
+// AircraftClass::Delete_Me -- the body is the canonical transcription of
 // 12 instructions at 0x004a4a10, in src/generated/code/.
 // size 30 bytes; callees: 0x005709b0, 0x00608820
 //
-void AircraftClass::vfunc_56()
+void AircraftClass::Delete_Me()
 {
     ts::sub::sub_004a4a10();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_57 -- the body is the canonical transcription of
+// AircraftClass::Do_Shimmer -- the body is the canonical transcription of
 // 4 instructions at 0x00617ce0, in src/generated/code/.
 // size 11 bytes; callees: none
 //
-void AircraftClass::vfunc_57()
+void AircraftClass::Do_Shimmer()
 {
     ts::sub::sub_00617ce0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_58 -- the body is the canonical transcription of
+// AircraftClass::Exit_Object -- the body is the canonical transcription of
 // 102 instructions at 0x00408fd0, in src/generated/code/.
 // size 314 bytes; callees: 0x005020d0
 //
-void AircraftClass::vfunc_58(int a0)
+void AircraftClass::Exit_Object(int a0)
 {
     ts::sub::sub_00408fd0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_59 -- the body is the canonical transcription of
+// AircraftClass::Render -- the body is the canonical transcription of
 // 41 instructions at 0x0056f480, in src/generated/code/.
 // size 111 bytes; callees: 0x005f5120
 //
-void AircraftClass::vfunc_59(int a0, int a1, int a2)
+void AircraftClass::Render(int a0, int a1, int a2)
 {
     ts::sub::sub_0056f480();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_60 -- the body is the canonical transcription of
+// AircraftClass::Occupy_List -- the body is the canonical transcription of
 // 27 instructions at 0x005701b0, in src/generated/code/.
 // size 87 bytes; callees: 0x00682610
 //
-void AircraftClass::vfunc_60(int a0)
+void AircraftClass::Occupy_List(int a0)
 {
     ts::sub::sub_005701b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_61 -- the body is the canonical transcription of
+// AircraftClass::Draw_Pre_Render -- the body is the canonical transcription of
 // 57 instructions at 0x00610880, in src/generated/code/.
 // size 163 bytes; callees: 0x00610933
 //
-void AircraftClass::vfunc_61(int a0, int a1, int a2, int a3, int a4)
+void AircraftClass::Draw_Pre_Render(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00610880();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_62 -- the body is the canonical transcription of
+// AircraftClass::Draw_Post_Render -- the body is the canonical transcription of
 // 77 instructions at 0x0060fb90, in src/generated/code/.
 // size 230 bytes; callees: 0x00459da0, 0x0060fc8a
 //
-void AircraftClass::vfunc_62(int a0, int a1, int a2, int a3, int a4, int a5)
+void AircraftClass::Draw_Post_Render(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_0060fb90();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_63 -- the body is the canonical transcription of
+// AircraftClass::Draw_It -- the body is the canonical transcription of
 // 209 instructions at 0x00408260, in src/generated/code/.
 // size 724 bytes; callees: 0x00408541, 0x00446e70, 0x00454d00, 0x004c4fb0, 0x00502060, 0x00510f70, 0x0051e760, 0x005f5030, 0x005f5120, 0x006939b0
 //
-void AircraftClass::vfunc_63(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17)
+void AircraftClass::Draw_It(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16, int a17)
 {
     ts::sub::sub_00408260();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_64 -- the body is the canonical transcription of
+// AircraftClass::Editor_Draw_It -- the body is the canonical transcription of
 // 7 instructions at 0x00570990, in src/generated/code/.
 // size 21 bytes; callees: none
 //
-void AircraftClass::vfunc_64(int a0, int a1)
+void AircraftClass::Editor_Draw_It(int a0, int a1)
 {
     ts::sub::sub_00570990();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_65 -- the body is the canonical transcription of
+// AircraftClass::Hidden -- the body is the canonical transcription of
 // 12 instructions at 0x0060f590, in src/generated/code/.
 // size 36 bytes; callees: 0x004c4ff0
 //
-void AircraftClass::vfunc_65()
+void AircraftClass::Hidden()
 {
     ts::sub::sub_0060f590();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_66 -- the body is the canonical transcription of
+// AircraftClass::Look -- the body is the canonical transcription of
 // 12 instructions at 0x0040d9e0, in src/generated/code/.
 // size 38 bytes; callees: 0x0040da0a
 //
-void AircraftClass::vfunc_66(int a0, int a1)
+void AircraftClass::Look(int a0, int a1)
 {
     ts::sub::sub_0040d9e0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_67 -- the body is the canonical transcription of
+// AircraftClass::Mark -- the body is the canonical transcription of
 // 12 instructions at 0x0049c590, in src/generated/code/.
 // size 22 bytes; callees: none
 //
-void AircraftClass::vfunc_67(int a0)
+void AircraftClass::Mark(int a0)
 {
     ts::sub::sub_0049c590();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_68 -- the body is the canonical transcription of
+// AircraftClass::Get_Visual_Rect -- the body is the canonical transcription of
 // 37 instructions at 0x0056f000, in src/generated/code/.
 // size 103 bytes; callees: 0x005f5120
 //
-void AircraftClass::vfunc_68(int a0)
+void AircraftClass::Get_Visual_Rect(int a0)
 {
     ts::sub::sub_0056f000();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_69 -- the body is the canonical transcription of
+// AircraftClass::Get_Render_Rect -- the body is the canonical transcription of
 // 38 instructions at 0x0056f160, in src/generated/code/.
 // size 120 bytes; callees: 0x005f5120
 //
-void AircraftClass::vfunc_69(int a0)
+void AircraftClass::Get_Render_Rect(int a0)
 {
     ts::sub::sub_0056f160();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_70 -- the body is the canonical transcription of
+// AircraftClass::Draw_Radial_Indicator -- the body is the canonical transcription of
 // 1 instructions at 0x0040e690, in src/generated/code/.
 // size 1 bytes; callees: none
 //
-void AircraftClass::vfunc_70()
+void AircraftClass::Draw_Radial_Indicator()
 {
     ts::sub::sub_0040e690();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_71 -- the body is the canonical transcription of
+// AircraftClass::Mark_For_Redraw -- the body is the canonical transcription of
 // 8 instructions at 0x0056f680, in src/generated/code/.
 // size 24 bytes; callees: 0x004b2e90
 //
-void AircraftClass::vfunc_71()
+void AircraftClass::Mark_For_Redraw()
 {
     ts::sub::sub_0056f680();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_72 -- the body is the canonical transcription of
+// AircraftClass::Active_Click_With -- the body is the canonical transcription of
 // 8 instructions at 0x0040ad40, in src/generated/code/.
 // size 23 bytes; callees: 0x0049f500
 //
-void AircraftClass::vfunc_72(int a0, int a1, int a2)
+void AircraftClass::Active_Click_With(int a0, int a1, int a2)
 {
     ts::sub::sub_0040ad40();
 }
@@ -738,1081 +738,1081 @@ void AircraftClass::vfunc_73(int a0, int a1, int a2)
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_74 -- the body is the canonical transcription of
+// AircraftClass::Clicked_As_Target -- the body is the canonical transcription of
 // 3 instructions at 0x00612dd0, in src/generated/code/.
 // size 10 bytes; callees: none
 //
-void AircraftClass::vfunc_74(int a0)
+void AircraftClass::Clicked_As_Target(int a0)
 {
     ts::sub::sub_00612dd0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_75 -- the body is the canonical transcription of
+// AircraftClass::Select -- the body is the canonical transcription of
 // 39 instructions at 0x00613f10, in src/generated/code/.
 // size 111 bytes; callees: 0x004c4fb0, 0x0056ee20, 0x00603730
 //
-void AircraftClass::vfunc_75()
+void AircraftClass::Select()
 {
     ts::sub::sub_00613f10();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_76 -- the body is the canonical transcription of
+// AircraftClass::Unselect -- the body is the canonical transcription of
 // 39 instructions at 0x0056eda0, in src/generated/code/.
 // size 117 bytes; callees: 0x00478840, 0x00478860
 //
-void AircraftClass::vfunc_76(int a0)
+void AircraftClass::Unselect(int a0)
 {
     ts::sub::sub_0056eda0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_77 -- the body is the canonical transcription of
+// AircraftClass::In_Range -- the body is the canonical transcription of
 // 16 instructions at 0x00611540, in src/generated/code/.
 // size 40 bytes; callees: 0x00502060
 //
-void AircraftClass::vfunc_77(int a0, int a1)
+void AircraftClass::In_Range(int a0, int a1)
 {
     ts::sub::sub_00611540();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_78 -- the body is the canonical transcription of
+// AircraftClass::Weapon_Range -- the body is the canonical transcription of
 // 9 instructions at 0x006164c0, in src/generated/code/.
 // size 25 bytes; callees: none
 //
-void AircraftClass::vfunc_78(int a0)
+void AircraftClass::Weapon_Range(int a0)
 {
     ts::sub::sub_006164c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_79 -- the body is the canonical transcription of
+// AircraftClass::Take_Damage -- the body is the canonical transcription of
 // 30 instructions at 0x00409890, in src/generated/code/.
 // size 73 bytes; callees: 0x0049eda0
 //
-void AircraftClass::vfunc_79(int a0, int a1, int a2, int a3, int a4, int a5)
+void AircraftClass::Take_Damage(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00409890();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_80 -- the body is the canonical transcription of
+// AircraftClass::Scatter -- the body is the canonical transcription of
 // 13 instructions at 0x0040d1b0, in src/generated/code/.
 // size 33 bytes; callees: 0x00547100
 //
-void AircraftClass::vfunc_80(int a0, int a1, int a2)
+void AircraftClass::Scatter(int a0, int a1, int a2)
 {
     ts::sub::sub_0040d1b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_81 -- the body is the canonical transcription of
+// AircraftClass::Catch_Fire -- the body is the canonical transcription of
 // 2 instructions at 0x0056eca0, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_81()
+void AircraftClass::Catch_Fire()
 {
     ts::sub::sub_0056eca0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_82 -- the body is the canonical transcription of
+// AircraftClass::Fire_Out -- the body is the canonical transcription of
 // 1 instructions at 0x0056ecb0, in src/generated/code/.
 // size 1 bytes; callees: none
 //
-void AircraftClass::vfunc_82()
+void AircraftClass::Fire_Out()
 {
     ts::sub::sub_0056ecb0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_83 -- the body is the canonical transcription of
+// AircraftClass::Value -- the body is the canonical transcription of
 // 46 instructions at 0x0061a4d0, in src/generated/code/.
 // size 136 bytes; callees: 0x00446e70
 //
-void AircraftClass::vfunc_83()
+void AircraftClass::Value()
 {
     ts::sub::sub_0061a4d0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_84 -- the body is the canonical transcription of
+// AircraftClass::Get_Mission -- the body is the canonical transcription of
 // 5 instructions at 0x005468d0, in src/generated/code/.
 // size 12 bytes; callees: none
 //
-void AircraftClass::vfunc_84()
+void AircraftClass::Get_Mission()
 {
     ts::sub::sub_005468d0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_85 -- the body is the canonical transcription of
+// AircraftClass::Assign_Mission -- the body is the canonical transcription of
 // 8 instructions at 0x00546d60, in src/generated/code/.
 // size 24 bytes; callees: 0x00546d7d
 //
-void AircraftClass::vfunc_85(int a0)
+void AircraftClass::Assign_Mission(int a0)
 {
     ts::sub::sub_00546d60();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_86 -- the body is the canonical transcription of
+// AircraftClass::Per_Cell_Process -- the body is the canonical transcription of
 // 167 instructions at 0x0049fae0, in src/generated/code/.
 // size 569 bytes; callees: 0x0044f930, 0x00454d60, 0x0049fd23, 0x004b7310, 0x005020d0, 0x005072b0, 0x005111c0, 0x0061d8e0
 //
-void AircraftClass::vfunc_86(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void AircraftClass::Per_Cell_Process(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_0049fae0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_87 -- the body is the canonical transcription of
+// AircraftClass::Who_Can_Build_Me -- the body is the canonical transcription of
 // 23 instructions at 0x00570240, in src/generated/code/.
 // size 51 bytes; callees: none
 //
-void AircraftClass::vfunc_87(int a0, int a1)
+void AircraftClass::Who_Can_Build_Me(int a0, int a1)
 {
     ts::sub::sub_00570240();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_88 -- the body is the canonical transcription of
+// AircraftClass::Receive_Message -- the body is the canonical transcription of
 // 12 instructions at 0x0040be00, in src/generated/code/.
 // size 40 bytes; callees: none
 //
-void AircraftClass::vfunc_88(int a0, int a1)
+void AircraftClass::Receive_Message(int a0, int a1)
 {
     ts::sub::sub_0040be00();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_89 -- the body is the canonical transcription of
+// AircraftClass::Revealed -- the body is the canonical transcription of
 // 17 instructions at 0x0060f490, in src/generated/code/.
 // size 38 bytes; callees: none
 //
-void AircraftClass::vfunc_89(int a0)
+void AircraftClass::Revealed(int a0)
 {
     ts::sub::sub_0060f490();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_90 -- the body is the canonical transcription of
+// AircraftClass::Repair -- the body is the canonical transcription of
 // 1 instructions at 0x0056ece0, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_90(int a0)
+void AircraftClass::Repair(int a0)
 {
     ts::sub::sub_0056ece0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_91 -- the body is the canonical transcription of
+// AircraftClass::Sell_Back -- the body is the canonical transcription of
 // 34 instructions at 0x004a1160, in src/generated/code/.
 // size 117 bytes; callees: 0x004b71b0, 0x004c4fb0, 0x006470b0, 0x00647f00
 //
-void AircraftClass::vfunc_91(int a0)
+void AircraftClass::Sell_Back(int a0)
 {
     ts::sub::sub_004a1160();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_92 -- the body is the canonical transcription of
+// AircraftClass::Set_Waypoint_Path -- the body is the canonical transcription of
 // 31 instructions at 0x004a2cd0, in src/generated/code/.
 // size 106 bytes; callees: 0x004a2d5e, 0x00655a10
 //
-void AircraftClass::vfunc_92(int a0)
+void AircraftClass::Set_Waypoint_Path(int a0)
 {
     ts::sub::sub_004a2cd0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_93 -- the body is the canonical transcription of
+// AircraftClass::Move -- the body is the canonical transcription of
 // 55 instructions at 0x0056ed00, in src/generated/code/.
 // size 156 bytes; callees: 0x00502060
 //
-void AircraftClass::vfunc_93(int a0)
+void AircraftClass::Move(int a0)
 {
     ts::sub::sub_0056ed00();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_94 -- the body is the canonical transcription of
+// AircraftClass::Can_Enter_Cell -- the body is the canonical transcription of
 // 62 instructions at 0x0040c350, in src/generated/code/.
 // size 177 bytes; callees: 0x00405980, 0x004563e0, 0x004b72d0, 0x005112a0, 0x00609f00
 //
-void AircraftClass::vfunc_94(int a0, int a1, int a2, int a3, int a4)
+void AircraftClass::Can_Enter_Cell(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0040c350();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_95 -- the body is the canonical transcription of
+// AircraftClass::Can_Reach -- the body is the canonical transcription of
 // 49 instructions at 0x004a0e70, in src/generated/code/.
 // size 174 bytes; callees: 0x005020d0
 //
-void AircraftClass::vfunc_95(int a0, int a1, int a2, int a3, int a4)
+void AircraftClass::Can_Reach(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_004a0e70();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_96 -- the body is the canonical transcription of
+// AircraftClass::Get_Coord -- the body is the canonical transcription of
 // 12 instructions at 0x0040e6a0, in src/generated/code/.
 // size 30 bytes; callees: none
 //
-void AircraftClass::vfunc_96(int a0)
+void AircraftClass::Get_Coord(int a0)
 {
     ts::sub::sub_0040e6a0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_97 -- the body is the canonical transcription of
+// AircraftClass::Set_Coord -- the body is the canonical transcription of
 // 18 instructions at 0x004a2170, in src/generated/code/.
 // size 48 bytes; callees: 0x00570cc0
 //
-void AircraftClass::vfunc_97(int a0)
+void AircraftClass::Set_Coord(int a0)
 {
     ts::sub::sub_004a2170();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_98 -- the body is the canonical transcription of
+// AircraftClass::Get_Cell -- the body is the canonical transcription of
 // 18 instructions at 0x0040e6c0, in src/generated/code/.
 // size 55 bytes; callees: none
 //
-void AircraftClass::vfunc_98(int a0)
+void AircraftClass::Get_Cell(int a0)
 {
     ts::sub::sub_0040e6c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_99 -- the body is the canonical transcription of
+// AircraftClass::Get_Cell_Ptr -- the body is the canonical transcription of
 // 10 instructions at 0x00570ce0, in src/generated/code/.
 // size 31 bytes; callees: 0x00502060
 //
-void AircraftClass::vfunc_99()
+void AircraftClass::Get_Cell_Ptr()
 {
     ts::sub::sub_00570ce0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_100 -- the body is the canonical transcription of
+// AircraftClass::Get_Target_Cell -- the body is the canonical transcription of
 // 23 instructions at 0x00570d00, in src/generated/code/.
 // size 70 bytes; callees: none
 //
-void AircraftClass::vfunc_100(int a0)
+void AircraftClass::Get_Target_Cell(int a0)
 {
     ts::sub::sub_00570d00();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_101 -- the body is the canonical transcription of
+// AircraftClass::Get_Target_Cell_Ptr -- the body is the canonical transcription of
 // 26 instructions at 0x00570d50, in src/generated/code/.
 // size 81 bytes; callees: 0x005020d0
 //
-void AircraftClass::vfunc_101(int a0)
+void AircraftClass::Get_Target_Cell_Ptr(int a0)
 {
     ts::sub::sub_00570d50();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_102 -- the body is the canonical transcription of
+// AircraftClass::Get_Height_AGL -- the body is the canonical transcription of
 // 21 instructions at 0x00570370, in src/generated/code/.
 // size 57 bytes; callees: 0x00510f70
 //
-void AircraftClass::vfunc_102()
+void AircraftClass::Get_Height_AGL()
 {
     ts::sub::sub_00570370();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_103 -- the body is the canonical transcription of
+// AircraftClass::Set_Height_AGL -- the body is the canonical transcription of
 // 34 instructions at 0x005703b0, in src/generated/code/.
 // size 94 bytes; callees: 0x00510f70
 //
-void AircraftClass::vfunc_103(int a0)
+void AircraftClass::Set_Height_AGL(int a0)
 {
     ts::sub::sub_005703b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_104 -- the body is the canonical transcription of
+// AircraftClass::Get_Height -- the body is the canonical transcription of
 // 2 instructions at 0x00570360, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void AircraftClass::vfunc_104()
+void AircraftClass::Get_Height()
 {
     ts::sub::sub_00570360();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_105 -- the body is the canonical transcription of
+// AircraftClass::Commence -- the body is the canonical transcription of
 // 2 instructions at 0x0040e3d0, in src/generated/code/.
 // size 12 bytes; callees: 0x00546d20
 //
-void AircraftClass::vfunc_105()
+void AircraftClass::Commence()
 {
     ts::sub::sub_0040e3d0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_106 -- the body is the canonical transcription of
+// AircraftClass::Ready_To_Commence -- the body is the canonical transcription of
 // 12 instructions at 0x0040e180, in src/generated/code/.
 // size 35 bytes; callees: none
 //
-void AircraftClass::vfunc_106()
+void AircraftClass::Ready_To_Commence()
 {
     ts::sub::sub_0040e180();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_107 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_SLEEP -- the body is the canonical transcription of
 // 2 instructions at 0x00546750, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_107()
+void AircraftClass::Do_MISSION_SLEEP()
 {
     ts::sub::sub_00546750();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_108 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_HARMLESS -- the body is the canonical transcription of
 // 2 instructions at 0x00546760, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_108()
+void AircraftClass::Do_MISSION_HARMLESS()
 {
     ts::sub::sub_00546760();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_109 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_AMBUSH -- the body is the canonical transcription of
 // 2 instructions at 0x00546770, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_109()
+void AircraftClass::Do_MISSION_AMBUSH()
 {
     ts::sub::sub_00546770();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_110 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_ATTACK -- the body is the canonical transcription of
 // 12 instructions at 0x0040b040, in src/generated/code/.
 // size 37 bytes; callees: none
 //
-void AircraftClass::vfunc_110()
+void AircraftClass::Do_MISSION_ATTACK()
 {
     ts::sub::sub_0040b040();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_111 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_CAPTURE -- the body is the canonical transcription of
 // 105 instructions at 0x0049d8e0, in src/generated/code/.
 // size 326 bytes; callees: 0x0044fa70, 0x004c4ff0, 0x00502060, 0x00547100, 0x005a5f10, 0x0061d8e0, 0x0067faf0, 0x0068309c
 //
-void AircraftClass::vfunc_111(int a0)
+void AircraftClass::Do_MISSION_CAPTURE(int a0)
 {
     ts::sub::sub_0049d8e0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_112 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_GUARD -- the body is the canonical transcription of
 // 32 instructions at 0x0040d1e0, in src/generated/code/.
 // size 100 bytes; callees: 0x00547100, 0x0067faf0
 //
-void AircraftClass::vfunc_112()
+void AircraftClass::Do_MISSION_GUARD()
 {
     ts::sub::sub_0040d1e0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_113 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_GUARD_AREA -- the body is the canonical transcription of
 // 24 instructions at 0x0040d530, in src/generated/code/.
 // size 66 bytes; callees: none
 //
-void AircraftClass::vfunc_113()
+void AircraftClass::Do_MISSION_GUARD_AREA()
 {
     ts::sub::sub_0040d530();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_114 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_HARVEST -- the body is the canonical transcription of
 // 2 instructions at 0x005467c0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_114()
+void AircraftClass::Do_MISSION_HARVEST()
 {
     ts::sub::sub_005467c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_115 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_HUNT -- the body is the canonical transcription of
 // 32 instructions at 0x00408740, in src/generated/code/.
 // size 99 bytes; callees: 0x00547100, 0x005a5f10, 0x00608820, 0x0067faf0
 //
-void AircraftClass::vfunc_115()
+void AircraftClass::Do_MISSION_HUNT()
 {
     ts::sub::sub_00408740();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_116 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_MOVE -- the body is the canonical transcription of
 // 5 instructions at 0x00409a00, in src/generated/code/.
 // size 21 bytes; callees: 0x00409f80
 //
-void AircraftClass::vfunc_116()
+void AircraftClass::Do_MISSION_MOVE()
 {
     ts::sub::sub_00409a00();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_117 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_RETREAT -- the body is the canonical transcription of
 // 2 instructions at 0x00408fc0, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_117()
+void AircraftClass::Do_MISSION_RETREAT()
 {
     ts::sub::sub_00408fc0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_118 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_RETURN -- the body is the canonical transcription of
 // 2 instructions at 0x00546800, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_118()
+void AircraftClass::Do_MISSION_RETURN()
 {
     ts::sub::sub_00546800();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_119 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_STOP -- the body is the canonical transcription of
 // 2 instructions at 0x00546810, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_119()
+void AircraftClass::Do_MISSION_STOP()
 {
     ts::sub::sub_00546810();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_120 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_UNLOAD -- the body is the canonical transcription of
 // 10 instructions at 0x00408aa0, in src/generated/code/.
 // size 28 bytes; callees: none
 //
-void AircraftClass::vfunc_120()
+void AircraftClass::Do_MISSION_UNLOAD()
 {
     ts::sub::sub_00408aa0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_121 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_ENTER -- the body is the canonical transcription of
 // 35 instructions at 0x0040c8c0, in src/generated/code/.
 // size 89 bytes; callees: 0x0061de90
 //
-void AircraftClass::vfunc_121()
+void AircraftClass::Do_MISSION_ENTER()
 {
     ts::sub::sub_0040c8c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_122 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_CONSTRUCTION -- the body is the canonical transcription of
 // 2 instructions at 0x00546840, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_122()
+void AircraftClass::Do_MISSION_CONSTRUCTION()
 {
     ts::sub::sub_00546840();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_123 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_DECONSTRUCTION -- the body is the canonical transcription of
 // 2 instructions at 0x00546850, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_123()
+void AircraftClass::Do_MISSION_DECONSTRUCTION()
 {
     ts::sub::sub_00546850();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_124 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_REPAIR -- the body is the canonical transcription of
 // 2 instructions at 0x00546860, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_124()
+void AircraftClass::Do_MISSION_REPAIR()
 {
     ts::sub::sub_00546860();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_125 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_MISSILE -- the body is the canonical transcription of
 // 2 instructions at 0x00546870, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_125()
+void AircraftClass::Do_MISSION_MISSILE()
 {
     ts::sub::sub_00546870();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_126 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_OPEN -- the body is the canonical transcription of
 // 2 instructions at 0x00546880, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AircraftClass::vfunc_126()
+void AircraftClass::Do_MISSION_OPEN()
 {
     ts::sub::sub_00546880();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_127 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_RESCUE -- the body is the canonical transcription of
 // 22 instructions at 0x004a4420, in src/generated/code/.
 // size 70 bytes; callees: 0x004a460d, 0x0061cf90
 //
-void AircraftClass::vfunc_127()
+void AircraftClass::Do_MISSION_RESCUE()
 {
     ts::sub::sub_004a4420();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_128 -- the body is the canonical transcription of
+// AircraftClass::Do_MISSION_PATROL -- the body is the canonical transcription of
 // 11 instructions at 0x0040a510, in src/generated/code/.
 // size 31 bytes; callees: none
 //
-void AircraftClass::vfunc_128()
+void AircraftClass::Do_MISSION_PATROL()
 {
     ts::sub::sub_0040a510();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_129 -- the body is the canonical transcription of
+// AircraftClass::Set_Mission -- the body is the canonical transcription of
 // 5 instructions at 0x005468b0, in src/generated/code/.
 // size 21 bytes; callees: none
 //
-void AircraftClass::vfunc_129(int a0)
+void AircraftClass::Set_Mission(int a0)
 {
     ts::sub::sub_005468b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_130 -- the body is the canonical transcription of
+// AircraftClass::Override_Mission -- the body is the canonical transcription of
 // 21 instructions at 0x004a0330, in src/generated/code/.
 // size 56 bytes; callees: 0x006164e0
 //
-void AircraftClass::vfunc_130(int a0, int a1, int a2)
+void AircraftClass::Override_Mission(int a0, int a1, int a2)
 {
     ts::sub::sub_004a0330();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_131 -- the body is the canonical transcription of
+// AircraftClass::Restore_Mission -- the body is the canonical transcription of
 // 14 instructions at 0x004a0370, in src/generated/code/.
 // size 35 bytes; callees: 0x00616520
 //
-void AircraftClass::vfunc_131()
+void AircraftClass::Restore_Mission()
 {
     ts::sub::sub_004a0370();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_132 -- the body is the canonical transcription of
+// AircraftClass::Has_Suspended_Mission -- the body is the canonical transcription of
 // 5 instructions at 0x00547110, in src/generated/code/.
 // size 12 bytes; callees: none
 //
-void AircraftClass::vfunc_132()
+void AircraftClass::Has_Suspended_Mission()
 {
     ts::sub::sub_00547110();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_133 -- the body is the canonical transcription of
+// AircraftClass::Transmit_Message -- the body is the canonical transcription of
 // 8 instructions at 0x005a58a0, in src/generated/code/.
 // size 26 bytes; callees: none
 //
-void AircraftClass::vfunc_133(int a0, int a1)
+void AircraftClass::Transmit_Message(int a0, int a1)
 {
     ts::sub::sub_005a58a0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_134 -- the body is the canonical transcription of
+// AircraftClass::Transmit_Message -- the body is the canonical transcription of
 // 15 instructions at 0x005a57d0, in src/generated/code/.
 // size 28 bytes; callees: none
 //
-void AircraftClass::vfunc_134(int a0, int a1, int a2)
+void AircraftClass::Transmit_Message(int a0, int a1, int a2)
 {
     ts::sub::sub_005a57d0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_135 -- the body is the canonical transcription of
+// AircraftClass::Is_Move_Override -- the body is the canonical transcription of
 // 2 instructions at 0x0040e700, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_135()
+void AircraftClass::Is_Move_Override()
 {
     ts::sub::sub_0040e700();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_136 -- the body is the canonical transcription of
+// AircraftClass::Is_Allowed_To_Recloak -- the body is the canonical transcription of
 // 25 instructions at 0x004a2690, in src/generated/code/.
 // size 75 bytes; callees: 0x0061cf80, 0x006939b0
 //
-void AircraftClass::vfunc_136()
+void AircraftClass::Is_Allowed_To_Recloak()
 {
     ts::sub::sub_004a2690();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_137 -- the body is the canonical transcription of
+// AircraftClass::Can_Scatter -- the body is the canonical transcription of
 // 25 instructions at 0x0060eb20, in src/generated/code/.
 // size 69 bytes; callees: none
 //
-void AircraftClass::vfunc_137()
+void AircraftClass::Can_Scatter()
 {
     ts::sub::sub_0060eb20();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_138 -- the body is the canonical transcription of
+// AircraftClass::Is_In_Team -- the body is the canonical transcription of
 // 5 instructions at 0x0040e7a0, in src/generated/code/.
 // size 14 bytes; callees: none
 //
-void AircraftClass::vfunc_138()
+void AircraftClass::Is_In_Team()
 {
     ts::sub::sub_0040e7a0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_139 -- the body is the canonical transcription of
+// AircraftClass::Should_Self_Heal_Now -- the body is the canonical transcription of
 // 44 instructions at 0x0061cb60, in src/generated/code/.
 // size 121 bytes; callees: 0x006468b0, 0x00646930
 //
-void AircraftClass::vfunc_139()
+void AircraftClass::Should_Self_Heal_Now()
 {
     ts::sub::sub_0061cb60();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_140 -- the body is the canonical transcription of
+// AircraftClass::Is_Voxel_Loaded -- the body is the canonical transcription of
 // 10 instructions at 0x00612de0, in src/generated/code/.
 // size 22 bytes; callees: none
 //
-void AircraftClass::vfunc_140()
+void AircraftClass::Is_Voxel_Loaded()
 {
     ts::sub::sub_00612de0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_141 -- the body is the canonical transcription of
+// AircraftClass::Is_Ready_To_Move -- the body is the canonical transcription of
 // 2 instructions at 0x0040e710, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_141()
+void AircraftClass::Is_Ready_To_Move()
 {
     ts::sub::sub_0040e710();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_142 -- the body is the canonical transcription of
+// AircraftClass::Is_Ready_To_Cloak -- the body is the canonical transcription of
 // 79 instructions at 0x00613d60, in src/generated/code/.
 // size 236 bytes; callees: 0x00459d80, 0x005020d0, 0x006468b0, 0x00646930
 //
-void AircraftClass::vfunc_142(int a0, int a1, int a2)
+void AircraftClass::Is_Ready_To_Cloak(int a0, int a1, int a2)
 {
     ts::sub::sub_00613d60();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_143 -- the body is the canonical transcription of
+// AircraftClass::Should_Uncloak -- the body is the canonical transcription of
 // 82 instructions at 0x00613c60, in src/generated/code/.
 // size 246 bytes; callees: 0x00459d80, 0x005020d0, 0x006468b0, 0x00646930
 //
-void AircraftClass::vfunc_143(int a0, int a1, int a2)
+void AircraftClass::Should_Uncloak(int a0, int a1, int a2)
 {
     ts::sub::sub_00613c60();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_144 -- the body is the canonical transcription of
+// AircraftClass::Turret_Facing -- the body is the canonical transcription of
 // 10 instructions at 0x0040e910, in src/generated/code/.
 // size 29 bytes; callees: 0x00492960
 //
-void AircraftClass::vfunc_144(int a0)
+void AircraftClass::Turret_Facing(int a0)
 {
     ts::sub::sub_0040e910();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_145 -- the body is the canonical transcription of
+// AircraftClass::Is_Weapon_Equipped -- the body is the canonical transcription of
 // 9 instructions at 0x00616450, in src/generated/code/.
 // size 22 bytes; callees: none
 //
-void AircraftClass::vfunc_145()
+void AircraftClass::Is_Weapon_Equipped()
 {
     ts::sub::sub_00616450();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_146 -- the body is the canonical transcription of
+// AircraftClass::Is_On_Elevation -- the body is the canonical transcription of
 // 31 instructions at 0x0061cfa0, in src/generated/code/.
 // size 84 bytes; callees: 0x005f82d0
 //
-void AircraftClass::vfunc_146(int a0, int a1)
+void AircraftClass::Is_On_Elevation(int a0, int a1)
 {
     ts::sub::sub_0061cfa0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_147 -- the body is the canonical transcription of
+// AircraftClass::Tiberium_Load -- the body is the canonical transcription of
 // 2 instructions at 0x0061b1e0, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void AircraftClass::vfunc_147()
+void AircraftClass::Tiberium_Load()
 {
     ts::sub::sub_0061b1e0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_148 -- the body is the canonical transcription of
+// AircraftClass::Weed_Load -- the body is the canonical transcription of
 // 2 instructions at 0x0061d000, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void AircraftClass::vfunc_148()
+void AircraftClass::Weed_Load()
 {
     ts::sub::sub_0061d000();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_149 -- the body is the canonical transcription of
+// AircraftClass::Pip_Count -- the body is the canonical transcription of
 // 14 instructions at 0x0061b210, in src/generated/code/.
 // size 35 bytes; callees: none
 //
-void AircraftClass::vfunc_149()
+void AircraftClass::Pip_Count()
 {
     ts::sub::sub_0061b210();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_150 -- the body is the canonical transcription of
+// AircraftClass::Refund_Amount -- the body is the canonical transcription of
 // 25 instructions at 0x0061bf60, in src/generated/code/.
 // size 76 bytes; callees: 0x004c4ff0, 0x0067faf0
 //
-void AircraftClass::vfunc_150(int a0)
+void AircraftClass::Refund_Amount(int a0)
 {
     ts::sub::sub_0061bf60();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_151 -- the body is the canonical transcription of
+// AircraftClass::Risk -- the body is the canonical transcription of
 // 6 instructions at 0x0061b1c0, in src/generated/code/.
 // size 19 bytes; callees: none
 //
-void AircraftClass::vfunc_151()
+void AircraftClass::Risk()
 {
     ts::sub::sub_0061b1c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_152 -- the body is the canonical transcription of
+// AircraftClass::Is_In_Same_Zone_As -- the body is the canonical transcription of
 // 39 instructions at 0x004a2340, in src/generated/code/.
 // size 117 bytes; callees: none
 //
-void AircraftClass::vfunc_152(int a0)
+void AircraftClass::Is_In_Same_Zone_As(int a0)
 {
     ts::sub::sub_004a2340();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_153 -- the body is the canonical transcription of
+// AircraftClass::Barrel_Pitch -- the body is the canonical transcription of
 // 90 instructions at 0x00614770, in src/generated/code/.
 // size 276 bytes; callees: 0x0045d580, 0x0045d910, 0x00494170, 0x0061c9b0, 0x0061dc60, 0x0067faf0, 0x006826c0
 //
-void AircraftClass::vfunc_153(int a0, int a1)
+void AircraftClass::Barrel_Pitch(int a0, int a1)
 {
     ts::sub::sub_00614770();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_154 -- the body is the canonical transcription of
+// AircraftClass::Is_In_Same_Zone -- the body is the canonical transcription of
 // 14 instructions at 0x0049c620, in src/generated/code/.
 // size 36 bytes; callees: none
 //
-void AircraftClass::vfunc_154(int a0)
+void AircraftClass::Is_In_Same_Zone(int a0)
 {
     ts::sub::sub_0049c620();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_155 -- the body is the canonical transcription of
+// AircraftClass::How_Many_Survivors -- the body is the canonical transcription of
 // 8 instructions at 0x0060ed00, in src/generated/code/.
 // size 24 bytes; callees: none
 //
-void AircraftClass::vfunc_155()
+void AircraftClass::How_Many_Survivors()
 {
     ts::sub::sub_0060ed00();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_156 -- the body is the canonical transcription of
+// AircraftClass::Scatter_Incoming_Infantry -- the body is the canonical transcription of
 // 1 instructions at 0x0061df10, in src/generated/code/.
 // size 1 bytes; callees: none
 //
-void AircraftClass::vfunc_156()
+void AircraftClass::Scatter_Incoming_Infantry()
 {
     ts::sub::sub_0061df10();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_157 -- the body is the canonical transcription of
+// AircraftClass::Get_Collateral_Damage -- the body is the canonical transcription of
 // 4 instructions at 0x0061dd70, in src/generated/code/.
 // size 12 bytes; callees: none
 //
-void AircraftClass::vfunc_157()
+void AircraftClass::Get_Collateral_Damage()
 {
     ts::sub::sub_0061dd70();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_158 -- the body is the canonical transcription of
+// AircraftClass::Get_Z_Adjust -- the body is the canonical transcription of
 // 53 instructions at 0x004a1a50, in src/generated/code/.
 // size 178 bytes; callees: 0x004a1b06, 0x00617f30, 0x00618290, 0x00618420, 0x00618660, 0x006939b0
 //
-void AircraftClass::vfunc_158(int a0, int a1, int a2)
+void AircraftClass::Get_Z_Adjust(int a0, int a1, int a2)
 {
     ts::sub::sub_004a1a50();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_159 -- the body is the canonical transcription of
+// AircraftClass::Get_Z_Gradient -- the body is the canonical transcription of
 // 15 instructions at 0x004a1b30, in src/generated/code/.
 // size 41 bytes; callees: 0x006939b0
 //
-void AircraftClass::vfunc_159()
+void AircraftClass::Get_Z_Gradient()
 {
     ts::sub::sub_004a1b30();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_160 -- the body is the canonical transcription of
+// AircraftClass::Find_Docking_Bay -- the body is the canonical transcription of
 // 33 instructions at 0x0061bd30, in src/generated/code/.
 // size 113 bytes; callees: 0x0046b380, 0x004b7310, 0x0061bdb6
 //
-void AircraftClass::vfunc_160(int a0, int a1, int a2)
+void AircraftClass::Find_Docking_Bay(int a0, int a1, int a2)
 {
     ts::sub::sub_0061bd30();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_161 -- the body is the canonical transcription of
+// AircraftClass::Find_Exit_Cell -- the body is the canonical transcription of
 // 23 instructions at 0x0061bf10, in src/generated/code/.
 // size 73 bytes; callees: none
 //
-void AircraftClass::vfunc_161(int a0, int a1)
+void AircraftClass::Find_Exit_Cell(int a0, int a1)
 {
     ts::sub::sub_0061bf10();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_162 -- the body is the canonical transcription of
+// AircraftClass::Turret_Coord -- the body is the canonical transcription of
 // 50 instructions at 0x0060efa0, in src/generated/code/.
 // size 159 bytes; callees: 0x005420b0, 0x0060f048, 0x0068309c, 0x006939b0
 //
-void AircraftClass::vfunc_162(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void AircraftClass::Turret_Coord(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
 {
     ts::sub::sub_0060efa0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_163 -- the body is the canonical transcription of
+// AircraftClass::Desired_Load_Dir -- the body is the canonical transcription of
 // 89 instructions at 0x0040c240, in src/generated/code/.
 // size 260 bytes; callees: 0x004563e0, 0x005020d0, 0x00503e00
 //
-void AircraftClass::vfunc_163(int a0, int a1)
+void AircraftClass::Desired_Load_Dir(int a0, int a1)
 {
     ts::sub::sub_0040c240();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_164 -- the body is the canonical transcription of
+// AircraftClass::Fire_Direction -- the body is the canonical transcription of
 // 10 instructions at 0x0040cfd0, in src/generated/code/.
 // size 29 bytes; callees: 0x00492960
 //
-void AircraftClass::vfunc_164(int a0)
+void AircraftClass::Fire_Direction(int a0)
 {
     ts::sub::sub_0040cfd0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_165 -- the body is the canonical transcription of
+// AircraftClass::Crew_Type -- the body is the canonical transcription of
 // 10 instructions at 0x0061a450, in src/generated/code/.
 // size 25 bytes; callees: none
 //
-void AircraftClass::vfunc_165()
+void AircraftClass::Crew_Type()
 {
     ts::sub::sub_0061a450();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_166 -- the body is the canonical transcription of
+// AircraftClass::Can_Attack_Now -- the body is the canonical transcription of
 // 25 instructions at 0x00616160, in src/generated/code/.
 // size 68 bytes; callees: 0x0068309c
 //
-void AircraftClass::vfunc_166()
+void AircraftClass::Can_Attack_Now()
 {
     ts::sub::sub_00616160();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_167 -- the body is the canonical transcription of
+// AircraftClass::Can_Deploy_Now -- the body is the canonical transcription of
 // 159 instructions at 0x006161b0, in src/generated/code/.
 // size 557 bytes; callees: 0x004577f0, 0x005020d0, 0x0068309c
 //
-void AircraftClass::vfunc_167(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void AircraftClass::Can_Deploy_Now(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
 {
     ts::sub::sub_006161b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_168 -- the body is the canonical transcription of
+// AircraftClass::Rearm_Delay -- the body is the canonical transcription of
 // 13 instructions at 0x006143a0, in src/generated/code/.
 // size 33 bytes; callees: none
 //
-void AircraftClass::vfunc_168(int a0)
+void AircraftClass::Rearm_Delay(int a0)
 {
     ts::sub::sub_006143a0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_169 -- the body is the canonical transcription of
+// AircraftClass::Threat_Range -- the body is the canonical transcription of
 // 12 instructions at 0x0061a560, in src/generated/code/.
 // size 22 bytes; callees: none
 //
-void AircraftClass::vfunc_169(int a0)
+void AircraftClass::Threat_Range(int a0)
 {
     ts::sub::sub_0061a560();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_170 -- the body is the canonical transcription of
+// AircraftClass::Is_Allowed_To_Leave_Map -- the body is the canonical transcription of
 // 8 instructions at 0x004a13b0, in src/generated/code/.
 // size 17 bytes; callees: none
 //
-void AircraftClass::vfunc_170()
+void AircraftClass::Is_Allowed_To_Leave_Map()
 {
     ts::sub::sub_004a13b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_171 -- the body is the canonical transcription of
+// AircraftClass::Is_Radar_Visible -- the body is the canonical transcription of
 // 19 instructions at 0x0061d9d0, in src/generated/code/.
 // size 51 bytes; callees: none
 //
-void AircraftClass::vfunc_171(int a0)
+void AircraftClass::Is_Radar_Visible(int a0)
 {
     ts::sub::sub_0061d9d0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_172 -- the body is the canonical transcription of
+// AircraftClass::Is_Sensed_By_Player -- the body is the canonical transcription of
 // 18 instructions at 0x0061db90, in src/generated/code/.
 // size 54 bytes; callees: 0x00459da0, 0x00502060
 //
-void AircraftClass::vfunc_172()
+void AircraftClass::Is_Sensed_By_Player()
 {
     ts::sub::sub_0061db90();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_173 -- the body is the canonical transcription of
+// AircraftClass::Is_Renovator -- the body is the canonical transcription of
 // 2 instructions at 0x0040e720, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_173()
+void AircraftClass::Is_Renovator()
 {
     ts::sub::sub_0040e720();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_174 -- the body is the canonical transcription of
+// AircraftClass::Advance_Waypoint_Path -- the body is the canonical transcription of
 // 20 instructions at 0x004a49c0, in src/generated/code/.
 // size 75 bytes; callees: 0x004a2d80, 0x00655a10, 0x00655c30
 //
-void AircraftClass::vfunc_174()
+void AircraftClass::Advance_Waypoint_Path()
 {
     ts::sub::sub_004a49c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_175 -- the body is the canonical transcription of
+// AircraftClass::Response_Select -- the body is the canonical transcription of
 // 27 instructions at 0x0061b2e0, in src/generated/code/.
 // size 88 bytes; callees: 0x005a5ec0, 0x006470b0
 //
-void AircraftClass::vfunc_175()
+void AircraftClass::Response_Select()
 {
     ts::sub::sub_0061b2e0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_176 -- the body is the canonical transcription of
+// AircraftClass::Response_Move -- the body is the canonical transcription of
 // 27 instructions at 0x0061b340, in src/generated/code/.
 // size 88 bytes; callees: 0x005a5ec0, 0x006470b0
 //
-void AircraftClass::vfunc_176()
+void AircraftClass::Response_Move()
 {
     ts::sub::sub_0061b340();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_177 -- the body is the canonical transcription of
+// AircraftClass::Response_Attack -- the body is the canonical transcription of
 // 27 instructions at 0x0061b3a0, in src/generated/code/.
 // size 88 bytes; callees: 0x005a5ec0, 0x006470b0
 //
-void AircraftClass::vfunc_177()
+void AircraftClass::Response_Attack()
 {
     ts::sub::sub_0061b3a0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_178 -- the body is the canonical transcription of
+// AircraftClass::Player_Assign_Mission -- the body is the canonical transcription of
 // 14 instructions at 0x0040ad60, in src/generated/code/.
 // size 36 bytes; callees: 0x0040ad8e
 //
-void AircraftClass::vfunc_178(int a0, int a1, int a2, int a3)
+void AircraftClass::Player_Assign_Mission(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_0040ad60();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_179 -- the body is the canonical transcription of
+// AircraftClass::Reduce_Ammunition -- the body is the canonical transcription of
 // 1 instructions at 0x0040e420, in src/generated/code/.
 // size 1 bytes; callees: none
 //
-void AircraftClass::vfunc_179()
+void AircraftClass::Reduce_Ammunition()
 {
     ts::sub::sub_0040e420();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_180 -- the body is the canonical transcription of
+// AircraftClass::Target_Something_Nearby -- the body is the canonical transcription of
 // 46 instructions at 0x0061b400, in src/generated/code/.
 // size 123 bytes; callees: 0x0060ebd0
 //
-void AircraftClass::vfunc_180(int a0, int a1)
+void AircraftClass::Target_Something_Nearby(int a0, int a1)
 {
     ts::sub::sub_0061b400();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_181 -- the body is the canonical transcription of
+// AircraftClass::Stun -- the body is the canonical transcription of
 // 14 instructions at 0x0049de00, in src/generated/code/.
 // size 44 bytes; callees: 0x00614290
 //
-void AircraftClass::vfunc_181()
+void AircraftClass::Stun()
 {
     ts::sub::sub_0049de00();
 }
@@ -1828,531 +1828,531 @@ void AircraftClass::vfunc_182(int a0, int a1)
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_183 -- the body is the canonical transcription of
+// AircraftClass::Death_Announcement -- the body is the canonical transcription of
 // 28 instructions at 0x004a0bb0, in src/generated/code/.
 // size 91 bytes; callees: 0x00647f00
 //
-void AircraftClass::vfunc_183(int a0)
+void AircraftClass::Death_Announcement(int a0)
 {
     ts::sub::sub_004a0bb0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_184 -- the body is the canonical transcription of
+// AircraftClass::Can_Fire -- the body is the canonical transcription of
 // 12 instructions at 0x0040d5a0, in src/generated/code/.
 // size 25 bytes; callees: 0x004e4a00
 //
-void AircraftClass::vfunc_184(int a0, int a1)
+void AircraftClass::Can_Fire(int a0, int a1)
 {
     ts::sub::sub_0040d5a0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_185 -- the body is the canonical transcription of
+// AircraftClass::Greatest_Threat -- the body is the canonical transcription of
 // 32 instructions at 0x004a0c10, in src/generated/code/.
 // size 88 bytes; callees: 0x004c4ff0, 0x0061d8e0
 //
-void AircraftClass::vfunc_185(int a0, int a1, int a2)
+void AircraftClass::Greatest_Threat(int a0, int a1, int a2)
 {
     ts::sub::sub_004a0c10();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_186 -- the body is the canonical transcription of
+// AircraftClass::Assign_Target -- the body is the canonical transcription of
 // 21 instructions at 0x006142e0, in src/generated/code/.
 // size 61 bytes; callees: 0x00502060, 0x00614348
 //
-void AircraftClass::vfunc_186(int a0, int a1)
+void AircraftClass::Assign_Target(int a0, int a1)
 {
     ts::sub::sub_006142e0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_187 -- the body is the canonical transcription of
+// AircraftClass::Fire_At -- the body is the canonical transcription of
 // 19 instructions at 0x00409220, in src/generated/code/.
 // size 40 bytes; callees: 0x00409120
 //
-void AircraftClass::vfunc_187(int a0, int a1)
+void AircraftClass::Fire_At(int a0, int a1)
 {
     ts::sub::sub_00409220();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_188 -- the body is the canonical transcription of
+// AircraftClass::Captured -- the body is the canonical transcription of
 // 22 instructions at 0x004a27c0, in src/generated/code/.
 // size 57 bytes; callees: 0x006165c0
 //
-void AircraftClass::vfunc_188(int a0)
+void AircraftClass::Captured(int a0)
 {
     ts::sub::sub_004a27c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_189 -- the body is the canonical transcription of
+// AircraftClass::Laser_Zap -- the body is the canonical transcription of
 // 29 instructions at 0x00614530, in src/generated/code/.
 // size 89 bytes; callees: 0x00614612
 //
-void AircraftClass::vfunc_189(int a0, int a1, int a2, int a3, int a4, int a5)
+void AircraftClass::Laser_Zap(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00614530();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_190 -- the body is the canonical transcription of
+// AircraftClass::Rock -- the body is the canonical transcription of
 // 143 instructions at 0x0061c360, in src/generated/code/.
 // size 497 bytes; callees: 0x00492960, 0x00494170, 0x004941e0, 0x00494230, 0x0061c567
 //
-void AircraftClass::vfunc_190(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void AircraftClass::Rock(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
 {
     ts::sub::sub_0061c360();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_191 -- the body is the canonical transcription of
+// AircraftClass::Get_Class_Weapon_Data -- the body is the canonical transcription of
 // 17 instructions at 0x0040e730, in src/generated/code/.
 // size 49 bytes; callees: 0x00622130, 0x00646930
 //
-void AircraftClass::vfunc_191(int a0)
+void AircraftClass::Get_Class_Weapon_Data(int a0)
 {
     ts::sub::sub_0040e730();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_192 -- the body is the canonical transcription of
+// AircraftClass::Is_Turret_Equipped -- the body is the canonical transcription of
 // 4 instructions at 0x0040e780, in src/generated/code/.
 // size 15 bytes; callees: none
 //
-void AircraftClass::vfunc_192()
+void AircraftClass::Is_Turret_Equipped()
 {
     ts::sub::sub_0040e780();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_193 -- the body is the canonical transcription of
+// AircraftClass::Renovate -- the body is the canonical transcription of
 // 32 instructions at 0x00616550, in src/generated/code/.
 // size 94 bytes; callees: 0x00435360, 0x00570280
 //
-void AircraftClass::vfunc_193()
+void AircraftClass::Renovate()
 {
     ts::sub::sub_00616550();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_194 -- the body is the canonical transcription of
+// AircraftClass::Cloaking_AI -- the body is the canonical transcription of
 // 92 instructions at 0x00613760, in src/generated/code/.
 // size 307 bytes; callees: 0x0043a3a0, 0x00570280, 0x006468b0, 0x00646930
 //
-void AircraftClass::vfunc_194(int a0)
+void AircraftClass::Cloaking_AI(int a0)
 {
     ts::sub::sub_00613760();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_195 -- the body is the canonical transcription of
+// AircraftClass::Rocking_AI -- the body is the canonical transcription of
 // 12 instructions at 0x0061c650, in src/generated/code/.
 // size 31 bytes; callees: 0x0061c671
 //
-void AircraftClass::vfunc_195()
+void AircraftClass::Rocking_AI()
 {
     ts::sub::sub_0061c650();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_196 -- the body is the canonical transcription of
+// AircraftClass::Try_To_Cloak -- the body is the canonical transcription of
 // 133 instructions at 0x0060f8f0, in src/generated/code/.
 // size 421 bytes; callees: 0x00459d80, 0x00459da0, 0x004e53f0, 0x00502060, 0x005020d0, 0x0068298c
 //
-void AircraftClass::vfunc_196(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void AircraftClass::Try_To_Cloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_0060f8f0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_197 -- the body is the canonical transcription of
+// AircraftClass::Draw_Action_Line -- the body is the canonical transcription of
 // 47 instructions at 0x004a2880, in src/generated/code/.
 // size 159 bytes; callees: 0x004a29fb, 0x0061c9b0
 //
-void AircraftClass::vfunc_197(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void AircraftClass::Draw_Action_Line(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_004a2880();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_198 -- the body is the canonical transcription of
+// AircraftClass::Draw_Voxel -- the body is the canonical transcription of
 // 60 instructions at 0x004a19a0, in src/generated/code/.
 // size 164 bytes; callees: 0x00619490, 0x006939b0
 //
-void AircraftClass::vfunc_198(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void AircraftClass::Draw_Voxel(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_004a19a0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_199 -- the body is the canonical transcription of
+// AircraftClass::Draw_Health_Bar_Old -- the body is the canonical transcription of
 // 1 instructions at 0x00610870, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_199(int a0, int a1)
+void AircraftClass::Draw_Health_Bar_Old(int a0, int a1)
 {
     ts::sub::sub_00610870();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_200 -- the body is the canonical transcription of
+// AircraftClass::Draw_Health_Bar -- the body is the canonical transcription of
 // 208 instructions at 0x00610c50, in src/generated/code/.
 // size 636 bytes; callees: 0x0040e980, 0x00478f00, 0x00570280, 0x005f4dc0, 0x00610ed0, 0x0067faf0
 //
-void AircraftClass::vfunc_200(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
+void AircraftClass::Draw_Health_Bar(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
 {
     ts::sub::sub_00610c50();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_201 -- the body is the canonical transcription of
+// AircraftClass::Draw_Pips -- the body is the canonical transcription of
 // 124 instructions at 0x0061b4f0, in src/generated/code/.
 // size 426 bytes; callees: 0x00446e70, 0x00478f00, 0x0061ba49
 //
-void AircraftClass::vfunc_201(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void AircraftClass::Draw_Pips(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
 {
     ts::sub::sub_0061b4f0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_202 -- the body is the canonical transcription of
+// AircraftClass::Draw_Text_Overlay -- the body is the canonical transcription of
 // 80 instructions at 0x0061bc30, in src/generated/code/.
 // size 242 bytes; callees: 0x0043e6f0, 0x0046ebd0, 0x004719a0, 0x00471a00, 0x00682aae
 //
-void AircraftClass::vfunc_202(int a0, int a1, int a2)
+void AircraftClass::Draw_Text_Overlay(int a0, int a1, int a2)
 {
     ts::sub::sub_0061bc30();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_203 -- the body is the canonical transcription of
+// AircraftClass::Do_Uncloak -- the body is the canonical transcription of
 // 40 instructions at 0x00617b90, in src/generated/code/.
 // size 155 bytes; callees: 0x00647220
 //
-void AircraftClass::vfunc_203(int a0)
+void AircraftClass::Do_Uncloak(int a0)
 {
     ts::sub::sub_00617b90();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_204 -- the body is the canonical transcription of
+// AircraftClass::Do_Cloak -- the body is the canonical transcription of
 // 41 instructions at 0x00617c30, in src/generated/code/.
 // size 162 bytes; callees: 0x00647220
 //
-void AircraftClass::vfunc_204(int a0)
+void AircraftClass::Do_Cloak(int a0)
 {
     ts::sub::sub_00617c30();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_205 -- the body is the canonical transcription of
+// AircraftClass::Apparent_Brightness -- the body is the canonical transcription of
 // 12 instructions at 0x0061d9a0, in src/generated/code/.
 // size 39 bytes; callees: none
 //
-void AircraftClass::vfunc_205(int a0)
+void AircraftClass::Apparent_Brightness(int a0)
 {
     ts::sub::sub_0061d9a0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_206 -- the body is the canonical transcription of
+// AircraftClass::Is_Ready_To_Random_Animate -- the body is the canonical transcription of
 // 14 instructions at 0x0061b490, in src/generated/code/.
 // size 41 bytes; callees: none
 //
-void AircraftClass::vfunc_206()
+void AircraftClass::Is_Ready_To_Random_Animate()
 {
     ts::sub::sub_0061b490();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_207 -- the body is the canonical transcription of
+// AircraftClass::Random_Animate -- the body is the canonical transcription of
 // 2 instructions at 0x0040e790, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_207()
+void AircraftClass::Random_Animate()
 {
     ts::sub::sub_0040e790();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_208 -- the body is the canonical transcription of
+// AircraftClass::Assign_Destination -- the body is the canonical transcription of
 // 22 instructions at 0x0040d640, in src/generated/code/.
 // size 49 bytes; callees: 0x004a0830
 //
-void AircraftClass::vfunc_208(int a0, int a1)
+void AircraftClass::Assign_Destination(int a0, int a1)
 {
     ts::sub::sub_0040d640();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_209 -- the body is the canonical transcription of
+// AircraftClass::Enter_Idle_Mode -- the body is the canonical transcription of
 // 22 instructions at 0x0040a930, in src/generated/code/.
 // size 57 bytes; callees: none
 //
-void AircraftClass::vfunc_209(int a0, int a1)
+void AircraftClass::Enter_Idle_Mode(int a0, int a1)
 {
     ts::sub::sub_0040a930();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_210 -- the body is the canonical transcription of
+// AircraftClass::Radar_Track -- the body is the canonical transcription of
 // 12 instructions at 0x0061d4c0, in src/generated/code/.
 // size 37 bytes; callees: 0x005a2960
 //
-void AircraftClass::vfunc_210()
+void AircraftClass::Radar_Track()
 {
     ts::sub::sub_0061d4c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_211 -- the body is the canonical transcription of
+// AircraftClass::Radar_Untrack -- the body is the canonical transcription of
 // 12 instructions at 0x0061d4f0, in src/generated/code/.
 // size 37 bytes; callees: 0x005a2b40
 //
-void AircraftClass::vfunc_211()
+void AircraftClass::Radar_Untrack()
 {
     ts::sub::sub_0061d4f0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_212 -- the body is the canonical transcription of
+// AircraftClass::Plot_On_Radar -- the body is the canonical transcription of
 // 5 instructions at 0x0061d520, in src/generated/code/.
 // size 18 bytes; callees: 0x005a34e0
 //
-void AircraftClass::vfunc_212()
+void AircraftClass::Plot_On_Radar()
 {
     ts::sub::sub_0061d520();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_213 -- the body is the canonical transcription of
+// AircraftClass::Update_Radar_Position -- the body is the canonical transcription of
 // 33 instructions at 0x0061df20, in src/generated/code/.
 // size 98 bytes; callees: 0x0051e620, 0x0061dfac
 //
-void AircraftClass::vfunc_213(int a0, int a1, int a2, int a3, int a4)
+void AircraftClass::Update_Radar_Position(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0061df20();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_214 -- the body is the canonical transcription of
+// AircraftClass::Should_Delete_Off_Map -- the body is the canonical transcription of
 // 20 instructions at 0x0040e3e0, in src/generated/code/.
 // size 58 bytes; callees: 0x00609f00
 //
-void AircraftClass::vfunc_214()
+void AircraftClass::Should_Delete_Off_Map()
 {
     ts::sub::sub_0040e3e0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_215 -- the body is the canonical transcription of
+// AircraftClass::Is_Considered_Slow -- the body is the canonical transcription of
 // 10 instructions at 0x004a2800, in src/generated/code/.
 // size 21 bytes; callees: none
 //
-void AircraftClass::vfunc_215()
+void AircraftClass::Is_Considered_Slow()
 {
     ts::sub::sub_004a2800();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_216 -- the body is the canonical transcription of
+// AircraftClass::Deploy_To_Fire -- the body is the canonical transcription of
 // 2 instructions at 0x0040e7b0, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_216()
+void AircraftClass::Deploy_To_Fire()
 {
     ts::sub::sub_0040e7b0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_217 -- the body is the canonical transcription of
+// AircraftClass::Likely_Coord -- the body is the canonical transcription of
 // 18 instructions at 0x004a11e0, in src/generated/code/.
 // size 48 bytes; callees: none
 //
-void AircraftClass::vfunc_217(int a0)
+void AircraftClass::Likely_Coord(int a0)
 {
     ts::sub::sub_004a11e0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_218 -- the body is the canonical transcription of
+// AircraftClass::On_Movement_Blocked -- the body is the canonical transcription of
 // 17 instructions at 0x004a2850, in src/generated/code/.
 // size 44 bytes; callees: none
 //
-void AircraftClass::vfunc_218()
+void AircraftClass::On_Movement_Blocked()
 {
     ts::sub::sub_004a2850();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_219 -- the body is the canonical transcription of
+// AircraftClass::JumpJet_To_Walk -- the body is the canonical transcription of
 // 2 instructions at 0x0040e7d0, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_219()
+void AircraftClass::JumpJet_To_Walk()
 {
     ts::sub::sub_0040e7d0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_220 -- the body is the canonical transcription of
+// AircraftClass::Start_Driver -- the body is the canonical transcription of
 // 40 instructions at 0x0049dd90, in src/generated/code/.
 // size 108 bytes; callees: 0x006939b0
 //
-void AircraftClass::vfunc_220(int a0)
+void AircraftClass::Start_Driver(int a0)
 {
     ts::sub::sub_0049dd90();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_221 -- the body is the canonical transcription of
+// AircraftClass::Stop_Driver -- the body is the canonical transcription of
 // 14 instructions at 0x0049dd60, in src/generated/code/.
 // size 39 bytes; callees: 0x006939b0
 //
-void AircraftClass::vfunc_221()
+void AircraftClass::Stop_Driver()
 {
     ts::sub::sub_0049dd60();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_222 -- the body is the canonical transcription of
+// AircraftClass::Is_Docked_For_Repair -- the body is the canonical transcription of
 // 30 instructions at 0x004a22c0, in src/generated/code/.
 // size 78 bytes; callees: 0x004a2310
 //
-void AircraftClass::vfunc_222()
+void AircraftClass::Is_Docked_For_Repair()
 {
     ts::sub::sub_004a22c0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_223 -- the body is the canonical transcription of
+// AircraftClass::Draw_Object -- the body is the canonical transcription of
 // 32 instructions at 0x0040e7e0, in src/generated/code/.
 // size 83 bytes; callees: 0x00618dd0
 //
-void AircraftClass::vfunc_223(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14)
+void AircraftClass::Draw_Object(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14)
 {
     ts::sub::sub_0040e7e0();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_224 -- the body is the canonical transcription of
+// AircraftClass::Berzerk -- the body is the canonical transcription of
 // 1 instructions at 0x0040e840, in src/generated/code/.
 // size 1 bytes; callees: none
 //
-void AircraftClass::vfunc_224()
+void AircraftClass::Berzerk()
 {
     ts::sub::sub_0040e840();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_225 -- the body is the canonical transcription of
+// AircraftClass::Start_Fear -- the body is the canonical transcription of
 // 1 instructions at 0x0040e850, in src/generated/code/.
 // size 1 bytes; callees: none
 //
-void AircraftClass::vfunc_225()
+void AircraftClass::Start_Fear()
 {
     ts::sub::sub_0040e850();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_226 -- the body is the canonical transcription of
+// AircraftClass::Stop_Fear -- the body is the canonical transcription of
 // 1 instructions at 0x0040e860, in src/generated/code/.
 // size 1 bytes; callees: none
 //
-void AircraftClass::vfunc_226()
+void AircraftClass::Stop_Fear()
 {
     ts::sub::sub_0040e860();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_227 -- the body is the canonical transcription of
+// AircraftClass::Do_Idle -- the body is the canonical transcription of
 // 1 instructions at 0x0040e870, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_227(int a0)
+void AircraftClass::Do_Idle(int a0)
 {
     ts::sub::sub_0040e870();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_228 -- the body is the canonical transcription of
+// AircraftClass::Offload_Tiberium_Bail -- the body is the canonical transcription of
 // 2 instructions at 0x004a0e10, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_228()
+void AircraftClass::Offload_Tiberium_Bail()
 {
     ts::sub::sub_004a0e10();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_229 -- the body is the canonical transcription of
+// AircraftClass::Overrun_Square -- the body is the canonical transcription of
 // 1 instructions at 0x0040e880, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_229(int a0, int a1)
+void AircraftClass::Overrun_Square(int a0, int a1)
 {
     ts::sub::sub_0040e880();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_230 -- the body is the canonical transcription of
+// AircraftClass::Current_Speed -- the body is the canonical transcription of
 // 43 instructions at 0x004a1c20, in src/generated/code/.
 // size 138 bytes; callees: 0x0061d8e0, 0x0067faf0
 //
-void AircraftClass::vfunc_230(int a0, int a1)
+void AircraftClass::Current_Speed(int a0, int a1)
 {
     ts::sub::sub_004a1c20();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_231 -- the body is the canonical transcription of
+// AircraftClass::Approach_Target -- the body is the canonical transcription of
 // 49 instructions at 0x0049de30, in src/generated/code/.
 // size 132 bytes; callees: 0x0060ebd0
 //
-void AircraftClass::vfunc_231(int a0, int a1, int a2, int a3)
+void AircraftClass::Approach_Target(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_0049de30();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_232 -- the body is the canonical transcription of
+// AircraftClass::Fixup_Path -- the body is the canonical transcription of
 // 1 instructions at 0x0040e890, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void AircraftClass::vfunc_232(int a0)
+void AircraftClass::Fixup_Path(int a0)
 {
     ts::sub::sub_0040e890();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_233 -- the body is the canonical transcription of
+// AircraftClass::Set_Speed -- the body is the canonical transcription of
 // 8 instructions at 0x0049c520, in src/generated/code/.
 // size 40 bytes; callees: none
 //
-void AircraftClass::vfunc_233(int a0, int a1)
+void AircraftClass::Set_Speed(int a0, int a1)
 {
     ts::sub::sub_0049c520();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_234 -- the body is the canonical transcription of
+// AircraftClass::Stop_Movement_Animation -- the body is the canonical transcription of
 // 1 instructions at 0x004a2330, in src/generated/code/.
 // size 1 bytes; callees: none
 //
-void AircraftClass::vfunc_234()
+void AircraftClass::Stop_Movement_Animation()
 {
     ts::sub::sub_004a2330();
 }
 
 // -------------------------------------------------------------------------
-// AircraftClass::vfunc_235 -- the body is the canonical transcription of
+// AircraftClass::Is_LZ_Clear -- the body is the canonical transcription of
 // 14 instructions at 0x004a4140, in src/generated/code/.
 // size 27 bytes; callees: none
 //
-void AircraftClass::vfunc_235(int a0)
+void AircraftClass::Is_LZ_Clear(int a0)
 {
     ts::sub::sub_004a4140();
 }

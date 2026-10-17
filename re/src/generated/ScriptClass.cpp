@@ -26,74 +26,74 @@ void ScriptClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// ScriptClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// ScriptClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void ScriptClass::Init(int a0)
+void ScriptClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// ScriptClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// ScriptClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void ScriptClass::Shutdown(int a0)
+void ScriptClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// ScriptClass::vfunc_3 -- the body is the canonical transcription of
+// ScriptClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x005ce490, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void ScriptClass::vfunc_3(int a0, int a1)
+void ScriptClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_005ce490();
 }
 
-// ScriptClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// ScriptClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void ScriptClass::Release(int a0)
+void ScriptClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// ScriptClass::vfunc_5 -- the body is the canonical transcription of
+// ScriptClass::Load -- the body is the canonical transcription of
 // 23 instructions at 0x005ce4d0, in src/generated/code/.
 // size 69 bytes; callees: 0x00405710, 0x004058b0, 0x005f36e0
 //
-void ScriptClass::vfunc_5(int a0, int a1)
+void ScriptClass::Load(int a0, int a1)
 {
     ts::sub::sub_005ce4d0();
 }
 
 // -------------------------------------------------------------------------
-// ScriptClass::vfunc_6 -- the body is the canonical transcription of
+// ScriptClass::Save -- the body is the canonical transcription of
 // 11 instructions at 0x005ce520, in src/generated/code/.
 // size 29 bytes; callees: 0x00405850
 //
-void ScriptClass::vfunc_6(int a0, int a1, int a2)
+void ScriptClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_005ce520();
 }
 
-// ScriptClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// ScriptClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void ScriptClass::GetType(int a0, int a1)
+void ScriptClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// ScriptClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// ScriptClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void ScriptClass::Set_ID()
+void ScriptClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// ScriptClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// ScriptClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void ScriptClass::Get_RTTI(int a0, int a1)
+void ScriptClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,91 +109,91 @@ void ScriptClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// ScriptClass::Get_Heap -- the body is the canonical transcription of
+// ScriptClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x005cec40, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ScriptClass::Get_Heap()
+void ScriptClass::Fetch_Object_Size()
 {
     ts::sub::sub_005cec40();
 }
 
 // -------------------------------------------------------------------------
-// ScriptClass::Load -- the body is the canonical transcription of
+// ScriptClass::Compute_CRC -- the body is the canonical transcription of
 // 13 instructions at 0x005ce3a0, in src/generated/code/.
 // size 30 bytes; callees: 0x00405940, 0x0046d680
 //
-void ScriptClass::Load(int a0)
+void ScriptClass::Compute_CRC(int a0)
 {
     ts::sub::sub_005ce3a0();
 }
 
-// ScriptClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// ScriptClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void ScriptClass::Save()
+void ScriptClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// ScriptClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// ScriptClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void ScriptClass::GetSizeMax()
+void ScriptClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// ScriptClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// ScriptClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void ScriptClass::Compute_CRC()
+void ScriptClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// ScriptClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// ScriptClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void ScriptClass::vfunc_17()
+void ScriptClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// ScriptClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// ScriptClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void ScriptClass::vfunc_18(int a0)
+void ScriptClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// ScriptClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// ScriptClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void ScriptClass::vfunc_19(int a0)
+void ScriptClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// ScriptClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// ScriptClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void ScriptClass::vfunc_20()
+void ScriptClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// ScriptClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// ScriptClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void ScriptClass::vfunc_21()
+void ScriptClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// ScriptClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// ScriptClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void ScriptClass::vfunc_22(int a0)
+void ScriptClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// ScriptClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// ScriptClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void ScriptClass::vfunc_23()
+void ScriptClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

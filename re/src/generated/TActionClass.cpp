@@ -26,77 +26,77 @@ void TActionClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// TActionClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// TActionClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void TActionClass::Init(int a0)
+void TActionClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// TActionClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// TActionClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void TActionClass::Shutdown(int a0)
+void TActionClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::vfunc_3 -- the body is the canonical transcription of
+// TActionClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x00602760, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void TActionClass::vfunc_3(int a0, int a1)
+void TActionClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_00602760();
 }
 
-// TActionClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// TActionClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void TActionClass::Release(int a0)
+void TActionClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::vfunc_5 -- the body is the canonical transcription of
+// TActionClass::Load -- the body is the canonical transcription of
 // 35 instructions at 0x006027a0, in src/generated/code/.
 // size 111 bytes; callees: 0x00405710, 0x004058b0, 0x005f36e0
 //
-void TActionClass::vfunc_5(int a0, int a1)
+void TActionClass::Load(int a0, int a1)
 {
     ts::sub::sub_006027a0();
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::vfunc_6 -- the body is the canonical transcription of
+// TActionClass::Save -- the body is the canonical transcription of
 // 11 instructions at 0x00602810, in src/generated/code/.
 // size 29 bytes; callees: 0x00405850
 //
-void TActionClass::vfunc_6(int a0, int a1, int a2)
+void TActionClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_00602810();
 }
 
-// TActionClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// TActionClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void TActionClass::GetType(int a0, int a1)
+void TActionClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// TActionClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// TActionClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void TActionClass::Set_ID()
+void TActionClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::Get_RTTI -- the body is the canonical transcription of
+// TActionClass::Detach -- the body is the canonical transcription of
 // 21 instructions at 0x005fe060, in src/generated/code/.
 // size 52 bytes; callees: none
 //
-void TActionClass::Get_RTTI(int a0, int a1)
+void TActionClass::Detach(int a0, int a1)
 {
     ts::sub::sub_005fe060();
 }
@@ -112,94 +112,94 @@ void TActionClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::Get_Heap -- the body is the canonical transcription of
+// TActionClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00602980, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TActionClass::Get_Heap()
+void TActionClass::Fetch_Object_Size()
 {
     ts::sub::sub_00602980();
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::Load -- the body is the canonical transcription of
+// TActionClass::Compute_CRC -- the body is the canonical transcription of
 // 57 instructions at 0x00602830, in src/generated/code/.
 // size 141 bytes; callees: 0x00405940, 0x0046d680
 //
-void TActionClass::Load(int a0)
+void TActionClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00602830();
 }
 
-// TActionClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// TActionClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void TActionClass::Save()
+void TActionClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// TActionClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// TActionClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void TActionClass::GetSizeMax()
+void TActionClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
 // -------------------------------------------------------------------------
-// TActionClass::Compute_CRC -- the body is the canonical transcription of
+// TActionClass::Fetch_Heap_ID -- the body is the canonical transcription of
 // 2 instructions at 0x006029a0, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void TActionClass::Compute_CRC()
+void TActionClass::Fetch_Heap_ID()
 {
     ts::sub::sub_006029a0();
 }
 
-// TActionClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// TActionClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void TActionClass::vfunc_17()
+void TActionClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// TActionClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// TActionClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void TActionClass::vfunc_18(int a0)
+void TActionClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// TActionClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// TActionClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void TActionClass::vfunc_19(int a0)
+void TActionClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// TActionClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// TActionClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void TActionClass::vfunc_20()
+void TActionClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// TActionClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// TActionClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void TActionClass::vfunc_21()
+void TActionClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// TActionClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// TActionClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void TActionClass::vfunc_22(int a0)
+void TActionClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// TActionClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// TActionClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void TActionClass::vfunc_23()
+void TActionClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

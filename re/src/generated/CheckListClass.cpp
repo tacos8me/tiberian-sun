@@ -101,211 +101,211 @@ void CheckListClass::vfunc_9()
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_10 -- the body is the canonical transcription of
+// CheckListClass::Input -- the body is the canonical transcription of
 // 41 instructions at 0x004a5be0, in src/generated/code/.
 // size 148 bytes; callees: 0x004a5c7f, 0x004f1ca0, 0x004f1cf0
 //
-void CheckListClass::vfunc_10(int a0, int a1)
+void CheckListClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_11 -- the body is the canonical transcription of
+// CheckListClass::Draw_All -- the body is the canonical transcription of
 // 20 instructions at 0x004a5bb0, in src/generated/code/.
 // size 44 bytes; callees: none
 //
-void CheckListClass::vfunc_11(int a0)
+void CheckListClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_12 -- the body is the canonical transcription of
+// CheckListClass::Delete_List -- the body is the canonical transcription of
 // 37 instructions at 0x004a5b20, in src/generated/code/.
 // size 74 bytes; callees: none
 //
-void CheckListClass::vfunc_12()
+void CheckListClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_13 -- the body is the canonical transcription of
+// CheckListClass::Extract_Gadget -- the body is the canonical transcription of
 // 23 instructions at 0x004a5de0, in src/generated/code/.
 // size 47 bytes; callees: none
 //
-void CheckListClass::vfunc_13(int a0)
+void CheckListClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_14 -- the body is the canonical transcription of
+// CheckListClass::Flag_List_To_Redraw -- the body is the canonical transcription of
 // 2 instructions at 0x0045afe0, in src/generated/code/.
 // size 11 bytes; callees: none
 //
-void CheckListClass::vfunc_14()
+void CheckListClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_15 -- the body is the canonical transcription of
+// CheckListClass::Disable -- the body is the canonical transcription of
 // 5 instructions at 0x004a5ad0, in src/generated/code/.
 // size 13 bytes; callees: none
 //
-void CheckListClass::vfunc_15()
+void CheckListClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_16 -- the body is the canonical transcription of
+// CheckListClass::Enable -- the body is the canonical transcription of
 // 4 instructions at 0x004a5ac0, in src/generated/code/.
 // size 13 bytes; callees: none
 //
-void CheckListClass::vfunc_16()
+void CheckListClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_17 -- the body is the canonical transcription of
+// CheckListClass::Get_ID -- the body is the canonical transcription of
 // 2 instructions at 0x00460610, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void CheckListClass::vfunc_17()
+void CheckListClass::Get_ID()
 {
     ts::sub::sub_00460610();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_18 -- the body is the canonical transcription of
+// CheckListClass::Flag_To_Redraw -- the body is the canonical transcription of
 // 18 instructions at 0x004f78a0, in src/generated/code/.
 // size 58 bytes; callees: 0x004a5e20
 //
-void CheckListClass::vfunc_18()
+void CheckListClass::Flag_To_Redraw()
 {
     ts::sub::sub_004f78a0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_19 -- the body is the canonical transcription of
+// CheckListClass::Peer_To_Peer -- the body is the canonical transcription of
 // 32 instructions at 0x004f73e0, in src/generated/code/.
 // size 89 bytes; callees: none
 //
-void CheckListClass::vfunc_19(int a0, int a1, int a2)
+void CheckListClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_004f73e0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_20 -- the body is the canonical transcription of
+// CheckListClass::Set_Focus -- the body is the canonical transcription of
 // 16 instructions at 0x004a5e60, in src/generated/code/.
 // size 46 bytes; callees: none
 //
-void CheckListClass::vfunc_20()
+void CheckListClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_21 -- the body is the canonical transcription of
+// CheckListClass::Clear_Focus -- the body is the canonical transcription of
 // 7 instructions at 0x004a5e90, in src/generated/code/.
 // size 28 bytes; callees: none
 //
-void CheckListClass::vfunc_21()
+void CheckListClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_22 -- the body is the canonical transcription of
+// CheckListClass::Has_Focus -- the body is the canonical transcription of
 // 5 instructions at 0x004a5eb0, in src/generated/code/.
 // size 14 bytes; callees: none
 //
-void CheckListClass::vfunc_22()
+void CheckListClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_23 -- the body is the canonical transcription of
+// CheckListClass::Is_List_To_Redraw -- the body is the canonical transcription of
 // 12 instructions at 0x004a5ec0, in src/generated/code/.
 // size 25 bytes; callees: none
 //
-void CheckListClass::vfunc_23()
+void CheckListClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_24 -- the body is the canonical transcription of
+// CheckListClass::Is_To_Redraw -- the body is the canonical transcription of
 // 2 instructions at 0x0045aff0, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void CheckListClass::vfunc_24()
+void CheckListClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_25 -- the body is the canonical transcription of
+// CheckListClass::Set_Position -- the body is the canonical transcription of
 // 43 instructions at 0x004f6e10, in src/generated/code/.
 // size 123 bytes; callees: none
 //
-void CheckListClass::vfunc_25(int a0, int a1)
+void CheckListClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004f6e10();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_26 -- the body is the canonical transcription of
+// CheckListClass::Set_Size -- the body is the canonical transcription of
 // 5 instructions at 0x004a5f00, in src/generated/code/.
 // size 17 bytes; callees: none
 //
-void CheckListClass::vfunc_26(int a0, int a1)
+void CheckListClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_27 -- the body is the canonical transcription of
+// CheckListClass::Draw_Me -- the body is the canonical transcription of
 // 83 instructions at 0x004f71f0, in src/generated/code/.
 // size 232 bytes; callees: 0x00470d90, 0x004a5b90
 //
-void CheckListClass::vfunc_27(int a0)
+void CheckListClass::Draw_Me(int a0)
 {
     ts::sub::sub_004f71f0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_28 -- the body is the canonical transcription of
+// CheckListClass::Sticky_Process -- the body is the canonical transcription of
 // 8 instructions at 0x004a5e30, in src/generated/code/.
 // size 23 bytes; callees: 0x004a5e4f
 //
-void CheckListClass::vfunc_28(int a0)
+void CheckListClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_29 -- the body is the canonical transcription of
+// CheckListClass::Action -- the body is the canonical transcription of
 // 8 instructions at 0x0045adf0, in src/generated/code/.
 // size 19 bytes; callees: none
 //
-void CheckListClass::vfunc_29(int a0, int a1)
+void CheckListClass::Action(int a0, int a1)
 {
     ts::sub::sub_0045adf0();
 }
 
 // -------------------------------------------------------------------------
-// CheckListClass::vfunc_30 -- the body is the canonical transcription of
+// CheckListClass::Clicked_On -- the body is the canonical transcription of
 // 26 instructions at 0x004a5a60, in src/generated/code/.
 // size 67 bytes; callees: none
 //
-void CheckListClass::vfunc_30(int a0, int a1, int a2, int a3)
+void CheckListClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

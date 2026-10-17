@@ -82,155 +82,155 @@ void GaugeClass::vfunc_9()
     ts::sub::sub_004a5ae0();
 }
 
-// GaugeClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// GaugeClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_10(int a0, int a1)
+void GaugeClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// GaugeClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// GaugeClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_11(int a0)
+void GaugeClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// GaugeClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// GaugeClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_12()
+void GaugeClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// GaugeClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// GaugeClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_13(int a0)
+void GaugeClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// GaugeClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// GaugeClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_14()
+void GaugeClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// GaugeClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// GaugeClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_15()
+void GaugeClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// GaugeClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// GaugeClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_16()
+void GaugeClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// GaugeClass::vfunc_17 -- ALIAS of CheckListClass::vfunc_17 (same machine code at 0x00460610); the
+// GaugeClass::Get_ID -- ALIAS of CheckListClass::Get_ID (same machine code at 0x00460610); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_17()
+void GaugeClass::Get_ID()
 {
     ts::sub::sub_00460610();
 }
 
-// GaugeClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); the
+// GaugeClass::Flag_To_Redraw -- ALIAS of ControlClass::Flag_To_Redraw (same machine code at 0x004a5e20); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_18()
+void GaugeClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
-// GaugeClass::vfunc_19 -- ALIAS of ControlClass::vfunc_19 (same machine code at 0x00460650); the
+// GaugeClass::Peer_To_Peer -- ALIAS of ControlClass::Peer_To_Peer (same machine code at 0x00460650); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_19(int a0, int a1, int a2)
+void GaugeClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_00460650();
 }
 
-// GaugeClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); the
+// GaugeClass::Set_Focus -- ALIAS of CheckListClass::Set_Focus (same machine code at 0x004a5e60); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_20()
+void GaugeClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
-// GaugeClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// GaugeClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_21()
+void GaugeClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// GaugeClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// GaugeClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_22()
+void GaugeClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// GaugeClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// GaugeClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_23()
+void GaugeClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// GaugeClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// GaugeClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_24()
+void GaugeClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
-// GaugeClass::vfunc_25 -- ALIAS of ControlClass::vfunc_25 (same machine code at 0x004a5ee0); the
+// GaugeClass::Set_Position -- ALIAS of ControlClass::Set_Position (same machine code at 0x004a5ee0); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_25(int a0, int a1)
+void GaugeClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004a5ee0();
 }
 
-// GaugeClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// GaugeClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_26(int a0, int a1)
+void GaugeClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
 // -------------------------------------------------------------------------
-// GaugeClass::vfunc_27 -- the body is the canonical transcription of
+// GaugeClass::Draw_Me -- the body is the canonical transcription of
 // 67 instructions at 0x004a6b90, in src/generated/code/.
 // size 212 bytes; callees: 0x00460620, 0x00470d90, 0x004a5940, 0x004a6c70
 //
-void GaugeClass::vfunc_27(int a0, int a1, int a2, int a3)
+void GaugeClass::Draw_Me(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a6b90();
 }
 
-// GaugeClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// GaugeClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_28(int a0)
+void GaugeClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
 // -------------------------------------------------------------------------
-// GaugeClass::vfunc_29 -- the body is the canonical transcription of
+// GaugeClass::Action -- the body is the canonical transcription of
 // 12 instructions at 0x004a6d30, in src/generated/code/.
 // size 20 bytes; callees: none
 //
-void GaugeClass::vfunc_29(int a0, int a1)
+void GaugeClass::Action(int a0, int a1)
 {
     ts::sub::sub_004a6d30();
 }
 
-// GaugeClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// GaugeClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void GaugeClass::vfunc_30(int a0, int a1, int a2, int a3)
+void GaugeClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

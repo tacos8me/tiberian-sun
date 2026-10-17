@@ -26,16 +26,16 @@ void CampaignClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// CampaignClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// CampaignClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void CampaignClass::Init(int a0)
+void CampaignClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// CampaignClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// CampaignClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void CampaignClass::Shutdown(int a0)
+void CampaignClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,9 +50,9 @@ void CampaignClass::vfunc_3(int a0, int a1)
     ts::sub::sub_004469e0();
 }
 
-// CampaignClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// CampaignClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void CampaignClass::Release(int a0)
+void CampaignClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
@@ -77,23 +77,23 @@ void CampaignClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_00446ab0();
 }
 
-// CampaignClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// CampaignClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void CampaignClass::GetType(int a0, int a1)
+void CampaignClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// CampaignClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// CampaignClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void CampaignClass::Set_ID()
+void CampaignClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// CampaignClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// CampaignClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void CampaignClass::Get_RTTI(int a0, int a1)
+void CampaignClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,115 +109,115 @@ void CampaignClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// CampaignClass::Get_Heap -- the body is the canonical transcription of
+// CampaignClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00446ad0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void CampaignClass::Get_Heap()
+void CampaignClass::Fetch_Object_Size()
 {
     ts::sub::sub_00446ad0();
 }
 
 // -------------------------------------------------------------------------
-// CampaignClass::Load -- the body is the canonical transcription of
+// CampaignClass::Compute_CRC -- the body is the canonical transcription of
 // 25 instructions at 0x00446a20, in src/generated/code/.
 // size 69 bytes; callees: 0x00405fe0, 0x0046d680, 0x0046d6e0
 //
-void CampaignClass::Load(int a0)
+void CampaignClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00446a20();
 }
 
-// CampaignClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// CampaignClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void CampaignClass::Save()
+void CampaignClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// CampaignClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// CampaignClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void CampaignClass::GetSizeMax()
+void CampaignClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// CampaignClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// CampaignClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void CampaignClass::Compute_CRC()
+void CampaignClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// CampaignClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// CampaignClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void CampaignClass::vfunc_17()
+void CampaignClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// CampaignClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// CampaignClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void CampaignClass::vfunc_18(int a0)
+void CampaignClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// CampaignClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// CampaignClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void CampaignClass::vfunc_19(int a0)
+void CampaignClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// CampaignClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// CampaignClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void CampaignClass::vfunc_20()
+void CampaignClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// CampaignClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// CampaignClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void CampaignClass::vfunc_21()
+void CampaignClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// CampaignClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// CampaignClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void CampaignClass::vfunc_22(int a0)
+void CampaignClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// CampaignClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// CampaignClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void CampaignClass::vfunc_23()
+void CampaignClass::AI()
 {
     ts::sub::sub_00405ab0();
 }
 
-// CampaignClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
+// CampaignClass::Init_Theater -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
 // forwarder is written once, at that declaration.
-void CampaignClass::vfunc_24(int a0)
+void CampaignClass::Init_Theater(int a0)
 {
     ts::sub::sub_00406010();
 }
 
 // -------------------------------------------------------------------------
-// CampaignClass::Fetch_ID -- the body is the canonical transcription of
+// CampaignClass::Read_INI -- the body is the canonical transcription of
 // 50 instructions at 0x004467d0, in src/generated/code/.
 // size 136 bytes; callees: 0x00405f20, 0x00448e60, 0x004d60b0, 0x004d6ed0, 0x0069426c
 //
-void CampaignClass::Fetch_ID(int a0)
+void CampaignClass::Read_INI(int a0)
 {
     ts::sub::sub_004467d0();
 }
 
-// CampaignClass::Set_ID -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
+// CampaignClass::Write_INI -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
 // forwarder is written once, at that declaration.
-void CampaignClass::Set_ID(int a0)
+void CampaignClass::Write_INI(int a0)
 {
     ts::sub::sub_00405fb0();
 }
