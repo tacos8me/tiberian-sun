@@ -67,10 +67,10 @@ import re
 import subprocess
 import sys
 
-# g++ 13 quotes with U+2018/U+2019; older versions use plain quotes.
-NEGATIVE = re.compile(
-    r"size\s+[^\n]*?of array\s+[\u2018\u2019'\"]?(chk_[A-Za-z0-9_]+)"
-    r"[\u2018\u2019'\"]?\s+is negative")
+# A failed assertion is reported as "size ... of array 'chk_NN_...' is
+# negative" (g++ 13 quotes the symbol with U+2018/U+2019). Only the wording
+# "is negative" is matched; the symbol is taken from the line's position in
+# the TU, which is exact, rather than from the message.
 
 # A class definition in a header, with its optional template header.
 DEF_RE = re.compile(
