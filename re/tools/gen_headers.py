@@ -377,6 +377,12 @@ def curated_members(body):
             continue
         if not s or s.startswith("//") or ";" not in s:
             continue
+        if _GAP_MEMBER_RE.match(line):
+            # A member this tool declared inside a curated gap. It is machine
+            # text: treat the gap as empty so curated_pad_plan() re-creates the
+            # pad and curated_gap() re-declares the member at the same place,
+            # instead of the two fighting over the same bytes.
+            continue
         code = line.split("//")[0]
         if "(" in code:
             continue
@@ -1096,6 +1102,55 @@ def class_body_span(src, class_name):
 # would add another pad and the block would walk down the class.
 _CURATED_PAD_RE = re.compile(r"^\s*unsigned char pad_doc_\w+\[[^\]]*\];")
 
+# A member this tool declares inside a curated gap, so it can be asserted. It
+# is machine text like a pad, so a re-run removes it before deciding where the
+# gaps are; the `(gap member)` marker in its comment is what tells it apart
+# from a declaration the curator wrote.
+_GAP_MARK = "(gap member)"
+_GAP_MEMBER_RE = re.compile(r"^\s*\w[\w ]*;\s*//[^\n]*" + re.escape(_GAP_MARK))
+
+
+def curated_gap(layout, rtti_class, lo, hi, ident, taken):
+    """Lines filling the curated gap [lo, hi) and naming what the ctor stored.
+
+    A hand-written block that jumps from one documented offset to the next
+    leaves a pad for the gap, and that pad is a real hole: WarheadTypeClass's
+    pad before `UseFireParticles` covers +0x2e..+0xc9 while its constructor
+    writes +0x9c, +0xa0, +0xa4, +0xa8, +0xa9, +0xac and +0xb0. The recovered
+    offsets are real and the pad is the only place they can be declared, so the
+    gap is cut at every one of them and the byte is declared where the compiler
+    will actually put it. A gap with no recovered offset in it stays one pad,
+    exactly as before.
+
+    The declaration is named `m_<offset>`, the spelling the machine block
+    already uses for a member with no evidence-backed name, and carries a
+    marker so a re-run can find and replace it.
+    """
+    widths = layout.widths.get(rtti_class) or {}
+    marks = [o for o in layout.recovered(rtti_class) if lo <= o < hi]
+    out = []
+
+    def pad(size, before, at):
+        # The name must not end in `m_<hex>`/`pad_<hex>`: the layout check
+        # reads that as the member's own claimed offset, and this pad sits
+        # where the gap before `before` starts, not at `before`.
+        out.append("    unsigned char pad_doc_gap_%03x[0x%x];  // holds the gap "
+                   "before %s, which documents 0x%x (the compiler would put it "
+                   "at 0x%x)" % (at, size, before, hi, at))
+
+    if not marks or marks[0] > lo:
+        pad((marks[0] if marks else hi) - lo, ident, lo)
+    for a, b in zip(marks, marks[1:] + [hi]):
+        name = "m_%03x" % a
+        while name in taken:
+            name += "_"
+        typ, size, ann = member_width(widths, a)
+        out.append("    %s %s;  // +0x%03x %s; %s"
+                   % (typ, name, a, _GAP_MARK, ann))
+        if a + size < b:
+            pad(b - a - size, name, a + size)
+    return out
+
 
 def apply_curated_pads(src, class_name, layout, rtti_class):
     """Make a curated hand-written block sit at the offsets it documents.
@@ -1122,7 +1177,8 @@ def apply_curated_pads(src, class_name, layout, rtti_class):
     # an earlier run inserted and restores the lines it commented out, so the
     # block is the curator's text again before the gaps are measured.
     lines = [_uncommented(ln) or ln for ln in src[start:end].split("\n")
-             if not _CURATED_PAD_RE.match(ln)]
+             if not _CURATED_PAD_RE.match(ln)
+             and not _GAP_MEMBER_RE.match(ln)]
     # The line numbers in the plan refer to the block as it was parsed, which is
     # the text with any earlier pads already removed, so re-parse to match.
     loc = {}
@@ -1146,14 +1202,12 @@ def apply_curated_pads(src, class_name, layout, rtti_class):
             continue
         if i in pad_at:
             ident, size, claim = pad_at[i]
-            # The comment must not spell "+0x": the layout check reads a
-            # trailing "+0xNN" as a member's claimed offset, and a pad is not
-            # a member claim -- naming one made the pad itself an assertion
-            # that could not hold.
-            out.append("    unsigned char pad_doc_%s[0x%x];  // holds the gap "
-                       "before %s, which documents 0x%x (the compiler would "
-                       "put it at 0x%x)"
-                       % (ident, size, ident, claim, claim - size))
+            # The pad's own comment must not spell "+0x": the layout check reads
+            # a "+0xNN" in a comment as a member's claimed offset, and a pad is
+            # not at the offset it holds the gap for. A recovered offset inside
+            # the gap IS declared here, though, and that one does carry "+0x".
+            out.extend(curated_gap(layout, rtti_class, claim - size, claim,
+                                   ident, set(loc)))
         out.append(ln)
     return (src[:start] + "\n".join(out) + src[end:],
             len(pad_at), len(dup_at), unfixable)

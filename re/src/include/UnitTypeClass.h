@@ -71,7 +71,7 @@ public:
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x63e470 writes these offsets; INI reader 0x63e8e0
     // references the named keys (ini_keys.json, reader VA 0x6547680 = 0x63e8e0).
-    unsigned char pad_doc_m_Field470[0x4];  // holds the gap before m_Field470, which documents 0x470 (the compiler would put it at 0x46c)
+    unsigned char pad_doc_gap_46c[0x4];  // holds the gap before m_Field470, which documents 0x470 (the compiler would put it at 0x46c)
     int   m_Field470;           // +0x470 ctor: mov dword ptr [esi+0x470], 0xffffffff
     int   m_Field474;           // +0x474 ctor: mov dword ptr [esi+0x474], 0xffffffff
     int   m_Field478;           // +0x478 ctor: mov dword ptr [esi+0x478], ebx (0)
@@ -91,7 +91,7 @@ public:
     bool  m_Field48f;           // +0x48f ctor: mov byte ptr [esi+0x48f], bl (0)
     bool  m_Field490;           // +0x490 ctor: mov byte ptr [esi+0x490], bl (0)
     bool  m_Field491;           // +0x491 ctor: mov byte ptr [esi+0x491], bl (0)
-    unsigned char pad_doc_m_Field494[0x2];  // holds the gap before m_Field494, which documents 0x494 (the compiler would put it at 0x492)
+    unsigned char pad_doc_gap_492[0x2];  // holds the gap before m_Field494, which documents 0x494 (the compiler would put it at 0x492)
     int   m_Field494;           // +0x494 ctor: mov dword ptr [esi+0x494], ebx (0)
     bool  m_Field498;           // +0x498 ctor: mov byte ptr [esi+0x498], 0xc
     bool  m_Field499;           // +0x499 ctor: mov byte ptr [esi+0x499], bl (0)

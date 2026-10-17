@@ -59,7 +59,7 @@ public:
     virtual int   Get_RTTI_2();                                     // [28] 0x406a30
 
     // Evidence: ctor 0x405d50 writes [ebp+0x14] (name buffer) and [ebp+0x2d].
-    unsigned char pad_doc_m_Name[0x3];  // holds the gap before m_Name, which documents 0x14 (the compiler would put it at 0x11)
+    unsigned char pad_doc_gap_011[0x3];  // holds the gap before m_Name, which documents 0x14 (the compiler would put it at 0x11)
     char  m_Name[25];       // +0x14  /* ? */ INI "Name" (25-byte inline buffer)
     bool  m_NameSet;        // +0x2d  /* ? */
 
@@ -130,11 +130,11 @@ public:
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x571220 writes these offsets; INI reader 0x572610
     // references the named keys (ini_keys.json, reader VA 0x572610).
-    unsigned char pad_doc_m_IsCrushable[0x32];  // holds the gap before m_IsCrushable, which documents 0x60 (the compiler would put it at 0x2e)
+    unsigned char pad_doc_gap_02e[0x32];  // holds the gap before m_IsCrushable, which documents 0x60 (the compiler would put it at 0x2e)
     bool  m_IsCrushable;        // +0x60  /* ? */ INI "Crushable"
     bool  m_IsSelectable;       // +0x61  /* ? */ INI "Selectable"
     bool  m_IsLegalTarget;      // +0x62  /* ? */ INI "LegalTarget"
-    unsigned char pad_doc_m_Strength[0x1];  // holds the gap before m_Strength, which documents 0x64 (the compiler would put it at 0x63)
+    unsigned char pad_doc_gap_063[0x1];  // holds the gap before m_Strength, which documents 0x64 (the compiler would put it at 0x63)
     int   m_Strength;           // +0x64  INI "Strength"
     int   m_Armor;              // +0x68  INI "Armor"
     int   m_Image;              // +0x6c  /* ? */ INI "Image"

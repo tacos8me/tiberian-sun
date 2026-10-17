@@ -83,7 +83,7 @@ public:
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x61ed9c writes these offsets; INI reader 0x61f590
     // references the named keys (ini_keys.json, reader VA 0x6419856 = 0x61f590).
-    unsigned char pad_doc_m_GuardRange[0x254];  // holds the gap before m_GuardRange, which documents 0x378 (the compiler would put it at 0x124)
+    unsigned char pad_doc_gap_124[0x254];  // holds the gap before m_GuardRange, which documents 0x378 (the compiler would put it at 0x124)
     int   m_GuardRange;         // +0x378  INI "GuardRange"
     int   m_WalkRate;           // +0x37c  INI "WalkRate"
     int   m_TypeImmune;         // +0x380  /* ? */ INI "TypeImmune"

@@ -48,12 +48,18 @@ public:
     bool  Inviso;                // 0x12B INI "Inviso"        (0x6BFEB4)
     bool  Proximity;             // 0x12C INI "Proximity"     (0x6BFEAC)
     bool  Ranged;                // 0x12D INI "Ranged"        (0x6BFEA4)
-    unsigned char pad_doc_Inaccuate[0x1];  // holds the gap before Inaccuate, which documents 0x12f (the compiler would put it at 0x12e)
+    unsigned char m_12e;  // +0x12e (gap member); 1-byte store: mov byte ptr [esi + 0x12e], 1
     bool  Inaccuate;             // 0x12F INI "Inaccuate"     (0x6BFE9C)
-    unsigned char pad_doc_Degenerates[0x2];  // holds the gap before Degenerates, which documents 0x132 (the compiler would put it at 0x130)
+    unsigned char m_130;  // +0x130 (gap member); 1-byte store: mov byte ptr [esi + 0x130], bl
+    unsigned char m_131;  // +0x131 (gap member); 1-byte store: mov byte ptr [esi + 0x131], 1
     bool  Degenerates;           // 0x132 INI "Degenerates"   (0x6BFE94)
     bool  Bouncy;                // 0x133 INI "Bouncy"        (0x6BFE8C)
-    unsigned char pad_doc_Acceleration[0x14];  // holds the gap before Acceleration, which documents 0x148 (the compiler would put it at 0x134)
+    unsigned char m_134;  // +0x134 (gap member); 1-byte store: mov byte ptr [esi + 0x134], bl
+    unsigned char pad_doc_gap_135[0x3];  // holds the gap before m_134, which documents 0x148 (the compiler would put it at 0x135)
+    unsigned int m_138;  // +0x138 (gap member); 4-byte store: mov dword ptr [esi + 0x138], 1
+    unsigned int m_13c;  // +0x13c (gap member); 4-byte store: mov dword ptr [esi + 0x13c], ebx
+    unsigned int m_140;  // +0x140 (gap member); 4-byte store: mov dword ptr [esi + 0x140], ebx
+    unsigned int m_144;  // +0x144 (gap member); 4-byte store: mov dword ptr [esi + 0x144], 0x3fe80000
     double Acceleration;         // 0x148 INI "Acceleration"  (0x6BFE84)
     // /* ? */ "Elasticity", "Color", "Cluster", "Image", "Trailer" are
     //         read by this function; store targets not isolated.

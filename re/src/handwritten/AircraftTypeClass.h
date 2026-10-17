@@ -71,7 +71,7 @@ public:
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x40f4a0 writes these offsets; INI reader 0x40f300
     // references the named keys (ini_keys.json, reader VA 0x4256512 = 0x40f300).
-    unsigned char pad_doc_m_Field470[0x4];  // holds the gap before m_Field470, which documents 0x470 (the compiler would put it at 0x46c)
+    unsigned char pad_doc_gap_46c[0x4];  // holds the gap before m_Field470, which documents 0x470 (the compiler would put it at 0x46c)
     int   m_Field470;           // +0x470 ctor: mov dword ptr [esi+0x470], 0xffffffff
     bool  m_Landable;           // +0x474 ctor: mov byte ptr [esi+0x474], bl (0)  INI "Landable"
     bool  m_Carryall;           // +0x475 ctor: mov byte ptr [esi+0x475], bl (0)  INI "Carryall"

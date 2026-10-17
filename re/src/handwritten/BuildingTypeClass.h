@@ -74,12 +74,12 @@ public:
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x43dc10 writes these offsets; INI readers
     // 0x43f250 / 0x43f45f / 0x43fb5d reference the named keys.
-    unsigned char pad_doc_m_Field470[0x4];  // holds the gap before m_Field470, which documents 0x470 (the compiler would put it at 0x46c)
+    unsigned char pad_doc_gap_46c[0x4];  // holds the gap before m_Field470, which documents 0x470 (the compiler would put it at 0x46c)
     int   m_Field470;           // +0x470 ctor: mov dword ptr [esi+0x470], edi
     int   m_Field474;           // +0x474 ctor: mov dword ptr [esi+0x474], ebx (0)
     int   m_Field478;           // +0x478 ctor: mov dword ptr [esi+0x478], ebx (0)
     int   m_Field47c;           // +0x47c ctor: lea ecx,[esi+0x47c] (sub-object)
-    unsigned char pad_doc_m_Field498[0x18];  // holds the gap before m_Field498, which documents 0x498 (the compiler would put it at 0x480)
+    unsigned char pad_doc_gap_480[0x18];  // holds the gap before m_Field498, which documents 0x498 (the compiler would put it at 0x480)
     int   m_Field498;           // +0x498 ctor: mov dword ptr [esi+0x498], ebx (0)
     int   m_Field49c;           // +0x49c ctor: mov dword ptr [esi+0x49c], ebx (0)
     int   m_Field4a0;           // +0x4a0 ctor: mov dword ptr [esi+0x4a0], 0x1388
@@ -93,7 +93,10 @@ public:
     int   m_Field4c0;           // +0x4c0 ctor: mov dword ptr [esi+0x4c0], ecx
     int   m_Field4c4;           // +0x4c4 ctor: mov dword ptr [esi+0x4c4], ebx (0)
     int   m_Field4c8;           // +0x4c8 ctor: mov dword ptr [esi+0x4c8], ebx (0)
-    unsigned char pad_doc_m_Field4f4[0x28];  // holds the gap before m_Field4f4, which documents 0x4f4 (the compiler would put it at 0x4cc)
+    unsigned char m_4cc;  // +0x4cc (gap member); 1-byte store: mov byte ptr [esi + 0x4cc], bl
+    unsigned char pad_doc_gap_4cd[0xf];  // holds the gap before m_4cc, which documents 0x4f4 (the compiler would put it at 0x4cd)
+    unsigned char m_4dc;  // +0x4dc (gap member); 1-byte store: mov byte ptr [esi + 0x4dc], bl
+    unsigned char pad_doc_gap_4dd[0x17];  // holds the gap before m_4dc, which documents 0x4f4 (the compiler would put it at 0x4dd)
     int   m_Field4f4;           // +0x4f4 ctor: mov dword ptr [esi+0x4f4], ebx (0)
     int   m_Field4f8;           // +0x4f8 ctor: mov dword ptr [esi+0x4f8], edi
     int   m_Field4fc;           // +0x4fc ctor: mov dword ptr [esi+0x4fc], 3
@@ -109,7 +112,23 @@ public:
     int   m_Field524;           // +0x524 ctor: mov dword ptr [esi+0x524], ebp
     int   m_Field528;           // +0x528 ctor: mov dword ptr [esi+0x528], ebx (0)
     int   m_Field52c;           // +0x52c ctor: mov dword ptr [esi+0x52c], ebx (0)
-    unsigned char pad_doc_m_Field7b4[0x284];  // holds the gap before m_Field7b4, which documents 0x7b4 (the compiler would put it at 0x530)
+    unsigned int m_530;  // +0x530 (gap member); 4-byte store: mov dword ptr [esi + 0x530], ebx
+    unsigned int m_534;  // +0x534 (gap member); 4-byte store: mov dword ptr [esi + 0x534], ebp
+    unsigned int m_538;  // +0x538 (gap member); 4-byte store: mov dword ptr [esi + 0x538], ebx
+    unsigned int m_53c;  // +0x53c (gap member); 4-byte store: mov dword ptr [esi + 0x53c], ebx
+    unsigned int m_540;  // +0x540 (gap member); 4-byte store: mov dword ptr [esi + 0x540], ebp
+    unsigned int m_544;  // +0x544 (gap member); 4-byte store: mov dword ptr [esi + 0x544], ebx
+    unsigned int m_548;  // +0x548 (gap member); 4-byte store: mov dword ptr [esi + 0x548], ebx
+    unsigned int m_54c;  // +0x54c (gap member); 4-byte store: mov dword ptr [esi + 0x54c], ebp
+    unsigned int m_550;  // +0x550 (gap member); 4-byte store: mov dword ptr [esi + 0x550], ebx
+    unsigned char pad_doc_gap_554[0xc];  // holds the gap before m_550, which documents 0x7b4 (the compiler would put it at 0x554)
+    unsigned int m_560;  // +0x560 (gap member); 4-byte store: mov dword ptr [esi + 0x560], ebx
+    unsigned int m_564;  // +0x564 (gap member); 4-byte store: mov dword ptr [esi + 0x564], ebp
+    unsigned int m_568;  // +0x568 (gap member); 4-byte store: mov dword ptr [esi + 0x568], ebx
+    unsigned int m_56c;  // +0x56c (gap member); 4-byte store: mov dword ptr [esi + 0x56c], ebx
+    unsigned int m_570;  // +0x570 (gap member); 4-byte store: mov dword ptr [esi + 0x570], ebp
+    unsigned int m_574;  // +0x574 (gap member); 4-byte store: mov dword ptr [esi + 0x574], ebx
+    unsigned char pad_doc_gap_578[0x23c];  // holds the gap before m_574, which documents 0x7b4 (the compiler would put it at 0x578)
     int   m_Field7b4;           // +0x7b4 ctor: mov dword ptr [esi+0x7b4], ebx (0)
     int   m_Field7b8;           // +0x7b8 ctor: mov dword ptr [esi+0x7b8], ebx (0)
     int   m_Field7bc;           // +0x7bc ctor: mov dword ptr [esi+0x7bc], ebx (0)
@@ -123,7 +142,7 @@ public:
     int   m_Field7dc;           // +0x7dc ctor: mov dword ptr [esi+0x7dc], ebx (0)
     int   m_Field7e0;           // +0x7e0 ctor: mov dword ptr [esi+0x7e0], eax
     int   m_Field7e4;           // +0x7e4 ctor: mov dword ptr [esi+0x7e4], ebx (0)
-    unsigned char pad_doc_m_Field7f8[0x10];  // holds the gap before m_Field7f8, which documents 0x7f8 (the compiler would put it at 0x7e8)
+    unsigned char pad_doc_gap_7e8[0x10];  // holds the gap before m_Field7f8, which documents 0x7f8 (the compiler would put it at 0x7e8)
     short m_Field7f8;           // +0x7f8 ctor: mov word ptr [esi+0x7f8], bx (0)
     bool  m_Field7fa;           // +0x7fa ctor: mov byte ptr [esi+0x7fa], 1
     bool  m_Field7fb;           // +0x7fb ctor: mov byte ptr [esi+0x7fb], bl (0)
@@ -143,7 +162,12 @@ public:
     bool  m_Field809;           // +0x809 ctor: mov byte ptr [esi+0x809], bl (0)
     bool  m_Field80a;           // +0x80a ctor: mov byte ptr [esi+0x80a], bl (0)
     bool  m_Field80b;           // +0x80b ctor: mov byte ptr [esi+0x80b], bl (0)
-    unsigned char pad_doc_m_Field812[0x6];  // holds the gap before m_Field812, which documents 0x812 (the compiler would put it at 0x80c)
+    unsigned char m_80c;  // +0x80c (gap member); 1-byte store: mov byte ptr [esi + 0x80c], bl
+    unsigned char m_80d;  // +0x80d (gap member); 1-byte store: mov byte ptr [esi + 0x80d], 1
+    unsigned char m_80e;  // +0x80e (gap member); 1-byte store: mov byte ptr [esi + 0x80e], bl
+    unsigned char m_80f;  // +0x80f (gap member); 1-byte store: mov byte ptr [esi + 0x80f], bl
+    unsigned char m_810;  // +0x810 (gap member); 1-byte store: mov byte ptr [esi + 0x810], bl
+    unsigned char m_811;  // +0x811 (gap member); 1-byte store: mov byte ptr [esi + 0x811], bl
     bool  m_Field812;           // +0x812 ctor: mov byte ptr [esi+0x812], bl (0)
 
     // ---- INI keys read by 0x43f250 / 0x43f45f / 0x43fb5d -------------------

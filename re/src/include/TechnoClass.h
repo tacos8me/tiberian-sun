@@ -194,23 +194,23 @@ public:
     //<UNCOMMENT>    bool  m_IsSelected;         // +0x80  ctor: mov byte ptr [esi+0x80], bl (0)  // commented out: it documents 0x80, which C++ supplies itself (the compiler's own vptr or base sub-object is already there)
     int   m_Owner;              // +0x84  ctor: mov dword ptr [esi+0x84], ebx (0)
     int   m_Field88;            // +0x88  ctor: mov dword ptr [esi+0x88], eax
-    unsigned char pad_doc_m_Field90[0x4];  // holds the gap before m_Field90, which documents 0x90 (the compiler would put it at 0x8c)
+    unsigned char pad_doc_gap_08c[0x4];  // holds the gap before m_Field90, which documents 0x90 (the compiler would put it at 0x8c)
     int   m_Field90;            // +0x90  ctor: mov dword ptr [esi+0x90], ebx (0)
     int   m_Field94;            // +0x94  ctor: mov dword ptr [esi+0x94], ebx (0)
     int   m_Field98;            // +0x98  ctor: mov dword ptr [esi+0x98], 1
     int   m_Field9c;            // +0x9c  ctor: mov dword ptr [esi+0x9c], ebp
     int   m_FieldA0;            // +0xa0  ctor: mov dword ptr [esi+0xa0], ebx (0)
     int   m_FieldA4;            // +0xa4  ctor: mov dword ptr [esi+0xa4], ebx (0)
-    unsigned char pad_doc_m_FieldB0[0x8];  // holds the gap before m_FieldB0, which documents 0xb0 (the compiler would put it at 0xa8)
+    unsigned char pad_doc_gap_0a8[0x8];  // holds the gap before m_FieldB0, which documents 0xb0 (the compiler would put it at 0xa8)
     int   m_FieldB0;            // +0xb0  ctor: mov dword ptr [esi+0xb0], ebx (0)
     int   m_FieldB4;            // +0xb4  ctor: mov dword ptr [esi+0xb4], eax
     int   m_FieldB8;            // +0xb8  ctor: mov dword ptr [esi+0xb8], ebx (0)
     int   m_FieldBc;            // +0xbc  ctor: mov dword ptr [esi+0xbc], eax
     int   m_FieldC0;            // +0xc0  ctor: mov dword ptr [esi+0xc0], ecx
-    unsigned char pad_doc_m_FieldC8[0x4];  // holds the gap before m_FieldC8, which documents 0xc8 (the compiler would put it at 0xc4)
+    unsigned char pad_doc_gap_0c4[0x4];  // holds the gap before m_FieldC8, which documents 0xc8 (the compiler would put it at 0xc4)
     int   m_FieldC8;            // +0xc8  ctor: mov dword ptr [esi+0xc8], ebx (0)
     int   m_FieldCc;            // +0xcc  ctor: mov dword ptr [esi+0xcc], edx
-    unsigned char pad_doc_m_FieldD4[0x4];  // holds the gap before m_FieldD4, which documents 0xd4 (the compiler would put it at 0xd0)
+    unsigned char pad_doc_gap_0d0[0x4];  // holds the gap before m_FieldD4, which documents 0xd4 (the compiler would put it at 0xd0)
     int   m_FieldD4;            // +0xd4  ctor: mov dword ptr [esi+0xd4], ebx (0)
     int   m_FieldD8;            // +0xd8  ctor: mov dword ptr [esi+0xd8], ebx (0)
     int   m_FieldDc;            // +0xdc  ctor: mov dword ptr [esi+0xdc], ebx (0)
@@ -221,19 +221,19 @@ public:
     int   m_FieldF0;            // +0xf0  ctor: mov dword ptr [esi+0xf0], ebx (0)
     int   m_FieldF4;            // +0xf4  ctor: mov dword ptr [esi+0xf4], ebx (0)
     int   m_FieldF8;            // +0xf8  ctor: mov dword ptr [esi+0xf8], eax
-    unsigned char pad_doc_m_Field100[0x4];  // holds the gap before m_Field100, which documents 0x100 (the compiler would put it at 0xfc)
+    unsigned char pad_doc_gap_0fc[0x4];  // holds the gap before m_Field100, which documents 0x100 (the compiler would put it at 0xfc)
     int   m_Field100;           // +0x100 ctor: mov dword ptr [esi+0x100], ebx (0)
     int   m_Field104;           // +0x104 ctor: mov dword ptr [esi+0x104], ebx (0)
     int   m_Field108;           // +0x108 ctor: mov dword ptr [esi+0x108], 1
     int   m_Field10c;           // +0x10c ctor: mov dword ptr [esi+0x10c], ecx
-    unsigned char pad_doc_m_Field114[0x4];  // holds the gap before m_Field114, which documents 0x114 (the compiler would put it at 0x110)
+    unsigned char pad_doc_gap_110[0x4];  // holds the gap before m_Field114, which documents 0x114 (the compiler would put it at 0x110)
     int   m_Field114;           // +0x114 ctor: mov dword ptr [esi+0x114], ebx (0)
     int   m_Field118;           // +0x118 ctor: mov dword ptr [esi+0x118], ebx (0)
     int   m_Field11c;           // +0x11c ctor: mov dword ptr [esi+0x11c], ebx (0)
     int   m_Field120;           // +0x120 ctor: mov dword ptr [esi+0x120], ebx (0)
     int   m_Field124;           // +0x124 ctor: mov dword ptr [esi+0x124], ebx (0)
     int   m_Field128;           // +0x128 ctor: mov dword ptr [esi+0x128], edx
-    unsigned char pad_doc_m_Field130[0x4];  // holds the gap before m_Field130, which documents 0x130 (the compiler would put it at 0x12c)
+    unsigned char pad_doc_gap_12c[0x4];  // holds the gap before m_Field130, which documents 0x130 (the compiler would put it at 0x12c)
     int   m_Field130;           // +0x130 ctor: mov dword ptr [esi+0x130], ebx (0)
     int   m_Field134;           // +0x134 ctor: mov dword ptr [esi+0x134], ebp
     int   m_Field138;           // +0x138 ctor: mov dword ptr [esi+0x138], ebx (0)
@@ -250,10 +250,10 @@ public:
     int   m_Field164;           // +0x164 ctor: mov dword ptr [esi+0x164], ebp
     // +0x168..+0x1e0: embedded sub-objects (lea ecx,[esi+0x168], +0x178,
     //   +0x198, +0x1b0, +0x1c8) constructed in place.  /* ? */
-    unsigned char pad_doc_m_Field1e0[0x78];  // holds the gap before m_Field1e0, which documents 0x1e0 (the compiler would put it at 0x168)
+    unsigned char pad_doc_gap_168[0x78];  // holds the gap before m_Field1e0, which documents 0x1e0 (the compiler would put it at 0x168)
     int   m_Field1e0;           // +0x1e0 ctor: mov dword ptr [esi+0x1e0], ebx (0)
     int   m_Field1e4;           // +0x1e4 ctor: mov dword ptr [esi+0x1e4], eax
-    unsigned char pad_doc_m_Field1ec[0x4];  // holds the gap before m_Field1ec, which documents 0x1ec (the compiler would put it at 0x1e8)
+    unsigned char pad_doc_gap_1e8[0x4];  // holds the gap before m_Field1ec, which documents 0x1ec (the compiler would put it at 0x1e8)
     int   m_Field1ec;           // +0x1ec ctor: mov dword ptr [esi+0x1ec], ebx (0)
     short m_Field1f0;           // +0x1f0 ctor: mov word ptr [esi+0x1f0], ax
     short m_Field1f2;           // +0x1f2 ctor: mov word ptr [esi+0x1f2], bx (0)

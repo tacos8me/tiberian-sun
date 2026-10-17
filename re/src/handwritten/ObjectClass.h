@@ -97,7 +97,7 @@ public:
 
     // ---- data members -----------------------------------------------------
     // Evidence: constructor 0x56e420 writes these offsets.
-    unsigned char pad_doc_m_NextObject[0x3];  // holds the gap before m_NextObject, which documents 0x14 (the compiler would put it at 0x11)
+    unsigned char pad_doc_gap_011[0x3];  // holds the gap before m_NextObject, which documents 0x14 (the compiler would put it at 0x11)
     int   m_NextObject;         // +0x14  ctor: mov dword ptr [esi+0x14], ebx (0)
     int   m_PrevObject;         // +0x18  ctor: mov dword ptr [esi+0x18], ebx (0)
     int   m_Type;               // +0x1c  ctor: mov dword ptr [esi+0x1c], ebx (0)
@@ -114,11 +114,11 @@ public:
     bool  m_IsCloaked;          // +0x33  ctor: mov byte ptr [esi+0x33], bl (0)
     bool  m_IsPowered;          // +0x34  ctor: mov byte ptr [esi+0x34], bl (0)
     bool  m_IsSelected3;        // +0x35  ctor: mov byte ptr [esi+0x35], al (1)
-    unsigned char pad_doc_m_ObjectID[0x2];  // holds the gap before m_ObjectID, which documents 0x38 (the compiler would put it at 0x36)
+    unsigned char pad_doc_gap_036[0x2];  // holds the gap before m_ObjectID, which documents 0x38 (the compiler would put it at 0x36)
     int   m_ObjectID;           // +0x38  ctor: mov dword ptr [esi+0x38], 0xffffffff
     bool  m_IsDead;             // +0x3c  ctor: mov byte ptr [esi+0x3c], bl (0)
     // +0x40: 12-byte coordinate (3 x int) copied from global 0x7d69f0.
-    unsigned char pad_doc_m_CoordX[0x3];  // holds the gap before m_CoordX, which documents 0x40 (the compiler would put it at 0x3d)
+    unsigned char pad_doc_gap_03d[0x3];  // holds the gap before m_CoordX, which documents 0x40 (the compiler would put it at 0x3d)
     int   m_CoordX;             // +0x40  ctor: mov dword ptr [esi+0x40], ecx
     int   m_CoordY;             // +0x44  ctor: mov dword ptr [eax+4], edx
     int   m_CoordZ;             // +0x48  ctor: mov dword ptr [eax+8], ecx
