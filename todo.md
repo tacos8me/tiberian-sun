@@ -554,8 +554,8 @@ so a fresh checkout no longer gets 140 raw headers copied over the reconciled
 ones. Measured: `python3 tools/boot.py` builds (0 of 492 units compiled on a warm
 cache) and reports.
 
-### [ ] `blowfish.dll!DllRegisterServer` fails, so the game takes its error box
-**The current boot stop, measured.** The game reaches its own `MessageBoxA` at
+### [x] `blowfish.dll!DllRegisterServer` fails, so the game takes its error box — fixed
+**Was the boot stop, measured.** The game reaches its own `MessageBoxA` at
 `0x5e72fb` (`type=0x30`, `ExitProcess(1)`). The box is guarded by the byte at
 `-0x5f4(%ebp)`, which is set at `0x5e6216` from `FUN_005e87a0` (a
 `CoCreateInstance` wrapper) and, in the fallback, at `0x5e625b`/`0x5e626b`.
@@ -586,15 +586,29 @@ Two related defects in the same path:
 - `GetProcAddress` cannot resolve an export on a DLL the model only pretends to
   load; `DllRegisterServer` is exactly that case.
 
-*Next:* give `LoadLibraryA`/`GetProcAddress` a named export table for
-`blowfish.dll` (at minimum `DllRegisterServer`/`DllUnregisterServer` returning
-`S_OK`), and make `CoCreateInstance` write a fake COM object with a real vtable.
-Then boot; the next stop should be the primary-surface check, whose descriptor
-offsets are already fixed (`138718a`: bpp at `+0x54`, `lpSurface` at `+0x24`).
-If the game actually calls Blowfish methods to decrypt MIX data, those methods
-need behaviour, not just `S_OK`.
-*Done when:* the registration flag stays 0 and the run reaches the next precise
-stop (or the message loop).
+**Fixed in `1580be3`.** `LoadLibraryA` now returns a module handle that names
+the module, with a per-module export table; `blowfish.dll` exports
+`DllCanUnloadNow`/`DllGetClassObject`/`DllRegisterServer`/`DllUnregisterServer`.
+`CoCreateInstance` writes an `IBlowfish` object for CLSID `1440AD10-…` whose
+eight-slot vtable was recovered from `BLOWFISH.DLL` (object vtable
+`0x1101e480`); slots 3–7 are `SetKey`, `GetMaxKeyLength` (56), `GetBlockSize`
+(8), `Encrypt`, `Decrypt`. `IDirectDraw::CreateClipper` and
+`DirectSoundCreate` no longer return `S_OK` without writing their out pointers
+(the latter now returns `DSERR_NODRIVER`, matching the retail no-audio
+environment). A regression test (`win32-module-exports`) covers handle
+identity, export isolation, `*ppv` being written, the IBlowfish methods and ESP
+balance; it is mutation-proven.
+
+Measured: the registration flag stays 0, the `0x5e72fb` error box never fires,
+there is no `ExitProcess`, the primary-surface check passes
+(`TS_PEEK: 0x006beed8 = 1`), and the boot **reaches the message loop**:
+`PeekMessage=695,115`, `CreateWindowExA=1`, `DispatchMessageA=0`, 0 unmapped
+calls, `boot.py --strict` exits 0.
+
+**Caveat:** `IBlowfish::Encrypt`/`Decrypt` copy the block and log once that no
+cipher is modelled. They are not reached in this boot path, but if the game
+decrypts MIX data with them the plaintext will be silently wrong. Implement the
+real cipher before trusting any content path that depends on it.
 
 ### [x] Write `DDSURFACEDESC` fields where the game reads them
 The game's `DSurface` wrapper (`0x4874c0`/`0x487ad0`) reads `dwRGBBitCount` at
@@ -604,45 +618,86 @@ The game's `DSurface` wrapper (`0x4874c0`/`0x487ad0`) reads `dwRGBBitCount` at
 `138718a` against the game's own code. This did not move the current stop
 (COM registration fails earlier), but it is the next runtime check.
 
-### [ ] Reach a window and a message loop
-**NOT reached.** This entry previously said "Reached. CreateWindowExA=1,
-PeekMessage=137,295" -- that was false, and it was false for an instructive
-reason: the model let `ExitProcess` return, so execution walked past a fatal exit
-and the "loop" was one the real game never ran. `ExitProcess` now halts the run
-in both `boot_driver` and the link test, and the measurement is
-`GetMessage=0 PeekMessage=0 DispatchMessage=0 CreateWindowExA=0`.
+### [x] Reach a window and a message loop — reached, but idle
+**Reached in `1580be3`.** `CreateWindowExA=1` and `PeekMessage=695,115`; the
+loop at `0x0055f78a` (`sub_0055f780`, the PeekMessage pump) is the game's own.
+`DispatchMessageA=0` and `GetMessage=0`, so the loop spins without delivering a
+message. The run now ends on the instruction budget, not a fault or an exit.
 
-The one real unlock on this path is worth keeping: `comctl32!DllGetVersion` was
-reached through `GetProcAddress` rather than the import table, so there was no
-stub, the version read as 0, the CRT's version check failed and the game called
-`ExitProcess(1)` before initialising anything. One export reporting 4.72 fixed it.
+This entry previously said "Reached. CreateWindowExA=1, PeekMessage=137,295"
+and was false, for an instructive reason: the model let `ExitProcess` return,
+so execution walked past a fatal exit and the "loop" was one the real game
+never ran. `ExitProcess` now halts the run in both `boot_driver` and the link
+test, and the current measurement is from a run that never calls it.
 
-Measured coverage now: **44,246 distinct instructions; 4,211 of 46,008 recovered
-functions entered**; 2,046 import calls over 341 traced imports (64 distinct);
-2,046 calls over 25 distinct imports in the link test. The next stubs that
-matter: `RegisterClassA`, `CreateWindowExA`, `PeekMessageA` (must return 0 when
-there is no message -- that is what keeps a game loop running), `GetMessageA`
-(must not return 0 immediately, which looks like WM_QUIT), `GetSystemMetrics`,
-`DirectDrawCreate` (must return a plausible object with a vtable, because the
-game's own wrapper calls through it).
-*Done when:* the run reaches a message loop and keeps executing frames rather
-than returning.
+The unlock on this path is worth keeping: `comctl32!DllGetVersion` was reached
+through `GetProcAddress` rather than the import table, so there was no stub, the
+version read as 0, the CRT's version check failed and the game called
+`ExitProcess(1)` before initialising anything. One export reporting 4.72 fixed
+it. The same class of defect (`GetProcAddress` on a module the model only
+pretended to load) blocked `blowfish.dll!DllRegisterServer` until `1580be3`.
 
-### [ ] The 2 unmapped calls, now outside `.text`
+Measured on `main` with the project's `../gamedir`: **43,845 distinct
+instructions; 4,142 of 46,008 recovered functions entered**; 0 unmapped calls;
+`boot.py --strict` exits 0. Without `../gamedir` the counts differ slightly
+(the `CreateFileA("\\.\MONO")` path changes); use the project gamedir for the
+canonical figure.
+
+*The next entry is the real remaining work on this path: the loop is reached,
+but no message is ever delivered to the window procedure.*
+
+### [ ] Deliver queued messages so the game runs frames
+**The current blocker, measured.** The message loop at `0x0055f780` spins on
+`DAT_007b2e50`:
+
+```asm
+5e77b0: mov al, ds:0x7b2e50
+5e77b5: test al, al
+5e77b7: je   0x5e77ab        ; call FUN_0055f780 again
+```
+
+`DAT_007b2e50` is "app active". The game's WndProc sets it at `0x65bd2a` from
+the `WM_ACTIVATEAPP` (`0x1c`) `wParam`; the dispatch is at `0x65bcaf` and the
+handler at `0x65bd00`. The model's `PeekMessageA` always returns 0, so no
+`WM_ACTIVATEAPP` is ever delivered, `DispatchMessageA` is never called, and the
+flag never changes.
+
+*Next:* implement a real USER32 message queue in `Win32Stubs.h`:
+- `RegisterClassA` records the `WndProc` for the class (currently discarded).
+- `CreateWindowExA` queues at least `WM_CREATE` and `WM_ACTIVATEAPP` (with
+  `wParam=1`) for the created window.
+- `PeekMessageA`/`GetMessageA` return queued messages (correct `MSG` layout:
+  `hwnd`, `message`, `wParam`, `lParam`, `time`, `pt`), and return 0/block only
+  when the queue is empty.
+- `DispatchMessageA` calls the recorded `WndProc` with the message; `SendMessageA`
+  should do the same synchronously.
+*Done when:* `DispatchMessageA > 0`, `DAT_007b2e50` becomes 1, and the game
+executes frames (the loop stops being a pure `PeekMessage` spin). Then name the
+next blocker.
+
+**Secondary, not blocking:** the DirectSound warning text is the literal
+`"%s\n\n%s"`, so the `sprintf`-wrapper path (`0x682aae` → `0x68667c`) or
+`LoadStringA` is not producing formatted text. The box renders with the format
+string; fix it when the message path is stable.
+
+### [x] The unmapped calls — all gone
 **The two in-`.text` targets are gone.** `0x6844df` and `0x46f3f8` disappeared
-with the stack-leak fix; the link test now reports **0 unmapped calls inside
-`.text`** and passes. Two unmapped targets remain, both outside `.text`:
+with the stack-leak fix; the link test reported **0 unmapped calls inside
+`.text`** and passed.
 
+Two outside-`.text` targets remained:
 - `0x002fffe8` -- a stack address (the entry ESP is 0x002ffffc), so a data slot
-  holds a stack pointer where a code pointer was expected.
+  held a stack pointer where a code pointer was expected.
 - `0xa000f9b6` -- inside the synthetic traced-thunk region (`kWrapperBase =
-  0x00a00000`) but not a registered thunk, so it is a computed stub address
+  0x00a00000`) but not a registered thunk, so it was a computed stub address
   that nothing bound.
 
-`python3 tools/boot.py --strict` exits **4** on them
-(`boot: --strict: 2 garbage call target(s) remain`); the boot reports
-`unmapped targets: below 0x1000=0 .rdata=0 elsewhere=2`.
-*Done when:* both are named or gone, and `boot.py --strict` exits 0.
+Both were the same class: a stub that returned `S_OK` without writing its out
+pointer. `1580be3` fixed `IDirectDraw::CreateClipper` (the `0x4876e4` call to
+address 0) and `DirectSoundCreate` (the `0x484839` call to address 0; it now
+returns `DSERR_NODRIVER`, matching the retail no-audio environment). The boot
+now reports **0 unmapped calls** and `python3 tools/boot.py --strict` exits
+**0**.
 
 ### [x] Real file I/O
 The stub layer used to make every file "exist" and read as empty, with
