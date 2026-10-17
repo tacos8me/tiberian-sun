@@ -444,6 +444,15 @@ def parse_report(stdout):
         if line.startswith("  ") and current:
             lists[current].append(line.strip())
             continue
+        # The stack-balance report is a bare header plus indented rows, not a
+        # `key: value` line. It used to be dropped here (the header has no
+        # colon) and its rows attached to whatever list was open before, so the
+        # boot summary never showed a stack defect at all.
+        if line.startswith("STACK IMBALANCE"):
+            keys["stack-imbalance-header"] = line.strip()
+            lists.setdefault("stack-imbalance", [])
+            current = "stack-imbalance"
+            continue
         if ":" not in line:
             continue
         key, value = line.split(":", 1)
@@ -587,6 +596,13 @@ def print_report(keys, lists, entries, build_note, elapsed):
         out.append("call at fault: " + fmt_name(entries, va, thunks))
     out.append("message loop: %s   (%s)"
                % (keys.get("message-loop", "?"), keys.get("message-calls", "")))
+    # A stub whose argument count disagrees with the stack it was called on is a
+    # silent defect: every later argument reads from the wrong slot. Report it
+    # next to the message loop, not buried below the import tail.
+    if "stack-imbalance-header" in keys:
+        out.append(keys["stack-imbalance-header"])
+        for row in lists.get("stack-imbalance", []):
+            out.append("  " + row)
 
     unmapped = int(keys.get("unmapped-calls", "0") or 0)
     in_text = int(keys.get("unmapped-in-text", "0") or 0)

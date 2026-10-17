@@ -125,6 +125,12 @@ inline void note(const char *name) {
 inline u32 arg(unsigned i) { return ld32(ESP.d + 4u + i * 4u); }
 inline void stub_done(unsigned nargs, u32 value) {
     mach().stub_dispatches++;   // the stack-balance gate in ts_call_at watches this
+    // ts_call_at checks the call against esp_before + 4*nargs: a __stdcall stub
+    // pops the return address and its own arguments, so it does NOT return to
+    // esp_before. Recording the count here is what lets the tracker tell a
+    // correct stub from a real defect.
+    mach().stub_last_nargs = nargs;
+    mach().stub_last_depth = mach().call_depth;   // direct-stub test in ts_call_at
     ESP.d += 4u + nargs * 4u;
     EAX.d = value;
 }
