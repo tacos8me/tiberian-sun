@@ -42,6 +42,8 @@ public:
     // 1 recovered offset(s) below +0x4 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0
+    // 1 recovered offset(s) fall inside a wider declaration above
+    // (the store width and the recovered table disagree): +0x16
     unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
     unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [eax + 0xc], edx

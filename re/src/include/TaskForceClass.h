@@ -13,7 +13,6 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "ObjectTypeClass.h"
 
 class TaskForceClass : public AbstractTypeClass
 {

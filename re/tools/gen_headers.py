@@ -1577,10 +1577,63 @@ def main():
         _h = owning_header(_m["class"])
         if _h:
             body_owners.setdefault(_h, []).append(_m["class"])
-    layout = DeclaredLayout(srcdir, hw_dir, manifest, direct, members,
-                            widths_by_class, ident_of, rtti_by_ident, owned,
-                            emitted_bases, owning_header, prelude_owned_types,
-                            owner_header, hw_names, body_owners)
+    def _make_layout():
+        return DeclaredLayout(srcdir, hw_dir, manifest, direct, members,
+                              widths_by_class, ident_of, rtti_by_ident, owned,
+                              emitted_bases, owning_header, prelude_owned_types,
+                              owner_header, hw_names, body_owners)
+
+    layout = _make_layout()
+    # A recovered offset that lies inside a base sub-object belongs to the
+    # BASE, not to the class whose constructor wrote it: a derived constructor
+    # inlines its base's, and C++ puts those bytes in the base sub-object, so
+    # the derived header cannot declare them. IPXManagerClass's constructor
+    # writes +0x4..+0x40 and those are ConnManClass's, whose own header only
+    # learned about +0x5, +0x3c and +0x40 from ConnManClass's constructor --
+    # so 12 of its offsets were declared nowhere at all. Attribute them to the
+    # base that owns the region, carry the store-width evidence with them, and
+    # re-derive the model until the attribution stops growing the base regions.
+    for _round in range(4):
+        _extra = {}
+        for _m in manifest:
+            _c = _m["class"]
+            if _c not in members:
+                continue
+            _pos, _parts = layout._base_region(_c)
+            if not _parts:
+                continue
+            for _r in members[_c]["members"]:
+                _off = _r["off"]
+                if _off >= _pos:
+                    continue
+                for _ident, _lo, _hi in _parts:
+                    # _base_region names a base by its ident; the table is keyed
+                    # by the RTTI spelling.
+                    _key = rtti_by_ident.get(_ident, _ident)
+                    if _lo <= _off < _hi and _key in members:
+                        _extra.setdefault(_key, {})[_off] = _r
+                        break
+        _added = 0
+        for _ident, _offs in _extra.items():
+            _have = {r["off"] for r in members[_ident]["members"]}
+            for _off, _r in sorted(_offs.items()):
+                if _off in _have:
+                    continue
+                members[_ident]["members"].append(dict(_r))
+                members[_ident]["members"].sort(key=lambda r: r["off"])
+                if _r.get("vptr"):
+                    # A vptr store at +0x4 in the derived object is a base
+                    # sub-object's vptr, not the base's own; the base's own
+                    # vptr store is the one at +0x0 and is already recorded.
+                    continue
+                _w = (widths_by_class.get(_c) or {}).get(_off)
+                if _w:
+                    widths_by_class.setdefault(_ident, {}).setdefault(_off, _w)
+                _added += 1
+        if not _added:
+            break
+        layout = _make_layout()
+
     if os.environ.get("GEN_HEADERS_DEBUG"):
         # GEN_HEADERS_DEBUG="class TechnoClass" prints what the layout model
         # decided for a class and why, which is the only way to read the

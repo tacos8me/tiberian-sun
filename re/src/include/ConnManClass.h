@@ -47,9 +47,24 @@ public:
     // 1 recovered offset(s) below +0x4 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0
-    unsigned char pad_004[0x1];
+    // 1 recovered offset(s) fall inside a wider declaration above
+    // (the store width and the recovered table disagree): +0x1a
+    unsigned char m_004;  // +0x004 /* ? */; 1-byte store: mov byte ptr [esi + 4], 1
     unsigned char m_005;  // +0x005 /* ? */; 1-byte store: mov byte ptr [esi + 5], bl
-    unsigned char pad_006[0x36];
+    unsigned char pad_006[0x2];
+    unsigned int m_008;  // +0x008 /* ? */; /* width ? */
+    unsigned int m_00c;  // +0x00c /* ? */; /* width ? */
+    unsigned int m_010;  // +0x010 init 0x1f4; /* width ? */
+    unsigned int m_014;  // +0x014 /* ? */; /* width ? */
+    unsigned int m_018;  // +0x018 /* ? */; /* width ? */
+    unsigned int m_01c;  // +0x01c /* ? */; /* width ? */
+    unsigned int m_020;  // +0x020 /* ? */; 4-byte store: mov dword ptr [esi + edx*4 + 0x20], eax
+    unsigned int m_024;  // +0x024 init 0xbb8; /* width ? */
+    unsigned int m_028;  // +0x028 init 0x4b0; /* width ? */
+    unsigned int m_02c;  // +0x02c /* ? */; /* width ? */
+    unsigned int m_030;  // +0x030 init 0x2b; /* width ? */
+    unsigned int m_034;  // +0x034 /* ? */; /* width ? */
+    unsigned int m_038;  // +0x038 /* ? */; /* width ? */
     unsigned int m_03c;  // +0x03c /* ? */; 4-byte store: mov dword ptr [esi + 0x3c], ebx
     unsigned int m_040;  // +0x040 /* ? */; 4-byte store: mov dword ptr [esi + 0x40], ebx
 };

@@ -49,7 +49,10 @@ public:
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0
     unsigned int m_004;  // +0x004 zero-initialised; 4-byte store: mov dword ptr [esi + 4], 0
-    unsigned char pad_008[0x10];
+    unsigned int m_008;  // +0x008 /* ? */; /* width ? */
+    unsigned int m_00c;  // +0x00c /* ? */; 4-byte store: mov dword ptr [esi + 0xc], 0
+    unsigned int m_010;  // +0x010 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x10], 0
+    unsigned int m_014;  // +0x014 zero-initialised; 4-byte store: mov dword ptr [esi + 0x14], eax
     unsigned char m_018;  // +0x018 zero-initialised; 1-byte store: mov byte ptr [esi + 0x18], 0
     unsigned char m_019;  // +0x019 zero-initialised; 1-byte store: mov byte ptr [esi + 0x19], 0
 };

@@ -105,9 +105,9 @@ public:
     // The machine block begins at +0x3a0: the compiled end of the
     // base sub-object region (+0x124) and of the curated block
     // above. Base evidence: ObjectTypeClass at +0x0 (ends +0x124).
-    // 3 recovered offset(s) below +0x124 lie inside the base
+    // 4 recovered offset(s) below +0x124 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
-    // compiler-checked in the base's own header -- +0x0, +0x4, +0xcd
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0xc7, +0xcd
     // 7 recovered offset(s) are inside the curated hand-written block
     // above (its span is +0x124..+0x3a0) and are NOT repeated here:
     // the curated block wins -- +0x378, +0x37c, +0x380, +0x384, +0x388, +0x38c, +0x39c

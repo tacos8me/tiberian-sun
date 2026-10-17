@@ -46,9 +46,9 @@ public:
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
     // The machine block begins at +0x1a: the compiled end of the
     // base sub-object region. Evidence: FileClass at +0x0 (ends +0x1a).
-    // 3 recovered offset(s) below +0x1a lie inside the base
+    // 7 recovered offset(s) below +0x1a lie inside the base
     // sub-object region and are NOT declared here: they are declared and
-    // compiler-checked in the base's own header -- +0x0, +0x10, +0x14
-    unsigned char pad_01a[0x2];
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x8, +0xc, +0x10, +0x14, +0x18
+    unsigned short m_01a;  // +0x01a /* ? */; /* width ? */
     unsigned char m_01c;  // +0x01c zero-initialised; 1-byte store: mov byte ptr [esi + 0x1c], 0
 };

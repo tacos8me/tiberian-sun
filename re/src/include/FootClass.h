@@ -267,9 +267,9 @@ public:
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
     // The machine block begins at +0x214: the compiled end of the
     // base sub-object region. Evidence: TechnoClass at +0x0 (ends +0x214).
-    // 2 recovered offset(s) below +0x214 lie inside the base
+    // 5 recovered offset(s) below +0x214 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
-    // compiler-checked in the base's own header -- +0x0, +0x4
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x28, +0x134, +0x1f8
     unsigned char pad_214[0x4];
     unsigned int m_218;  // +0x218 init 0xffffffff; 4-byte store: mov dword ptr [esi + 0x218], 0xffffffff
     unsigned short m_21c;  // +0x21c /* ? */; 2-byte store: mov word ptr [esi + 0x21c], bx

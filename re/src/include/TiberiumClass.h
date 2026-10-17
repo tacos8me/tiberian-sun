@@ -13,7 +13,6 @@
 // ==========================================================================
 
 #include "ts_prelude.h"
-#include "ObjectTypeClass.h"
 
 class TiberiumClass : public AbstractTypeClass
 {

@@ -163,10 +163,16 @@ public:
     // 2 recovered offset(s) below +0x2e lie inside the base
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0, +0x4
-    // 1 recovered offset(s) are inside the curated hand-written block
+    // 3 recovered offset(s) are inside the curated hand-written block
     // above (its span is +0x2e..+0x9c) and are NOT repeated here:
-    // the curated block wins -- +0x6c
-    unsigned char pad_09c[0x38];
+    // the curated block wins -- +0x64, +0x68, +0x6c
+    // 5 recovered offset(s) fall inside a wider declaration above
+    // (the store width and the recovered table disagree): +0xc9, +0xca, +0xcb, +0xcd, +0xce
+    unsigned char pad_09c[0x2b];
+    unsigned char Crushable;  // +0x0c7 (INI key); /* width ? */
+    unsigned int m_0c8;  // +0x0c8 /* ? */; /* width ? */
+    unsigned int Immune;  // +0x0cc (INI key); /* width ? */
+    unsigned char pad_0d0[0x4];
     unsigned int m_0d4;  // +0x0d4 /* ? */; 4-byte store: mov dword ptr [esi + 0xd4], eax
     unsigned int m_0d8;  // +0x0d8 /* ? */; 4-byte store: mov dword ptr [esi + 0xd8], eax
     unsigned int m_0dc;  // +0x0dc /* ? */; 4-byte store: mov dword ptr [esi + 0xdc], eax

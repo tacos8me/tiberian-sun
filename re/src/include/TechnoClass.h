@@ -44,9 +44,9 @@ public:
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
     // The machine block begins at +0x4c: the compiled end of the
     // base sub-object region. Evidence: ObjectClass at +0x0 (ends +0x4c).
-    // 2 recovered offset(s) below +0x4c lie inside the base
+    // 3 recovered offset(s) below +0x4c lie inside the base
     // sub-object region and are NOT declared here: they are declared and
-    // compiler-checked in the base's own header -- +0x0, +0x4
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x28
     unsigned int m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [esi + 0x4c], eax
     unsigned int m_050;  // +0x050 /* ? */; 4-byte store: mov dword ptr [esi + 0x50], eax
     unsigned int m_054;  // +0x054 /* ? */; 4-byte store: mov dword ptr [esi + 0x54], eax
@@ -78,9 +78,9 @@ public:
     // vtable-pointer stores are omitted: the compiler supplies the vptr.
     // The machine block begins at +0x6c: the compiled end of the
     // base sub-object region. Evidence: MissionClass at +0x0 (ends +0x6c).
-    // 2 recovered offset(s) below +0x6c lie inside the base
+    // 3 recovered offset(s) below +0x6c lie inside the base
     // sub-object region and are NOT declared here: they are declared and
-    // compiler-checked in the base's own header -- +0x0, +0x4
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x28
     unsigned int m_06c;  // +0x06c /* ? */; 4-byte store: mov dword ptr [esi + 0x6c], eax
     unsigned int m_070;  // +0x070 /* ? */; 4-byte store: mov dword ptr [esi + 0x70], eax
     unsigned int m_074;  // +0x074 /* ? */; 4-byte store: mov dword ptr [esi + 0x74], eax
@@ -295,9 +295,9 @@ public:
     // The machine block begins at +0x214: the compiled end of the
     // base sub-object region (+0x84) and of the curated block
     // above. Base evidence: RadioClass at +0x0 (ends +0x7c), FlasherClass at +0x7c (ends +0x80), StageClass at +0x80 (ends +0x84).
-    // 4 recovered offset(s) below +0x84 lie inside the base
+    // 5 recovered offset(s) below +0x84 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
-    // compiler-checked in the base's own header -- +0x0, +0x4, +0x7c, +0x80
+    // compiler-checked in the base's own header -- +0x0, +0x4, +0x28, +0x7c, +0x80
     // 80 recovered offset(s) are inside the curated hand-written block
     // above (its span is +0x84..+0x214) and are NOT repeated here:
     // the curated block wins -- +0x84, +0x88, +0x90, +0x94, +0x98, +0x9c, +0xa0, +0xa4 ...
