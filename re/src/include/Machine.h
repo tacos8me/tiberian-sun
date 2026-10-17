@@ -118,6 +118,9 @@ struct Machine {
     // and 0x5dcd40" is.
     u32 unmapped_text_sample[16];
     unsigned unmapped_text_sample_n;
+    // The CALL SITE of each in-.text unmapped target. The target alone says the
+    // stack is wrong; the caller says WHICH call pushed the bad pointer.
+    u32 unmapped_text_from[16];
     // .text bounds, set by the caller. They let an unmapped call be classified:
     // outside .text it is an import (expected -- the model has no Windows),
     // inside .text it is a recovered function nothing registered (a defect).
@@ -569,12 +572,14 @@ inline bool in_recovered_span(u32 va) {
 // .text it is bytes the recovery never covered. With no extent table supplied the
 // old, coarser rule stands, so a caller that does not register spans cannot
 // accidentally pass by classifying every defect as a gap.
-inline void count_unmapped_target(Machine &m, u32 va) {
+inline void count_unmapped_target(Machine &m, u32 va, u32 from) {
     if (!m.text_hi || va < m.text_lo || va >= m.text_hi) return;
     if (span_count() == 0 || in_recovered_span(va)) {
         ++m.unmapped_in_text;
-        if (m.unmapped_text_sample_n < 16)
+        if (m.unmapped_text_sample_n < 16) {
+            m.unmapped_text_from[m.unmapped_text_sample_n] = from;
             m.unmapped_text_sample[m.unmapped_text_sample_n++] = va;
+        }
     } else {
         ++m.unmapped_in_gap;
     }
@@ -582,6 +587,7 @@ inline void count_unmapped_target(Machine &m, u32 va) {
 
 inline void ts_call(u32 va) {
     Machine &m = mach();
+    u32 from = m.eip;      // the call site, before eip is overwritten
     m.eip = va;
     m.recent_calls[m.recent_call_n & 7u] = va;
     ++m.recent_call_n;
@@ -589,7 +595,7 @@ inline void ts_call(u32 va) {
     if (!f) {
         if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
         m.unmapped_calls++;
-        count_unmapped_target(m, va);
+        count_unmapped_target(m, va, from);
         return;
     }
     // Bound the depth. A recovered loop whose modelled condition never changes
@@ -619,7 +625,7 @@ inline void ts_call(u32 va) {
         if (!f) {
             if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
             m.unmapped_calls++;
-            count_unmapped_target(m, va);
+            count_unmapped_target(m, va, from);
             break;
         }
     }

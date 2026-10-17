@@ -685,7 +685,8 @@ int main(int argc, char **argv) {
         std::printf("  distinct in-.text targets (first %u):",
                     (unsigned)m.unmapped_text_sample_n);
         for (unsigned i = 0; i < m.unmapped_text_sample_n; ++i)
-            std::printf(" 0x%08x", m.unmapped_text_sample[i]);
+            std::printf(" 0x%08x(from 0x%08x)",
+                        m.unmapped_text_sample[i], m.unmapped_text_from[i]);
         std::printf("\n");
         return 1;
     }

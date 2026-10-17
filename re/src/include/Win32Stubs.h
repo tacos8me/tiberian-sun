@@ -2085,6 +2085,29 @@ TS_RET(ImageList_DragShowNolock, 1, 1u)
 // InitCommonControls: measured 0 arguments at 0x65c04b, where the call sits
 // directly behind the prologue with nothing pushed. It is the call a program
 // makes before RegisterClass, which is what the enclosing function does.
+// DllGetVersion is NOT in the import table -- the program reaches it through
+// GetProcAddress -- so it has to exist as an export here or the game never finds
+// it. That matters more than it looks: FUN_00478e60 does
+//   LoadLibraryA(dll); p = GetProcAddress(h,"DllGetVersion");
+//   if (p) { vi.cbSize=0x14; if (p(&vi) >= 0) version = vi.dwMajor<<16 | vi.dwMinor; }
+// and FUN_005e5b80 then does
+//   if (version < 0x40046) { MessageBoxA(...,MB_ICONERROR); ExitProcess(1); }
+// 0x40046 is comctl32 4.00.70. With no export the version is 0, the check fails,
+// and the game shows an error box and exits before it initialises anything. So
+// report a comctl32 new enough to pass, and be internally consistent about it:
+// 4.72 is what shipped with IE 4-era installs and is what this reports.
+TS_BEGIN(DllGetVersion)
+    u32 p = arg(0);
+    u32 cb = p ? ld32(p) : 0;
+    if (p && cb >= 0x14u) {
+        st32(p + 0x04u, 4u);      // dwMajorVersion
+        st32(p + 0x08u, 0x48u);   // dwMinorVersion -> version 0x40048 >= 0x40046
+        st32(p + 0x0cu, 0u);      // dwBuildNumber
+        st32(p + 0x10u, 1u);      // dwPlatformID
+    }
+    stub_done(1, 0u);             // S_OK
+TS_END
+
 TS_ORD_RET(comctl32_ord_2147483665, "COMCTL32", 0x80000011u, 0u)
 
 // -- VERSION / SHELL32 -------------------------------------------------------
@@ -2747,6 +2770,7 @@ inline const ImportDef *imports(unsigned *count) {
 	{ "VERSION", "GetFileVersionInfoA", 4, 0x00000000u, &k_GetFileVersionInfoA },
 	{ "VERSION", "VerQueryValueA", 4, 0x00000000u, &k_VerQueryValueA },
 	{ "COMCTL32", "ImageList_DragShowNolock", 1, 0x00000001u, &k_ImageList_DragShowNolock },
+	{ "COMCTL32", "DllGetVersion", 1, 0x00000000u, &k_DllGetVersion },
 	{ "COMCTL32", "#17", 0, 0x00000000u, &k_comctl32_ord_2147483665 },
 	{ "COMCTL32", "ImageList_DragMove", 2, 0x00000001u, &k_ImageList_DragMove },
 	{ "COMCTL32", "ImageList_DragEnter", 3, 0x00000001u, &k_ImageList_DragEnter },
