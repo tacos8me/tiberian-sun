@@ -363,8 +363,30 @@ def build(outdir, image, stats):
         "",
         "namespace ts {",
     ]
+    # The extents of recovered code, merged so the table stays small. The model
+    # uses it to tell "a recovered function nothing registered" from "a call into
+    # bytes the recovery never covered" -- two defects a .text range cannot
+    # distinguish. Merging only joins spans that touch, so a gap between two
+    # spans stays a gap.
+    spans = sorted((f["va"], f["va"] + f["size"]) for f in fns)
+    merged = []
+    for lo, hi in spans:
+        if merged and lo <= merged[-1][1]:
+            if hi > merged[-1][1]:
+                merged[-1][1] = hi
+        else:
+            merged.append([lo, hi])
     reg.append("namespace {")
     reg.append("struct Entry { u32 va; Fn fn; };")
+    reg.append("")
+    reg.append("// [lo, hi) per recovered extent, sorted and non-overlapping.")
+    reg.append("const u32 kRecoveredSpans[] = {")
+    for lo, hi in merged:
+        reg.append("    0x%08xu, 0x%08xu," % (lo, hi))
+    reg.append("};")
+    reg.append("const unsigned kRecoveredSpanCount =")
+    reg.append("    sizeof(kRecoveredSpans) / sizeof(kRecoveredSpans[0]) / 2;")
+    reg.append("")
     reg.append("const Entry kRecovered[] = {")
     for va in registered:
         reg.append("    { 0x%08xu, &sub::%s }," % (va, sub_name(va)))
@@ -376,6 +398,7 @@ def build(outdir, image, stats):
     reg.append("void register_all_recovered() {")
     reg.append("    for (unsigned i = 0; i < kRecoveredCount; ++i)")
     reg.append("        ts_register(kRecovered[i].va, kRecovered[i].fn);")
+    reg.append("    set_recovered_spans(kRecoveredSpans, kRecoveredSpanCount);")
     reg.append("}")
     reg.append("")
     reg.append("}  // namespace ts")

@@ -115,7 +115,15 @@ struct Machine {
     // outside .text it is an import (expected -- the model has no Windows),
     // inside .text it is a recovered function nothing registered (a defect).
     u32 text_lo, text_hi;
+    // An unregistered target inside .text is one of two very different things,
+    // and one .text range cannot tell them apart: inside a recovered span it is a
+    // recovered function nothing registered (a defect in this tree), and outside
+    // every span it is a call into bytes the disassembly never recovered (a gap
+    // in the recovery, reported by out/text_data.json). The recovered spans are
+    // therefore supplied by the generated registration unit and the two are
+    // counted separately.
     unsigned long unmapped_in_text;
+    unsigned long unmapped_in_gap;
     // A tail transfer in flight: the VA a transcribed span continues at after
     // it returns. A recovered `jmp` to another span, and a span whose last
     // instruction does not transfer control, both continue the SAME invocation
@@ -220,6 +228,7 @@ inline void reset() {
     for (int i = 0; i < 8; ++i) { m.fault_reg[i].d = 0; m.fault_calls[i] = 0; }
     m.fault_calls_n = 0; m.call_depth_max = 0; m.recent_call_n = 0;
     m.unmapped_in_text = 0;
+    m.unmapped_in_gap = 0;
     m.tail = 0;
     m.unmodelled_insns = 0;
     m.call_depth = 0;
@@ -516,12 +525,48 @@ inline Fn ts_lookup(u32 va) {
     return 0;
 }
 
+// -- recovered code extents ---------------------------------------------------
+// The [lo, hi) ranges the tree has a transcription for, supplied once by the
+// generated register_all_recovered(). Sorted and non-overlapping, so a target can
+// be classified with a binary search rather than a guessed .text range.
+inline const u32 *&span_table() { static const u32 *p = 0; return p; }
+inline unsigned &span_count() { static unsigned n = 0; return n; }
+
+inline void set_recovered_spans(const u32 *pairs, unsigned n) {
+    span_table() = pairs;
+    span_count() = n;
+}
+
+inline bool in_recovered_span(u32 va) {
+    const u32 *p = span_table();
+    unsigned n = span_count();
+    unsigned lo = 0, hi = n;
+    while (lo < hi) {
+        unsigned mid = (lo + hi) / 2u;
+        if (va < p[2u * mid]) hi = mid;
+        else if (va >= p[2u * mid + 1u]) lo = mid + 1u;
+        else return true;
+    }
+    return false;
+}
+
 // A recovered `call` names a target VA. Nothing is registered by default: a
 // generated body is a member definition whose transcription reads the machine
 // model rather than its own C++ parameters, so making the whole program *execute*
 // is a separate step from transcribing it. An unregistered target is counted,
 // not guessed at. The registry exists so that step can be added without touching
 // a single generated line.
+// Where did an unregistered target come from? Inside a recovered span it is a
+// recovered function nothing registered, which is a defect; anywhere else in
+// .text it is bytes the recovery never covered. With no extent table supplied the
+// old, coarser rule stands, so a caller that does not register spans cannot
+// accidentally pass by classifying every defect as a gap.
+inline void count_unmapped_target(Machine &m, u32 va) {
+    if (!m.text_hi || va < m.text_lo || va >= m.text_hi) return;
+    if (span_count() == 0 || in_recovered_span(va)) ++m.unmapped_in_text;
+    else ++m.unmapped_in_gap;
+}
+
 inline void ts_call(u32 va) {
     Machine &m = mach();
     m.eip = va;
@@ -531,7 +576,7 @@ inline void ts_call(u32 va) {
     if (!f) {
         if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
         m.unmapped_calls++;
-        if (m.text_hi && va >= m.text_lo && va < m.text_hi) ++m.unmapped_in_text;
+        count_unmapped_target(m, va);
         return;
     }
     // Bound the depth. A recovered loop whose modelled condition never changes
@@ -561,7 +606,7 @@ inline void ts_call(u32 va) {
         if (!f) {
             if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
             m.unmapped_calls++;
-            if (m.text_hi && va >= m.text_lo && va < m.text_hi) ++m.unmapped_in_text;
+            count_unmapped_target(m, va);
             break;
         }
     }
