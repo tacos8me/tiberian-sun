@@ -226,6 +226,52 @@ def test_tail_entries():
         eq("tail-host", tails[0x3000]["va"], 0x2ff0)
 
 
+def test_indirect_tail_targets():
+    """A switch-table entry is a dispatch target, not just a table word.
+
+    The memcpy tail tables at 0x683c10 carry a dummy entry 0 and target
+    0x683c4c, which is an instruction boundary inside the span at 0x683c49 but
+    not a function start. Nothing registered it, so `ts::jmp_indirect` treated
+    the dispatch as an unregistered call and abandoned memcpy's frame (ESI kept
+    the source pointer, 16 bytes of stack leaked), which is what stopped the
+    MIX index read after one block. This is that shape, synthetically.
+    """
+    import struct
+    import gen_code as C
+
+    class TableImage(object):
+        def __init__(self, words):
+            self.words = words
+
+        def read(self, va, n):
+            if va not in self.words:
+                raise ValueError("outside the table")
+            return struct.pack("<I", self.words[va])
+
+    fns = [{"va": 0x1000, "size": 0x10,
+            "insns": [{"va": 0x1000, "mnem": "jmp",
+                       "op": "dword ptr [eax*4 + 0x1800]"},
+                      {"va": 0x1006, "mnem": "ret", "op": ""}]},
+           {"va": 0x2000, "size": 0x20,
+            "insns": [{"va": 0x2000, "mnem": "ret", "op": ""},
+                      {"va": 0x2010, "mnem": "ret", "op": ""}]}]
+    # Entry 0 is the dummy the compiler emits for an index it knows is not
+    # zero; entry 3 is inside the span at 0x2000 but not on an instruction
+    # boundary, so no transcription can start there.
+    words = {0x1800: 0xdeadbeef, 0x1804: 0x2010, 0x1808: 0x1000,
+             0x180c: 0x2004, 0x1810: 0x2010}
+    targets = C.indirect_jump_targets(fns, TableImage(words))
+    check("indirect-target-found", 0x2010 in targets, str(targets))
+    check("indirect-target-start", 0x1000 in targets, str(targets))
+    check("indirect-target-not-boundary", 0x2004 not in targets, str(targets))
+    # A function start needs no tail entry of its own.
+    tails = C.tail_entries(fns, extra=targets)
+    check("indirect-tail-entry", 0x2010 in tails, str(tails))
+    check("indirect-start-not-tail", 0x1000 not in tails, str(tails))
+    # No image means no resolution: the computed dispatch is kept, unchanged.
+    eq("indirect-no-image", C.indirect_jump_targets(fns, None), {})
+
+
 # ---------------------------------------------------------------------------
 # Machine model: differential against independent arithmetic
 # ---------------------------------------------------------------------------
@@ -1234,6 +1280,7 @@ def main():
     for fn in (test_emit_masking, test_emit_in_out, test_emit_loop_tail,
                test_emit_ret, test_decl_destructor, test_slot_va,
                test_slot0_shared, test_reduce_bases, test_tail_entries,
+               test_indirect_tail_targets,
                test_machine_mul, test_machine_flags, test_machine_stack,
                test_machine_mmx, test_machine_depth_guard,
                test_machine_boot_regressions, test_win32_module_exports,

@@ -27,6 +27,8 @@ Usage:
 import glob
 import json
 import os
+import re
+import struct
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -175,7 +177,54 @@ def ends_with_transfer(insn):
     return (insn.get("mnem") or "").strip() in TRANSFER
 
 
-def tail_entries(fns):
+# `jmp dword ptr [reg*4 + 0xTABLE]`: the operand names the table's base address.
+INDIRECT_JMP = re.compile(r"dword ptr \[[a-z]{2,3}\*4 \+ (0x[0-9a-fA-F]+)\]")
+
+
+def indirect_jump_targets(fns, image, window=256):
+    """VAs a static switch table can transfer to, from the table in the image.
+
+    `ts::jmp_indirect` dispatches by exact VA. An entry that nothing registered
+    is treated as an unregistered call: the callee's frame is abandoned with
+    its saved registers and return address still on the modelled stack. The
+    instruction stream names the table base but not its entries, so they are
+    read out of the real image.
+
+    An entry is accepted only when it is an instruction boundary of a recovered
+    span, because a transcription has to start on one. That also rejects the
+    padding/garbage entry a switch table sometimes carries at index 0. A table
+    is scanned as a bounded window rather than until the first non-code word:
+    the first entry of the memcpy tables at 0x683c10 is not an instruction
+    boundary (0x683c20 is real code the recovery decoded from the table bytes
+    at 0x683c14 instead), and stopping there would miss the rest of the table.
+    """
+    if image is None:
+        return {}
+    bounds = {}
+    for f in fns:
+        for i in f.get("insns") or []:
+            bounds[int(i.get("va", 0) or 0)] = f
+    out = {}
+    for f in fns:
+        for i in f.get("insns") or []:
+            if (i.get("mnem") or "").strip() != "jmp":
+                continue
+            m = INDIRECT_JMP.search((i.get("op") or "").strip())
+            if not m:
+                continue
+            base = int(m.group(1), 16)
+            for k in range(window):
+                try:
+                    t = struct.unpack("<I", image.read(base + 4 * k, 4))[0]
+                except Exception:
+                    break
+                host = bounds.get(t)
+                if host is not None and t not in out:
+                    out[t] = host
+    return out
+
+
+def tail_entries(fns, extra=()):
     """VAs a cross-function branch targets that are not function starts.
 
     A `jmp` to an address in the middle of another function is a tail transfer:
@@ -184,9 +233,12 @@ def tail_entries(fns):
     function entries, so nothing registered them and a `ts_call` to one found
     nothing -- it was counted as unmapped rather than reached. Transcribing each
     from its own address to the end of its containing function closes that hole.
+
+    `extra` carries VAs found outside the instruction stream (indirect jump
+    tables) that need the same treatment for the same reason.
     """
     starts = {f["va"] for f in fns}
-    need = set()
+    need = set(t for t in extra if t not in starts)
     for f in fns:
         lo, hi = f["va"], f["va"] + f["size"]
         # A span whose last instruction does not transfer control continues at its
@@ -235,10 +287,16 @@ def build(outdir, image, stats):
     # pass can only add addresses that are not already entries, so this
     # terminates; the bound is a guard against a pathological input, not a
     # working limit.
+    # VAs reachable only through a static switch table. Computed once: the
+    # tables are in the image, not in the recovered spans, so the fixpoint does
+    # not change which entries exist, only which span contains each one.
+    indirect = indirect_jump_targets(fns, image)
+
     tails = {}
     for _ in range(8):
         added = 0
-        for t, host in tail_entries(fns + list(tails.values())).items():
+        for t, host in tail_entries(fns + list(tails.values()),
+                                    extra=indirect).items():
             if t in tails:
                 continue
             insns = [i for i in host.get("insns", [])
