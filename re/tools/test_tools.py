@@ -16,7 +16,8 @@ adding one: if it cannot fail, it is not worth the runtime.
   gen_bodies destructors  -- `\\b` before the name meant NO destructor matched
   gen_bodies slot VA      -- vtable-block addresses were not read
   reduce_bases            -- the numContainedBases walk, on a synthetic array
-  Machine mul/div         -- differential against 64-bit reference arithmetic
+  Machine mul             -- differential against 64-bit reference arithmetic
+  Machine div             -- idiv is SIGNED: -1/-1=1, not a false overflow
   Machine flags           -- add/sub carry and overflow, against the manual
   Machine stack           -- push/pop balance
   Machine mmx lanes       -- differential against lane-array reference code
@@ -26,6 +27,8 @@ adding one: if it cannot fail, it is not worth the runtime.
   Win32 module exports    -- handles name modules, CoCreateInstance writes *ppv
   Win32 message queue     -- WM_ACTIVATEAPP was never queued, so PeekMessageA
                              returned 0 forever and DispatchMessageA never ran
+  Win32 surface Lock      -- Lock popped 4 of the 5 __stdcall words, leaking 4
+                             bytes per call into the caller's frame
 
 Usage:
   python3 tools/test_tools.py
@@ -436,6 +439,176 @@ int main() {
         return
     r = subprocess.run(["/tmp/ts_mul_test"], capture_output=True)
     eq("machine-mul", r.stdout.decode().strip(), "0")
+
+
+def test_machine_div():
+    """`idiv` is signed, `div` is unsigned, against the host's own 64-bit math.
+
+    Regression test for the boot stop at 0x00422a59: `idiv ecx` with
+    EDX:EAX = 0xffffffffffffffff and ECX = -1. The true quotient is 1, but
+    divmod64 ignored its `sign` flag, divided the unsigned value by `-d` (= 1)
+    and raised "divide overflow". The reference here is the host's signed
+    64-bit `/` and `%`, which truncate toward zero and give the remainder the
+    dividend's sign exactly as x86 does -- an independent formulation, not a
+    copy of the magnitude arithmetic in Machine.h. INT64_MIN / -1 is excluded
+    from the reference because it is undefined in C++ (the model must fault on
+    it, and the vector checks that).
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Machine.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+static void clear() { ts::reset(); }
+
+// Host reference for idiv. Returns false when x86 would raise #DE (quotient
+// does not fit int32, or the INT64_MIN / -1 case the host cannot compute).
+static bool ref_idiv(unsigned hi, unsigned lo, unsigned d,
+                     unsigned &q, unsigned &r) {
+    unsigned long long un = ((unsigned long long)hi << 32) | lo;
+    long long n = (long long)un;
+    long long sd = (long long)(int)d;
+    if (sd == -1 && n == (-9223372036854775807LL - 1LL)) return false;
+    long long qq = n / sd;
+    long long rr = n % sd;
+    if (qq < -2147483647LL - 1LL || qq > 2147483647LL) return false;
+    q = (unsigned)qq;
+    r = (unsigned)rr;
+    return true;
+}
+
+static bool ref_div(unsigned hi, unsigned lo, unsigned d,
+                    unsigned &q, unsigned &r) {
+    unsigned long long n = ((unsigned long long)hi << 32) | lo;
+    unsigned long long qq = n / d;
+    r = (unsigned)(n % d);
+    if (qq > 0xffffffffull) return false;
+    q = (unsigned)qq;
+    return true;
+}
+
+int main() {
+    unsigned rem = 0xdeadbeefu, q;
+
+    // The exact boot case: EDX:EAX = -1, ECX = -1.
+    clear();
+    q = ts::idiv32(0xffffffffu, 0xffffffffu, 0xffffffffu, rem);
+    ck("(-1)/-1 q", q == 1u);
+    ck("(-1)/-1 rem", rem == 0u);
+    ck("(-1)/-1 does not fault", !ts::mach().faulted);
+
+    // Truncation toward zero; the remainder takes the dividend's sign.
+    clear();
+    q = ts::idiv32(0u, 7u, 2u, rem);
+    ck("7/2 q", q == 3u); ck("7/2 rem", rem == 1u);
+    q = ts::idiv32(0xffffffffu, 0xfffffff9u, 2u, rem);          // -7 / 2
+    ck("-7/2 q", q == 0xfffffffdu); ck("-7/2 rem", rem == 0xffffffffu);
+    q = ts::idiv32(0u, 7u, 0xfffffffeu, rem);                   // 7 / -2
+    ck("7/-2 q", q == 0xfffffffdu); ck("7/-2 rem", rem == 1u);
+    q = ts::idiv32(0xffffffffu, 0xfffffff9u, 0xfffffffeu, rem); // -7 / -2
+    ck("-7/-2 q", q == 3u); ck("-7/-2 rem", rem == 0xffffffffu);
+
+    // INT32_MIN is representable; one past it is overflow.
+    clear();
+    q = ts::idiv32(0u, 0x80000000u, 0xffffffffu, rem);          // 2^31 / -1
+    ck("2^31/-1 q", q == 0x80000000u);
+    ck("2^31/-1 rem", rem == 0u);
+    ck("2^31/-1 does not fault", !ts::mach().faulted);
+    clear();
+    ts::idiv32(0u, 0x80000000u, 1u, rem);                       // 2^31 / 1
+    ck("2^31/1 overflows", ts::mach().faulted);
+    clear();
+    ts::idiv32(0u, 0x80000001u, 0xffffffffu, rem);              // -(2^31+1)
+    ck("-2^31-1 overflows", ts::mach().faulted);
+    clear();
+    ts::idiv32(0x80000000u, 0u, 0xffffffffu, rem);              // INT64_MIN/-1
+    ck("INT64_MIN/-1 overflows", ts::mach().faulted);
+    clear();
+    ts::idiv32(1u, 0u, 2u, rem);                                // 2^32 / 2
+    ck("2^32/2 overflows", ts::mach().faulted);
+    clear();
+    q = ts::idiv32(1u, 0u, 0xfffffffeu, rem);                   // 2^32 / -2
+    ck("2^32/-2 q", q == 0x80000000u);
+    ck("2^32/-2 rem", rem == 0u);
+    ck("2^32/-2 does not fault", !ts::mach().faulted);
+
+    // Divide by zero.
+    clear();
+    ts::idiv32(0u, 1u, 0u, rem);
+    ck("idiv by zero faults", ts::mach().faulted);
+
+    // Unsigned `div` must keep its own (unsigned) overflow rule.
+    clear();
+    q = ts::div32(0u, 100u, 7u, rem);
+    ck("u 100/7 q", q == 14u); ck("u 100/7 rem", rem == 2u);
+    q = ts::div32(0u, 0xffffffffu, 2u, rem);
+    ck("u 0xffffffff/2 q", q == 0x7fffffffu);
+    ck("u 0xffffffff/2 rem", rem == 1u);
+    q = ts::div32(1u, 0u, 2u, rem);                             // 2^32 / 2
+    ck("u 2^32/2 q", q == 0x80000000u);
+    ck("u 2^32/2 rem", rem == 0u);
+    ck("u 2^32/2 does not fault", !ts::mach().faulted);
+    clear();
+    ts::div32(0xffffffffu, 0xffffffffu, 0xffffffffu, rem);      // 2^32+1
+    ck("u overflow faults", ts::mach().faulted);
+    clear();
+    ts::div32(0u, 1u, 0u, rem);
+    ck("u divide by zero faults", ts::mach().faulted);
+
+    // Differential sweep: 200k random EDX:EAX/divisor pairs, both signs.
+    unsigned s = 0x9e3779b9u;
+    for (int k = 0; k < 200000; ++k) {
+        s = s * 1103515245u + 12345u; unsigned hi = s;
+        s = s * 1103515245u + 12345u; unsigned lo = s;
+        s = s * 1103515245u + 12345u; unsigned d = s;
+        if (d == 0u) d = 1u;
+
+        unsigned rq = 0, rr = 0, gq = 0, gr = 0;
+        bool ok = ref_idiv(hi, lo, d, rq, rr);
+        clear();
+        gq = ts::idiv32(hi, lo, d, gr);
+        if (ok != !ts::mach().faulted || (ok && (gq != rq || gr != rr))) {
+            std::printf("FAIL idiv %08x:%08x / %08x -> %08x rem %08x, "
+                        "want %08x rem %08x (fault %d)\n",
+                        hi, lo, d, gq, gr, rq, rr, (int)ts::mach().faulted);
+            ++fails;
+            break;
+        }
+
+        ok = ref_div(hi, lo, d, rq, rr);
+        clear();
+        gq = ts::div32(hi, lo, d, gr);
+        if (ok != !ts::mach().faulted || (ok && (gq != rq || gr != rr))) {
+            std::printf("FAIL div %08x:%08x / %08x -> %08x rem %08x, "
+                        "want %08x rem %08x (fault %d)\n",
+                        hi, lo, d, gq, gr, rq, rr, (int)ts::mach().faulted);
+            ++fails;
+            break;
+        }
+    }
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_div_test.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O1", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_div_test",
+                        "/tmp/ts_div_test.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("machine-div-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_div_test"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("machine-div", False, out)
+    else:
+        eq("machine-div", out.splitlines()[-1] if out else "", "0")
 
 
 def test_machine_flags():
@@ -1186,6 +1359,79 @@ int main() {
         eq("win32-message-queue", out.splitlines()[-1] if out else "", "0")
 
 
+def test_win32_surface_lock():
+    """IDirectDrawSurface::Lock pops all five words the game pushes.
+
+    Regression test for the four-byte-per-Lock leak that walked the caller's
+    frame at 0x487ad0, zeroed EBP, left the global AlternateSurface
+    (0x714ed4) null and produced five null-`this` teardown calls. COM methods
+    are __stdcall with `this` as the first STACK argument: the game's call
+    site 0x487b31 pushes hEvent, flags, desc, rect and this and has no add-esp
+    cleanup, so the callee owns five argument words. The vtable slot is driven
+    exactly as the transcription drives it -- through ts_call_at, which pushes
+    the return address -- and ESP must end at caller_ESP + 0x14.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+
+int main() {
+    ts::reset();
+    ts::register_win32_stubs();
+
+    const ts::u32 sp = 0x002ff000u;
+    ts::u32 surf = ts::w32::make_surface();
+    ck("make_surface returns an object", surf != 0);
+    ts::u32 vt = ts::ld32(surf);
+    ts::u32 lock = ts::ld32(vt + 25u * 4u);   // IDirectDrawSurface::Lock
+    ck("slot 25 is registered", lock != 0);
+    ck("slot 25 is the Lock override, not a generic slot stub",
+       lock != ts::ld32(vt + 26u * 4u));
+
+    // The game's five pushed words, oldest push first: hEvent, flags, desc,
+    // rect, this. In memory at the caller's ESP that is this at +0.
+    const ts::u32 rect = 0x00300000u, desc = 0x00300100u, hevent = 0x00abcdeeu;
+    ts::st32(sp + 0u, surf);           // this
+    ts::st32(sp + 4u, rect);           // lpDestRect
+    ts::st32(sp + 8u, desc);           // lpDDSurfaceDesc
+    ts::st32(sp + 12u, 0x00000001u);   // dwFlags (DDLOCK_WAIT)
+    ts::st32(sp + 16u, hevent);        // hEvent
+    ESP.d = sp;
+    ts::ts_call_at(lock, 0x00c0ffeeu);
+
+    ck("Lock pops return address + five arguments",
+       ESP.d == sp + 0x14u);
+    ck("Lock does not fault", !ts::mach().faulted);
+    ck("Lock fills DDSURFACEDESC.dwSize", ts::ld32(desc + 0u) == 108u);
+    ck("Lock fills DDSURFACEDESC.lpSurface", ts::ld32(desc + 0x24u) != 0u);
+    ck("Lock fills the pixel bit count", ts::ld32(desc + 0x54u) == 16u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_surface_lock.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_surface_lock",
+                        "/tmp/ts_surface_lock.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-surface-lock-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_surface_lock"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-surface-lock", False, out)
+    else:
+        eq("win32-surface-lock", out.splitlines()[-1] if out else "", "0")
+
+
 def test_win32_blowfish():
     """IBlowfish is a real Blowfish-ECB cipher, not an identity copy.
 
@@ -1400,10 +1646,11 @@ def main():
                test_emit_ret, test_decl_destructor, test_slot_va,
                test_slot0_shared, test_reduce_bases, test_tail_entries,
                test_indirect_tail_targets, test_jump_table_data,
-               test_machine_mul, test_machine_flags, test_machine_stack,
-               test_machine_mmx, test_machine_depth_guard,
-               test_machine_boot_regressions, test_win32_module_exports,
-               test_win32_message_queue, test_win32_blowfish):
+               test_machine_mul, test_machine_div, test_machine_flags,
+               test_machine_stack, test_machine_mmx,
+               test_machine_depth_guard, test_machine_boot_regressions,
+               test_win32_module_exports, test_win32_message_queue,
+               test_win32_surface_lock, test_win32_blowfish):
         try:
             fn()
         except Exception as exc:  # a tool that raises is a failure, not a skip

@@ -554,22 +554,43 @@ inline u32 mul32(u32 a, u32 b) { EDX.d = mul_hi(a, b); return mul_lo(a, b); }
 
 // 64/32 division. This is the single place the model needs a 64-bit
 // intermediate; the instruction encoding itself never does.
+//
+// `div` divides the unsigned EDX:EAX by an unsigned operand; `idiv` divides the
+// SIGNED EDX:EAX by a SIGNED operand. Both truncate toward zero, both give the
+// remainder the dividend's sign, and both raise #DE when the divisor is zero or
+// the quotient does not fit the destination register -- for `idiv` that is
+// -2^31..2^31-1, not 0..2^32-1. `sign` selects the interpretation.
+//
+// The signed path divides magnitudes instead of casting to a signed 64-bit
+// type: INT64_MIN / -1 is undefined in C++ (and traps on some hosts) while the
+// x86 answer is a well-defined #DE, and the magnitude form raises exactly that.
 inline u32 divmod64(u32 hi, u32 lo, u32 d, u32 &rem, bool sign) {
     if (d == 0) { fault("divide by zero"); rem = lo; return 0; }
     unsigned long long n = ((unsigned long long)hi << 32) | (unsigned long long)lo;
-    unsigned long long q = n / d;
-    rem = (u32)(n % d);
-    if (q > 0xffffffffull) fault("divide overflow");
-    (void)sign;
-    return (u32)q;
+    if (!sign) {
+        unsigned long long q = n / d;
+        rem = (u32)(n % d);
+        if (q > 0xffffffffull) fault("divide overflow");
+        return (u32)q;
+    }
+    bool neg_n = (hi & 0x80000000u) != 0;
+    bool neg_d = ((i32)d) < 0;
+    unsigned long long un = neg_n ? 0ull - n : n;
+    unsigned long long ud = neg_d ? (unsigned long long)(u32)(0u - d)
+                                  : (unsigned long long)d;
+    unsigned long long uq = un / ud;
+    unsigned long long ur = un % ud;
+    bool neg_q = (neg_n != neg_d);
+    u32 r = neg_n ? (u32)(0u - (u32)ur) : (u32)ur;
+    rem = r;
+    if (uq > (neg_q ? 0x80000000ull : 0x7fffffffull)) {
+        fault("divide overflow");
+        return neg_q ? (u32)(0u - (u32)uq) : (u32)uq;
+    }
+    return neg_q ? (u32)(0u - (u32)uq) : (u32)uq;
 }
 inline u32 div32(u32 hi, u32 lo, u32 d, u32 &rem) { return divmod64(hi, lo, d, rem, false); }
-inline u32 idiv32(u32 hi, u32 lo, u32 d, u32 &rem) {
-    i32 sd = (i32)d;
-    if (sd == 0) { fault("divide by zero"); rem = lo; return 0; }
-    if (sd < 0) { u32 r = divmod64(hi, lo, (u32)(0u - d), rem, true); return (u32)(0u - r); }
-    return divmod64(hi, lo, d, rem, true);
-}
+inline u32 idiv32(u32 hi, u32 lo, u32 d, u32 &rem) { return divmod64(hi, lo, d, rem, true); }
 
 // One-operand multiply and divide: these touch EDX:EAX as a pair and take their
 // operand from memory, so the operand is passed by value and evaluated before
