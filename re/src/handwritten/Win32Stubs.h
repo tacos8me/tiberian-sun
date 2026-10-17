@@ -1078,9 +1078,9 @@ TS_BEGIN(PeekMessageA)
     // PeekMessageA(MSG*, hwnd, min, max, wRemoveMsg). 0 means "no message", and
     // that is the return value that keeps a game loop running: it says "carry
     // on with this frame", not "quit".
-    u32 p = arg(1);
+    u32 p = arg(0);
     MsgRec m;
-    if (msg_pop(&m, arg(0), arg(2), arg(3), (arg(4) & 1u) != 0u)) {
+    if (msg_pop(&m, arg(1), arg(2), arg(3), (arg(4) & 1u) != 0u)) {
         msg_fill(p, m);
         stub_done(5, 1u);
     } else {
@@ -1703,14 +1703,28 @@ TS_END
 
 inline u32 &gdi_serial() { static u32 n = 0; return n; }
 
+// What is selected into each device context. Without this, SelectObject cannot
+// answer with the object it replaced, and a caller that selects a font, draws,
+// and selects the old one back gets somebody else's object.
+inline u32 *dc_handles() { static u32 h[16]; return h; }
+inline u32 *dc_objects() { static u32 o[16]; return o; }
+
 TS_BEGIN(GetStockObject)
     stub_done(1, 0x00070000u + arg(0));
 TS_END
 TS_BEGIN(SelectObject)
-    static u32 prev = 0x00070001u;
-    u32 r = prev;
-    prev = arg(1);
-    stub_done(2, r);
+    // Per device context. A fresh DC holds a stock object, which is what the
+    // first call reports as the one it replaced.
+    u32 dc = arg(0), obj = arg(1), prev = 0x00070001u;
+    for (unsigned i = 0; i < 16u; ++i) {
+        if (dc_handles()[i] == 0u) { dc_handles()[i] = dc; dc_objects()[i] = prev; }
+        if (dc_handles()[i] == dc) {
+            prev = dc_objects()[i];
+            dc_objects()[i] = obj;
+            break;
+        }
+    }
+    stub_done(2, prev);
 TS_END
 TS_RET(DeleteObject, 1, 1u)
 TS_RET(DeleteDC, 1, 1u)
@@ -2093,6 +2107,18 @@ inline Fn *slot_fns() {
     return f;
 }
 
+void k_com_QueryInterface();
+
+TS_BEGIN(com_QueryInterface)
+    // QueryInterface(this, riid, ppvObject) for every fake object in the model.
+    // Filling ppvObject is the whole job: a wrapper that asks for an interface,
+    // is told S_OK, and then calls through a ppvObject nobody wrote calls
+    // through garbage. This object answers every interface with itself.
+    u32 out = arg(2);
+    if (out) st32(out, arg(0));
+    stub_done(3, 0u);   // S_OK
+TS_END
+
 // Build a fake COM object: an object block whose first dword points at a
 // freshly allocated vtable. Each slot gets its own registered stub VA.
 inline u32 make_com_object(const char *const *names, const u8 *nargs,
@@ -2107,6 +2133,7 @@ inline u32 make_com_object(const char *const *names, const u8 *nargs,
     u32 vt = alloc_block(slots * 4u, 4u);
     for (unsigned i = 0; i < slots; ++i) {
         Fn f = override_fns[i] ? override_fns[i] : slot_fns()[base + i];
+        if (i == 0u) f = &k_com_QueryInterface;   // slot 0 is QueryInterface
         u32 va = alloc_stub_va();
         ts_register(va, f);
         st32(vt + i * 4u, va);
@@ -2120,7 +2147,6 @@ inline u32 make_com_object(const char *const *names, const u8 *nargs,
 void k_sfs_Lock();
 void k_sfs_GetSurfaceDesc();
 void k_sfs_GetAttachedSurface();
-
 inline u32 make_surface() {
     // IDirectDrawSurface, DirectX 6 slot order. Every slot is a stub; the two
     // that hand back memory are given real bodies because a caller that locks
