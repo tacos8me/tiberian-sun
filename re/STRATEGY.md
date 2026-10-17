@@ -251,8 +251,8 @@ only honest way to close the rest.
 Ordered by damage. Same failure mode the project already caught once: prose that
 measurement does not support. Each item is now marked **RESOLVED** (with the
 corrected statement and the commit/date) or **OPEN** (with what is still false).
-The first batch of corrections is commit `8467f84`; `todo.md` and this section
-are carried by the follow-up docs commit.
+The first batch of corrections is commit `8467f84`; `todo.md`, `REPORT.md` and
+this section are carried by commit `be04940` (both 2026-10-17).
 
 1. **RESOLVED — `AGENTS.md`'s retracted boot block.** The false
    `budget 5000000 / message loop: reached (PeekMessage=137295)` block is gone;

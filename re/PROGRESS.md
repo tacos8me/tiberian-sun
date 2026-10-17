@@ -16,13 +16,13 @@ what to work on.
 
 ## Status summary
 
-**`tools/verify.py` prints VERIFICATION PASSED across nine checks in about 6
-seconds.** Check 9 is the one that matters most: it makes the compiler confirm
-every recovered member offset it can express, and it passes 3,073/3,073.
-**`pipeline.sh` is red at the link test** on 2 unmapped calls, and takes about
-471 seconds -- the link is the expensive stage. Measured link: `link: OK (492
-translation units)`, then `ts_link_test: FAILED (2 unmapped calls inside .text:
-0x006844df from 0x005e7317, 0x0046f3f8 from 0x00674bf6)`.
+**`tools/verify.py` prints VERIFICATION PASSED across nine checks.** Check 9 is
+the one that matters most: it makes the compiler confirm every recovered member
+offset it can express, and it passes 3,073/3,073. **The link stage is red** on 2
+unmapped calls: measured this session, `link: OK (492 translation units)`, then
+`ts_link_test: FAILED (2 unmapped calls inside .text: 0x006844df from
+0x005e7317, 0x0046f3f8 from 0x00674bf6)`. The full `pipeline.sh` was not re-run
+here; it last measured about 471 seconds, with the link the expensive stage.
 
 **The game boots, initialises, and exits.** The image maps at its real VAs and
 all **341/341** PE import-directory thunks are written to stubs (`link_test.py`:
