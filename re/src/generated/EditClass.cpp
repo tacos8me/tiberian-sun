@@ -82,149 +82,149 @@ void EditClass::vfunc_9()
     ts::sub::sub_004a5ae0();
 }
 
-// EditClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// EditClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_10(int a0, int a1)
+void EditClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// EditClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// EditClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_11(int a0)
+void EditClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// EditClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// EditClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_12()
+void EditClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// EditClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// EditClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_13(int a0)
+void EditClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// EditClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// EditClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_14()
+void EditClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// EditClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// EditClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_15()
+void EditClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// EditClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// EditClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_16()
+void EditClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// EditClass::vfunc_17 -- ALIAS of CheckListClass::vfunc_17 (same machine code at 0x00460610); the
+// EditClass::Get_ID -- ALIAS of CheckListClass::Get_ID (same machine code at 0x00460610); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_17()
+void EditClass::Get_ID()
 {
     ts::sub::sub_00460610();
 }
 
-// EditClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); the
+// EditClass::Flag_To_Redraw -- ALIAS of ControlClass::Flag_To_Redraw (same machine code at 0x004a5e20); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_18()
+void EditClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
-// EditClass::vfunc_19 -- ALIAS of ControlClass::vfunc_19 (same machine code at 0x00460650); the
+// EditClass::Peer_To_Peer -- ALIAS of ControlClass::Peer_To_Peer (same machine code at 0x00460650); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_19(int a0, int a1, int a2)
+void EditClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_00460650();
 }
 
-// EditClass::vfunc_20 -- ALIAS of DropListClass::vfunc_20 (same machine code at 0x0048cf90); the
+// EditClass::Set_Focus -- ALIAS of DropListClass::Set_Focus (same machine code at 0x0048cf90); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_20()
+void EditClass::Set_Focus()
 {
     ts::sub::sub_0048cf90();
 }
 
-// EditClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// EditClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_21()
+void EditClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// EditClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// EditClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_22()
+void EditClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// EditClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// EditClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_23()
+void EditClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// EditClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// EditClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_24()
+void EditClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
-// EditClass::vfunc_25 -- ALIAS of ControlClass::vfunc_25 (same machine code at 0x004a5ee0); the
+// EditClass::Set_Position -- ALIAS of ControlClass::Set_Position (same machine code at 0x004a5ee0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_25(int a0, int a1)
+void EditClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004a5ee0();
 }
 
-// EditClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// EditClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_26(int a0, int a1)
+void EditClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
-// EditClass::vfunc_27 -- ALIAS of DropListClass::vfunc_27 (same machine code at 0x0048cb40); the
+// EditClass::Draw_Me -- ALIAS of DropListClass::Draw_Me (same machine code at 0x0048cb40); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_27(int a0)
+void EditClass::Draw_Me(int a0)
 {
     ts::sub::sub_0048cb40();
 }
 
-// EditClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// EditClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_28(int a0)
+void EditClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
-// EditClass::vfunc_29 -- ALIAS of DropListClass::vfunc_29 (same machine code at 0x0048cbc0); the
+// EditClass::Action -- ALIAS of DropListClass::Action (same machine code at 0x0048cbc0); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_29(int a0, int a1)
+void EditClass::Action(int a0, int a1)
 {
     ts::sub::sub_0048cbc0();
 }
 
-// EditClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// EditClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void EditClass::vfunc_30(int a0, int a1, int a2, int a3)
+void EditClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

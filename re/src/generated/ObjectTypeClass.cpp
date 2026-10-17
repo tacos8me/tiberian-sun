@@ -77,7 +77,7 @@ void ObjectTypeClass::vfunc_6()
     ts::sub::sub_00572b80();
 }
 
-// ObjectTypeClass::vfunc_7 -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
+// ObjectTypeClass::vfunc_7 -- ALIAS of IsometricTileTypeClass::GetSizeMax (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
 void ObjectTypeClass::vfunc_7()
 {
@@ -237,14 +237,14 @@ int ObjectTypeClass::Get_RTTI_2()
     return (int)(size_t)ts::ret_eax();
 }
 
-// ObjectTypeClass::vfunc_29 -- ALIAS of IsometricTileTypeClass::vfunc_28 (same machine code at 0x00418f40); the
+// ObjectTypeClass::vfunc_29 -- ALIAS of IsometricTileTypeClass::Get_Ownable (same machine code at 0x00418f40); the
 // forwarder is written once, at that declaration.
 void ObjectTypeClass::vfunc_29()
 {
     ts::sub::sub_00418f40();
 }
 
-// ObjectTypeClass::vfunc_30 -- ALIAS of IsometricTileTypeClass::vfunc_29 (same machine code at 0x005715e0); the
+// ObjectTypeClass::vfunc_30 -- ALIAS of IsometricTileTypeClass::Max_Pips (same machine code at 0x005715e0); the
 // forwarder is written once, at that declaration.
 void ObjectTypeClass::vfunc_30()
 {
@@ -258,7 +258,7 @@ void ObjectTypeClass::vfunc_31()
     ts::sub::sub_005715f0();
 }
 
-// ObjectTypeClass::vfunc_32 -- ALIAS of IsometricTileTypeClass::vfunc_31 (same machine code at 0x00571610); the
+// ObjectTypeClass::vfunc_32 -- ALIAS of IsometricTileTypeClass::Lepton_Dimensions (same machine code at 0x00571610); the
 // forwarder is written once, at that declaration.
 void ObjectTypeClass::vfunc_32()
 {
@@ -272,14 +272,14 @@ void ObjectTypeClass::vfunc_33()
     ts::sub::sub_006829a5();
 }
 
-// ObjectTypeClass::vfunc_34 -- ALIAS of IsometricTileTypeClass::vfunc_33 (same machine code at 0x00571640); the
+// ObjectTypeClass::vfunc_34 -- ALIAS of IsometricTileTypeClass::Cost_Of (same machine code at 0x00571640); the
 // forwarder is written once, at that declaration.
 void ObjectTypeClass::vfunc_34()
 {
     ts::sub::sub_00571640();
 }
 
-// ObjectTypeClass::vfunc_35 -- ALIAS of IsometricTileTypeClass::vfunc_34 (same machine code at 0x00571650); the
+// ObjectTypeClass::vfunc_35 -- ALIAS of IsometricTileTypeClass::Time_To_Build (same machine code at 0x00571650); the
 // forwarder is written once, at that declaration.
 void ObjectTypeClass::vfunc_35()
 {
@@ -310,7 +310,7 @@ void ObjectTypeClass::vfunc_38()
     ts::sub::sub_00571710();
 }
 
-// ObjectTypeClass::vfunc_39 -- ALIAS of IsometricTileTypeClass::vfunc_38 (same machine code at 0x00571660); the
+// ObjectTypeClass::vfunc_39 -- ALIAS of IsometricTileTypeClass::Get_Cameo_Data (same machine code at 0x00571660); the
 // forwarder is written once, at that declaration.
 void ObjectTypeClass::vfunc_39()
 {

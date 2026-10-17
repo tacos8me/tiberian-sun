@@ -26,16 +26,16 @@ void SuperWeaponTypeClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// SuperWeaponTypeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// SuperWeaponTypeClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::Init(int a0)
+void SuperWeaponTypeClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// SuperWeaponTypeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// SuperWeaponTypeClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::Shutdown(int a0)
+void SuperWeaponTypeClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,9 +50,9 @@ void SuperWeaponTypeClass::vfunc_3(int a0, int a1)
     ts::sub::sub_005f2d70();
 }
 
-// SuperWeaponTypeClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// SuperWeaponTypeClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::Release(int a0)
+void SuperWeaponTypeClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
@@ -77,23 +77,23 @@ void SuperWeaponTypeClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_005f2e70();
 }
 
-// SuperWeaponTypeClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// SuperWeaponTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::GetType(int a0, int a1)
+void SuperWeaponTypeClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// SuperWeaponTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// SuperWeaponTypeClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::Set_ID()
+void SuperWeaponTypeClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// SuperWeaponTypeClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// SuperWeaponTypeClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::Get_RTTI(int a0, int a1)
+void SuperWeaponTypeClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,118 +109,118 @@ void SuperWeaponTypeClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// SuperWeaponTypeClass::Get_Heap -- the body is the canonical transcription of
+// SuperWeaponTypeClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x005f2ea0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SuperWeaponTypeClass::Get_Heap()
+void SuperWeaponTypeClass::Fetch_Object_Size()
 {
     ts::sub::sub_005f2ea0();
 }
 
 // -------------------------------------------------------------------------
-// SuperWeaponTypeClass::Load -- the body is the canonical transcription of
+// SuperWeaponTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 53 instructions at 0x005f2eb0, in src/generated/code/.
 // size 152 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680
 //
-void SuperWeaponTypeClass::Load(int a0)
+void SuperWeaponTypeClass::Compute_CRC(int a0)
 {
     ts::sub::sub_005f2eb0();
 }
 
-// SuperWeaponTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// SuperWeaponTypeClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::Save()
+void SuperWeaponTypeClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// SuperWeaponTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// SuperWeaponTypeClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::GetSizeMax()
+void SuperWeaponTypeClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
 // -------------------------------------------------------------------------
-// SuperWeaponTypeClass::Compute_CRC -- the body is the canonical transcription of
+// SuperWeaponTypeClass::Fetch_Heap_ID -- the body is the canonical transcription of
 // 2 instructions at 0x005f2f50, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void SuperWeaponTypeClass::Compute_CRC()
+void SuperWeaponTypeClass::Fetch_Heap_ID()
 {
     ts::sub::sub_005f2f50();
 }
 
-// SuperWeaponTypeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// SuperWeaponTypeClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::vfunc_17()
+void SuperWeaponTypeClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// SuperWeaponTypeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// SuperWeaponTypeClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::vfunc_18(int a0)
+void SuperWeaponTypeClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// SuperWeaponTypeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// SuperWeaponTypeClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::vfunc_19(int a0)
+void SuperWeaponTypeClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// SuperWeaponTypeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// SuperWeaponTypeClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::vfunc_20()
+void SuperWeaponTypeClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// SuperWeaponTypeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// SuperWeaponTypeClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::vfunc_21()
+void SuperWeaponTypeClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// SuperWeaponTypeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// SuperWeaponTypeClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::vfunc_22(int a0)
+void SuperWeaponTypeClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// SuperWeaponTypeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// SuperWeaponTypeClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::vfunc_23()
+void SuperWeaponTypeClass::AI()
 {
     ts::sub::sub_00405ab0();
 }
 
-// SuperWeaponTypeClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
+// SuperWeaponTypeClass::Init_Theater -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::vfunc_24(int a0)
+void SuperWeaponTypeClass::Init_Theater(int a0)
 {
     ts::sub::sub_00406010();
 }
 
 // -------------------------------------------------------------------------
-// SuperWeaponTypeClass::Fetch_ID -- the body is the canonical transcription of
+// SuperWeaponTypeClass::Read_INI -- the body is the canonical transcription of
 // 26 instructions at 0x005f2f60, in src/generated/code/.
 // size 82 bytes; callees: 0x00405f20, 0x004d6ed0, 0x005f2fb4, 0x006576f0
 //
-void SuperWeaponTypeClass::Fetch_ID(int a0, int a1, int a2, int a3, int a4, int a5)
+void SuperWeaponTypeClass::Read_INI(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_005f2f60();
 }
 
-// SuperWeaponTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
+// SuperWeaponTypeClass::Write_INI -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
 // forwarder is written once, at that declaration.
-void SuperWeaponTypeClass::Set_ID(int a0)
+void SuperWeaponTypeClass::Write_INI(int a0)
 {
     ts::sub::sub_00405fb0();
 }

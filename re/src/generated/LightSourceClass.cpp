@@ -26,74 +26,74 @@ void LightSourceClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// LightSourceClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// LightSourceClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::Init(int a0)
+void LightSourceClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// LightSourceClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// LightSourceClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::Shutdown(int a0)
+void LightSourceClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// LightSourceClass::vfunc_3 -- the body is the canonical transcription of
+// LightSourceClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x004f5520, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void LightSourceClass::vfunc_3(int a0, int a1)
+void LightSourceClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_004f5520();
 }
 
-// LightSourceClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// LightSourceClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::Release(int a0)
+void LightSourceClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// LightSourceClass::vfunc_5 -- the body is the canonical transcription of
+// LightSourceClass::Load -- the body is the canonical transcription of
 // 19 instructions at 0x004f5560, in src/generated/code/.
 // size 55 bytes; callees: 0x00405710, 0x004058b0
 //
-void LightSourceClass::vfunc_5(int a0, int a1)
+void LightSourceClass::Load(int a0, int a1)
 {
     ts::sub::sub_004f5560();
 }
 
 // -------------------------------------------------------------------------
-// LightSourceClass::vfunc_6 -- the body is the canonical transcription of
+// LightSourceClass::Save -- the body is the canonical transcription of
 // 11 instructions at 0x004f55a0, in src/generated/code/.
 // size 29 bytes; callees: 0x00405850
 //
-void LightSourceClass::vfunc_6(int a0, int a1, int a2)
+void LightSourceClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_004f55a0();
 }
 
-// LightSourceClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// LightSourceClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::GetType(int a0, int a1)
+void LightSourceClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// LightSourceClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// LightSourceClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::Set_ID()
+void LightSourceClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// LightSourceClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// LightSourceClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::Get_RTTI(int a0, int a1)
+void LightSourceClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,91 +109,91 @@ void LightSourceClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// LightSourceClass::Get_Heap -- the body is the canonical transcription of
+// LightSourceClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x004f55c0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void LightSourceClass::Get_Heap()
+void LightSourceClass::Fetch_Object_Size()
 {
     ts::sub::sub_004f55c0();
 }
 
 // -------------------------------------------------------------------------
-// LightSourceClass::Load -- the body is the canonical transcription of
+// LightSourceClass::Compute_CRC -- the body is the canonical transcription of
 // 33 instructions at 0x004f54c0, in src/generated/code/.
 // size 85 bytes; callees: 0x00405940, 0x0046d5d0, 0x0046d680
 //
-void LightSourceClass::Load(int a0)
+void LightSourceClass::Compute_CRC(int a0)
 {
     ts::sub::sub_004f54c0();
 }
 
-// LightSourceClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// LightSourceClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::Save()
+void LightSourceClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// LightSourceClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// LightSourceClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::GetSizeMax()
+void LightSourceClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// LightSourceClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// LightSourceClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::Compute_CRC()
+void LightSourceClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// LightSourceClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// LightSourceClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::vfunc_17()
+void LightSourceClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// LightSourceClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// LightSourceClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::vfunc_18(int a0)
+void LightSourceClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// LightSourceClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// LightSourceClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::vfunc_19(int a0)
+void LightSourceClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// LightSourceClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// LightSourceClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::vfunc_20()
+void LightSourceClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// LightSourceClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// LightSourceClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::vfunc_21()
+void LightSourceClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// LightSourceClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// LightSourceClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::vfunc_22(int a0)
+void LightSourceClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// LightSourceClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// LightSourceClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void LightSourceClass::vfunc_23()
+void LightSourceClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

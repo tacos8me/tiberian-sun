@@ -85,164 +85,164 @@ void ControlClass::vfunc_9()
     ts::sub::sub_004a5ae0();
 }
 
-// ControlClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// ControlClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_10(int a0, int a1)
+void ControlClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// ControlClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// ControlClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_11(int a0)
+void ControlClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// ControlClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// ControlClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_12()
+void ControlClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// ControlClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// ControlClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_13(int a0)
+void ControlClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// ControlClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// ControlClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_14()
+void ControlClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// ControlClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// ControlClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_15()
+void ControlClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// ControlClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// ControlClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_16()
+void ControlClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// ControlClass::vfunc_17 -- ALIAS of CheckListClass::vfunc_17 (same machine code at 0x00460610); the
+// ControlClass::Get_ID -- ALIAS of CheckListClass::Get_ID (same machine code at 0x00460610); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_17()
+void ControlClass::Get_ID()
 {
     ts::sub::sub_00460610();
 }
 
 // -------------------------------------------------------------------------
-// ControlClass::vfunc_18 -- the body is the canonical transcription of
+// ControlClass::Flag_To_Redraw -- the body is the canonical transcription of
 // 2 instructions at 0x004a5e20, in src/generated/code/.
 // size 5 bytes; callees: none
 //
-void ControlClass::vfunc_18()
+void ControlClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
 // -------------------------------------------------------------------------
-// ControlClass::vfunc_19 -- the body is the canonical transcription of
+// ControlClass::Peer_To_Peer -- the body is the canonical transcription of
 // 1 instructions at 0x00460650, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void ControlClass::vfunc_19(int a0, int a1, int a2)
+void ControlClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_00460650();
 }
 
-// ControlClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); the
+// ControlClass::Set_Focus -- ALIAS of CheckListClass::Set_Focus (same machine code at 0x004a5e60); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_20()
+void ControlClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
-// ControlClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// ControlClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_21()
+void ControlClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// ControlClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// ControlClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_22()
+void ControlClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// ControlClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// ControlClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_23()
+void ControlClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// ControlClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// ControlClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_24()
+void ControlClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
 // -------------------------------------------------------------------------
-// ControlClass::vfunc_25 -- the body is the canonical transcription of
+// ControlClass::Set_Position -- the body is the canonical transcription of
 // 5 instructions at 0x004a5ee0, in src/generated/code/.
 // size 17 bytes; callees: none
 //
-void ControlClass::vfunc_25(int a0, int a1)
+void ControlClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004a5ee0();
 }
 
-// ControlClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// ControlClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_26(int a0, int a1)
+void ControlClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
 // -------------------------------------------------------------------------
-// ControlClass::vfunc_27 -- the body is the canonical transcription of
+// ControlClass::Draw_Me -- the body is the canonical transcription of
 // 14 instructions at 0x00460620, in src/generated/code/.
 // size 33 bytes; callees: 0x004a5b90
 //
-void ControlClass::vfunc_27(int a0)
+void ControlClass::Draw_Me(int a0)
 {
     ts::sub::sub_00460620();
 }
 
-// ControlClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// ControlClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_28(int a0)
+void ControlClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
 // -------------------------------------------------------------------------
-// ControlClass::vfunc_29 -- the body is the canonical transcription of
+// ControlClass::Action -- the body is the canonical transcription of
 // 20 instructions at 0x004605a0, in src/generated/code/.
 // size 47 bytes; callees: 0x004605d5
 //
-void ControlClass::vfunc_29(int a0, int a1)
+void ControlClass::Action(int a0, int a1)
 {
     ts::sub::sub_004605a0();
 }
 
-// ControlClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// ControlClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void ControlClass::vfunc_30(int a0, int a1, int a2, int a3)
+void ControlClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

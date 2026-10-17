@@ -26,16 +26,16 @@ void TerrainClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// TerrainClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// TerrainClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Init(int a0)
+void TerrainClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// TerrainClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// TerrainClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Shutdown(int a0)
+void TerrainClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,19 +50,19 @@ void TerrainClass::vfunc_3(int a0, int a1)
     ts::sub::sub_00624620();
 }
 
-// TerrainClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// TerrainClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Release(int a0)
+void TerrainClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_5 -- the body is the canonical transcription of
+// TerrainClass::Load -- the body is the canonical transcription of
 // 113 instructions at 0x006240a0, in src/generated/code/.
 // size 381 bytes; callees: 0x0040ed40, 0x0043ad00, 0x0056e5f0, 0x005702f0, 0x005f36e0, 0x006834cc
 //
-void TerrainClass::vfunc_5(int a0, int a1)
+void TerrainClass::Load(int a0, int a1)
 {
     ts::sub::sub_006240a0();
 }
@@ -77,26 +77,26 @@ void TerrainClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_00624220();
 }
 
-// TerrainClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// TerrainClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void TerrainClass::GetType(int a0, int a1)
+void TerrainClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// TerrainClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// TerrainClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Set_ID()
+void TerrainClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::Get_RTTI -- the body is the canonical transcription of
+// TerrainClass::Detach -- the body is the canonical transcription of
 // 14 instructions at 0x006242d0, in src/generated/code/.
 // size 36 bytes; callees: 0x0056fb00
 //
-void TerrainClass::Get_RTTI(int a0, int a1)
+void TerrainClass::Detach(int a0, int a1)
 {
     ts::sub::sub_006242d0();
 }
@@ -112,467 +112,467 @@ void TerrainClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::Get_Heap -- the body is the canonical transcription of
+// TerrainClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00624600, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TerrainClass::Get_Heap()
+void TerrainClass::Fetch_Object_Size()
 {
     ts::sub::sub_00624600();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::Load -- the body is the canonical transcription of
+// TerrainClass::Compute_CRC -- the body is the canonical transcription of
 // 39 instructions at 0x00624260, in src/generated/code/.
 // size 99 bytes; callees: 0x0046d5d0, 0x0046d680, 0x00570630
 //
-void TerrainClass::Load(int a0)
+void TerrainClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00624260();
 }
 
-// TerrainClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// TerrainClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Save()
+void TerrainClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// TerrainClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// TerrainClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::GetSizeMax()
+void TerrainClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// TerrainClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// TerrainClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::Compute_CRC()
+void TerrainClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// TerrainClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); the
+// TerrainClass::Is_Inactive -- ALIAS of AircraftClass::Is_Inactive (same machine code at 0x00570a20); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_17()
+void TerrainClass::Is_Inactive()
 {
     ts::sub::sub_00570a20();
 }
 
-// TerrainClass::vfunc_18 -- ALIAS of AircraftClass::vfunc_18 (same machine code at 0x00570960); the
+// TerrainClass::Center_Coord -- ALIAS of AircraftClass::Center_Coord (same machine code at 0x00570960); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_18(int a0)
+void TerrainClass::Center_Coord(int a0)
 {
     ts::sub::sub_00570960();
 }
 
-// TerrainClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// TerrainClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_19(int a0)
+void TerrainClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// TerrainClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); the
+// TerrainClass::On_Ground -- ALIAS of AircraftClass::On_Ground (same machine code at 0x00570e80); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_20()
+void TerrainClass::On_Ground()
 {
     ts::sub::sub_00570e80();
 }
 
-// TerrainClass::vfunc_21 -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); the
+// TerrainClass::In_Air -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_21()
+void TerrainClass::In_Air()
 {
     ts::sub::sub_00570ea0();
 }
 
-// TerrainClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// TerrainClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_22(int a0)
+void TerrainClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_23 -- the body is the canonical transcription of
+// TerrainClass::AI -- the body is the canonical transcription of
 // 75 instructions at 0x00623a00, in src/generated/code/.
 // size 237 bytes; callees: 0x0043a3a0, 0x0056e860, 0x005a5ec0
 //
-void TerrainClass::vfunc_23(int a0, int a1)
+void TerrainClass::AI(int a0, int a1)
 {
     ts::sub::sub_00623a00();
 }
 
-// TerrainClass::vfunc_24 -- ALIAS of AnimClass::vfunc_24 (same machine code at 0x004167b0); the
+// TerrainClass::Is_Players_Army -- ALIAS of AnimClass::vfunc_24 (same machine code at 0x004167b0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_24()
+void TerrainClass::Is_Players_Army()
 {
     ts::sub::sub_004167b0();
 }
 
-// TerrainClass::vfunc_25 -- ALIAS of AnimClass::vfunc_25 (same machine code at 0x004167c0); the
+// TerrainClass::Visual_Character -- ALIAS of AnimClass::vfunc_25 (same machine code at 0x004167c0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_25(int a0, int a1)
+void TerrainClass::Visual_Character(int a0, int a1)
 {
     ts::sub::sub_004167c0();
 }
 
-// TerrainClass::vfunc_26 -- ALIAS of AircraftClass::vfunc_26 (same machine code at 0x0056e820); the
+// TerrainClass::Get_Image_Data -- ALIAS of AircraftClass::Get_Image_Data (same machine code at 0x0056e820); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_26()
+void TerrainClass::Get_Image_Data()
 {
     ts::sub::sub_0056e820();
 }
 
-// TerrainClass::vfunc_27 -- ALIAS of AnimClass::vfunc_27 (same machine code at 0x0056eb50); the
+// TerrainClass::What_Action -- ALIAS of AnimClass::vfunc_27 (same machine code at 0x0056eb50); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_27(int a0, int a1, int a2)
+void TerrainClass::What_Action(int a0, int a1, int a2)
 {
     ts::sub::sub_0056eb50();
 }
 
-// TerrainClass::vfunc_28 -- ALIAS of AnimClass::vfunc_28 (same machine code at 0x0056eb40); the
+// TerrainClass::What_Action -- ALIAS of AnimClass::vfunc_28 (same machine code at 0x0056eb40); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_28(int a0, int a1)
+void TerrainClass::What_Action(int a0, int a1)
 {
     ts::sub::sub_0056eb40();
 }
 
-// TerrainClass::vfunc_29 -- ALIAS of BuildingClass::vfunc_29 (same machine code at 0x0056eb60); the
+// TerrainClass::In_Which_Layer -- ALIAS of BuildingClass::In_Which_Layer (same machine code at 0x0056eb60); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_29()
+void TerrainClass::In_Which_Layer()
 {
     ts::sub::sub_0056eb60();
 }
 
-// TerrainClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); the
+// TerrainClass::Not_Underground -- ALIAS of AircraftClass::Not_Underground (same machine code at 0x00570ef0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_30()
+void TerrainClass::Not_Underground()
 {
     ts::sub::sub_00570ef0();
 }
 
-// TerrainClass::vfunc_31 -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); the
+// TerrainClass::Considered_Vehicle -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_31()
+void TerrainClass::Considered_Vehicle()
 {
     ts::sub::sub_004167d0();
 }
 
-// TerrainClass::vfunc_32 -- ALIAS of AnimClass::vfunc_32 (same machine code at 0x00570ec0); the
+// TerrainClass::Techno_Type_Class -- ALIAS of AnimClass::vfunc_32 (same machine code at 0x00570ec0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_32()
+void TerrainClass::Techno_Type_Class()
 {
     ts::sub::sub_00570ec0();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::Get_Type -- the body is the canonical transcription of
+// TerrainClass::Class_Of -- the body is the canonical transcription of
 // 2 instructions at 0x00624420, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void TerrainClass::Get_Type()
+void TerrainClass::Class_Of()
 {
     ts::sub::sub_00624420();
 }
 
-// TerrainClass::vfunc_34 -- ALIAS of AnimClass::vfunc_34 (same machine code at 0x0056eba0); the
+// TerrainClass::Get_Ownable -- ALIAS of AnimClass::vfunc_34 (same machine code at 0x0056eba0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_34()
+void TerrainClass::Get_Ownable()
 {
     ts::sub::sub_0056eba0();
 }
 
-// TerrainClass::vfunc_35 -- ALIAS of AnimClass::vfunc_35 (same machine code at 0x004167e0); the
+// TerrainClass::Full_Name -- ALIAS of AnimClass::vfunc_35 (same machine code at 0x004167e0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_35()
+void TerrainClass::Full_Name()
 {
     ts::sub::sub_004167e0();
 }
 
-// TerrainClass::vfunc_36 -- ALIAS of AnimClass::vfunc_36 (same machine code at 0x0056ebb0); the
+// TerrainClass::Can_Repair -- ALIAS of AnimClass::vfunc_36 (same machine code at 0x0056ebb0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_36()
+void TerrainClass::Can_Repair()
 {
     ts::sub::sub_0056ebb0();
 }
 
-// TerrainClass::vfunc_37 -- ALIAS of AnimClass::vfunc_37 (same machine code at 0x0056ebc0); the
+// TerrainClass::Can_Demolish -- ALIAS of AnimClass::vfunc_37 (same machine code at 0x0056ebc0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_37()
+void TerrainClass::Can_Demolish()
 {
     ts::sub::sub_0056ebc0();
 }
 
-// TerrainClass::vfunc_38 -- ALIAS of AnimClass::vfunc_38 (same machine code at 0x0056ebd0); the
+// TerrainClass::Can_Player_Fire -- ALIAS of AnimClass::vfunc_38 (same machine code at 0x0056ebd0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_38()
+void TerrainClass::Can_Player_Fire()
 {
     ts::sub::sub_0056ebd0();
 }
 
-// TerrainClass::vfunc_39 -- ALIAS of AnimClass::vfunc_39 (same machine code at 0x0056ebe0); the
+// TerrainClass::Can_Player_Move -- ALIAS of AnimClass::vfunc_39 (same machine code at 0x0056ebe0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_39()
+void TerrainClass::Can_Player_Move()
 {
     ts::sub::sub_0056ebe0();
 }
 
-// TerrainClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); the
+// TerrainClass::Target_Coord -- ALIAS of AircraftClass::Target_Coord (same machine code at 0x0040e5d0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_40(int a0)
+void TerrainClass::Target_Coord(int a0)
 {
     ts::sub::sub_0040e5d0();
 }
 
-// TerrainClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); the
+// TerrainClass::Docking_Coord -- ALIAS of AircraftClass::Docking_Coord (same machine code at 0x0040e600); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_41(int a0)
+void TerrainClass::Docking_Coord(int a0)
 {
     ts::sub::sub_0040e600();
 }
 
-// TerrainClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); the
+// TerrainClass::Render_Coord -- ALIAS of AircraftClass::Render_Coord (same machine code at 0x0040e630); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_42(int a0)
+void TerrainClass::Render_Coord(int a0)
 {
     ts::sub::sub_0040e630();
 }
 
-// TerrainClass::vfunc_43 -- ALIAS of AnimClass::vfunc_43 (same machine code at 0x004167f0); the
+// TerrainClass::Fire_Coord -- ALIAS of AnimClass::vfunc_43 (same machine code at 0x004167f0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_43(int a0, int a1)
+void TerrainClass::Fire_Coord(int a0, int a1)
 {
     ts::sub::sub_004167f0();
 }
 
-// TerrainClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); the
+// TerrainClass::Exit_Coord -- ALIAS of AircraftClass::Exit_Coord (same machine code at 0x0040e660); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_44(int a0)
+void TerrainClass::Exit_Coord(int a0)
 {
     ts::sub::sub_0040e660();
 }
 
-// TerrainClass::vfunc_45 -- ALIAS of AircraftClass::vfunc_45 (same machine code at 0x00570ed0); the
+// TerrainClass::Sort_Y -- ALIAS of AircraftClass::Sort_Y (same machine code at 0x00570ed0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_45()
+void TerrainClass::Sort_Y()
 {
     ts::sub::sub_00570ed0();
 }
 
-// TerrainClass::vfunc_46 -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
+// TerrainClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_46(int a0, int a1, int a2, int a3)
+void TerrainClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00570db0();
 }
 
-// TerrainClass::vfunc_47 -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); the
+// TerrainClass::Occupies_Cells -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_47()
+void TerrainClass::Occupies_Cells()
 {
     ts::sub::sub_00416830();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_48 -- the body is the canonical transcription of
+// TerrainClass::Limbo -- the body is the canonical transcription of
 // 90 instructions at 0x00623c60, in src/generated/code/.
 // size 295 bytes; callees: 0x00450750, 0x00502060, 0x005020d0, 0x00508840, 0x0051c870, 0x0056f6a0, 0x005a25c0
 //
-void TerrainClass::vfunc_48(int a0, int a1, int a2, int a3, int a4)
+void TerrainClass::Limbo(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00623c60();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_49 -- the body is the canonical transcription of
+// TerrainClass::Unlimbo -- the body is the canonical transcription of
 // 86 instructions at 0x00624300, in src/generated/code/.
 // size 272 bytes; callees: 0x00502060, 0x005020d0, 0x0056f810, 0x005f5120
 //
-void TerrainClass::vfunc_49(int a0, int a1)
+void TerrainClass::Unlimbo(int a0, int a1)
 {
     ts::sub::sub_00624300();
 }
 
-// TerrainClass::vfunc_50 -- ALIAS of AnimClass::vfunc_50 (same machine code at 0x0056fb40); the
+// TerrainClass::Detach_All -- ALIAS of AnimClass::vfunc_50 (same machine code at 0x0056fb40); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_50(int a0)
+void TerrainClass::Detach_All(int a0)
 {
     ts::sub::sub_0056fb40();
 }
 
-// TerrainClass::vfunc_51 -- ALIAS of AnimClass::vfunc_51 (same machine code at 0x0056ebf0); the
+// TerrainClass::Record_The_Kill -- ALIAS of AnimClass::vfunc_51 (same machine code at 0x0056ebf0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_51(int a0)
+void TerrainClass::Record_The_Kill(int a0)
 {
     ts::sub::sub_0056ebf0();
 }
 
-// TerrainClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); the
+// TerrainClass::Paradrop -- ALIAS of AircraftClass::Paradrop (same machine code at 0x005700c0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_52(int a0)
+void TerrainClass::Paradrop(int a0)
 {
     ts::sub::sub_005700c0();
 }
 
-// TerrainClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); the
+// TerrainClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_53(int a0)
+void TerrainClass::Fall_From_Height(int a0)
 {
     ts::sub::sub_0056ea70();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_54 -- the body is the canonical transcription of
+// TerrainClass::Set_Occupy_Bit -- the body is the canonical transcription of
 // 8 instructions at 0x00623420, in src/generated/code/.
 // size 27 bytes; callees: 0x00623444
 //
-void TerrainClass::vfunc_54(int a0)
+void TerrainClass::Set_Occupy_Bit(int a0)
 {
     ts::sub::sub_00623420();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_55 -- the body is the canonical transcription of
+// TerrainClass::Clear_Occupy_Bit -- the body is the canonical transcription of
 // 8 instructions at 0x00623390, in src/generated/code/.
 // size 27 bytes; callees: 0x006233b4
 //
-void TerrainClass::vfunc_55(int a0)
+void TerrainClass::Clear_Occupy_Bit(int a0)
 {
     ts::sub::sub_00623390();
 }
 
-// TerrainClass::vfunc_56 -- ALIAS of BuildingClass::vfunc_56 (same machine code at 0x005709b0); the
+// TerrainClass::Delete_Me -- ALIAS of BuildingClass::Delete_Me (same machine code at 0x005709b0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_56()
+void TerrainClass::Delete_Me()
 {
     ts::sub::sub_005709b0();
 }
 
-// TerrainClass::vfunc_57 -- ALIAS of AnimClass::vfunc_57 (same machine code at 0x0056ec00); the
+// TerrainClass::Do_Shimmer -- ALIAS of AnimClass::vfunc_57 (same machine code at 0x0056ec00); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_57()
+void TerrainClass::Do_Shimmer()
 {
     ts::sub::sub_0056ec00();
 }
 
-// TerrainClass::vfunc_58 -- ALIAS of AnimClass::vfunc_58 (same machine code at 0x0056ec10); the
+// TerrainClass::Exit_Object -- ALIAS of AnimClass::vfunc_58 (same machine code at 0x0056ec10); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_58(int a0)
+void TerrainClass::Exit_Object(int a0)
 {
     ts::sub::sub_0056ec10();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_59 -- the body is the canonical transcription of
+// TerrainClass::Render -- the body is the canonical transcription of
 // 109 instructions at 0x00623f60, in src/generated/code/.
 // size 308 bytes; callees: 0x00412bb0, 0x005f5120
 //
-void TerrainClass::vfunc_59(int a0, int a1, int a2)
+void TerrainClass::Render(int a0, int a1, int a2)
 {
     ts::sub::sub_00623f60();
 }
 
-// TerrainClass::vfunc_60 -- ALIAS of AircraftClass::vfunc_60 (same machine code at 0x005701b0); the
+// TerrainClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_60(int a0)
+void TerrainClass::Occupy_List(int a0)
 {
     ts::sub::sub_005701b0();
 }
 
-// TerrainClass::vfunc_61 -- ALIAS of AnimClass::vfunc_61 (same machine code at 0x00416840); the
+// TerrainClass::Draw_Pre_Render -- ALIAS of AnimClass::vfunc_61 (same machine code at 0x00416840); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_61(int a0, int a1)
+void TerrainClass::Draw_Pre_Render(int a0, int a1)
 {
     ts::sub::sub_00416840();
 }
 
-// TerrainClass::vfunc_62 -- ALIAS of AnimClass::vfunc_62 (same machine code at 0x00416850); the
+// TerrainClass::Draw_Post_Render -- ALIAS of AnimClass::vfunc_62 (same machine code at 0x00416850); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_62(int a0, int a1)
+void TerrainClass::Draw_Post_Render(int a0, int a1)
 {
     ts::sub::sub_00416850();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_63 -- the body is the canonical transcription of
+// TerrainClass::Draw_It -- the body is the canonical transcription of
 // 32 instructions at 0x006234b0, in src/generated/code/.
 // size 90 bytes; callees: 0x005020d0, 0x00623528
 //
-void TerrainClass::vfunc_63(int a0, int a1, int a2)
+void TerrainClass::Draw_It(int a0, int a1, int a2)
 {
     ts::sub::sub_006234b0();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_64 -- the body is the canonical transcription of
+// TerrainClass::Editor_Draw_It -- the body is the canonical transcription of
 // 67 instructions at 0x00623660, in src/generated/code/.
 // size 216 bytes; callees: 0x00456ca0, 0x005020d0, 0x005f5030, 0x00623742
 //
-void TerrainClass::vfunc_64(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void TerrainClass::Editor_Draw_It(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_00623660();
 }
 
-// TerrainClass::vfunc_65 -- ALIAS of AnimClass::vfunc_65 (same machine code at 0x0056ec20); the
+// TerrainClass::Hidden -- ALIAS of AnimClass::vfunc_65 (same machine code at 0x0056ec20); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_65()
+void TerrainClass::Hidden()
 {
     ts::sub::sub_0056ec20();
 }
 
-// TerrainClass::vfunc_66 -- ALIAS of AnimClass::vfunc_66 (same machine code at 0x0056ec30); the
+// TerrainClass::Look -- ALIAS of AnimClass::vfunc_66 (same machine code at 0x0056ec30); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_66(int a0, int a1)
+void TerrainClass::Look(int a0, int a1)
 {
     ts::sub::sub_0056ec30();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_67 -- the body is the canonical transcription of
+// TerrainClass::Mark -- the body is the canonical transcription of
 // 33 instructions at 0x00623320, in src/generated/code/.
 // size 79 bytes; callees: 0x00503ec0, 0x00570000
 //
-void TerrainClass::vfunc_67(int a0)
+void TerrainClass::Mark(int a0)
 {
     ts::sub::sub_00623320();
 }
 
-// TerrainClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); the
+// TerrainClass::Get_Visual_Rect -- ALIAS of AircraftClass::Get_Visual_Rect (same machine code at 0x0056f000); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_68(int a0)
+void TerrainClass::Get_Visual_Rect(int a0)
 {
     ts::sub::sub_0056f000();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_69 -- the body is the canonical transcription of
+// TerrainClass::Get_Render_Rect -- the body is the canonical transcription of
 // 29 instructions at 0x00624430, in src/generated/code/.
 // size 96 bytes; callees: 0x0056e820
 //
-void TerrainClass::vfunc_69(int a0)
+void TerrainClass::Get_Render_Rect(int a0)
 {
     ts::sub::sub_00624430();
 }
 
-// TerrainClass::vfunc_70 -- ALIAS of AircraftClass::vfunc_70 (same machine code at 0x0040e690); the
+// TerrainClass::Draw_Radial_Indicator -- ALIAS of AircraftClass::Draw_Radial_Indicator (same machine code at 0x0040e690); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_70()
+void TerrainClass::Draw_Radial_Indicator()
 {
     ts::sub::sub_0040e690();
 }
 
-// TerrainClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); the
+// TerrainClass::Mark_For_Redraw -- ALIAS of AircraftClass::Mark_For_Redraw (same machine code at 0x0056f680); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_71()
+void TerrainClass::Mark_For_Redraw()
 {
     ts::sub::sub_0056f680();
 }
 
-// TerrainClass::vfunc_72 -- ALIAS of AnimClass::vfunc_72 (same machine code at 0x0056ec50); the
+// TerrainClass::Active_Click_With -- ALIAS of AnimClass::vfunc_72 (same machine code at 0x0056ec50); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_72(int a0, int a1, int a2)
+void TerrainClass::Active_Click_With(int a0, int a1, int a2)
 {
     ts::sub::sub_0056ec50();
 }
@@ -584,231 +584,231 @@ void TerrainClass::vfunc_73(int a0, int a1, int a2)
     ts::sub::sub_0056ec40();
 }
 
-// TerrainClass::vfunc_74 -- ALIAS of AnimClass::vfunc_74 (same machine code at 0x0056ec60); the
+// TerrainClass::Clicked_As_Target -- ALIAS of AnimClass::vfunc_74 (same machine code at 0x0056ec60); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_74(int a0)
+void TerrainClass::Clicked_As_Target(int a0)
 {
     ts::sub::sub_0056ec60();
 }
 
-// TerrainClass::vfunc_75 -- ALIAS of AnimClass::vfunc_75 (same machine code at 0x0056ee20); the
+// TerrainClass::Select -- ALIAS of AnimClass::vfunc_75 (same machine code at 0x0056ee20); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_75()
+void TerrainClass::Select()
 {
     ts::sub::sub_0056ee20();
 }
 
-// TerrainClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); the
+// TerrainClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_76(int a0)
+void TerrainClass::Unselect(int a0)
 {
     ts::sub::sub_0056eda0();
 }
 
-// TerrainClass::vfunc_77 -- ALIAS of AnimClass::vfunc_77 (same machine code at 0x0056ec70); the
+// TerrainClass::In_Range -- ALIAS of AnimClass::vfunc_77 (same machine code at 0x0056ec70); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_77(int a0, int a1)
+void TerrainClass::In_Range(int a0, int a1)
 {
     ts::sub::sub_0056ec70();
 }
 
-// TerrainClass::vfunc_78 -- ALIAS of AnimClass::vfunc_78 (same machine code at 0x0056ec80); the
+// TerrainClass::Weapon_Range -- ALIAS of AnimClass::vfunc_78 (same machine code at 0x0056ec80); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_78(int a0)
+void TerrainClass::Weapon_Range(int a0)
 {
     ts::sub::sub_0056ec80();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_79 -- the body is the canonical transcription of
+// TerrainClass::Take_Damage -- the body is the canonical transcription of
 // 17 instructions at 0x00622d50, in src/generated/code/.
 // size 31 bytes; callees: none
 //
-void TerrainClass::vfunc_79(int a0, int a1, int a2, int a3, int a4, int a5)
+void TerrainClass::Take_Damage(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00622d50();
 }
 
-// TerrainClass::vfunc_80 -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); the
+// TerrainClass::Scatter -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_80(int a0, int a1, int a2)
+void TerrainClass::Scatter(int a0, int a1, int a2)
 {
     ts::sub::sub_0056ec90();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_81 -- the body is the canonical transcription of
+// TerrainClass::Catch_Fire -- the body is the canonical transcription of
 // 68 instructions at 0x006238b0, in src/generated/code/.
 // size 210 bytes; callees: 0x00412f30, 0x00414fb0, 0x005a5ec0, 0x00682997
 //
-void TerrainClass::vfunc_81(int a0, int a1)
+void TerrainClass::Catch_Fire(int a0, int a1)
 {
     ts::sub::sub_006238b0();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_82 -- the body is the canonical transcription of
+// TerrainClass::Fire_Out -- the body is the canonical transcription of
 // 36 instructions at 0x00623990, in src/generated/code/.
 // size 104 bytes; callees: none
 //
-void TerrainClass::vfunc_82(int a0)
+void TerrainClass::Fire_Out(int a0)
 {
     ts::sub::sub_00623990();
 }
 
-// TerrainClass::vfunc_83 -- ALIAS of AnimClass::vfunc_83 (same machine code at 0x0056ecc0); the
+// TerrainClass::Value -- ALIAS of AnimClass::vfunc_83 (same machine code at 0x0056ecc0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_83()
+void TerrainClass::Value()
 {
     ts::sub::sub_0056ecc0();
 }
 
-// TerrainClass::vfunc_84 -- ALIAS of AnimClass::vfunc_84 (same machine code at 0x0056ecd0); the
+// TerrainClass::Get_Mission -- ALIAS of AnimClass::vfunc_84 (same machine code at 0x0056ecd0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_84()
+void TerrainClass::Get_Mission()
 {
     ts::sub::sub_0056ecd0();
 }
 
-// TerrainClass::vfunc_85 -- ALIAS of AnimClass::vfunc_85 (same machine code at 0x00416860); the
+// TerrainClass::Assign_Mission -- ALIAS of AnimClass::vfunc_85 (same machine code at 0x00416860); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_85(int a0)
+void TerrainClass::Assign_Mission(int a0)
 {
     ts::sub::sub_00416860();
 }
 
-// TerrainClass::vfunc_86 -- ALIAS of AnimClass::vfunc_86 (same machine code at 0x00416870); the
+// TerrainClass::Per_Cell_Process -- ALIAS of AnimClass::vfunc_86 (same machine code at 0x00416870); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_86(int a0)
+void TerrainClass::Per_Cell_Process(int a0)
 {
     ts::sub::sub_00416870();
 }
 
-// TerrainClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); the
+// TerrainClass::Who_Can_Build_Me -- ALIAS of AircraftClass::Who_Can_Build_Me (same machine code at 0x00570240); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_87(int a0, int a1)
+void TerrainClass::Who_Can_Build_Me(int a0, int a1)
 {
     ts::sub::sub_00570240();
 }
 
-// TerrainClass::vfunc_88 -- ALIAS of AnimClass::vfunc_88 (same machine code at 0x0056fbc0); the
+// TerrainClass::Receive_Message -- ALIAS of AnimClass::vfunc_88 (same machine code at 0x0056fbc0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_88(int a0, int a1, int a2)
+void TerrainClass::Receive_Message(int a0, int a1, int a2)
 {
     ts::sub::sub_0056fbc0();
 }
 
-// TerrainClass::vfunc_89 -- ALIAS of AnimClass::vfunc_89 (same machine code at 0x005700b0); the
+// TerrainClass::Revealed -- ALIAS of AnimClass::vfunc_89 (same machine code at 0x005700b0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_89(int a0)
+void TerrainClass::Revealed(int a0)
 {
     ts::sub::sub_005700b0();
 }
 
-// TerrainClass::vfunc_90 -- ALIAS of AircraftClass::vfunc_90 (same machine code at 0x0056ece0); the
+// TerrainClass::Repair -- ALIAS of AircraftClass::Repair (same machine code at 0x0056ece0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_90(int a0)
+void TerrainClass::Repair(int a0)
 {
     ts::sub::sub_0056ece0();
 }
 
-// TerrainClass::vfunc_91 -- ALIAS of AnimClass::vfunc_91 (same machine code at 0x0056ecf0); the
+// TerrainClass::Sell_Back -- ALIAS of AnimClass::vfunc_91 (same machine code at 0x0056ecf0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_91(int a0)
+void TerrainClass::Sell_Back(int a0)
 {
     ts::sub::sub_0056ecf0();
 }
 
-// TerrainClass::vfunc_92 -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); the
+// TerrainClass::Set_Waypoint_Path -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_92(int a0, int a1)
+void TerrainClass::Set_Waypoint_Path(int a0, int a1)
 {
     ts::sub::sub_00570e70();
 }
 
-// TerrainClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); the
+// TerrainClass::Move -- ALIAS of AircraftClass::Move (same machine code at 0x0056ed00); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_93(int a0)
+void TerrainClass::Move(int a0)
 {
     ts::sub::sub_0056ed00();
 }
 
 // -------------------------------------------------------------------------
-// TerrainClass::vfunc_94 -- the body is the canonical transcription of
+// TerrainClass::Can_Enter_Cell -- the body is the canonical transcription of
 // 44 instructions at 0x006237d0, in src/generated/code/.
 // size 140 bytes; callees: 0x0044fb60, 0x005020d0, 0x006237f6
 //
-void TerrainClass::vfunc_94(int a0, int a1, int a2, int a3)
+void TerrainClass::Can_Enter_Cell(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_006237d0();
 }
 
-// TerrainClass::vfunc_95 -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); the
+// TerrainClass::Can_Reach -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_95(int a0, int a1, int a2, int a3, int a4)
+void TerrainClass::Can_Reach(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00416890();
 }
 
-// TerrainClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); the
+// TerrainClass::Get_Coord -- ALIAS of AircraftClass::Get_Coord (same machine code at 0x0040e6a0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_96(int a0)
+void TerrainClass::Get_Coord(int a0)
 {
     ts::sub::sub_0040e6a0();
 }
 
-// TerrainClass::vfunc_97 -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); the
+// TerrainClass::Set_Coord -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_97(int a0)
+void TerrainClass::Set_Coord(int a0)
 {
     ts::sub::sub_00570cc0();
 }
 
-// TerrainClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); the
+// TerrainClass::Get_Cell -- ALIAS of AircraftClass::Get_Cell (same machine code at 0x0040e6c0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_98(int a0)
+void TerrainClass::Get_Cell(int a0)
 {
     ts::sub::sub_0040e6c0();
 }
 
-// TerrainClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); the
+// TerrainClass::Get_Cell_Ptr -- ALIAS of AircraftClass::Get_Cell_Ptr (same machine code at 0x00570ce0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_99()
+void TerrainClass::Get_Cell_Ptr()
 {
     ts::sub::sub_00570ce0();
 }
 
-// TerrainClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); the
+// TerrainClass::Get_Target_Cell -- ALIAS of AircraftClass::Get_Target_Cell (same machine code at 0x00570d00); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_100(int a0)
+void TerrainClass::Get_Target_Cell(int a0)
 {
     ts::sub::sub_00570d00();
 }
 
-// TerrainClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); the
+// TerrainClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_101(int a0)
+void TerrainClass::Get_Target_Cell_Ptr(int a0)
 {
     ts::sub::sub_00570d50();
 }
 
-// TerrainClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); the
+// TerrainClass::Get_Height_AGL -- ALIAS of AircraftClass::Get_Height_AGL (same machine code at 0x00570370); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_102()
+void TerrainClass::Get_Height_AGL()
 {
     ts::sub::sub_00570370();
 }
 
-// TerrainClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); the
+// TerrainClass::Set_Height_AGL -- ALIAS of AircraftClass::Set_Height_AGL (same machine code at 0x005703b0); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_103(int a0)
+void TerrainClass::Set_Height_AGL(int a0)
 {
     ts::sub::sub_005703b0();
 }
 
-// TerrainClass::vfunc_104 -- ALIAS of AircraftClass::vfunc_104 (same machine code at 0x00570360); the
+// TerrainClass::Get_Height -- ALIAS of AircraftClass::Get_Height (same machine code at 0x00570360); the
 // forwarder is written once, at that declaration.
-void TerrainClass::vfunc_104()
+void TerrainClass::Get_Height()
 {
     ts::sub::sub_00570360();
 }

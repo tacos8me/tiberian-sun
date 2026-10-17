@@ -26,77 +26,77 @@ void TEventClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// TEventClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// TEventClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void TEventClass::Init(int a0)
+void TEventClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// TEventClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// TEventClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void TEventClass::Shutdown(int a0)
+void TEventClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::vfunc_3 -- the body is the canonical transcription of
+// TEventClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x00626700, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void TEventClass::vfunc_3(int a0, int a1)
+void TEventClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_00626700();
 }
 
-// TEventClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// TEventClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void TEventClass::Release(int a0)
+void TEventClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::vfunc_5 -- the body is the canonical transcription of
+// TEventClass::Load -- the body is the canonical transcription of
 // 27 instructions at 0x00626740, in src/generated/code/.
 // size 83 bytes; callees: 0x00405710, 0x004058b0, 0x005f36e0
 //
-void TEventClass::vfunc_5(int a0, int a1)
+void TEventClass::Load(int a0, int a1)
 {
     ts::sub::sub_00626740();
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::vfunc_6 -- the body is the canonical transcription of
+// TEventClass::Save -- the body is the canonical transcription of
 // 11 instructions at 0x006267a0, in src/generated/code/.
 // size 29 bytes; callees: 0x00405850
 //
-void TEventClass::vfunc_6(int a0, int a1, int a2)
+void TEventClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_006267a0();
 }
 
-// TEventClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// TEventClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void TEventClass::GetType(int a0, int a1)
+void TEventClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// TEventClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// TEventClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void TEventClass::Set_ID()
+void TEventClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::Get_RTTI -- the body is the canonical transcription of
+// TEventClass::Detach -- the body is the canonical transcription of
 // 10 instructions at 0x00626680, in src/generated/code/.
 // size 32 bytes; callees: none
 //
-void TEventClass::Get_RTTI(int a0, int a1)
+void TEventClass::Detach(int a0, int a1)
 {
     ts::sub::sub_00626680();
 }
@@ -112,94 +112,94 @@ void TEventClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::Get_Heap -- the body is the canonical transcription of
+// TEventClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00626840, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void TEventClass::Get_Heap()
+void TEventClass::Fetch_Object_Size()
 {
     ts::sub::sub_00626840();
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::Load -- the body is the canonical transcription of
+// TEventClass::Compute_CRC -- the body is the canonical transcription of
 // 37 instructions at 0x006266a0, in src/generated/code/.
 // size 91 bytes; callees: 0x00405940, 0x0046d680
 //
-void TEventClass::Load(int a0)
+void TEventClass::Compute_CRC(int a0)
 {
     ts::sub::sub_006266a0();
 }
 
-// TEventClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// TEventClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void TEventClass::Save()
+void TEventClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// TEventClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// TEventClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void TEventClass::GetSizeMax()
+void TEventClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
 // -------------------------------------------------------------------------
-// TEventClass::Compute_CRC -- the body is the canonical transcription of
+// TEventClass::Fetch_Heap_ID -- the body is the canonical transcription of
 // 2 instructions at 0x00626860, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void TEventClass::Compute_CRC()
+void TEventClass::Fetch_Heap_ID()
 {
     ts::sub::sub_00626860();
 }
 
-// TEventClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// TEventClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void TEventClass::vfunc_17()
+void TEventClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// TEventClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// TEventClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void TEventClass::vfunc_18(int a0)
+void TEventClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// TEventClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// TEventClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void TEventClass::vfunc_19(int a0)
+void TEventClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// TEventClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// TEventClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void TEventClass::vfunc_20()
+void TEventClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// TEventClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// TEventClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void TEventClass::vfunc_21()
+void TEventClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// TEventClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// TEventClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void TEventClass::vfunc_22(int a0)
+void TEventClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// TEventClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// TEventClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void TEventClass::vfunc_23()
+void TEventClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

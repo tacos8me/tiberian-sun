@@ -97,167 +97,167 @@ void DropListClass::vfunc_9()
     ts::sub::sub_0047ed30();
 }
 
-// DropListClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// DropListClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_10(int a0, int a1)
+void DropListClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// DropListClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// DropListClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_11(int a0)
+void DropListClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// DropListClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// DropListClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_12()
+void DropListClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// DropListClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// DropListClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_13(int a0)
+void DropListClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// DropListClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// DropListClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_14()
+void DropListClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// DropListClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// DropListClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_15()
+void DropListClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// DropListClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// DropListClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_16()
+void DropListClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// DropListClass::vfunc_17 -- ALIAS of CheckListClass::vfunc_17 (same machine code at 0x00460610); the
+// DropListClass::Get_ID -- ALIAS of CheckListClass::Get_ID (same machine code at 0x00460610); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_17()
+void DropListClass::Get_ID()
 {
     ts::sub::sub_00460610();
 }
 
-// DropListClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); the
+// DropListClass::Flag_To_Redraw -- ALIAS of ControlClass::Flag_To_Redraw (same machine code at 0x004a5e20); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_18()
+void DropListClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
 // -------------------------------------------------------------------------
-// DropListClass::vfunc_19 -- the body is the canonical transcription of
+// DropListClass::Peer_To_Peer -- the body is the canonical transcription of
 // 21 instructions at 0x0047ee80, in src/generated/code/.
 // size 62 bytes; callees: 0x0047ef0d
 //
-void DropListClass::vfunc_19(int a0, int a1)
+void DropListClass::Peer_To_Peer(int a0, int a1)
 {
     ts::sub::sub_0047ee80();
 }
 
 // -------------------------------------------------------------------------
-// DropListClass::vfunc_20 -- the body is the canonical transcription of
+// DropListClass::Set_Focus -- the body is the canonical transcription of
 // 16 instructions at 0x0048cf90, in src/generated/code/.
 // size 39 bytes; callees: 0x004a5e60
 //
-void DropListClass::vfunc_20()
+void DropListClass::Set_Focus()
 {
     ts::sub::sub_0048cf90();
 }
 
 // -------------------------------------------------------------------------
-// DropListClass::vfunc_21 -- the body is the canonical transcription of
+// DropListClass::Clear_Focus -- the body is the canonical transcription of
 // 11 instructions at 0x0047ee60, in src/generated/code/.
 // size 31 bytes; callees: none
 //
-void DropListClass::vfunc_21()
+void DropListClass::Clear_Focus()
 {
     ts::sub::sub_0047ee60();
 }
 
-// DropListClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// DropListClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_22()
+void DropListClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// DropListClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// DropListClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_23()
+void DropListClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// DropListClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// DropListClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_24()
+void DropListClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
 // -------------------------------------------------------------------------
-// DropListClass::vfunc_25 -- the body is the canonical transcription of
+// DropListClass::Set_Position -- the body is the canonical transcription of
 // 28 instructions at 0x0047f260, in src/generated/code/.
 // size 71 bytes; callees: 0x004a5ee0
 //
-void DropListClass::vfunc_25(int a0, int a1)
+void DropListClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_0047f260();
 }
 
-// DropListClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// DropListClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_26(int a0, int a1)
+void DropListClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
 // -------------------------------------------------------------------------
-// DropListClass::vfunc_27 -- the body is the canonical transcription of
+// DropListClass::Draw_Me -- the body is the canonical transcription of
 // 41 instructions at 0x0048cb40, in src/generated/code/.
 // size 112 bytes; callees: 0x00460620
 //
-void DropListClass::vfunc_27(int a0)
+void DropListClass::Draw_Me(int a0)
 {
     ts::sub::sub_0048cb40();
 }
 
-// DropListClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// DropListClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_28(int a0)
+void DropListClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
 // -------------------------------------------------------------------------
-// DropListClass::vfunc_29 -- the body is the canonical transcription of
+// DropListClass::Action -- the body is the canonical transcription of
 // 8 instructions at 0x0048cbc0, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void DropListClass::vfunc_29(int a0, int a1)
+void DropListClass::Action(int a0, int a1)
 {
     ts::sub::sub_0048cbc0();
 }
 
-// DropListClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// DropListClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void DropListClass::vfunc_30(int a0, int a1, int a2, int a3)
+void DropListClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

@@ -26,16 +26,16 @@ void ParticleClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// ParticleClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// ParticleClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Init(int a0)
+void ParticleClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// ParticleClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// ParticleClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Shutdown(int a0)
+void ParticleClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,19 +50,19 @@ void ParticleClass::vfunc_3(int a0, int a1)
     ts::sub::sub_0058dc10();
 }
 
-// ParticleClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// ParticleClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Release(int a0)
+void ParticleClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::vfunc_5 -- the body is the canonical transcription of
+// ParticleClass::Load -- the body is the canonical transcription of
 // 27 instructions at 0x0058daa0, in src/generated/code/.
 // size 86 bytes; callees: 0x0056e5f0, 0x005702f0, 0x005f36e0
 //
-void ParticleClass::vfunc_5(int a0, int a1)
+void ParticleClass::Load(int a0, int a1)
 {
     ts::sub::sub_0058daa0();
 }
@@ -77,23 +77,23 @@ void ParticleClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_0058db00();
 }
 
-// ParticleClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// ParticleClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void ParticleClass::GetType(int a0, int a1)
+void ParticleClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// ParticleClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// ParticleClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Set_ID()
+void ParticleClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// ParticleClass::Get_RTTI -- ALIAS of IsometricTileClass::Get_RTTI (same machine code at 0x0056fb00); the
+// ParticleClass::Detach -- ALIAS of IsometricTileClass::Detach (same machine code at 0x0056fb00); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Get_RTTI(int a0, int a1)
+void ParticleClass::Detach(int a0, int a1)
 {
     ts::sub::sub_0056fb00();
 }
@@ -109,446 +109,446 @@ void ParticleClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::Get_Heap -- the body is the canonical transcription of
+// ParticleClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x0058dc50, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleClass::Get_Heap()
+void ParticleClass::Fetch_Object_Size()
 {
     ts::sub::sub_0058dc50();
 }
 
-// ParticleClass::Load -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
+// ParticleClass::Compute_CRC -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Load(int a0)
+void ParticleClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00570630();
 }
 
-// ParticleClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// ParticleClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Save()
+void ParticleClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// ParticleClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// ParticleClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::GetSizeMax()
+void ParticleClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// ParticleClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// ParticleClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::Compute_CRC()
+void ParticleClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// ParticleClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); the
+// ParticleClass::Is_Inactive -- ALIAS of AircraftClass::Is_Inactive (same machine code at 0x00570a20); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_17()
+void ParticleClass::Is_Inactive()
 {
     ts::sub::sub_00570a20();
 }
 
-// ParticleClass::vfunc_18 -- ALIAS of AircraftClass::vfunc_18 (same machine code at 0x00570960); the
+// ParticleClass::Center_Coord -- ALIAS of AircraftClass::Center_Coord (same machine code at 0x00570960); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_18(int a0)
+void ParticleClass::Center_Coord(int a0)
 {
     ts::sub::sub_00570960();
 }
 
-// ParticleClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// ParticleClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_19(int a0)
+void ParticleClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// ParticleClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); the
+// ParticleClass::On_Ground -- ALIAS of AircraftClass::On_Ground (same machine code at 0x00570e80); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_20()
+void ParticleClass::On_Ground()
 {
     ts::sub::sub_00570e80();
 }
 
-// ParticleClass::vfunc_21 -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); the
+// ParticleClass::In_Air -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_21()
+void ParticleClass::In_Air()
 {
     ts::sub::sub_00570ea0();
 }
 
-// ParticleClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// ParticleClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_22(int a0)
+void ParticleClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// ParticleClass::vfunc_23 -- ALIAS of IsometricTileClass::vfunc_23 (same machine code at 0x0056e860); the
+// ParticleClass::AI -- ALIAS of IsometricTileClass::AI (same machine code at 0x0056e860); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_23()
+void ParticleClass::AI()
 {
     ts::sub::sub_0056e860();
 }
 
-// ParticleClass::vfunc_24 -- ALIAS of AnimClass::vfunc_24 (same machine code at 0x004167b0); the
+// ParticleClass::Is_Players_Army -- ALIAS of AnimClass::vfunc_24 (same machine code at 0x004167b0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_24()
+void ParticleClass::Is_Players_Army()
 {
     ts::sub::sub_004167b0();
 }
 
-// ParticleClass::vfunc_25 -- ALIAS of AnimClass::vfunc_25 (same machine code at 0x004167c0); the
+// ParticleClass::Visual_Character -- ALIAS of AnimClass::vfunc_25 (same machine code at 0x004167c0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_25(int a0, int a1)
+void ParticleClass::Visual_Character(int a0, int a1)
 {
     ts::sub::sub_004167c0();
 }
 
-// ParticleClass::vfunc_26 -- ALIAS of AircraftClass::vfunc_26 (same machine code at 0x0056e820); the
+// ParticleClass::Get_Image_Data -- ALIAS of AircraftClass::Get_Image_Data (same machine code at 0x0056e820); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_26()
+void ParticleClass::Get_Image_Data()
 {
     ts::sub::sub_0056e820();
 }
 
-// ParticleClass::vfunc_27 -- ALIAS of AnimClass::vfunc_27 (same machine code at 0x0056eb50); the
+// ParticleClass::What_Action -- ALIAS of AnimClass::vfunc_27 (same machine code at 0x0056eb50); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_27(int a0, int a1, int a2)
+void ParticleClass::What_Action(int a0, int a1, int a2)
 {
     ts::sub::sub_0056eb50();
 }
 
-// ParticleClass::vfunc_28 -- ALIAS of AnimClass::vfunc_28 (same machine code at 0x0056eb40); the
+// ParticleClass::What_Action -- ALIAS of AnimClass::vfunc_28 (same machine code at 0x0056eb40); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_28(int a0, int a1)
+void ParticleClass::What_Action(int a0, int a1)
 {
     ts::sub::sub_0056eb40();
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::vfunc_29 -- the body is the canonical transcription of
+// ParticleClass::In_Which_Layer -- the body is the canonical transcription of
 // 2 instructions at 0x0058da70, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleClass::vfunc_29()
+void ParticleClass::In_Which_Layer()
 {
     ts::sub::sub_0058da70();
 }
 
-// ParticleClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); the
+// ParticleClass::Not_Underground -- ALIAS of AircraftClass::Not_Underground (same machine code at 0x00570ef0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_30()
+void ParticleClass::Not_Underground()
 {
     ts::sub::sub_00570ef0();
 }
 
-// ParticleClass::vfunc_31 -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); the
+// ParticleClass::Considered_Vehicle -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_31()
+void ParticleClass::Considered_Vehicle()
 {
     ts::sub::sub_004167d0();
 }
 
-// ParticleClass::vfunc_32 -- ALIAS of AnimClass::vfunc_32 (same machine code at 0x00570ec0); the
+// ParticleClass::Techno_Type_Class -- ALIAS of AnimClass::vfunc_32 (same machine code at 0x00570ec0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_32()
+void ParticleClass::Techno_Type_Class()
 {
     ts::sub::sub_00570ec0();
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::Get_Type -- the body is the canonical transcription of
+// ParticleClass::Class_Of -- the body is the canonical transcription of
 // 2 instructions at 0x0058dc70, in src/generated/code/.
 // size 4 bytes; callees: none
 //
-void ParticleClass::Get_Type()
+void ParticleClass::Class_Of()
 {
     ts::sub::sub_0058dc70();
 }
 
-// ParticleClass::vfunc_34 -- ALIAS of AnimClass::vfunc_34 (same machine code at 0x0056eba0); the
+// ParticleClass::Get_Ownable -- ALIAS of AnimClass::vfunc_34 (same machine code at 0x0056eba0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_34()
+void ParticleClass::Get_Ownable()
 {
     ts::sub::sub_0056eba0();
 }
 
-// ParticleClass::vfunc_35 -- ALIAS of AnimClass::vfunc_35 (same machine code at 0x004167e0); the
+// ParticleClass::Full_Name -- ALIAS of AnimClass::vfunc_35 (same machine code at 0x004167e0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_35()
+void ParticleClass::Full_Name()
 {
     ts::sub::sub_004167e0();
 }
 
-// ParticleClass::vfunc_36 -- ALIAS of AnimClass::vfunc_36 (same machine code at 0x0056ebb0); the
+// ParticleClass::Can_Repair -- ALIAS of AnimClass::vfunc_36 (same machine code at 0x0056ebb0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_36()
+void ParticleClass::Can_Repair()
 {
     ts::sub::sub_0056ebb0();
 }
 
-// ParticleClass::vfunc_37 -- ALIAS of AnimClass::vfunc_37 (same machine code at 0x0056ebc0); the
+// ParticleClass::Can_Demolish -- ALIAS of AnimClass::vfunc_37 (same machine code at 0x0056ebc0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_37()
+void ParticleClass::Can_Demolish()
 {
     ts::sub::sub_0056ebc0();
 }
 
-// ParticleClass::vfunc_38 -- ALIAS of AnimClass::vfunc_38 (same machine code at 0x0056ebd0); the
+// ParticleClass::Can_Player_Fire -- ALIAS of AnimClass::vfunc_38 (same machine code at 0x0056ebd0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_38()
+void ParticleClass::Can_Player_Fire()
 {
     ts::sub::sub_0056ebd0();
 }
 
-// ParticleClass::vfunc_39 -- ALIAS of AnimClass::vfunc_39 (same machine code at 0x0056ebe0); the
+// ParticleClass::Can_Player_Move -- ALIAS of AnimClass::vfunc_39 (same machine code at 0x0056ebe0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_39()
+void ParticleClass::Can_Player_Move()
 {
     ts::sub::sub_0056ebe0();
 }
 
-// ParticleClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); the
+// ParticleClass::Target_Coord -- ALIAS of AircraftClass::Target_Coord (same machine code at 0x0040e5d0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_40(int a0)
+void ParticleClass::Target_Coord(int a0)
 {
     ts::sub::sub_0040e5d0();
 }
 
-// ParticleClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); the
+// ParticleClass::Docking_Coord -- ALIAS of AircraftClass::Docking_Coord (same machine code at 0x0040e600); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_41(int a0)
+void ParticleClass::Docking_Coord(int a0)
 {
     ts::sub::sub_0040e600();
 }
 
-// ParticleClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); the
+// ParticleClass::Render_Coord -- ALIAS of AircraftClass::Render_Coord (same machine code at 0x0040e630); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_42(int a0)
+void ParticleClass::Render_Coord(int a0)
 {
     ts::sub::sub_0040e630();
 }
 
-// ParticleClass::vfunc_43 -- ALIAS of AnimClass::vfunc_43 (same machine code at 0x004167f0); the
+// ParticleClass::Fire_Coord -- ALIAS of AnimClass::vfunc_43 (same machine code at 0x004167f0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_43(int a0, int a1)
+void ParticleClass::Fire_Coord(int a0, int a1)
 {
     ts::sub::sub_004167f0();
 }
 
-// ParticleClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); the
+// ParticleClass::Exit_Coord -- ALIAS of AircraftClass::Exit_Coord (same machine code at 0x0040e660); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_44(int a0)
+void ParticleClass::Exit_Coord(int a0)
 {
     ts::sub::sub_0040e660();
 }
 
-// ParticleClass::vfunc_45 -- ALIAS of AircraftClass::vfunc_45 (same machine code at 0x00570ed0); the
+// ParticleClass::Sort_Y -- ALIAS of AircraftClass::Sort_Y (same machine code at 0x00570ed0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_45()
+void ParticleClass::Sort_Y()
 {
     ts::sub::sub_00570ed0();
 }
 
-// ParticleClass::vfunc_46 -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
+// ParticleClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_46(int a0, int a1, int a2, int a3)
+void ParticleClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00570db0();
 }
 
-// ParticleClass::vfunc_47 -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); the
+// ParticleClass::Occupies_Cells -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_47()
+void ParticleClass::Occupies_Cells()
 {
     ts::sub::sub_00416830();
 }
 
-// ParticleClass::vfunc_48 -- ALIAS of BulletClass::vfunc_48 (same machine code at 0x0056f6a0); the
+// ParticleClass::Limbo -- ALIAS of BulletClass::vfunc_48 (same machine code at 0x0056f6a0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_48(int a0, int a1, int a2, int a3, int a4)
+void ParticleClass::Limbo(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0056f6a0();
 }
 
-// ParticleClass::vfunc_49 -- ALIAS of AnimClass::vfunc_49 (same machine code at 0x0056f810); the
+// ParticleClass::Unlimbo -- ALIAS of AnimClass::vfunc_49 (same machine code at 0x0056f810); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_49(int a0, int a1)
+void ParticleClass::Unlimbo(int a0, int a1)
 {
     ts::sub::sub_0056f810();
 }
 
-// ParticleClass::vfunc_50 -- ALIAS of AnimClass::vfunc_50 (same machine code at 0x0056fb40); the
+// ParticleClass::Detach_All -- ALIAS of AnimClass::vfunc_50 (same machine code at 0x0056fb40); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_50(int a0)
+void ParticleClass::Detach_All(int a0)
 {
     ts::sub::sub_0056fb40();
 }
 
-// ParticleClass::vfunc_51 -- ALIAS of AnimClass::vfunc_51 (same machine code at 0x0056ebf0); the
+// ParticleClass::Record_The_Kill -- ALIAS of AnimClass::vfunc_51 (same machine code at 0x0056ebf0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_51(int a0)
+void ParticleClass::Record_The_Kill(int a0)
 {
     ts::sub::sub_0056ebf0();
 }
 
-// ParticleClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); the
+// ParticleClass::Paradrop -- ALIAS of AircraftClass::Paradrop (same machine code at 0x005700c0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_52(int a0)
+void ParticleClass::Paradrop(int a0)
 {
     ts::sub::sub_005700c0();
 }
 
-// ParticleClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); the
+// ParticleClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_53(int a0)
+void ParticleClass::Fall_From_Height(int a0)
 {
     ts::sub::sub_0056ea70();
 }
 
-// ParticleClass::vfunc_54 -- ALIAS of AircraftClass::vfunc_54 (same machine code at 0x00570480); the
+// ParticleClass::Set_Occupy_Bit -- ALIAS of AircraftClass::Set_Occupy_Bit (same machine code at 0x00570480); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_54(int a0)
+void ParticleClass::Set_Occupy_Bit(int a0)
 {
     ts::sub::sub_00570480();
 }
 
-// ParticleClass::vfunc_55 -- ALIAS of AircraftClass::vfunc_55 (same machine code at 0x00570500); the
+// ParticleClass::Clear_Occupy_Bit -- ALIAS of AircraftClass::Clear_Occupy_Bit (same machine code at 0x00570500); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_55(int a0)
+void ParticleClass::Clear_Occupy_Bit(int a0)
 {
     ts::sub::sub_00570500();
 }
 
-// ParticleClass::vfunc_56 -- ALIAS of BuildingClass::vfunc_56 (same machine code at 0x005709b0); the
+// ParticleClass::Delete_Me -- ALIAS of BuildingClass::Delete_Me (same machine code at 0x005709b0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_56()
+void ParticleClass::Delete_Me()
 {
     ts::sub::sub_005709b0();
 }
 
-// ParticleClass::vfunc_57 -- ALIAS of AnimClass::vfunc_57 (same machine code at 0x0056ec00); the
+// ParticleClass::Do_Shimmer -- ALIAS of AnimClass::vfunc_57 (same machine code at 0x0056ec00); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_57()
+void ParticleClass::Do_Shimmer()
 {
     ts::sub::sub_0056ec00();
 }
 
-// ParticleClass::vfunc_58 -- ALIAS of AnimClass::vfunc_58 (same machine code at 0x0056ec10); the
+// ParticleClass::Exit_Object -- ALIAS of AnimClass::vfunc_58 (same machine code at 0x0056ec10); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_58(int a0)
+void ParticleClass::Exit_Object(int a0)
 {
     ts::sub::sub_0056ec10();
 }
 
-// ParticleClass::vfunc_59 -- ALIAS of AircraftClass::vfunc_59 (same machine code at 0x0056f480); the
+// ParticleClass::Render -- ALIAS of AircraftClass::Render (same machine code at 0x0056f480); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_59(int a0, int a1, int a2)
+void ParticleClass::Render(int a0, int a1, int a2)
 {
     ts::sub::sub_0056f480();
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::vfunc_60 -- the body is the canonical transcription of
+// ParticleClass::Occupy_List -- the body is the canonical transcription of
 // 19 instructions at 0x0058da10, in src/generated/code/.
 // size 69 bytes; callees: 0x00682610
 //
-void ParticleClass::vfunc_60(int a0)
+void ParticleClass::Occupy_List(int a0)
 {
     ts::sub::sub_0058da10();
 }
 
-// ParticleClass::vfunc_61 -- ALIAS of AnimClass::vfunc_61 (same machine code at 0x00416840); the
+// ParticleClass::Draw_Pre_Render -- ALIAS of AnimClass::vfunc_61 (same machine code at 0x00416840); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_61(int a0, int a1)
+void ParticleClass::Draw_Pre_Render(int a0, int a1)
 {
     ts::sub::sub_00416840();
 }
 
-// ParticleClass::vfunc_62 -- ALIAS of AnimClass::vfunc_62 (same machine code at 0x00416850); the
+// ParticleClass::Draw_Post_Render -- ALIAS of AnimClass::vfunc_62 (same machine code at 0x00416850); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_62(int a0, int a1)
+void ParticleClass::Draw_Post_Render(int a0, int a1)
 {
     ts::sub::sub_00416850();
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::vfunc_63 -- the body is the canonical transcription of
+// ParticleClass::Draw_It -- the body is the canonical transcription of
 // 65 instructions at 0x0058d250, in src/generated/code/.
 // size 220 bytes; callees: 0x0051e760, 0x0058d342, 0x005f5030
 //
-void ParticleClass::vfunc_63(int a0, int a1)
+void ParticleClass::Draw_It(int a0, int a1)
 {
     ts::sub::sub_0058d250();
 }
 
-// ParticleClass::vfunc_64 -- ALIAS of AircraftClass::vfunc_64 (same machine code at 0x00570990); the
+// ParticleClass::Editor_Draw_It -- ALIAS of AircraftClass::Editor_Draw_It (same machine code at 0x00570990); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_64(int a0, int a1)
+void ParticleClass::Editor_Draw_It(int a0, int a1)
 {
     ts::sub::sub_00570990();
 }
 
-// ParticleClass::vfunc_65 -- ALIAS of AnimClass::vfunc_65 (same machine code at 0x0056ec20); the
+// ParticleClass::Hidden -- ALIAS of AnimClass::vfunc_65 (same machine code at 0x0056ec20); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_65()
+void ParticleClass::Hidden()
 {
     ts::sub::sub_0056ec20();
 }
 
-// ParticleClass::vfunc_66 -- ALIAS of AnimClass::vfunc_66 (same machine code at 0x0056ec30); the
+// ParticleClass::Look -- ALIAS of AnimClass::vfunc_66 (same machine code at 0x0056ec30); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_66(int a0, int a1)
+void ParticleClass::Look(int a0, int a1)
 {
     ts::sub::sub_0056ec30();
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::vfunc_67 -- the body is the canonical transcription of
+// ParticleClass::Mark -- the body is the canonical transcription of
 // 6 instructions at 0x0058d9f0, in src/generated/code/.
 // size 18 bytes; callees: 0x00570000
 //
-void ParticleClass::vfunc_67(int a0)
+void ParticleClass::Mark(int a0)
 {
     ts::sub::sub_0058d9f0();
 }
 
-// ParticleClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); the
+// ParticleClass::Get_Visual_Rect -- ALIAS of AircraftClass::Get_Visual_Rect (same machine code at 0x0056f000); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_68(int a0)
+void ParticleClass::Get_Visual_Rect(int a0)
 {
     ts::sub::sub_0056f000();
 }
 
-// ParticleClass::vfunc_69 -- ALIAS of AircraftClass::vfunc_69 (same machine code at 0x0056f160); the
+// ParticleClass::Get_Render_Rect -- ALIAS of AircraftClass::Get_Render_Rect (same machine code at 0x0056f160); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_69(int a0)
+void ParticleClass::Get_Render_Rect(int a0)
 {
     ts::sub::sub_0056f160();
 }
 
-// ParticleClass::vfunc_70 -- ALIAS of AircraftClass::vfunc_70 (same machine code at 0x0040e690); the
+// ParticleClass::Draw_Radial_Indicator -- ALIAS of AircraftClass::Draw_Radial_Indicator (same machine code at 0x0040e690); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_70()
+void ParticleClass::Draw_Radial_Indicator()
 {
     ts::sub::sub_0040e690();
 }
 
-// ParticleClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); the
+// ParticleClass::Mark_For_Redraw -- ALIAS of AircraftClass::Mark_For_Redraw (same machine code at 0x0056f680); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_71()
+void ParticleClass::Mark_For_Redraw()
 {
     ts::sub::sub_0056f680();
 }
 
-// ParticleClass::vfunc_72 -- ALIAS of AnimClass::vfunc_72 (same machine code at 0x0056ec50); the
+// ParticleClass::Active_Click_With -- ALIAS of AnimClass::vfunc_72 (same machine code at 0x0056ec50); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_72(int a0, int a1, int a2)
+void ParticleClass::Active_Click_With(int a0, int a1, int a2)
 {
     ts::sub::sub_0056ec50();
 }
@@ -560,229 +560,229 @@ void ParticleClass::vfunc_73(int a0, int a1, int a2)
     ts::sub::sub_0056ec40();
 }
 
-// ParticleClass::vfunc_74 -- ALIAS of AnimClass::vfunc_74 (same machine code at 0x0056ec60); the
+// ParticleClass::Clicked_As_Target -- ALIAS of AnimClass::vfunc_74 (same machine code at 0x0056ec60); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_74(int a0)
+void ParticleClass::Clicked_As_Target(int a0)
 {
     ts::sub::sub_0056ec60();
 }
 
-// ParticleClass::vfunc_75 -- ALIAS of AnimClass::vfunc_75 (same machine code at 0x0056ee20); the
+// ParticleClass::Select -- ALIAS of AnimClass::vfunc_75 (same machine code at 0x0056ee20); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_75()
+void ParticleClass::Select()
 {
     ts::sub::sub_0056ee20();
 }
 
-// ParticleClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); the
+// ParticleClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_76(int a0)
+void ParticleClass::Unselect(int a0)
 {
     ts::sub::sub_0056eda0();
 }
 
-// ParticleClass::vfunc_77 -- ALIAS of AnimClass::vfunc_77 (same machine code at 0x0056ec70); the
+// ParticleClass::In_Range -- ALIAS of AnimClass::vfunc_77 (same machine code at 0x0056ec70); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_77(int a0, int a1)
+void ParticleClass::In_Range(int a0, int a1)
 {
     ts::sub::sub_0056ec70();
 }
 
-// ParticleClass::vfunc_78 -- ALIAS of AnimClass::vfunc_78 (same machine code at 0x0056ec80); the
+// ParticleClass::Weapon_Range -- ALIAS of AnimClass::vfunc_78 (same machine code at 0x0056ec80); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_78(int a0)
+void ParticleClass::Weapon_Range(int a0)
 {
     ts::sub::sub_0056ec80();
 }
 
-// ParticleClass::vfunc_79 -- ALIAS of AnimClass::vfunc_79 (same machine code at 0x0056fbe0); the
+// ParticleClass::Take_Damage -- ALIAS of AnimClass::vfunc_79 (same machine code at 0x0056fbe0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_79(int a0, int a1, int a2, int a3, int a4, int a5)
+void ParticleClass::Take_Damage(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_0056fbe0();
 }
 
-// ParticleClass::vfunc_80 -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); the
+// ParticleClass::Scatter -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_80(int a0, int a1, int a2)
+void ParticleClass::Scatter(int a0, int a1, int a2)
 {
     ts::sub::sub_0056ec90();
 }
 
-// ParticleClass::vfunc_81 -- ALIAS of AircraftClass::vfunc_81 (same machine code at 0x0056eca0); the
+// ParticleClass::Catch_Fire -- ALIAS of AircraftClass::Catch_Fire (same machine code at 0x0056eca0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_81()
+void ParticleClass::Catch_Fire()
 {
     ts::sub::sub_0056eca0();
 }
 
-// ParticleClass::vfunc_82 -- ALIAS of AircraftClass::vfunc_82 (same machine code at 0x0056ecb0); the
+// ParticleClass::Fire_Out -- ALIAS of AircraftClass::Fire_Out (same machine code at 0x0056ecb0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_82()
+void ParticleClass::Fire_Out()
 {
     ts::sub::sub_0056ecb0();
 }
 
-// ParticleClass::vfunc_83 -- ALIAS of AnimClass::vfunc_83 (same machine code at 0x0056ecc0); the
+// ParticleClass::Value -- ALIAS of AnimClass::vfunc_83 (same machine code at 0x0056ecc0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_83()
+void ParticleClass::Value()
 {
     ts::sub::sub_0056ecc0();
 }
 
-// ParticleClass::vfunc_84 -- ALIAS of AnimClass::vfunc_84 (same machine code at 0x0056ecd0); the
+// ParticleClass::Get_Mission -- ALIAS of AnimClass::vfunc_84 (same machine code at 0x0056ecd0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_84()
+void ParticleClass::Get_Mission()
 {
     ts::sub::sub_0056ecd0();
 }
 
-// ParticleClass::vfunc_85 -- ALIAS of AnimClass::vfunc_85 (same machine code at 0x00416860); the
+// ParticleClass::Assign_Mission -- ALIAS of AnimClass::vfunc_85 (same machine code at 0x00416860); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_85(int a0)
+void ParticleClass::Assign_Mission(int a0)
 {
     ts::sub::sub_00416860();
 }
 
-// ParticleClass::vfunc_86 -- ALIAS of AnimClass::vfunc_86 (same machine code at 0x00416870); the
+// ParticleClass::Per_Cell_Process -- ALIAS of AnimClass::vfunc_86 (same machine code at 0x00416870); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_86(int a0)
+void ParticleClass::Per_Cell_Process(int a0)
 {
     ts::sub::sub_00416870();
 }
 
-// ParticleClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); the
+// ParticleClass::Who_Can_Build_Me -- ALIAS of AircraftClass::Who_Can_Build_Me (same machine code at 0x00570240); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_87(int a0, int a1)
+void ParticleClass::Who_Can_Build_Me(int a0, int a1)
 {
     ts::sub::sub_00570240();
 }
 
-// ParticleClass::vfunc_88 -- ALIAS of AnimClass::vfunc_88 (same machine code at 0x0056fbc0); the
+// ParticleClass::Receive_Message -- ALIAS of AnimClass::vfunc_88 (same machine code at 0x0056fbc0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_88(int a0, int a1, int a2)
+void ParticleClass::Receive_Message(int a0, int a1, int a2)
 {
     ts::sub::sub_0056fbc0();
 }
 
-// ParticleClass::vfunc_89 -- ALIAS of AnimClass::vfunc_89 (same machine code at 0x005700b0); the
+// ParticleClass::Revealed -- ALIAS of AnimClass::vfunc_89 (same machine code at 0x005700b0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_89(int a0)
+void ParticleClass::Revealed(int a0)
 {
     ts::sub::sub_005700b0();
 }
 
-// ParticleClass::vfunc_90 -- ALIAS of AircraftClass::vfunc_90 (same machine code at 0x0056ece0); the
+// ParticleClass::Repair -- ALIAS of AircraftClass::Repair (same machine code at 0x0056ece0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_90(int a0)
+void ParticleClass::Repair(int a0)
 {
     ts::sub::sub_0056ece0();
 }
 
-// ParticleClass::vfunc_91 -- ALIAS of AnimClass::vfunc_91 (same machine code at 0x0056ecf0); the
+// ParticleClass::Sell_Back -- ALIAS of AnimClass::vfunc_91 (same machine code at 0x0056ecf0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_91(int a0)
+void ParticleClass::Sell_Back(int a0)
 {
     ts::sub::sub_0056ecf0();
 }
 
-// ParticleClass::vfunc_92 -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); the
+// ParticleClass::Set_Waypoint_Path -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_92(int a0, int a1)
+void ParticleClass::Set_Waypoint_Path(int a0, int a1)
 {
     ts::sub::sub_00570e70();
 }
 
-// ParticleClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); the
+// ParticleClass::Move -- ALIAS of AircraftClass::Move (same machine code at 0x0056ed00); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_93(int a0)
+void ParticleClass::Move(int a0)
 {
     ts::sub::sub_0056ed00();
 }
 
-// ParticleClass::vfunc_94 -- ALIAS of AnimClass::vfunc_94 (same machine code at 0x00416880); the
+// ParticleClass::Can_Enter_Cell -- ALIAS of AnimClass::vfunc_94 (same machine code at 0x00416880); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_94(int a0, int a1, int a2, int a3, int a4)
+void ParticleClass::Can_Enter_Cell(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00416880();
 }
 
-// ParticleClass::vfunc_95 -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); the
+// ParticleClass::Can_Reach -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_95(int a0, int a1, int a2, int a3, int a4)
+void ParticleClass::Can_Reach(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00416890();
 }
 
-// ParticleClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); the
+// ParticleClass::Get_Coord -- ALIAS of AircraftClass::Get_Coord (same machine code at 0x0040e6a0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_96(int a0)
+void ParticleClass::Get_Coord(int a0)
 {
     ts::sub::sub_0040e6a0();
 }
 
-// ParticleClass::vfunc_97 -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); the
+// ParticleClass::Set_Coord -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_97(int a0)
+void ParticleClass::Set_Coord(int a0)
 {
     ts::sub::sub_00570cc0();
 }
 
-// ParticleClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); the
+// ParticleClass::Get_Cell -- ALIAS of AircraftClass::Get_Cell (same machine code at 0x0040e6c0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_98(int a0)
+void ParticleClass::Get_Cell(int a0)
 {
     ts::sub::sub_0040e6c0();
 }
 
-// ParticleClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); the
+// ParticleClass::Get_Cell_Ptr -- ALIAS of AircraftClass::Get_Cell_Ptr (same machine code at 0x00570ce0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_99()
+void ParticleClass::Get_Cell_Ptr()
 {
     ts::sub::sub_00570ce0();
 }
 
-// ParticleClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); the
+// ParticleClass::Get_Target_Cell -- ALIAS of AircraftClass::Get_Target_Cell (same machine code at 0x00570d00); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_100(int a0)
+void ParticleClass::Get_Target_Cell(int a0)
 {
     ts::sub::sub_00570d00();
 }
 
-// ParticleClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); the
+// ParticleClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_101(int a0)
+void ParticleClass::Get_Target_Cell_Ptr(int a0)
 {
     ts::sub::sub_00570d50();
 }
 
-// ParticleClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); the
+// ParticleClass::Get_Height_AGL -- ALIAS of AircraftClass::Get_Height_AGL (same machine code at 0x00570370); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_102()
+void ParticleClass::Get_Height_AGL()
 {
     ts::sub::sub_00570370();
 }
 
-// ParticleClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); the
+// ParticleClass::Set_Height_AGL -- ALIAS of AircraftClass::Set_Height_AGL (same machine code at 0x005703b0); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_103(int a0)
+void ParticleClass::Set_Height_AGL(int a0)
 {
     ts::sub::sub_005703b0();
 }
 
-// ParticleClass::vfunc_104 -- ALIAS of AircraftClass::vfunc_104 (same machine code at 0x00570360); the
+// ParticleClass::Get_Height -- ALIAS of AircraftClass::Get_Height (same machine code at 0x00570360); the
 // forwarder is written once, at that declaration.
-void ParticleClass::vfunc_104()
+void ParticleClass::Get_Height()
 {
     ts::sub::sub_00570360();
 }
 
 // -------------------------------------------------------------------------
-// ParticleClass::vfunc_105 -- the body is the canonical transcription of
+// ParticleClass::Shape_Number -- the body is the canonical transcription of
 // 50 instructions at 0x0058db20, in src/generated/code/.
 // size 166 bytes; callees: 0x005f5120, 0x00652b50
 //
-void ParticleClass::vfunc_105(int a0)
+void ParticleClass::Shape_Number(int a0)
 {
     ts::sub::sub_0058db20();
 }

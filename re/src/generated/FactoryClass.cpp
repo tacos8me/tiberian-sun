@@ -26,77 +26,77 @@ void FactoryClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// FactoryClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// FactoryClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void FactoryClass::Init(int a0)
+void FactoryClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// FactoryClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// FactoryClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void FactoryClass::Shutdown(int a0)
+void FactoryClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::vfunc_3 -- the body is the canonical transcription of
+// FactoryClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x00493790, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void FactoryClass::vfunc_3(int a0, int a1)
+void FactoryClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_00493790();
 }
 
-// FactoryClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// FactoryClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void FactoryClass::Release(int a0)
+void FactoryClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::vfunc_5 -- the body is the canonical transcription of
+// FactoryClass::Load -- the body is the canonical transcription of
 // 115 instructions at 0x004937d0, in src/generated/code/.
 // size 314 bytes; callees: 0x00405710, 0x004058b0, 0x00493e10, 0x00494120, 0x005f36e0
 //
-void FactoryClass::vfunc_5(int a0, int a1)
+void FactoryClass::Load(int a0, int a1)
 {
     ts::sub::sub_004937d0();
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::vfunc_6 -- the body is the canonical transcription of
+// FactoryClass::Save -- the body is the canonical transcription of
 // 46 instructions at 0x00493910, in src/generated/code/.
 // size 101 bytes; callees: 0x00405850
 //
-void FactoryClass::vfunc_6(int a0, int a1, int a2)
+void FactoryClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_00493910();
 }
 
-// FactoryClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// FactoryClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void FactoryClass::GetType(int a0, int a1)
+void FactoryClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// FactoryClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// FactoryClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void FactoryClass::Set_ID()
+void FactoryClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::Get_RTTI -- the body is the canonical transcription of
+// FactoryClass::Detach -- the body is the canonical transcription of
 // 6 instructions at 0x00493ad0, in src/generated/code/.
 // size 21 bytes; callees: none
 //
-void FactoryClass::Get_RTTI(int a0, int a1)
+void FactoryClass::Detach(int a0, int a1)
 {
     ts::sub::sub_00493ad0();
 }
@@ -112,94 +112,94 @@ void FactoryClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::Get_Heap -- the body is the canonical transcription of
+// FactoryClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00493ca0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void FactoryClass::Get_Heap()
+void FactoryClass::Fetch_Object_Size()
 {
     ts::sub::sub_00493ca0();
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::Load -- the body is the canonical transcription of
+// FactoryClass::Compute_CRC -- the body is the canonical transcription of
 // 110 instructions at 0x00493980, in src/generated/code/.
 // size 323 bytes; callees: 0x00405940, 0x00407a60, 0x0046d5d0, 0x0046d680
 //
-void FactoryClass::Load(int a0)
+void FactoryClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00493980();
 }
 
-// FactoryClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// FactoryClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void FactoryClass::Save()
+void FactoryClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// FactoryClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// FactoryClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void FactoryClass::GetSizeMax()
+void FactoryClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// FactoryClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// FactoryClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void FactoryClass::Compute_CRC()
+void FactoryClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// FactoryClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// FactoryClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void FactoryClass::vfunc_17()
+void FactoryClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// FactoryClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// FactoryClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void FactoryClass::vfunc_18(int a0)
+void FactoryClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// FactoryClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// FactoryClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void FactoryClass::vfunc_19(int a0)
+void FactoryClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// FactoryClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// FactoryClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void FactoryClass::vfunc_20()
+void FactoryClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// FactoryClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// FactoryClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void FactoryClass::vfunc_21()
+void FactoryClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// FactoryClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// FactoryClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void FactoryClass::vfunc_22(int a0)
+void FactoryClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
 // -------------------------------------------------------------------------
-// FactoryClass::vfunc_23 -- the body is the canonical transcription of
+// FactoryClass::AI -- the body is the canonical transcription of
 // 51 instructions at 0x004930c0, in src/generated/code/.
 // size 156 bytes; callees: 0x0043a3a0, 0x00493163
 //
-void FactoryClass::vfunc_23(int a0)
+void FactoryClass::AI(int a0)
 {
     ts::sub::sub_004930c0();
 }

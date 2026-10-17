@@ -82,152 +82,152 @@ void TriColorGaugeClass::vfunc_9()
     ts::sub::sub_004a5ae0();
 }
 
-// TriColorGaugeClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// TriColorGaugeClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_10(int a0, int a1)
+void TriColorGaugeClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// TriColorGaugeClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// TriColorGaugeClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_11(int a0)
+void TriColorGaugeClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// TriColorGaugeClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// TriColorGaugeClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_12()
+void TriColorGaugeClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// TriColorGaugeClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// TriColorGaugeClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_13(int a0)
+void TriColorGaugeClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// TriColorGaugeClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// TriColorGaugeClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_14()
+void TriColorGaugeClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// TriColorGaugeClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// TriColorGaugeClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_15()
+void TriColorGaugeClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// TriColorGaugeClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// TriColorGaugeClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_16()
+void TriColorGaugeClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// TriColorGaugeClass::vfunc_17 -- ALIAS of CheckListClass::vfunc_17 (same machine code at 0x00460610); the
+// TriColorGaugeClass::Get_ID -- ALIAS of CheckListClass::Get_ID (same machine code at 0x00460610); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_17()
+void TriColorGaugeClass::Get_ID()
 {
     ts::sub::sub_00460610();
 }
 
-// TriColorGaugeClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); the
+// TriColorGaugeClass::Flag_To_Redraw -- ALIAS of ControlClass::Flag_To_Redraw (same machine code at 0x004a5e20); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_18()
+void TriColorGaugeClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
-// TriColorGaugeClass::vfunc_19 -- ALIAS of ControlClass::vfunc_19 (same machine code at 0x00460650); the
+// TriColorGaugeClass::Peer_To_Peer -- ALIAS of ControlClass::Peer_To_Peer (same machine code at 0x00460650); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_19(int a0, int a1, int a2)
+void TriColorGaugeClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_00460650();
 }
 
-// TriColorGaugeClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); the
+// TriColorGaugeClass::Set_Focus -- ALIAS of CheckListClass::Set_Focus (same machine code at 0x004a5e60); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_20()
+void TriColorGaugeClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
-// TriColorGaugeClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// TriColorGaugeClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_21()
+void TriColorGaugeClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// TriColorGaugeClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// TriColorGaugeClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_22()
+void TriColorGaugeClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// TriColorGaugeClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// TriColorGaugeClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_23()
+void TriColorGaugeClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// TriColorGaugeClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// TriColorGaugeClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_24()
+void TriColorGaugeClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
-// TriColorGaugeClass::vfunc_25 -- ALIAS of ControlClass::vfunc_25 (same machine code at 0x004a5ee0); the
+// TriColorGaugeClass::Set_Position -- ALIAS of ControlClass::Set_Position (same machine code at 0x004a5ee0); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_25(int a0, int a1)
+void TriColorGaugeClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004a5ee0();
 }
 
-// TriColorGaugeClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// TriColorGaugeClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_26(int a0, int a1)
+void TriColorGaugeClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
 // -------------------------------------------------------------------------
-// TriColorGaugeClass::vfunc_27 -- the body is the canonical transcription of
+// TriColorGaugeClass::Draw_Me -- the body is the canonical transcription of
 // 73 instructions at 0x004a7040, in src/generated/code/.
 // size 216 bytes; callees: 0x00470d90, 0x004a6b90, 0x004a7124
 //
-void TriColorGaugeClass::vfunc_27(int a0, int a1, int a2, int a3)
+void TriColorGaugeClass::Draw_Me(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a7040();
 }
 
-// TriColorGaugeClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// TriColorGaugeClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_28(int a0)
+void TriColorGaugeClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
-// TriColorGaugeClass::vfunc_29 -- ALIAS of GaugeClass::vfunc_29 (same machine code at 0x004a6d30); the
+// TriColorGaugeClass::Action -- ALIAS of GaugeClass::Action (same machine code at 0x004a6d30); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_29(int a0, int a1)
+void TriColorGaugeClass::Action(int a0, int a1)
 {
     ts::sub::sub_004a6d30();
 }
 
-// TriColorGaugeClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// TriColorGaugeClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void TriColorGaugeClass::vfunc_30(int a0, int a1, int a2, int a3)
+void TriColorGaugeClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

@@ -26,16 +26,16 @@ void ParticleSystemTypeClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// ParticleSystemTypeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// ParticleSystemTypeClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::Init(int a0)
+void ParticleSystemTypeClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// ParticleSystemTypeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// ParticleSystemTypeClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::Shutdown(int a0)
+void ParticleSystemTypeClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,9 +50,9 @@ void ParticleSystemTypeClass::vfunc_3(int a0, int a1)
     ts::sub::sub_00597560();
 }
 
-// ParticleSystemTypeClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// ParticleSystemTypeClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::Release(int a0)
+void ParticleSystemTypeClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
@@ -77,23 +77,23 @@ void ParticleSystemTypeClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_005975e0();
 }
 
-// ParticleSystemTypeClass::GetType -- ALIAS of IsometricTileTypeClass::GetType (same machine code at 0x00572ba0); the
+// ParticleSystemTypeClass::GetSizeMax -- ALIAS of IsometricTileTypeClass::GetSizeMax (same machine code at 0x00572ba0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::GetType(int a0, int a1)
+void ParticleSystemTypeClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00572ba0();
 }
 
-// ParticleSystemTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// ParticleSystemTypeClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::Set_ID()
+void ParticleSystemTypeClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// ParticleSystemTypeClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// ParticleSystemTypeClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::Get_RTTI(int a0, int a1)
+void ParticleSystemTypeClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,98 +109,98 @@ void ParticleSystemTypeClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemTypeClass::Get_Heap -- the body is the canonical transcription of
+// ParticleSystemTypeClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x005976d0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void ParticleSystemTypeClass::Get_Heap()
+void ParticleSystemTypeClass::Fetch_Object_Size()
 {
     ts::sub::sub_005976d0();
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemTypeClass::Load -- the body is the canonical transcription of
+// ParticleSystemTypeClass::Compute_CRC -- the body is the canonical transcription of
 // 49 instructions at 0x005974c0, in src/generated/code/.
 // size 159 bytes; callees: 0x00405fe0, 0x0046d5d0, 0x0046d680, 0x0046d6a0
 //
-void ParticleSystemTypeClass::Load(int a0)
+void ParticleSystemTypeClass::Compute_CRC(int a0)
 {
     ts::sub::sub_005974c0();
 }
 
-// ParticleSystemTypeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// ParticleSystemTypeClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::Save()
+void ParticleSystemTypeClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// ParticleSystemTypeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// ParticleSystemTypeClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::GetSizeMax()
+void ParticleSystemTypeClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// ParticleSystemTypeClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// ParticleSystemTypeClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::Compute_CRC()
+void ParticleSystemTypeClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// ParticleSystemTypeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// ParticleSystemTypeClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_17()
+void ParticleSystemTypeClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// ParticleSystemTypeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// ParticleSystemTypeClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_18(int a0)
+void ParticleSystemTypeClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// ParticleSystemTypeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// ParticleSystemTypeClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_19(int a0)
+void ParticleSystemTypeClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// ParticleSystemTypeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// ParticleSystemTypeClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_20()
+void ParticleSystemTypeClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// ParticleSystemTypeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// ParticleSystemTypeClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_21()
+void ParticleSystemTypeClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// ParticleSystemTypeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// ParticleSystemTypeClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_22(int a0)
+void ParticleSystemTypeClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// ParticleSystemTypeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// ParticleSystemTypeClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_23()
+void ParticleSystemTypeClass::AI()
 {
     ts::sub::sub_00405ab0();
 }
 
-// ParticleSystemTypeClass::vfunc_24 -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
+// ParticleSystemTypeClass::Init_Theater -- ALIAS of AbstractClass::GetType_2 (same machine code at 0x00406010); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_24(int a0)
+void ParticleSystemTypeClass::Init_Theater(int a0)
 {
     ts::sub::sub_00406010();
 }
@@ -215,106 +215,106 @@ void ParticleSystemTypeClass::Read_INI(int a0)
     ts::sub::sub_00597090();
 }
 
-// ParticleSystemTypeClass::Set_ID -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
+// ParticleSystemTypeClass::Write_INI -- ALIAS of AbstractClass::Set_ID_2 (same machine code at 0x00405fb0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::Set_ID(int a0)
+void ParticleSystemTypeClass::Write_INI(int a0)
 {
     ts::sub::sub_00405fb0();
 }
 
-// ParticleSystemTypeClass::vfunc_27 -- ALIAS of AircraftTypeClass::Get_RTTI_2 (same machine code at 0x0040f600); the
+// ParticleSystemTypeClass::Coord_Fixup -- ALIAS of AircraftTypeClass::Get_RTTI_2 (same machine code at 0x0040f600); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_27(int a0, int a1)
+void ParticleSystemTypeClass::Coord_Fixup(int a0, int a1)
 {
     ts::sub::sub_0040f600();
 }
 
-// ParticleSystemTypeClass::vfunc_28 -- ALIAS of IsometricTileTypeClass::vfunc_28 (same machine code at 0x00418f40); the
+// ParticleSystemTypeClass::Get_Ownable -- ALIAS of IsometricTileTypeClass::Get_Ownable (same machine code at 0x00418f40); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_28()
+void ParticleSystemTypeClass::Get_Ownable()
 {
     ts::sub::sub_00418f40();
 }
 
-// ParticleSystemTypeClass::vfunc_29 -- ALIAS of IsometricTileTypeClass::vfunc_29 (same machine code at 0x005715e0); the
+// ParticleSystemTypeClass::Max_Pips -- ALIAS of IsometricTileTypeClass::Max_Pips (same machine code at 0x005715e0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_29()
+void ParticleSystemTypeClass::Max_Pips()
 {
     ts::sub::sub_005715e0();
 }
 
-// ParticleSystemTypeClass::vfunc_30 -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); the
+// ParticleSystemTypeClass::Pixel_Dimensions -- ALIAS of AircraftTypeClass::vfunc_31 (same machine code at 0x005715f0); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_30(int a0)
+void ParticleSystemTypeClass::Pixel_Dimensions(int a0)
 {
     ts::sub::sub_005715f0();
 }
 
-// ParticleSystemTypeClass::vfunc_31 -- ALIAS of IsometricTileTypeClass::vfunc_31 (same machine code at 0x00571610); the
+// ParticleSystemTypeClass::Lepton_Dimensions -- ALIAS of IsometricTileTypeClass::Lepton_Dimensions (same machine code at 0x00571610); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_31(int a0)
+void ParticleSystemTypeClass::Lepton_Dimensions(int a0)
 {
     ts::sub::sub_00571610();
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemTypeClass::vfunc_32 -- the body is the canonical transcription of
+// ParticleSystemTypeClass::Create_And_Place -- the body is the canonical transcription of
 // 2 instructions at 0x005976f0, in src/generated/code/.
 // size 5 bytes; callees: none
 //
-void ParticleSystemTypeClass::vfunc_32(int a0, int a1)
+void ParticleSystemTypeClass::Create_And_Place(int a0, int a1)
 {
     ts::sub::sub_005976f0();
 }
 
-// ParticleSystemTypeClass::vfunc_33 -- ALIAS of IsometricTileTypeClass::vfunc_33 (same machine code at 0x00571640); the
+// ParticleSystemTypeClass::Cost_Of -- ALIAS of IsometricTileTypeClass::Cost_Of (same machine code at 0x00571640); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_33(int a0)
+void ParticleSystemTypeClass::Cost_Of(int a0)
 {
     ts::sub::sub_00571640();
 }
 
-// ParticleSystemTypeClass::vfunc_34 -- ALIAS of IsometricTileTypeClass::vfunc_34 (same machine code at 0x00571650); the
+// ParticleSystemTypeClass::Time_To_Build -- ALIAS of IsometricTileTypeClass::Time_To_Build (same machine code at 0x00571650); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_34()
+void ParticleSystemTypeClass::Time_To_Build()
 {
     ts::sub::sub_00571650();
 }
 
 // -------------------------------------------------------------------------
-// ParticleSystemTypeClass::vfunc_35 -- the body is the canonical transcription of
+// ParticleSystemTypeClass::Create_One_Of -- the body is the canonical transcription of
 // 2 instructions at 0x00597700, in src/generated/code/.
 // size 5 bytes; callees: none
 //
-void ParticleSystemTypeClass::vfunc_35(int a0)
+void ParticleSystemTypeClass::Create_One_Of(int a0)
 {
     ts::sub::sub_00597700();
 }
 
-// ParticleSystemTypeClass::vfunc_36 -- ALIAS of ObjectTypeClass::vfunc_37 (same machine code at 0x00571670); the
+// ParticleSystemTypeClass::Occupy_List -- ALIAS of ObjectTypeClass::vfunc_37 (same machine code at 0x00571670); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_36(int a0)
+void ParticleSystemTypeClass::Occupy_List(int a0)
 {
     ts::sub::sub_00571670();
 }
 
-// ParticleSystemTypeClass::vfunc_37 -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
+// ParticleSystemTypeClass::Who_Can_Build_Me -- ALIAS of AircraftTypeClass::vfunc_38 (same machine code at 0x00571710); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_37(int a0, int a1, int a2, int a3, int a4, int a5)
+void ParticleSystemTypeClass::Who_Can_Build_Me(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00571710();
 }
 
-// ParticleSystemTypeClass::vfunc_38 -- ALIAS of IsometricTileTypeClass::vfunc_38 (same machine code at 0x00571660); the
+// ParticleSystemTypeClass::Get_Cameo_Data -- ALIAS of IsometricTileTypeClass::Get_Cameo_Data (same machine code at 0x00571660); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_38()
+void ParticleSystemTypeClass::Get_Cameo_Data()
 {
     ts::sub::sub_00571660();
 }
 
-// ParticleSystemTypeClass::vfunc_39 -- ALIAS of AircraftTypeClass::vfunc_40 (same machine code at 0x0040f620); the
+// ParticleSystemTypeClass::Get_Image_Data -- ALIAS of AircraftTypeClass::vfunc_40 (same machine code at 0x0040f620); the
 // forwarder is written once, at that declaration.
-void ParticleSystemTypeClass::vfunc_39()
+void ParticleSystemTypeClass::Get_Image_Data()
 {
     ts::sub::sub_0040f620();
 }

@@ -26,74 +26,74 @@ void FoggedObjectClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// FoggedObjectClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// FoggedObjectClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::Init(int a0)
+void FoggedObjectClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// FoggedObjectClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// FoggedObjectClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::Shutdown(int a0)
+void FoggedObjectClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// FoggedObjectClass::vfunc_3 -- the body is the canonical transcription of
+// FoggedObjectClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x0049b6d0, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void FoggedObjectClass::vfunc_3(int a0, int a1)
+void FoggedObjectClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_0049b6d0();
 }
 
-// FoggedObjectClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// FoggedObjectClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::Release(int a0)
+void FoggedObjectClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// FoggedObjectClass::vfunc_5 -- the body is the canonical transcription of
+// FoggedObjectClass::Load -- the body is the canonical transcription of
 // 137 instructions at 0x0049b420, in src/generated/code/.
 // size 411 bytes; callees: 0x00405710, 0x004058b0, 0x0049b5c5, 0x0049bc80, 0x005f36e0
 //
-void FoggedObjectClass::vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
+void FoggedObjectClass::Load(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
 {
     ts::sub::sub_0049b420();
 }
 
 // -------------------------------------------------------------------------
-// FoggedObjectClass::vfunc_6 -- the body is the canonical transcription of
+// FoggedObjectClass::Save -- the body is the canonical transcription of
 // 50 instructions at 0x0049b3b0, in src/generated/code/.
 // size 107 bytes; callees: 0x00405850
 //
-void FoggedObjectClass::vfunc_6(int a0, int a1, int a2)
+void FoggedObjectClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_0049b3b0();
 }
 
-// FoggedObjectClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// FoggedObjectClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::GetType(int a0, int a1)
+void FoggedObjectClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// FoggedObjectClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// FoggedObjectClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::Set_ID()
+void FoggedObjectClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// FoggedObjectClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// FoggedObjectClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::Get_RTTI(int a0, int a1)
+void FoggedObjectClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,91 +109,91 @@ void FoggedObjectClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// FoggedObjectClass::Get_Heap -- the body is the canonical transcription of
+// FoggedObjectClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x0049b6c0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void FoggedObjectClass::Get_Heap()
+void FoggedObjectClass::Fetch_Object_Size()
 {
     ts::sub::sub_0049b6c0();
 }
 
 // -------------------------------------------------------------------------
-// FoggedObjectClass::Load -- the body is the canonical transcription of
+// FoggedObjectClass::Compute_CRC -- the body is the canonical transcription of
 // 65 instructions at 0x0049b710, in src/generated/code/.
 // size 173 bytes; callees: 0x00405940, 0x0046d680
 //
-void FoggedObjectClass::Load(int a0)
+void FoggedObjectClass::Compute_CRC(int a0)
 {
     ts::sub::sub_0049b710();
 }
 
-// FoggedObjectClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// FoggedObjectClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::Save()
+void FoggedObjectClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// FoggedObjectClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// FoggedObjectClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::GetSizeMax()
+void FoggedObjectClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// FoggedObjectClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// FoggedObjectClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::Compute_CRC()
+void FoggedObjectClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// FoggedObjectClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// FoggedObjectClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::vfunc_17()
+void FoggedObjectClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// FoggedObjectClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// FoggedObjectClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::vfunc_18(int a0)
+void FoggedObjectClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// FoggedObjectClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// FoggedObjectClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::vfunc_19(int a0)
+void FoggedObjectClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// FoggedObjectClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// FoggedObjectClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::vfunc_20()
+void FoggedObjectClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// FoggedObjectClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// FoggedObjectClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::vfunc_21()
+void FoggedObjectClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// FoggedObjectClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// FoggedObjectClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::vfunc_22(int a0)
+void FoggedObjectClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// FoggedObjectClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// FoggedObjectClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void FoggedObjectClass::vfunc_23()
+void FoggedObjectClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

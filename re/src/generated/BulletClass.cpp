@@ -179,14 +179,14 @@ void BulletClass::vfunc_16()
     ts::sub::sub_004059f0();
 }
 
-// BulletClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); the
+// BulletClass::vfunc_17 -- ALIAS of AircraftClass::Is_Inactive (same machine code at 0x00570a20); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_17()
 {
     ts::sub::sub_00570a20();
 }
 
-// BulletClass::vfunc_18 -- ALIAS of AircraftClass::vfunc_18 (same machine code at 0x00570960); the
+// BulletClass::vfunc_18 -- ALIAS of AircraftClass::Center_Coord (same machine code at 0x00570960); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_18()
 {
@@ -200,7 +200,7 @@ void BulletClass::vfunc_19()
     ts::sub::sub_00405a30();
 }
 
-// BulletClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); the
+// BulletClass::vfunc_20 -- ALIAS of AircraftClass::On_Ground (same machine code at 0x00570e80); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_20()
 {
@@ -245,7 +245,7 @@ void BulletClass::vfunc_25()
     ts::sub::sub_004167c0();
 }
 
-// BulletClass::vfunc_26 -- ALIAS of AircraftClass::vfunc_26 (same machine code at 0x0056e820); the
+// BulletClass::vfunc_26 -- ALIAS of AircraftClass::Get_Image_Data (same machine code at 0x0056e820); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_26()
 {
@@ -276,7 +276,7 @@ void BulletClass::vfunc_29()
     ts::sub::sub_004443c0();
 }
 
-// BulletClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); the
+// BulletClass::vfunc_30 -- ALIAS of AircraftClass::Not_Underground (same machine code at 0x00570ef0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_30()
 {
@@ -349,21 +349,21 @@ void BulletClass::vfunc_39()
     ts::sub::sub_0056ebe0();
 }
 
-// BulletClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); the
+// BulletClass::vfunc_40 -- ALIAS of AircraftClass::Target_Coord (same machine code at 0x0040e5d0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_40()
 {
     ts::sub::sub_0040e5d0();
 }
 
-// BulletClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); the
+// BulletClass::vfunc_41 -- ALIAS of AircraftClass::Docking_Coord (same machine code at 0x0040e600); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_41()
 {
     ts::sub::sub_0040e600();
 }
 
-// BulletClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); the
+// BulletClass::vfunc_42 -- ALIAS of AircraftClass::Render_Coord (same machine code at 0x0040e630); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_42()
 {
@@ -377,14 +377,14 @@ void BulletClass::vfunc_43()
     ts::sub::sub_004167f0();
 }
 
-// BulletClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); the
+// BulletClass::vfunc_44 -- ALIAS of AircraftClass::Exit_Coord (same machine code at 0x0040e660); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_44()
 {
     ts::sub::sub_0040e660();
 }
 
-// BulletClass::vfunc_45 -- ALIAS of AircraftClass::vfunc_45 (same machine code at 0x00570ed0); the
+// BulletClass::vfunc_45 -- ALIAS of AircraftClass::Sort_Y (same machine code at 0x00570ed0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_45()
 {
@@ -436,35 +436,35 @@ void BulletClass::vfunc_51()
     ts::sub::sub_0056ebf0();
 }
 
-// BulletClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); the
+// BulletClass::vfunc_52 -- ALIAS of AircraftClass::Paradrop (same machine code at 0x005700c0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_52()
 {
     ts::sub::sub_005700c0();
 }
 
-// BulletClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); the
+// BulletClass::vfunc_53 -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_53()
 {
     ts::sub::sub_0056ea70();
 }
 
-// BulletClass::vfunc_54 -- ALIAS of AircraftClass::vfunc_54 (same machine code at 0x00570480); the
+// BulletClass::vfunc_54 -- ALIAS of AircraftClass::Set_Occupy_Bit (same machine code at 0x00570480); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_54()
 {
     ts::sub::sub_00570480();
 }
 
-// BulletClass::vfunc_55 -- ALIAS of AircraftClass::vfunc_55 (same machine code at 0x00570500); the
+// BulletClass::vfunc_55 -- ALIAS of AircraftClass::Clear_Occupy_Bit (same machine code at 0x00570500); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_55()
 {
     ts::sub::sub_00570500();
 }
 
-// BulletClass::vfunc_56 -- ALIAS of BuildingClass::vfunc_56 (same machine code at 0x005709b0); the
+// BulletClass::vfunc_56 -- ALIAS of BuildingClass::Delete_Me (same machine code at 0x005709b0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_56()
 {
@@ -485,7 +485,7 @@ void BulletClass::vfunc_58()
     ts::sub::sub_0056ec10();
 }
 
-// BulletClass::vfunc_59 -- ALIAS of AircraftClass::vfunc_59 (same machine code at 0x0056f480); the
+// BulletClass::vfunc_59 -- ALIAS of AircraftClass::Render (same machine code at 0x0056f480); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_59()
 {
@@ -526,7 +526,7 @@ void BulletClass::vfunc_63()
     ts::sub::sub_00443d10();
 }
 
-// BulletClass::vfunc_64 -- ALIAS of AircraftClass::vfunc_64 (same machine code at 0x00570990); the
+// BulletClass::vfunc_64 -- ALIAS of AircraftClass::Editor_Draw_It (same machine code at 0x00570990); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_64()
 {
@@ -557,28 +557,28 @@ void BulletClass::vfunc_67()
     ts::sub::sub_004428d0();
 }
 
-// BulletClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); the
+// BulletClass::vfunc_68 -- ALIAS of AircraftClass::Get_Visual_Rect (same machine code at 0x0056f000); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_68()
 {
     ts::sub::sub_0056f000();
 }
 
-// BulletClass::vfunc_69 -- ALIAS of AircraftClass::vfunc_69 (same machine code at 0x0056f160); the
+// BulletClass::vfunc_69 -- ALIAS of AircraftClass::Get_Render_Rect (same machine code at 0x0056f160); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_69()
 {
     ts::sub::sub_0056f160();
 }
 
-// BulletClass::vfunc_70 -- ALIAS of AircraftClass::vfunc_70 (same machine code at 0x0040e690); the
+// BulletClass::vfunc_70 -- ALIAS of AircraftClass::Draw_Radial_Indicator (same machine code at 0x0040e690); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_70()
 {
     ts::sub::sub_0040e690();
 }
 
-// BulletClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); the
+// BulletClass::vfunc_71 -- ALIAS of AircraftClass::Mark_For_Redraw (same machine code at 0x0056f680); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_71()
 {
@@ -613,7 +613,7 @@ void BulletClass::vfunc_75()
     ts::sub::sub_0056ee20();
 }
 
-// BulletClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); the
+// BulletClass::vfunc_76 -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_76()
 {
@@ -648,14 +648,14 @@ void BulletClass::vfunc_80()
     ts::sub::sub_0056ec90();
 }
 
-// BulletClass::vfunc_81 -- ALIAS of AircraftClass::vfunc_81 (same machine code at 0x0056eca0); the
+// BulletClass::vfunc_81 -- ALIAS of AircraftClass::Catch_Fire (same machine code at 0x0056eca0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_81()
 {
     ts::sub::sub_0056eca0();
 }
 
-// BulletClass::vfunc_82 -- ALIAS of AircraftClass::vfunc_82 (same machine code at 0x0056ecb0); the
+// BulletClass::vfunc_82 -- ALIAS of AircraftClass::Fire_Out (same machine code at 0x0056ecb0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_82()
 {
@@ -690,7 +690,7 @@ void BulletClass::vfunc_86()
     ts::sub::sub_00416870();
 }
 
-// BulletClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); the
+// BulletClass::vfunc_87 -- ALIAS of AircraftClass::Who_Can_Build_Me (same machine code at 0x00570240); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_87()
 {
@@ -711,7 +711,7 @@ void BulletClass::vfunc_89()
     ts::sub::sub_005700b0();
 }
 
-// BulletClass::vfunc_90 -- ALIAS of AircraftClass::vfunc_90 (same machine code at 0x0056ece0); the
+// BulletClass::vfunc_90 -- ALIAS of AircraftClass::Repair (same machine code at 0x0056ece0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_90()
 {
@@ -732,7 +732,7 @@ void BulletClass::vfunc_92()
     ts::sub::sub_00570e70();
 }
 
-// BulletClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); the
+// BulletClass::vfunc_93 -- ALIAS of AircraftClass::Move (same machine code at 0x0056ed00); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_93()
 {
@@ -753,7 +753,7 @@ void BulletClass::vfunc_95()
     ts::sub::sub_00416890();
 }
 
-// BulletClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); the
+// BulletClass::vfunc_96 -- ALIAS of AircraftClass::Get_Coord (same machine code at 0x0040e6a0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_96()
 {
@@ -767,49 +767,49 @@ void BulletClass::vfunc_97()
     ts::sub::sub_00570cc0();
 }
 
-// BulletClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); the
+// BulletClass::vfunc_98 -- ALIAS of AircraftClass::Get_Cell (same machine code at 0x0040e6c0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_98()
 {
     ts::sub::sub_0040e6c0();
 }
 
-// BulletClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); the
+// BulletClass::vfunc_99 -- ALIAS of AircraftClass::Get_Cell_Ptr (same machine code at 0x00570ce0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_99()
 {
     ts::sub::sub_00570ce0();
 }
 
-// BulletClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); the
+// BulletClass::vfunc_100 -- ALIAS of AircraftClass::Get_Target_Cell (same machine code at 0x00570d00); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_100()
 {
     ts::sub::sub_00570d00();
 }
 
-// BulletClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); the
+// BulletClass::vfunc_101 -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_101()
 {
     ts::sub::sub_00570d50();
 }
 
-// BulletClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); the
+// BulletClass::vfunc_102 -- ALIAS of AircraftClass::Get_Height_AGL (same machine code at 0x00570370); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_102()
 {
     ts::sub::sub_00570370();
 }
 
-// BulletClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); the
+// BulletClass::vfunc_103 -- ALIAS of AircraftClass::Set_Height_AGL (same machine code at 0x005703b0); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_103()
 {
     ts::sub::sub_005703b0();
 }
 
-// BulletClass::vfunc_104 -- ALIAS of AircraftClass::vfunc_104 (same machine code at 0x00570360); the
+// BulletClass::vfunc_104 -- ALIAS of AircraftClass::Get_Height (same machine code at 0x00570360); the
 // forwarder is written once, at that declaration.
 void BulletClass::vfunc_104()
 {

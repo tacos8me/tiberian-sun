@@ -26,77 +26,77 @@ void AlphaShapeClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// AlphaShapeClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// AlphaShapeClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::Init(int a0)
+void AlphaShapeClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// AlphaShapeClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// AlphaShapeClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::Shutdown(int a0)
+void AlphaShapeClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// AlphaShapeClass::vfunc_3 -- the body is the canonical transcription of
+// AlphaShapeClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x00411da0, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void AlphaShapeClass::vfunc_3(int a0, int a1)
+void AlphaShapeClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_00411da0();
 }
 
-// AlphaShapeClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// AlphaShapeClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::Release(int a0)
+void AlphaShapeClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// AlphaShapeClass::vfunc_5 -- the body is the canonical transcription of
+// AlphaShapeClass::Load -- the body is the canonical transcription of
 // 27 instructions at 0x00411e40, in src/generated/code/.
 // size 80 bytes; callees: 0x00405710, 0x004058b0, 0x005f36e0
 //
-void AlphaShapeClass::vfunc_5(int a0, int a1)
+void AlphaShapeClass::Load(int a0, int a1)
 {
     ts::sub::sub_00411e40();
 }
 
 // -------------------------------------------------------------------------
-// AlphaShapeClass::vfunc_6 -- the body is the canonical transcription of
+// AlphaShapeClass::Save -- the body is the canonical transcription of
 // 13 instructions at 0x00411e90, in src/generated/code/.
 // size 33 bytes; callees: 0x00405850
 //
-void AlphaShapeClass::vfunc_6(int a0, int a1, int a2)
+void AlphaShapeClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_00411e90();
 }
 
-// AlphaShapeClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// AlphaShapeClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::GetType(int a0, int a1)
+void AlphaShapeClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// AlphaShapeClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// AlphaShapeClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::Set_ID()
+void AlphaShapeClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// AlphaShapeClass::Get_RTTI -- the body is the canonical transcription of
+// AlphaShapeClass::Detach -- the body is the canonical transcription of
 // 6 instructions at 0x00411ec0, in src/generated/code/.
 // size 18 bytes; callees: none
 //
-void AlphaShapeClass::Get_RTTI(int a0, int a1)
+void AlphaShapeClass::Detach(int a0, int a1)
 {
     ts::sub::sub_00411ec0();
 }
@@ -112,91 +112,91 @@ void AlphaShapeClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// AlphaShapeClass::Get_Heap -- the body is the canonical transcription of
+// AlphaShapeClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00411df0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void AlphaShapeClass::Get_Heap()
+void AlphaShapeClass::Fetch_Object_Size()
 {
     ts::sub::sub_00411df0();
 }
 
 // -------------------------------------------------------------------------
-// AlphaShapeClass::Load -- the body is the canonical transcription of
+// AlphaShapeClass::Compute_CRC -- the body is the canonical transcription of
 // 25 instructions at 0x00411e00, in src/generated/code/.
 // size 63 bytes; callees: 0x00405940, 0x0046d680
 //
-void AlphaShapeClass::Load(int a0)
+void AlphaShapeClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00411e00();
 }
 
-// AlphaShapeClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// AlphaShapeClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::Save()
+void AlphaShapeClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// AlphaShapeClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// AlphaShapeClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::GetSizeMax()
+void AlphaShapeClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// AlphaShapeClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// AlphaShapeClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::Compute_CRC()
+void AlphaShapeClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// AlphaShapeClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// AlphaShapeClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::vfunc_17()
+void AlphaShapeClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// AlphaShapeClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// AlphaShapeClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::vfunc_18(int a0)
+void AlphaShapeClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// AlphaShapeClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// AlphaShapeClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::vfunc_19(int a0)
+void AlphaShapeClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// AlphaShapeClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// AlphaShapeClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::vfunc_20()
+void AlphaShapeClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// AlphaShapeClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// AlphaShapeClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::vfunc_21()
+void AlphaShapeClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// AlphaShapeClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// AlphaShapeClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::vfunc_22(int a0)
+void AlphaShapeClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// AlphaShapeClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// AlphaShapeClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void AlphaShapeClass::vfunc_23()
+void AlphaShapeClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

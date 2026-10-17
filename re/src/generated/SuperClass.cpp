@@ -26,77 +26,77 @@ void SuperClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// SuperClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// SuperClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void SuperClass::Init(int a0)
+void SuperClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// SuperClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// SuperClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void SuperClass::Shutdown(int a0)
+void SuperClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// SuperClass::vfunc_3 -- the body is the canonical transcription of
+// SuperClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x005f26e0, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void SuperClass::vfunc_3(int a0, int a1)
+void SuperClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_005f26e0();
 }
 
-// SuperClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// SuperClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void SuperClass::Release(int a0)
+void SuperClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// SuperClass::vfunc_5 -- the body is the canonical transcription of
+// SuperClass::Load -- the body is the canonical transcription of
 // 25 instructions at 0x005f2720, in src/generated/code/.
 // size 78 bytes; callees: 0x004056f0, 0x004058b0, 0x005f36e0
 //
-void SuperClass::vfunc_5(int a0, int a1)
+void SuperClass::Load(int a0, int a1)
 {
     ts::sub::sub_005f2720();
 }
 
 // -------------------------------------------------------------------------
-// SuperClass::vfunc_6 -- the body is the canonical transcription of
+// SuperClass::Save -- the body is the canonical transcription of
 // 11 instructions at 0x005f2770, in src/generated/code/.
 // size 29 bytes; callees: 0x00405850
 //
-void SuperClass::vfunc_6(int a0, int a1, int a2)
+void SuperClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_005f2770();
 }
 
-// SuperClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// SuperClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void SuperClass::GetType(int a0, int a1)
+void SuperClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// SuperClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// SuperClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void SuperClass::Set_ID()
+void SuperClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// SuperClass::Get_RTTI -- the body is the canonical transcription of
+// SuperClass::Detach -- the body is the canonical transcription of
 // 13 instructions at 0x005f2790, in src/generated/code/.
 // size 31 bytes; callees: none
 //
-void SuperClass::Get_RTTI(int a0, int a1)
+void SuperClass::Detach(int a0, int a1)
 {
     ts::sub::sub_005f2790();
 }
@@ -112,91 +112,91 @@ void SuperClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// SuperClass::Get_Heap -- the body is the canonical transcription of
+// SuperClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x005f2830, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void SuperClass::Get_Heap()
+void SuperClass::Fetch_Object_Size()
 {
     ts::sub::sub_005f2830();
 }
 
 // -------------------------------------------------------------------------
-// SuperClass::Load -- the body is the canonical transcription of
+// SuperClass::Compute_CRC -- the body is the canonical transcription of
 // 33 instructions at 0x005f27b0, in src/generated/code/.
 // size 85 bytes; callees: 0x00405940, 0x0046d5d0, 0x0046d680
 //
-void SuperClass::Load(int a0)
+void SuperClass::Compute_CRC(int a0)
 {
     ts::sub::sub_005f27b0();
 }
 
-// SuperClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// SuperClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void SuperClass::Save()
+void SuperClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// SuperClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// SuperClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void SuperClass::GetSizeMax()
+void SuperClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// SuperClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// SuperClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void SuperClass::Compute_CRC()
+void SuperClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// SuperClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// SuperClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void SuperClass::vfunc_17()
+void SuperClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// SuperClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// SuperClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void SuperClass::vfunc_18(int a0)
+void SuperClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// SuperClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// SuperClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void SuperClass::vfunc_19(int a0)
+void SuperClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// SuperClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// SuperClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void SuperClass::vfunc_20()
+void SuperClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// SuperClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// SuperClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void SuperClass::vfunc_21()
+void SuperClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// SuperClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// SuperClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void SuperClass::vfunc_22(int a0)
+void SuperClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// SuperClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// SuperClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void SuperClass::vfunc_23()
+void SuperClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

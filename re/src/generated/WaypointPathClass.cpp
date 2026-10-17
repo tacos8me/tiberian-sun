@@ -26,74 +26,74 @@ void WaypointPathClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// WaypointPathClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// WaypointPathClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::Init(int a0)
+void WaypointPathClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// WaypointPathClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// WaypointPathClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::Shutdown(int a0)
+void WaypointPathClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// WaypointPathClass::vfunc_3 -- the body is the canonical transcription of
+// WaypointPathClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x00655cc0, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void WaypointPathClass::vfunc_3(int a0, int a1)
+void WaypointPathClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_00655cc0();
 }
 
-// WaypointPathClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// WaypointPathClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::Release(int a0)
+void WaypointPathClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// WaypointPathClass::vfunc_5 -- the body is the canonical transcription of
+// WaypointPathClass::Load -- the body is the canonical transcription of
 // 99 instructions at 0x00655d00, in src/generated/code/.
 // size 262 bytes; callees: 0x00405710, 0x004058b0, 0x00656790
 //
-void WaypointPathClass::vfunc_5(int a0, int a1)
+void WaypointPathClass::Load(int a0, int a1)
 {
     ts::sub::sub_00655d00();
 }
 
 // -------------------------------------------------------------------------
-// WaypointPathClass::vfunc_6 -- the body is the canonical transcription of
+// WaypointPathClass::Save -- the body is the canonical transcription of
 // 51 instructions at 0x00655e10, in src/generated/code/.
 // size 109 bytes; callees: 0x00405850
 //
-void WaypointPathClass::vfunc_6(int a0, int a1, int a2)
+void WaypointPathClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_00655e10();
 }
 
-// WaypointPathClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// WaypointPathClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::GetType(int a0, int a1)
+void WaypointPathClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// WaypointPathClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// WaypointPathClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::Set_ID()
+void WaypointPathClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// WaypointPathClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// WaypointPathClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::Get_RTTI(int a0, int a1)
+void WaypointPathClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,91 +109,91 @@ void WaypointPathClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// WaypointPathClass::Get_Heap -- the body is the canonical transcription of
+// WaypointPathClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00655e80, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void WaypointPathClass::Get_Heap()
+void WaypointPathClass::Fetch_Object_Size()
 {
     ts::sub::sub_00655e80();
 }
 
 // -------------------------------------------------------------------------
-// WaypointPathClass::Load -- the body is the canonical transcription of
+// WaypointPathClass::Compute_CRC -- the body is the canonical transcription of
 // 17 instructions at 0x00655c90, in src/generated/code/.
 // size 41 bytes; callees: 0x00405940, 0x0046d680
 //
-void WaypointPathClass::Load(int a0)
+void WaypointPathClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00655c90();
 }
 
-// WaypointPathClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// WaypointPathClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::Save()
+void WaypointPathClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// WaypointPathClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// WaypointPathClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::GetSizeMax()
+void WaypointPathClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// WaypointPathClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// WaypointPathClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::Compute_CRC()
+void WaypointPathClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// WaypointPathClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// WaypointPathClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::vfunc_17()
+void WaypointPathClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// WaypointPathClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// WaypointPathClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::vfunc_18(int a0)
+void WaypointPathClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// WaypointPathClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// WaypointPathClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::vfunc_19(int a0)
+void WaypointPathClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// WaypointPathClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// WaypointPathClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::vfunc_20()
+void WaypointPathClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// WaypointPathClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// WaypointPathClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::vfunc_21()
+void WaypointPathClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// WaypointPathClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// WaypointPathClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::vfunc_22(int a0)
+void WaypointPathClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// WaypointPathClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// WaypointPathClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void WaypointPathClass::vfunc_23()
+void WaypointPathClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

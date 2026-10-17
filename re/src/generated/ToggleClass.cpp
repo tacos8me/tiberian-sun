@@ -82,149 +82,149 @@ void ToggleClass::vfunc_9()
     ts::sub::sub_004a5ae0();
 }
 
-// ToggleClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// ToggleClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_10(int a0, int a1)
+void ToggleClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// ToggleClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// ToggleClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_11(int a0)
+void ToggleClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// ToggleClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// ToggleClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_12()
+void ToggleClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// ToggleClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// ToggleClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_13(int a0)
+void ToggleClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// ToggleClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// ToggleClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_14()
+void ToggleClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// ToggleClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// ToggleClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_15()
+void ToggleClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// ToggleClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// ToggleClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_16()
+void ToggleClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// ToggleClass::vfunc_17 -- ALIAS of CheckListClass::vfunc_17 (same machine code at 0x00460610); the
+// ToggleClass::Get_ID -- ALIAS of CheckListClass::Get_ID (same machine code at 0x00460610); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_17()
+void ToggleClass::Get_ID()
 {
     ts::sub::sub_00460610();
 }
 
-// ToggleClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); the
+// ToggleClass::Flag_To_Redraw -- ALIAS of ControlClass::Flag_To_Redraw (same machine code at 0x004a5e20); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_18()
+void ToggleClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
-// ToggleClass::vfunc_19 -- ALIAS of ControlClass::vfunc_19 (same machine code at 0x00460650); the
+// ToggleClass::Peer_To_Peer -- ALIAS of ControlClass::Peer_To_Peer (same machine code at 0x00460650); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_19(int a0, int a1, int a2)
+void ToggleClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_00460650();
 }
 
-// ToggleClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); the
+// ToggleClass::Set_Focus -- ALIAS of CheckListClass::Set_Focus (same machine code at 0x004a5e60); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_20()
+void ToggleClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
-// ToggleClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// ToggleClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_21()
+void ToggleClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// ToggleClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// ToggleClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_22()
+void ToggleClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// ToggleClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// ToggleClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_23()
+void ToggleClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// ToggleClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// ToggleClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_24()
+void ToggleClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
-// ToggleClass::vfunc_25 -- ALIAS of ControlClass::vfunc_25 (same machine code at 0x004a5ee0); the
+// ToggleClass::Set_Position -- ALIAS of ControlClass::Set_Position (same machine code at 0x004a5ee0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_25(int a0, int a1)
+void ToggleClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004a5ee0();
 }
 
-// ToggleClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// ToggleClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_26(int a0, int a1)
+void ToggleClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
-// ToggleClass::vfunc_27 -- ALIAS of ControlClass::vfunc_27 (same machine code at 0x00460620); the
+// ToggleClass::Draw_Me -- ALIAS of ControlClass::Draw_Me (same machine code at 0x00460620); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_27(int a0)
+void ToggleClass::Draw_Me(int a0)
 {
     ts::sub::sub_00460620();
 }
 
-// ToggleClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// ToggleClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_28(int a0)
+void ToggleClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
-// ToggleClass::vfunc_29 -- ALIAS of MyButton::vfunc_29 (same machine code at 0x0062a8c0); the
+// ToggleClass::Action -- ALIAS of MyButton::Action (same machine code at 0x0062a8c0); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_29(int a0)
+void ToggleClass::Action(int a0)
 {
     ts::sub::sub_0062a8c0();
 }
 
-// ToggleClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// ToggleClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void ToggleClass::vfunc_30(int a0, int a1, int a2, int a3)
+void ToggleClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }

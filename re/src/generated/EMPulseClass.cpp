@@ -26,74 +26,74 @@ void EMPulseClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// EMPulseClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// EMPulseClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::Init(int a0)
+void EMPulseClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// EMPulseClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// EMPulseClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::Shutdown(int a0)
+void EMPulseClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
 
 // -------------------------------------------------------------------------
-// EMPulseClass::vfunc_3 -- the body is the canonical transcription of
+// EMPulseClass::GetClassID -- the body is the canonical transcription of
 // 5 instructions at 0x0048f500, in src/generated/code/.
 // size 16 bytes; callees: none
 //
-void EMPulseClass::vfunc_3(int a0, int a1)
+void EMPulseClass::GetClassID(int a0, int a1)
 {
     ts::sub::sub_0048f500();
 }
 
-// EMPulseClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// EMPulseClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::Release(int a0)
+void EMPulseClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// EMPulseClass::vfunc_5 -- the body is the canonical transcription of
+// EMPulseClass::Load -- the body is the canonical transcription of
 // 19 instructions at 0x0048f540, in src/generated/code/.
 // size 55 bytes; callees: 0x00405710, 0x004058b0
 //
-void EMPulseClass::vfunc_5(int a0, int a1)
+void EMPulseClass::Load(int a0, int a1)
 {
     ts::sub::sub_0048f540();
 }
 
 // -------------------------------------------------------------------------
-// EMPulseClass::vfunc_6 -- the body is the canonical transcription of
+// EMPulseClass::Save -- the body is the canonical transcription of
 // 11 instructions at 0x0048f580, in src/generated/code/.
 // size 29 bytes; callees: 0x00405850
 //
-void EMPulseClass::vfunc_6(int a0, int a1, int a2)
+void EMPulseClass::Save(int a0, int a1, int a2)
 {
     ts::sub::sub_0048f580();
 }
 
-// EMPulseClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// EMPulseClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::GetType(int a0, int a1)
+void EMPulseClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// EMPulseClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// EMPulseClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::Set_ID()
+void EMPulseClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
-// EMPulseClass::Get_RTTI -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
+// EMPulseClass::Detach -- ALIAS of AbstractClass::Get_RTTI (same machine code at 0x004059c0); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::Get_RTTI(int a0, int a1)
+void EMPulseClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004059c0();
 }
@@ -109,91 +109,91 @@ void EMPulseClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// EMPulseClass::Get_Heap -- the body is the canonical transcription of
+// EMPulseClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x0048f5a0, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void EMPulseClass::Get_Heap()
+void EMPulseClass::Fetch_Object_Size()
 {
     ts::sub::sub_0048f5a0();
 }
 
 // -------------------------------------------------------------------------
-// EMPulseClass::Load -- the body is the canonical transcription of
+// EMPulseClass::Compute_CRC -- the body is the canonical transcription of
 // 29 instructions at 0x0048f4b0, in src/generated/code/.
 // size 76 bytes; callees: 0x00405940, 0x0046d660, 0x0046d680
 //
-void EMPulseClass::Load(int a0)
+void EMPulseClass::Compute_CRC(int a0)
 {
     ts::sub::sub_0048f4b0();
 }
 
-// EMPulseClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// EMPulseClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::Save()
+void EMPulseClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// EMPulseClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// EMPulseClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::GetSizeMax()
+void EMPulseClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// EMPulseClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// EMPulseClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::Compute_CRC()
+void EMPulseClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// EMPulseClass::vfunc_17 -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
+// EMPulseClass::Is_Inactive -- ALIAS of AbstractClass::vfunc_17 (same machine code at 0x00405970); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::vfunc_17()
+void EMPulseClass::Is_Inactive()
 {
     ts::sub::sub_00405970();
 }
 
-// EMPulseClass::vfunc_18 -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
+// EMPulseClass::Center_Coord -- ALIAS of AbstractClass::vfunc_18 (same machine code at 0x00405a00); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::vfunc_18(int a0)
+void EMPulseClass::Center_Coord(int a0)
 {
     ts::sub::sub_00405a00();
 }
 
-// EMPulseClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// EMPulseClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::vfunc_19(int a0)
+void EMPulseClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// EMPulseClass::vfunc_20 -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
+// EMPulseClass::On_Ground -- ALIAS of AbstractClass::vfunc_20 (same machine code at 0x00405a60); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::vfunc_20()
+void EMPulseClass::On_Ground()
 {
     ts::sub::sub_00405a60();
 }
 
-// EMPulseClass::vfunc_21 -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
+// EMPulseClass::In_Air -- ALIAS of AbstractClass::vfunc_21 (same machine code at 0x00405a70); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::vfunc_21()
+void EMPulseClass::In_Air()
 {
     ts::sub::sub_00405a70();
 }
 
-// EMPulseClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// EMPulseClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::vfunc_22(int a0)
+void EMPulseClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
-// EMPulseClass::vfunc_23 -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
+// EMPulseClass::AI -- ALIAS of AbstractClass::vfunc_23 (same machine code at 0x00405ab0); the
 // forwarder is written once, at that declaration.
-void EMPulseClass::vfunc_23()
+void EMPulseClass::AI()
 {
     ts::sub::sub_00405ab0();
 }

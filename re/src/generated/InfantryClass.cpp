@@ -26,16 +26,16 @@ void InfantryClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// InfantryClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// InfantryClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void InfantryClass::Init(int a0)
+void InfantryClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// InfantryClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// InfantryClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void InfantryClass::Shutdown(int a0)
+void InfantryClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,19 +50,19 @@ void InfantryClass::vfunc_3(int a0, int a1)
     ts::sub::sub_004d2e40();
 }
 
-// InfantryClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// InfantryClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void InfantryClass::Release(int a0)
+void InfantryClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_5 -- the body is the canonical transcription of
+// InfantryClass::Load -- the body is the canonical transcription of
 // 113 instructions at 0x004d2460, in src/generated/code/.
 // size 354 bytes; callees: 0x0040ec90, 0x0043ad00, 0x0049c390, 0x004a1d80, 0x005f36e0
 //
-void InfantryClass::vfunc_5(int a0, int a1)
+void InfantryClass::Load(int a0, int a1)
 {
     ts::sub::sub_004d2460();
 }
@@ -77,29 +77,29 @@ void InfantryClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_004d25d0();
 }
 
-// InfantryClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// InfantryClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void InfantryClass::GetType(int a0, int a1)
+void InfantryClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::Set_ID -- the body is the canonical transcription of
+// InfantryClass::Init -- the body is the canonical transcription of
 // 19 instructions at 0x004cb7c0, in src/generated/code/.
 // size 66 bytes; callees: 0x004bb850, 0x0060f180
 //
-void InfantryClass::Set_ID()
+void InfantryClass::Init()
 {
     ts::sub::sub_004cb7c0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::Get_RTTI -- the body is the canonical transcription of
+// InfantryClass::Detach -- the body is the canonical transcription of
 // 14 instructions at 0x004cd470, in src/generated/code/.
 // size 42 bytes; callees: 0x004a0ca0
 //
-void InfantryClass::Get_RTTI(int a0, int a1)
+void InfantryClass::Detach(int a0, int a1)
 {
     ts::sub::sub_004cd470();
 }
@@ -115,473 +115,473 @@ void InfantryClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::Get_Heap -- the body is the canonical transcription of
+// InfantryClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x004d2e30, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void InfantryClass::Get_Heap()
+void InfantryClass::Fetch_Object_Size()
 {
     ts::sub::sub_004d2e30();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::Load -- the body is the canonical transcription of
+// InfantryClass::Compute_CRC -- the body is the canonical transcription of
 // 20 instructions at 0x004d2740, in src/generated/code/.
 // size 61 bytes; callees: 0x0046d680, 0x004a23c0, 0x004d277f
 //
-void InfantryClass::Load(int a0)
+void InfantryClass::Compute_CRC(int a0)
 {
     ts::sub::sub_004d2740();
 }
 
-// InfantryClass::Save -- ALIAS of AircraftClass::Save (same machine code at 0x00612db0); the
+// InfantryClass::Owner -- ALIAS of AircraftClass::Owner (same machine code at 0x00612db0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::Save()
+void InfantryClass::Owner()
 {
     ts::sub::sub_00612db0();
 }
 
-// InfantryClass::GetSizeMax -- ALIAS of AircraftClass::GetSizeMax (same machine code at 0x00612dc0); the
+// InfantryClass::Owner_HouseClass -- ALIAS of AircraftClass::Owner_HouseClass (same machine code at 0x00612dc0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::GetSizeMax()
+void InfantryClass::Owner_HouseClass()
 {
     ts::sub::sub_00612dc0();
 }
 
-// InfantryClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// InfantryClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::Compute_CRC()
+void InfantryClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// InfantryClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); the
+// InfantryClass::Is_Inactive -- ALIAS of AircraftClass::Is_Inactive (same machine code at 0x00570a20); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_17()
+void InfantryClass::Is_Inactive()
 {
     ts::sub::sub_00570a20();
 }
 
-// InfantryClass::vfunc_18 -- ALIAS of AircraftClass::vfunc_18 (same machine code at 0x00570960); the
+// InfantryClass::Center_Coord -- ALIAS of AircraftClass::Center_Coord (same machine code at 0x00570960); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_18(int a0)
+void InfantryClass::Center_Coord(int a0)
 {
     ts::sub::sub_00570960();
 }
 
-// InfantryClass::vfunc_19 -- ALIAS of AircraftClass::vfunc_19 (same machine code at 0x004a26e0); the
+// InfantryClass::Destination_Coord -- ALIAS of AircraftClass::Destination_Coord (same machine code at 0x004a26e0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_19(int a0)
+void InfantryClass::Destination_Coord(int a0)
 {
     ts::sub::sub_004a26e0();
 }
 
-// InfantryClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); the
+// InfantryClass::On_Ground -- ALIAS of AircraftClass::On_Ground (same machine code at 0x00570e80); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_20()
+void InfantryClass::On_Ground()
 {
     ts::sub::sub_00570e80();
 }
 
-// InfantryClass::vfunc_21 -- ALIAS of AircraftClass::vfunc_21 (same machine code at 0x004a4a30); the
+// InfantryClass::In_Air -- ALIAS of AircraftClass::In_Air (same machine code at 0x004a4a30); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_21(int a0, int a1)
+void InfantryClass::In_Air(int a0, int a1)
 {
     ts::sub::sub_004a4a30();
 }
 
-// InfantryClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// InfantryClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_22(int a0)
+void InfantryClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_23 -- the body is the canonical transcription of
+// InfantryClass::AI -- the body is the canonical transcription of
 // 14 instructions at 0x004ce250, in src/generated/code/.
 // size 38 bytes; callees: 0x004cdbd0
 //
-void InfantryClass::vfunc_23()
+void InfantryClass::AI()
 {
     ts::sub::sub_004ce250();
 }
 
-// InfantryClass::vfunc_24 -- ALIAS of AircraftClass::vfunc_24 (same machine code at 0x0060eb70); the
+// InfantryClass::Is_Players_Army -- ALIAS of AircraftClass::Is_Players_Army (same machine code at 0x0060eb70); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_24()
+void InfantryClass::Is_Players_Army()
 {
     ts::sub::sub_0060eb70();
 }
 
-// InfantryClass::vfunc_25 -- ALIAS of AircraftClass::vfunc_25 (same machine code at 0x004a1690); the
+// InfantryClass::Visual_Character -- ALIAS of AircraftClass::Visual_Character (same machine code at 0x004a1690); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_25(int a0, int a1)
+void InfantryClass::Visual_Character(int a0, int a1)
 {
     ts::sub::sub_004a1690();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_26 -- the body is the canonical transcription of
+// InfantryClass::Get_Image_Data -- the body is the canonical transcription of
 // 13 instructions at 0x004d2240, in src/generated/code/.
 // size 46 bytes; callees: none
 //
-void InfantryClass::vfunc_26()
+void InfantryClass::Get_Image_Data()
 {
     ts::sub::sub_004d2240();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_27 -- the body is the canonical transcription of
+// InfantryClass::What_Action -- the body is the canonical transcription of
 // 17 instructions at 0x004d0ae0, in src/generated/code/.
 // size 36 bytes; callees: 0x004c4fb0
 //
-void InfantryClass::vfunc_27(int a0, int a1, int a2)
+void InfantryClass::What_Action(int a0, int a1, int a2)
 {
     ts::sub::sub_004d0ae0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_28 -- the body is the canonical transcription of
+// InfantryClass::What_Action -- the body is the canonical transcription of
 // 69 instructions at 0x004d0290, in src/generated/code/.
 // size 219 bytes; callees: 0x004a4360, 0x004c4fb0, 0x0051f690
 //
-void InfantryClass::vfunc_28(int a0, int a1)
+void InfantryClass::What_Action(int a0, int a1)
 {
     ts::sub::sub_004d0290();
 }
 
-// InfantryClass::vfunc_29 -- ALIAS of FootClass::vfunc_29 (same machine code at 0x004a2140); the
+// InfantryClass::In_Which_Layer -- ALIAS of FootClass::In_Which_Layer (same machine code at 0x004a2140); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_29()
+void InfantryClass::In_Which_Layer()
 {
     ts::sub::sub_004a2140();
 }
 
-// InfantryClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); the
+// InfantryClass::Not_Underground -- ALIAS of AircraftClass::Not_Underground (same machine code at 0x00570ef0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_30()
+void InfantryClass::Not_Underground()
 {
     ts::sub::sub_00570ef0();
 }
 
-// InfantryClass::vfunc_31 -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); the
+// InfantryClass::Considered_Vehicle -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_31()
+void InfantryClass::Considered_Vehicle()
 {
     ts::sub::sub_004167d0();
 }
 
-// InfantryClass::vfunc_32 -- ALIAS of AircraftClass::vfunc_32 (same machine code at 0x0060eb10); the
+// InfantryClass::Techno_Type_Class -- ALIAS of AircraftClass::Techno_Type_Class (same machine code at 0x0060eb10); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_32()
+void InfantryClass::Techno_Type_Class()
 {
     ts::sub::sub_0060eb10();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::Get_Type -- the body is the canonical transcription of
+// InfantryClass::Class_Of -- the body is the canonical transcription of
 // 2 instructions at 0x004d0d40, in src/generated/code/.
 // size 7 bytes; callees: none
 //
-void InfantryClass::Get_Type()
+void InfantryClass::Class_Of()
 {
     ts::sub::sub_004d0d40();
 }
 
-// InfantryClass::vfunc_34 -- ALIAS of AircraftClass::vfunc_34 (same machine code at 0x0061b1b0); the
+// InfantryClass::Get_Ownable -- ALIAS of AircraftClass::Get_Ownable (same machine code at 0x0061b1b0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_34()
+void InfantryClass::Get_Ownable()
 {
     ts::sub::sub_0061b1b0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_35 -- the body is the canonical transcription of
+// InfantryClass::Full_Name -- the body is the canonical transcription of
 // 8 instructions at 0x004d09d0, in src/generated/code/.
 // size 24 bytes; callees: 0x0046ebd0
 //
-void InfantryClass::vfunc_35()
+void InfantryClass::Full_Name()
 {
     ts::sub::sub_004d09d0();
 }
 
-// InfantryClass::vfunc_36 -- ALIAS of AircraftClass::vfunc_36 (same machine code at 0x00616470); the
+// InfantryClass::Can_Repair -- ALIAS of AircraftClass::Can_Repair (same machine code at 0x00616470); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_36()
+void InfantryClass::Can_Repair()
 {
     ts::sub::sub_00616470();
 }
 
-// InfantryClass::vfunc_37 -- ALIAS of AircraftClass::vfunc_37 (same machine code at 0x004a1080); the
+// InfantryClass::Can_Demolish -- ALIAS of AircraftClass::Can_Demolish (same machine code at 0x004a1080); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_37(int a0, int a1, int a2, int a3, int a4)
+void InfantryClass::Can_Demolish(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_004a1080();
 }
 
-// InfantryClass::vfunc_38 -- ALIAS of AircraftClass::vfunc_38 (same machine code at 0x00616410); the
+// InfantryClass::Can_Player_Fire -- ALIAS of AircraftClass::Can_Player_Fire (same machine code at 0x00616410); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_38()
+void InfantryClass::Can_Player_Fire()
 {
     ts::sub::sub_00616410();
 }
 
-// InfantryClass::vfunc_39 -- ALIAS of AircraftClass::vfunc_39 (same machine code at 0x00616130); the
+// InfantryClass::Can_Player_Move -- ALIAS of AircraftClass::Can_Player_Move (same machine code at 0x00616130); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_39()
+void InfantryClass::Can_Player_Move()
 {
     ts::sub::sub_00616130();
 }
 
-// InfantryClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); the
+// InfantryClass::Target_Coord -- ALIAS of AircraftClass::Target_Coord (same machine code at 0x0040e5d0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_40(int a0)
+void InfantryClass::Target_Coord(int a0)
 {
     ts::sub::sub_0040e5d0();
 }
 
-// InfantryClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); the
+// InfantryClass::Docking_Coord -- ALIAS of AircraftClass::Docking_Coord (same machine code at 0x0040e600); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_41(int a0)
+void InfantryClass::Docking_Coord(int a0)
 {
     ts::sub::sub_0040e600();
 }
 
-// InfantryClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); the
+// InfantryClass::Render_Coord -- ALIAS of AircraftClass::Render_Coord (same machine code at 0x0040e630); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_42(int a0)
+void InfantryClass::Render_Coord(int a0)
 {
     ts::sub::sub_0040e630();
 }
 
-// InfantryClass::vfunc_43 -- ALIAS of AircraftClass::vfunc_43 (same machine code at 0x0060edd0); the
+// InfantryClass::Fire_Coord -- ALIAS of AircraftClass::Fire_Coord (same machine code at 0x0060edd0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_43(int a0, int a1)
+void InfantryClass::Fire_Coord(int a0, int a1)
 {
     ts::sub::sub_0060edd0();
 }
 
-// InfantryClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); the
+// InfantryClass::Exit_Coord -- ALIAS of AircraftClass::Exit_Coord (same machine code at 0x0040e660); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_44(int a0)
+void InfantryClass::Exit_Coord(int a0)
 {
     ts::sub::sub_0040e660();
 }
 
-// InfantryClass::vfunc_45 -- ALIAS of AircraftClass::vfunc_45 (same machine code at 0x00570ed0); the
+// InfantryClass::Sort_Y -- ALIAS of AircraftClass::Sort_Y (same machine code at 0x00570ed0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_45()
+void InfantryClass::Sort_Y()
 {
     ts::sub::sub_00570ed0();
 }
 
-// InfantryClass::vfunc_46 -- ALIAS of AircraftClass::vfunc_46 (same machine code at 0x004a4120); the
+// InfantryClass::Is_Moving_Onto_Bridge -- ALIAS of AircraftClass::Is_Moving_Onto_Bridge (same machine code at 0x004a4120); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_46()
+void InfantryClass::Is_Moving_Onto_Bridge()
 {
     ts::sub::sub_004a4120();
 }
 
-// InfantryClass::vfunc_47 -- ALIAS of AircraftClass::vfunc_47 (same machine code at 0x0040e7c0); the
+// InfantryClass::Occupies_Cells -- ALIAS of AircraftClass::Occupies_Cells (same machine code at 0x0040e7c0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_47()
+void InfantryClass::Occupies_Cells()
 {
     ts::sub::sub_0040e7c0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_48 -- the body is the canonical transcription of
+// InfantryClass::Limbo -- the body is the canonical transcription of
 // 15 instructions at 0x004cfe00, in src/generated/code/.
 // size 47 bytes; callees: 0x004a1cc0, 0x006939b0
 //
-void InfantryClass::vfunc_48()
+void InfantryClass::Limbo()
 {
     ts::sub::sub_004cfe00();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_49 -- the body is the canonical transcription of
+// InfantryClass::Unlimbo -- the body is the canonical transcription of
 // 45 instructions at 0x004cfeb0, in src/generated/code/.
 // size 136 bytes; callees: 0x004cff3d, 0x00510f70, 0x005111c0
 //
-void InfantryClass::vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void InfantryClass::Unlimbo(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_004cfeb0();
 }
 
-// InfantryClass::vfunc_50 -- ALIAS of AircraftClass::vfunc_50 (same machine code at 0x004a0a00); the
+// InfantryClass::Detach_All -- ALIAS of AircraftClass::Detach_All (same machine code at 0x004a0a00); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_50(int a0)
+void InfantryClass::Detach_All(int a0)
 {
     ts::sub::sub_004a0a00();
 }
 
-// InfantryClass::vfunc_51 -- ALIAS of AircraftClass::vfunc_51 (same machine code at 0x00617760); the
+// InfantryClass::Record_The_Kill -- ALIAS of AircraftClass::Record_The_Kill (same machine code at 0x00617760); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_51(int a0)
+void InfantryClass::Record_The_Kill(int a0)
 {
     ts::sub::sub_00617760();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_52 -- the body is the canonical transcription of
+// InfantryClass::Paradrop -- the body is the canonical transcription of
 // 18 instructions at 0x004d22f0, in src/generated/code/.
 // size 50 bytes; callees: 0x004c4ff0, 0x005700c0
 //
-void InfantryClass::vfunc_52(int a0)
+void InfantryClass::Paradrop(int a0)
 {
     ts::sub::sub_004d22f0();
 }
 
-// InfantryClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); the
+// InfantryClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_53(int a0)
+void InfantryClass::Fall_From_Height(int a0)
 {
     ts::sub::sub_0056ea70();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_54 -- the body is the canonical transcription of
+// InfantryClass::Set_Occupy_Bit -- the body is the canonical transcription of
 // 39 instructions at 0x004d2340, in src/generated/code/.
 // size 106 bytes; callees: 0x00454610, 0x00502060, 0x00510f70
 //
-void InfantryClass::vfunc_54(int a0)
+void InfantryClass::Set_Occupy_Bit(int a0)
 {
     ts::sub::sub_004d2340();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_55 -- the body is the canonical transcription of
+// InfantryClass::Clear_Occupy_Bit -- the body is the canonical transcription of
 // 34 instructions at 0x004d23d0, in src/generated/code/.
 // size 96 bytes; callees: 0x00454610, 0x00502060, 0x00510f70
 //
-void InfantryClass::vfunc_55(int a0)
+void InfantryClass::Clear_Occupy_Bit(int a0)
 {
     ts::sub::sub_004d23d0();
 }
 
-// InfantryClass::vfunc_56 -- ALIAS of AircraftClass::vfunc_56 (same machine code at 0x004a4a10); the
+// InfantryClass::Delete_Me -- ALIAS of AircraftClass::Delete_Me (same machine code at 0x004a4a10); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_56()
+void InfantryClass::Delete_Me()
 {
     ts::sub::sub_004a4a10();
 }
 
-// InfantryClass::vfunc_57 -- ALIAS of AircraftClass::vfunc_57 (same machine code at 0x00617ce0); the
+// InfantryClass::Do_Shimmer -- ALIAS of AircraftClass::Do_Shimmer (same machine code at 0x00617ce0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_57()
+void InfantryClass::Do_Shimmer()
 {
     ts::sub::sub_00617ce0();
 }
 
-// InfantryClass::vfunc_58 -- ALIAS of FootClass::vfunc_58 (same machine code at 0x0061b480); the
+// InfantryClass::Exit_Object -- ALIAS of FootClass::Exit_Object (same machine code at 0x0061b480); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_58(int a0)
+void InfantryClass::Exit_Object(int a0)
 {
     ts::sub::sub_0061b480();
 }
 
-// InfantryClass::vfunc_59 -- ALIAS of AircraftClass::vfunc_59 (same machine code at 0x0056f480); the
+// InfantryClass::Render -- ALIAS of AircraftClass::Render (same machine code at 0x0056f480); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_59(int a0, int a1, int a2)
+void InfantryClass::Render(int a0, int a1, int a2)
 {
     ts::sub::sub_0056f480();
 }
 
-// InfantryClass::vfunc_60 -- ALIAS of AircraftClass::vfunc_60 (same machine code at 0x005701b0); the
+// InfantryClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_60(int a0)
+void InfantryClass::Occupy_List(int a0)
 {
     ts::sub::sub_005701b0();
 }
 
-// InfantryClass::vfunc_61 -- ALIAS of AircraftClass::vfunc_61 (same machine code at 0x00610880); the
+// InfantryClass::Draw_Pre_Render -- ALIAS of AircraftClass::Draw_Pre_Render (same machine code at 0x00610880); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_61(int a0, int a1, int a2, int a3, int a4)
+void InfantryClass::Draw_Pre_Render(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00610880();
 }
 
-// InfantryClass::vfunc_62 -- ALIAS of AircraftClass::vfunc_62 (same machine code at 0x0060fb90); the
+// InfantryClass::Draw_Post_Render -- ALIAS of AircraftClass::Draw_Post_Render (same machine code at 0x0060fb90); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_62(int a0, int a1, int a2, int a3, int a4, int a5)
+void InfantryClass::Draw_Post_Render(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_0060fb90();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_63 -- the body is the canonical transcription of
+// InfantryClass::Draw_It -- the body is the canonical transcription of
 // 155 instructions at 0x004cc200, in src/generated/code/.
 // size 479 bytes; callees: 0x0043ad90, 0x00478f00, 0x004cc6a4, 0x005020d0, 0x00547660, 0x006939b0
 //
-void InfantryClass::vfunc_63(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14)
+void InfantryClass::Draw_It(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14)
 {
     ts::sub::sub_004cc200();
 }
 
-// InfantryClass::vfunc_64 -- ALIAS of AircraftClass::vfunc_64 (same machine code at 0x00570990); the
+// InfantryClass::Editor_Draw_It -- ALIAS of AircraftClass::Editor_Draw_It (same machine code at 0x00570990); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_64(int a0, int a1)
+void InfantryClass::Editor_Draw_It(int a0, int a1)
 {
     ts::sub::sub_00570990();
 }
 
-// InfantryClass::vfunc_65 -- ALIAS of AircraftClass::vfunc_65 (same machine code at 0x0060f590); the
+// InfantryClass::Hidden -- ALIAS of AircraftClass::Hidden (same machine code at 0x0060f590); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_65()
+void InfantryClass::Hidden()
 {
     ts::sub::sub_0060f590();
 }
 
-// InfantryClass::vfunc_66 -- ALIAS of BuildingClass::vfunc_66 (same machine code at 0x0061c1e0); the
+// InfantryClass::Look -- ALIAS of BuildingClass::Look (same machine code at 0x0061c1e0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_66(int a0, int a1)
+void InfantryClass::Look(int a0, int a1)
 {
     ts::sub::sub_0061c1e0();
 }
 
-// InfantryClass::vfunc_67 -- ALIAS of AircraftClass::vfunc_67 (same machine code at 0x0049c590); the
+// InfantryClass::Mark -- ALIAS of AircraftClass::Mark (same machine code at 0x0049c590); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_67(int a0)
+void InfantryClass::Mark(int a0)
 {
     ts::sub::sub_0049c590();
 }
 
-// InfantryClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); the
+// InfantryClass::Get_Visual_Rect -- ALIAS of AircraftClass::Get_Visual_Rect (same machine code at 0x0056f000); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_68(int a0)
+void InfantryClass::Get_Visual_Rect(int a0)
 {
     ts::sub::sub_0056f000();
 }
 
-// InfantryClass::vfunc_69 -- ALIAS of AircraftClass::vfunc_69 (same machine code at 0x0056f160); the
+// InfantryClass::Get_Render_Rect -- ALIAS of AircraftClass::Get_Render_Rect (same machine code at 0x0056f160); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_69(int a0)
+void InfantryClass::Get_Render_Rect(int a0)
 {
     ts::sub::sub_0056f160();
 }
 
-// InfantryClass::vfunc_70 -- ALIAS of AircraftClass::vfunc_70 (same machine code at 0x0040e690); the
+// InfantryClass::Draw_Radial_Indicator -- ALIAS of AircraftClass::Draw_Radial_Indicator (same machine code at 0x0040e690); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_70()
+void InfantryClass::Draw_Radial_Indicator()
 {
     ts::sub::sub_0040e690();
 }
 
-// InfantryClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); the
+// InfantryClass::Mark_For_Redraw -- ALIAS of AircraftClass::Mark_For_Redraw (same machine code at 0x0056f680); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_71()
+void InfantryClass::Mark_For_Redraw()
 {
     ts::sub::sub_0056f680();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_72 -- the body is the canonical transcription of
+// InfantryClass::Active_Click_With -- the body is the canonical transcription of
 // 8 instructions at 0x004d2e90, in src/generated/code/.
 // size 23 bytes; callees: 0x0049f500
 //
-void InfantryClass::vfunc_72(int a0, int a1, int a2)
+void InfantryClass::Active_Click_With(int a0, int a1, int a2)
 {
     ts::sub::sub_004d2e90();
 }
@@ -596,782 +596,782 @@ void InfantryClass::vfunc_73(int a0, int a1, int a2)
     ts::sub::sub_004d0940();
 }
 
-// InfantryClass::vfunc_74 -- ALIAS of AircraftClass::vfunc_74 (same machine code at 0x00612dd0); the
+// InfantryClass::Clicked_As_Target -- ALIAS of AircraftClass::Clicked_As_Target (same machine code at 0x00612dd0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_74(int a0)
+void InfantryClass::Clicked_As_Target(int a0)
 {
     ts::sub::sub_00612dd0();
 }
 
-// InfantryClass::vfunc_75 -- ALIAS of AircraftClass::vfunc_75 (same machine code at 0x00613f10); the
+// InfantryClass::Select -- ALIAS of AircraftClass::Select (same machine code at 0x00613f10); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_75()
+void InfantryClass::Select()
 {
     ts::sub::sub_00613f10();
 }
 
-// InfantryClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); the
+// InfantryClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_76(int a0)
+void InfantryClass::Unselect(int a0)
 {
     ts::sub::sub_0056eda0();
 }
 
-// InfantryClass::vfunc_77 -- ALIAS of AircraftClass::vfunc_77 (same machine code at 0x00611540); the
+// InfantryClass::In_Range -- ALIAS of AircraftClass::In_Range (same machine code at 0x00611540); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_77(int a0, int a1)
+void InfantryClass::In_Range(int a0, int a1)
 {
     ts::sub::sub_00611540();
 }
 
-// InfantryClass::vfunc_78 -- ALIAS of AircraftClass::vfunc_78 (same machine code at 0x006164c0); the
+// InfantryClass::Weapon_Range -- ALIAS of AircraftClass::Weapon_Range (same machine code at 0x006164c0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_78(int a0)
+void InfantryClass::Weapon_Range(int a0)
 {
     ts::sub::sub_006164c0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_79 -- the body is the canonical transcription of
+// InfantryClass::Take_Damage -- the body is the canonical transcription of
 // 46 instructions at 0x004cb9d0, in src/generated/code/.
 // size 122 bytes; callees: 0x0049eda0, 0x0067faf0
 //
-void InfantryClass::vfunc_79(int a0, int a1, int a2, int a3, int a4, int a5)
+void InfantryClass::Take_Damage(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_004cb9d0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_80 -- the body is the canonical transcription of
+// InfantryClass::Scatter -- the body is the canonical transcription of
 // 19 instructions at 0x004cf3c0, in src/generated/code/.
 // size 49 bytes; callees: 0x004cf3f5, 0x006939b0
 //
-void InfantryClass::vfunc_80(int a0)
+void InfantryClass::Scatter(int a0)
 {
     ts::sub::sub_004cf3c0();
 }
 
-// InfantryClass::vfunc_81 -- ALIAS of AircraftClass::vfunc_81 (same machine code at 0x0056eca0); the
+// InfantryClass::Catch_Fire -- ALIAS of AircraftClass::Catch_Fire (same machine code at 0x0056eca0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_81()
+void InfantryClass::Catch_Fire()
 {
     ts::sub::sub_0056eca0();
 }
 
-// InfantryClass::vfunc_82 -- ALIAS of AircraftClass::vfunc_82 (same machine code at 0x0056ecb0); the
+// InfantryClass::Fire_Out -- ALIAS of AircraftClass::Fire_Out (same machine code at 0x0056ecb0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_82()
+void InfantryClass::Fire_Out()
 {
     ts::sub::sub_0056ecb0();
 }
 
-// InfantryClass::vfunc_83 -- ALIAS of AircraftClass::vfunc_83 (same machine code at 0x0061a4d0); the
+// InfantryClass::Value -- ALIAS of AircraftClass::Value (same machine code at 0x0061a4d0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_83()
+void InfantryClass::Value()
 {
     ts::sub::sub_0061a4d0();
 }
 
-// InfantryClass::vfunc_84 -- ALIAS of AircraftClass::vfunc_84 (same machine code at 0x005468d0); the
+// InfantryClass::Get_Mission -- ALIAS of AircraftClass::Get_Mission (same machine code at 0x005468d0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_84()
+void InfantryClass::Get_Mission()
 {
     ts::sub::sub_005468d0();
 }
 
-// InfantryClass::vfunc_85 -- ALIAS of AircraftClass::vfunc_85 (same machine code at 0x00546d60); the
+// InfantryClass::Assign_Mission -- ALIAS of AircraftClass::Assign_Mission (same machine code at 0x00546d60); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_85(int a0)
+void InfantryClass::Assign_Mission(int a0)
 {
     ts::sub::sub_00546d60();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_86 -- the body is the canonical transcription of
+// InfantryClass::Per_Cell_Process -- the body is the canonical transcription of
 // 103 instructions at 0x004cc6f0, in src/generated/code/.
 // size 340 bytes; callees: 0x00405980, 0x004ccb41, 0x00502060, 0x00570170, 0x00603730, 0x00603b10
 //
-void InfantryClass::vfunc_86(int a0, int a1, int a2, int a3, int a4, int a5)
+void InfantryClass::Per_Cell_Process(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_004cc6f0();
 }
 
-// InfantryClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); the
+// InfantryClass::Who_Can_Build_Me -- ALIAS of AircraftClass::Who_Can_Build_Me (same machine code at 0x00570240); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_87(int a0, int a1)
+void InfantryClass::Who_Can_Build_Me(int a0, int a1)
 {
     ts::sub::sub_00570240();
 }
 
-// InfantryClass::vfunc_88 -- ALIAS of FootClass::vfunc_88 (same machine code at 0x004a03a0); the
+// InfantryClass::Receive_Message -- ALIAS of FootClass::Receive_Message (same machine code at 0x004a03a0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_88(int a0, int a1)
+void InfantryClass::Receive_Message(int a0, int a1)
 {
     ts::sub::sub_004a03a0();
 }
 
-// InfantryClass::vfunc_89 -- ALIAS of AircraftClass::vfunc_89 (same machine code at 0x0060f490); the
+// InfantryClass::Revealed -- ALIAS of AircraftClass::Revealed (same machine code at 0x0060f490); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_89(int a0)
+void InfantryClass::Revealed(int a0)
 {
     ts::sub::sub_0060f490();
 }
 
-// InfantryClass::vfunc_90 -- ALIAS of AircraftClass::vfunc_90 (same machine code at 0x0056ece0); the
+// InfantryClass::Repair -- ALIAS of AircraftClass::Repair (same machine code at 0x0056ece0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_90(int a0)
+void InfantryClass::Repair(int a0)
 {
     ts::sub::sub_0056ece0();
 }
 
-// InfantryClass::vfunc_91 -- ALIAS of AircraftClass::vfunc_91 (same machine code at 0x004a1160); the
+// InfantryClass::Sell_Back -- ALIAS of AircraftClass::Sell_Back (same machine code at 0x004a1160); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_91(int a0)
+void InfantryClass::Sell_Back(int a0)
 {
     ts::sub::sub_004a1160();
 }
 
-// InfantryClass::vfunc_92 -- ALIAS of AircraftClass::vfunc_92 (same machine code at 0x004a2cd0); the
+// InfantryClass::Set_Waypoint_Path -- ALIAS of AircraftClass::Set_Waypoint_Path (same machine code at 0x004a2cd0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_92(int a0)
+void InfantryClass::Set_Waypoint_Path(int a0)
 {
     ts::sub::sub_004a2cd0();
 }
 
-// InfantryClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); the
+// InfantryClass::Move -- ALIAS of AircraftClass::Move (same machine code at 0x0056ed00); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_93(int a0)
+void InfantryClass::Move(int a0)
 {
     ts::sub::sub_0056ed00();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_94 -- the body is the canonical transcription of
+// InfantryClass::Can_Enter_Cell -- the body is the canonical transcription of
 // 22 instructions at 0x004ce5b0, in src/generated/code/.
 // size 61 bytes; callees: 0x004ce5f2
 //
-void InfantryClass::vfunc_94(int a0, int a1)
+void InfantryClass::Can_Enter_Cell(int a0, int a1)
 {
     ts::sub::sub_004ce5b0();
 }
 
-// InfantryClass::vfunc_95 -- ALIAS of AircraftClass::vfunc_95 (same machine code at 0x004a0e70); the
+// InfantryClass::Can_Reach -- ALIAS of AircraftClass::Can_Reach (same machine code at 0x004a0e70); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_95(int a0, int a1, int a2, int a3, int a4)
+void InfantryClass::Can_Reach(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_004a0e70();
 }
 
-// InfantryClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); the
+// InfantryClass::Get_Coord -- ALIAS of AircraftClass::Get_Coord (same machine code at 0x0040e6a0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_96(int a0)
+void InfantryClass::Get_Coord(int a0)
 {
     ts::sub::sub_0040e6a0();
 }
 
-// InfantryClass::vfunc_97 -- ALIAS of AircraftClass::vfunc_97 (same machine code at 0x004a2170); the
+// InfantryClass::Set_Coord -- ALIAS of AircraftClass::Set_Coord (same machine code at 0x004a2170); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_97(int a0)
+void InfantryClass::Set_Coord(int a0)
 {
     ts::sub::sub_004a2170();
 }
 
-// InfantryClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); the
+// InfantryClass::Get_Cell -- ALIAS of AircraftClass::Get_Cell (same machine code at 0x0040e6c0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_98(int a0)
+void InfantryClass::Get_Cell(int a0)
 {
     ts::sub::sub_0040e6c0();
 }
 
-// InfantryClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); the
+// InfantryClass::Get_Cell_Ptr -- ALIAS of AircraftClass::Get_Cell_Ptr (same machine code at 0x00570ce0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_99()
+void InfantryClass::Get_Cell_Ptr()
 {
     ts::sub::sub_00570ce0();
 }
 
-// InfantryClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); the
+// InfantryClass::Get_Target_Cell -- ALIAS of AircraftClass::Get_Target_Cell (same machine code at 0x00570d00); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_100(int a0)
+void InfantryClass::Get_Target_Cell(int a0)
 {
     ts::sub::sub_00570d00();
 }
 
-// InfantryClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); the
+// InfantryClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_101(int a0)
+void InfantryClass::Get_Target_Cell_Ptr(int a0)
 {
     ts::sub::sub_00570d50();
 }
 
-// InfantryClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); the
+// InfantryClass::Get_Height_AGL -- ALIAS of AircraftClass::Get_Height_AGL (same machine code at 0x00570370); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_102()
+void InfantryClass::Get_Height_AGL()
 {
     ts::sub::sub_00570370();
 }
 
-// InfantryClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); the
+// InfantryClass::Set_Height_AGL -- ALIAS of AircraftClass::Set_Height_AGL (same machine code at 0x005703b0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_103(int a0)
+void InfantryClass::Set_Height_AGL(int a0)
 {
     ts::sub::sub_005703b0();
 }
 
-// InfantryClass::vfunc_104 -- ALIAS of AircraftClass::vfunc_104 (same machine code at 0x00570360); the
+// InfantryClass::Get_Height -- ALIAS of AircraftClass::Get_Height (same machine code at 0x00570360); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_104()
+void InfantryClass::Get_Height()
 {
     ts::sub::sub_00570360();
 }
 
-// InfantryClass::vfunc_105 -- ALIAS of BuildingClass::vfunc_105 (same machine code at 0x00546d20); the
+// InfantryClass::Commence -- ALIAS of BuildingClass::Commence (same machine code at 0x00546d20); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_105(int a0)
+void InfantryClass::Commence(int a0)
 {
     ts::sub::sub_00546d20();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_106 -- the body is the canonical transcription of
+// InfantryClass::Ready_To_Commence -- the body is the canonical transcription of
 // 51 instructions at 0x004d2610, in src/generated/code/.
 // size 161 bytes; callees: 0x006939b0
 //
-void InfantryClass::vfunc_106()
+void InfantryClass::Ready_To_Commence()
 {
     ts::sub::sub_004d2610();
 }
 
-// InfantryClass::vfunc_107 -- ALIAS of AircraftClass::vfunc_107 (same machine code at 0x00546750); the
+// InfantryClass::Do_MISSION_SLEEP -- ALIAS of AircraftClass::Do_MISSION_SLEEP (same machine code at 0x00546750); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_107()
+void InfantryClass::Do_MISSION_SLEEP()
 {
     ts::sub::sub_00546750();
 }
 
-// InfantryClass::vfunc_108 -- ALIAS of AircraftClass::vfunc_108 (same machine code at 0x00546760); the
+// InfantryClass::Do_MISSION_HARMLESS -- ALIAS of AircraftClass::Do_MISSION_HARMLESS (same machine code at 0x00546760); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_108()
+void InfantryClass::Do_MISSION_HARMLESS()
 {
     ts::sub::sub_00546760();
 }
 
-// InfantryClass::vfunc_109 -- ALIAS of AircraftClass::vfunc_109 (same machine code at 0x00546770); the
+// InfantryClass::Do_MISSION_AMBUSH -- ALIAS of AircraftClass::Do_MISSION_AMBUSH (same machine code at 0x00546770); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_109()
+void InfantryClass::Do_MISSION_AMBUSH()
 {
     ts::sub::sub_00546770();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_110 -- the body is the canonical transcription of
+// InfantryClass::Do_MISSION_ATTACK -- the body is the canonical transcription of
 // 31 instructions at 0x004d0a30, in src/generated/code/.
 // size 90 bytes; callees: 0x0061d8e0
 //
-void InfantryClass::vfunc_110()
+void InfantryClass::Do_MISSION_ATTACK()
 {
     ts::sub::sub_004d0a30();
 }
 
-// InfantryClass::vfunc_111 -- ALIAS of AircraftClass::vfunc_111 (same machine code at 0x0049d8e0); the
+// InfantryClass::Do_MISSION_CAPTURE -- ALIAS of AircraftClass::Do_MISSION_CAPTURE (same machine code at 0x0049d8e0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_111(int a0)
+void InfantryClass::Do_MISSION_CAPTURE(int a0)
 {
     ts::sub::sub_0049d8e0();
 }
 
-// InfantryClass::vfunc_112 -- ALIAS of FootClass::vfunc_112 (same machine code at 0x0049da90); the
+// InfantryClass::Do_MISSION_GUARD -- ALIAS of FootClass::Do_MISSION_GUARD (same machine code at 0x0049da90); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_112(int a0)
+void InfantryClass::Do_MISSION_GUARD(int a0)
 {
     ts::sub::sub_0049da90();
 }
 
-// InfantryClass::vfunc_113 -- ALIAS of FootClass::vfunc_113 (same machine code at 0x0049e7f0); the
+// InfantryClass::Do_MISSION_GUARD_AREA -- ALIAS of FootClass::Do_MISSION_GUARD_AREA (same machine code at 0x0049e7f0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_113(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
+void InfantryClass::Do_MISSION_GUARD_AREA(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9)
 {
     ts::sub::sub_0049e7f0();
 }
 
-// InfantryClass::vfunc_114 -- ALIAS of AircraftClass::vfunc_114 (same machine code at 0x005467c0); the
+// InfantryClass::Do_MISSION_HARVEST -- ALIAS of AircraftClass::Do_MISSION_HARVEST (same machine code at 0x005467c0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_114()
+void InfantryClass::Do_MISSION_HARVEST()
 {
     ts::sub::sub_005467c0();
 }
 
-// InfantryClass::vfunc_115 -- ALIAS of FootClass::vfunc_115 (same machine code at 0x0049dbe0); the
+// InfantryClass::Do_MISSION_HUNT -- ALIAS of FootClass::Do_MISSION_HUNT (same machine code at 0x0049dbe0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_115()
+void InfantryClass::Do_MISSION_HUNT()
 {
     ts::sub::sub_0049dbe0();
 }
 
-// InfantryClass::vfunc_116 -- ALIAS of FootClass::vfunc_116 (same machine code at 0x0049cfb0); the
+// InfantryClass::Do_MISSION_MOVE -- ALIAS of FootClass::Do_MISSION_MOVE (same machine code at 0x0049cfb0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_116()
+void InfantryClass::Do_MISSION_MOVE()
 {
     ts::sub::sub_0049cfb0();
 }
 
-// InfantryClass::vfunc_117 -- ALIAS of FootClass::vfunc_117 (same machine code at 0x004a1480); the
+// InfantryClass::Do_MISSION_RETREAT -- ALIAS of FootClass::Do_MISSION_RETREAT (same machine code at 0x004a1480); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_117()
+void InfantryClass::Do_MISSION_RETREAT()
 {
     ts::sub::sub_004a1480();
 }
 
-// InfantryClass::vfunc_118 -- ALIAS of AircraftClass::vfunc_118 (same machine code at 0x00546800); the
+// InfantryClass::Do_MISSION_RETURN -- ALIAS of AircraftClass::Do_MISSION_RETURN (same machine code at 0x00546800); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_118()
+void InfantryClass::Do_MISSION_RETURN()
 {
     ts::sub::sub_00546800();
 }
 
-// InfantryClass::vfunc_119 -- ALIAS of AircraftClass::vfunc_119 (same machine code at 0x00546810); the
+// InfantryClass::Do_MISSION_STOP -- ALIAS of AircraftClass::Do_MISSION_STOP (same machine code at 0x00546810); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_119()
+void InfantryClass::Do_MISSION_STOP()
 {
     ts::sub::sub_00546810();
 }
 
-// InfantryClass::vfunc_120 -- ALIAS of FootClass::vfunc_120 (same machine code at 0x00546820); the
+// InfantryClass::Do_MISSION_UNLOAD -- ALIAS of FootClass::Do_MISSION_UNLOAD (same machine code at 0x00546820); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_120()
+void InfantryClass::Do_MISSION_UNLOAD()
 {
     ts::sub::sub_00546820();
 }
 
-// InfantryClass::vfunc_121 -- ALIAS of FootClass::vfunc_121 (same machine code at 0x004a0660); the
+// InfantryClass::Do_MISSION_ENTER -- ALIAS of FootClass::Do_MISSION_ENTER (same machine code at 0x004a0660); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_121()
+void InfantryClass::Do_MISSION_ENTER()
 {
     ts::sub::sub_004a0660();
 }
 
-// InfantryClass::vfunc_122 -- ALIAS of AircraftClass::vfunc_122 (same machine code at 0x00546840); the
+// InfantryClass::Do_MISSION_CONSTRUCTION -- ALIAS of AircraftClass::Do_MISSION_CONSTRUCTION (same machine code at 0x00546840); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_122()
+void InfantryClass::Do_MISSION_CONSTRUCTION()
 {
     ts::sub::sub_00546840();
 }
 
-// InfantryClass::vfunc_123 -- ALIAS of AircraftClass::vfunc_123 (same machine code at 0x00546850); the
+// InfantryClass::Do_MISSION_DECONSTRUCTION -- ALIAS of AircraftClass::Do_MISSION_DECONSTRUCTION (same machine code at 0x00546850); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_123()
+void InfantryClass::Do_MISSION_DECONSTRUCTION()
 {
     ts::sub::sub_00546850();
 }
 
-// InfantryClass::vfunc_124 -- ALIAS of AircraftClass::vfunc_124 (same machine code at 0x00546860); the
+// InfantryClass::Do_MISSION_REPAIR -- ALIAS of AircraftClass::Do_MISSION_REPAIR (same machine code at 0x00546860); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_124()
+void InfantryClass::Do_MISSION_REPAIR()
 {
     ts::sub::sub_00546860();
 }
 
-// InfantryClass::vfunc_125 -- ALIAS of AircraftClass::vfunc_125 (same machine code at 0x00546870); the
+// InfantryClass::Do_MISSION_MISSILE -- ALIAS of AircraftClass::Do_MISSION_MISSILE (same machine code at 0x00546870); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_125()
+void InfantryClass::Do_MISSION_MISSILE()
 {
     ts::sub::sub_00546870();
 }
 
-// InfantryClass::vfunc_126 -- ALIAS of AircraftClass::vfunc_126 (same machine code at 0x00546880); the
+// InfantryClass::Do_MISSION_OPEN -- ALIAS of AircraftClass::Do_MISSION_OPEN (same machine code at 0x00546880); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_126()
+void InfantryClass::Do_MISSION_OPEN()
 {
     ts::sub::sub_00546880();
 }
 
-// InfantryClass::vfunc_127 -- ALIAS of AircraftClass::vfunc_127 (same machine code at 0x004a4420); the
+// InfantryClass::Do_MISSION_RESCUE -- ALIAS of AircraftClass::Do_MISSION_RESCUE (same machine code at 0x004a4420); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_127()
+void InfantryClass::Do_MISSION_RESCUE()
 {
     ts::sub::sub_004a4420();
 }
 
-// InfantryClass::vfunc_128 -- ALIAS of FootClass::vfunc_128 (same machine code at 0x0049d080); the
+// InfantryClass::Do_MISSION_PATROL -- ALIAS of FootClass::Do_MISSION_PATROL (same machine code at 0x0049d080); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_128()
+void InfantryClass::Do_MISSION_PATROL()
 {
     ts::sub::sub_0049d080();
 }
 
-// InfantryClass::vfunc_129 -- ALIAS of AircraftClass::vfunc_129 (same machine code at 0x005468b0); the
+// InfantryClass::Set_Mission -- ALIAS of AircraftClass::Set_Mission (same machine code at 0x005468b0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_129(int a0)
+void InfantryClass::Set_Mission(int a0)
 {
     ts::sub::sub_005468b0();
 }
 
-// InfantryClass::vfunc_130 -- ALIAS of AircraftClass::vfunc_130 (same machine code at 0x004a0330); the
+// InfantryClass::Override_Mission -- ALIAS of AircraftClass::Override_Mission (same machine code at 0x004a0330); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_130(int a0, int a1, int a2)
+void InfantryClass::Override_Mission(int a0, int a1, int a2)
 {
     ts::sub::sub_004a0330();
 }
 
-// InfantryClass::vfunc_131 -- ALIAS of AircraftClass::vfunc_131 (same machine code at 0x004a0370); the
+// InfantryClass::Restore_Mission -- ALIAS of AircraftClass::Restore_Mission (same machine code at 0x004a0370); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_131()
+void InfantryClass::Restore_Mission()
 {
     ts::sub::sub_004a0370();
 }
 
-// InfantryClass::vfunc_132 -- ALIAS of AircraftClass::vfunc_132 (same machine code at 0x00547110); the
+// InfantryClass::Has_Suspended_Mission -- ALIAS of AircraftClass::Has_Suspended_Mission (same machine code at 0x00547110); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_132()
+void InfantryClass::Has_Suspended_Mission()
 {
     ts::sub::sub_00547110();
 }
 
-// InfantryClass::vfunc_133 -- ALIAS of AircraftClass::vfunc_133 (same machine code at 0x005a58a0); the
+// InfantryClass::Transmit_Message -- ALIAS of AircraftClass::Transmit_Message (same machine code at 0x005a58a0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_133(int a0, int a1)
+void InfantryClass::Transmit_Message(int a0, int a1)
 {
     ts::sub::sub_005a58a0();
 }
 
-// InfantryClass::vfunc_134 -- ALIAS of AircraftClass::vfunc_134 (same machine code at 0x005a57d0); the
+// InfantryClass::Transmit_Message -- ALIAS of AircraftClass::Transmit_Message (same machine code at 0x005a57d0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_134(int a0, int a1, int a2)
+void InfantryClass::Transmit_Message(int a0, int a1, int a2)
 {
     ts::sub::sub_005a57d0();
 }
 
-// InfantryClass::vfunc_135 -- ALIAS of AircraftClass::vfunc_135 (same machine code at 0x0040e700); the
+// InfantryClass::Is_Move_Override -- ALIAS of AircraftClass::Is_Move_Override (same machine code at 0x0040e700); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_135()
+void InfantryClass::Is_Move_Override()
 {
     ts::sub::sub_0040e700();
 }
 
-// InfantryClass::vfunc_136 -- ALIAS of AircraftClass::vfunc_136 (same machine code at 0x004a2690); the
+// InfantryClass::Is_Allowed_To_Recloak -- ALIAS of AircraftClass::Is_Allowed_To_Recloak (same machine code at 0x004a2690); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_136()
+void InfantryClass::Is_Allowed_To_Recloak()
 {
     ts::sub::sub_004a2690();
 }
 
-// InfantryClass::vfunc_137 -- ALIAS of AircraftClass::vfunc_137 (same machine code at 0x0060eb20); the
+// InfantryClass::Can_Scatter -- ALIAS of AircraftClass::Can_Scatter (same machine code at 0x0060eb20); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_137()
+void InfantryClass::Can_Scatter()
 {
     ts::sub::sub_0060eb20();
 }
 
-// InfantryClass::vfunc_138 -- ALIAS of AircraftClass::vfunc_138 (same machine code at 0x0040e7a0); the
+// InfantryClass::Is_In_Team -- ALIAS of AircraftClass::Is_In_Team (same machine code at 0x0040e7a0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_138()
+void InfantryClass::Is_In_Team()
 {
     ts::sub::sub_0040e7a0();
 }
 
-// InfantryClass::vfunc_139 -- ALIAS of AircraftClass::vfunc_139 (same machine code at 0x0061cb60); the
+// InfantryClass::Should_Self_Heal_Now -- ALIAS of AircraftClass::Should_Self_Heal_Now (same machine code at 0x0061cb60); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_139()
+void InfantryClass::Should_Self_Heal_Now()
 {
     ts::sub::sub_0061cb60();
 }
 
-// InfantryClass::vfunc_140 -- ALIAS of AircraftClass::vfunc_140 (same machine code at 0x00612de0); the
+// InfantryClass::Is_Voxel_Loaded -- ALIAS of AircraftClass::Is_Voxel_Loaded (same machine code at 0x00612de0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_140()
+void InfantryClass::Is_Voxel_Loaded()
 {
     ts::sub::sub_00612de0();
 }
 
-// InfantryClass::vfunc_141 -- ALIAS of AircraftClass::vfunc_141 (same machine code at 0x0040e710); the
+// InfantryClass::Is_Ready_To_Move -- ALIAS of AircraftClass::Is_Ready_To_Move (same machine code at 0x0040e710); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_141()
+void InfantryClass::Is_Ready_To_Move()
 {
     ts::sub::sub_0040e710();
 }
 
-// InfantryClass::vfunc_142 -- ALIAS of AircraftClass::vfunc_142 (same machine code at 0x00613d60); the
+// InfantryClass::Is_Ready_To_Cloak -- ALIAS of AircraftClass::Is_Ready_To_Cloak (same machine code at 0x00613d60); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_142(int a0, int a1, int a2)
+void InfantryClass::Is_Ready_To_Cloak(int a0, int a1, int a2)
 {
     ts::sub::sub_00613d60();
 }
 
-// InfantryClass::vfunc_143 -- ALIAS of AircraftClass::vfunc_143 (same machine code at 0x00613c60); the
+// InfantryClass::Should_Uncloak -- ALIAS of AircraftClass::Should_Uncloak (same machine code at 0x00613c60); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_143(int a0, int a1, int a2)
+void InfantryClass::Should_Uncloak(int a0, int a1, int a2)
 {
     ts::sub::sub_00613c60();
 }
 
-// InfantryClass::vfunc_144 -- ALIAS of FootClass::vfunc_144 (same machine code at 0x004a4b20); the
+// InfantryClass::Turret_Facing -- ALIAS of FootClass::Turret_Facing (same machine code at 0x004a4b20); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_144(int a0)
+void InfantryClass::Turret_Facing(int a0)
 {
     ts::sub::sub_004a4b20();
 }
 
-// InfantryClass::vfunc_145 -- ALIAS of AircraftClass::vfunc_145 (same machine code at 0x00616450); the
+// InfantryClass::Is_Weapon_Equipped -- ALIAS of AircraftClass::Is_Weapon_Equipped (same machine code at 0x00616450); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_145()
+void InfantryClass::Is_Weapon_Equipped()
 {
     ts::sub::sub_00616450();
 }
 
-// InfantryClass::vfunc_146 -- ALIAS of AircraftClass::vfunc_146 (same machine code at 0x0061cfa0); the
+// InfantryClass::Is_On_Elevation -- ALIAS of AircraftClass::Is_On_Elevation (same machine code at 0x0061cfa0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_146(int a0, int a1)
+void InfantryClass::Is_On_Elevation(int a0, int a1)
 {
     ts::sub::sub_0061cfa0();
 }
 
-// InfantryClass::vfunc_147 -- ALIAS of AircraftClass::vfunc_147 (same machine code at 0x0061b1e0); the
+// InfantryClass::Tiberium_Load -- ALIAS of AircraftClass::Tiberium_Load (same machine code at 0x0061b1e0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_147()
+void InfantryClass::Tiberium_Load()
 {
     ts::sub::sub_0061b1e0();
 }
 
-// InfantryClass::vfunc_148 -- ALIAS of AircraftClass::vfunc_148 (same machine code at 0x0061d000); the
+// InfantryClass::Weed_Load -- ALIAS of AircraftClass::Weed_Load (same machine code at 0x0061d000); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_148()
+void InfantryClass::Weed_Load()
 {
     ts::sub::sub_0061d000();
 }
 
-// InfantryClass::vfunc_149 -- ALIAS of AircraftClass::vfunc_149 (same machine code at 0x0061b210); the
+// InfantryClass::Pip_Count -- ALIAS of AircraftClass::Pip_Count (same machine code at 0x0061b210); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_149()
+void InfantryClass::Pip_Count()
 {
     ts::sub::sub_0061b210();
 }
 
-// InfantryClass::vfunc_150 -- ALIAS of AircraftClass::vfunc_150 (same machine code at 0x0061bf60); the
+// InfantryClass::Refund_Amount -- ALIAS of AircraftClass::Refund_Amount (same machine code at 0x0061bf60); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_150(int a0)
+void InfantryClass::Refund_Amount(int a0)
 {
     ts::sub::sub_0061bf60();
 }
 
-// InfantryClass::vfunc_151 -- ALIAS of AircraftClass::vfunc_151 (same machine code at 0x0061b1c0); the
+// InfantryClass::Risk -- ALIAS of AircraftClass::Risk (same machine code at 0x0061b1c0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_151()
+void InfantryClass::Risk()
 {
     ts::sub::sub_0061b1c0();
 }
 
-// InfantryClass::vfunc_152 -- ALIAS of AircraftClass::vfunc_152 (same machine code at 0x004a2340); the
+// InfantryClass::Is_In_Same_Zone_As -- ALIAS of AircraftClass::Is_In_Same_Zone_As (same machine code at 0x004a2340); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_152(int a0)
+void InfantryClass::Is_In_Same_Zone_As(int a0)
 {
     ts::sub::sub_004a2340();
 }
 
-// InfantryClass::vfunc_153 -- ALIAS of AircraftClass::vfunc_153 (same machine code at 0x00614770); the
+// InfantryClass::Barrel_Pitch -- ALIAS of AircraftClass::Barrel_Pitch (same machine code at 0x00614770); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_153(int a0, int a1)
+void InfantryClass::Barrel_Pitch(int a0, int a1)
 {
     ts::sub::sub_00614770();
 }
 
-// InfantryClass::vfunc_154 -- ALIAS of AircraftClass::vfunc_154 (same machine code at 0x0049c620); the
+// InfantryClass::Is_In_Same_Zone -- ALIAS of AircraftClass::Is_In_Same_Zone (same machine code at 0x0049c620); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_154(int a0)
+void InfantryClass::Is_In_Same_Zone(int a0)
 {
     ts::sub::sub_0049c620();
 }
 
-// InfantryClass::vfunc_155 -- ALIAS of AircraftClass::vfunc_155 (same machine code at 0x0060ed00); the
+// InfantryClass::How_Many_Survivors -- ALIAS of AircraftClass::How_Many_Survivors (same machine code at 0x0060ed00); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_155()
+void InfantryClass::How_Many_Survivors()
 {
     ts::sub::sub_0060ed00();
 }
 
-// InfantryClass::vfunc_156 -- ALIAS of AircraftClass::vfunc_156 (same machine code at 0x0061df10); the
+// InfantryClass::Scatter_Incoming_Infantry -- ALIAS of AircraftClass::Scatter_Incoming_Infantry (same machine code at 0x0061df10); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_156()
+void InfantryClass::Scatter_Incoming_Infantry()
 {
     ts::sub::sub_0061df10();
 }
 
-// InfantryClass::vfunc_157 -- ALIAS of AircraftClass::vfunc_157 (same machine code at 0x0061dd70); the
+// InfantryClass::Get_Collateral_Damage -- ALIAS of AircraftClass::Get_Collateral_Damage (same machine code at 0x0061dd70); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_157()
+void InfantryClass::Get_Collateral_Damage()
 {
     ts::sub::sub_0061dd70();
 }
 
-// InfantryClass::vfunc_158 -- ALIAS of AircraftClass::vfunc_158 (same machine code at 0x004a1a50); the
+// InfantryClass::Get_Z_Adjust -- ALIAS of AircraftClass::Get_Z_Adjust (same machine code at 0x004a1a50); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_158(int a0, int a1, int a2)
+void InfantryClass::Get_Z_Adjust(int a0, int a1, int a2)
 {
     ts::sub::sub_004a1a50();
 }
 
-// InfantryClass::vfunc_159 -- ALIAS of AircraftClass::vfunc_159 (same machine code at 0x004a1b30); the
+// InfantryClass::Get_Z_Gradient -- ALIAS of AircraftClass::Get_Z_Gradient (same machine code at 0x004a1b30); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_159()
+void InfantryClass::Get_Z_Gradient()
 {
     ts::sub::sub_004a1b30();
 }
 
-// InfantryClass::vfunc_160 -- ALIAS of AircraftClass::vfunc_160 (same machine code at 0x0061bd30); the
+// InfantryClass::Find_Docking_Bay -- ALIAS of AircraftClass::Find_Docking_Bay (same machine code at 0x0061bd30); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_160(int a0, int a1, int a2)
+void InfantryClass::Find_Docking_Bay(int a0, int a1, int a2)
 {
     ts::sub::sub_0061bd30();
 }
 
-// InfantryClass::vfunc_161 -- ALIAS of AircraftClass::vfunc_161 (same machine code at 0x0061bf10); the
+// InfantryClass::Find_Exit_Cell -- ALIAS of AircraftClass::Find_Exit_Cell (same machine code at 0x0061bf10); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_161(int a0, int a1)
+void InfantryClass::Find_Exit_Cell(int a0, int a1)
 {
     ts::sub::sub_0061bf10();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_162 -- the body is the canonical transcription of
+// InfantryClass::Turret_Coord -- the body is the canonical transcription of
 // 20 instructions at 0x004d27e0, in src/generated/code/.
 // size 53 bytes; callees: none
 //
-void InfantryClass::vfunc_162(int a0, int a1)
+void InfantryClass::Turret_Coord(int a0, int a1)
 {
     ts::sub::sub_004d27e0();
 }
 
-// InfantryClass::vfunc_163 -- ALIAS of BuildingClass::vfunc_163 (same machine code at 0x0061b1f0); the
+// InfantryClass::Desired_Load_Dir -- ALIAS of BuildingClass::Desired_Load_Dir (same machine code at 0x0061b1f0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_163(int a0, int a1)
+void InfantryClass::Desired_Load_Dir(int a0, int a1)
 {
     ts::sub::sub_0061b1f0();
 }
 
-// InfantryClass::vfunc_164 -- ALIAS of FootClass::vfunc_164 (same machine code at 0x0061b2c0); the
+// InfantryClass::Fire_Direction -- ALIAS of FootClass::Fire_Direction (same machine code at 0x0061b2c0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_164(int a0)
+void InfantryClass::Fire_Direction(int a0)
 {
     ts::sub::sub_0061b2c0();
 }
 
-// InfantryClass::vfunc_165 -- ALIAS of AircraftClass::vfunc_165 (same machine code at 0x0061a450); the
+// InfantryClass::Crew_Type -- ALIAS of AircraftClass::Crew_Type (same machine code at 0x0061a450); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_165()
+void InfantryClass::Crew_Type()
 {
     ts::sub::sub_0061a450();
 }
 
-// InfantryClass::vfunc_166 -- ALIAS of AircraftClass::vfunc_166 (same machine code at 0x00616160); the
+// InfantryClass::Can_Attack_Now -- ALIAS of AircraftClass::Can_Attack_Now (same machine code at 0x00616160); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_166()
+void InfantryClass::Can_Attack_Now()
 {
     ts::sub::sub_00616160();
 }
 
-// InfantryClass::vfunc_167 -- ALIAS of AircraftClass::vfunc_167 (same machine code at 0x006161b0); the
+// InfantryClass::Can_Deploy_Now -- ALIAS of AircraftClass::Can_Deploy_Now (same machine code at 0x006161b0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_167(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
+void InfantryClass::Can_Deploy_Now(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7)
 {
     ts::sub::sub_006161b0();
 }
 
-// InfantryClass::vfunc_168 -- ALIAS of AircraftClass::vfunc_168 (same machine code at 0x006143a0); the
+// InfantryClass::Rearm_Delay -- ALIAS of AircraftClass::Rearm_Delay (same machine code at 0x006143a0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_168(int a0)
+void InfantryClass::Rearm_Delay(int a0)
 {
     ts::sub::sub_006143a0();
 }
 
-// InfantryClass::vfunc_169 -- ALIAS of AircraftClass::vfunc_169 (same machine code at 0x0061a560); the
+// InfantryClass::Threat_Range -- ALIAS of AircraftClass::Threat_Range (same machine code at 0x0061a560); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_169(int a0)
+void InfantryClass::Threat_Range(int a0)
 {
     ts::sub::sub_0061a560();
 }
 
-// InfantryClass::vfunc_170 -- ALIAS of AircraftClass::vfunc_170 (same machine code at 0x004a13b0); the
+// InfantryClass::Is_Allowed_To_Leave_Map -- ALIAS of AircraftClass::Is_Allowed_To_Leave_Map (same machine code at 0x004a13b0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_170()
+void InfantryClass::Is_Allowed_To_Leave_Map()
 {
     ts::sub::sub_004a13b0();
 }
 
-// InfantryClass::vfunc_171 -- ALIAS of AircraftClass::vfunc_171 (same machine code at 0x0061d9d0); the
+// InfantryClass::Is_Radar_Visible -- ALIAS of AircraftClass::Is_Radar_Visible (same machine code at 0x0061d9d0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_171(int a0)
+void InfantryClass::Is_Radar_Visible(int a0)
 {
     ts::sub::sub_0061d9d0();
 }
 
-// InfantryClass::vfunc_172 -- ALIAS of AircraftClass::vfunc_172 (same machine code at 0x0061db90); the
+// InfantryClass::Is_Sensed_By_Player -- ALIAS of AircraftClass::Is_Sensed_By_Player (same machine code at 0x0061db90); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_172()
+void InfantryClass::Is_Sensed_By_Player()
 {
     ts::sub::sub_0061db90();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_173 -- the body is the canonical transcription of
+// InfantryClass::Is_Renovator -- the body is the canonical transcription of
 // 3 instructions at 0x004d2e20, in src/generated/code/.
 // size 13 bytes; callees: none
 //
-void InfantryClass::vfunc_173()
+void InfantryClass::Is_Renovator()
 {
     ts::sub::sub_004d2e20();
 }
 
-// InfantryClass::vfunc_174 -- ALIAS of AircraftClass::vfunc_174 (same machine code at 0x004a49c0); the
+// InfantryClass::Advance_Waypoint_Path -- ALIAS of AircraftClass::Advance_Waypoint_Path (same machine code at 0x004a49c0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_174()
+void InfantryClass::Advance_Waypoint_Path()
 {
     ts::sub::sub_004a49c0();
 }
 
-// InfantryClass::vfunc_175 -- ALIAS of AircraftClass::vfunc_175 (same machine code at 0x0061b2e0); the
+// InfantryClass::Response_Select -- ALIAS of AircraftClass::Response_Select (same machine code at 0x0061b2e0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_175()
+void InfantryClass::Response_Select()
 {
     ts::sub::sub_0061b2e0();
 }
 
-// InfantryClass::vfunc_176 -- ALIAS of AircraftClass::vfunc_176 (same machine code at 0x0061b340); the
+// InfantryClass::Response_Move -- ALIAS of AircraftClass::Response_Move (same machine code at 0x0061b340); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_176()
+void InfantryClass::Response_Move()
 {
     ts::sub::sub_0061b340();
 }
 
-// InfantryClass::vfunc_177 -- ALIAS of AircraftClass::vfunc_177 (same machine code at 0x0061b3a0); the
+// InfantryClass::Response_Attack -- ALIAS of AircraftClass::Response_Attack (same machine code at 0x0061b3a0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_177()
+void InfantryClass::Response_Attack()
 {
     ts::sub::sub_0061b3a0();
 }
 
-// InfantryClass::vfunc_178 -- ALIAS of BuildingClass::vfunc_178 (same machine code at 0x00615820); the
+// InfantryClass::Player_Assign_Mission -- ALIAS of BuildingClass::Player_Assign_Mission (same machine code at 0x00615820); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_178(int a0)
+void InfantryClass::Player_Assign_Mission(int a0)
 {
     ts::sub::sub_00615820();
 }
 
-// InfantryClass::vfunc_179 -- ALIAS of BuildingClass::vfunc_179 (same machine code at 0x0061dd50); the
+// InfantryClass::Reduce_Ammunition -- ALIAS of BuildingClass::Reduce_Ammunition (same machine code at 0x0061dd50); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_179()
+void InfantryClass::Reduce_Ammunition()
 {
     ts::sub::sub_0061dd50();
 }
 
-// InfantryClass::vfunc_180 -- ALIAS of AircraftClass::vfunc_180 (same machine code at 0x0061b400); the
+// InfantryClass::Target_Something_Nearby -- ALIAS of AircraftClass::Target_Something_Nearby (same machine code at 0x0061b400); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_180(int a0, int a1)
+void InfantryClass::Target_Something_Nearby(int a0, int a1)
 {
     ts::sub::sub_0061b400();
 }
 
-// InfantryClass::vfunc_181 -- ALIAS of AircraftClass::vfunc_181 (same machine code at 0x0049de00); the
+// InfantryClass::Stun -- ALIAS of AircraftClass::Stun (same machine code at 0x0049de00); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_181()
+void InfantryClass::Stun()
 {
     ts::sub::sub_0049de00();
 }
@@ -1383,440 +1383,440 @@ void InfantryClass::vfunc_182(int a0, int a1)
     ts::sub::sub_006114b0();
 }
 
-// InfantryClass::vfunc_183 -- ALIAS of AircraftClass::vfunc_183 (same machine code at 0x004a0bb0); the
+// InfantryClass::Death_Announcement -- ALIAS of AircraftClass::Death_Announcement (same machine code at 0x004a0bb0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_183(int a0)
+void InfantryClass::Death_Announcement(int a0)
 {
     ts::sub::sub_004a0bb0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_184 -- the body is the canonical transcription of
+// InfantryClass::Can_Fire -- the body is the canonical transcription of
 // 30 instructions at 0x004cee00, in src/generated/code/.
 // size 83 bytes; callees: 0x00570280, 0x0060ed20, 0x0068309c
 //
-void InfantryClass::vfunc_184(int a0, int a1)
+void InfantryClass::Can_Fire(int a0, int a1)
 {
     ts::sub::sub_004cee00();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_185 -- the body is the canonical transcription of
+// InfantryClass::Greatest_Threat -- the body is the canonical transcription of
 // 70 instructions at 0x004cfff0, in src/generated/code/.
 // size 222 bytes; callees: 0x00494170, 0x004c4ff0, 0x0067faf0
 //
-void InfantryClass::vfunc_185(int a0, int a1, int a2)
+void InfantryClass::Greatest_Threat(int a0, int a1, int a2)
 {
     ts::sub::sub_004cfff0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_186 -- the body is the canonical transcription of
+// InfantryClass::Assign_Target -- the body is the canonical transcription of
 // 18 instructions at 0x004cdb20, in src/generated/code/.
 // size 54 bytes; callees: 0x004cdb64
 //
-void InfantryClass::vfunc_186(int a0)
+void InfantryClass::Assign_Target(int a0)
 {
     ts::sub::sub_004cdb20();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_187 -- the body is the canonical transcription of
+// InfantryClass::Fire_At -- the body is the canonical transcription of
 // 42 instructions at 0x004cfe30, in src/generated/code/.
 // size 126 bytes; callees: 0x006148b0
 //
-void InfantryClass::vfunc_187(int a0, int a1)
+void InfantryClass::Fire_At(int a0, int a1)
 {
     ts::sub::sub_004cfe30();
 }
 
-// InfantryClass::vfunc_188 -- ALIAS of AircraftClass::vfunc_188 (same machine code at 0x004a27c0); the
+// InfantryClass::Captured -- ALIAS of AircraftClass::Captured (same machine code at 0x004a27c0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_188(int a0)
+void InfantryClass::Captured(int a0)
 {
     ts::sub::sub_004a27c0();
 }
 
-// InfantryClass::vfunc_189 -- ALIAS of AircraftClass::vfunc_189 (same machine code at 0x00614530); the
+// InfantryClass::Laser_Zap -- ALIAS of AircraftClass::Laser_Zap (same machine code at 0x00614530); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_189(int a0, int a1, int a2, int a3, int a4, int a5)
+void InfantryClass::Laser_Zap(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_00614530();
 }
 
-// InfantryClass::vfunc_190 -- ALIAS of AircraftClass::vfunc_190 (same machine code at 0x0061c360); the
+// InfantryClass::Rock -- ALIAS of AircraftClass::Rock (same machine code at 0x0061c360); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_190(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void InfantryClass::Rock(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
 {
     ts::sub::sub_0061c360();
 }
 
-// InfantryClass::vfunc_191 -- ALIAS of AircraftClass::vfunc_191 (same machine code at 0x0040e730); the
+// InfantryClass::Get_Class_Weapon_Data -- ALIAS of AircraftClass::Get_Class_Weapon_Data (same machine code at 0x0040e730); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_191(int a0)
+void InfantryClass::Get_Class_Weapon_Data(int a0)
 {
     ts::sub::sub_0040e730();
 }
 
-// InfantryClass::vfunc_192 -- ALIAS of AircraftClass::vfunc_192 (same machine code at 0x0040e780); the
+// InfantryClass::Is_Turret_Equipped -- ALIAS of AircraftClass::Is_Turret_Equipped (same machine code at 0x0040e780); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_192()
+void InfantryClass::Is_Turret_Equipped()
 {
     ts::sub::sub_0040e780();
 }
 
-// InfantryClass::vfunc_193 -- ALIAS of AircraftClass::vfunc_193 (same machine code at 0x00616550); the
+// InfantryClass::Renovate -- ALIAS of AircraftClass::Renovate (same machine code at 0x00616550); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_193()
+void InfantryClass::Renovate()
 {
     ts::sub::sub_00616550();
 }
 
-// InfantryClass::vfunc_194 -- ALIAS of AircraftClass::vfunc_194 (same machine code at 0x00613760); the
+// InfantryClass::Cloaking_AI -- ALIAS of AircraftClass::Cloaking_AI (same machine code at 0x00613760); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_194(int a0)
+void InfantryClass::Cloaking_AI(int a0)
 {
     ts::sub::sub_00613760();
 }
 
-// InfantryClass::vfunc_195 -- ALIAS of AircraftClass::vfunc_195 (same machine code at 0x0061c650); the
+// InfantryClass::Rocking_AI -- ALIAS of AircraftClass::Rocking_AI (same machine code at 0x0061c650); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_195()
+void InfantryClass::Rocking_AI()
 {
     ts::sub::sub_0061c650();
 }
 
-// InfantryClass::vfunc_196 -- ALIAS of AircraftClass::vfunc_196 (same machine code at 0x0060f8f0); the
+// InfantryClass::Try_To_Cloak -- ALIAS of AircraftClass::Try_To_Cloak (same machine code at 0x0060f8f0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_196(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void InfantryClass::Try_To_Cloak(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_0060f8f0();
 }
 
-// InfantryClass::vfunc_197 -- ALIAS of AircraftClass::vfunc_197 (same machine code at 0x004a2880); the
+// InfantryClass::Draw_Action_Line -- ALIAS of AircraftClass::Draw_Action_Line (same machine code at 0x004a2880); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_197(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void InfantryClass::Draw_Action_Line(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_004a2880();
 }
 
-// InfantryClass::vfunc_198 -- ALIAS of AircraftClass::vfunc_198 (same machine code at 0x004a19a0); the
+// InfantryClass::Draw_Voxel -- ALIAS of AircraftClass::Draw_Voxel (same machine code at 0x004a19a0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_198(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
+void InfantryClass::Draw_Voxel(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8)
 {
     ts::sub::sub_004a19a0();
 }
 
-// InfantryClass::vfunc_199 -- ALIAS of AircraftClass::vfunc_199 (same machine code at 0x00610870); the
+// InfantryClass::Draw_Health_Bar_Old -- ALIAS of AircraftClass::Draw_Health_Bar_Old (same machine code at 0x00610870); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_199(int a0, int a1)
+void InfantryClass::Draw_Health_Bar_Old(int a0, int a1)
 {
     ts::sub::sub_00610870();
 }
 
-// InfantryClass::vfunc_200 -- ALIAS of AircraftClass::vfunc_200 (same machine code at 0x00610c50); the
+// InfantryClass::Draw_Health_Bar -- ALIAS of AircraftClass::Draw_Health_Bar (same machine code at 0x00610c50); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_200(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
+void InfantryClass::Draw_Health_Bar(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14, int a15, int a16)
 {
     ts::sub::sub_00610c50();
 }
 
-// InfantryClass::vfunc_201 -- ALIAS of AircraftClass::vfunc_201 (same machine code at 0x0061b4f0); the
+// InfantryClass::Draw_Pips -- ALIAS of AircraftClass::Draw_Pips (same machine code at 0x0061b4f0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_201(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
+void InfantryClass::Draw_Pips(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11)
 {
     ts::sub::sub_0061b4f0();
 }
 
-// InfantryClass::vfunc_202 -- ALIAS of AircraftClass::vfunc_202 (same machine code at 0x0061bc30); the
+// InfantryClass::Draw_Text_Overlay -- ALIAS of AircraftClass::Draw_Text_Overlay (same machine code at 0x0061bc30); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_202(int a0, int a1, int a2)
+void InfantryClass::Draw_Text_Overlay(int a0, int a1, int a2)
 {
     ts::sub::sub_0061bc30();
 }
 
-// InfantryClass::vfunc_203 -- ALIAS of AircraftClass::vfunc_203 (same machine code at 0x00617b90); the
+// InfantryClass::Do_Uncloak -- ALIAS of AircraftClass::Do_Uncloak (same machine code at 0x00617b90); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_203(int a0)
+void InfantryClass::Do_Uncloak(int a0)
 {
     ts::sub::sub_00617b90();
 }
 
-// InfantryClass::vfunc_204 -- ALIAS of AircraftClass::vfunc_204 (same machine code at 0x00617c30); the
+// InfantryClass::Do_Cloak -- ALIAS of AircraftClass::Do_Cloak (same machine code at 0x00617c30); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_204(int a0)
+void InfantryClass::Do_Cloak(int a0)
 {
     ts::sub::sub_00617c30();
 }
 
-// InfantryClass::vfunc_205 -- ALIAS of AircraftClass::vfunc_205 (same machine code at 0x0061d9a0); the
+// InfantryClass::Apparent_Brightness -- ALIAS of AircraftClass::Apparent_Brightness (same machine code at 0x0061d9a0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_205(int a0)
+void InfantryClass::Apparent_Brightness(int a0)
 {
     ts::sub::sub_0061d9a0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_206 -- the body is the canonical transcription of
+// InfantryClass::Is_Ready_To_Random_Animate -- the body is the canonical transcription of
 // 7 instructions at 0x004d2280, in src/generated/code/.
 // size 14 bytes; callees: 0x0061b490
 //
-void InfantryClass::vfunc_206()
+void InfantryClass::Is_Ready_To_Random_Animate()
 {
     ts::sub::sub_004d2280();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_207 -- the body is the canonical transcription of
+// InfantryClass::Random_Animate -- the body is the canonical transcription of
 // 55 instructions at 0x004cf0b0, in src/generated/code/.
 // size 212 bytes; callees: 0x004c4ff0, 0x005a5f10, 0x0067faf0
 //
-void InfantryClass::vfunc_207(int a0, int a1)
+void InfantryClass::Random_Animate(int a0, int a1)
 {
     ts::sub::sub_004cf0b0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_208 -- the body is the canonical transcription of
+// InfantryClass::Assign_Destination -- the body is the canonical transcription of
 // 78 instructions at 0x004cd4a0, in src/generated/code/.
 // size 237 bytes; callees: 0x004563e0, 0x004c4ff0, 0x004cd5ba, 0x00502060, 0x006939b0
 //
-void InfantryClass::vfunc_208(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
+void InfantryClass::Assign_Destination(int a0, int a1, int a2, int a3, int a4, int a5, int a6)
 {
     ts::sub::sub_004cd4a0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_209 -- the body is the canonical transcription of
+// InfantryClass::Enter_Idle_Mode -- the body is the canonical transcription of
 // 28 instructions at 0x004ceef0, in src/generated/code/.
 // size 82 bytes; callees: 0x0049f8e0, 0x004cf076
 //
-void InfantryClass::vfunc_209(int a0, int a1)
+void InfantryClass::Enter_Idle_Mode(int a0, int a1)
 {
     ts::sub::sub_004ceef0();
 }
 
-// InfantryClass::vfunc_210 -- ALIAS of AircraftClass::vfunc_210 (same machine code at 0x0061d4c0); the
+// InfantryClass::Radar_Track -- ALIAS of AircraftClass::Radar_Track (same machine code at 0x0061d4c0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_210()
+void InfantryClass::Radar_Track()
 {
     ts::sub::sub_0061d4c0();
 }
 
-// InfantryClass::vfunc_211 -- ALIAS of AircraftClass::vfunc_211 (same machine code at 0x0061d4f0); the
+// InfantryClass::Radar_Untrack -- ALIAS of AircraftClass::Radar_Untrack (same machine code at 0x0061d4f0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_211()
+void InfantryClass::Radar_Untrack()
 {
     ts::sub::sub_0061d4f0();
 }
 
-// InfantryClass::vfunc_212 -- ALIAS of AircraftClass::vfunc_212 (same machine code at 0x0061d520); the
+// InfantryClass::Plot_On_Radar -- ALIAS of AircraftClass::Plot_On_Radar (same machine code at 0x0061d520); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_212()
+void InfantryClass::Plot_On_Radar()
 {
     ts::sub::sub_0061d520();
 }
 
-// InfantryClass::vfunc_213 -- ALIAS of AircraftClass::vfunc_213 (same machine code at 0x0061df20); the
+// InfantryClass::Update_Radar_Position -- ALIAS of AircraftClass::Update_Radar_Position (same machine code at 0x0061df20); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_213(int a0, int a1, int a2, int a3, int a4)
+void InfantryClass::Update_Radar_Position(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_0061df20();
 }
 
-// InfantryClass::vfunc_214 -- ALIAS of FootClass::vfunc_214 (same machine code at 0x004a2c50); the
+// InfantryClass::Should_Delete_Off_Map -- ALIAS of FootClass::Should_Delete_Off_Map (same machine code at 0x004a2c50); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_214()
+void InfantryClass::Should_Delete_Off_Map()
 {
     ts::sub::sub_004a2c50();
 }
 
-// InfantryClass::vfunc_215 -- ALIAS of AircraftClass::vfunc_215 (same machine code at 0x004a2800); the
+// InfantryClass::Is_Considered_Slow -- ALIAS of AircraftClass::Is_Considered_Slow (same machine code at 0x004a2800); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_215()
+void InfantryClass::Is_Considered_Slow()
 {
     ts::sub::sub_004a2800();
 }
 
-// InfantryClass::vfunc_216 -- ALIAS of AircraftClass::vfunc_216 (same machine code at 0x0040e7b0); the
+// InfantryClass::Deploy_To_Fire -- ALIAS of AircraftClass::Deploy_To_Fire (same machine code at 0x0040e7b0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_216()
+void InfantryClass::Deploy_To_Fire()
 {
     ts::sub::sub_0040e7b0();
 }
 
-// InfantryClass::vfunc_217 -- ALIAS of AircraftClass::vfunc_217 (same machine code at 0x004a11e0); the
+// InfantryClass::Likely_Coord -- ALIAS of AircraftClass::Likely_Coord (same machine code at 0x004a11e0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_217(int a0)
+void InfantryClass::Likely_Coord(int a0)
 {
     ts::sub::sub_004a11e0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_218 -- the body is the canonical transcription of
+// InfantryClass::On_Movement_Blocked -- the body is the canonical transcription of
 // 34 instructions at 0x004d2870, in src/generated/code/.
 // size 120 bytes; callees: 0x0047eb00, 0x004a2850, 0x004d28fd, 0x00570720
 //
-void InfantryClass::vfunc_218(int a0, int a1)
+void InfantryClass::On_Movement_Blocked(int a0, int a1)
 {
     ts::sub::sub_004d2870();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_219 -- the body is the canonical transcription of
+// InfantryClass::JumpJet_To_Walk -- the body is the canonical transcription of
 // 178 instructions at 0x004d2950, in src/generated/code/.
 // size 537 bytes; callees: 0x0040e9d0, 0x0043a340, 0x0043a370, 0x0043ae10, 0x0047eb00, 0x004a4bd0, 0x004d2f40, 0x006939b0
 //
-void InfantryClass::vfunc_219(int a0, int a1, int a2, int a3)
+void InfantryClass::JumpJet_To_Walk(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004d2950();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_220 -- the body is the canonical transcription of
+// InfantryClass::Start_Driver -- the body is the canonical transcription of
 // 240 instructions at 0x004cfae0, in src/generated/code/.
 // size 785 bytes; callees: 0x00416920, 0x004546f0, 0x004941e0, 0x00494230, 0x00494360, 0x0049dd90, 0x00502060, 0x0067faf0
 //
-void InfantryClass::vfunc_220(int a0)
+void InfantryClass::Start_Driver(int a0)
 {
     ts::sub::sub_004cfae0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_221 -- the body is the canonical transcription of
+// InfantryClass::Stop_Driver -- the body is the canonical transcription of
 // 11 instructions at 0x004cfa30, in src/generated/code/.
 // size 30 bytes; callees: 0x004cfa5c
 //
-void InfantryClass::vfunc_221(int a0)
+void InfantryClass::Stop_Driver(int a0)
 {
     ts::sub::sub_004cfa30();
 }
 
-// InfantryClass::vfunc_222 -- ALIAS of AircraftClass::vfunc_222 (same machine code at 0x004a22c0); the
+// InfantryClass::Is_Docked_For_Repair -- ALIAS of AircraftClass::Is_Docked_For_Repair (same machine code at 0x004a22c0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_222()
+void InfantryClass::Is_Docked_For_Repair()
 {
     ts::sub::sub_004a22c0();
 }
 
-// InfantryClass::vfunc_223 -- ALIAS of AircraftClass::vfunc_223 (same machine code at 0x0040e7e0); the
+// InfantryClass::Draw_Object -- ALIAS of AircraftClass::Draw_Object (same machine code at 0x0040e7e0); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_223(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14)
+void InfantryClass::Draw_Object(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12, int a13, int a14)
 {
     ts::sub::sub_0040e7e0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_224 -- the body is the canonical transcription of
+// InfantryClass::Berzerk -- the body is the canonical transcription of
 // 2 instructions at 0x004d2b90, in src/generated/code/.
 // size 8 bytes; callees: none
 //
-void InfantryClass::vfunc_224()
+void InfantryClass::Berzerk()
 {
     ts::sub::sub_004d2b90();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_225 -- the body is the canonical transcription of
+// InfantryClass::Start_Fear -- the body is the canonical transcription of
 // 14 instructions at 0x004d26c0, in src/generated/code/.
 // size 44 bytes; callees: 0x0061d8e0
 //
-void InfantryClass::vfunc_225()
+void InfantryClass::Start_Fear()
 {
     ts::sub::sub_004d26c0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_226 -- the body is the canonical transcription of
+// InfantryClass::Stop_Fear -- the body is the canonical transcription of
 // 6 instructions at 0x004d26f0, in src/generated/code/.
 // size 27 bytes; callees: none
 //
-void InfantryClass::vfunc_226()
+void InfantryClass::Stop_Fear()
 {
     ts::sub::sub_004d26f0();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_227 -- the body is the canonical transcription of
+// InfantryClass::Do_Idle -- the body is the canonical transcription of
 // 8 instructions at 0x004d2710, in src/generated/code/.
 // size 22 bytes; callees: none
 //
-void InfantryClass::vfunc_227(int a0)
+void InfantryClass::Do_Idle(int a0)
 {
     ts::sub::sub_004d2710();
 }
 
-// InfantryClass::vfunc_228 -- ALIAS of AircraftClass::vfunc_228 (same machine code at 0x004a0e10); the
+// InfantryClass::Offload_Tiberium_Bail -- ALIAS of AircraftClass::Offload_Tiberium_Bail (same machine code at 0x004a0e10); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_228()
+void InfantryClass::Offload_Tiberium_Bail()
 {
     ts::sub::sub_004a0e10();
 }
 
-// InfantryClass::vfunc_229 -- ALIAS of AircraftClass::vfunc_229 (same machine code at 0x0040e880); the
+// InfantryClass::Overrun_Square -- ALIAS of AircraftClass::Overrun_Square (same machine code at 0x0040e880); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_229(int a0, int a1)
+void InfantryClass::Overrun_Square(int a0, int a1)
 {
     ts::sub::sub_0040e880();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_230 -- the body is the canonical transcription of
+// InfantryClass::Current_Speed -- the body is the canonical transcription of
 // 22 instructions at 0x004d2820, in src/generated/code/.
 // size 60 bytes; callees: 0x004a1c20
 //
-void InfantryClass::vfunc_230()
+void InfantryClass::Current_Speed()
 {
     ts::sub::sub_004d2820();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_231 -- the body is the canonical transcription of
+// InfantryClass::Approach_Target -- the body is the canonical transcription of
 // 16 instructions at 0x004d2de0, in src/generated/code/.
 // size 48 bytes; callees: none
 //
-void InfantryClass::vfunc_231()
+void InfantryClass::Approach_Target()
 {
     ts::sub::sub_004d2de0();
 }
 
-// InfantryClass::vfunc_232 -- ALIAS of AircraftClass::vfunc_232 (same machine code at 0x0040e890); the
+// InfantryClass::Fixup_Path -- ALIAS of AircraftClass::Fixup_Path (same machine code at 0x0040e890); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_232(int a0)
+void InfantryClass::Fixup_Path(int a0)
 {
     ts::sub::sub_0040e890();
 }
 
-// InfantryClass::vfunc_233 -- ALIAS of AircraftClass::vfunc_233 (same machine code at 0x0049c520); the
+// InfantryClass::Set_Speed -- ALIAS of AircraftClass::Set_Speed (same machine code at 0x0049c520); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_233(int a0, int a1)
+void InfantryClass::Set_Speed(int a0, int a1)
 {
     ts::sub::sub_0049c520();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_234 -- the body is the canonical transcription of
+// InfantryClass::Stop_Movement_Animation -- the body is the canonical transcription of
 // 7 instructions at 0x004d25f0, in src/generated/code/.
 // size 27 bytes; callees: none
 //
-void InfantryClass::vfunc_234()
+void InfantryClass::Stop_Movement_Animation()
 {
     ts::sub::sub_004d25f0();
 }
 
-// InfantryClass::vfunc_235 -- ALIAS of AircraftClass::vfunc_235 (same machine code at 0x004a4140); the
+// InfantryClass::Is_LZ_Clear -- ALIAS of AircraftClass::Is_LZ_Clear (same machine code at 0x004a4140); the
 // forwarder is written once, at that declaration.
-void InfantryClass::vfunc_235(int a0)
+void InfantryClass::Is_LZ_Clear(int a0)
 {
     ts::sub::sub_004a4140();
 }
 
 // -------------------------------------------------------------------------
-// InfantryClass::vfunc_236 -- the body is the canonical transcription of
+// InfantryClass::Do_Action -- the body is the canonical transcription of
 // 37 instructions at 0x004cf920, in src/generated/code/.
 // size 140 bytes; callees: 0x004cf9d6
 //
-void InfantryClass::vfunc_236(int a0, int a1, int a2)
+void InfantryClass::Do_Action(int a0, int a1, int a2)
 {
     ts::sub::sub_004cf920();
 }

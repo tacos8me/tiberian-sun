@@ -26,16 +26,16 @@ void WaveClass::QueryInterface(int a0, int a1, int a2)
     ts::sub::sub_00405790();
 }
 
-// WaveClass::Init -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
+// WaveClass::AddRef -- ALIAS of AbstractClass::Init (same machine code at 0x00405830); the
 // forwarder is written once, at that declaration.
-void WaveClass::Init(int a0)
+void WaveClass::AddRef(int a0)
 {
     ts::sub::sub_00405830();
 }
 
-// WaveClass::Shutdown -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
+// WaveClass::Release -- ALIAS of AbstractClass::Shutdown (same machine code at 0x00405840); the
 // forwarder is written once, at that declaration.
-void WaveClass::Shutdown(int a0)
+void WaveClass::Release(int a0)
 {
     ts::sub::sub_00405840();
 }
@@ -50,19 +50,19 @@ void WaveClass::vfunc_3(int a0, int a1)
     ts::sub::sub_00653120();
 }
 
-// WaveClass::Release -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
+// WaveClass::IsDirty -- ALIAS of AbstractClass::AddRef (same machine code at 0x00405990); the
 // forwarder is written once, at that declaration.
-void WaveClass::Release(int a0)
+void WaveClass::IsDirty(int a0)
 {
     ts::sub::sub_00405990();
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::vfunc_5 -- the body is the canonical transcription of
+// WaveClass::Load -- the body is the canonical transcription of
 // 115 instructions at 0x00652f60, in src/generated/code/.
 // size 332 bytes; callees: 0x00492750, 0x0056e5f0, 0x005702f0, 0x005f36e0, 0x00655340
 //
-void WaveClass::vfunc_5(int a0, int a1)
+void WaveClass::Load(int a0, int a1)
 {
     ts::sub::sub_00652f60();
 }
@@ -77,26 +77,26 @@ void WaveClass::vfunc_6(int a0, int a1, int a2)
     ts::sub::sub_006530b0();
 }
 
-// WaveClass::GetType -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
+// WaveClass::GetSizeMax -- ALIAS of AbstractClass::GetType (same machine code at 0x00405910); the
 // forwarder is written once, at that declaration.
-void WaveClass::GetType(int a0, int a1)
+void WaveClass::GetSizeMax(int a0, int a1)
 {
     ts::sub::sub_00405910();
 }
 
-// WaveClass::Set_ID -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
+// WaveClass::Init -- ALIAS of AbstractClass::Set_ID (same machine code at 0x004059b0); the
 // forwarder is written once, at that declaration.
-void WaveClass::Set_ID()
+void WaveClass::Init()
 {
     ts::sub::sub_004059b0();
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::Get_RTTI -- the body is the canonical transcription of
+// WaveClass::Detach -- the body is the canonical transcription of
 // 19 instructions at 0x00652f20, in src/generated/code/.
 // size 50 bytes; callees: 0x0056fb00
 //
-void WaveClass::Get_RTTI(int a0, int a1)
+void WaveClass::Detach(int a0, int a1)
 {
     ts::sub::sub_00652f20();
 }
@@ -112,449 +112,449 @@ void WaveClass::What_Am_I()
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::Get_Heap -- the body is the canonical transcription of
+// WaveClass::Fetch_Object_Size -- the body is the canonical transcription of
 // 2 instructions at 0x00653160, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void WaveClass::Get_Heap()
+void WaveClass::Fetch_Object_Size()
 {
     ts::sub::sub_00653160();
 }
 
-// WaveClass::Load -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
+// WaveClass::Compute_CRC -- ALIAS of BulletClass::Compute_CRC (same machine code at 0x00570630); the
 // forwarder is written once, at that declaration.
-void WaveClass::Load(int a0)
+void WaveClass::Compute_CRC(int a0)
 {
     ts::sub::sub_00570630();
 }
 
-// WaveClass::Save -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
+// WaveClass::Owner -- ALIAS of AbstractClass::Save (same machine code at 0x004059d0); the
 // forwarder is written once, at that declaration.
-void WaveClass::Save()
+void WaveClass::Owner()
 {
     ts::sub::sub_004059d0();
 }
 
-// WaveClass::GetSizeMax -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
+// WaveClass::Owner_HouseClass -- ALIAS of AbstractClass::GetSizeMax (same machine code at 0x004059e0); the
 // forwarder is written once, at that declaration.
-void WaveClass::GetSizeMax()
+void WaveClass::Owner_HouseClass()
 {
     ts::sub::sub_004059e0();
 }
 
-// WaveClass::Compute_CRC -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
+// WaveClass::Fetch_Heap_ID -- ALIAS of AbstractClass::Compute_CRC (same machine code at 0x004059f0); the
 // forwarder is written once, at that declaration.
-void WaveClass::Compute_CRC()
+void WaveClass::Fetch_Heap_ID()
 {
     ts::sub::sub_004059f0();
 }
 
-// WaveClass::vfunc_17 -- ALIAS of AircraftClass::vfunc_17 (same machine code at 0x00570a20); the
+// WaveClass::Is_Inactive -- ALIAS of AircraftClass::Is_Inactive (same machine code at 0x00570a20); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_17()
+void WaveClass::Is_Inactive()
 {
     ts::sub::sub_00570a20();
 }
 
-// WaveClass::vfunc_18 -- ALIAS of AircraftClass::vfunc_18 (same machine code at 0x00570960); the
+// WaveClass::Center_Coord -- ALIAS of AircraftClass::Center_Coord (same machine code at 0x00570960); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_18(int a0)
+void WaveClass::Center_Coord(int a0)
 {
     ts::sub::sub_00570960();
 }
 
-// WaveClass::vfunc_19 -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
+// WaveClass::Destination_Coord -- ALIAS of AbstractClass::vfunc_19 (same machine code at 0x00405a30); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_19(int a0)
+void WaveClass::Destination_Coord(int a0)
 {
     ts::sub::sub_00405a30();
 }
 
-// WaveClass::vfunc_20 -- ALIAS of AircraftClass::vfunc_20 (same machine code at 0x00570e80); the
+// WaveClass::On_Ground -- ALIAS of AircraftClass::On_Ground (same machine code at 0x00570e80); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_20()
+void WaveClass::On_Ground()
 {
     ts::sub::sub_00570e80();
 }
 
-// WaveClass::vfunc_21 -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); the
+// WaveClass::In_Air -- ALIAS of AnimClass::vfunc_21 (same machine code at 0x00570ea0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_21()
+void WaveClass::In_Air()
 {
     ts::sub::sub_00570ea0();
 }
 
-// WaveClass::vfunc_22 -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
+// WaveClass::As_Coord -- ALIAS of AbstractClass::vfunc_22 (same machine code at 0x00405a80); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_22(int a0)
+void WaveClass::As_Coord(int a0)
 {
     ts::sub::sub_00405a80();
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::vfunc_23 -- the body is the canonical transcription of
+// WaveClass::AI -- the body is the canonical transcription of
 // 21 instructions at 0x00653f10, in src/generated/code/.
 // size 65 bytes; callees: none
 //
-void WaveClass::vfunc_23()
+void WaveClass::AI()
 {
     ts::sub::sub_00653f10();
 }
 
-// WaveClass::vfunc_24 -- ALIAS of AnimClass::vfunc_24 (same machine code at 0x004167b0); the
+// WaveClass::Is_Players_Army -- ALIAS of AnimClass::vfunc_24 (same machine code at 0x004167b0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_24()
+void WaveClass::Is_Players_Army()
 {
     ts::sub::sub_004167b0();
 }
 
-// WaveClass::vfunc_25 -- ALIAS of AnimClass::vfunc_25 (same machine code at 0x004167c0); the
+// WaveClass::Visual_Character -- ALIAS of AnimClass::vfunc_25 (same machine code at 0x004167c0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_25(int a0, int a1)
+void WaveClass::Visual_Character(int a0, int a1)
 {
     ts::sub::sub_004167c0();
 }
 
-// WaveClass::vfunc_26 -- ALIAS of AircraftClass::vfunc_26 (same machine code at 0x0056e820); the
+// WaveClass::Get_Image_Data -- ALIAS of AircraftClass::Get_Image_Data (same machine code at 0x0056e820); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_26()
+void WaveClass::Get_Image_Data()
 {
     ts::sub::sub_0056e820();
 }
 
-// WaveClass::vfunc_27 -- ALIAS of AnimClass::vfunc_27 (same machine code at 0x0056eb50); the
+// WaveClass::What_Action -- ALIAS of AnimClass::vfunc_27 (same machine code at 0x0056eb50); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_27(int a0, int a1, int a2)
+void WaveClass::What_Action(int a0, int a1, int a2)
 {
     ts::sub::sub_0056eb50();
 }
 
-// WaveClass::vfunc_28 -- ALIAS of AnimClass::vfunc_28 (same machine code at 0x0056eb40); the
+// WaveClass::What_Action -- ALIAS of AnimClass::vfunc_28 (same machine code at 0x0056eb40); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_28(int a0, int a1)
+void WaveClass::What_Action(int a0, int a1)
 {
     ts::sub::sub_0056eb40();
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::vfunc_29 -- the body is the canonical transcription of
+// WaveClass::In_Which_Layer -- the body is the canonical transcription of
 // 2 instructions at 0x00653170, in src/generated/code/.
 // size 6 bytes; callees: none
 //
-void WaveClass::vfunc_29()
+void WaveClass::In_Which_Layer()
 {
     ts::sub::sub_00653170();
 }
 
-// WaveClass::vfunc_30 -- ALIAS of AircraftClass::vfunc_30 (same machine code at 0x00570ef0); the
+// WaveClass::Not_Underground -- ALIAS of AircraftClass::Not_Underground (same machine code at 0x00570ef0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_30()
+void WaveClass::Not_Underground()
 {
     ts::sub::sub_00570ef0();
 }
 
-// WaveClass::vfunc_31 -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); the
+// WaveClass::Considered_Vehicle -- ALIAS of AnimClass::vfunc_31 (same machine code at 0x004167d0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_31()
+void WaveClass::Considered_Vehicle()
 {
     ts::sub::sub_004167d0();
 }
 
-// WaveClass::vfunc_32 -- ALIAS of AnimClass::vfunc_32 (same machine code at 0x00570ec0); the
+// WaveClass::Techno_Type_Class -- ALIAS of AnimClass::vfunc_32 (same machine code at 0x00570ec0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_32()
+void WaveClass::Techno_Type_Class()
 {
     ts::sub::sub_00570ec0();
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::Get_Type -- the body is the canonical transcription of
+// WaveClass::Class_Of -- the body is the canonical transcription of
 // 2 instructions at 0x00653180, in src/generated/code/.
 // size 3 bytes; callees: none
 //
-void WaveClass::Get_Type()
+void WaveClass::Class_Of()
 {
     ts::sub::sub_00653180();
 }
 
-// WaveClass::vfunc_34 -- ALIAS of AnimClass::vfunc_34 (same machine code at 0x0056eba0); the
+// WaveClass::Get_Ownable -- ALIAS of AnimClass::vfunc_34 (same machine code at 0x0056eba0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_34()
+void WaveClass::Get_Ownable()
 {
     ts::sub::sub_0056eba0();
 }
 
-// WaveClass::vfunc_35 -- ALIAS of AnimClass::vfunc_35 (same machine code at 0x004167e0); the
+// WaveClass::Full_Name -- ALIAS of AnimClass::vfunc_35 (same machine code at 0x004167e0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_35()
+void WaveClass::Full_Name()
 {
     ts::sub::sub_004167e0();
 }
 
-// WaveClass::vfunc_36 -- ALIAS of AnimClass::vfunc_36 (same machine code at 0x0056ebb0); the
+// WaveClass::Can_Repair -- ALIAS of AnimClass::vfunc_36 (same machine code at 0x0056ebb0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_36()
+void WaveClass::Can_Repair()
 {
     ts::sub::sub_0056ebb0();
 }
 
-// WaveClass::vfunc_37 -- ALIAS of AnimClass::vfunc_37 (same machine code at 0x0056ebc0); the
+// WaveClass::Can_Demolish -- ALIAS of AnimClass::vfunc_37 (same machine code at 0x0056ebc0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_37()
+void WaveClass::Can_Demolish()
 {
     ts::sub::sub_0056ebc0();
 }
 
-// WaveClass::vfunc_38 -- ALIAS of AnimClass::vfunc_38 (same machine code at 0x0056ebd0); the
+// WaveClass::Can_Player_Fire -- ALIAS of AnimClass::vfunc_38 (same machine code at 0x0056ebd0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_38()
+void WaveClass::Can_Player_Fire()
 {
     ts::sub::sub_0056ebd0();
 }
 
-// WaveClass::vfunc_39 -- ALIAS of AnimClass::vfunc_39 (same machine code at 0x0056ebe0); the
+// WaveClass::Can_Player_Move -- ALIAS of AnimClass::vfunc_39 (same machine code at 0x0056ebe0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_39()
+void WaveClass::Can_Player_Move()
 {
     ts::sub::sub_0056ebe0();
 }
 
-// WaveClass::vfunc_40 -- ALIAS of AircraftClass::vfunc_40 (same machine code at 0x0040e5d0); the
+// WaveClass::Target_Coord -- ALIAS of AircraftClass::Target_Coord (same machine code at 0x0040e5d0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_40(int a0)
+void WaveClass::Target_Coord(int a0)
 {
     ts::sub::sub_0040e5d0();
 }
 
-// WaveClass::vfunc_41 -- ALIAS of AircraftClass::vfunc_41 (same machine code at 0x0040e600); the
+// WaveClass::Docking_Coord -- ALIAS of AircraftClass::Docking_Coord (same machine code at 0x0040e600); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_41(int a0)
+void WaveClass::Docking_Coord(int a0)
 {
     ts::sub::sub_0040e600();
 }
 
-// WaveClass::vfunc_42 -- ALIAS of AircraftClass::vfunc_42 (same machine code at 0x0040e630); the
+// WaveClass::Render_Coord -- ALIAS of AircraftClass::Render_Coord (same machine code at 0x0040e630); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_42(int a0)
+void WaveClass::Render_Coord(int a0)
 {
     ts::sub::sub_0040e630();
 }
 
-// WaveClass::vfunc_43 -- ALIAS of AnimClass::vfunc_43 (same machine code at 0x004167f0); the
+// WaveClass::Fire_Coord -- ALIAS of AnimClass::vfunc_43 (same machine code at 0x004167f0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_43(int a0, int a1)
+void WaveClass::Fire_Coord(int a0, int a1)
 {
     ts::sub::sub_004167f0();
 }
 
-// WaveClass::vfunc_44 -- ALIAS of AircraftClass::vfunc_44 (same machine code at 0x0040e660); the
+// WaveClass::Exit_Coord -- ALIAS of AircraftClass::Exit_Coord (same machine code at 0x0040e660); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_44(int a0)
+void WaveClass::Exit_Coord(int a0)
 {
     ts::sub::sub_0040e660();
 }
 
-// WaveClass::vfunc_45 -- ALIAS of AircraftClass::vfunc_45 (same machine code at 0x00570ed0); the
+// WaveClass::Sort_Y -- ALIAS of AircraftClass::Sort_Y (same machine code at 0x00570ed0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_45()
+void WaveClass::Sort_Y()
 {
     ts::sub::sub_00570ed0();
 }
 
-// WaveClass::vfunc_46 -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
+// WaveClass::Is_Moving_Onto_Bridge -- ALIAS of AnimClass::vfunc_46 (same machine code at 0x00570db0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_46(int a0, int a1, int a2, int a3)
+void WaveClass::Is_Moving_Onto_Bridge(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_00570db0();
 }
 
-// WaveClass::vfunc_47 -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); the
+// WaveClass::Occupies_Cells -- ALIAS of AnimClass::vfunc_47 (same machine code at 0x00416830); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_47()
+void WaveClass::Occupies_Cells()
 {
     ts::sub::sub_00416830();
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::vfunc_48 -- the body is the canonical transcription of
+// WaveClass::Limbo -- the body is the canonical transcription of
 // 29 instructions at 0x00653250, in src/generated/code/.
 // size 85 bytes; callees: 0x004731a0, 0x004fad70
 //
-void WaveClass::vfunc_48()
+void WaveClass::Limbo()
 {
     ts::sub::sub_00653250();
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::vfunc_49 -- the body is the canonical transcription of
+// WaveClass::Unlimbo -- the body is the canonical transcription of
 // 63 instructions at 0x00653190, in src/generated/code/.
 // size 175 bytes; callees: 0x00473150, 0x004fad40, 0x00502060
 //
-void WaveClass::vfunc_49(int a0, int a1)
+void WaveClass::Unlimbo(int a0, int a1)
 {
     ts::sub::sub_00653190();
 }
 
-// WaveClass::vfunc_50 -- ALIAS of AnimClass::vfunc_50 (same machine code at 0x0056fb40); the
+// WaveClass::Detach_All -- ALIAS of AnimClass::vfunc_50 (same machine code at 0x0056fb40); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_50(int a0)
+void WaveClass::Detach_All(int a0)
 {
     ts::sub::sub_0056fb40();
 }
 
-// WaveClass::vfunc_51 -- ALIAS of AnimClass::vfunc_51 (same machine code at 0x0056ebf0); the
+// WaveClass::Record_The_Kill -- ALIAS of AnimClass::vfunc_51 (same machine code at 0x0056ebf0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_51(int a0)
+void WaveClass::Record_The_Kill(int a0)
 {
     ts::sub::sub_0056ebf0();
 }
 
-// WaveClass::vfunc_52 -- ALIAS of AircraftClass::vfunc_52 (same machine code at 0x005700c0); the
+// WaveClass::Paradrop -- ALIAS of AircraftClass::Paradrop (same machine code at 0x005700c0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_52(int a0)
+void WaveClass::Paradrop(int a0)
 {
     ts::sub::sub_005700c0();
 }
 
-// WaveClass::vfunc_53 -- ALIAS of AircraftClass::vfunc_53 (same machine code at 0x0056ea70); the
+// WaveClass::Fall_From_Height -- ALIAS of AircraftClass::Fall_From_Height (same machine code at 0x0056ea70); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_53(int a0)
+void WaveClass::Fall_From_Height(int a0)
 {
     ts::sub::sub_0056ea70();
 }
 
-// WaveClass::vfunc_54 -- ALIAS of AircraftClass::vfunc_54 (same machine code at 0x00570480); the
+// WaveClass::Set_Occupy_Bit -- ALIAS of AircraftClass::Set_Occupy_Bit (same machine code at 0x00570480); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_54(int a0)
+void WaveClass::Set_Occupy_Bit(int a0)
 {
     ts::sub::sub_00570480();
 }
 
-// WaveClass::vfunc_55 -- ALIAS of AircraftClass::vfunc_55 (same machine code at 0x00570500); the
+// WaveClass::Clear_Occupy_Bit -- ALIAS of AircraftClass::Clear_Occupy_Bit (same machine code at 0x00570500); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_55(int a0)
+void WaveClass::Clear_Occupy_Bit(int a0)
 {
     ts::sub::sub_00570500();
 }
 
-// WaveClass::vfunc_56 -- ALIAS of BuildingClass::vfunc_56 (same machine code at 0x005709b0); the
+// WaveClass::Delete_Me -- ALIAS of BuildingClass::Delete_Me (same machine code at 0x005709b0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_56()
+void WaveClass::Delete_Me()
 {
     ts::sub::sub_005709b0();
 }
 
-// WaveClass::vfunc_57 -- ALIAS of AnimClass::vfunc_57 (same machine code at 0x0056ec00); the
+// WaveClass::Do_Shimmer -- ALIAS of AnimClass::vfunc_57 (same machine code at 0x0056ec00); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_57()
+void WaveClass::Do_Shimmer()
 {
     ts::sub::sub_0056ec00();
 }
 
-// WaveClass::vfunc_58 -- ALIAS of AnimClass::vfunc_58 (same machine code at 0x0056ec10); the
+// WaveClass::Exit_Object -- ALIAS of AnimClass::vfunc_58 (same machine code at 0x0056ec10); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_58(int a0)
+void WaveClass::Exit_Object(int a0)
 {
     ts::sub::sub_0056ec10();
 }
 
-// WaveClass::vfunc_59 -- ALIAS of AircraftClass::vfunc_59 (same machine code at 0x0056f480); the
+// WaveClass::Render -- ALIAS of AircraftClass::Render (same machine code at 0x0056f480); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_59(int a0, int a1, int a2)
+void WaveClass::Render(int a0, int a1, int a2)
 {
     ts::sub::sub_0056f480();
 }
 
-// WaveClass::vfunc_60 -- ALIAS of AircraftClass::vfunc_60 (same machine code at 0x005701b0); the
+// WaveClass::Occupy_List -- ALIAS of AircraftClass::Occupy_List (same machine code at 0x005701b0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_60(int a0)
+void WaveClass::Occupy_List(int a0)
 {
     ts::sub::sub_005701b0();
 }
 
-// WaveClass::vfunc_61 -- ALIAS of AnimClass::vfunc_61 (same machine code at 0x00416840); the
+// WaveClass::Draw_Pre_Render -- ALIAS of AnimClass::vfunc_61 (same machine code at 0x00416840); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_61(int a0, int a1)
+void WaveClass::Draw_Pre_Render(int a0, int a1)
 {
     ts::sub::sub_00416840();
 }
 
-// WaveClass::vfunc_62 -- ALIAS of AnimClass::vfunc_62 (same machine code at 0x00416850); the
+// WaveClass::Draw_Post_Render -- ALIAS of AnimClass::vfunc_62 (same machine code at 0x00416850); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_62(int a0, int a1)
+void WaveClass::Draw_Post_Render(int a0, int a1)
 {
     ts::sub::sub_00416850();
 }
 
 // -------------------------------------------------------------------------
-// WaveClass::vfunc_63 -- the body is the canonical transcription of
+// WaveClass::Draw_It -- the body is the canonical transcription of
 // 32 instructions at 0x006532b0, in src/generated/code/.
 // size 86 bytes; callees: 0x0051e760, 0x00653a00
 //
-void WaveClass::vfunc_63(int a0, int a1)
+void WaveClass::Draw_It(int a0, int a1)
 {
     ts::sub::sub_006532b0();
 }
 
-// WaveClass::vfunc_64 -- ALIAS of AircraftClass::vfunc_64 (same machine code at 0x00570990); the
+// WaveClass::Editor_Draw_It -- ALIAS of AircraftClass::Editor_Draw_It (same machine code at 0x00570990); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_64(int a0, int a1)
+void WaveClass::Editor_Draw_It(int a0, int a1)
 {
     ts::sub::sub_00570990();
 }
 
-// WaveClass::vfunc_65 -- ALIAS of AnimClass::vfunc_65 (same machine code at 0x0056ec20); the
+// WaveClass::Hidden -- ALIAS of AnimClass::vfunc_65 (same machine code at 0x0056ec20); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_65()
+void WaveClass::Hidden()
 {
     ts::sub::sub_0056ec20();
 }
 
-// WaveClass::vfunc_66 -- ALIAS of AnimClass::vfunc_66 (same machine code at 0x0056ec30); the
+// WaveClass::Look -- ALIAS of AnimClass::vfunc_66 (same machine code at 0x0056ec30); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_66(int a0, int a1)
+void WaveClass::Look(int a0, int a1)
 {
     ts::sub::sub_0056ec30();
 }
 
-// WaveClass::vfunc_67 -- ALIAS of BuildingLightClass::vfunc_67 (same machine code at 0x00570000); the
+// WaveClass::Mark -- ALIAS of BuildingLightClass::Mark (same machine code at 0x00570000); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_67(int a0)
+void WaveClass::Mark(int a0)
 {
     ts::sub::sub_00570000();
 }
 
-// WaveClass::vfunc_68 -- ALIAS of AircraftClass::vfunc_68 (same machine code at 0x0056f000); the
+// WaveClass::Get_Visual_Rect -- ALIAS of AircraftClass::Get_Visual_Rect (same machine code at 0x0056f000); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_68(int a0)
+void WaveClass::Get_Visual_Rect(int a0)
 {
     ts::sub::sub_0056f000();
 }
 
-// WaveClass::vfunc_69 -- ALIAS of AircraftClass::vfunc_69 (same machine code at 0x0056f160); the
+// WaveClass::Get_Render_Rect -- ALIAS of AircraftClass::Get_Render_Rect (same machine code at 0x0056f160); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_69(int a0)
+void WaveClass::Get_Render_Rect(int a0)
 {
     ts::sub::sub_0056f160();
 }
 
-// WaveClass::vfunc_70 -- ALIAS of AircraftClass::vfunc_70 (same machine code at 0x0040e690); the
+// WaveClass::Draw_Radial_Indicator -- ALIAS of AircraftClass::Draw_Radial_Indicator (same machine code at 0x0040e690); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_70()
+void WaveClass::Draw_Radial_Indicator()
 {
     ts::sub::sub_0040e690();
 }
 
-// WaveClass::vfunc_71 -- ALIAS of AircraftClass::vfunc_71 (same machine code at 0x0056f680); the
+// WaveClass::Mark_For_Redraw -- ALIAS of AircraftClass::Mark_For_Redraw (same machine code at 0x0056f680); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_71()
+void WaveClass::Mark_For_Redraw()
 {
     ts::sub::sub_0056f680();
 }
 
-// WaveClass::vfunc_72 -- ALIAS of AnimClass::vfunc_72 (same machine code at 0x0056ec50); the
+// WaveClass::Active_Click_With -- ALIAS of AnimClass::vfunc_72 (same machine code at 0x0056ec50); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_72(int a0, int a1, int a2)
+void WaveClass::Active_Click_With(int a0, int a1, int a2)
 {
     ts::sub::sub_0056ec50();
 }
@@ -566,219 +566,219 @@ void WaveClass::vfunc_73(int a0, int a1, int a2)
     ts::sub::sub_0056ec40();
 }
 
-// WaveClass::vfunc_74 -- ALIAS of AnimClass::vfunc_74 (same machine code at 0x0056ec60); the
+// WaveClass::Clicked_As_Target -- ALIAS of AnimClass::vfunc_74 (same machine code at 0x0056ec60); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_74(int a0)
+void WaveClass::Clicked_As_Target(int a0)
 {
     ts::sub::sub_0056ec60();
 }
 
-// WaveClass::vfunc_75 -- ALIAS of AnimClass::vfunc_75 (same machine code at 0x0056ee20); the
+// WaveClass::Select -- ALIAS of AnimClass::vfunc_75 (same machine code at 0x0056ee20); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_75()
+void WaveClass::Select()
 {
     ts::sub::sub_0056ee20();
 }
 
-// WaveClass::vfunc_76 -- ALIAS of AircraftClass::vfunc_76 (same machine code at 0x0056eda0); the
+// WaveClass::Unselect -- ALIAS of AircraftClass::Unselect (same machine code at 0x0056eda0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_76(int a0)
+void WaveClass::Unselect(int a0)
 {
     ts::sub::sub_0056eda0();
 }
 
-// WaveClass::vfunc_77 -- ALIAS of AnimClass::vfunc_77 (same machine code at 0x0056ec70); the
+// WaveClass::In_Range -- ALIAS of AnimClass::vfunc_77 (same machine code at 0x0056ec70); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_77(int a0, int a1)
+void WaveClass::In_Range(int a0, int a1)
 {
     ts::sub::sub_0056ec70();
 }
 
-// WaveClass::vfunc_78 -- ALIAS of AnimClass::vfunc_78 (same machine code at 0x0056ec80); the
+// WaveClass::Weapon_Range -- ALIAS of AnimClass::vfunc_78 (same machine code at 0x0056ec80); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_78(int a0)
+void WaveClass::Weapon_Range(int a0)
 {
     ts::sub::sub_0056ec80();
 }
 
-// WaveClass::vfunc_79 -- ALIAS of AnimClass::vfunc_79 (same machine code at 0x0056fbe0); the
+// WaveClass::Take_Damage -- ALIAS of AnimClass::vfunc_79 (same machine code at 0x0056fbe0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_79(int a0, int a1, int a2, int a3, int a4, int a5)
+void WaveClass::Take_Damage(int a0, int a1, int a2, int a3, int a4, int a5)
 {
     ts::sub::sub_0056fbe0();
 }
 
-// WaveClass::vfunc_80 -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); the
+// WaveClass::Scatter -- ALIAS of AnimClass::vfunc_80 (same machine code at 0x0056ec90); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_80(int a0, int a1, int a2)
+void WaveClass::Scatter(int a0, int a1, int a2)
 {
     ts::sub::sub_0056ec90();
 }
 
-// WaveClass::vfunc_81 -- ALIAS of AircraftClass::vfunc_81 (same machine code at 0x0056eca0); the
+// WaveClass::Catch_Fire -- ALIAS of AircraftClass::Catch_Fire (same machine code at 0x0056eca0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_81()
+void WaveClass::Catch_Fire()
 {
     ts::sub::sub_0056eca0();
 }
 
-// WaveClass::vfunc_82 -- ALIAS of AircraftClass::vfunc_82 (same machine code at 0x0056ecb0); the
+// WaveClass::Fire_Out -- ALIAS of AircraftClass::Fire_Out (same machine code at 0x0056ecb0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_82()
+void WaveClass::Fire_Out()
 {
     ts::sub::sub_0056ecb0();
 }
 
-// WaveClass::vfunc_83 -- ALIAS of AnimClass::vfunc_83 (same machine code at 0x0056ecc0); the
+// WaveClass::Value -- ALIAS of AnimClass::vfunc_83 (same machine code at 0x0056ecc0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_83()
+void WaveClass::Value()
 {
     ts::sub::sub_0056ecc0();
 }
 
-// WaveClass::vfunc_84 -- ALIAS of AnimClass::vfunc_84 (same machine code at 0x0056ecd0); the
+// WaveClass::Get_Mission -- ALIAS of AnimClass::vfunc_84 (same machine code at 0x0056ecd0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_84()
+void WaveClass::Get_Mission()
 {
     ts::sub::sub_0056ecd0();
 }
 
-// WaveClass::vfunc_85 -- ALIAS of AnimClass::vfunc_85 (same machine code at 0x00416860); the
+// WaveClass::Assign_Mission -- ALIAS of AnimClass::vfunc_85 (same machine code at 0x00416860); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_85(int a0)
+void WaveClass::Assign_Mission(int a0)
 {
     ts::sub::sub_00416860();
 }
 
-// WaveClass::vfunc_86 -- ALIAS of AnimClass::vfunc_86 (same machine code at 0x00416870); the
+// WaveClass::Per_Cell_Process -- ALIAS of AnimClass::vfunc_86 (same machine code at 0x00416870); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_86(int a0)
+void WaveClass::Per_Cell_Process(int a0)
 {
     ts::sub::sub_00416870();
 }
 
-// WaveClass::vfunc_87 -- ALIAS of AircraftClass::vfunc_87 (same machine code at 0x00570240); the
+// WaveClass::Who_Can_Build_Me -- ALIAS of AircraftClass::Who_Can_Build_Me (same machine code at 0x00570240); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_87(int a0, int a1)
+void WaveClass::Who_Can_Build_Me(int a0, int a1)
 {
     ts::sub::sub_00570240();
 }
 
-// WaveClass::vfunc_88 -- ALIAS of AnimClass::vfunc_88 (same machine code at 0x0056fbc0); the
+// WaveClass::Receive_Message -- ALIAS of AnimClass::vfunc_88 (same machine code at 0x0056fbc0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_88(int a0, int a1, int a2)
+void WaveClass::Receive_Message(int a0, int a1, int a2)
 {
     ts::sub::sub_0056fbc0();
 }
 
-// WaveClass::vfunc_89 -- ALIAS of AnimClass::vfunc_89 (same machine code at 0x005700b0); the
+// WaveClass::Revealed -- ALIAS of AnimClass::vfunc_89 (same machine code at 0x005700b0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_89(int a0)
+void WaveClass::Revealed(int a0)
 {
     ts::sub::sub_005700b0();
 }
 
-// WaveClass::vfunc_90 -- ALIAS of AircraftClass::vfunc_90 (same machine code at 0x0056ece0); the
+// WaveClass::Repair -- ALIAS of AircraftClass::Repair (same machine code at 0x0056ece0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_90(int a0)
+void WaveClass::Repair(int a0)
 {
     ts::sub::sub_0056ece0();
 }
 
-// WaveClass::vfunc_91 -- ALIAS of AnimClass::vfunc_91 (same machine code at 0x0056ecf0); the
+// WaveClass::Sell_Back -- ALIAS of AnimClass::vfunc_91 (same machine code at 0x0056ecf0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_91(int a0)
+void WaveClass::Sell_Back(int a0)
 {
     ts::sub::sub_0056ecf0();
 }
 
-// WaveClass::vfunc_92 -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); the
+// WaveClass::Set_Waypoint_Path -- ALIAS of AnimClass::vfunc_92 (same machine code at 0x00570e70); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_92(int a0, int a1)
+void WaveClass::Set_Waypoint_Path(int a0, int a1)
 {
     ts::sub::sub_00570e70();
 }
 
-// WaveClass::vfunc_93 -- ALIAS of AircraftClass::vfunc_93 (same machine code at 0x0056ed00); the
+// WaveClass::Move -- ALIAS of AircraftClass::Move (same machine code at 0x0056ed00); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_93(int a0)
+void WaveClass::Move(int a0)
 {
     ts::sub::sub_0056ed00();
 }
 
-// WaveClass::vfunc_94 -- ALIAS of AnimClass::vfunc_94 (same machine code at 0x00416880); the
+// WaveClass::Can_Enter_Cell -- ALIAS of AnimClass::vfunc_94 (same machine code at 0x00416880); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_94(int a0, int a1, int a2, int a3, int a4)
+void WaveClass::Can_Enter_Cell(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00416880();
 }
 
-// WaveClass::vfunc_95 -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); the
+// WaveClass::Can_Reach -- ALIAS of AnimClass::vfunc_95 (same machine code at 0x00416890); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_95(int a0, int a1, int a2, int a3, int a4)
+void WaveClass::Can_Reach(int a0, int a1, int a2, int a3, int a4)
 {
     ts::sub::sub_00416890();
 }
 
-// WaveClass::vfunc_96 -- ALIAS of AircraftClass::vfunc_96 (same machine code at 0x0040e6a0); the
+// WaveClass::Get_Coord -- ALIAS of AircraftClass::Get_Coord (same machine code at 0x0040e6a0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_96(int a0)
+void WaveClass::Get_Coord(int a0)
 {
     ts::sub::sub_0040e6a0();
 }
 
-// WaveClass::vfunc_97 -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); the
+// WaveClass::Set_Coord -- ALIAS of AnimClass::vfunc_97 (same machine code at 0x00570cc0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_97(int a0)
+void WaveClass::Set_Coord(int a0)
 {
     ts::sub::sub_00570cc0();
 }
 
-// WaveClass::vfunc_98 -- ALIAS of AircraftClass::vfunc_98 (same machine code at 0x0040e6c0); the
+// WaveClass::Get_Cell -- ALIAS of AircraftClass::Get_Cell (same machine code at 0x0040e6c0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_98(int a0)
+void WaveClass::Get_Cell(int a0)
 {
     ts::sub::sub_0040e6c0();
 }
 
-// WaveClass::vfunc_99 -- ALIAS of AircraftClass::vfunc_99 (same machine code at 0x00570ce0); the
+// WaveClass::Get_Cell_Ptr -- ALIAS of AircraftClass::Get_Cell_Ptr (same machine code at 0x00570ce0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_99()
+void WaveClass::Get_Cell_Ptr()
 {
     ts::sub::sub_00570ce0();
 }
 
-// WaveClass::vfunc_100 -- ALIAS of AircraftClass::vfunc_100 (same machine code at 0x00570d00); the
+// WaveClass::Get_Target_Cell -- ALIAS of AircraftClass::Get_Target_Cell (same machine code at 0x00570d00); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_100(int a0)
+void WaveClass::Get_Target_Cell(int a0)
 {
     ts::sub::sub_00570d00();
 }
 
-// WaveClass::vfunc_101 -- ALIAS of AircraftClass::vfunc_101 (same machine code at 0x00570d50); the
+// WaveClass::Get_Target_Cell_Ptr -- ALIAS of AircraftClass::Get_Target_Cell_Ptr (same machine code at 0x00570d50); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_101(int a0)
+void WaveClass::Get_Target_Cell_Ptr(int a0)
 {
     ts::sub::sub_00570d50();
 }
 
-// WaveClass::vfunc_102 -- ALIAS of AircraftClass::vfunc_102 (same machine code at 0x00570370); the
+// WaveClass::Get_Height_AGL -- ALIAS of AircraftClass::Get_Height_AGL (same machine code at 0x00570370); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_102()
+void WaveClass::Get_Height_AGL()
 {
     ts::sub::sub_00570370();
 }
 
-// WaveClass::vfunc_103 -- ALIAS of AircraftClass::vfunc_103 (same machine code at 0x005703b0); the
+// WaveClass::Set_Height_AGL -- ALIAS of AircraftClass::Set_Height_AGL (same machine code at 0x005703b0); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_103(int a0)
+void WaveClass::Set_Height_AGL(int a0)
 {
     ts::sub::sub_005703b0();
 }
 
-// WaveClass::vfunc_104 -- ALIAS of AircraftClass::vfunc_104 (same machine code at 0x00570360); the
+// WaveClass::Get_Height -- ALIAS of AircraftClass::Get_Height (same machine code at 0x00570360); the
 // forwarder is written once, at that declaration.
-void WaveClass::vfunc_104()
+void WaveClass::Get_Height()
 {
     ts::sub::sub_00570360();
 }

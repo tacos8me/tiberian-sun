@@ -82,152 +82,152 @@ void TextButtonClass::vfunc_9()
     ts::sub::sub_004a5ae0();
 }
 
-// TextButtonClass::vfunc_10 -- ALIAS of CheckListClass::vfunc_10 (same machine code at 0x004a5be0); the
+// TextButtonClass::Input -- ALIAS of CheckListClass::Input (same machine code at 0x004a5be0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_10(int a0, int a1)
+void TextButtonClass::Input(int a0, int a1)
 {
     ts::sub::sub_004a5be0();
 }
 
-// TextButtonClass::vfunc_11 -- ALIAS of CheckListClass::vfunc_11 (same machine code at 0x004a5bb0); the
+// TextButtonClass::Draw_All -- ALIAS of CheckListClass::Draw_All (same machine code at 0x004a5bb0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_11(int a0)
+void TextButtonClass::Draw_All(int a0)
 {
     ts::sub::sub_004a5bb0();
 }
 
-// TextButtonClass::vfunc_12 -- ALIAS of CheckListClass::vfunc_12 (same machine code at 0x004a5b20); the
+// TextButtonClass::Delete_List -- ALIAS of CheckListClass::Delete_List (same machine code at 0x004a5b20); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_12()
+void TextButtonClass::Delete_List()
 {
     ts::sub::sub_004a5b20();
 }
 
-// TextButtonClass::vfunc_13 -- ALIAS of CheckListClass::vfunc_13 (same machine code at 0x004a5de0); the
+// TextButtonClass::Extract_Gadget -- ALIAS of CheckListClass::Extract_Gadget (same machine code at 0x004a5de0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_13(int a0)
+void TextButtonClass::Extract_Gadget(int a0)
 {
     ts::sub::sub_004a5de0();
 }
 
-// TextButtonClass::vfunc_14 -- ALIAS of CheckListClass::vfunc_14 (same machine code at 0x0045afe0); the
+// TextButtonClass::Flag_List_To_Redraw -- ALIAS of CheckListClass::Flag_List_To_Redraw (same machine code at 0x0045afe0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_14()
+void TextButtonClass::Flag_List_To_Redraw()
 {
     ts::sub::sub_0045afe0();
 }
 
-// TextButtonClass::vfunc_15 -- ALIAS of CheckListClass::vfunc_15 (same machine code at 0x004a5ad0); the
+// TextButtonClass::Disable -- ALIAS of CheckListClass::Disable (same machine code at 0x004a5ad0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_15()
+void TextButtonClass::Disable()
 {
     ts::sub::sub_004a5ad0();
 }
 
-// TextButtonClass::vfunc_16 -- ALIAS of CheckListClass::vfunc_16 (same machine code at 0x004a5ac0); the
+// TextButtonClass::Enable -- ALIAS of CheckListClass::Enable (same machine code at 0x004a5ac0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_16()
+void TextButtonClass::Enable()
 {
     ts::sub::sub_004a5ac0();
 }
 
-// TextButtonClass::vfunc_17 -- ALIAS of CheckListClass::vfunc_17 (same machine code at 0x00460610); the
+// TextButtonClass::Get_ID -- ALIAS of CheckListClass::Get_ID (same machine code at 0x00460610); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_17()
+void TextButtonClass::Get_ID()
 {
     ts::sub::sub_00460610();
 }
 
-// TextButtonClass::vfunc_18 -- ALIAS of ControlClass::vfunc_18 (same machine code at 0x004a5e20); the
+// TextButtonClass::Flag_To_Redraw -- ALIAS of ControlClass::Flag_To_Redraw (same machine code at 0x004a5e20); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_18()
+void TextButtonClass::Flag_To_Redraw()
 {
     ts::sub::sub_004a5e20();
 }
 
-// TextButtonClass::vfunc_19 -- ALIAS of ControlClass::vfunc_19 (same machine code at 0x00460650); the
+// TextButtonClass::Peer_To_Peer -- ALIAS of ControlClass::Peer_To_Peer (same machine code at 0x00460650); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_19(int a0, int a1, int a2)
+void TextButtonClass::Peer_To_Peer(int a0, int a1, int a2)
 {
     ts::sub::sub_00460650();
 }
 
-// TextButtonClass::vfunc_20 -- ALIAS of CheckListClass::vfunc_20 (same machine code at 0x004a5e60); the
+// TextButtonClass::Set_Focus -- ALIAS of CheckListClass::Set_Focus (same machine code at 0x004a5e60); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_20()
+void TextButtonClass::Set_Focus()
 {
     ts::sub::sub_004a5e60();
 }
 
-// TextButtonClass::vfunc_21 -- ALIAS of CheckListClass::vfunc_21 (same machine code at 0x004a5e90); the
+// TextButtonClass::Clear_Focus -- ALIAS of CheckListClass::Clear_Focus (same machine code at 0x004a5e90); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_21()
+void TextButtonClass::Clear_Focus()
 {
     ts::sub::sub_004a5e90();
 }
 
-// TextButtonClass::vfunc_22 -- ALIAS of CheckListClass::vfunc_22 (same machine code at 0x004a5eb0); the
+// TextButtonClass::Has_Focus -- ALIAS of CheckListClass::Has_Focus (same machine code at 0x004a5eb0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_22()
+void TextButtonClass::Has_Focus()
 {
     ts::sub::sub_004a5eb0();
 }
 
-// TextButtonClass::vfunc_23 -- ALIAS of CheckListClass::vfunc_23 (same machine code at 0x004a5ec0); the
+// TextButtonClass::Is_List_To_Redraw -- ALIAS of CheckListClass::Is_List_To_Redraw (same machine code at 0x004a5ec0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_23()
+void TextButtonClass::Is_List_To_Redraw()
 {
     ts::sub::sub_004a5ec0();
 }
 
-// TextButtonClass::vfunc_24 -- ALIAS of CheckListClass::vfunc_24 (same machine code at 0x0045aff0); the
+// TextButtonClass::Is_To_Redraw -- ALIAS of CheckListClass::Is_To_Redraw (same machine code at 0x0045aff0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_24()
+void TextButtonClass::Is_To_Redraw()
 {
     ts::sub::sub_0045aff0();
 }
 
-// TextButtonClass::vfunc_25 -- ALIAS of ControlClass::vfunc_25 (same machine code at 0x004a5ee0); the
+// TextButtonClass::Set_Position -- ALIAS of ControlClass::Set_Position (same machine code at 0x004a5ee0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_25(int a0, int a1)
+void TextButtonClass::Set_Position(int a0, int a1)
 {
     ts::sub::sub_004a5ee0();
 }
 
-// TextButtonClass::vfunc_26 -- ALIAS of CheckListClass::vfunc_26 (same machine code at 0x004a5f00); the
+// TextButtonClass::Set_Size -- ALIAS of CheckListClass::Set_Size (same machine code at 0x004a5f00); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_26(int a0, int a1)
+void TextButtonClass::Set_Size(int a0, int a1)
 {
     ts::sub::sub_004a5f00();
 }
 
 // -------------------------------------------------------------------------
-// TextButtonClass::vfunc_27 -- the body is the canonical transcription of
+// TextButtonClass::Draw_Me -- the body is the canonical transcription of
 // 18 instructions at 0x00626e70, in src/generated/code/.
 // size 50 bytes; callees: 0x00460620
 //
-void TextButtonClass::vfunc_27(int a0)
+void TextButtonClass::Draw_Me(int a0)
 {
     ts::sub::sub_00626e70();
 }
 
-// TextButtonClass::vfunc_28 -- ALIAS of CheckListClass::vfunc_28 (same machine code at 0x004a5e30); the
+// TextButtonClass::Sticky_Process -- ALIAS of CheckListClass::Sticky_Process (same machine code at 0x004a5e30); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_28(int a0)
+void TextButtonClass::Sticky_Process(int a0)
 {
     ts::sub::sub_004a5e30();
 }
 
-// TextButtonClass::vfunc_29 -- ALIAS of MyButton::vfunc_29 (same machine code at 0x0062a8c0); the
+// TextButtonClass::Action -- ALIAS of MyButton::Action (same machine code at 0x0062a8c0); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_29(int a0)
+void TextButtonClass::Action(int a0)
 {
     ts::sub::sub_0062a8c0();
 }
 
-// TextButtonClass::vfunc_30 -- ALIAS of CheckListClass::vfunc_30 (same machine code at 0x004a5a60); the
+// TextButtonClass::Clicked_On -- ALIAS of CheckListClass::Clicked_On (same machine code at 0x004a5a60); the
 // forwarder is written once, at that declaration.
-void TextButtonClass::vfunc_30(int a0, int a1, int a2, int a3)
+void TextButtonClass::Clicked_On(int a0, int a1, int a2, int a3)
 {
     ts::sub::sub_004a5a60();
 }
