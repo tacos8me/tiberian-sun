@@ -350,6 +350,13 @@ TS_RET(GetProcessHeap, 0, 0x00010000u)
 
 TS_BEGIN(HeapAlloc)
     u32 size = arg(2);
+    // A size this large is never a real request: it is a length the caller
+    // computed from data it did not get (a failed stream read leaves the
+    // stack slot it was read from uninitialised). Naming it here turns the
+    // model's page-table exhaustion into the value that caused it.
+    if (std::getenv("TS_FILE_TRACE") && size > 0x08000000u)
+        std::fprintf(stderr, "win32stubs: HeapAlloc(size=0x%08x) -- implausible "
+                             "allocation, step %lu\n", size, mach().steps);
     u32 p = alloc_block(size, 8u);
     st32(p, size);
     u32 q = p + 16u;
@@ -2597,6 +2604,22 @@ inline u32 make_dd_clipper() {
 // Encrypt/Decrypt are honest copies for now: the model has no Blowfish cipher,
 // and a caller that decrypts with this gets its input back rather than a crash
 // or a plausible-looking wrong plaintext. They say so once, by name.
+//
+// MEASURED CONSEQUENCE -- this is the blocker after the message queue. Once
+// WM_ACTIVATEAPP is delivered, the game reaches TIBSUN.MIX's index:
+//
+//   step 1881678  IBlowfish::SetKey(56, key=82060323...)  from 0x423404
+//   step 1881870  ReadFile(8) at MIX offset 84
+//   step 1881940  IBlowfish::Decrypt(8, src=2ce3171b...)  from 0x423469
+//   step 1882051  HeapAlloc(0xfffea610)                   from 0x68511c
+//
+// The key the game computes with its own RSA code is byte-for-byte the key
+// tools/mix.py derives from the same 80-byte block, and decrypting the first
+// index block with it gives count=17, body=75,094,416 -- a valid index. The
+// identity copy leaves the ciphertext, so the PKStraw (vtable 0x6a3270) read
+// returns 0; FUN_00547290 then reads a 6-byte header from the uninitialised
+// stack (count=0xe32c), and operator_new(-88560) wraps to a 4 GB allocation.
+// Implementing Blowfish-ECB in slots 6/7 is what unblocks the next stage.
 inline u8 *blowfish_key() { static u8 k[56]; return k; }
 inline u32 &blowfish_key_len() { static u32 n = 0; return n; }
 

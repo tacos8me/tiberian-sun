@@ -23,6 +23,8 @@ adding one: if it cannot fail, it is not worth the runtime.
   Machine boot regressions -- call_ptr balance, rep ECX, jmp_indirect, maps
   gen_code tails          -- cross-function tail targets are found
   Win32 module exports    -- handles name modules, CoCreateInstance writes *ppv
+  Win32 message queue     -- WM_ACTIVATEAPP was never queued, so PeekMessageA
+                             returned 0 forever and DispatchMessageA never ran
 
 Usage:
   python3 tools/test_tools.py
