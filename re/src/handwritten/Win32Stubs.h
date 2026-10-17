@@ -2393,11 +2393,11 @@ TS_BEGIN(DirectDrawCreate)
     stub_done(3, 0u);   // DD_OK
 TS_END
 
-TS_BEGIN(dsound_ord_2147483649)   // DirectSoundCreate
+TS_ORD_BEGIN(dsound_ord_2147483649, "DSOUND", 0x80000001u)   // DirectSoundCreate
     u32 out = arg(1);
     if (out) st32(out, make_directdraw());
-    stub_done(3, 0u);   // DS_OK
-TS_END
+    stub_done_for("DSOUND", ord, 0u);   // DS_OK
+TS_ORD_END
 
 // the import table
 //
@@ -3052,11 +3052,20 @@ inline void register_impl() {
     registered() = true;
     unsigned n = 0;
     const ImportDef *t = imports(&n);
+    unsigned generic = 0;
     for (unsigned i = 0; i < n; ++i) {
         u32 va = alloc_stub_va();
         stub_vas()[i] = va;
         ts_register(va, t[i].real ? t[i].real : idx_stub_fn(i));
+        if (!t[i].real) ++generic;
     }
+    // One line, once, at the moment the table is bound: how much of the import
+    // layer is a real body and how much is a stub that only keeps the caller
+    // alive. Each generic import also names itself on first call; this is the
+    // count a reader needs before the first call happens.
+    std::printf("win32stubs: %u imports registered: %u with a body, %u generic "
+                "(a generic stub pops its table's arguments, returns its row's "
+                "value, and says so on first call)\n", n, n - generic, generic);
 }
 
 inline u32 stub_va_impl(const char *dll, const char *fn) {
@@ -3137,6 +3146,13 @@ inline void stub_report() {
                     d.known_arity ? "argument count from the import table"
                                   : "ARGUMENT COUNT UNKNOWN: stack unbalanced");
     }
+    // The generic rows by name. They are correct about the stack and about the
+    // return value, and they are still unimplemented: a reader asking "what does
+    // this model not do yet" should not have to call them all to find out.
+    for (unsigned i = 0; i < n; ++i)
+        if (!t[i].real)
+            std::printf("  GENERIC   %s!%s (%u argument word(s))\n",
+                        t[i].dll, t[i].fn, (unsigned)t[i].nargs);
     // COM methods are not imports, so the ones served by a generic slot stub
     // are reported from the slot table: a DirectDraw wrapper's Blt, Flip and
     // Unlock calls land there, and a DirectDraw phase needs to see them by

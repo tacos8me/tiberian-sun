@@ -18,6 +18,7 @@ It reads the import directory straight out of bin/GAME.EXE, so a name that is
 not in the binary cannot appear in the table.
 """
 
+import os
 import re
 import struct
 import sys
@@ -429,6 +430,77 @@ def derive_ordinals():
                 loaded = {}
     return slots, found
 
+# The stub-stack probe. Every stub is driven directly with a known stack: push
+# the number of argument words its table row claims, push a return address,
+# call it, and check ESP came back to exactly where it started. A stub that pops
+# the wrong number leaves ESP four bytes per argument away from where the caller
+# expects it, and the caller then reads its own locals off by that much -- the
+# failure is silent and shows up hundreds of instructions later as a wrong
+# branch. This is the one check that makes the import layer's stack discipline
+# a measurement rather than a claim.
+STACK_PROBE = r"""
+#include <cstdio>
+#include "Image.h"
+
+namespace ts {
+int stubcheck() {
+    reset();
+    if (!load_image("bin/GAME.EXE")) { std::printf("load failed\n"); return 2; }
+    resolve_imports();
+    unsigned n = 0;
+    const w32::ImportDef *t = w32::imports(&n);
+    unsigned bad = 0, checked = 0, unresolved = 0;
+    for (unsigned i = 0; i < n; ++i) {
+        u32 va = stub_va(t[i].dll, t[i].fn);
+        if (!va) { ++unresolved; continue; }
+        const u32 base = 0x002f0000u;
+        ESP.d = base;
+        for (unsigned k = 0; k < t[i].nargs; ++k) push32(0u);
+        ts_call_ptr(va, 0xdeadbeefu);
+        ++checked;
+        if (ESP.d != base) {
+            ++bad;
+            std::printf("IMBALANCE %s!%s nargs=%u: esp 0x%08x -> 0x%08x (%+d bytes)\n",
+                        t[i].dll, t[i].fn, (unsigned)t[i].nargs, base, ESP.d,
+                        (int)(ESP.d - base));
+        }
+    }
+    std::printf("stub stack check: %u stubs driven, %u unresolved, %u imbalanced; "
+                "%lu fallback calls, %lu resolutions with an unknown argument "
+                "count\n", checked, unresolved, bad, w32::state().fallbacks,
+                w32::state().unbalanced_at_resolution);
+    return bad || unresolved ? 1 : 0;
+}
+}  // namespace ts
+
+int main() { return ts::stubcheck(); }
+"""
+
+
+def stack_check():
+    """Compile and run the stub-stack probe at the target ABI."""
+    import subprocess
+    import tempfile
+    d = tempfile.mkdtemp(prefix="stubcheck.")
+    src = os.path.join(d, "stubcheck.cpp")
+    exe = os.path.join(d, "stubcheck")
+    open(src, "w").write(STACK_PROBE)
+    cc = ["g++", "-std=c++03", "-m32", "-Isrc/include", "-Isrc/generated",
+          "-Ibuild/shim", "-o", exe, src]
+    r = subprocess.run(cc, capture_output=True, text=True)
+    if r.returncode:
+        print(r.stdout + r.stderr)
+        print("stack check: cannot compile the probe at -m32")
+        return 2
+    # The probe drives every stub with dummy arguments, so a stub that prints a
+    # string prints whatever is at address 0. Decode tolerantly: the only lines
+    # that matter are this check's own.
+    r = subprocess.run([exe], capture_output=True, cwd=os.getcwd())
+    for line in r.stdout.decode("latin1").splitlines():
+        if line.startswith(("IMBALANCE", "stub stack check", "load failed")):
+            print(line)
+    return r.returncode
+
 
 def evidence():
     """Print how each ordinal's argument count was obtained; fail on a lie."""
@@ -747,11 +819,20 @@ inline void register_impl() {
     registered() = true;
     unsigned n = 0;
     const ImportDef *t = imports(&n);
+    unsigned generic = 0;
     for (unsigned i = 0; i < n; ++i) {
         u32 va = alloc_stub_va();
         stub_vas()[i] = va;
         ts_register(va, t[i].real ? t[i].real : idx_stub_fn(i));
+        if (!t[i].real) ++generic;
     }
+    // One line, once, at the moment the table is bound: how much of the import
+    // layer is a real body and how much is a stub that only keeps the caller
+    // alive. Each generic import also names itself on first call; this is the
+    // count a reader needs before the first call happens.
+    std::printf("win32stubs: %u imports registered: %u with a body, %u generic "
+                "(a generic stub pops its table's arguments, returns its row's "
+                "value, and says so on first call)\\n", n, n - generic, generic);
 }
 
 inline u32 stub_va_impl(const char *dll, const char *fn) {
@@ -832,6 +913,13 @@ inline void stub_report() {
                     d.known_arity ? "argument count from the import table"
                                   : "ARGUMENT COUNT UNKNOWN: stack unbalanced");
     }
+    // The generic rows by name. They are correct about the stack and about the
+    // return value, and they are still unimplemented: a reader asking "what does
+    // this model not do yet" should not have to call them all to find out.
+    for (unsigned i = 0; i < n; ++i)
+        if (!t[i].real)
+            std::printf("  GENERIC   %s!%s (%u argument word(s))\\n",
+                        t[i].dll, t[i].fn, (unsigned)t[i].nargs);
     // COM methods are not imports, so the ones served by a generic slot stub
     // are reported from the slot table: a DirectDraw wrapper's Blt, Flip and
     // Unlock calls land there, and a DirectDraw phase needs to see them by
@@ -856,4 +944,6 @@ inline void stub_report() {
 if __name__ == "__main__":
     if "--evidence" in sys.argv[1:]:
         sys.exit(evidence())
+    if "--stack-check" in sys.argv[1:]:
+        sys.exit(stack_check())
     sys.exit(main())

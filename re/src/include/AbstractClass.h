@@ -1,4 +1,5 @@
 #pragma once
+#include "ts_prelude.h"
 // ============================================================================
 // AbstractClass.h  —  reconstructed from GAME.EXE (C&C Tiberian Sun, 1999)
 //
@@ -27,13 +28,7 @@ struct IStream;
 // the binary's own stubs; when this header is copied into src/include,
 // tools/reconcile_prelude.py defers this definition to the prelude so the two
 // copies never collide.
-struct IUnknown
-{
-    virtual HRESULT __stdcall QueryInterface(REFIID riid, void** ppv) = 0;  // vtbl[0]
-    virtual ULONG   __stdcall AddRef() = 0;                                 // vtbl[1]
-    virtual ULONG   __stdcall Release() = 0;                                // vtbl[2]
-};
-
+// IUnknown is defined by ts_prelude.h (shared COM base).
 struct IPersist : public IUnknown
 {
     virtual HRESULT __stdcall GetClassID(CLSID* pClassID) = 0;              // vtbl[3]

@@ -47,15 +47,8 @@ struct IUnknown {
     virtual ULONG   __stdcall AddRef() = 0;
     virtual ULONG   __stdcall Release() = 0;
 };
-struct IPersist {
-    virtual HRESULT __stdcall GetClassID(CLSID* pClassID) = 0;
-};
-struct IPersistStream : public IPersist {
-    virtual HRESULT __stdcall IsDirty() = 0;
-    virtual HRESULT __stdcall Load(IStream* pStm) = 0;
-    virtual HRESULT __stdcall Save(IStream* pStm, BOOL fClearDirty) = 0;
-    virtual HRESULT __stdcall GetSizeMax(ULARGE_INTEGER* pcbSize) = 0;
-};
+struct IPersist;   // defined by its own reconstructed header
+struct IPersistStream;   // defined by its own reconstructed header
 struct ISequentialStream {
     virtual HRESULT __stdcall Read(void* pv, ULONG cb, ULONG* pcbRead) = 0;
     virtual HRESULT __stdcall Write(const void* pv, ULONG cb, ULONG* pcbWritten) = 0;
@@ -99,36 +92,18 @@ struct IClassFactory {
 struct IConnectionPoint {
     virtual HRESULT __stdcall _dummy_IConnectionPoint() = 0;
 };
-struct IConnectionPointContainer {
-    virtual HRESULT __stdcall _dummy_IConnectionPointContainer() = 0;
-};
+struct IConnectionPointContainer;   // defined by its own reconstructed header
 struct IEnumConnectionPoints {
     virtual HRESULT __stdcall _dummy_IEnumConnectionPoints() = 0;
 };
 struct IEnumConnections {
     virtual HRESULT __stdcall _dummy_IEnumConnections() = 0;
 };
-struct IRTTITypeInfo {
-    virtual int  __stdcall Get_RTTI() = 0;
-    virtual int  __stdcall Fetch_ID() = 0;
-    virtual void __stdcall Set_ID(int id) = 0;
-};
-struct IPiggyback {
-    virtual HRESULT __stdcall Begin_Piggyback(IStream* pStm) = 0;
-    virtual HRESULT __stdcall End_Piggyback(IStream* pStm) = 0;
-    virtual HRESULT __stdcall Is_Ok_To_End() = 0;
-    virtual HRESULT __stdcall Piggyback_Available() = 0;
-};
-struct ILocomotion {
-    virtual HRESULT __stdcall _dummy_ILocomotion() = 0;
-};
-struct IHouse {
-    virtual HRESULT __stdcall _dummy_IHouse() = 0;
-};
-struct IPublicHouse {
-    virtual HRESULT __stdcall _dummy_IPublicHouse() = 0;
-};
-
+struct IRTTITypeInfo;   // defined by its own reconstructed header
+struct IPiggyback;   // defined by its own reconstructed header
+struct ILocomotion;   // defined by its own reconstructed header
+struct IHouse;   // defined by its own reconstructed header
+struct IPublicHouse;   // defined by its own reconstructed header
 // --- WOL (Westwood Online) event interfaces --------------------------------
 namespace WOL {
     struct IChatEvent {
@@ -159,12 +134,8 @@ struct BounceClass {
 struct DiskSwap {
     virtual ~DiskSwap() {}
 };
-struct FlasherClass {
-    virtual ~FlasherClass() {}
-};
-struct StageClass {
-    virtual ~StageClass() {}
-};
+struct FlasherClass;   // defined by its own reconstructed header
+struct StageClass;   // defined by its own reconstructed header
 struct CDownloadEventSink {
     virtual ~CDownloadEventSink() {}
 };
@@ -173,9 +144,4 @@ struct CNetUtilEventSink {
 };
 
 // --- container node templates referenced as bases --------------------------
-template <class T, class Key>
-struct Node {
-    T* Next;
-    T* Prev;
-    Key ID;
-};
+// Node<T,Key> is defined by INIClass.h.
