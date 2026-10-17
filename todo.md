@@ -693,8 +693,8 @@ string; fix it when the content path is stable.
 undecryptable index. `boot.py --strict` exits 4 while they remain. They should
 disappear when the index decrypts; if not, they are a separate teardown defect.
 
-### [ ] Implement the Blowfish cipher the MIX indexes need
-**Measured against the retail binary, and it is not optional.** The object that
+### [x] Implement the Blowfish cipher the MIX indexes need — fixed
+**Measured against the retail binary, and it was not optional.** The object that
 `blowfish.dll` registers (`IBlowfish`, CLSID
 `{1440AD10-6AA8-11D1-B6F9-00A024DDAFD1}`, vtable `0x1101e480`, 8 entries) is a
 real cipher the game uses during startup: `SetKey(56, key)` **9 times** and
@@ -726,15 +726,70 @@ returns 0; `FUN_00547290` then reads its 6-byte header from uninitialised stack
 (`count=0xe32c`), and `operator_new(-88560)` wraps to a ~4 GB allocation that
 exhausts the model's page table at `0x00a006b0`.
 
-*Spec:* `re/out/blowfish_oracle.md` (vtable indices and method semantics,
-object layout, the nine-index corroboration, reproduction commands), produced by
-`re/tools/oracle_blowfish.py` and `re/tools/wine_blowfish_trace.sh`. This is
-standard Blowfish ECB with the key supplied by the game; the Westwood RSA step
-is not needed in the stub.
-*Done when:* the stub decrypts a shipped MIX index byte-identically to
-`tools/mix.py` (which already decodes the index independently), with a
-known-answer test in `tools/test_tools.py`; then re-run the boot and confirm the
-game's MIX reads are no longer garbage.
+**Fixed in `345aae7`.** Standard Blowfish-ECB in slots 3/6/7: pi-derived
+P-array and S-boxes, the standard key schedule, 16-round Feistel, big-endian
+blocks, `len/8` blocks plus a verbatim tail, in-place operation, and
+`SetKey(NULL)` -> `E_POINTER`. Proven by the four standard known-answer vectors,
+round-trip/block/tail/stack tests, and — the strongest evidence — a
+byte-identical cross-check against `tools/mix.py` on the shipped TIBSUN.MIX
+index: key `82060323...`, ciphertext `2ce3171bdbecb40e` decrypts to
+`110090d97904849a` (count 17, body 75,094,416). That vector is now a permanent
+regression test; `tools/test_tools.py` runs **43** checks.
+
+Measured: the page-table exhaustion at `0x00a006b0` is **gone**. The run now
+consumes the full 20,000,001-instruction budget in the CRT exit path at
+`0x006844db` (`sub_00684486`, `_exit`/atexit walk); message loop
+`GetMessage=2 PeekMessage=5 DispatchMessage=2 CreateWindowExA=1`; coverage
+51,604 / 4,535 of 46,008. The game's own `SetKey(56, 82060323...)` and the
+correct decryptions of the first index blocks are visible in `TS_FILE_TRACE`.
+
+*Spec (kept for the MIX read path):* `re/out/blowfish_oracle.md`, produced by
+`re/tools/oracle_blowfish.py` and `re/tools/wine_blowfish_trace.sh`.
+
+### [ ] The MIX index read stops after 2 of 27 blocks
+**The next measurable defect, after `345aae7`.** The game reads the TIBSUN.MIX
+header and only **2 index blocks (16 bytes)** instead of 27. The 204-byte
+record-table read at `0x547435` returns just one further 8-byte block: the pipe
+chain (`0x5932d8 -> 0x5f1070 -> 0x423660`) moves one block per call, and
+`0x547426` calls it once without looping or checking the count, so the 17-entry
+table is built from ~10 valid bytes plus stale memory.
+
+At step 1,886,937 the game posts `WM_DESTROY` (caller `0x5e7d29`, shutdown block
+`sub_005e7cd9`), drains the loop, and WinMain (`0x5e5b80`, called from `entry`
+at `0x6855b1`) returns at ~7.66M instructions. The CRT exit path is then entered
+with ESP already corrupted (`0x11`; it was `0x2fff84` at entry), so the atexit
+walk runs away for the remaining ~12.3M instructions.
+
+*Next:* decide whether the short read is a model defect in the pipe/straw layer
+or a transcription/control-flow defect at `0x547426` (the call should consume
+204 bytes, not 8). Use `TS_FILE_TRACE=1`, `TS_TRACE` at `0x547426`/`0x547435`,
+and compare against the retail sequence. Do not assume the cipher is still at
+fault; it is proven against `mix.py`.
+*Done when:* the 17-entry index is read correctly and the game proceeds past
+the MIX header, with the next stop named.
+
+### [ ] Shutdown corrupts ESP before the CRT exit path
+**Measured, and separate from the MIX read.** WinMain returns at ~7.66M
+instructions with ESP `0x11`; it was `0x2fff84` at entry. The CRT's atexit walk
+then consumes the remaining ~12.3M instructions. This is the same class as the
+original 108-byte leak, but on the shutdown path: find the call or tail
+continuation that does not restore ESP, using the per-callee ESP tracker
+(`TS_TRACE`, `leak_va`/`leak_delta`) rather than counting pushes.
+*Done when:* WinMain returns with ESP where its caller left it and the CRT exit
+path completes (or faults at a named instruction).
+
+### [ ] Null-pointer teardown calls and the 10 in-text unmapped calls
+**Measured after `345aae7`; they did not disappear when the index decrypted.**
+The original five `this == NULL` sites still fire twice each: `0x4b312b`,
+`0x4b319b`, `0x4b31a4`, `0x487d16`, `0x5e7c7e`; new null sites are `0x5f1083`,
+`0x5f1006`, `0x5e7cfe`, `0x5e8489`. The boot now reports **70 unmapped calls,
+10 inside `.text`** (it was 5, none in `.text`), and `boot.py --strict` exits
+non-zero. They are a teardown defect, not a consequence of the undecryptable
+index.
+*Next:* name the caller and the object whose construction failed for each
+in-text target; fix the null `this` or the missing registration. Re-run
+`boot.py --strict` until it exits 0.
+*Done when:* 0 in-text unmapped calls and each null site named or fixed.
 
 ### [ ] The stack-imbalance tracker flags correct `__stdcall` stubs
 **A diagnostic false positive, measured at 2,069 stub calls after `f3011ca`.**

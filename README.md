@@ -15,8 +15,10 @@ against a model of the x86 machine it was written for.
 It is **not yet a playable game**, and the source is not yet source-shaped:
 
 - The model boots the image at its real VAs, resolves all 341 PE import-directory
-  thunks, reaches the game's own **message loop**, and stops where the model's
-  Blowfish stub is still an identity copy (the MIX index cannot be decrypted).
+  thunks, reaches the game's own **message loop**, decrypts the TIBSUN.MIX index
+  with a real Blowfish-ECB implementation, and posts `WM_DESTROY`. The MIX index
+  read then stops after 2 of 27 blocks, and the shutdown path corrupts ESP before
+  the CRT exit walk.
 - The **retail** game reaches its **main menu** under Wine on this host; that is
   the project's external oracle.
 - Every function body is generated machine transcription, one instruction per
@@ -35,7 +37,7 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 | headers | 264 total, 263 compile standalone at `-m32` |
 | verification gate | 9 checks, fail-closed, passing; check 9 confirms 3,073/3,073 offsets |
 | tool tests | 42 checks, several mutation-proven |
-| boot | message loop reached; 1,882,051 instructions; stops on the Blowfish identity copy |
+| boot | message loop reached; real Blowfish-ECB; 20M budget in the CRT exit path; next defect is a short MIX-index read |
 
 **Measure, don't trust prose.** `python3 tools/harness.py metrics` prints the
 real state; these figures drift as the tools improve. `AGENTS.md` records the
@@ -73,18 +75,20 @@ resolve to stubs, and the original entry point `0x6854e3` runs. The current
 measured stop:
 
 ```
-message loop: reached  (GetMessage=1 PeekMessage=3 DispatchMessage=1 CreateWindowExA=1)
-stop: fault at 0x00a006b0 after 1,882,051 instructions
-why:  page table exhausted
-coverage: 49,635 distinct instructions; 4,455 of 46,008 recovered functions
-unmapped calls: 5 (0 inside .text)
+message loop: reached  (GetMessage=2 PeekMessage=5 DispatchMessage=2 CreateWindowExA=1)
+stop: instruction budget exhausted at 0x006844db after 20,000,001 instructions
+why:  the game posted WM_DESTROY and WinMain returned; the CRT exit walk runs on
+coverage: 51,604 distinct instructions; 4,535 of 46,008 recovered functions
+unmapped calls: 70 (10 inside .text)
 ```
 
-The stop is diagnosed, not mysterious: the game reads the `TIBSUN.MIX` index and
-calls `IBlowfish::Decrypt`, which the model still implements as an identity copy.
-The index stays ciphertext, a wrapped `operator_new` asks for ~4 GB, and the
-model's page table exhausts. Implementing real Blowfish-ECB is the next queued
-step; `re/out/blowfish_oracle.md` is the measured spec.
+Real Blowfish-ECB is implemented and proven against `tools/mix.py` (the shipped
+TIBSUN.MIX first index block decrypts byte-identically), so the old page-table
+exhaustion is gone. The next measurable defect is that the game reads only 2 of
+the 27 index blocks: the 204-byte record-table read at `0x547435` moves one
+8-byte block through the pipe chain, and `0x547426` calls it once without
+looping. The shutdown path then returns with ESP corrupted (`0x11`), so the CRT
+atexit walk consumes the remaining budget. Both are recorded in `todo.md`.
 
 The model has diagnostics for this work: `TS_TRACE=0xADDR`, `TS_PEEK=0xADDR`,
 `TS_SCAN=start,count`, `TS_WATCH=0xADDR`, `TS_FILE_TRACE=1`, plus `bad_calls`,
