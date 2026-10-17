@@ -252,7 +252,8 @@ Ordered by damage. Same failure mode the project already caught once: prose that
 measurement does not support. Each item is now marked **RESOLVED** (with the
 corrected statement and the commit/date) or **OPEN** (with what is still false).
 The first batch of corrections is commit `8467f84`; `todo.md`, `REPORT.md` and
-this section are carried by commit `be04940` (both 2026-10-17).
+this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
+(all 2026-10-17).
 
 1. **RESOLVED — `AGENTS.md`'s retracted boot block.** The false
    `budget 5000000 / message loop: reached (PeekMessage=137295)` block is gone;
@@ -300,14 +301,12 @@ this section are carried by commit `be04940` (both 2026-10-17).
    through `GetProcAddress`); "traced" is the count of imports actually called.
    Stated in `PROGRESS.md` and used consistently in `AGENTS.md` and `CONTEXT.md`
    (`8467f84`).
-10. **PARTLY RESOLVED — verification figures drifted inside single files.**
-    `AGENTS.md` check 9 is fixed to **3,073/3,073**. **OPEN:** `AGENTS.md` still
-    quotes check 7 as both 1317/1317 and 2186/2186, check 8 as 478/1,172, member
-    verification as 4,322/4,326, and check 9's unasserted breakdown with the old
-    counts. Measured this session: check 7 **1,317/1,317 across 206 classes**;
-    check 8 **331/1,116 match, 785 divergence**; member verification
-    **4,285/4,289, 4 refuted**. `AGENTS.md` was outside this lane's edit scope
-    beyond the import and check-9 items, so the rest is left for the next sweep.
+10. **RESOLVED — verification figures drifted inside single files.**
+    `AGENTS.md` now quotes check 7 as **1,317/1,317 across 206 classes**, check 8
+    as **331/1,116 match, 785 divergence**, member verification as **4,285/4,289,
+    4 refuted**, and check 9 as **3,073/3,073** with the current unasserted
+    breakdown (743 vptr, 413 past extent, 44 undeclared, 10 no offset, 6
+    headerless = 1,216). Measured this session.
 11. **RESOLVED — `CONTEXT.md` called `verify.py` "the 8-check gate".** It now
     says nine, describes check 9, and lists `link_test.py` (492 TUs),
     `test_tools.py` (39 checks) and the import distinction (`8467f84`).
@@ -317,18 +316,20 @@ this section are carried by commit `be04940` (both 2026-10-17).
     references this file's argument, but the *strategic* disagreement is real
     and unresolved: the roadmap optimises the source artifact, this file
     optimises a playable runtime. Say which product you are building.
-13. **OPEN (new) — `AGENTS.md`'s "Current status" table still carries stale
-    counts.** Measured: 43,564 spans (not 41,822), 96.09% code (not 96.06%),
-    105,966 B unattributed classified as 12 jump tables / 264 B, 7 switch index
-    tables / 349 B, 104,959 B padding, 394 B in 55 runs (not 104 KB, 11 jump
-    tables / 256 B, 356 B, 105,808 B, 554 B in 90 runs); 9,810 vtable slots (not
-    9,780); 46,008 transcriptions / 918,438 instruction lines (not 43,668 /
-    897,193); 264 headers (not 262); 2,444 tail entries (not 1,846); 492 TUs
-    (not 482); 4,289 member claims, 4,285 confirmed (not 4,326 / 4,322); check 7
-    1,317 offsets across 206 classes (not 2,186 across 248); 2,458 `vfunc_N` and
-    291 named members (not 5,420 unnamed virtuals / ~4,190 unnamed members);
-    39 tool tests (not 36). Also retracted: "the virtual-naming problem is 3,409
-    distinct slots". Left unfixed here for the same scope reason as item 10.
+13. **RESOLVED — `AGENTS.md`'s "Current status" table carried stale counts.**
+    It now uses the measured set: 43,564 spans (not 41,822), 96.09% code (not
+    96.06%), 105,966 B unattributed classified as 12 jump tables / 264 B, 7
+    switch index tables / 349 B, 104,959 B padding, 394 B in 55 runs (not 104 KB,
+    11 jump tables / 256 B, 356 B, 105,808 B, 554 B in 90 runs); 9,810 vtable
+    slots (not 9,780); 46,008 transcriptions / 918,438 instruction lines (not
+    43,668 / 897,193); 264 headers (not 262); 2,444 tail entries (not 1,846;
+    `shared_tail_entry_points` = 1,080 is a different quantity and is now
+    labelled as such); 492 TUs (not 482); 4,289 member claims, 4,285 confirmed
+    (not 4,326 / 4,322); check 7 1,317 offsets across 206 classes (not 2,186
+    across 248); 2,458 `vfunc_N` and 291 named members (not 5,420 unnamed
+    virtuals / ~4,190 unnamed members); 39 tool tests (not 36). The
+    "3,409 distinct slots" claim is retracted and replaced with the measured
+    slot-instance/named-pair/distinct-name set. Commit `27e7f59`.
 14. **OPEN (new) — boot figures are not currently reproducible in this tree.**
     `tools/boot.py` fails to build after `sync_handwritten()` copies the
     hand-written headers over the generated set (140 of 492 TUs fail on missing
