@@ -547,14 +547,19 @@ inline unsigned long &count_of(const char *fn) {
     return counts()[n];   // everything unnamed shares the last bucket
 }
 
+inline bool same_dll(const char *a, const char *b);
+
 // The definition of the forward declaration in the head: a stub body asks the
 // table how many argument words it owns instead of repeating a count that only
 // one place can check.
-inline void stub_done_for(const char *fn, u32 value) {
+inline void stub_done_for(const char *dll, const char *fn, u32 value) {
     unsigned n = 0;
     const ImportDef *t = imports(&n);
     for (unsigned i = 0; i < n; ++i)
-        if (!std::strcmp(t[i].fn, fn)) { stub_done(t[i].nargs, value); return; }
+        if (!std::strcmp(t[i].fn, fn) && same_dll(t[i].dll, dll)) {
+            stub_done(t[i].nargs, value);
+            return;
+        }
     stub_done(0u, value);
 }
 

@@ -127,7 +127,7 @@ inline void stub_done(unsigned nargs, u32 value) {
 // and for 20 of the 32 ordinal imports the two claims disagreed, so the body
 // would have popped 7 words where the caller had pushed 2. A body therefore
 // asks the table how many words it owns.
-inline void stub_done_for(const char *fn, u32 value);
+inline void stub_done_for(const char *dll, const char *fn, u32 value);
 
 // 0x800000a1 -> "#161": the spelling the loader uses for an ordinal import,
 // because an ordinal has no name string and its number is all it carries.
@@ -146,11 +146,11 @@ inline const char *ord_name(u32 raw) {
 // every DLL. Its argument count is NOT written here: it lives in the import
 // table row for "#161", which is where `--evidence` checks it. A body that
 // named its own count would be a second claim about the same fact.
-#define TS_ORD_BEGIN(sym, raw) \
+#define TS_ORD_BEGIN(sym, dllname, raw) \
     void k_##sym() { const char *const ord = ord_name(raw); note(ord);
 #define TS_ORD_END }
-#define TS_ORD_RET(sym, raw, v) \
-    TS_ORD_BEGIN(sym, raw) stub_done_for(ord, v); TS_ORD_END
+#define TS_ORD_RET(sym, dllname, raw, v) \
+    TS_ORD_BEGIN(sym, dllname, raw) stub_done_for(dllname, ord, v); TS_ORD_END
 
 // -- memory and string helpers ----------------------------------------------
 inline u32 c_strlen(u32 p) { u32 n = 0; while (ld8(p + n)) ++n; return n; }
@@ -2044,26 +2044,26 @@ inline u32 make_bstr(u32 src, u32 chars) {
 // go to the named generic stub, which pops exactly the words the table says and
 // prints once, on first call, that it is unimplemented.
 
-TS_ORD_BEGIN(oleaut_ord_2147483681, 0x800000a1u)   // LoadTypeLib /* ? */
+TS_ORD_BEGIN(oleaut_ord_2147483809, "OLEAUT32", 0x800000a1u)   // LoadTypeLib /* ? */
     // Measured 2 arguments at 0x5e5910: the wide string "SUN.TLB" and an
     // out-pointer. Answering success without writing an object would be a lie
     // the caller dereferences, so this fails the way a missing typelib fails.
     u32 out = arg(1);
     if (out) st32(out, 0u);
-    stub_done_for(ord, 0x8002801du);   // TYPE_E_CANTLOADLIBRARY
+    stub_done_for("OLEAUT32", ord, 0x8002801du);   // TYPE_E_CANTLOADLIBRARY
 TS_ORD_END
 
-TS_ORD_BEGIN(oleaut_ord_2147483650, 0x80000002u)   // SysAllocString /* ? */
+TS_ORD_BEGIN(oleaut_ord_2147483650, "OLEAUT32", 0x80000002u)   // SysAllocString /* ? */
     u32 s = arg(0);
-    stub_done_for(ord, s ? make_bstr(s, c_strlen(s)) : 0u);
+    stub_done_for("OLEAUT32", ord, s ? make_bstr(s, c_strlen(s)) : 0u);
 TS_ORD_END
 
-TS_ORD_BEGIN(oleaut_ord_2147483656, 0x80000008u)   // VariantInit /* ? */
+TS_ORD_BEGIN(oleaut_ord_2147483656, "OLEAUT32", 0x80000008u)   // VariantInit /* ? */
     // The call sites pass `lea reg,[ebp-N]`, a local VARIANT. A VARIANT that
     // was never zeroed is a variant with a garbage type tag.
     u32 p = arg(0);
     for (u32 i = 0; i < 16u; ++i) st8(p + i, 0);
-    stub_done_for(ord, 0u);
+    stub_done_for("OLEAUT32", ord, 0u);
 TS_ORD_END
 
 // -- WINMM -------------------------------------------------------------------
@@ -2085,7 +2085,7 @@ TS_RET(ImageList_DragShowNolock, 1, 1u)
 // InitCommonControls: measured 0 arguments at 0x65c04b, where the call sits
 // directly behind the prologue with nothing pushed. It is the call a program
 // makes before RegisterClass, which is what the enclosing function does.
-TS_ORD_RET(comctl32_ord_2147483665, 0x80000011u, 0u)
+TS_ORD_RET(comctl32_ord_2147483665, "COMCTL32", 0x80000011u, 0u)
 
 // -- VERSION / SHELL32 -------------------------------------------------------
 TS_RET(GetFileVersionInfoSizeA, 2, 0u)   // no version resource, honestly
@@ -2107,7 +2107,7 @@ TS_RET(FindExecutableA, 3, 1u)
 // caller that checks the result gives up on networking entirely. Its argument
 // count is measured all the same -- ordinal 115 is the one ordinal of the 19
 // whose number the classic table and this header agree on.
-TS_ORD_BEGIN(wsock_ord_2147483763, 0x80000073u)   // WSAStartup
+TS_ORD_BEGIN(wsock_ord_2147483763, "WSOCK32", 0x80000073u)   // WSAStartup
     u32 p = arg(1);
     for (u32 i = 0; i < 0x190u; ++i) st8(p + i, 0);
     st16(p + 0u, 0x0101u);   // wVersion = 1.1
@@ -2115,7 +2115,7 @@ TS_ORD_BEGIN(wsock_ord_2147483763, 0x80000073u)   // WSAStartup
     c_strcpy(p + 4u, lit("Tiberian Sun WinSock"));
     st16(p + 0x18cu, 0u);
     st16(p + 0x18eu, 0u);
-    stub_done_for(ord, 0u);
+    stub_done_for("WSOCK32", ord, 0u);
 TS_ORD_END
 
 // ===========================================================================
@@ -2706,7 +2706,7 @@ inline const ImportDef *imports(unsigned *count) {
 	{ "ole32", "CoCreateInstance", 5, 0x00000000u, 0 },
 	{ "ole32", "OleRun", 1, 0x00000000u, &k_OleRun },
 	{ "OLEAUT32", "#2", 1, 0x00000000u, &k_oleaut_ord_2147483650 },
-	{ "OLEAUT32", "#161", 2, 0x00000000u, 0 },
+	{ "OLEAUT32", "#161", 2, 0x00000000u, &k_oleaut_ord_2147483809 },
 	{ "OLEAUT32", "#6", 1, 0x00000000u, 0 },
 	{ "OLEAUT32", "#201", 2, 0x00000000u, 0 },
 	{ "OLEAUT32", "#12", 4, 0x00000000u, 0 },
@@ -2714,7 +2714,7 @@ inline const ImportDef *imports(unsigned *count) {
 	{ "OLEAUT32", "#9", 1, 0x00000000u, 0 },
 	{ "OLEAUT32", "#8", 1, 0x00000000u, &k_oleaut_ord_2147483656 },
 	{ "OLEAUT32", "#34", 2, 0x00000000u, 0 },
-	{ "OLEAUT32", "#33", 4, 0x00000000u, &k_oleaut_ord_2147483681 },
+	{ "OLEAUT32", "#33", 4, 0x00000000u, 0 },
 	{ "OLEAUT32", "#200", 2, 0x00000000u, 0 },
 	{ "WINMM", "timeBeginPeriod", 1, 0x00000000u, &k_timeBeginPeriod },
 	{ "WINMM", "timeSetEvent", 5, 0x00000000u, &k_timeSetEvent },
@@ -2766,14 +2766,19 @@ inline unsigned long &count_of(const char *fn) {
     return counts()[n];   // everything unnamed shares the last bucket
 }
 
+inline bool same_dll(const char *a, const char *b);
+
 // The definition of the forward declaration in the head: a stub body asks the
 // table how many argument words it owns instead of repeating a count that only
 // one place can check.
-inline void stub_done_for(const char *fn, u32 value) {
+inline void stub_done_for(const char *dll, const char *fn, u32 value) {
     unsigned n = 0;
     const ImportDef *t = imports(&n);
     for (unsigned i = 0; i < n; ++i)
-        if (!std::strcmp(t[i].fn, fn)) { stub_done(t[i].nargs, value); return; }
+        if (!std::strcmp(t[i].fn, fn) && same_dll(t[i].dll, dll)) {
+            stub_done(t[i].nargs, value);
+            return;
+        }
     stub_done(0u, value);
 }
 
