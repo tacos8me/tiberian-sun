@@ -399,11 +399,18 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
         }
         std::printf("scan: %u of %u entries are not .text VAs\n", bad, count);
     }
+    if (m.leak_n) {
+        std::printf("ESP moved across %u distinct callee/delta pairs\n", m.leak_n);
+        for (u32 i = 0; i < m.leak_n && i < 14; ++i)
+            std::printf("  callee 0x%08x delta %+d  x%lu\n",
+                        m.leak_va[i], m.leak_delta[i], m.leak_count[i]);
+    }
     if (m.trace_n) {
         std::printf("trace 0x%08x: %u hit(s)\n", m.trace_va, m.trace_n);
         for (u32 i = 0; i < m.trace_n; ++i)
-            std::printf("  esp=0x%08x eax=0x%08x ecx=0x%08x edx=0x%08x\n",
-                        m.trace_esp[i], m.trace_eax[i], m.trace_ecx[i], m.trace_edx[i]);
+            std::printf("  esp=0x%08x esi=0x%08x edi=0x%08x eax=0x%08x ecx=0x%08x edx=0x%08x\n",
+                        m.trace_esp[i], m.trace_esi[i], m.trace_edi[i],
+                        m.trace_eax[i], m.trace_ecx[i], m.trace_edx[i]);
     }
     if (m.stack_imbalances) {
         std::printf("STACK IMBALANCE at %lu stub call(s)\n", m.stack_imbalances);

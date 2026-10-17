@@ -152,6 +152,17 @@ struct Machine {
     u32 trace_eax[8];
     u32 trace_ecx[8];
     u32 trace_edx[8];
+    // Which CALLEE leaves ESP wrong. A cdecl call legitimately moves ESP by
+    // -4*nargs, so a non-zero delta is not automatically a bug; the point is to
+    // see which callees produce it and with what shape. The atexit walk calls
+    // 3,311 constructors as `call *%eax` with no arguments, so every one of them
+    // must leave ESP exactly where it started -- 27 that do not is the leak.
+    u32 leak_va[64];
+    int leak_delta[64];
+    unsigned long leak_count[64];
+    unsigned leak_n;
+    u32 trace_esi[8];
+    u32 trace_edi[8];
     unsigned long stub_dispatches;
     unsigned long stack_imbalances;
     u32 stack_imbalance_n;
@@ -288,7 +299,7 @@ inline void reset() {
     m.bad_call_n = 0;
     m.watch_va = 0; m.watch_hits = 0;
     m.stub_dispatches = 0; m.stack_imbalances = 0; m.stack_imbalance_n = 0;
-    m.trace_va = 0; m.trace_n = 0;
+    m.trace_va = 0; m.trace_n = 0; m.leak_n = 0;
     m.bad_calls = 0;
     if (m.call_depth_limit == 0) m.call_depth_limit = 4096;
 }
@@ -326,6 +337,8 @@ inline void insn(u32 va) {
         m.trace_eax[m.trace_n] = EAX.d;
         m.trace_ecx[m.trace_n] = ECX.d;
         m.trace_edx[m.trace_n] = EDX.d;
+        m.trace_esi[m.trace_n] = ESI.d;
+        m.trace_edi[m.trace_n] = EDI.d;
         ++m.trace_n;
     }
     if (m.step_limit && m.steps > m.step_limit) {
@@ -740,6 +753,20 @@ inline void ts_call_at(u32 target, u32 ret) {
     // pops the return address plus the argument count its table row declares.
     // A mismatch means the row is wrong, and the caller's next argument reads
     // come from the wrong slots.
+    if (ESP.d != esp_before && m.leak_n < 64u) {
+        u32 callee = target;
+        unsigned i = 0;
+        for (; i < m.leak_n; ++i)
+            if (m.leak_va[i] == callee && m.leak_delta[i] == (int)(ESP.d - esp_before))
+                break;
+        if (i == m.leak_n) {
+            m.leak_va[i] = callee;
+            m.leak_delta[i] = (int)(ESP.d - esp_before);
+            m.leak_count[i] = 0;
+            ++m.leak_n;
+        }
+        ++m.leak_count[i];
+    }
     if (m.stub_dispatches != stubs_before && ESP.d != esp_before) {
         ++m.stack_imbalances;
         if (m.stack_imbalance_n < 16) {
