@@ -660,6 +660,279 @@ int main() {
     eq("machine-flags", r.stdout.decode().strip(), "0")
 
 
+def test_machine_narrow_flags():
+    """8- and 16-bit flag derivation, against the CPU's own flags.
+
+    The defect: f_add/f_sub/f_inc/f_dec/f_log derived SF and OF from bit 31
+    while the narrow helpers passed a zero-extended result. Every JLE/JG on a
+    byte was therefore wrong for 0x80..0xff, which made the game's own vsprintf
+    (FUN_0068667c) copy `%` literally and GetCDClass (FUN_004a7600) stop its
+    drive scan at `c`.
+
+    The oracle here is the hardware, via inline asm on x86-64, so the model
+    cannot agree with a reference that repeats its own mistake. The JLE/JG
+    predicates are taken from emit_x86.COND so this tests the condition the
+    generator actually emits, not a copy of it.
+    """
+    import subprocess
+    import emit_x86 as E
+    le = E.COND['le']
+    jg = E.COND['g']
+    jl = E.COND['l']
+    src = r'''
+#include <cstdio>
+#include "Machine.h"
+static int bad = 0;
+#define T(c) do { if (!(c)) { std::printf("FAIL %s (line %d)\n", #c, __LINE__); ++bad; } } while (0)
+#define JLE() (@LE@)
+#define JG()  (@JG@)
+#define JL()  (@JL@)
+
+#define F_CF 1
+#define F_PF 2
+#define F_AF 4
+#define F_ZF 8
+#define F_SF 16
+#define F_OF 32
+#define F_ALL 63
+#define F_NO_AF 59   // AF is undefined after a logical op
+
+#if defined(__x86_64__)
+#define HW 1
+static unsigned long hw_cmp8(unsigned a, unsigned b) {
+    unsigned long fl;
+    __asm__ __volatile__("cmpb %2, %1\n\tpushfq\n\tpopq %0"
+        : "=r"(fl) : "q"((unsigned char)a), "q"((unsigned char)b) : "cc");
+    return fl;
+}
+static unsigned long hw_cmp16(unsigned a, unsigned b) {
+    unsigned long fl;
+    __asm__ __volatile__("cmpw %2, %1\n\tpushfq\n\tpopq %0"
+        : "=r"(fl) : "r"((unsigned short)a), "r"((unsigned short)b) : "cc");
+    return fl;
+}
+static unsigned long hw_cmp32(unsigned a, unsigned b) {
+    unsigned long fl;
+    __asm__ __volatile__("cmpl %2, %1\n\tpushfq\n\tpopq %0"
+        : "=r"(fl) : "r"(a), "r"(b) : "cc");
+    return fl;
+}
+static unsigned long hw_add8(unsigned a, unsigned b) {
+    unsigned long fl; unsigned char x = (unsigned char)a;
+    __asm__ __volatile__("addb %2, %0\n\tpushfq\n\tpopq %1"
+        : "+q"(x), "=r"(fl) : "q"((unsigned char)b) : "cc");
+    return fl;
+}
+static unsigned long hw_sub8(unsigned a, unsigned b) {
+    unsigned long fl; unsigned char x = (unsigned char)a;
+    __asm__ __volatile__("subb %2, %0\n\tpushfq\n\tpopq %1"
+        : "+q"(x), "=r"(fl) : "q"((unsigned char)b) : "cc");
+    return fl;
+}
+static unsigned long hw_add16(unsigned a, unsigned b) {
+    unsigned long fl; unsigned short x = (unsigned short)a;
+    __asm__ __volatile__("addw %2, %0\n\tpushfq\n\tpopq %1"
+        : "+r"(x), "=r"(fl) : "r"((unsigned short)b) : "cc");
+    return fl;
+}
+static unsigned long hw_sub16(unsigned a, unsigned b) {
+    unsigned long fl; unsigned short x = (unsigned short)a;
+    __asm__ __volatile__("subw %2, %0\n\tpushfq\n\tpopq %1"
+        : "+r"(x), "=r"(fl) : "r"((unsigned short)b) : "cc");
+    return fl;
+}
+static unsigned long hw_add32(unsigned a, unsigned b) {
+    unsigned long fl; unsigned x = a;
+    __asm__ __volatile__("addl %2, %0\n\tpushfq\n\tpopq %1"
+        : "+r"(x), "=r"(fl) : "r"(b) : "cc");
+    return fl;
+}
+static unsigned long hw_sub32(unsigned a, unsigned b) {
+    unsigned long fl; unsigned x = a;
+    __asm__ __volatile__("subl %2, %0\n\tpushfq\n\tpopq %1"
+        : "+r"(x), "=r"(fl) : "r"(b) : "cc");
+    return fl;
+}
+static unsigned long hw_test8(unsigned a, unsigned b) {
+    unsigned long fl;
+    __asm__ __volatile__("testb %2, %1\n\tpushfq\n\tpopq %0"
+        : "=r"(fl) : "q"((unsigned char)a), "q"((unsigned char)b) : "cc");
+    return fl;
+}
+static unsigned long hw_inc8(unsigned a, int cf_in) {
+    unsigned long fl; unsigned char x = (unsigned char)a;
+    if (cf_in)
+        __asm__ __volatile__("stc\n\tincb %0\n\tpushfq\n\tpopq %1"
+            : "+q"(x), "=r"(fl) : : "cc");
+    else
+        __asm__ __volatile__("clc\n\tincb %0\n\tpushfq\n\tpopq %1"
+            : "+q"(x), "=r"(fl) : : "cc");
+    return fl;
+}
+static unsigned long hw_dec8(unsigned a, int cf_in) {
+    unsigned long fl; unsigned char x = (unsigned char)a;
+    if (cf_in)
+        __asm__ __volatile__("stc\n\tdecb %0\n\tpushfq\n\tpopq %1"
+            : "+q"(x), "=r"(fl) : : "cc");
+    else
+        __asm__ __volatile__("clc\n\tdecb %0\n\tpushfq\n\tpopq %1"
+            : "+q"(x), "=r"(fl) : : "cc");
+    return fl;
+}
+#else
+#define HW 0
+static unsigned long hw_cmp8(unsigned, unsigned) { return 0; }
+static unsigned long hw_cmp16(unsigned, unsigned) { return 0; }
+static unsigned long hw_cmp32(unsigned, unsigned) { return 0; }
+static unsigned long hw_add8(unsigned, unsigned) { return 0; }
+static unsigned long hw_sub8(unsigned, unsigned) { return 0; }
+static unsigned long hw_add16(unsigned, unsigned) { return 0; }
+static unsigned long hw_sub16(unsigned, unsigned) { return 0; }
+static unsigned long hw_add32(unsigned, unsigned) { return 0; }
+static unsigned long hw_sub32(unsigned, unsigned) { return 0; }
+static unsigned long hw_test8(unsigned, unsigned) { return 0; }
+static unsigned long hw_inc8(unsigned, int) { return 0; }
+static unsigned long hw_dec8(unsigned, int) { return 0; }
+#endif
+
+static void chk(const char *what, unsigned long hw, int mask,
+                int cf, int pf, int af, int zf, int sf, int of) {
+    ts::Machine &m = ts::mach();
+    int gcf = (int)(hw & 1), gpf = (int)((hw >> 2) & 1), gaf = (int)((hw >> 4) & 1);
+    int gzf = (int)((hw >> 6) & 1), gsf = (int)((hw >> 7) & 1), gof = (int)((hw >> 11) & 1);
+#define FCHK(bit, field, want, got) \
+    do { if ((mask & (bit)) && (field) != (want)) { \
+        std::printf("FAIL %s %s model=%d want=%d hw=%d\n", what, #field, (int)(field), (int)(want), (int)(got)); ++bad; } } while (0)
+    FCHK(F_CF, m.cf, cf, gcf);
+    FCHK(F_PF, m.pf, pf, gpf);
+    FCHK(F_AF, m.af, af, gaf);
+    FCHK(F_ZF, m.zf, zf, gzf);
+    FCHK(F_SF, m.sf, sf, gsf);
+    FCHK(F_OF, m.of, of, gof);
+#if HW
+    // The hardware must also agree with the expected vector; otherwise a typo
+    // in the expectation would pass against a matching typo in the model.
+    FCHK(F_CF, gcf, cf, gcf);
+    FCHK(F_PF, gpf, pf, gpf);
+    FCHK(F_AF, gaf, af, gaf);
+    FCHK(F_ZF, gzf, zf, gzf);
+    FCHK(F_SF, gsf, sf, gsf);
+    FCHK(F_OF, gof, of, gof);
+#else
+    (void)gcf; (void)gpf; (void)gaf; (void)gzf; (void)gsf; (void)gof;
+#endif
+#undef FCHK
+}
+
+// The game's vsprintf classifies a format byte with this exact sequence
+// (FUN_0068667c, 0x6866b9..0x6866c1):
+//     cmp bl, 0x20 ; jl  skip
+//     cmp bl, 0x78 ; jg  skip
+// '%' is 0x25 and must fall through to the conversion table. Under the old
+// flag derivation 0x25 - 0x78 = 0xad read as non-negative, `jg` was taken, and
+// the format was copied literally -- GetDriveTypeA("%c:\\"), CreateFileA(
+// "EXPAND%02d.MIX"), MessageBoxA("%s\\n\\n%s").
+static int classifies(unsigned char c) {
+    ts::cmp8(c, 0x20);
+    if (JL()) return 0;
+    ts::cmp8(c, 0x78);
+    if (JG()) return 0;
+    return 1;
+}
+
+int main() {
+    ts::Machine &m = ts::mach();
+
+    // GetCDClass (FUN_004a7600) scans 'c'..'z' with cmp8(BL,0x7a); jle.
+    // Signed byte comparison: 'c' <= 'z', so JLE must be taken.
+    ts::cmp8(0x63, 0x7a);
+    chk("cmp8 c,z", hw_cmp8(0x63, 0x7a), F_ALL, 1, 0, 1, 0, 1, 0);
+    T(JLE()); T(!JG());
+    ts::cmp8(0x7a, 0x7a);
+    chk("cmp8 z,z", hw_cmp8(0x7a, 0x7a), F_ALL, 0, 1, 0, 1, 0, 0);
+    T(JLE()); T(!JG());
+    ts::cmp8(0x7b, 0x7a);
+    chk("cmp8 {,z", hw_cmp8(0x7b, 0x7a), F_ALL, 0, 0, 0, 0, 0, 0);
+    T(!JLE()); T(JG());
+
+    // The 0x7f/0x80 sign boundary. 0x7f - 0x80 = 0xff overflows, so
+    // sf != of and JLE is NOT taken (127 > -128). 0x80 - 0x7f also overflows,
+    // sf == of, so JLE IS taken (-128 <= 127). Deriving SF from bit 31 makes
+    // both of these read as non-negative and gets both wrong.
+    ts::cmp8(0x7f, 0x80);
+    chk("cmp8 7f,80", hw_cmp8(0x7f, 0x80), F_ALL, 1, 1, 0, 0, 1, 1);
+    T(!JLE()); T(JG());
+    ts::cmp8(0x80, 0x7f);
+    chk("cmp8 80,7f", hw_cmp8(0x80, 0x7f), F_ALL, 0, 0, 1, 0, 0, 1);
+    T(JLE()); T(!JG());
+
+    // Word forms.
+    ts::cmp16(0x7fff, 0x8000);
+    chk("cmp16 7fff,8000", hw_cmp16(0x7fff, 0x8000), F_ALL, 1, 1, 0, 0, 1, 1);
+    T(!JLE()); T(JG());
+    ts::cmp16(0x8000, 0x7fff);
+    chk("cmp16 8000,7fff", hw_cmp16(0x8000, 0x7fff), F_ALL, 0, 0, 1, 0, 0, 1);
+    T(JLE()); T(!JG());
+
+    // add/sub carry, overflow, AF and PF at byte and word width.
+    ts::add8(0x7f, 1);
+    chk("add8 7f+1", hw_add8(0x7f, 1), F_ALL, 0, 0, 1, 0, 1, 1);
+    ts::add8(0xff, 1);
+    chk("add8 ff+1", hw_add8(0xff, 1), F_ALL, 1, 1, 1, 1, 0, 0);
+    ts::sub8(0x00, 1);
+    chk("sub8 0-1", hw_sub8(0x00, 1), F_ALL, 1, 1, 1, 0, 1, 0);
+    ts::add16(0x7fff, 1);
+    chk("add16 7fff+1", hw_add16(0x7fff, 1), F_ALL, 0, 1, 1, 0, 1, 1);
+    ts::sub16(0x8000, 1);
+    chk("sub16 8000-1", hw_sub16(0x8000, 1), F_ALL, 0, 1, 1, 0, 0, 1);
+
+    // inc/dec preserve CF and set OF at the width's own boundary.
+    m.cf = 0; ts::inc8(0x7f);
+    chk("inc8 7f", hw_inc8(0x7f, 0), F_ALL, 0, 0, 1, 0, 1, 1);
+    m.cf = 1; ts::inc8(0x7f);
+    chk("inc8 7f cf", hw_inc8(0x7f, 1), F_ALL, 1, 0, 1, 0, 1, 1);
+    m.cf = 0; ts::dec8(0x80);
+    chk("dec8 80", hw_dec8(0x80, 0), F_ALL, 0, 0, 1, 0, 0, 1);
+
+    // test8: logical flags, PF from the low byte, SF from bit 7 (AF undefined).
+    ts::test8(0x80, 0x80);
+    chk("test8 80", hw_test8(0x80, 0x80), F_NO_AF, 0, 0, 0, 0, 1, 0);
+    ts::test8(0xff, 0xff);
+    chk("test8 ff", hw_test8(0xff, 0xff), F_NO_AF, 0, 1, 0, 0, 1, 0);
+
+    // 32-bit regression: unchanged by the width fix.
+    ts::add32(0x7fffffff, 1);
+    chk("add32 7fffffff+1", hw_add32(0x7fffffff, 1), F_ALL, 0, 1, 1, 0, 1, 1);
+    ts::sub32(0x80000000, 1);
+    chk("sub32 80000000-1", hw_sub32(0x80000000, 1), F_ALL, 0, 1, 1, 0, 0, 1);
+    ts::cmp32(5, 5);
+    chk("cmp32 5,5", hw_cmp32(5, 5), F_ALL, 0, 1, 0, 1, 0, 0);
+    ts::cmp32(0x7fffffff, 0x80000000);
+    chk("cmp32 7fffffff,80000000", hw_cmp32(0x7fffffff, 0x80000000),
+        F_ALL, 1, 1, 0, 0, 1, 1);
+
+    // The vsprintf classification, end to end at the branch level.
+    T(classifies('%')); T(classifies('d')); T(classifies('s'));
+    T(!classifies(0x19)); T(!classifies('y'));
+
+    std::printf("%d\n", bad);
+    return 0;
+}
+'''
+    src = src.replace("@LE@", le).replace("@JG@", jg).replace("@JL@", jl)
+    open("/tmp/ts_narrow_flag_test.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_narrow_flag_test",
+                        "/tmp/ts_narrow_flag_test.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("machine-narrow-flags-build", False,
+              r.stderr.decode("utf-8", "replace")[:500])
+        return
+    r = subprocess.run(["/tmp/ts_narrow_flag_test"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace")
+    eq("machine-narrow-flags", out.strip(), "0")
+
+
 def test_machine_stack():
     import subprocess
     src = r'''
@@ -1807,6 +2080,7 @@ def main():
                test_slot0_shared, test_reduce_bases, test_tail_entries,
                test_indirect_tail_targets, test_jump_table_data,
                test_machine_mul, test_machine_div, test_machine_flags,
+               test_machine_narrow_flags,
                test_machine_stack, test_machine_mmx,
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,

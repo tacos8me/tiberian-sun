@@ -463,30 +463,80 @@ inline void st32(u32 a, u32 v) {
 // Flag semantics matter: the recovered conditional jumps test them, so an
 // approximate model would silently change control flow. Each helper sets the
 // flags the way the real instruction does.
-inline void f_log(u32 r) {
-    Machine &m = mach();
-    m.cf = 0; m.of = 0; m.zf = (r == 0) ? 1 : 0; m.sf = (u8)((r >> 31) & 1); m.pf = 0;
+//
+// WIDTH MATTERS, and the helpers below take it explicitly. An 8- or 16-bit
+// operation sets SF and OF from the result's own sign bit, not from bit 31:
+// `cmp bl, 0x7a` is a signed comparison of bytes, so with SF taken from bit 31
+// of the zero-extended result every byte value 0x80..0xff reads as
+// non-negative and every JLE/JG on a byte is wrong. The same mistake in OF
+// makes `jl`/`jg` on 0x7f/0x80 boundaries wrong. CF and AF are likewise the
+// carry/borrow out of the operation's own top bit and bit 3, and PF is the
+// parity of the low byte at every width. f_* are the 32-bit forms kept for
+// their existing call sites; the narrow helpers pass 8 or 16.
+inline u8 parity8(u32 r) {
+    u32 v = r & 0xffu;
+    v ^= v >> 4; v ^= v >> 2; v ^= v >> 1;
+    return (u8)((v & 1u) ? 0u : 1u);
 }
-inline void f_add(u32 a, u32 b, u32 r) {
+inline u32 width_mask(int w) { return (w >= 32) ? 0xffffffffu : ((1u << w) - 1u); }
+inline u32 width_sign(int w) { return 1u << (w - 1); }
+
+inline void f_log_w(u32 r, int w) {
     Machine &m = mach();
+    r &= width_mask(w);
+    m.cf = 0; m.of = 0; m.af = 0;   // AF is undefined after a logical op; model 0.
+    m.zf = (r == 0) ? 1 : 0;
+    m.sf = (u8)((r & width_sign(w)) ? 1 : 0);
+    m.pf = parity8(r);
+}
+inline void f_add_w(u32 a, u32 b, u32 r, int w) {
+    Machine &m = mach();
+    u32 mask = width_mask(w), sign = width_sign(w);
+    a &= mask; b &= mask; r &= mask;
     m.cf = (r < a) ? 1 : 0;
-    m.of = (u8)((((a ^ r) & (b ^ r)) >> 31) & 1);
-    m.zf = (r == 0) ? 1 : 0; m.sf = (u8)((r >> 31) & 1);
+    m.of = (u8)((((a ^ r) & (b ^ r)) & sign) ? 1 : 0);
+    m.zf = (r == 0) ? 1 : 0;
+    m.sf = (u8)((r & sign) ? 1 : 0);
+    m.af = (u8)(((a ^ b ^ r) >> 4) & 1);
+    m.pf = parity8(r);
 }
-inline void f_sub(u32 a, u32 b, u32 r) {
+inline void f_sub_w(u32 a, u32 b, u32 r, int w) {
     Machine &m = mach();
+    u32 mask = width_mask(w), sign = width_sign(w);
+    a &= mask; b &= mask; r &= mask;
     m.cf = (a < b) ? 1 : 0;
-    m.of = (u8)((((a ^ b) & (a ^ r)) >> 31) & 1);
-    m.zf = (r == 0) ? 1 : 0; m.sf = (u8)((r >> 31) & 1);
+    m.of = (u8)((((a ^ b) & (a ^ r)) & sign) ? 1 : 0);
+    m.zf = (r == 0) ? 1 : 0;
+    m.sf = (u8)((r & sign) ? 1 : 0);
+    m.af = (u8)(((a ^ b ^ r) >> 4) & 1);
+    m.pf = parity8(r);
 }
-inline void f_inc(u32 a, u32 r) {
+inline void f_inc_w(u32 a, u32 r, int w) {
     Machine &m = mach();
-    m.of = (a == 0x7fffffffu) ? 1 : 0; m.zf = (r == 0) ? 1 : 0; m.sf = (u8)((r >> 31) & 1);
+    u32 mask = width_mask(w), sign = width_sign(w);
+    a &= mask; r &= mask;
+    m.of = (a == (sign - 1u)) ? 1 : 0;   // CF is unaffected by inc/dec.
+    m.zf = (r == 0) ? 1 : 0;
+    m.sf = (u8)((r & sign) ? 1 : 0);
+    m.af = (u8)(((a ^ 1u ^ r) >> 4) & 1);
+    m.pf = parity8(r);
 }
-inline void f_dec(u32 a, u32 r) {
+inline void f_dec_w(u32 a, u32 r, int w) {
     Machine &m = mach();
-    m.of = (a == 0x80000000u) ? 1 : 0; m.zf = (r == 0) ? 1 : 0; m.sf = (u8)((r >> 31) & 1);
+    u32 mask = width_mask(w), sign = width_sign(w);
+    a &= mask; r &= mask;
+    m.of = (a == sign) ? 1 : 0;
+    m.zf = (r == 0) ? 1 : 0;
+    m.sf = (u8)((r & sign) ? 1 : 0);
+    m.af = (u8)(((a ^ 1u ^ r) >> 4) & 1);
+    m.pf = parity8(r);
 }
+
+inline void f_log(u32 r) { f_log_w(r, 32); }
+inline void f_add(u32 a, u32 b, u32 r) { f_add_w(a, b, r, 32); }
+inline void f_sub(u32 a, u32 b, u32 r) { f_sub_w(a, b, r, 32); }
+inline void f_inc(u32 a, u32 r) { f_inc_w(a, r, 32); }
+inline void f_dec(u32 a, u32 r) { f_dec_w(a, r, 32); }
 
 // -- integer core -----------------------------------------------------------
 // Helpers take their operands by value and RETURN the result rather than taking
@@ -495,19 +545,19 @@ inline void f_dec(u32 a, u32 r) {
 //   st32(ECX.d + 8, add32(ld32(ECX.d + 8), 1u));
 // with the flags set exactly once, in the helper, rather than at the call site.
 inline u32 add32(u32 a, u32 b) { u32 r = a + b; f_add(a, b, r); return r; }
-inline u16 add16(u16 a, u16 b) { u16 r = (u16)(a + b); f_add(a, b, r); return r; }
-inline u8  add8 (u8  a, u8  b) { u8  r = (u8)(a + b);  f_add(a, b, r); return r; }
+inline u16 add16(u16 a, u16 b) { u16 r = (u16)(a + b); f_add_w(a, b, r, 16); return r; }
+inline u8  add8 (u8  a, u8  b) { u8  r = (u8)(a + b);  f_add_w(a, b, r, 8); return r; }
 inline u32 sub32(u32 a, u32 b) { u32 r = a - b; f_sub(a, b, r); return r; }
-inline u16 sub16(u16 a, u16 b) { u16 r = (u16)(a - b); f_sub(a, b, r); return r; }
-inline u8  sub8 (u8  a, u8  b) { u8  r = (u8)(a - b);  f_sub(a, b, r); return r; }
+inline u16 sub16(u16 a, u16 b) { u16 r = (u16)(a - b); f_sub_w(a, b, r, 16); return r; }
+inline u8  sub8 (u8  a, u8  b) { u8  r = (u8)(a - b);  f_sub_w(a, b, r, 8); return r; }
 inline u32 adc32(u32 a, u32 b) { u32 c = M.cf; u32 r = a + b + c; f_add(a, b + c, r); return r; }
 inline u32 sbb32(u32 a, u32 b) { u32 c = M.cf; u32 r = a - b - c; f_sub(a, b + c, r); return r; }
 inline void cmp32(u32 a, u32 b) { f_sub(a, b, a - b); }
-inline void cmp16(u16 a, u16 b) { f_sub(a, b, (u16)(a - b)); }
-inline void cmp8 (u8  a, u8  b) { f_sub(a, b, (u8)(a - b)); }
+inline void cmp16(u16 a, u16 b) { f_sub_w(a, b, (u16)(a - b), 16); }
+inline void cmp8 (u8  a, u8  b) { f_sub_w(a, b, (u8)(a - b), 8); }
 inline void test32(u32 a, u32 b) { f_log(a & b); }
-inline void test16(u16 a, u16 b) { f_log((u32)(a & b)); }
-inline void test8 (u8  a, u8  b) { f_log((u32)(a & b)); }
+inline void test16(u16 a, u16 b) { f_log_w((u32)(a & b), 16); }
+inline void test8 (u8  a, u8  b) { f_log_w((u32)(a & b), 8); }
 inline u32 and32(u32 a, u32 b) { u32 r = a & b; f_log(r); return r; }
 inline u32 or32 (u32 a, u32 b) { u32 r = a | b; f_log(r); return r; }
 inline u32 xor32(u32 a, u32 b) { u32 r = a ^ b; f_log(r); return r; }
@@ -1072,24 +1122,24 @@ inline void bound_op(u32 idx, u32 addr) {
 
 // -- narrow forms -----------------------------------------------------------
 // The binary uses byte- and word-sized arithmetic throughout, not just dword.
-inline u8  inc8 (u8  a) { u8  r = (u8)(a + 1);  f_inc(a, r); return r; }
-inline u8  dec8 (u8  a) { u8  r = (u8)(a - 1);  f_dec(a, r); return r; }
-inline u16 inc16(u16 a) { u16 r = (u16)(a + 1); f_inc(a, r); return r; }
-inline u16 dec16(u16 a) { u16 r = (u16)(a - 1); f_dec(a, r); return r; }
-inline u8  neg8 (u8  a) { u8  r = (u8)(0 - a);  f_sub(0, a, r); return r; }
-inline u16 neg16(u16 a) { u16 r = (u16)(0 - a); f_sub(0, a, r); return r; }
+inline u8  inc8 (u8  a) { u8  r = (u8)(a + 1);  f_inc_w(a, r, 8); return r; }
+inline u8  dec8 (u8  a) { u8  r = (u8)(a - 1);  f_dec_w(a, r, 8); return r; }
+inline u16 inc16(u16 a) { u16 r = (u16)(a + 1); f_inc_w(a, r, 16); return r; }
+inline u16 dec16(u16 a) { u16 r = (u16)(a - 1); f_dec_w(a, r, 16); return r; }
+inline u8  neg8 (u8  a) { u8  r = (u8)(0 - a);  f_sub_w(0, a, r, 8); return r; }
+inline u16 neg16(u16 a) { u16 r = (u16)(0 - a); f_sub_w(0, a, r, 16); return r; }
 inline u8  not8 (u8  a) { return (u8)~a; }
 inline u16 not16(u16 a) { return (u16)~a; }
-inline u8  adc8 (u8  a, u8  b) { u8  c = M.cf; u8  r = (u8)(a + b + c);   f_add(a, (u8)(b + c), r); return r; }
-inline u16 adc16(u16 a, u16 b) { u16 c = M.cf; u16 r = (u16)(a + b + c); f_add(a, (u16)(b + c), r); return r; }
-inline u8  sbb8 (u8  a, u8  b) { u8  c = M.cf; u8  r = (u8)(a - b - c);   f_sub(a, (u8)(b + c), r); return r; }
-inline u16 sbb16(u16 a, u16 b) { u16 c = M.cf; u16 r = (u16)(a - b - c); f_sub(a, (u16)(b + c), r); return r; }
-inline u8  and8 (u8  a, u8  b) { u8  r = (u8)(a & b); f_log(r); return r; }
-inline u16 and16(u16 a, u16 b) { u16 r = (u16)(a & b); f_log(r); return r; }
-inline u8  or8  (u8  a, u8  b) { u8  r = (u8)(a | b); f_log(r); return r; }
-inline u16 or16 (u16 a, u16 b) { u16 r = (u16)(a | b); f_log(r); return r; }
-inline u8  xor8 (u8  a, u8  b) { u8  r = (u8)(a ^ b); f_log(r); return r; }
-inline u16 xor16(u16 a, u16 b) { u16 r = (u16)(a ^ b); f_log(r); return r; }
+inline u8  adc8 (u8  a, u8  b) { u8  c = M.cf; u8  r = (u8)(a + b + c);   f_add_w(a, (u8)(b + c), r, 8); return r; }
+inline u16 adc16(u16 a, u16 b) { u16 c = M.cf; u16 r = (u16)(a + b + c); f_add_w(a, (u16)(b + c), r, 16); return r; }
+inline u8  sbb8 (u8  a, u8  b) { u8  c = M.cf; u8  r = (u8)(a - b - c);   f_sub_w(a, (u8)(b + c), r, 8); return r; }
+inline u16 sbb16(u16 a, u16 b) { u16 c = M.cf; u16 r = (u16)(a - b - c); f_sub_w(a, (u16)(b + c), r, 16); return r; }
+inline u8  and8 (u8  a, u8  b) { u8  r = (u8)(a & b); f_log_w(r, 8); return r; }
+inline u16 and16(u16 a, u16 b) { u16 r = (u16)(a & b); f_log_w(r, 16); return r; }
+inline u8  or8  (u8  a, u8  b) { u8  r = (u8)(a | b); f_log_w(r, 8); return r; }
+inline u16 or16 (u16 a, u16 b) { u16 r = (u16)(a | b); f_log_w(r, 16); return r; }
+inline u8  xor8 (u8  a, u8  b) { u8  r = (u8)(a ^ b); f_log_w(r, 8); return r; }
+inline u16 xor16(u16 a, u16 b) { u16 r = (u16)(a ^ b); f_log_w(r, 16); return r; }
 inline u16 imul16(u16 a, u16 b) {
     u16 r = (u16)(a * b);
     Machine &m = mach();
