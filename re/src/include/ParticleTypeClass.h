@@ -4,7 +4,7 @@
 //
 // RTTI class   : class ParticleTypeClass
 // vtable       : 0x006a3470  (40 slots)
-// constructor  : 0x005979c0
+// constructor  : 0x005979f7
 // vtable store : 0x00597ad6  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -31,7 +31,7 @@ public:
     virtual void Detach(int a0, int a1);  // [10] 0x00598640  // __thiscall, returns ?
     virtual void What_Am_I();  // [11] 0x005986b0  // __cdecl, returns int
     virtual void Fetch_Object_Size();  // [12] 0x005986a0  // __cdecl, returns int
-    virtual void Compute_CRC(int a0);  // [13] 0x00598280  // __thiscall, returns ?
+    virtual void Compute_CRC(int a0);  // [13] 0x00598280  // __thiscall, returns char
     virtual void Owner();  // [14] 0x004059d0  // __cdecl, returns int
     virtual void Owner_HouseClass();  // [15] 0x004059e0  // __cdecl, returns int
     virtual void Fetch_Heap_ID();  // [16] 0x004059f0  // __cdecl, returns int
@@ -59,12 +59,12 @@ public:
     virtual void Get_Cameo_Data();  // [38] 0x00571660  // __cdecl, returns int
     virtual void Get_Image_Data();  // [39] 0x0040f620  // __thiscall, returns ?
 
-    ParticleTypeClass();  // 0x005979c0
+    ParticleTypeClass();  // 0x005979f7
     // The destructor is declared non-virtual here: slot 0 holds a stub
     // shared with 66 other classes (0x00405790), not the destructor.
     ~ParticleTypeClass();
 
-    // ---- data members (offsets from ctor 0x005979c0) ----
+    // ---- data members (offsets from ctor 0x005979f7) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
@@ -74,14 +74,12 @@ public:
     // 3 recovered offset(s) below +0x124 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0, +0x4, +0xcd
-    unsigned int m_124;  // +0x124 /* ? */; 4-byte store: mov dword ptr [esi + 0x124], ebx
-    unsigned int m_128;  // +0x128 /* ? */; 4-byte store: mov dword ptr [esi + 0x128], ebx
-    unsigned int m_12c;  // +0x12c /* ? */; 4-byte store: mov dword ptr [esi + 0x12c], ebx
+    unsigned char pad_124[0xc];
     unsigned int m_130;  // +0x130 /* ? */; 4-byte store: mov dword ptr [esi + 0x130], ebp
     unsigned int YVelocity;  // +0x134 (INI key); 4-byte store: mov dword ptr [esi + 0x134], ebp
     unsigned int MinZVelocity;  // +0x138 (INI key); 4-byte store: mov dword ptr [esi + 0x138], ebx
     unsigned int m_13c;  // +0x13c /* ? */; 4-byte store: mov dword ptr [esi + 0x13c], ebp
-    unsigned int m_140;  // +0x140 /* ? */; 4-byte store: mov dword ptr [esi + 0x140], ebx
+    unsigned char pad_140[0x4];
     unsigned int m_144;  // +0x144 /* ? */; 4-byte store: mov dword ptr [esi + 0x144], ebx
     unsigned char pad_148[0x1c];
     unsigned char m_164;  // +0x164 /* ? */; 1-byte store: mov byte ptr [esi + 0x164], bl

@@ -1116,6 +1116,7 @@
   "104": "Get_Height",
   "105": "Shape_Number",
   "106": "Assign_Target",
+  "107": "Unlimbo",
   "11": "What_Am_I",
   "12": "Fetch_Object_Size",
   "13": "Compute_CRC",
@@ -2970,8 +2971,7 @@
  },
  "MapSeedClass": {
   "0": "~MapSeedClass",
-  "1": "Read_INI",
-  "2": "Read_INI"
+  "1": "Read_INI"
  },
  "MissionClass": {
   "0": "QueryInterface",
@@ -4777,11 +4777,6 @@
   "1": "AddRef",
   "2": "Release"
  },
- "TClassFactory_class_ParticleClass": {
-  "0": "QueryInterface",
-  "1": "AddRef",
-  "2": "Release"
- },
  "TClassFactory_class_ParticleSystemClass": {
   "0": "QueryInterface",
   "1": "AddRef",
@@ -5610,7 +5605,6 @@
   "25": "Read_INI",
   "26": "Write_INI",
   "4": "IsDirty",
-  "5": "~TiberiumClass",
   "7": "GetSizeMax",
   "8": "~TiberiumClass",
   "9": "Init"
@@ -6101,9 +6095,6 @@
  "VectorClass_BuildChoiceClass_HouseClass": {
   "0": "~VectorClass_BuildChoiceClass_HouseClass"
  },
- "VectorClass_BuildingClass": {
-  "0": "~VectorClass_BuildingClass"
- },
  "VectorClass_BuildingLightClass": {
   "0": "~VectorClass_BuildingLightClass"
  },
@@ -6164,9 +6155,6 @@
  "VectorClass_FoggedObjectClass": {
   "0": "~VectorClass_FoggedObjectClass"
  },
- "VectorClass_FootClass": {
-  "0": "~VectorClass_FootClass"
- },
  "VectorClass_G": {
   "0": "~VectorClass_G"
  },
@@ -6211,9 +6199,6 @@
  },
  "VectorClass_LaserDrawClass": {
   "0": "~VectorClass_LaserDrawClass"
- },
- "VectorClass_LightConvertClass": {
-  "0": "~VectorClass_LightConvertClass"
  },
  "VectorClass_LightSourceClass": {
   "0": "~VectorClass_LightSourceClass"

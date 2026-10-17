@@ -84,7 +84,7 @@ public:
     // 0x0064E25E — reads "Projectile" and resolves it to a BulletTypeClass*
     // /* ? */ exact signature not proven.
 
-    // ---- data members (offsets from ctor 0x00656a90) ----
+    // ---- data members (offsets from ctor 0x00656aa9) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.

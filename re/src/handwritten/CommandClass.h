@@ -141,7 +141,7 @@ public:
     virtual const char* Get_Description();   // 0x4e10e0
     virtual const char* Get_UI_Description();// 0x4e10f0
 
-    // ---- data members (offsets from ctor 0x004de97b) ----
+    // ---- data members (offsets from ctor 0x004de9a0) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.

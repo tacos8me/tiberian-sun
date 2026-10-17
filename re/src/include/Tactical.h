@@ -41,7 +41,7 @@ public:
     virtual void On_Ground();  // [20] 0x00405a60  // __cdecl, returns int
     virtual void In_Air();  // [21] 0x00405a70  // __cdecl, returns int
     virtual void As_Coord(int a0);  // [22] 0x00405a80  // __thiscall, returns ?
-    virtual void AI();  // [23] 0x005f55d0  // __thiscall, returns ?
+    virtual void AI();  // [23] 0x005f55d0  // __thiscall, returns void*
     virtual void vfunc_24(int a0, int a1, int a2, int a3);  // [24] 0x005fcf50  // __thiscall, returns ?
 
     Tactical();  // 0x005f4b30

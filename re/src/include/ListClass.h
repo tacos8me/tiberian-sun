@@ -67,7 +67,7 @@ public:
     virtual void vfunc_46(int a0);  // [46] 0x004f75e0  // __thiscall, returns ?
     virtual void vfunc_47(int a0);  // [47] 0x004f7440  // __thiscall, returns int
     virtual void vfunc_48(int a0);  // [48] 0x004f7340  // __thiscall, returns ?
-    virtual void vfunc_49(int a0, int a1, int a2, int a3, int a4);  // [49] 0x004f75f0  // __thiscall, returns ?
+    virtual void vfunc_49(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8);  // [49] 0x004f75f0  // __thiscall, returns ?
 
     ListClass();  // 0x004f6ad0
     virtual ~ListClass();

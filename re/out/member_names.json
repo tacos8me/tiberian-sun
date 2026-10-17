@@ -292,270 +292,10 @@
     "key_va": 7154124,
     "reader_va": 6419856
    },
-   "1184": {
-    "name": "LightVisibility",
-    "key_va": 7082440,
-    "reader_va": 4453471
-   },
-   "1188": {
-    "name": "LightIntensity",
-    "key_va": 7082424,
-    "reader_va": 4453471
-   },
-   "1192": {
-    "name": "LightRedTint",
-    "key_va": 7082408,
-    "reader_va": 4453471
-   },
-   "1196": {
-    "name": "LightGreenTint",
-    "key_va": 7082392,
-    "reader_va": 4453471
-   },
-   "1200": {
-    "name": "LightBlueTint",
-    "key_va": 7082376,
-    "reader_va": 4453471
-   },
-   "1204": {
-    "name": "PrimaryFirePixelOffset",
-    "key_va": 7082004,
-    "reader_va": 4455261
-   },
-   "1212": {
-    "name": "SecondaryFirePixelOffset",
-    "key_va": 7081976,
-    "reader_va": 4455261
-   },
-   "1276": {
-    "name": "Adjacent",
-    "key_va": 7082872,
-    "reader_va": 4452944
-   },
-   "1324": {
-    "name": "DoorStages",
-    "key_va": 7082068,
-    "reader_va": 4455261
-   },
-   "1992": {
-    "name": "SpecialZOverlayZAdjust",
-    "key_va": 7081932,
-    "reader_va": 4455261
-   },
-   "2000": {
-    "name": "NormalZAdjust",
-    "key_va": 7081916,
-    "reader_va": 4455261
-   },
-   "2016": {
-    "name": "ZShapePointMove",
-    "key_va": 7081900,
-    "reader_va": 4455261
-   },
-   "2040": {
-    "name": "ExtraLight",
-    "key_va": 7081888,
-    "reader_va": 4455261
-   },
-   "2042": {
-    "name": "TogglePower",
-    "key_va": 7082744,
-    "reader_va": 4453471
-   },
-   "2044": {
-    "name": "IsTemple",
-    "key_va": 7082764,
-    "reader_va": 4453471
-   },
-   "2045": {
-    "name": "IsPlug",
-    "key_va": 7082756,
-    "reader_va": 4453471
-   },
-   "2046": {
-    "name": "HoverPad",
-    "key_va": 7082776,
-    "reader_va": 4453471
-   },
-   "2047": {
-    "name": "BaseNormal",
-    "key_va": 7082824,
-    "reader_va": 4452944
-   },
-   "2048": {
-    "name": "Bib",
-    "key_va": 7082848,
-    "reader_va": 4452944
-   },
-   "2049": {
-    "name": "Wall",
-    "key_va": 7082816,
-    "reader_va": 4452944
-   },
-   "2050": {
-    "name": "Capturable",
-    "key_va": 7082860,
-    "reader_va": 4452944
-   },
-   "2051": {
-    "name": "Powered",
-    "key_va": 7082852,
-    "reader_va": 4452944
-   },
-   "2052": {
-    "name": "Unsellable",
-    "key_va": 7082836,
-    "reader_va": 4452944
-   },
    "2053": {
     "name": "Radar",
     "key_va": 7082896,
     "reader_va": 4452944
-   },
-   "2056": {
-    "name": "UnitRepair",
-    "key_va": 7082732,
-    "reader_va": 4453471
-   },
-   "2057": {
-    "name": "UnitReload",
-    "key_va": 7082720,
-    "reader_va": 4453471
-   },
-   "2059": {
-    "name": "DockUnload",
-    "key_va": 7082708,
-    "reader_va": 4453471
-   },
-   "2063": {
-    "name": "Gate",
-    "key_va": 7082700,
-    "reader_va": 4453471
-   },
-   "2064": {
-    "name": "SAM",
-    "key_va": 7082696,
-    "reader_va": 4453471
-   },
-   "2065": {
-    "name": "ConstructionYard",
-    "key_va": 7082676,
-    "reader_va": 4453471
-   },
-   "2066": {
-    "name": "NukeSilo",
-    "key_va": 7082664,
-    "reader_va": 4453471
-   },
-   "2067": {
-    "name": "Refinery",
-    "key_va": 7082652,
-    "reader_va": 4453471
-   },
-   "2068": {
-    "name": "Weeder",
-    "key_va": 7082808,
-    "reader_va": 4452944
-   },
-   "2069": {
-    "name": "WeaponsFactory",
-    "key_va": 7082636,
-    "reader_va": 4453471
-   },
-   "2070": {
-    "name": "LaserFencePost",
-    "key_va": 7082620,
-    "reader_va": 4453471
-   },
-   "2071": {
-    "name": "LaserFence",
-    "key_va": 7082608,
-    "reader_va": 4453471
-   },
-   "2072": {
-    "name": "FirestormWall",
-    "key_va": 7082592,
-    "reader_va": 4453471
-   },
-   "2073": {
-    "name": "Hospital",
-    "key_va": 7082580,
-    "reader_va": 4453471
-   },
-   "2074": {
-    "name": "Armory",
-    "key_va": 7082572,
-    "reader_va": 4453471
-   },
-   "2075": {
-    "name": "EMPulseCannon",
-    "key_va": 7082532,
-    "reader_va": 4453471
-   },
-   "2076": {
-    "name": "TickTank",
-    "key_va": 7082520,
-    "reader_va": 4453471
-   },
-   "2078": {
-    "name": "CloakGenerator",
-    "key_va": 7082488,
-    "reader_va": 4453471
-   },
-   "2079": {
-    "name": "SensorArray",
-    "key_va": 7082476,
-    "reader_va": 4453471
-   },
-   "2082": {
-    "name": "Helipad",
-    "key_va": 7082800,
-    "reader_va": 4452944
-   },
-   "2083": {
-    "name": "GDIBarracks",
-    "key_va": 7082560,
-    "reader_va": 4453471
-   },
-   "2084": {
-    "name": "NODBarracks",
-    "key_va": 7082548,
-    "reader_va": 4453471
-   },
-   "2096": {
-    "name": "GateStages",
-    "key_va": 7082028,
-    "reader_va": 4455261
-   },
-   "2104": {
-    "name": "DamagedDoor",
-    "key_va": 7082056,
-    "reader_va": 4455261
-   },
-   "2105": {
-    "name": "InvisibleInGame",
-    "key_va": 7082344,
-    "reader_va": 4453471
-   },
-   "2108": {
-    "name": "ExtraDamageStage",
-    "key_va": 7081956,
-    "reader_va": 4455261
-   },
-   "2111": {
-    "name": "CloakRadiusInCells",
-    "key_va": 7082456,
-    "reader_va": 4453471
-   },
-   "2113": {
-    "name": "DemandLoadBuildup",
-    "key_va": 7081868,
-    "reader_va": 4455261
-   },
-   "2114": {
-    "name": "FreeBuildup",
-    "key_va": 7081856,
-    "reader_va": 4455261
    }
   }
  },
@@ -656,36 +396,6 @@
     "name": "Arm",
     "key_va": 7083456,
     "reader_va": 4479904
-   }
-  }
- },
- "class DisplayClass": {
-  "ident": "DisplayClass",
-  "members": {
-   "18": {
-    "name": "ShadowCaster",
-    "key_va": 7126140,
-    "reader_va": 5159341
-   },
-   "21": {
-    "name": "AllowTiberium",
-    "key_va": 7126208,
-    "reader_va": 5159341
-   },
-   "23": {
-    "name": "Morphable",
-    "key_va": 7126256,
-    "reader_va": 5159341
-   },
-   "152": {
-    "name": "ShadowTiles",
-    "key_va": 7126128,
-    "reader_va": 5159341
-   },
-   "272": {
-    "name": "ToSnowTheater",
-    "key_va": 7126176,
-    "reader_va": 5159341
    }
   }
  },
@@ -959,36 +669,6 @@
    }
   }
  },
- "class MouseClass": {
-  "ident": "MouseClass",
-  "members": {
-   "18": {
-    "name": "ShadowCaster",
-    "key_va": 7126140,
-    "reader_va": 5159341
-   },
-   "21": {
-    "name": "AllowTiberium",
-    "key_va": 7126208,
-    "reader_va": 5159341
-   },
-   "23": {
-    "name": "Morphable",
-    "key_va": 7126256,
-    "reader_va": 5159341
-   },
-   "152": {
-    "name": "ShadowTiles",
-    "key_va": 7126128,
-    "reader_va": 5159341
-   },
-   "272": {
-    "name": "ToSnowTheater",
-    "key_va": 7126176,
-    "reader_va": 5159341
-   }
-  }
- },
  "class ObjectTypeClass": {
   "ident": "ObjectTypeClass",
   "members": {
@@ -1097,35 +777,10 @@
     "key_va": 7154136,
     "reader_va": 5730448
    },
-   "318": {
-    "name": "IsVeinholeMonster",
-    "key_va": 7154044,
-    "reader_va": 5730769
-   },
-   "319": {
-    "name": "IsVeins",
-    "key_va": 7077356,
-    "reader_va": 5730769
-   },
-   "320": {
-    "name": "DemandLoad",
-    "key_va": 7077448,
-    "reader_va": 5730769
-   },
    "323": {
     "name": "Overrides",
     "key_va": 7154112,
     "reader_va": 5730448
-   },
-   "324": {
-    "name": "DrawFlat",
-    "key_va": 7154016,
-    "reader_va": 5730769
-   },
-   "325": {
-    "name": "IsARock",
-    "key_va": 7154008,
-    "reader_va": 5730769
    }
   }
  },
@@ -1314,126 +969,6 @@
    }
   }
  },
- "class PowerClass": {
-  "ident": "PowerClass",
-  "members": {
-   "18": {
-    "name": "ShadowCaster",
-    "key_va": 7126140,
-    "reader_va": 5159341
-   },
-   "21": {
-    "name": "AllowTiberium",
-    "key_va": 7126208,
-    "reader_va": 5159341
-   },
-   "23": {
-    "name": "Morphable",
-    "key_va": 7126256,
-    "reader_va": 5159341
-   },
-   "152": {
-    "name": "ShadowTiles",
-    "key_va": 7126128,
-    "reader_va": 5159341
-   },
-   "272": {
-    "name": "ToSnowTheater",
-    "key_va": 7126176,
-    "reader_va": 5159341
-   }
-  }
- },
- "class RadarClass": {
-  "ident": "RadarClass",
-  "members": {
-   "18": {
-    "name": "ShadowCaster",
-    "key_va": 7126140,
-    "reader_va": 5159341
-   },
-   "21": {
-    "name": "AllowTiberium",
-    "key_va": 7126208,
-    "reader_va": 5159341
-   },
-   "23": {
-    "name": "Morphable",
-    "key_va": 7126256,
-    "reader_va": 5159341
-   },
-   "152": {
-    "name": "ShadowTiles",
-    "key_va": 7126128,
-    "reader_va": 5159341
-   },
-   "272": {
-    "name": "ToSnowTheater",
-    "key_va": 7126176,
-    "reader_va": 5159341
-   }
-  }
- },
- "class ScrollClass": {
-  "ident": "ScrollClass",
-  "members": {
-   "18": {
-    "name": "ShadowCaster",
-    "key_va": 7126140,
-    "reader_va": 5159341
-   },
-   "21": {
-    "name": "AllowTiberium",
-    "key_va": 7126208,
-    "reader_va": 5159341
-   },
-   "23": {
-    "name": "Morphable",
-    "key_va": 7126256,
-    "reader_va": 5159341
-   },
-   "152": {
-    "name": "ShadowTiles",
-    "key_va": 7126128,
-    "reader_va": 5159341
-   },
-   "272": {
-    "name": "ToSnowTheater",
-    "key_va": 7126176,
-    "reader_va": 5159341
-   }
-  }
- },
- "class SidebarClass": {
-  "ident": "SidebarClass",
-  "members": {
-   "18": {
-    "name": "ShadowCaster",
-    "key_va": 7126140,
-    "reader_va": 5159341
-   },
-   "21": {
-    "name": "AllowTiberium",
-    "key_va": 7126208,
-    "reader_va": 5159341
-   },
-   "23": {
-    "name": "Morphable",
-    "key_va": 7126256,
-    "reader_va": 5159341
-   },
-   "152": {
-    "name": "ShadowTiles",
-    "key_va": 7126128,
-    "reader_va": 5159341
-   },
-   "272": {
-    "name": "ToSnowTheater",
-    "key_va": 7126176,
-    "reader_va": 5159341
-   }
-  }
- },
  "class SmudgeTypeClass": {
   "ident": "SmudgeTypeClass",
   "members": {
@@ -1491,36 +1026,6 @@
     "name": "Crater",
     "key_va": 7077664,
     "reader_va": 6166880
-   }
-  }
- },
- "class TabClass": {
-  "ident": "TabClass",
-  "members": {
-   "18": {
-    "name": "ShadowCaster",
-    "key_va": 7126140,
-    "reader_va": 5159341
-   },
-   "21": {
-    "name": "AllowTiberium",
-    "key_va": 7126208,
-    "reader_va": 5159341
-   },
-   "23": {
-    "name": "Morphable",
-    "key_va": 7126256,
-    "reader_va": 5159341
-   },
-   "152": {
-    "name": "ShadowTiles",
-    "key_va": 7126128,
-    "reader_va": 5159341
-   },
-   "272": {
-    "name": "ToSnowTheater",
-    "key_va": 7126176,
-    "reader_va": 5159341
    }
   }
  },
@@ -1756,16 +1261,6 @@
     "name": "IsVeinhole",
     "key_va": 7191428,
     "reader_va": 6443648
-   }
-  }
- },
- "class TiberiumClass": {
-  "ident": "TiberiumClass",
-  "members": {
-   "128": {
-    "name": "Value",
-    "key_va": 7191996,
-    "reader_va": 6456640
    }
   }
  },

@@ -26,7 +26,7 @@ public:
     virtual void vfunc_5(int a0, int a1);  // [5] 0x00674da0  // __thiscall, returns void*
     virtual void vfunc_6(int a0);  // [6] 0x00675830  // __thiscall, returns void*
     virtual void vfunc_7(int a0, int a1, int a2);  // [7] 0x006750c0  // __stdcall, returns int
-    virtual void vfunc_8(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12);  // [8] 0x006750d0  // __thiscall, returns void*
+    virtual void vfunc_8(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11, int a12);  // [8] 0x006750d0  // __thiscall, returns int
     virtual void vfunc_9(int a0, int a1);  // [9] 0x00674c30  // __thiscall, returns char
     virtual void vfunc_10(int a0);  // [10] 0x00674be0  // __thiscall, returns ?
     virtual void vfunc_11(int a0, int a1, int a2, int a3);  // [11] 0x006743a0  // __thiscall, returns char

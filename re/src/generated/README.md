@@ -12,8 +12,8 @@ The per-class `.cpp` files here hold **forwarders**: the out-of-line definitions
 
 | scope | functions |
 |---|---|
-| recovered from the binary | 43543 |
-| transcribed in `code/` | 45995 |
+| recovered from the binary | 43564 |
+| transcribed in `code/` | 46008 |
 | forwarders emitted (every declaring name) | 6962 |
 | distinct machine functions among those | 3024 |
 | alias definitions (same machine code) | 3938 |

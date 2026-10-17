@@ -78,7 +78,7 @@ public:
     virtual void Do_Shimmer();  // [57] 0x00617ce0  // __thiscall, returns ?
     virtual void Exit_Object(int a0);  // [58] 0x0061b480  // __stdcall, returns int
     virtual void Render(int a0, int a1, int a2);  // [59] 0x0056f480  // __thiscall, returns int
-    virtual void Occupy_List(int a0);  // [60] 0x005701b0  // __thiscall, returns void*
+    virtual void Occupy_List();  // [60] 0x005701b0  // __thiscall, returns short
     virtual void Draw_Pre_Render();  // [61] 0x00610880  // __thiscall, returns ?
     virtual void Draw_Post_Render(int a0, int a1);  // [62] 0x0060fb90  // __thiscall, returns ?
     virtual void Draw_It(int a0, int a1);  // [63] 0x004cc200  // __thiscall, returns ?
@@ -161,7 +161,7 @@ public:
     virtual void Is_Voxel_Loaded();  // [140] 0x00612de0  // __thiscall, returns int
     virtual void Is_Ready_To_Move();  // [141] 0x0040e710  // __cdecl, returns char
     virtual void Is_Ready_To_Cloak();  // [142] 0x00613d60  // __thiscall, returns int
-    virtual void Should_Uncloak();  // [143] 0x00613c60  // __thiscall, returns char
+    virtual void Should_Uncloak();  // [143] 0x00613c60  // __thiscall, returns int
     virtual void Turret_Facing(int a0);  // [144] 0x004a4b20  // __thiscall, returns ?
     virtual void Is_Weapon_Equipped();  // [145] 0x00616450  // __thiscall, returns ?
     virtual void Is_On_Elevation();  // [146] 0x0061cfa0  // __thiscall, returns int
@@ -193,7 +193,7 @@ public:
     virtual void Is_Sensed_By_Player();  // [172] 0x0061db90  // __thiscall, returns ?
     virtual void Is_Renovator();  // [173] 0x004d2e20  // __thiscall, returns char
     virtual void Advance_Waypoint_Path();  // [174] 0x004a49c0  // __thiscall, returns ?
-    virtual void Response_Select();  // [175] 0x0061b2e0  // __thiscall, returns ?
+    virtual void Response_Select();  // [175] 0x0061b2e0  // __thiscall, returns int
     virtual void Response_Move();  // [176] 0x0061b340  // __thiscall, returns ?
     virtual void Response_Attack();  // [177] 0x0061b3a0  // __thiscall, returns ?
     virtual void Player_Assign_Mission(int a0, int a1, int a2);  // [178] 0x00615820  // __thiscall, returns ?
@@ -222,7 +222,7 @@ public:
     virtual void Draw_Pips(int a0, int a1, int a2);  // [201] 0x0061b4f0  // __thiscall, returns ?
     virtual void Draw_Text_Overlay(int a0, int a1, int a2);  // [202] 0x0061bc30  // __thiscall, returns ?
     virtual void Do_Uncloak(int a0);  // [203] 0x00617b90  // __thiscall, returns void*
-    virtual void Do_Cloak(int a0);  // [204] 0x00617c30  // __thiscall, returns void*
+    virtual void Do_Cloak(int a0);  // [204] 0x00617c30  // __thiscall, returns char
     virtual void Apparent_Brightness(int a0);  // [205] 0x0061d9a0  // __thiscall, returns int
     virtual void Is_Ready_To_Random_Animate();  // [206] 0x004d2280  // __thiscall, returns void
     virtual void Random_Animate();  // [207] 0x004cf0b0  // __thiscall, returns char
@@ -237,7 +237,7 @@ public:
     virtual void Deploy_To_Fire();  // [216] 0x0040e7b0  // __cdecl, returns int
     virtual void Likely_Coord(int a0);  // [217] 0x004a11e0  // __thiscall, returns ?
     virtual void On_Movement_Blocked();  // [218] 0x004d2870  // __thiscall, returns ?
-    virtual void JumpJet_To_Walk();  // [219] 0x004d2950  // __thiscall, returns char
+    virtual void JumpJet_To_Walk();  // [219] 0x004d2950  // __thiscall, returns int
     virtual void Start_Driver(int a0);  // [220] 0x004cfae0  // __thiscall, returns char
     virtual void Stop_Driver();  // [221] 0x004cfa30  // __thiscall, returns void*
     virtual void Is_Docked_For_Repair();  // [222] 0x004a22c0  // __thiscall, returns ?

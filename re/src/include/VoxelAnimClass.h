@@ -67,7 +67,7 @@ public:
     virtual void Is_Moving_Onto_Bridge();  // [46] 0x00570db0  // __thiscall, returns char
     virtual void Occupies_Cells();  // [47] 0x00416830  // __cdecl, returns char
     virtual void Limbo();  // [48] 0x0056f6a0  // __thiscall, returns char
-    virtual void Unlimbo(int a0, int a1);  // [49] 0x0056f810  // __thiscall, returns char
+    virtual void Unlimbo(int a0);  // [49] 0x0056f810  // __thiscall, returns void*
     virtual void Detach_All(int a0);  // [50] 0x0056fb40  // __thiscall, returns ?
     virtual void Record_The_Kill(int a0);  // [51] 0x0056ebf0  // __stdcall, returns void
     virtual void Paradrop(int a0);  // [52] 0x005700c0  // __thiscall, returns ?

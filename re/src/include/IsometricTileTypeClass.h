@@ -4,7 +4,7 @@
 //
 // RTTI class   : class IsometricTileTypeClass
 // vtable       : 0x006a12d8  (40 slots)
-// constructor  : 0x004ea0c0
+// constructor  : 0x004ea14e
 // vtable store : 0x004ea1cb  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -54,12 +54,12 @@ public:
     virtual void Cost_Of(int a0);  // [33] 0x00571640  // __stdcall, returns int
     virtual void Time_To_Build();  // [34] 0x00571650  // __cdecl, returns int
     virtual void Create_One_Of(int a0);  // [35] 0x004ef2a0  // __thiscall, returns char
-    virtual void Occupy_List(int a0);  // [36] 0x004ea600  // __thiscall, returns void*
+    virtual void Occupy_List();  // [36] 0x004ea600  // __thiscall, returns ?
     virtual void Who_Can_Build_Me(int a0, int a1, int a2, int a3);  // [37] 0x00571710  // __thiscall, returns ?
     virtual void Get_Cameo_Data();  // [38] 0x00571660  // __cdecl, returns int
     virtual void Get_Image_Data();  // [39] 0x004ea590  // __thiscall, returns ?
 
-    IsometricTileTypeClass();  // 0x004ea0c0
+    IsometricTileTypeClass();  // 0x004ea14e
     // The destructor is declared non-virtual here: slot 0 holds a stub
     // shared with 66 other classes (0x00405790), not the destructor.
     ~IsometricTileTypeClass();

@@ -1888,7 +1888,7 @@
  },
  "class BlitTransLucent75ZRead<G>": {
   "ident": "BlitTransLucent75ZRead_G",
-  "ctor": 4592148,
+  "ctor": 4592153,
   "members": [
    {
     "off": 0,
@@ -2309,7 +2309,7 @@
  },
  "class BlitTransZRemapXlatAlphaZReadWrite<G>": {
   "ident": "BlitTransZRemapXlatAlphaZReadWrite_G",
-  "ctor": 4594110,
+  "ctor": 4594138,
   "members": [
    {
     "off": 0,
@@ -4303,7 +4303,7 @@
  },
  "class ControlClass": {
   "ident": "ControlClass",
-  "ctor": 4588832,
+  "ctor": 4588843,
   "members": [
    {
     "off": 0,
@@ -9305,7 +9305,7 @@
  },
  "class JumpjetLocomotionClass": {
   "ident": "JumpjetLocomotionClass",
-  "ctor": 5178400,
+  "ctor": 5178452,
   "members": [
    {
     "off": 0,
@@ -9318,16 +9318,6 @@
     "kind": "imm",
     "value": 6951868,
     "vptr": true
-   },
-   {
-    "off": 32,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 36,
-    "kind": "reg",
-    "value": null
    },
    {
     "off": 64,
@@ -10356,7 +10346,7 @@
  },
  "class MapSeedClass": {
   "ident": "MapSeedClass",
-  "ctor": 5424384,
+  "ctor": 5424415,
   "members": [
    {
     "off": 0,
@@ -10373,21 +10363,6 @@
     "off": 12,
     "kind": "reg",
     "value": null
-   },
-   {
-    "off": 52,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 56,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 60,
-    "kind": "imm",
-    "value": 1
    },
    {
     "off": 64,
@@ -11549,7 +11524,7 @@
  },
  "class ParticleClass": {
   "ident": "ParticleClass",
-  "ctor": 5814832,
+  "ctor": 5815025,
   "members": [
    {
     "off": 0,
@@ -11558,92 +11533,12 @@
     "vptr": true
    },
    {
-    "off": 76,
-    "kind": "reg",
-    "value": null
-   },
-   {
     "off": 80,
     "kind": "reg",
     "value": null
    },
    {
-    "off": 81,
-    "kind": "reg",
-    "value": null
-   },
-   {
     "off": 82,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 84,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 88,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 92,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 96,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 100,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 104,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 108,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 112,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 116,
-    "kind": "imm",
-    "value": 3212836864
-   },
-   {
-    "off": 120,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 124,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 128,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 132,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 160,
     "kind": "reg",
     "value": null
    },
@@ -11955,7 +11850,7 @@
  },
  "class ParticleTypeClass": {
   "ident": "ParticleTypeClass",
-  "ctor": 5863872,
+  "ctor": 5863927,
   "members": [
    {
     "off": 0,
@@ -11971,21 +11866,6 @@
    },
    {
     "off": 205,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 292,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 296,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 300,
     "kind": "reg",
     "value": null
    },
@@ -12006,11 +11886,6 @@
    },
    {
     "off": 316,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 320,
     "kind": "reg",
     "value": null
    },
@@ -13479,7 +13354,7 @@
  },
  "class RLEBlitTransZRemapXlatZReadWrite<E>": {
   "ident": "RLEBlitTransZRemapXlatZReadWrite_E",
-  "ctor": 4591453,
+  "ctor": 4591491,
   "members": [
    {
     "off": 0,
@@ -14900,7 +14775,7 @@
  },
  "class StopCommandClass": {
   "ident": "StopCommandClass",
-  "ctor": 5106043,
+  "ctor": 5106080,
   "members": [
    {
     "off": 0,
@@ -19235,43 +19110,13 @@
  },
  "class TypeList<ircraftTypeClass&*>": {
   "ident": "TypeList_ircraftTypeClass",
-  "ctor": 6003408,
+  "ctor": 5946858,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6962164,
+    "value": 6962220,
     "vptr": true
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 13,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "imm",
-    "value": 10
    }
   ]
  },
@@ -19289,43 +19134,13 @@
  },
  "class TypeList<struct nitTypeClass*>": {
   "ident": "TypeList_struct_nitTypeClass",
-  "ctor": 6003200,
+  "ctor": 5946858,
   "members": [
    {
     "off": 0,
     "kind": "imm",
-    "value": 6962192,
+    "value": 6962220,
     "vptr": true
-   },
-   {
-    "off": 4,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 8,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 12,
-    "kind": "imm",
-    "value": 1
-   },
-   {
-    "off": 13,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 16,
-    "kind": "reg",
-    "value": null
-   },
-   {
-    "off": 20,
-    "kind": "imm",
-    "value": 10
    }
   ]
  },
@@ -20631,7 +20446,7 @@
  },
  "class VectorClass<FootClass*>": {
   "ident": "VectorClass_FootClass",
-  "ctor": 4871056,
+  "ctor": 4871059,
   "members": [
    {
     "off": 0,
@@ -21344,7 +21159,7 @@
  },
  "class VectorClass<MSAnim*>": {
   "ident": "VectorClass_MSAnim",
-  "ctor": 5620160,
+  "ctor": 5620162,
   "members": [
    {
     "off": 0,
@@ -25731,7 +25546,7 @@
  },
  "class WeaponTypeClass": {
   "ident": "WeaponTypeClass",
-  "ctor": 6646416,
+  "ctor": 6646441,
   "members": [
    {
     "off": 0,

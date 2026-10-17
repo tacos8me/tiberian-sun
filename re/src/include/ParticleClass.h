@@ -4,7 +4,7 @@
 //
 // RTTI class   : class ParticleClass
 // vtable       : 0x006a2e9c  (106 slots)
-// constructor  : 0x0058ba30
+// constructor  : 0x0058baf1
 // vtable store : 0x0058bb86  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -31,7 +31,7 @@ public:
     virtual void Detach(int a0, int a1);  // [10] 0x0056fb00  // __thiscall, returns ?
     virtual void What_Am_I();  // [11] 0x0058dc60  // __cdecl, returns int
     virtual void Fetch_Object_Size();  // [12] 0x0058dc50  // __cdecl, returns int
-    virtual void Compute_CRC(int a0);  // [13] 0x00570630  // __thiscall, returns ?
+    virtual void Compute_CRC(int a0);  // [13] 0x00570630  // __thiscall, returns char
     virtual void Owner();  // [14] 0x004059d0  // __cdecl, returns int
     virtual void Owner_HouseClass();  // [15] 0x004059e0  // __cdecl, returns int
     virtual void Fetch_Heap_ID();  // [16] 0x004059f0  // __cdecl, returns int
@@ -67,7 +67,7 @@ public:
     virtual void Is_Moving_Onto_Bridge();  // [46] 0x00570db0  // __thiscall, returns char
     virtual void Occupies_Cells();  // [47] 0x00416830  // __cdecl, returns char
     virtual void Limbo();  // [48] 0x0056f6a0  // __thiscall, returns char
-    virtual void Unlimbo(int a0, int a1);  // [49] 0x0056f810  // __thiscall, returns char
+    virtual void Unlimbo(int a0);  // [49] 0x0056f810  // __thiscall, returns void*
     virtual void Detach_All(int a0);  // [50] 0x0056fb40  // __thiscall, returns ?
     virtual void Record_The_Kill(int a0);  // [51] 0x0056ebf0  // __stdcall, returns void
     virtual void Paradrop(int a0);  // [52] 0x005700c0  // __thiscall, returns ?
@@ -81,7 +81,7 @@ public:
     virtual void Occupy_List(int a0);  // [60] 0x0058da10  // __stdcall, returns void*
     virtual void Draw_Pre_Render(int a0, int a1);  // [61] 0x00416840  // __stdcall, returns void
     virtual void Draw_Post_Render(int a0, int a1);  // [62] 0x00416850  // __stdcall, returns void
-    virtual void Draw_It(int a0, int a1);  // [63] 0x0058d250  // __thiscall, returns ?
+    virtual void Draw_It();  // [63] 0x0058d250  // __thiscall, returns void*
     virtual void Editor_Draw_It(int a0, int a1);  // [64] 0x00570990  // __thiscall, returns ?
     virtual void Hidden();  // [65] 0x0056ec20  // __cdecl, returns void
     virtual void Look(int a0, int a1);  // [66] 0x0056ec30  // __stdcall, returns void
@@ -125,12 +125,12 @@ public:
     virtual void Get_Height();  // [104] 0x00570360  // __thiscall, returns ?
     virtual void Shape_Number();  // [105] 0x0058db20  // __thiscall, returns int
 
-    ParticleClass();  // 0x0058ba30
+    ParticleClass();  // 0x0058baf1
     // The destructor is declared non-virtual here: slot 0 holds a stub
     // shared with 66 other classes (0x00405790), not the destructor.
     ~ParticleClass();
 
-    // ---- data members (offsets from ctor 0x0058ba30) ----
+    // ---- data members (offsets from ctor 0x0058baf1) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
@@ -140,28 +140,10 @@ public:
     // 1 recovered offset(s) below +0x4c lie inside the base
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0
-    // 1 recovered offset(s) fall inside a wider declaration above
-    // (the store width and the recovered table disagree): +0x51
-    unsigned int m_04c;  // +0x04c /* ? */; 4-byte store: mov dword ptr [esi + 0x4c], eax
+    unsigned char pad_04c[0x4];
     unsigned short m_050;  // +0x050 /* ? */; 2-byte store: mov word ptr [esi + 0x50], ax
-    unsigned char m_052;  // +0x052 /* ? */; 1-byte store: mov byte ptr [esi + 0x52], bl
-    unsigned char pad_053[0x1];
-    unsigned int m_054;  // +0x054 /* ? */; 4-byte store: mov dword ptr [esi + 0x54], ebx
-    unsigned int m_058;  // +0x058 /* ? */; 4-byte store: mov dword ptr [esi + 0x58], ebx
-    unsigned int m_05c;  // +0x05c /* ? */; 4-byte store: mov dword ptr [esi + 0x5c], ebx
-    unsigned int m_060;  // +0x060 /* ? */; 4-byte store: mov dword ptr [esi + 0x60], ebx
-    unsigned int m_064;  // +0x064 /* ? */; 4-byte store: mov dword ptr [esi + 0x64], ebx
-    unsigned int m_068;  // +0x068 /* ? */; 4-byte store: mov dword ptr [esi + 0x68], ebx
-    unsigned int m_06c;  // +0x06c /* ? */; 4-byte store: mov dword ptr [esi + 0x6c], ebx
-    unsigned int m_070;  // +0x070 /* ? */; 4-byte store: mov dword ptr [esi + 0x70], ebx
-    unsigned int m_074;  // +0x074 init 0xbf800000; 4-byte store: mov dword ptr [esi + 0x74], 0xbf800000
-    unsigned int m_078;  // +0x078 /* ? */; 4-byte store: mov dword ptr [esi + 0x78], ebx
-    unsigned int m_07c;  // +0x07c /* ? */; 4-byte store: mov dword ptr [esi + 0x7c], ebx
-    unsigned int m_080;  // +0x080 /* ? */; 4-byte store: mov dword ptr [esi + 0x80], ebx
-    unsigned int m_084;  // +0x084 /* ? */; 4-byte store: mov dword ptr [esi + 0x84], edx
-    unsigned char pad_088[0x18];
-    unsigned int m_0a0;  // +0x0a0 /* ? */; 4-byte store: mov dword ptr [esi + 0xa0], edx
-    unsigned char pad_0a4[0x20];
+    unsigned char m_052;  // +0x052 /* ? */; 1-byte store: mov byte ptr [esi + 0x52], cl
+    unsigned char pad_053[0x71];
     unsigned int m_0c4;  // +0x0c4 /* ? */; 4-byte store: mov dword ptr [esi + 0xc4], ecx
     unsigned short m_0c8;  // +0x0c8 /* ? */; 2-byte store: mov word ptr [esi + 0xc8], ax
     unsigned short m_0ca;  // +0x0ca /* ? */; 2-byte store: mov word ptr [esi + 0xca], cx

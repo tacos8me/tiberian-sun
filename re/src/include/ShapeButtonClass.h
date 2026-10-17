@@ -50,7 +50,7 @@ public:
     virtual void Action(int a0, int a1);  // [29] 0x0062a8c0  // __thiscall, returns int
     virtual void Clicked_On(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __thiscall, returns int
     virtual void vfunc_31(int a0);  // [31] 0x00460600  // __thiscall, returns ?
-    virtual void vfunc_32(int a0, int a1, int a2);  // [32] 0x005d7a90  // __thiscall, returns int
+    virtual void vfunc_32(int a0, int a1, int a2);  // [32] 0x005d7a90  // __thiscall, returns ?
 
     ShapeButtonClass();  // 0x0047f180
     virtual ~ShapeButtonClass();

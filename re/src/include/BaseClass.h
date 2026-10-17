@@ -18,9 +18,9 @@ class BaseClass
 {
 public:
     // ---- vtable 0x00699db8 (3 slots) ----
-    virtual void vfunc_0(int a0, int a1);  // [0] 0x0041ef90  // __stdcall, returns int
+    virtual void vfunc_0(int a0, int a1, int a2, int a3, int a4);  // [0] 0x0041ef90  // returns ?
     virtual void vfunc_1(int a0, int a1);  // [1] 0x0041f1b0  // __stdcall, returns void*
-    virtual void vfunc_2(int a0);  // [2] 0x0041f2b0  // __thiscall, returns ?
+    virtual void vfunc_2(int a0);  // [2] 0x0041f2b0  // __thiscall, returns short
 
     BaseClass();  // 0x0041e8c0
     virtual ~BaseClass();

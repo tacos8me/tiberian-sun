@@ -24,6 +24,7 @@ public:
     virtual void Release(int a0);  // [2] 0x00405840  // __stdcall, returns int
     virtual void vfunc_3(int a0, int a1);  // [3] 0x00628900  // __stdcall, returns int
     virtual void IsDirty(int a0);  // [4] 0x00405990  // __stdcall, returns ?
+    virtual void vfunc_5(int a0);  // [5] 0x00628940  // __thiscall, returns ?
     virtual void vfunc_6(int a0, int a1, int a2);  // [6] 0x00628b80  // __stdcall, returns int
     virtual void GetSizeMax(int a0, int a1);  // [7] 0x00628b50  // __stdcall, returns int
     virtual void Init();  // [9] 0x004059b0  // __cdecl, returns void
@@ -69,7 +70,7 @@ public:
     unsigned char pad_074[0x4];
     unsigned int m_078;  // +0x078 /* ? */; 4-byte store: mov dword ptr [esi + 0x78], ecx
     unsigned int m_07c;  // +0x07c /* ? */; 4-byte store: mov dword ptr [esi + 0x7c], eax
-    unsigned int Value;  // +0x080 (INI key); 4-byte store: mov dword ptr [esi + 0x80], ebx
+    unsigned int m_080;  // +0x080 /* ? */; 4-byte store: mov dword ptr [esi + 0x80], ebx
     unsigned int m_084;  // +0x084 /* ? */; 4-byte store: mov dword ptr [esi + 0x84], ebx
     unsigned int m_088;  // +0x088 /* ? */; 4-byte store: mov dword ptr [esi + 0x88], ebx
     unsigned char pad_08c[0x1c];

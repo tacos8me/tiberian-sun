@@ -31,7 +31,7 @@ public:
     virtual void Detach(int a0, int a1);  // [10] 0x00432dd0  // __thiscall, returns int
     virtual void What_Am_I();  // [11] 0x0043a1c0  // __cdecl, returns int
     virtual void Fetch_Object_Size();  // [12] 0x0043a170  // __cdecl, returns int
-    virtual void Compute_CRC(int a0);  // [13] 0x00436eb0  // __thiscall, returns short
+    virtual void Compute_CRC(int a0);  // [13] 0x00436eb0  // __thiscall, returns ?
     virtual void Owner();  // [14] 0x00612db0  // __thiscall, returns ?
     virtual void Owner_HouseClass();  // [15] 0x00612dc0  // __thiscall, returns ?
     virtual void Fetch_Heap_ID();  // [16] 0x004059f0  // __cdecl, returns int
@@ -78,7 +78,7 @@ public:
     virtual void Do_Shimmer();  // [57] 0x00617ce0  // __thiscall, returns ?
     virtual void Exit_Object(int a0);  // [58] 0x0042b790  // __thiscall, returns ?
     virtual void Render(int a0, int a1, int a2);  // [59] 0x004265e0  // __thiscall, returns char
-    virtual void Occupy_List(int a0);  // [60] 0x005701b0  // __thiscall, returns void*
+    virtual void Occupy_List();  // [60] 0x005701b0  // __thiscall, returns short
     virtual void Draw_Pre_Render();  // [61] 0x00610880  // __thiscall, returns ?
     virtual void Draw_Post_Render(int a0, int a1);  // [62] 0x0060fb90  // __thiscall, returns ?
     virtual void Draw_It(int a0, int a1);  // [63] 0x00426980  // __thiscall, returns ?
@@ -193,7 +193,7 @@ public:
     virtual void Is_Sensed_By_Player();  // [172] 0x0061db90  // __thiscall, returns ?
     virtual void Is_Renovator();  // [173] 0x0040e720  // __cdecl, returns int
     virtual void Advance_Waypoint_Path();  // [174] 0x0043a150  // __cdecl, returns void
-    virtual void Response_Select();  // [175] 0x0061b2e0  // __thiscall, returns ?
+    virtual void Response_Select();  // [175] 0x0061b2e0  // __thiscall, returns int
     virtual void Response_Move();  // [176] 0x0061b340  // __thiscall, returns ?
     virtual void Response_Attack();  // [177] 0x0061b3a0  // __thiscall, returns ?
     virtual void Player_Assign_Mission(int a0, int a1, int a2);  // [178] 0x00615820  // __thiscall, returns ?
@@ -203,10 +203,10 @@ public:
     virtual void vfunc_182(int a0, int a1);  // [182] 0x006114b0  // __thiscall, returns char
     virtual void Death_Announcement(int a0);  // [183] 0x00432340  // __thiscall, returns int
     virtual void Can_Fire(int a0, int a1);  // [184] 0x0042e590  // __thiscall, returns int
-    virtual void Greatest_Threat(int a0, int a1, int a2);  // [185] 0x0042d230  // __thiscall, returns ?
+    virtual void Greatest_Threat(int a0, int a1, int a2, int a3, int a4);  // [185] 0x0042d230  // __thiscall, returns ?
     virtual void Assign_Target(int a0);  // [186] 0x0042b6e0  // __thiscall, returns void
     virtual void Fire_At(int a0, int a1);  // [187] 0x006148b0  // __thiscall, returns ?
-    virtual void Captured(int a0);  // [188] 0x0042e7f0  // __thiscall, returns char
+    virtual void Captured(int a0);  // [188] 0x0042e7f0  // __thiscall, returns ?
     virtual void Laser_Zap(int a0, int a1, int a2, int a3);  // [189] 0x00614530  // __thiscall, returns void*
     virtual void Rock(int a0, int a1);  // [190] 0x0061c360  // __thiscall, returns ?
     virtual void Get_Class_Weapon_Data(int a0);  // [191] 0x00435a70  // __thiscall, returns char
@@ -222,7 +222,7 @@ public:
     virtual void Draw_Pips(int a0, int a1, int a2);  // [201] 0x0061b4f0  // __thiscall, returns ?
     virtual void Draw_Text_Overlay(int a0, int a1, int a2);  // [202] 0x0061bc30  // __thiscall, returns ?
     virtual void Do_Uncloak(int a0);  // [203] 0x00617b90  // __thiscall, returns void*
-    virtual void Do_Cloak(int a0);  // [204] 0x00617c30  // __thiscall, returns void*
+    virtual void Do_Cloak(int a0);  // [204] 0x00617c30  // __thiscall, returns char
     virtual void Apparent_Brightness(int a0);  // [205] 0x00439790  // __thiscall, returns int
     virtual void Is_Ready_To_Random_Animate();  // [206] 0x0061b490  // __thiscall, returns char
     virtual void Random_Animate();  // [207] 0x0040e790  // __cdecl, returns int
@@ -236,7 +236,7 @@ public:
     virtual void Update_Buildables();  // [215] 0x0042caf0  // __thiscall, returns ?
     virtual void Draw_Extras(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10);  // [216] 0x00426f30  // __thiscall, returns ?
     virtual void Aim_Direction(int a0, int a1);  // [217] 0x00428170  // __thiscall, returns ?
-    virtual void Do_Destruction(int a0, int a1, int a2, int a3, int a4, int a5);  // [218] 0x00429ce0  // __thiscall, returns ?
+    virtual void Do_Destruction(int a0, int a1);  // [218] 0x00429ce0  // __thiscall, returns void*
     virtual void Toggle_Primary();  // [219] 0x0042e720  // __thiscall, returns char
     virtual void entry_380();  // [220] 0x004355e0  // __cdecl, returns int
 

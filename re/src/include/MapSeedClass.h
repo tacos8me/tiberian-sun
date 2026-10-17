@@ -4,7 +4,7 @@
 //
 // RTTI class   : class MapSeedClass
 // vtable       : 0x006a1e24  (5 slots)
-// constructor  : 0x0052c500
+// constructor  : 0x0052c51f
 // vtable store : 0x0052c54a  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -20,14 +20,14 @@ class MapSeedClass : public LoadOptionsClass
 public:
     // ---- vtable 0x006a1e24 (5 slots) ----
     virtual void Read_INI(int a0);  // [1] 0x0052d760  // __thiscall, returns char  // refs "Description"
-    virtual void Read_INI(int a0, int a1);  // [2] 0x0052d4f0  // __thiscall, returns char  // refs "Description"
+    virtual void vfunc_2(int a0, int a1);  // [2] 0x0052d4f0  // __thiscall, returns ?  // refs "Description"
     virtual void vfunc_3(int a0);  // [3] 0x0052da20  // __stdcall, returns ?
-    virtual void vfunc_4(int a0, int a1);  // [4] 0x0052da30  // __stdcall, returns char
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x0052da30  // returns void*
 
-    MapSeedClass();  // 0x0052c500
+    MapSeedClass();  // 0x0052c51f
     virtual ~MapSeedClass();
 
-    // ---- data members (offsets from ctor 0x0052c500) ----
+    // ---- data members (offsets from ctor 0x0052c51f) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
@@ -37,10 +37,7 @@ public:
     // 3 recovered offset(s) below +0x18 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0, +0x8, +0xc
-    unsigned char pad_018[0x1c];
-    unsigned int m_034;  // +0x034 /* ? */; 4-byte store: mov dword ptr [ebx + 0x34], eax
-    unsigned int m_038;  // +0x038 /* ? */; 4-byte store: mov dword ptr [ebx + 0x38], eax
-    unsigned int Time;  // +0x03c (INI key); 4-byte store: mov dword ptr [ebx + 0x3c], 1
+    unsigned char pad_018[0x28];
     unsigned int WaterAmount;  // +0x040 (INI key); 4-byte store: mov dword ptr [ebx + 0x40], eax
     unsigned int NumPlayers;  // +0x044 (INI key); 4-byte store: mov dword ptr [ebx + 0x44], 2
     unsigned int m_048;  // +0x048 /* ? */; 4-byte store: mov dword ptr [ebx + 0x48], eax

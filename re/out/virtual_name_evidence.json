@@ -391,8 +391,8 @@
    },
    "13": {
     "name": "Compute_CRC",
-    "rule": "R13",
-    "signal": "derived slot 13 calls the base class's slot 13 target 0x405940, proving the override; name inherited from AbstractClass slot 13 (Compute_CRC, displacement 0)",
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 13 named Compute_CRC (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
     "target": "0x405fe0",
     "base": "AbstractClass",
     "base_slot": 13,
@@ -4049,9 +4049,13 @@
   "BlitTransXlatAlphaZRead_G": {
    "0": {
     "name": "~BlitTransXlatAlphaZRead_G",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x469ff0"
+    "rule": "R11",
+    "signal": "direct base Blitter slot 0 named ~Blitter (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x469ff0",
+    "base": "Blitter",
+    "base_slot": 0,
+    "base_name": "~Blitter",
+    "mdisp": 0
    }
   },
   "BlitTransXlatAlpha_G": {
@@ -6795,9 +6799,13 @@
    },
    "25": {
     "name": "Read_INI",
-    "rule": "R2",
-    "signal": "15 rules.ini field names (Adjacent, BaseNormal, Capturable, Factory, ...); 4 known INI accessor call(s); 10 reader store pattern(s)",
-    "target": "0x43f250"
+    "rule": "R13",
+    "signal": "derived slot 25 calls the base class's slot 25 target 0x61f590, proving the override; name inherited from TechnoTypeClass slot 25 (Read_INI, displacement 0)",
+    "target": "0x43f250",
+    "base": "TechnoTypeClass",
+    "base_slot": 25,
+    "base_name": "Read_INI",
+    "mdisp": 0
    },
    "26": {
     "name": "Write_INI",
@@ -7632,6 +7640,12 @@
     "rule": "R16",
     "signal": "slot 106 of BulletClass is entry 1 of the class's own declaration-order table (first slot 105); the recovered epilogue pops 1 stack word(s) and the declared signature implies 1",
     "target": "0x4451e0"
+   },
+   "107": {
+    "name": "Unlimbo",
+    "rule": "R16",
+    "signal": "slot 107 of BulletClass is entry 2 of the class's own declaration-order table (first slot 105); the target tail-jumps, so it has no epilogue to check; the declared signature implies 2 stack word(s)",
+    "target": "0x444050"
    }
   },
   "BulletTypeClass": {
@@ -7977,9 +7991,13 @@
    },
    "8": {
     "name": "~CampaignClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x446af0"
+    "rule": "R11",
+    "signal": "direct base AbstractTypeClass slot 8 named ~AbstractTypeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x446af0",
+    "base": "AbstractTypeClass",
+    "base_slot": 8,
+    "base_name": "~AbstractTypeClass",
+    "mdisp": 0
    },
    "9": {
     "name": "Init",
@@ -9441,9 +9459,13 @@
   "DynamicVectorClass_BulletTypeClass": {
    "0": {
     "name": "~DynamicVectorClass_BulletTypeClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4b1d90"
+    "rule": "R11",
+    "signal": "direct base VectorClass_BulletTypeClass slot 0 named ~VectorClass_BulletTypeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4b1d90",
+    "base": "VectorClass_BulletTypeClass",
+    "base_slot": 0,
+    "base_name": "~VectorClass_BulletTypeClass",
+    "mdisp": 0
    }
   },
   "DynamicVectorClass_ButtonFadeEffect": {
@@ -9873,9 +9895,13 @@
   "DynamicVectorClass_ParticleSystemTypeClass": {
    "0": {
     "name": "~DynamicVectorClass_ParticleSystemTypeClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4b2010"
+    "rule": "R11",
+    "signal": "direct base VectorClass_ParticleSystemTypeClass slot 0 named ~VectorClass_ParticleSystemTypeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4b2010",
+    "base": "VectorClass_ParticleSystemTypeClass",
+    "base_slot": 0,
+    "base_name": "~VectorClass_ParticleSystemTypeClass",
+    "mdisp": 0
    }
   },
   "DynamicVectorClass_ParticleTypeClass": {
@@ -10249,9 +10275,13 @@
   "DynamicVectorClass_WinsockBufferType_WinsockInterfaceClass": {
    "0": {
     "name": "~DynamicVectorClass_WinsockBufferType_WinsockInterfaceClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x66f450"
+    "rule": "R11",
+    "signal": "direct base VectorClass_WinsockBufferType_WinsockInterfaceClass slot 0 named ~VectorClass_WinsockBufferType_WinsockInterfaceClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x66f450",
+    "base": "VectorClass_WinsockBufferType_WinsockInterfaceClass",
+    "base_slot": 0,
+    "base_name": "~VectorClass_WinsockBufferType_WinsockInterfaceClass",
+    "mdisp": 0
    }
   },
   "DynamicVectorClass_articleSystemTypeClass": {
@@ -12988,7 +13018,7 @@
    "12": {
     "name": "Delete_List",
     "rule": "R16",
-    "signal": "slot 12 of GadgetClass is entry 2 of the class's own declaration-order table (first slot 10); the recovered epilogue pops 0 stack word(s) and the declared signature implies 0",
+    "signal": "slot 12 of GadgetClass is entry 2 of the class's own declaration-order table (first slot 10); the target tail-jumps, so it has no epilogue to check; the declared signature implies 0 stack word(s)",
     "target": "0x4a5b20"
    },
    "13": {
@@ -15855,9 +15885,13 @@
    },
    "8": {
     "name": "~IsometricTileClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4e93f0"
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 8 named ~ObjectClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4e93f0",
+    "base": "ObjectClass",
+    "base_slot": 8,
+    "base_name": "~ObjectClass",
+    "mdisp": 0
    },
    "9": {
     "name": "Init",
@@ -16885,9 +16919,13 @@
    },
    "8": {
     "name": "~LightSourceClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4f55e0"
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 8 named ~AbstractClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x4f55e0",
+    "base": "AbstractClass",
+    "base_slot": 8,
+    "base_name": "~AbstractClass",
+    "mdisp": 0
    },
    "9": {
     "name": "Init",
@@ -17260,12 +17298,6 @@
     "rule": "R2",
     "signal": "16 rules.ini field names (Accessibility, Biome, Description, Height, ...); 2 known INI accessor call(s); 5 reader store pattern(s)",
     "target": "0x52d760"
-   },
-   "2": {
-    "name": "Read_INI",
-    "rule": "R2",
-    "signal": "16 rules.ini field names (Accessibility, Biome, Description, Height, ...); 3 known INI accessor call(s); 1 reader store pattern(s)",
-    "target": "0x52d4f0"
    }
   },
   "MissionClass": {
@@ -18862,7 +18894,7 @@
    "60": {
     "name": "Occupy_List",
     "rule": "R16",
-    "signal": "slot 60 of ObjectClass is entry 36 of the class's own declaration-order table (first slot 24); the recovered epilogue pops 1 stack word(s) and the declared signature implies 1",
+    "signal": "slot 60 of ObjectClass is entry 36 of the class's own declaration-order table (first slot 24); the target tail-jumps, so it has no epilogue to check; the declared signature implies 1 stack word(s)",
     "target": "0x5701b0"
    },
    "61": {
@@ -20178,7 +20210,7 @@
    "25": {
     "name": "Read_INI",
     "rule": "R2",
-    "signal": "10 rules.ini field names (CellAnim, Crate, CrateTrigger, Explodes, ...); 3 known INI accessor call(s); 2 reader store pattern(s)",
+    "signal": "9 rules.ini field names (Crate, CrateTrigger, Explodes, High, ...); 2 known INI accessor call(s); 2 reader store pattern(s)",
     "target": "0x577090"
    },
    "26": {
@@ -22549,9 +22581,13 @@
   "RLEBlitTransZRemapXlatZReadWrite_G": {
    "0": {
     "name": "~RLEBlitTransZRemapXlatZReadWrite_G",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x46a530"
+    "rule": "R11",
+    "signal": "direct base RLEBlitter slot 0 named ~RLEBlitter (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x46a530",
+    "base": "RLEBlitter",
+    "base_slot": 0,
+    "base_name": "~RLEBlitter",
+    "mdisp": 0
    }
   },
   "RLEBlitTransZRemapXlatZRead_E": {
@@ -27136,26 +27172,6 @@
     "target": "0x5ebd50"
    }
   },
-  "TClassFactory_class_ParticleClass": {
-   "0": {
-    "name": "QueryInterface",
-    "rule": "R9",
-    "signal": "loads ppvObject from [esp+0xc]; tests it; returns E_POINTER 0x80004003; ret 0xc; slot 0 of the primary vtable",
-    "target": "0x5edf40"
-   },
-   "1": {
-    "name": "AddRef",
-    "rule": "R9",
-    "signal": "slot 0 target 0x5edf40 verified as QueryInterface (R9); slot 1 is IUnknown::AddRef by the MS IUnknown ABI",
-    "target": "0x5edfb0"
-   },
-   "2": {
-    "name": "Release",
-    "rule": "R9",
-    "signal": "slot 0 target 0x5edf40 verified as QueryInterface (R9); slot 2 is IUnknown::Release by the MS IUnknown ABI",
-    "target": "0x5edfd0"
-   }
-  },
   "TClassFactory_class_ParticleSystemClass": {
    "0": {
     "name": "QueryInterface",
@@ -29028,7 +29044,7 @@
    "26": {
     "name": "Write_INI",
     "rule": "R10",
-    "signal": "28 rules.ini field names; 3 known INI accessor call(s); calls AbstractClass::Set_ID 0x405fb0",
+    "signal": "17 rules.ini field names; 2 known INI accessor call(s); calls AbstractClass::Set_ID 0x405fb0",
     "target": "0x60d510"
    }
   },
@@ -30044,7 +30060,7 @@
    "143": {
     "name": "Should_Uncloak",
     "rule": "R16",
-    "signal": "slot 143 of TechnoClass is entry 8 of the class's own declaration-order table (first slot 135); the recovered epilogue pops 0 stack word(s) and the declared signature implies 0",
+    "signal": "slot 143 of TechnoClass is entry 8 of the class's own declaration-order table (first slot 135); the target tail-jumps, so it has no epilogue to check; the declared signature implies 0 stack word(s)",
     "target": "0x613c60"
    },
    "144": {
@@ -30134,7 +30150,7 @@
    "158": {
     "name": "Get_Z_Adjust",
     "rule": "R16",
-    "signal": "slot 158 of TechnoClass is entry 23 of the class's own declaration-order table (first slot 135); the recovered epilogue pops 0 stack word(s) and the declared signature implies 0",
+    "signal": "slot 158 of TechnoClass is entry 23 of the class's own declaration-order table (first slot 135); the target tail-jumps, so it has no epilogue to check; the declared signature implies 0 stack word(s)",
     "target": "0x618760"
    },
    "159": {
@@ -30218,7 +30234,7 @@
    "172": {
     "name": "Is_Sensed_By_Player",
     "rule": "R16",
-    "signal": "slot 172 of TechnoClass is entry 37 of the class's own declaration-order table (first slot 135); the recovered epilogue pops 0 stack word(s) and the declared signature implies 0",
+    "signal": "slot 172 of TechnoClass is entry 37 of the class's own declaration-order table (first slot 135); the target tail-jumps, so it has no epilogue to check; the declared signature implies 0 stack word(s)",
     "target": "0x61db90"
    },
    "173": {
@@ -30236,7 +30252,7 @@
    "175": {
     "name": "Response_Select",
     "rule": "R16",
-    "signal": "slot 175 of TechnoClass is entry 40 of the class's own declaration-order table (first slot 135); the recovered epilogue pops 0 stack word(s) and the declared signature implies 0",
+    "signal": "slot 175 of TechnoClass is entry 40 of the class's own declaration-order table (first slot 135); the target tail-jumps, so it has no epilogue to check; the declared signature implies 0 stack word(s)",
     "target": "0x61b2e0"
    },
    "176": {
@@ -30404,7 +30420,7 @@
    "204": {
     "name": "Do_Cloak",
     "rule": "R16",
-    "signal": "slot 204 of TechnoClass is entry 69 of the class's own declaration-order table (first slot 135); the recovered epilogue pops 1 stack word(s) and the declared signature implies 1",
+    "signal": "slot 204 of TechnoClass is entry 69 of the class's own declaration-order table (first slot 135); the target tail-jumps, so it has no epilogue to check; the declared signature implies 1 stack word(s)",
     "target": "0x617c30"
    },
    "205": {
@@ -31051,8 +31067,8 @@
    },
    "48": {
     "name": "Limbo",
-    "rule": "R13",
-    "signal": "derived slot 48 calls the base class's slot 48 target 0x56f6a0, proving the override; name inherited from ObjectClass slot 48 (Limbo, displacement 0)",
+    "rule": "R11",
+    "signal": "direct base ObjectClass slot 48 named Limbo (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
     "target": "0x623c60",
     "base": "ObjectClass",
     "base_slot": 48,
@@ -32027,12 +32043,6 @@
     "signal": "slot target 0x405990 is the same code address as AbstractClass slot 4 (IsDirty)",
     "target": "0x405990"
    },
-   "5": {
-    "name": "~TiberiumClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x628940"
-   },
    "7": {
     "name": "GetSizeMax",
     "rule": "R13",
@@ -32573,9 +32583,13 @@
    },
    "8": {
     "name": "~TriggerClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x62d180"
+    "rule": "R11",
+    "signal": "direct base AbstractClass slot 8 named ~AbstractClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x62d180",
+    "base": "AbstractClass",
+    "base_slot": 8,
+    "base_name": "~AbstractClass",
+    "mdisp": 0
    },
    "9": {
     "name": "Init",
@@ -35330,14 +35344,6 @@
     "target": "0x4c6860"
    }
   },
-  "VectorClass_BuildingClass": {
-   "0": {
-    "name": "~VectorClass_BuildingClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x43a9a0"
-   }
-  },
   "VectorClass_BuildingLightClass": {
    "0": {
     "name": "~VectorClass_BuildingLightClass",
@@ -35498,14 +35504,6 @@
     "target": "0x43ac70"
    }
   },
-  "VectorClass_FootClass": {
-   "0": {
-    "name": "~VectorClass_FootClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x4a5390"
-   }
-  },
   "VectorClass_G": {
    "0": {
     "name": "~VectorClass_G",
@@ -35624,14 +35622,6 @@
     "rule": "R1",
     "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
     "target": "0x4f37d0"
-   }
-  },
-  "VectorClass_LightConvertClass": {
-   "0": {
-    "name": "~VectorClass_LightConvertClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x401d40"
    }
   },
   "VectorClass_LightSourceClass": {
@@ -37841,9 +37831,13 @@
    },
    "8": {
     "name": "~VoxelAnimTypeClass",
-    "rule": "R1",
-    "signal": "calls operator delete 0x68298c and writes a vtable pointer into [ecx]/[esi]/[edi]",
-    "target": "0x6427a0"
+    "rule": "R11",
+    "signal": "direct base ObjectTypeClass slot 8 named ~ObjectTypeClass (displacement 0); MSVC keeps inherited virtuals at their base slot index, so this slot is the override of the same virtual",
+    "target": "0x6427a0",
+    "base": "ObjectTypeClass",
+    "base_slot": 8,
+    "base_name": "~ObjectTypeClass",
+    "mdisp": 0
    },
    "9": {
     "name": "Init",

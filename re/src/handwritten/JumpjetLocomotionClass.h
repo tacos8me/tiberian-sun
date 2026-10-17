@@ -37,7 +37,7 @@ public:
     virtual void    __stdcall Slot32();                                 // 0x4f12f0
     virtual void    __stdcall Slot39();                                 // 0x4f19f0
 
-    // ---- data members (offsets from ctor 0x004f0420) ----
+    // ---- data members (offsets from ctor 0x004f0454) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
@@ -47,11 +47,7 @@ public:
     // 2 recovered offset(s) below +0x8 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0, +0x4
-    unsigned char pad_008[0x18];
-    unsigned char m_020;  // +0x020 /* ? */; 1-byte store: mov byte ptr [esi + 0x20], bl
-    unsigned char pad_021[0x3];
-    unsigned int m_024;  // +0x024 /* ? */; 4-byte store: mov dword ptr [esi + 0x24], ebx
-    unsigned char pad_028[0x18];
+    unsigned char pad_008[0x38];
     unsigned int m_040;  // +0x040 /* ? */; 4-byte store: mov dword ptr [esi + 0x40], ebx
     unsigned int m_044;  // +0x044 /* ? */; 4-byte store: mov dword ptr [esi + 0x44], ebx
     unsigned int m_048;  // +0x048 /* ? */; 4-byte store: mov dword ptr [esi + 0x48], ebx

@@ -4,7 +4,7 @@
 //
 // RTTI class   : class ControlClass
 // vtable       : 0x0069b14c  (32 slots)
-// constructor  : 0x00460520
+// constructor  : 0x0046052b
 // vtable store : 0x00460558  (inside the ctor)
 //
 // Virtual slots are in real vtable order; each carries its target
@@ -51,10 +51,10 @@ public:
     virtual void Clicked_On(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __thiscall, returns int
     virtual void vfunc_31(int a0);  // [31] 0x00460600  // __thiscall, returns ?
 
-    ControlClass();  // 0x00460520
+    ControlClass();  // 0x0046052b
     virtual ~ControlClass();
 
-    // ---- data members (offsets from ctor 0x00460520) ----
+    // ---- data members (offsets from ctor 0x0046052b) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.

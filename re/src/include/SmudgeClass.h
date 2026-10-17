@@ -31,7 +31,7 @@ public:
     virtual void Detach(int a0, int a1);  // [10] 0x0056fb00  // __thiscall, returns ?
     virtual void What_Am_I();  // [11] 0x005e1230  // __cdecl, returns int
     virtual void Fetch_Object_Size();  // [12] 0x005e1220  // __cdecl, returns int
-    virtual void Compute_CRC(int a0);  // [13] 0x00570630  // __thiscall, returns ?
+    virtual void Compute_CRC(int a0);  // [13] 0x00570630  // __thiscall, returns char
     virtual void Owner();  // [14] 0x004059d0  // __cdecl, returns int
     virtual void Owner_HouseClass();  // [15] 0x004059e0  // __cdecl, returns int
     virtual void Fetch_Heap_ID();  // [16] 0x004059f0  // __cdecl, returns int
@@ -67,7 +67,7 @@ public:
     virtual void Is_Moving_Onto_Bridge();  // [46] 0x00570db0  // __thiscall, returns char
     virtual void Occupies_Cells();  // [47] 0x00416830  // __cdecl, returns char
     virtual void Limbo();  // [48] 0x0056f6a0  // __thiscall, returns char
-    virtual void Unlimbo(int a0, int a1);  // [49] 0x0056f810  // __thiscall, returns char
+    virtual void Unlimbo(int a0);  // [49] 0x0056f810  // __thiscall, returns void*
     virtual void Detach_All(int a0);  // [50] 0x0056fb40  // __thiscall, returns ?
     virtual void Record_The_Kill(int a0);  // [51] 0x0056ebf0  // __stdcall, returns void
     virtual void Paradrop(int a0);  // [52] 0x005700c0  // __thiscall, returns ?
@@ -78,7 +78,7 @@ public:
     virtual void Do_Shimmer();  // [57] 0x0056ec00  // __cdecl, returns void
     virtual void Exit_Object(int a0);  // [58] 0x0056ec10  // __stdcall, returns int
     virtual void Render(int a0, int a1, int a2);  // [59] 0x0056f480  // __thiscall, returns int
-    virtual void Occupy_List(int a0);  // [60] 0x005701b0  // __thiscall, returns void*
+    virtual void Occupy_List();  // [60] 0x005701b0  // __thiscall, returns short
     virtual void Draw_Pre_Render(int a0, int a1);  // [61] 0x00416840  // __stdcall, returns void
     virtual void Draw_Post_Render(int a0, int a1);  // [62] 0x00416850  // __stdcall, returns void
     virtual void Draw_It(int a0, int a1);  // [63] 0x005e1280  // __stdcall, returns void

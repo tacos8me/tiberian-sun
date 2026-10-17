@@ -22,7 +22,7 @@ public:
     virtual void vfunc_1(int a0);  // [1] 0x00557690  // __thiscall, returns char
     virtual void vfunc_2();  // [2] 0x005576a0  // __thiscall, returns ?
     virtual void vfunc_3();  // [3] 0x005576f0  // __thiscall, returns void
-    virtual void vfunc_4(int a0, int a1);  // [4] 0x005586a0  // __thiscall, returns char
+    virtual void vfunc_4(int a0, int a1);  // [4] 0x005586a0  // __thiscall, returns ?
     virtual void vfunc_5(int a0, int a1);  // [5] 0x005588d0  // __thiscall, returns ?
 
     MSOverlayAnim();  // 0x00558660

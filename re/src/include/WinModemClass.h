@@ -18,11 +18,11 @@ class WinModemClass
 {
 public:
     // ---- vtable 0x006a7620 (10 slots) ----
-    virtual void vfunc_1(int a0, int a1, int a2, int a3, int a4);  // [1] 0x00657c00  // __thiscall, returns int
+    virtual void vfunc_1(int a0);  // [1] 0x00657c00  // __thiscall, returns ?
     virtual void vfunc_2(int a0);  // [2] 0x00658050  // __thiscall, returns ?
     virtual void vfunc_3();  // [3] 0x00658060  // __cdecl, returns ?
     virtual void vfunc_4(int a0);  // [4] 0x006580b0  // __thiscall, returns ?
-    virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10);  // [5] 0x00658480  // __thiscall, returns int
+    virtual void vfunc_5(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7);  // [5] 0x00658480  // __thiscall, returns int
     virtual void vfunc_6(int a0);  // [6] 0x006586f0  // __thiscall, returns void*
     virtual void vfunc_7(int a0, int a1, int a2, int a3);  // [7] 0x006588b0  // __thiscall, returns int
     virtual void vfunc_8(int a0);  // [8] 0x00658c40  // __thiscall, returns ?

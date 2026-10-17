@@ -44,7 +44,7 @@ public:
     virtual void AI();  // [23] 0x00405ab0  // __cdecl, returns void
     virtual void Init_Theater(int a0);  // [24] 0x00406010  // __stdcall, returns void
     virtual void Read_INI(int a0);  // [25] 0x006043a0  // __thiscall, returns char
-    virtual void Write_INI(int a0);  // [26] 0x00604470  // __thiscall, returns char
+    virtual void Write_INI();  // [26] 0x00604470  // __thiscall, returns int
 
     TagTypeClass();  // 0x00603ee0
     // The destructor is declared non-virtual here: slot 0 holds a stub

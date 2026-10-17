@@ -78,7 +78,7 @@ public:
     virtual void Do_Shimmer();  // [57] 0x00617ce0  // __thiscall, returns ?
     virtual void Exit_Object(int a0);  // [58] 0x0061b480  // __stdcall, returns int
     virtual void Render(int a0, int a1, int a2);  // [59] 0x00635060  // __thiscall, returns int
-    virtual void Occupy_List(int a0);  // [60] 0x005701b0  // __thiscall, returns void*
+    virtual void Occupy_List();  // [60] 0x005701b0  // __thiscall, returns short
     virtual void Draw_Pre_Render();  // [61] 0x00610880  // __thiscall, returns ?
     virtual void Draw_Post_Render(int a0, int a1);  // [62] 0x0060fb90  // __thiscall, returns ?
     virtual void Draw_It(int a0, int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8);  // [63] 0x00636b90  // __thiscall, returns void*
@@ -98,7 +98,7 @@ public:
     virtual void In_Range(int a0, int a1);  // [77] 0x00611540  // __thiscall, returns ?
     virtual void Weapon_Range(int a0);  // [78] 0x006164c0  // __thiscall, returns ?
     virtual void Take_Damage(int a0, int a1, int a2, int a3, int a4, int a5);  // [79] 0x00632bf0  // __thiscall, returns ?
-    virtual void Scatter(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [80] 0x0063bc30  // __thiscall, returns char
+    virtual void Scatter(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [80] 0x0063bc30  // __thiscall, returns ?
     virtual void Catch_Fire();  // [81] 0x0056eca0  // __cdecl, returns int
     virtual void Fire_Out();  // [82] 0x0056ecb0  // __cdecl, returns void
     virtual void Value();  // [83] 0x0061a4d0  // __thiscall, returns int
@@ -112,7 +112,7 @@ public:
     virtual void Sell_Back(int a0);  // [91] 0x004a1160  // __thiscall, returns ?
     virtual void Set_Waypoint_Path(int a0, int a1);  // [92] 0x004a2cd0  // __thiscall, returns short
     virtual void Move(int a0);  // [93] 0x0056ed00  // __thiscall, returns ?
-    virtual void Can_Enter_Cell(int a0, int a1, int a2, int a3, int a4);  // [94] 0x00638400  // __thiscall, returns int
+    virtual void Can_Enter_Cell(int a0, int a1, int a2);  // [94] 0x00638400  // __thiscall, returns ?
     virtual void Can_Reach(int a0, int a1, int a2, int a3, int a4);  // [95] 0x004a0e70  // __stdcall, returns int
     virtual void Get_Coord(int a0);  // [96] 0x0040e6a0  // __thiscall, returns ?
     virtual void Set_Coord(int a0);  // [97] 0x004a2170  // __thiscall, returns ?
@@ -131,7 +131,7 @@ public:
     virtual void Do_MISSION_ATTACK();  // [110] 0x0063c760  // __cdecl, returns int
     virtual void Do_MISSION_CAPTURE(int a0);  // [111] 0x0049d8e0  // __thiscall, returns int
     virtual void Do_MISSION_GUARD();  // [112] 0x00639690  // __thiscall, returns int
-    virtual void Do_MISSION_GUARD_AREA();  // [113] 0x0063c170  // __cdecl, returns int
+    virtual void Do_MISSION_GUARD_AREA();  // [113] 0x0063c170  // returns void*
     virtual void Do_MISSION_HARVEST();  // [114] 0x00637b50  // __thiscall, returns int
     virtual void Do_MISSION_HUNT();  // [115] 0x00638340  // __thiscall, returns int
     virtual void Do_MISSION_MOVE();  // [116] 0x006397f0  // __thiscall, returns ?
@@ -161,7 +161,7 @@ public:
     virtual void Is_Voxel_Loaded();  // [140] 0x00612de0  // __thiscall, returns int
     virtual void Is_Ready_To_Move();  // [141] 0x0063c180  // __thiscall, returns char
     virtual void Is_Ready_To_Cloak();  // [142] 0x00613d60  // __thiscall, returns int
-    virtual void Should_Uncloak();  // [143] 0x00613c60  // __thiscall, returns char
+    virtual void Should_Uncloak();  // [143] 0x00613c60  // __thiscall, returns int
     virtual void Turret_Facing(int a0);  // [144] 0x0063e1a0  // __thiscall, returns ?
     virtual void Is_Weapon_Equipped();  // [145] 0x00616450  // __thiscall, returns ?
     virtual void Is_On_Elevation();  // [146] 0x0061cfa0  // __thiscall, returns int
@@ -181,7 +181,7 @@ public:
     virtual void Find_Docking_Bay(int a0, int a1, int a2, int a3, int a4, int a5, int a6);  // [160] 0x0061bd30  // __thiscall, returns char
     virtual void Find_Exit_Cell(int a0, int a1);  // [161] 0x0061bf10  // __thiscall, returns ?
     virtual void Turret_Coord(int a0, int a1);  // [162] 0x0060efa0  // __thiscall, returns ?
-    virtual void Desired_Load_Dir(int a0, int a1);  // [163] 0x00639890  // __thiscall, returns int
+    virtual void Desired_Load_Dir(int a0, int a1);  // [163] 0x00639890  // __thiscall, returns ?
     virtual void Fire_Direction(int a0);  // [164] 0x00639d20  // __thiscall, returns ?
     virtual void Crew_Type();  // [165] 0x00639c70  // __cdecl, returns int
     virtual void Can_Attack_Now();  // [166] 0x00616160  // __cdecl, returns int
@@ -193,7 +193,7 @@ public:
     virtual void Is_Sensed_By_Player();  // [172] 0x0061db90  // __thiscall, returns ?
     virtual void Is_Renovator();  // [173] 0x0040e720  // __cdecl, returns int
     virtual void Advance_Waypoint_Path();  // [174] 0x004a49c0  // __thiscall, returns ?
-    virtual void Response_Select();  // [175] 0x0061b2e0  // __thiscall, returns ?
+    virtual void Response_Select();  // [175] 0x0061b2e0  // __thiscall, returns int
     virtual void Response_Move();  // [176] 0x0061b340  // __thiscall, returns ?
     virtual void Response_Attack();  // [177] 0x0061b3a0  // __thiscall, returns ?
     virtual void Player_Assign_Mission(int a0, int a1, int a2);  // [178] 0x00615820  // __thiscall, returns ?
@@ -222,7 +222,7 @@ public:
     virtual void Draw_Pips(int a0, int a1, int a2);  // [201] 0x0061b4f0  // __thiscall, returns ?
     virtual void Draw_Text_Overlay(int a0, int a1, int a2);  // [202] 0x0061bc30  // __thiscall, returns ?
     virtual void Do_Uncloak(int a0);  // [203] 0x00617b90  // __thiscall, returns void*
-    virtual void Do_Cloak(int a0);  // [204] 0x00617c30  // __thiscall, returns void*
+    virtual void Do_Cloak(int a0);  // [204] 0x00617c30  // __thiscall, returns char
     virtual void Apparent_Brightness(int a0);  // [205] 0x0061d9a0  // __thiscall, returns int
     virtual void Is_Ready_To_Random_Animate();  // [206] 0x0061b490  // __thiscall, returns char
     virtual void Random_Animate();  // [207] 0x0040e790  // __cdecl, returns int

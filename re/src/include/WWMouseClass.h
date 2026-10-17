@@ -32,7 +32,7 @@ public:
     virtual void vfunc_11();  // [11] 0x006740f0  // __thiscall, returns ?
     virtual void vfunc_12();  // [12] 0x00674100  // __thiscall, returns ?
     virtual void vfunc_13(int a0);  // [13] 0x00674110  // __thiscall, returns ?
-    virtual void vfunc_14(int a0, int a1);  // [14] 0x00673150  // __thiscall, returns ?
+    virtual void vfunc_14(int a0, int a1, int a2, int a3, int a4, int a5);  // [14] 0x00673150  // __thiscall, returns ?
     virtual void vfunc_15(int a0, int a1, int a2, int a3, int a4);  // [15] 0x00673350  // __thiscall, returns ?
     virtual void vfunc_16(int a0, int a1);  // [16] 0x00673b80  // __thiscall, returns ?
 

@@ -43,7 +43,7 @@ public:
     virtual void As_Coord(int a0);  // [22] 0x00405a80  // __thiscall, returns ?
     virtual void AI();  // [23] 0x00405ab0  // __cdecl, returns void
     virtual void Init_Theater(int a0);  // [24] 0x00406010  // __stdcall, returns void
-    virtual void Read_INI(int a0);  // [25] 0x00577090  // __thiscall, returns char  // refs "Land"
+    virtual void Read_INI(int a0);  // [25] 0x00577090  // __thiscall, returns void*  // refs "Land"
     virtual void Write_INI(int a0);  // [26] 0x00405fb0  // __thiscall, returns char  // refs "Name"
     virtual void Coord_Fixup(int a0, int a1);  // [27] 0x00577330  // __stdcall, returns ?
     virtual void Get_Ownable();  // [28] 0x00418f40  // __cdecl, returns int
@@ -58,7 +58,7 @@ public:
     virtual void Who_Can_Build_Me(int a0, int a1, int a2, int a3);  // [37] 0x00571710  // __thiscall, returns ?
     virtual void Get_Cameo_Data();  // [38] 0x00571660  // __cdecl, returns int
     virtual void Get_Image_Data();  // [39] 0x00577720  // __thiscall, returns void*
-    virtual void vfunc_40(int a0, int a1, int a2);  // [40] 0x00576f10  // __stdcall, returns ?
+    virtual void vfunc_40(int a0, int a1);  // [40] 0x00576f10  // returns ?
 
     OverlayTypeClass();  // 0x00576bf0
     // The destructor is declared non-virtual here: slot 0 holds a stub
@@ -86,12 +86,12 @@ public:
     unsigned char Crate;  // +0x13b (INI key); 1-byte store: mov byte ptr [esi + 0x13b], bl
     unsigned char CrateTrigger;  // +0x13c (INI key); 1-byte store: mov byte ptr [esi + 0x13c], bl
     unsigned char m_13d;  // +0x13d /* ? */; 1-byte store: mov byte ptr [esi + 0x13d], al
-    unsigned char IsVeinholeMonster;  // +0x13e (INI key); 1-byte store: mov byte ptr [esi + 0x13e], bl
-    unsigned char IsVeins;  // +0x13f (INI key); 1-byte store: mov byte ptr [esi + 0x13f], bl
-    unsigned char DemandLoad;  // +0x140 (INI key); 1-byte store: mov byte ptr [esi + 0x140], bl
+    unsigned char m_13e;  // +0x13e /* ? */; 1-byte store: mov byte ptr [esi + 0x13e], bl
+    unsigned char m_13f;  // +0x13f /* ? */; 1-byte store: mov byte ptr [esi + 0x13f], bl
+    unsigned char m_140;  // +0x140 /* ? */; 1-byte store: mov byte ptr [esi + 0x140], bl
     unsigned char m_141;  // +0x141 /* ? */; 1-byte store: mov byte ptr [esi + 0x141], bl
     unsigned char m_142;  // +0x142 /* ? */; 1-byte store: mov byte ptr [esi + 0x142], bl
     unsigned char Overrides;  // +0x143 (INI key); 1-byte store: mov byte ptr [esi + 0x143], bl
-    unsigned char DrawFlat;  // +0x144 (INI key); 1-byte store: mov byte ptr [esi + 0x144], al
-    unsigned char IsARock;  // +0x145 (INI key); 1-byte store: mov byte ptr [esi + 0x145], bl
+    unsigned char m_144;  // +0x144 /* ? */; 1-byte store: mov byte ptr [esi + 0x144], al
+    unsigned char m_145;  // +0x145 /* ? */; 1-byte store: mov byte ptr [esi + 0x145], bl
 };

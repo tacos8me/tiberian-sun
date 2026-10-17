@@ -45,7 +45,7 @@ public:
     virtual void Is_To_Redraw();  // [24] 0x0045aff0  // __thiscall, returns char
     virtual void Set_Position(int a0, int a1);  // [25] 0x004a5ee0  // __thiscall, returns ?
     virtual void Set_Size(int a0, int a1);  // [26] 0x004a5f00  // __thiscall, returns int
-    virtual void Draw_Me(int a0);  // [27] 0x00470b60  // __thiscall, returns ?
+    virtual void Draw_Me(int a0, int a1);  // [27] 0x00470b60  // __thiscall, returns int
     virtual void Sticky_Process(int a0);  // [28] 0x004a5e30  // __thiscall, returns char
     virtual void Action(int a0, int a1);  // [29] 0x00470a10  // __thiscall, returns ?
     virtual void Clicked_On(int a0, int a1, int a2, int a3);  // [30] 0x004a5a60  // __thiscall, returns int

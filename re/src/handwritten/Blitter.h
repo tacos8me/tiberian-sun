@@ -470,7 +470,7 @@ template <class T> class BlitTransZRemapXlatAlphaZRead : public Blitter {
 }; // G
 template <class T> class BlitTransZRemapXlatAlphaZReadWrite : public Blitter {
 
-    // ---- data members (offsets from ctor 0x004619be) ----
+    // ---- data members (offsets from ctor 0x004619da) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
@@ -869,7 +869,7 @@ template <class T> class BlitTransLucent75AlphaZReadWrite : public Blitter {
 }; // G
 template <class T> class BlitTransLucent75ZRead : public Blitter {
 
-    // ---- data members (offsets from ctor 0x00461214) ----
+    // ---- data members (offsets from ctor 0x00461219) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
@@ -1691,7 +1691,7 @@ template <class T> class RLEBlitTransZRemapXlatZRead : public RLEBlitter {
 }; // E,G
 template <class T> class RLEBlitTransZRemapXlatZReadWrite : public RLEBlitter {
 
-    // ---- data members (offsets from ctor 0x00460f5d) ----
+    // ---- data members (offsets from ctor 0x00460f83) ----
     // Offsets are exact. Each member is declared at the access width
     // the constructor stores it with; the store instruction is quoted
     // as evidence. `/* width ? */` means no store could be classified.
@@ -1701,7 +1701,7 @@ template <class T> class RLEBlitTransZRemapXlatZReadWrite : public RLEBlitter {
     // 1 recovered offset(s) below +0x4 lie inside the base
     // sub-object region and are NOT declared here: they are declared and
     // compiler-checked in the base's own header -- +0x0
-    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], edx
+    unsigned int m_004;  // +0x004 /* ? */; 4-byte store: mov dword ptr [eax + 4], ecx
     unsigned int m_008;  // +0x008 /* ? */; 4-byte store: mov dword ptr [eax + 8], ecx
 
 }; // E,G

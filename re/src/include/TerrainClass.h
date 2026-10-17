@@ -79,7 +79,7 @@ public:
     virtual void Do_Shimmer();  // [57] 0x0056ec00  // __cdecl, returns void
     virtual void Exit_Object(int a0);  // [58] 0x0056ec10  // __stdcall, returns int
     virtual void Render(int a0, int a1, int a2);  // [59] 0x00623f60  // __thiscall, returns char
-    virtual void Occupy_List(int a0);  // [60] 0x005701b0  // __thiscall, returns void*
+    virtual void Occupy_List();  // [60] 0x005701b0  // __thiscall, returns short
     virtual void Draw_Pre_Render(int a0, int a1);  // [61] 0x00416840  // __stdcall, returns void
     virtual void Draw_Post_Render(int a0, int a1);  // [62] 0x00416850  // __stdcall, returns void
     virtual void Draw_It(int a0, int a1, int a2, int a3, int a4, int a5);  // [63] 0x006234b0  // __thiscall, returns ?

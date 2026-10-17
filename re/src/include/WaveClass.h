@@ -31,7 +31,7 @@ public:
     virtual void Detach(int a0, int a1);  // [10] 0x00652f20  // __thiscall, returns int
     virtual void What_Am_I();  // [11] 0x00655220  // __cdecl, returns int
     virtual void Fetch_Object_Size();  // [12] 0x00653160  // __cdecl, returns int
-    virtual void Compute_CRC(int a0);  // [13] 0x00570630  // __thiscall, returns ?
+    virtual void Compute_CRC(int a0);  // [13] 0x00570630  // __thiscall, returns char
     virtual void Owner();  // [14] 0x004059d0  // __cdecl, returns int
     virtual void Owner_HouseClass();  // [15] 0x004059e0  // __cdecl, returns int
     virtual void Fetch_Heap_ID();  // [16] 0x004059f0  // __cdecl, returns int
@@ -78,7 +78,7 @@ public:
     virtual void Do_Shimmer();  // [57] 0x0056ec00  // __cdecl, returns void
     virtual void Exit_Object(int a0);  // [58] 0x0056ec10  // __stdcall, returns int
     virtual void Render(int a0, int a1, int a2);  // [59] 0x0056f480  // __thiscall, returns int
-    virtual void Occupy_List(int a0);  // [60] 0x005701b0  // __thiscall, returns void*
+    virtual void Occupy_List();  // [60] 0x005701b0  // __thiscall, returns short
     virtual void Draw_Pre_Render(int a0, int a1);  // [61] 0x00416840  // __stdcall, returns void
     virtual void Draw_Post_Render(int a0, int a1);  // [62] 0x00416850  // __stdcall, returns void
     virtual void Draw_It(int a0, int a1);  // [63] 0x006532b0  // __thiscall, returns ?
