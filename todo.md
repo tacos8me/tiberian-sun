@@ -778,20 +778,31 @@ message loop `GetMessage=1 PeekMessage=13,607 DispatchMessage=1`; coverage
 teardown sites). At a 60M budget it stays in the same steady state, so it is not
 a corrupted loop. The shutdown/ESP path is no longer reached.
 
-### [ ] The recovery decoded memcpy's jump tables as code
-**Latent, measured by the lane that fixed the short read.** The jump tables at
-`0x683c10` and `0x683c20` were decoded as code, creating false spans at
-`0x683c14`, `0x683c89` and `0x683cf6`. As a result, entry 1 of each table is
-still not an instruction boundary and cannot be registered as a tail entry. It
-did not fire in the 20M or 60M runs, but any `memcpy` with `dest & 3 == 1` and
-`len >= 4` will still abandon its frame and corrupt the next iteration.
+### [x] The recovery decoded memcpy's jump tables as code — fixed
+**Was latent, measured by the lane that fixed the short read.** The jump tables
+at `0x683c10` and `0x683c20` were decoded as code, creating false spans at
+`0x683c14`, `0x683c89` and `0x683cf6`, so entry 1 of each table was not an
+instruction boundary and could not be registered. Any `memcpy` with
+`dest & 3 == 1` and `len >= 4` would have abandoned its frame.
 
-*Fix:* in `tools/disasm.py`, treat jump-table bytes as data and start a span at
-each target, rather than decoding the table itself. This is a recovery change,
-so it needs the full pipeline and a re-verification of the 46,051 transcriptions.
-*Done when:* entry 1 of both tables is an instruction boundary with a
-transcription, and the unaligned `dest & 3 == 1` memcpy case is exercised by a
-test (a synthetic `memcpy` call or a boot path that reaches it).
+**Fixed in `9e5703f` + `ad62afc`.** `tools/disasm.py` derives switch-table data
+regions from evidence only (a recovered `jmp dword ptr [reg*4 + base]`, then a
+run of at least two `.text` code pointers; `base+4` is tried for the unreachable
+index-0 hole). Recovery is a fixpoint over the seed and data sets, and the gap
+seeder/`_recover` stop at data. The binary has **three** hole tables, not two:
+`0x683c10` (entry 1 `0x683c20`), `0x683d98` (entry 1 `0x683da8`) and
+`0x68ce40` (entry 1 `0x68ce50`). All three entry-1 addresses are now function
+starts, transcribed (14, 12 and 14 instructions), declared and registered.
+
+Counts: recovered functions 43,564 -> **43,557**; transcriptions 46,051 ->
+**45,947**; instruction lines 919,493 -> **912,879** (100% modelled); `.text`
+code 96.09% -> **95.86%**; jump tables 264 B/12 -> **6,388 B/213**. Every one of
+the 3,186 instruction addresses that left the transcription was classified: 2,581
+inside classified tables, 249 re-decoded from corrected boundaries, 356 fill/
+table bytes. No real code was lost. The pipeline ran **exit 0** (8m51s), the
+faithfulness gate verified all 45,947 functions, the link passed, and
+`verify.py` printed `VERIFICATION PASSED`. `tools/test_tools.py` is now **68
+checks** (`test_jump_table_data`, mutation-proven).
 
 ### [ ] Shutdown corrupts ESP before the CRT exit path — not reached now
 **Measured before the MIX-read fix; the current run never gets here.** After
@@ -852,40 +863,57 @@ path. Do not chase the walk's targets individually.
 *Done when:* WinMain returns with ESP where its caller left it and the CRT exit
 path completes (or faults at a named instruction).
 
-### [ ] The 5 null-pointer teardown calls
-**The remaining runtime defect after `1c0db7e`.** The boot reports **5 unmapped
-calls, 0 inside `.text`**: `0x4b312b`, `0x4b319b`, `0x4b31a4`, `0x487d16`,
-`0x5e7c7e` (the original five `this == NULL` sites). `boot.py --strict` exits
-**4** on them; the link test's in-text gate is green again. The 9 atexit-walk
-targets and the `0x683c4c` MIX target are gone with the fixes above; these five
-are a real teardown defect of objects whose construction failed, not a symptom
-of the index read.
+### [x] The 5 null-pointer teardown calls — fixed
+**Was the remaining runtime defect after `1c0db7e`.** The boot reported **5
+unmapped calls, 0 inside `.text`**: `0x4b312b`, `0x4b319b`, `0x4b31a4`,
+`0x487d16`, `0x5e7c7e`. All five had **one root cause**: the DirectDraw surface
+COM vtable declared `Lock` with **4** stack arguments, but COM is `__stdcall`
+and `this` is the first stack argument — the game pushes **5**
+(`hEvent, flags, desc, rect, this`) at `0x487b31` with no `add esp` cleanup.
+Each Lock leaked 4 bytes; the leak walked `0x487ad0`'s frame, EBP reached 0, the
+"Allocating new surfaces" function took its skip branch, and the global
+AlternateSurface `[0x714ed4]` was left null. The five calls then went through
+that null surface (or through EBP=0).
 
-*Next:* fix the stack-imbalance tracker first (the entry below), then use the
-corrected per-callee ESP data and `TS_TRACE` to name the caller and the object
-whose construction failed at each site. Fix the null `this` or the missing
-registration; re-run `boot.py --strict`.
-*Done when:* `boot.py --strict` exits 0 and each site is named or fixed.
+**Fixed in `47d26eb`.** `IDirectDrawSurface::Lock` now pops 5. The retail oracle
+corroborates: at `0x5e7857` the retail's `[0x714ed4]` is non-null and it executes
+the fallback allocation at `0x4dfa0b`; the model now does both
+(`0x714ed4 = 0x50007600`).
 
-### [ ] The stack-imbalance tracker flags correct `__stdcall` stubs
-**A diagnostic false positive, now measured at 111,682 stub calls.** `ts_call_at`
-(`src/handwritten/Machine.h`) compares ESP after a call to the ESP before it,
-but a correct `__stdcall` stub ends at `esp_before + 4*nargs` because it pops
-its own arguments. Every correct stub therefore looks like a leak, and the real
-signal is buried. The project's stub-stack probe and the USER32 test's explicit
-`ESP == caller_ESP + 4*nargs` check are the reliable arity gates today.
+Result: **`boot.py --strict` exits 0**, **0 unmapped calls**, **0 stack
+imbalances**. New stop: **divide overflow at `0x00422a5b`** (`idiv ecx`,
+`ECX=0xffffffff`) after 16,318,827 instructions — a model defect, not the game
+(see the `idiv` entry below).
 
-**Reporting defect on top:** `tools/boot.py`'s report parser drops the
-`STACK IMBALANCE` header because it has no colon, so the boot summary hides the
-signal; the direct `build/boot_driver` still prints it.
+### [x] The stack-imbalance tracker flags correct `__stdcall` stubs — fixed
+**Was a diagnostic false positive at 111,682 stub calls.** `ts_call_at`
+(`Machine.h`) compared ESP after a call to the ESP before it, but a correct
+`__stdcall` stub ends at `esp_before + 4*nargs`.
 
-*Fix:* let the stub record the argument count it popped (a field set from
-`stub_done`, or an expected-delta hook), and compare a stub call against
-`esp_before + 4*nargs`; non-stub calls still require `esp_before`. Keep the
-mutation that proves a wrong arity is caught. Fix the boot.py parser to forward
-the header.
-*Done when:* a boot reports 0 false imbalances, a deliberately wrong arity still
-fails the gate, and `boot.py` shows the header when one exists.
+**Fixed in `d047496`.** `stub_done` records the popped argument count and the
+call depth; `ts_call_at` compares a **direct** stub call against
+`esp_before + 4*nargs` and still requires `esp_before` for a recovered callee.
+The depth test was necessary — without it, recovered callees that call a stub
+internally still produced 54,527 false positives. Measured: **111,682 -> 0**.
+Mutation proof: a stub body leaving ESP 4 bytes off reports 10,703 real
+imbalances, and `--stack-check` still catches a body/table arity disagreement.
+`tools/boot.py` now parses and forwards the bare `STACK IMBALANCE` header.
+
+### [ ] Signed `idiv` raises a false divide overflow
+**The current boot stop, and it is a model defect.** At `0x00422a59` the
+instruction is `idiv ecx` with `ECX = 0xffffffff`. The true quotient for
+`EDX:EAX = 0xffffffffffffffff`, `ECX = -1` is 1, but `ts::idiv32`/`divmod64`
+(`src/handwritten/Machine.h`) ignores its `sign` flag, divides the unsigned
+value by `-d` (=1), and raises "divide overflow". The game has not misbehaved;
+the model's arithmetic has.
+
+*Fix:* correct signed division (signed quotient/remainder, overflow only when the
+quotient does not fit in 32 bits or the divisor is zero) and add vectors for
+negative/positive combinations, remainder sign, divide-by-zero and overflow.
+A regression test for `IDirectDrawSurface::Lock`'s 5-argument pop belongs in the
+same pass (the teardown lane did not own `test_tools.py`).
+*Done when:* the boot passes `0x00422a5b` and the next stop is named; the signed
+division vectors and the Lock test are mutation-proven.
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and
