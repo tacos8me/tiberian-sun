@@ -1021,6 +1021,215 @@ int main() {
         eq("win32-message-queue", out.splitlines()[-1] if out else "", "0")
 
 
+def test_win32_blowfish():
+    """IBlowfish is a real Blowfish-ECB cipher, not an identity copy.
+
+    Regression test for the MIX-index blocker: slots 6/7 copied their input
+    unchanged, so the game's TIBSUN.MIX index decrypted to ciphertext, the
+    PKStraw read returned 0, and a wrapped operator_new exhausted the page
+    table. The four standard known-answer vectors prove the pi tables, the key
+    schedule and the 16-round Feistel; the fifth vector is the first block of
+    the shipped TIBSUN.MIX index, with the key tools/mix.py derives and the
+    plaintext PyCryptodome produces (count=17, body=75,094,416). Round-trip,
+    in-place, multi-block, tail-copy, unkeyed-copy and argument validation are
+    checked too, all through the dispatch table, including stack balance.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+static void put(ts::u32 at, const unsigned char *b, unsigned n) {
+    for (unsigned i = 0; i < n; ++i) ts::st8(at + i, b[i]);
+}
+static bool same(ts::u32 at, const unsigned char *b, unsigned n) {
+    for (unsigned i = 0; i < n; ++i) if (ts::ld8(at + i) != b[i]) return false;
+    return true;
+}
+// Call a vtable slot exactly as a transcription does.
+static ts::u32 call(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
+    for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
+    ESP.d = sp;
+    ts::ts_call_at(fn, 0x00c0ffeeu);
+    return EAX.d;
+}
+static const ts::u32 SP0 = 0x002ff000u;
+
+int main() {
+    ts::register_win32_stubs();
+    ts::u32 obj = ts::w32::make_blowfish_object();
+    ts::u32 vt = ts::ld32(obj);
+    ts::u32 setkey = ts::ld32(vt + 12u);
+    ts::u32 enc = ts::ld32(vt + 24u);
+    ts::u32 dec = ts::ld32(vt + 28u);
+    ck("slots 3/6/7 registered",
+       ts::ts_lookup(setkey) && ts::ts_lookup(enc) && ts::ts_lookup(dec));
+
+    ts::u32 key = ts::w32::alloc_block(64u, 4u);
+    ts::u32 pt = ts::w32::alloc_block(64u, 4u);
+    ts::u32 ct = ts::w32::alloc_block(64u, 4u);
+    ts::u32 out = ts::w32::alloc_block(64u, 4u);
+
+    struct V { const char *name; const unsigned char *k; unsigned klen;
+               const unsigned char *p; const unsigned char *c; };
+    // The four standard Blowfish known-answer vectors.
+    static const unsigned char k0[8] = {0,0,0,0,0,0,0,0};
+    static const unsigned char p0[8] = {0,0,0,0,0,0,0,0};
+    static const unsigned char c0[8] = {0x4E,0xF9,0x97,0x45,0x61,0x98,0xDD,0x78};
+    static const unsigned char k1[8] = {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
+    static const unsigned char c1[8] = {0x51,0x86,0x6F,0xD5,0xB8,0x5E,0xCB,0x8A};
+    static const unsigned char k2[8] = {0x01,0x23,0x45,0x67,0x89,0xAB,0xCD,0xEF};
+    static const unsigned char p2[8] = {0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11};
+    static const unsigned char c2[8] = {0x61,0xF9,0xC3,0x80,0x22,0x81,0xB0,0x96};
+    static const unsigned char k3[26] = {
+        'a','b','c','d','e','f','g','h','i','j','k','l','m',
+        'n','o','p','q','r','s','t','u','v','w','x','y','z' };
+    static const unsigned char p3[8] = {'B','L','O','W','F','I','S','H'};
+    static const unsigned char c3[8] = {0x32,0x4E,0xD0,0xFE,0xF4,0x13,0xA2,0x03};
+    // The shipped TIBSUN.MIX index: the key tools/mix.py derives from the
+    // archive's RSA block, its first 8-byte ciphertext block, and the plaintext
+    // PyCryptodome decodes (u16 count=17, u32 body=75,094,416).
+    static const unsigned char kt[56] = {
+        0x82,0x06,0x03,0x23,0x1a,0x9d,0xb6,0x43,
+        0x56,0x18,0x18,0x18,0x18,0x18,0x18,0x18,
+        0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,
+        0x18,0x18,0x18,0x18,0x18,0x18,0x18,0x18,
+        0xd2,0x3b,0x90,0xc2,0xac,0x04,0x3a,0x40,
+        0xdc,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,
+        0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb,0xbb };
+    static const unsigned char pt_c[8] = {0x2c,0xe3,0x17,0x1b,0xdb,0xec,0xb4,0x0e};
+    static const unsigned char pt_p[8] = {0x11,0x00,0x90,0xd9,0x79,0x04,0x84,0x9a};
+    static const V vecs[5] = {
+        { "0000000000000000/0000000000000000", k0, 8, p0, c0 },
+        { "FFFFFFFFFFFFFFFF/FFFFFFFFFFFFFFFF", k1, 8, k1, c1 },
+        { "0123456789ABCDEF/1111111111111111", k2, 8, p2, c2 },
+        { "abcdefghijklmnopqrstuvwxyz/BLOWFISH", k3, 26, p3, c3 },
+        { "TIBSUN.MIX index block 0", kt, 56, pt_p, pt_c },
+    };
+
+    for (unsigned i = 0; i < 5u; ++i) {
+        put(key, vecs[i].k, vecs[i].klen);
+        put(pt, vecs[i].p, 8);
+        for (unsigned j = 0; j < 8u; ++j) ts::st8(ct + j, 0xAA);
+        ts::u32 a[3] = { obj, vecs[i].klen, key };
+        ck("SetKey S_OK", call(setkey, a, 3, SP0) == 0u);
+        ck("SetKey pops 3", ESP.d == SP0 + 12u);
+        ck("key length stored exactly", ts::w32::blowfish_key_len() == vecs[i].klen);
+        bool same_key = true;
+        for (unsigned j = 0; j < vecs[i].klen; ++j)
+            if (ts::w32::blowfish_key()[j] != vecs[i].k[j]) same_key = false;
+        ck("key bytes stored exactly", same_key);
+        ts::u32 e[4] = { obj, 8u, pt, ct };
+        ck("Encrypt S_OK", call(enc, e, 4, SP0) == 0u);
+        ck("Encrypt pops 4", ESP.d == SP0 + 16u);
+        if (!same(ct, vecs[i].c, 8)) {
+            std::printf("FAIL vector %s: got ", vecs[i].name);
+            for (unsigned j = 0; j < 8u; ++j) std::printf("%02X", ts::ld8(ct + j));
+            std::printf("\n");
+            ++fails;
+        }
+        ts::u32 d[4] = { obj, 8u, ct, out };
+        ck("Decrypt S_OK", call(dec, d, 4, SP0) == 0u);
+        ck("Decrypt pops 4", ESP.d == SP0 + 16u);
+        if (!same(out, vecs[i].p, 8)) {
+            std::printf("FAIL round trip %s\n", vecs[i].name);
+            ++fails;
+        }
+    }
+
+    // Two consecutive blocks transform independently, and round-trip.
+    {
+        unsigned char p[16] = {0x11,0x11,0x11,0x11,0x11,0x11,0x11,0x11,
+                               0x22,0x22,0x22,0x22,0x22,0x22,0x22,0x22};
+        put(key, k2, 8); put(pt, p, 16);
+        ts::u32 a[3] = { obj, 8u, key };
+        call(setkey, a, 3, SP0);
+        ts::u32 e[4] = { obj, 16u, pt, ct };
+        call(enc, e, 4, SP0);
+        ck("block 0 of a 16-byte call", same(ct, c2, 8));
+        ts::u32 d[4] = { obj, 16u, ct, out };
+        call(dec, d, 4, SP0);
+        ck("two-block round trip", same(out, p, 16));
+    }
+
+    // The game passes in == out; reading both words before writing is what
+    // makes that safe.
+    {
+        unsigned char p[8] = {0,0,0,0,0,0,0,0};
+        put(key, k0, 8); put(pt, p, 8);
+        ts::u32 a[3] = { obj, 8u, key };
+        call(setkey, a, 3, SP0);
+        ts::u32 e[4] = { obj, 8u, pt, pt };
+        call(enc, e, 4, SP0);
+        ck("in-place encrypt", same(pt, c0, 8));
+        ts::u32 d[4] = { obj, 8u, pt, pt };
+        call(dec, d, 4, SP0);
+        ck("in-place round trip", same(pt, p, 8));
+    }
+
+    // len % 8: whole blocks transform, the tail is copied verbatim.
+    {
+        unsigned char p[10] = {0,0,0,0,0,0,0,0,0x5A,0xA5};
+        put(key, k0, 8); put(pt, p, 10);
+        ts::u32 a[3] = { obj, 8u, key };
+        call(setkey, a, 3, SP0);
+        ts::u32 e[4] = { obj, 10u, pt, ct };
+        call(enc, e, 4, SP0);
+        ck("whole block of a 10-byte call", same(ct, c0, 8));
+        ck("tail copied verbatim",
+           ts::ld8(ct + 8u) == 0x5A && ts::ld8(ct + 9u) == 0xA5);
+    }
+
+    // With no key the DLL copies verbatim (SetKey length 0 clears the flag).
+    {
+        unsigned char p[8] = {1,2,3,4,5,6,7,8};
+        put(pt, p, 8);
+        ts::u32 a[3] = { obj, 0u, key };
+        call(setkey, a, 3, SP0);
+        ts::u32 e[4] = { obj, 8u, pt, ct };
+        call(enc, e, 4, SP0);
+        ck("unkeyed Encrypt copies", same(ct, p, 8));
+        ts::u32 d[4] = { obj, 8u, pt, out };
+        call(dec, d, 4, SP0);
+        ck("unkeyed Decrypt copies", same(out, p, 8));
+    }
+
+    // The DLL's argument validation.
+    {
+        ts::u32 a[3] = { obj, 0u, 0u };
+        ck("SetKey(NULL) -> E_POINTER", call(setkey, a, 3, SP0) == 0x80004003u);
+        ts::u32 a2[3] = { obj, 57u, key };
+        ck("SetKey(57) -> E_INVALIDARG", call(setkey, a2, 3, SP0) == 0x80070057u);
+        ts::u32 e[4] = { obj, 8u, 0u, ct };
+        ck("Encrypt(NULL in) -> E_POINTER", call(enc, e, 4, SP0) == 0x80004003u);
+        ts::u32 d[4] = { obj, 8u, ct, 0u };
+        ck("Decrypt(NULL out) -> E_POINTER", call(dec, d, 4, SP0) == 0x80004003u);
+    }
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_blowfish.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_blowfish",
+                        "/tmp/ts_win32_blowfish.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-blowfish-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_win32_blowfish"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-blowfish", False, out)
+    else:
+        eq("win32-blowfish", out.splitlines()[-1] if out else "", "0")
+
+
 def main():
     for fn in (test_emit_masking, test_emit_in_out, test_emit_loop_tail,
                test_emit_ret, test_decl_destructor, test_slot_va,
@@ -1028,7 +1237,7 @@ def main():
                test_machine_mul, test_machine_flags, test_machine_stack,
                test_machine_mmx, test_machine_depth_guard,
                test_machine_boot_regressions, test_win32_module_exports,
-               test_win32_message_queue):
+               test_win32_message_queue, test_win32_blowfish):
         try:
             fn()
         except Exception as exc:  # a tool that raises is a failure, not a skip
