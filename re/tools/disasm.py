@@ -524,65 +524,105 @@ def print_text_attribution(data):
           f"out/text_data.json")
 
 
-def main():
-    path = sys.argv[1] if len(sys.argv) > 1 else "bin/GAME.EXE"
-    outdir = sys.argv[2] if len(sys.argv) > 2 else "out"
-    bin_ = Binary(path)
-    iat = load_imports(bin_)
-    print(f"imports: {len(iat)}")
+def pointer_table_targets(bin_, funcs, iat):
+    """Entry points the program's own code-pointer tables name.
 
-    t = bin_.text
-    text_va = t["va"]
-    text_end = t["va"] + t["vsize"]
+    A dword in a data section that points into .text is a code pointer the
+    original compiler stored. A *run* of consecutive such dwords is a table of
+    them -- a static-initializer list, a per-class dispatch table -- and such a
+    table is self-evidencing: when its other entries are already recovered
+    function starts and one entry is not, that entry is a function start the
+    sweep swallowed. 0x6bb170 holds 0x4034f0 -- the static initializer
+    `fldl 0x6988b0; fmull 0x6985f0; fstpl 0x714e28` -- inside a run of 28 dwords
+    of which the other 27 are function starts. The boot calls 0x4034f0 and
+    nothing was registered there, which is how the case was found; the table is
+    what makes it fixable without the boot.
 
-    # --- Seed function starts
-    seeds = set()
-    ep = IMAGE_BASE + bin_.pe.OPTIONAL_HEADER.AddressOfEntryPoint
-    seeds.add(ep)
-    seeds |= find_prologues(bin_)
-    print(f"prologue seeds: {len(seeds)}")
+    IAT slots are skipped. Their dwords are the addresses of import thunks in the
+    file and of stubs at run time, not code the program wrote down, and the
+    0x698000..0x698580 block would otherwise dominate the result.
 
-    # vtable entries are function starts. Slots that name a VA outside .text
-    # (e.g. .data-resident code) are collected separately and admitted below.
-    vtable_code = set()
-    vt_path = os.path.join(outdir, "classes.json")
-    if os.path.exists(vt_path):
-        d = json.load(open(vt_path))
-        for v in d.get("vtables", []):
-            va = v["vtable_va"]
-            # `continue`, not `break`: a vtable may legitimately contain a
-            # non-.text entry (a pure-virtual stub, an import thunk, or a
-            # pointer into .data). Breaking on the first one truncated the
-            # scan for 821 of 843 vtables, which is why TechnoClass was left
-            # with 146 of 214 slots unseeded.
-            # Walk the vtable until we leave .rdata/.text. The previous bound of
-            # 256 bytes (64 slots) truncated every class with more than 64
-            # virtuals -- 21 classes, 1,678 slots, and 927 manifest slots
-            # overall ended up with no function record.
-            for k in range(0, 16384, 4):
-                p = bin_.u32(va + k)
-                if p is None:
-                    break
-                if bin_.in_text(p):
-                    seeds.add(p)
-                elif bin_.section_of(p) is not None and k > 0:
-                    # A code pointer that does not live in .text. A vtable slot
-                    # may name code in another section (or, more often here,
-                    # terminate with a zero dword that is not code at all).
-                    # Record the candidate; the admission step below keeps it
-                    # only if its bytes look like a function prologue, so a
-                    # vtable's trailing zeros cannot become fake functions.
-                    if p:
-                        vtable_code.add(p)
-                    if not bin_.in_rdata(p):
-                        break
-                elif not bin_.in_rdata(p):
-                    # past the end of this vtable: a code pointer followed by
-                    # data means we have run off the table
-                    if k > 0:
-                        break
-    print(f"seeds after vtables: {len(seeds)}")
+    A candidate is also required to be an instruction boundary of the span that
+    contains it: the sweep already decoded an instruction there, so splitting
+    loses and duplicates nothing. Candidates that are not a boundary are returned
+    apart and reported -- they say the containing span's sweep is misaligned,
+    which is a defect in that span rather than a missing entry point.
 
+    Returns ({va: slot_va}, set_of_non_boundary_candidates).
+    """
+    starts = set(funcs)
+    bounds = sorted((f["va"], f["va"] + f["size"]) for f in funcs.values()
+                    if bin_.in_text(f["va"]))
+    los = [b[0] for b in bounds]
+    host_insns = {}
+
+    def host_of(va):
+        i = bisect.bisect_right(los, va) - 1
+        return bounds[i] if i >= 0 and va < bounds[i][1] else None
+
+    def is_boundary(host_start, va):
+        vas = host_insns.get(host_start)
+        if vas is None:
+            vas = host_insns[host_start] = set(i["va"] for i in
+                                               funcs[host_start]["insns"])
+        return va in vas
+
+    found = {}
+    unbounded = set()
+    for sec in bin_.sections:
+        if sec["name"] == ".text":
+            continue
+        raw = bin_.data[sec["raw"]:sec["raw"] + sec["rawsize"]]
+        n = len(raw) // 4
+        vals = [struct.unpack_from("<I", raw, 4 * i)[0] for i in range(n)]
+        i = 0
+        while i < n:
+            if sec["va"] + 4 * i in iat or not bin_.in_text(vals[i]):
+                i += 1
+                continue
+            j = i
+            while (j < n and sec["va"] + 4 * j not in iat
+                   and bin_.in_text(vals[j])):
+                j += 1
+            # A single stray dword is not a table; a run whose entries are all
+            # unknown says nothing either. A run that already names recovered
+            # function starts is a table, and its remaining entries are entries.
+            if j - i >= 2 and any(v in starts for v in vals[i:j]):
+                for k in range(i, j):
+                    va = vals[k]
+                    if va in starts:
+                        continue
+                    host = host_of(va)
+                    if not host:
+                        continue
+                    if is_boundary(host[0], va):
+                        found.setdefault(va, sec["va"] + 4 * k)
+                    else:
+                        unbounded.add(va)
+            i = j
+    return found, unbounded
+
+
+def recover(bin_, seeds, vtable_code):
+    """Run the worklist to a fixpoint and return the recovered bodies.
+
+    Every body feeds its successors back in (direct call/jmp targets, branch
+    targets, switch-table entries, code pointers pushed to a CRT helper); when
+    the worklist empties the remaining unattributed gaps are seeded and it runs
+    again, until no gap yields a new body. Nothing here invents a start: each VA
+    is the target of a real branch, the destination of a real table read, the
+    first non-padding byte of a gap, or a seed the caller supplies.
+
+    It is a function rather than a block because a start can only be *recognised*
+    from a recovered body -- a data-section pointer table names entry points, and
+    "the entry the table names is inside a span" is only visible afterwards. The
+    caller re-runs this from scratch with the new seed instead of patching a
+    recovered span, so every seed is admitted before any sweep begins and a body
+    stops at it. That is what keeps instruction coverage at exactly 100%: a split
+    made after the fact would decode the same bytes twice.
+    """
+    text_va = bin_.text["va"]
+    text_end = text_va + bin_.text["vsize"]
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
     md.detail = True
 
@@ -778,6 +818,94 @@ def main():
           f"call/jmp target; {ext_rejected} non-.text vtable pointers rejected "
           f"by the prologue byte test")
     print(f"functions recovered: {len(funcs)}")
+    return funcs
+
+
+def main():
+    path = sys.argv[1] if len(sys.argv) > 1 else "bin/GAME.EXE"
+    outdir = sys.argv[2] if len(sys.argv) > 2 else "out"
+    bin_ = Binary(path)
+    iat = load_imports(bin_)
+    print(f"imports: {len(iat)}")
+
+    t = bin_.text
+    text_va = t["va"]
+    text_end = t["va"] + t["vsize"]
+
+    # --- Seed function starts
+    seeds = set()
+    ep = IMAGE_BASE + bin_.pe.OPTIONAL_HEADER.AddressOfEntryPoint
+    seeds.add(ep)
+    seeds |= find_prologues(bin_)
+    print(f"prologue seeds: {len(seeds)}")
+
+    # vtable entries are function starts. Slots that name a VA outside .text
+    # (e.g. .data-resident code) are collected separately and admitted below.
+    vtable_code = set()
+    vt_path = os.path.join(outdir, "classes.json")
+    if os.path.exists(vt_path):
+        d = json.load(open(vt_path))
+        for v in d.get("vtables", []):
+            va = v["vtable_va"]
+            # `continue`, not `break`: a vtable may legitimately contain a
+            # non-.text entry (a pure-virtual stub, an import thunk, or a
+            # pointer into .data). Breaking on the first one truncated the
+            # scan for 821 of 843 vtables, which is why TechnoClass was left
+            # with 146 of 214 slots unseeded.
+            # Walk the vtable until we leave .rdata/.text. The previous bound of
+            # 256 bytes (64 slots) truncated every class with more than 64
+            # virtuals -- 21 classes, 1,678 slots, and 927 manifest slots
+            # overall ended up with no function record.
+            for k in range(0, 16384, 4):
+                p = bin_.u32(va + k)
+                if p is None:
+                    break
+                if bin_.in_text(p):
+                    seeds.add(p)
+                elif bin_.section_of(p) is not None and k > 0:
+                    # A code pointer that does not live in .text. A vtable slot
+                    # may name code in another section (or, more often here,
+                    # terminate with a zero dword that is not code at all).
+                    # Record the candidate; the admission step below keeps it
+                    # only if its bytes look like a function prologue, so a
+                    # vtable's trailing zeros cannot become fake functions.
+                    if p:
+                        vtable_code.add(p)
+                    if not bin_.in_rdata(p):
+                        break
+                elif not bin_.in_rdata(p):
+                    # past the end of this vtable: a code pointer followed by
+                    # data means we have run off the table
+                    if k > 0:
+                        break
+    print(f"seeds after vtables: {len(seeds)}")
+
+    # --- Entry points the pointer tables name -------------------------------
+    #
+    # A recovered body is the only place a swallowed entry point is visible, so the
+    # seed set grows by re-running the whole worklist: a start added between rounds
+    # is in `admitted` before any sweep begins, so the body that contained it stops
+    # at it instead of being truncated afterwards. Each round is deterministic and
+    # the seed set only grows, so this terminates; the loop is unbounded rather than
+    # capped because a cap would silently leave the last batch unseeded.
+    round_no = 0
+    while True:
+        funcs = recover(bin_, seeds, vtable_code)
+        found, unbounded = pointer_table_targets(bin_, funcs, iat)
+        extra = {va: slot for va, slot in found.items() if va not in seeds}
+        if not extra:
+            print(f"pointer-table rounds: {round_no}; no further entry point named")
+            break
+        round_no += 1
+        print(f"pointer-table round {round_no}: {len(extra)} entry point(s) named "
+              f"by a data-section code-pointer table; {len(unbounded)} candidate(s) "
+              f"rejected as not an instruction boundary")
+        for va in sorted(extra)[:12]:
+            print(f"  0x{va:08x} <- dword at 0x{extra[va]:08x}")
+        if len(extra) > 12:
+            print(f"  ... {len(extra) - 12} more")
+        seeds |= set(extra)
+
 
     # --- Remaining unattributed .text: jump tables, padding, and what is left
     data = classify_residual(bin_, funcs)
