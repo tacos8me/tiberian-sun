@@ -253,6 +253,7 @@
 #include "WaveClass.h"
 #include "WaypointPathClass.h"
 #include "WeaponTypeClass.h"
+#include "Win32Stubs.h"
 #include "WinModemClass.h"
 #include "WinsockInterfaceClass.h"
 #include "XSurface.h"
