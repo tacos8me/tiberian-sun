@@ -127,10 +127,12 @@ Unlock 2, GetSurfaceDesc 2).
 FILL COLOUR, measured rather than assumed. gdb attached to the retail
 GAME.EXE, breakpoint at its own `call *0x14(%edx)` (0x4883f5), captured all 11
 startup colour fills: dwSize 100, dst rectangles (0,0)-(64,64), (0,0)-(640,480),
-(0,0)-(472,480), (0,0)-(168,480), and every DDBLTFX field from +0x40 to +0x60
-zero except a transient 1 at +0x50. dwFillColor (the DirectX 6 layout's +0x40)
-is therefore 0 for every fill on this path: the game clears to black and blits
-art over it. Rendering.h reads +0x40.
+(0,0)-(472,480), (0,0)-(168,480), and dwFillColor at +0x50 = 0 for ten of them
+and 1 for one. +0x50 is the DirectX 6 DDBLTFX layout's dwFillColor (in the
+union after dwAlphaSrcConst), confirmed by the bundled ddraw.h and by the
+game's own store at 0x4883cd; +0x40 is dwAlphaDestConstBitDepth and is always
+zero. Rendering.h reads +0x50. The fills are effectively black: the game
+clears surfaces and blits art over them.
 """
 
 import os

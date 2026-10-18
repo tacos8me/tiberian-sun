@@ -1025,31 +1025,38 @@ Measured with `TS_CD`:
   **TIBSUN.MIX (75 MB)** and probed **`TITLE.PCX`/`LOCAL.MIX`** — main-menu asset
   initialization.
 
-### [ ] Main-menu asset init spins in a node list
-**The current blocker, after the movies complete.** At 1.6B the run stops at
-`0x004f698d`; a 3.2B budget (watchdog at 2.53B) reaches the same EIP
-(`0x004f698f`) with **identical coverage 78,070 / 6,166** and no new message
-pumping (`PeekMessage=248,971`). That is a real cycle, not a slow computation.
+### [x] Main-menu asset init spins in a node list — fixed (Blt arity)
+**Was the current blocker, after the movies complete.** At 1.6B the run stopped
+at `0x004f698d`; a 3.2B budget reached the same EIP with identical coverage
+78,070 / 6,166 and no new message pumping. The node list looked self-linked.
 
-The cycle is in the linked-list traversal helpers `FUN_004f6980` (follows `+8`)
-and `FUN_004f69b0` (follows `+4`) of the node class with vtable `0x69e7cc`,
-reached through `FUN_004b2f90`'s list at `DAT_007b2f9c`. The hypothesis is a node
-linked twice, or a link not cleared after the failed `TITLE.PCX`/`LOCAL.MIX`
-lookups.
+**The list was a symptom.** `IDirectDrawSurface::Blt` takes **6** words
+(`this, dest, src, srcrect, flags, fx`); the slot stub popped **5**, so each of
+the **210 Blt** calls before the menu leaked 4 bytes — **840 bytes of ESP
+drift**. That drift zeroed two stack-relative fields at the menu transition:
+`0x4db807` in `FUN_004da790` calls `FUN_005da290(1)`, which calls
+`FUN_005da880` twice with different `this` (`0x712254`, `0x712628`); both
+`[this+0x30]` fields read 0, so the second call re-inserted already-linked
+nodes. `FUN_004b2f90 -> FUN_004f6a20 -> FUN_004f69b0` then returned the node
+being inserted, setting its next pointer to itself, and `FUN_004f6980` walked
+the self-loop forever.
 
-*Next:* diagnose against the retail at `0x4f6980` (Ghidra MCP + `tools/oracle.py`
-/`wine_env.sh`); determine whether the failed asset lookup should remove/free the
-node, or whether the model's traversal is wrong. Fix the first proven cause.
+**Fixed in `df6eb6b`** (Blt pops 6; `BltFast` too), with a mutation-proven test
+in `59de3f2`. `dd_GetDisplayMode` now writes bpp at `+0x54` and caps at `+0x68`.
+Isolation: Blt=6 alone removes the cycle; Blt=5 with the display-mode fix
+reintroduces it exactly. The fixed model hits `0x4da790` once and never reaches
+`0x5da880`, matching the retail probe.
 
-**A candidate root cause from the rendering lane:** `IDirectDrawSurface::Blt`
-takes **6** words, not 5 (`this, dest, src, srcrect, flags, fx`). The current
-slot stub pops 5, so every Blt leaks 4 bytes; the retail performs **210 Blt**
-calls before the menu. That is 840 bytes of stack drift — the same class that
-produced the earlier node-list/teardown corruption. The lane was told to check
-this before chasing the list.
+**New stop: the model reaches the main menu.** At 1.6B it stops at
+`0x004dd3d9` (`sub_004dd37f +0x5a`) inside `FUN_004dd2a0`, the **main-menu
+input loop**; `GetMessage=1 PeekMessage=9,523,645 DispatchMessage=1
+CreateWindowExA=1`; coverage 77,459 / 6,121; 0 unmapped, 0 imbalances. The
+coverage is 611 instructions lower than the buggy run because the corrupted
+list path is no longer executed. The retail probe hits the same loop
+(`0x4dd2a0`, `0x4dd3d9`, key poll `0x4f1ca0`).
 
-*Done when:* coverage advances past 78,070 and the game reaches the main menu or
-the next named stop.
+*Next:* integrate `Rendering.h`/`Input.h` so the menu renders and input can
+leave the loop (the entry below).
 
 ### [x] Standalone rendering/input layer — built and tested
 **Built ahead of the menu.** `Rendering.h` provides per-surface memory with
@@ -1070,8 +1077,8 @@ PNG decoded independently, PPM pixel checked, two mutations caught). Synthetic
 640x480 frame: `out/frame_selftest.png` md5 `4e2d4e579162a2a669caa2f49b75b16d`.
 The exact integration patch is in `tools/test_runtime.py`'s docstring.
 
-### [ ] Integrate Rendering.h/Input.h into Win32Stubs.h
-**Queued behind the list-cycle lane** (it owns `Win32Stubs.h`). The patch is
+### [~] Integrate Rendering.h/Input.h into Win32Stubs.h — in progress
+**The list-cycle lane is done; this is now the active work.** The patch is
 documented in `tools/test_runtime.py`: include the two headers; route
 `make_surface`/`dd_CreateSurface`/`dd_GetDisplayMode` into `ts::rnd`; override
 surface slots 5 (Blt, **6 words**), 7 (BltFast, 6), 11 (Flip, 3), 14 (GetCaps),
@@ -1079,9 +1086,8 @@ surface slots 5 (Blt, **6 words**), 7 (BltFast, 6), 11 (Flip, 3), 14 (GetCaps),
 (SetPalette), 32 (Unlock); route the input functions and `PeekMessageA` through
 `ts::input`; dump `ts::rnd::dump_primary_png("out/frame.png")` after a run.
 
-Also fix while integrating: `dd_GetDisplayMode` writes `dwRGBBitCount` at +0x68
-(`ddsCaps.dwCaps`) instead of +0x54; `SCREEN_W/H` are 800x600 while the retail
-mode is 640x480.
+Also fix while integrating: `SCREEN_W/H` are 800x600 while the retail mode is
+640x480 (the `dd_GetDisplayMode` offset is already fixed).
 *Done when:* the boot with `TS_CD` reaches the menu (or the next named stop),
 `out/frame.png` shows the menu art rather than a blank frame, and the frame is
 diffed against the retail screenshot (`tools/wine_env.sh`). Keep `--strict` at 0.
