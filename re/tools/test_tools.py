@@ -2224,13 +2224,217 @@ int main() {
 
 
 def test_win32_heap():
-    """HeapFree returns a block to the heap and HeapAlloc reuses it, zeroed.
+    """HeapFree reuses and coalesces blocks; HeapReAlloc extends in place.
 
-    Regression test for the page-table exhaustion the GDI mission load hit:
-    HeapFree was a no-op, so an alloc/free loop touched a new 4 KB page every
-    iteration until Machine.h's fixed 32768-page table filled and page()
-    faulted. The check that matters is identity -- the same pointer comes back
-    -- plus the zeroing the CRT's atexit scan depends on.
+    Regression tests for two defects the GDI mission load hit. HeapFree was a
+    no-op, so an alloc/free loop touched a new 4 KB page every iteration until
+    Machine.h's fixed 32768-page table filled and page() faulted. Then the
+    first-fit free list still could not serve the loader's vector growth:
+    DynamicVectorClass allocates a larger buffer, copies, then frees the old
+    one, so every request exceeded the only free block and the arena grew by
+    every buffer ever allocated -- 5,664 reallocations, 679 MB. The checks that
+    matter are identity on reuse, coalescing of adjacent frees, in-place growth
+    of the last block, contents preserved, zeroed fresh bytes, and no overlap
+    between live blocks. The coalescing check is mutation-proven: disabling
+    heap_coalesce() makes the 150-byte request miss the merged block.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+static ts::u32 call(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
+    for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
+    ESP.d = sp; ts::ts_call_at(fn, 0x00c0ffeeu); return EAX.d;
+}
+static bool all_bytes(ts::u32 p, unsigned from, unsigned to, ts::u8 v) {
+    for (unsigned i = from; i < to; ++i) if (ts::ld8(p + i) != v) return false;
+    return true;
+}
+int main() {
+    ts::register_win32_stubs();
+    const ts::u32 sp = 0x002ff000u;
+    ts::u32 ha = ts::stub_va("KERNEL32", "HeapAlloc");
+    ts::u32 hf = ts::stub_va("KERNEL32", "HeapFree");
+    ts::u32 hs = ts::stub_va("KERNEL32", "HeapSize");
+    ts::u32 hr = ts::stub_va("KERNEL32", "HeapReAlloc");
+    ck("stubs resolve", ha && hf && hs && hr);
+
+    // A freed block is reused, and its contents are cleared.
+    ts::u32 a3[3] = { 0x00010000u, 0u, 100u };
+    ts::u32 p1 = call(ha, a3, 3, sp);
+    ck("first alloc", p1 != 0u);
+    for (unsigned i = 0; i < 100u; ++i) ts::st8(p1 + i, 0xa5u);
+    ts::u32 a3s[3] = { 0x00010000u, 0u, p1 };
+    ck("HeapSize", call(hs, a3s, 3, sp) == 100u);
+    ts::u32 a3f[3] = { 0x00010000u, 0u, p1 };
+    ck("free", call(hf, a3f, 3, sp) == 1u);
+    ts::u32 p2 = call(ha, a3, 3, sp);
+    ck("reuses the freed block", p2 == p1);
+    ck("reused block is zeroed", ts::ld8(p2) == 0u && ts::ld8(p2 + 99u) == 0u);
+
+    // HeapReAlloc grows the last block in place: same pointer, old contents,
+    // zeroed tail.
+    for (unsigned i = 0; i < 100u; ++i) ts::st8(p2 + i, 0x11u);
+    ts::u32 ar4[4] = { 0x00010000u, 0u, p2, 200u };
+    ts::u32 q1 = call(hr, ar4, 4, sp);
+    ck("realloc last block stays put", q1 == p2);
+    ck("realloc preserves contents", all_bytes(q1, 0u, 100u, 0x11u));
+    ck("realloc zeroes the new tail", all_bytes(q1, 100u, 200u, 0u));
+    ts::u32 a3s2[3] = { 0x00010000u, 0u, q1 };
+    ck("HeapSize after realloc", call(hs, a3s2, 3, sp) == 200u);
+
+    // Three live blocks must not overlap and must keep their own contents.
+    ts::u32 a = call(ha, a3, 3, sp);
+    ts::u32 b = call(ha, a3, 3, sp);
+    ts::u32 c = call(ha, a3, 3, sp);
+    ck("three live blocks are distinct",
+       a && b && c && a != b && b != c && a != c);
+    ck("no overlap between live blocks", a + 100u <= b && b + 100u <= c);
+    for (unsigned i = 0; i < 100u; ++i) {
+        ts::st8(a + i, 0xa1u); ts::st8(b + i, 0xb2u); ts::st8(c + i, 0xc3u);
+    }
+    ck("contents are per-block", all_bytes(a, 0u, 100u, 0xa1u) &&
+                                 all_bytes(b, 0u, 100u, 0xb2u) &&
+                                 all_bytes(c, 0u, 100u, 0xc3u));
+
+    // Coalescing: two adjacent freed blocks together satisfy a request that
+    // neither can alone, and the merged block is the one handed back.
+    ts::u32 a3b[3] = { 0x00010000u, 0u, b };
+    call(hf, a3b, 3, sp);
+    ts::u32 a3a[3] = { 0x00010000u, 0u, a };
+    call(hf, a3a, 3, sp);
+    ts::u32 a3d[3] = { 0x00010000u, 0u, 150u };
+    ts::u32 d = call(ha, a3d, 3, sp);
+    ck("coalesced free blocks satisfy a larger request", d == a);
+    ck("coalesced block does not overlap the live block", d + 150u <= c);
+
+    // A realloc that cannot extend in place moves the block and preserves it.
+    ts::u32 e = call(ha, a3, 3, sp);
+    ts::u32 f = call(ha, a3, 3, sp);
+    ck("realloc test blocks are adjacent", f >= e + 100u);
+    for (unsigned i = 0; i < 100u; ++i) ts::st8(e + i, 0x5au);
+    ts::u32 ar4b[4] = { 0x00010000u, 0u, e, 400u };
+    ts::u32 g = call(hr, ar4b, 4, sp);
+    ck("realloc that cannot extend moves", g != e);
+    ck("moved realloc preserves contents", all_bytes(g, 0u, 100u, 0x5au));
+    ck("moved realloc zeroes the tail", all_bytes(g, 100u, 400u, 0u));
+    ck("moved block does not overlap", g + 400u <= f || f + 100u <= g);
+
+    // The mission loader's own pattern (DynamicVectorClass, 0x0055b050):
+    // allocate a slightly larger buffer, copy, free the old one. The arena
+    // must not grow by every buffer ever allocated -- without coalescing this
+    // 400-step run grows by the cumulative ~6.8 MB instead of a few KB.
+    {
+        ts::u32 base = ts::w32::bump();
+        ts::u32 cur = 0, cursz = 0;
+        for (unsigned k = 0; k < 400u; ++k) {
+            ts::u32 nsz = 1200u + k * 80u;
+            ts::u32 a3n[3] = { 0x00010000u, 0u, nsz };
+            ts::u32 np = call(ha, a3n, 3, sp);
+            if (cur) {
+                for (unsigned i = 0; i < cursz; ++i)
+                    ts::st8(np + i, ts::ld8(cur + i));
+                ts::u32 a3o[3] = { 0x00010000u, 0u, cur };
+                call(hf, a3o, 3, sp);
+            }
+            cur = np; cursz = nsz;
+        }
+        ts::u32 grew = ts::w32::bump() - base;
+        ck("growth pattern reuses memory", grew < 4u * 33120u);
+    }
+
+    // Grow into a free successor: free y, then realloc x (which is adjacent to
+    // y) past its own capacity. The pointer stays and x must remain live.
+    ts::u32 x = call(ha, a3, 3, sp);
+    ts::u32 y = call(ha, a3, 3, sp);
+    ck("absorb test blocks are adjacent", y >= x + 100u);
+    for (unsigned i = 0; i < 100u; ++i) ts::st8(x + i, 0x77u);
+    ts::u32 a3y[3] = { 0x00010000u, 0u, y };
+    call(hf, a3y, 3, sp);
+    ts::u32 ar4x[4] = { 0x00010000u, 0u, x, 150u };
+    ts::u32 xr = call(hr, ar4x, 4, sp);
+    ck("realloc absorbs a free successor", xr == x);
+    ck("absorbed realloc preserves contents", all_bytes(xr, 0u, 100u, 0x77u));
+    ck("absorbed realloc zeroes the tail", all_bytes(xr, 100u, 150u, 0u));
+    ck("absorbed block stays live", !ts::w32::heap_is_free(xr - 16u));
+
+    // A larger request cannot use a 100-byte block.
+    ts::u32 a3big[3] = { 0x00010000u, 0u, 4096u };
+    ts::u32 p3 = call(ha, a3big, 3, sp);
+    ck("larger request is a new block", p3 != 0u && p3 != p1);
+
+    // Freeing a pointer outside the model's heap is ignored, not recorded.
+    ts::u32 a3bad[3] = { 0x00010000u, 0u, 0x00401000u };
+    ck("foreign free is ignored", call(hf, a3bad, 3, sp) == 1u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    cpp = "/tmp/ts_win32_heap.cpp"
+    open(cpp, "w").write(src)
+
+    def build(include_dir, exe):
+        return subprocess.run(["g++", "-std=c++03", "-O0", "-I" + include_dir,
+                               "-Isrc/include", "-Ibuild/shim", "-o", exe, cpp],
+                              capture_output=True)
+
+    r = build("src/include", "/tmp/ts_win32_heap")
+    if r.returncode != 0:
+        check("win32-heap-build", False,
+              r.stderr.decode("utf-8", "replace")[:400])
+        return
+    r = subprocess.run(["/tmp/ts_win32_heap"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-heap", False, out)
+    else:
+        eq("win32-heap", out.splitlines()[-1] if out else "", "0")
+
+    # Mutation: disable coalescing. The two adjacent freed 100-byte blocks no
+    # longer merge, so the 150-byte request misses the block it must reuse.
+    with open(os.path.join("src", "include", "Win32Stubs.h")) as fh:
+        real = fh.read()
+    anchors = [
+        "if (q && heap_is_free(q) && heap_adjacent(p, q))",
+        "if (a && heap_is_free(a) && heap_adjacent(a, p))",
+    ]
+    check("win32-heap-mutation-anchor", all(x in real for x in anchors),
+          "coalesce branch not found; update the mutation")
+    if all(x in real for x in anchors):
+        mut = os.path.join("/tmp", "ts_heap_mut")
+        os.makedirs(mut, exist_ok=True)
+        text = real
+        for x in anchors:
+            text = text.replace(x, "if (false && " + x[4:])
+        with open(os.path.join(mut, "Win32Stubs.h"), "w") as fh:
+            fh.write(text)
+        b = build(mut, "/tmp/ts_win32_heap_mut")
+        if b.returncode != 0:
+            check("win32-heap-mutation-build", False,
+                  b.stderr.decode("utf-8", "replace")[:300])
+        else:
+            m = subprocess.run(["/tmp/ts_win32_heap_mut"], capture_output=True)
+            check("win32-heap-mutation-caught", m.returncode != 0,
+                  "disabling coalescing did not fail the test")
+
+
+def test_win32_heap_arena():
+    """The stub heap never hands out the surface arena's window.
+
+    Regression test for the blue "mission frame": the heap bumped up from
+    0x50000000, crossed 0x60000000 where Rendering.h kept the surface arena,
+    and overwrote the primary surface, so the frame was raw heap bytes read as
+    RGB565. The arena now lives at 0x10000000, and alloc_block reserves
+    [0x60000000, 0x68000000) so a future arena move cannot reintroduce it.
+    The test creates a real primary surface through ts::rnd, places a probe in
+    the reserved window, allocates >256 MB through the stub heap, and requires
+    both to survive. Mutation-proven: removing the skip makes the third block
+    land on the probe.
     """
     import subprocess
     src = r'''
@@ -2249,44 +2453,102 @@ int main() {
     const ts::u32 sp = 0x002ff000u;
     ts::u32 ha = ts::stub_va("KERNEL32", "HeapAlloc");
     ts::u32 hf = ts::stub_va("KERNEL32", "HeapFree");
-    ts::u32 hs = ts::stub_va("KERNEL32", "HeapSize");
-    ck("stubs resolve", ha && hf && hs);
-    ts::u32 a3[3] = { 0x00010000u, 0u, 100u };
-    ts::u32 p1 = call(ha, a3, 3, sp);
-    ck("first alloc", p1 != 0u);
-    for (unsigned i = 0; i < 100u; ++i) ts::st8(p1 + i, 0xa5u);
-    ts::u32 a3s[3] = { 0x00010000u, 0u, p1 };
-    ck("HeapSize", call(hs, a3s, 3, sp) == 100u);
-    ts::u32 a3f[3] = { 0x00010000u, 0u, p1 };
-    ck("free", call(hf, a3f, 3, sp) == 1u);
-    ts::u32 p2 = call(ha, a3, 3, sp);
-    ck("reuses the freed block", p2 == p1);
-    ck("reused block is zeroed", ts::ld8(p2) == 0u && ts::ld8(p2 + 99u) == 0u);
-    // A larger request cannot use the 100-byte block.
-    ts::u32 a3b[3] = { 0x00010000u, 0u, 4096u };
-    ts::u32 p3 = call(ha, a3b, 3, sp);
-    ck("larger request is a new block", p3 != 0u && p3 != p1);
-    // Freeing a pointer outside the model's heap is ignored, not recorded.
-    ts::u32 a3bad[3] = { 0x00010000u, 0u, 0x00401000u };
-    ck("foreign free is ignored", call(hf, a3bad, 3, sp) == 1u);
+    ck("stubs resolve", ha && hf);
+
+    // The integrated primary surface, created the way the game creates it.
+    ts::rnd::Surface *prim =
+        ts::rnd::create_simple(0x006beed8u, 640u, 480u, 16u, true);
+    ck("primary surface created", prim != 0 && prim->pixels != 0u);
+    // A probe in the reserved window: what a future arena move back to
+    // 0x60000000 would look like.
+    ts::rnd::Surface probe;
+    probe.pixels = (ts::u32)ts::w32::SURFACE_ARENA_BASE;
+    probe.width = 64u; probe.height = 64u; probe.bpp = 16u;
+    probe.pitch = 128u;
+    const ts::u32 N = 64u * 64u;
+    for (ts::u32 i = 0; i < N; ++i) {
+        ts::st16(prim->pixels + i * 2u, (ts::u16)(i * 7u + 3u));
+        ts::st16(probe.pixels + i * 2u, (ts::u16)(i * 13u + 5u));
+    }
+
+    // More than 256 MB through the stub heap: enough to reach 0x60000000 from
+    // 0x50000000. Without the reserved window the heap lands on the probe.
+    const ts::u32 MB100 = 100u * 1024u * 1024u;
+    ts::u32 blocks[3];
+    for (unsigned k = 0; k < 3u; ++k) {
+        ts::u32 a3[3] = { 0x00010000u, 0u, MB100 };
+        blocks[k] = call(ha, a3, 3, sp);
+        ck("large heap allocation", blocks[k] != 0u);
+        ck("heap skips the surface arena",
+           blocks[k] + MB100 <= (ts::u32)ts::w32::SURFACE_ARENA_BASE ||
+           blocks[k] >= (ts::u32)ts::w32::SURFACE_ARENA_END);
+    }
+
+    bool prim_ok = true, probe_ok = true;
+    for (ts::u32 i = 0; i < N; ++i) {
+        if (ts::ld16(prim->pixels + i * 2u) != (ts::u16)(i * 7u + 3u))
+            prim_ok = false;
+        if (ts::ld16(probe.pixels + i * 2u) != (ts::u16)(i * 13u + 5u))
+            probe_ok = false;
+    }
+    ck("primary surface unchanged", prim_ok);
+    ck("reserved-window surface unchanged", probe_ok);
+
+    // The heap still frees and reuses after the large blocks.
+    for (unsigned k = 0; k < 3u; ++k) {
+        ts::u32 a3[3] = { 0x00010000u, 0u, blocks[k] };
+        call(hf, a3, 3, sp);
+    }
+    ts::u32 a3s[3] = { 0x00010000u, 0u, 64u };
+    ts::u32 r = call(ha, a3s, 3, sp);
+    ck("heap reuses a large block", r == blocks[0] || r == blocks[2]);
+
     std::printf("%d\n", fails);
     return fails ? 1 : 0;
 }
 '''
-    open("/tmp/ts_win32_heap.cpp", "w").write(src)
-    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
-                        "-Ibuild/shim", "-o", "/tmp/ts_win32_heap",
-                        "/tmp/ts_win32_heap.cpp"], capture_output=True)
+    cpp = "/tmp/ts_win32_heap_arena.cpp"
+    open(cpp, "w").write(src)
+
+    def build(include_dir, exe):
+        return subprocess.run(["g++", "-std=c++03", "-O0", "-I" + include_dir,
+                               "-Isrc/include", "-Ibuild/shim", "-o", exe, cpp],
+                              capture_output=True)
+
+    r = build("src/include", "/tmp/ts_win32_heap_arena")
     if r.returncode != 0:
-        check("win32-heap-build", False,
+        check("win32-heap-arena-build", False,
               r.stderr.decode("utf-8", "replace")[:400])
         return
-    r = subprocess.run(["/tmp/ts_win32_heap"], capture_output=True)
+    r = subprocess.run(["/tmp/ts_win32_heap_arena"], capture_output=True)
     out = r.stdout.decode("utf-8", "replace").strip()
     if out and out.splitlines()[-1] != "0":
-        check("win32-heap", False, out)
+        check("win32-heap-arena", False, out)
     else:
-        eq("win32-heap", out.splitlines()[-1] if out else "", "0")
+        eq("win32-heap-arena", out.splitlines()[-1] if out else "", "0")
+
+    # Mutation: remove the reserved-window skip. The third 100 MB block then
+    # starts at 0x5c800020 and runs over the probe at 0x60000000.
+    with open(os.path.join("src", "include", "Win32Stubs.h")) as fh:
+        real = fh.read()
+    anchor = ("if (b < (u32)SURFACE_ARENA_END && "
+              "b + size + 16u > (u32)SURFACE_ARENA_BASE)")
+    check("win32-heap-arena-mutation-anchor", anchor in real,
+          "reserved-window skip not found; update the mutation")
+    if anchor in real:
+        mut = os.path.join("/tmp", "ts_arena_mut")
+        os.makedirs(mut, exist_ok=True)
+        with open(os.path.join(mut, "Win32Stubs.h"), "w") as fh:
+            fh.write(real.replace(anchor, "if (false && " + anchor[4:]))
+        b = build(mut, "/tmp/ts_win32_heap_arena_mut")
+        if b.returncode != 0:
+            check("win32-heap-arena-mutation-build", False,
+                  b.stderr.decode("utf-8", "replace")[:300])
+        else:
+            m = subprocess.run(["/tmp/ts_win32_heap_arena_mut"],
+                               capture_output=True)
+            check("win32-heap-arena-mutation-caught", m.returncode != 0,
+                  "removing the reserved window did not fail the test")
 
 
 def test_page_table():
@@ -3171,7 +3433,8 @@ def main():
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,
                test_win32_dialog, test_win32_button_click,
-               test_win32_listbox, test_win32_heap, test_page_table,
+               test_win32_listbox, test_win32_heap, test_win32_heap_arena,
+               test_page_table,
                test_win32_dialog_ex,
                test_win32_surface_lock, test_win32_surface_blt,
                test_win32_render_input,
