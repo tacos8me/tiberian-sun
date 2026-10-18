@@ -114,7 +114,10 @@ entries). A 1.2e12-budget run reached 478,970,534,425 instructions and faulted a
 **7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`;
 7,673,235 below `0x1000`; 98,202 elsewhere), wild registers and a black frame.
 The page table is growable now, so this is a new pointer-table/stack defect, not
-the O(n²) estimate. **The tactical phase is not reached and no mission is
+the O(n²) estimate. A 500B-budget reproduction faulted at the same EIP after
+478,968,556,708 instructions with 1,023,748 pages and 7,734,028 unmapped calls
+(7 in `.text`, same call sites), so the flood reproduces in character but not
+bit-for-bit in length. **The tactical phase is not reached and no mission is
 rendered.** The VQA frame-wait path is also stub-bound, so movie pacing is not
 retail pacing. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read;
 the button art is not painted (no `WM_PAINT` to children; retail does not draw it

@@ -285,9 +285,12 @@ count and capacity both `0x27146`, growth step 10) and has not finished. A
 elsewhere — with wild registers across the top of the 4 GiB space and a **black
 frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips). That is a new
 defect (a pointer table or stack going wild), not the O(n²) estimate: the loader
-got far past 100B before it happened. **The tactical phase is not reached and no
-mission frame is rendered.** `tools/boot.py --strict` exits **0** and the link
-test passes.
+got far past 100B before it happened. A 500B-budget reproduction this session
+faulted at the same EIP after **478,968,556,708** instructions with 1,023,748
+pages and 7,734,028 unmapped calls (7 in `.text`, same `0x606060` call sites),
+so the flood reproduces in character but the exact length varies slightly
+between runs. **The tactical phase is not reached and no mission frame is
+rendered.** `tools/boot.py --strict` exits **0** and the link test passes.
 
 **The menu is selectable, and the game leaves it.** LANGUAGE.DLL `RT_DIALOG` 226
 is the menu (306x239 at (167,187)); its six `BS_OWNERDRAW` buttons are:

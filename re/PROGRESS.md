@@ -119,10 +119,14 @@ reached **478,970,534,425 instructions** and faulted at `0x00422de0` with
 elsewhere — with wild registers across the top of the 4 GiB space and a **black
 frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips; coverage
 158,971 / 9,630). The loader got far past 100B, so this is a new defect (a
-pointer table or stack going wild), not the O(n²) estimate. **The tactical phase
-is not reached and no mission is rendered.** A diagnosis lane is finding the
-first wild call. The VQA frame-wait is stub-bound (~68M `PeekMessageA` in 600 s),
-so ESC is the practical route meanwhile; it is secondary.
+pointer table or stack going wild), not the O(n²) estimate. A 500B-budget
+reproduction this session faulted at the same EIP after **478,968,556,708**
+instructions with 1,023,748 pages and 7,734,028 unmapped calls (7 in `.text`,
+same `0x606060` call sites), so the flood reproduces in character but the exact
+length varies slightly between runs. **The tactical phase is not reached and no
+mission is rendered.** A diagnosis lane is finding the first wild call. The VQA
+frame-wait is stub-bound (~68M `PeekMessageA` in 600 s), so ESC is the practical
+route meanwhile; it is secondary.
 
 **The recovery was corrected (`9e5703f` + `ad62afc`).** 213 static switch tables
 are now data (was 12), including three hole tables (`0x683c10`, `0x683d98`,

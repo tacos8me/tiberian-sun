@@ -324,7 +324,10 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
   2,097,152 pages, 1 refused), **7,771,444 unmapped calls** (7 in `.text`, all
   `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere),
   coverage 158,971 / 9,630, **black frame** (9 surfaces, 171 blits, 10,484 locks,
-  0 fills/flips). The **tactical phase is not reached**.
+  0 fills/flips). A 500B-budget reproduction faulted at the same EIP after
+  478,968,556,708 instructions with 1,023,748 pages and 7,734,028 unmapped calls
+  (7 in `.text`, same call sites); the flood reproduces in character, not
+  bit-for-bit in length. The **tactical phase is not reached**.
 
 The interpreter is **12-14x faster** than it was (~400M instructions/s vs
 ~28.6M/s) with byte-identical machine state: `-O2 -fno-pie`, a positive-hit page

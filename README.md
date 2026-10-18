@@ -54,7 +54,10 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
   `0x606060` from `sub_004f3b40`, 7,673,235 below `0x1000`, 98,202 elsewhere —
   with wild registers and a **black frame** (9 surfaces, 171 blits, 10,484 locks,
   0 fills/flips). The page table is now dynamically growable; the fault is a new
-  defect (a pointer table or stack going wild), not the O(n²) estimate. **The
+  defect (a pointer table or stack going wild), not the O(n²) estimate. A
+  500B-budget reproduction faulted at the same EIP after 478,968,556,708
+  instructions with 1,023,748 pages and 7,734,028 unmapped calls (7 in `.text`),
+  so the flood reproduces in character but not bit-for-bit in length. **The
   tactical phase is not reached and no mission is rendered.** The VQA frame-wait
   path is also stub-bound, so movie pacing is not retail pacing.
 - **The GDI loading screen renders.** At a 4B budget the ESC-skip run stops at

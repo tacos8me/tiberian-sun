@@ -78,10 +78,14 @@ calls** — 7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below
 `0x1000`; 98,202 elsewhere — with wild registers across the top of the 4 GiB
 space and a **black frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips;
 coverage 158,971 / 9,630). The loader got far past 100B, so this is a new defect
-(a pointer table or stack going wild), not the O(n²) estimate. **The tactical
-phase is not reached and no mission is rendered.** Separately, the VQA
-frame-wait path is stub-bound: the movie advances only as fast as the model
-services its wait, so playback pacing is not yet the retail pacing.
+(a pointer table or stack going wild), not the O(n²) estimate. A 500B-budget
+reproduction this session faulted at the same EIP after **478,968,556,708**
+instructions with 1,023,748 pages and 7,734,028 unmapped calls (7 in `.text`,
+same `0x606060` call sites), so the flood reproduces in character but the exact
+length varies slightly between runs. **The tactical phase is not reached and no
+mission is rendered.** Separately, the VQA frame-wait path is stub-bound: the
+movie advances only as fast as the model services its wait, so playback pacing
+is not yet the retail pacing.
 
 Boot states, all with **0 unmapped calls and 0 stack imbalances**:
 - 20M: stop `0x00488800`, coverage **55,774 / 4,764**, pages **3,538 / 32,768**.

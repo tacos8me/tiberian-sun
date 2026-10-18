@@ -1330,6 +1330,14 @@ This is a new defect, not the O(n²) estimate failing: the loader ran far past
 targets. The page-table refusal is one symptom; the first wild call predates
 it.
 
+A 500B-budget reproduction (2026-10-18) faulted at the same EIP after
+**478,968,556,708** instructions, depth 100, with **1,023,748 / 2,097,152** pages
+and **7,734,028** unmapped calls (7 in `.text`, the same `0x606060` sites from
+`0x004f3b5f`/`0x004f3b6d`; 7,635,819 below `0x1000`; 98,202 elsewhere), coverage
+158,971 / 9,630, the same render counters (9 surfaces, 171 blits, 10,484 locks,
+0 flips) and a 0-non-black frame. The flood reproduces in character; the exact
+length is not bit-identical between runs (479B vs 478.97B, ~0.0004%).
+
 **Context on the O(n²) loader** (still the cost): 22 `DynamicVectorClass`
 objects at `this+0x1280` (base `0x710cc8`, stride `0x18`) in `sub_005a35b0`
 (loop `0x5a35cb`..`0x5a3760`), called from `sub_005a1ba8` at `0x5a1bb8`; each
