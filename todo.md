@@ -1209,29 +1209,85 @@ game's own `MixFileClass` lookup, `GDI1A.MAP` is in **MAPS01.MIX on CD1** and
 - Gates: `verify.py` PASSED, `test_tools.py` **79**, `test_runtime.py` 101,
   `--strict` 0, link OK.
 
-### [ ] The page table is exhausted during the mission load
-**The current blocker.** `Machine.h`'s `PageTable::SLOTS` is 32,768 (128 MB).
-During `GDI1A.MAP`'s load the model touches every slot, `page()` degrades to a
-full-table probe and faults at `0x00a006b0` with `pages-used 32768/32768`.
-`HeapFree` now reuses freed blocks, but this path's growth is not through the
-model's `HeapFree` (the game suballocates from its own arena), so the fault step
-is unchanged.
+### [x] The page table is exhausted during the mission load — fixed
+**Was the current blocker.** `PageTable::SLOTS` was 32,768 (128 MB); the
+`GDI1A.MAP` load touched every slot and faulted at `0x00a006b0` with
+`pages-used 32768/32768`.
 
-*Next:* measure the actual peak demand during the load. If it is legitimate,
-make the page table dynamically growable (or hash-based) rather than a fixed
-array, and keep exhaustion a **reported fault** — never silent aliasing. If the
-growth is a model leak (an allocation that should have been freed), fix the leak
-instead of only raising the capacity.
-*Done when:* the mission load passes `0x00a006b0` and the next stop is named
-(ideally the mission rendering); peak pages-used is recorded.
+**The demand is legitimate and measured.** With temporary instrumentation
+(per-page first-toucher, 64 MB region histogram, HeapAlloc size/caller
+attribution) on the ESC-skip timeline:
+- Peak **182,757 pages at 3.2e9 (748 MB, 3 growths)**; **377,796 pages at 4e9
+  (1.44 GiB, 4 growths)**; growth is linear (~1 page per 4,100 instructions) and
+  no fault occurs.
+- **97%** of pages are touched inside `KERNEL32!HeapAlloc`; `VirtualAlloc` is
+  3,568; 791 are pre-`insn()` startup pages.
+- Of 7,353 fresh-page HeapAlloc calls (726,109,836 B), **5,664 calls /
+  679,369,440 B (93.5%) come from the `DynamicVectorClass` resize at
+  `0x0055b050`** (`code_0091.cpp:7808`): it allocates `capacity*8`, copies and
+  frees the old buffer; sizes run 1,200-273,680 B.
+- It is **not** a reuse failure: 7,859 HeapAlloc / 6,836 HeapFree, and the free
+  list length was 0 at all 44 samples. A growing reallocation cannot fit the
+  block it just freed; the bump cursor advances by the sum of intermediates.
+  The retail peak for that vector is one allocation (<=273,680 B). The model has
+  no decommit, so its footprint is every page ever touched, not the game's peak
+  live set — legitimate for a 4 GiB address-space model.
+
+**Fixed in `27e90dc`.** `PageTable` is now a growable open-addressed table:
+doubles at 75% load up to 2^21 slots, rehashes deterministically in old-array
+order, and **still refuses with a reported fault** (`page table exhausted`,
+counted in `refused`) instead of aliasing. `page_in()` exposes the lookup for
+tests; `page()` wraps the singleton. `boot_driver`/`boot.py` report
+`used/cap/peak/growths/refused`. `test_page_table` covers growth past 32,768
+with a byte-exact 40,000-page round-trip, reported exhaustion with live pages
+untouched, stable identity across rehash, distinct host pages, and deterministic
+layout; mutation-proven both ways. `test_tools.py` is **84 checks**.
+
+Measured on committed code (4B budget, ESC at 192,000): stop `0x0055b0b8` in
+`sub_0055b09a`, depth 29; **pages 377,796 of 524,288 (peak 377,796, growths 4,
+refused 0)**; `GetMessage=19 PeekMessage=13,549,425 DispatchMessage=19`;
+0 unmapped, `--strict` 0; render 8 surfaces, 12 blits, 0 fills, 769 locks,
+0 flips; frame 640x480, 191,093 non-black.
+
+**The mission still does not render** — see the two entries below.
+
+### [ ] The mission load is dominated by vector-growth reallocations
+**Measured; the load is correct but slow and memory-hungry.** 5,664
+`DynamicVectorClass` reallocations at `0x0055b050` account for 93.5% of the
+fresh-page HeapAlloc bytes (679 MB cumulative) and ~1.5e9 instructions, and
+they drive the 1.44 GiB footprint because the model has no decommit. The retail
+does one allocation (<=273,680 B) because a real heap extends/coalesces in
+place.
+
+*Fix:* in `Win32Stubs.h`'s heap, coalesce free blocks and extend the most
+recent block in place when a reallocation is the last live block (or add a
+size-class free list). Do not change allocation semantics: the game must still
+see distinct blocks and valid contents.
+*Done when:* the mission load's peak pages and instruction count drop
+substantially, no correctness test regresses, and the load either completes or
+reaches the next named blocker faster.
+
+### [ ] The mission writes pixels but never presents a frame
+**Measured after the page-table fix.** The 4B run reports 8 surfaces, **769
+locks, 12 blits, 0 fills, 0 flips**; the post-ESC frame is a structured blue
+banded/grid pattern, and the stop is inside the vector copy loop
+(`sub_0055b09a`) with ~29k 8-byte entries being copied. The game is writing
+pixels but never presenting a game frame.
+
+*Next:* investigate the render path after the load. Is the game drawing to an
+offscreen/back surface that is never flipped? Are `Fill`/`Flip` calls missing
+from the stub vtable, or does the game use `Blt` to the primary? Compare with
+the retail `+ddraw` trace during mission load. The blue banded/grid frame may be
+a loading screen or a partially initialized surface; identify it.
+*Done when:* a mission frame is presented and dumped, or the next render blocker
+is named precisely.
 
 ### [ ] The VQA player's frame-wait is stub-bound
 **Secondary; skipping works.** The movie player's frame-wait loop makes ~68M
 `PeekMessageA` calls in 600 s, so model time barely advances during movies. The
 clock now moves with executed instructions, but the movie pacing still consumes
-the budget. ESC at model-ms 192,000 is the practical route to the mission load
-until the clock/pacing model is improved. Scope this after the page-table fix;
-do not let it mask real progress.
+the budget. The committed `re/tools/input_scripts/esc_skip.txt` is the practical
+route to the mission load until the clock/pacing model is improved.
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and

@@ -1,0 +1,15 @@
+# Default timeline plus ESC at 192,000 ms to skip the GDI intro movie.
+@170000 mousemove 320 220
+@170100 lbuttondown
+@170150 lbuttonup
+@180000 mousemove 200 252
+@180100 lbuttondown
+@180150 lbuttonup
+@185000 mousemove 200 240
+@185100 lbuttondown
+@185150 lbuttonup
+@190000 mousemove 355 397
+@190100 lbuttondown
+@190150 lbuttonup
+@192000 keydown 0x1b
+@192100 keyup 0x1b
