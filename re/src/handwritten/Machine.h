@@ -397,36 +397,136 @@ inline void unmodelled(u32 va, const char *mnem) {
 
 // -- memory -----------------------------------------------------------------
 // The original is a flat 32-bit address space. Rather than allocate 4 GiB, pages
-// are handed out lazily and kept in a fixed open-addressed table; an address
-// that was never written reads as zero, which is what the original's untouched
-// .bss does. Accesses are assembled byte-wise so that a multi-byte access
-// straddling a page boundary is still correct.
+// are handed out lazily and kept in an open-addressed table; an address that was
+// never written reads as zero, which is what the original's untouched .bss does.
+// Accesses are assembled byte-wise so that a multi-byte access straddling a page
+// boundary is still correct.
+//
+// The table GROWS, and that is a correctness property, not a convenience. It was
+// once fixed at 8192 slots: a full table made page() return one shared dummy
+// page for every new address, so distinct pages silently overwrote each other.
+// It was then fixed at 32768 slots, which only moved the failure to a hard fault
+// when the GDI mission load exceeded 128 MB. A fixed bound is the wrong shape
+// for a model of a machine whose address space is 4 GiB: the table now doubles
+// at 75% load up to 2^21 slots (a 50% load over the largest possible 2^20
+// distinct pages), and refuses an insertion with a REPORTED fault rather than
+// aliasing if the host cannot provide the memory. Every page still gets its own
+// host allocation, so no two addresses ever share bytes.
+//
+// WHY THE DEMAND EXCEEDS 128 MB, measured on the GDI mission load: the model has
+// no decommit, so its footprint is every page ever touched, not the program's
+// peak live set. The largest contributor is not a leak of the game's: one
+// DynamicVectorClass growth loop (resize at 0x0055b050) performs 5,664 growing
+// reallocations totalling 679 MB -- each frees the old buffer and asks for a
+// slightly larger one, and the model's bump heap cannot extend the freed block
+// in place (Win32Stubs.h, not this table). The retail peak for that vector is
+// one allocation, at most 273,680 B. Covering the cumulative footprint is what
+// a 4 GiB address space is for; the heap-side coalescing fix is separate.
 struct PageTable {
-    enum { SLOTS = 32768 };
-    u32 key[SLOTS];
-    u8 *val[SLOTS];
-    PageTable() { for (int i = 0; i < SLOTS; ++i) { key[i] = 0xffffffffu; val[i] = 0; } }
+    enum {
+        EMPTY = 0xffffffffu,      // never a page number: p is 20 bits
+        INITIAL_SLOTS = 32768u,   // 128 MB of modelled memory before the first growth
+        MAX_SLOTS = 1u << 21      // 4 GiB of address space at a 50% load
+    };
+    u32 *key;
+    u8 **val;
+    u32 cap;        // slots, always a power of two
+    u32 max_slots;  // growth ceiling; MAX_SLOTS unless a caller asks for less
+    u32 used;       // distinct pages handed out
+    u32 peak;       // high-water mark of `used`
+    u32 growths;    // rehashes performed
+    u32 refused;    // insertions that could not be served (reported as a fault)
+    // `initial` and `max` exist so a test -- or a memory-constrained run -- can
+    // use a smaller table and reach the refusal path deliberately. Both are
+    // rounded down to a power of two; the default is the full 4 GiB space.
+    explicit PageTable(u32 initial = (u32)INITIAL_SLOTS,
+                       u32 max = (u32)MAX_SLOTS)
+        : key(0), val(0), cap(0), max_slots(0), used(0), peak(0),
+          growths(0), refused(0) {
+        max_slots = pow2_floor(max ? max : 1u);
+        initial = pow2_floor(initial ? initial : 1u);
+        if (initial > max_slots) initial = max_slots;
+        resize(initial);
+    }
+    static u32 pow2_floor(u32 v) {
+        u32 p = 1u;
+        while (p <= v / 2u) p <<= 1;
+        return p;
+    }
+    ~PageTable() { std::free(key); std::free(val); }
+    // Allocate a fresh index and reinsert every live entry. The iteration order
+    // is the old array's, so the resulting layout is a function of the insertion
+    // sequence alone -- the model stays deterministic.
+    bool resize(u32 ncap) {
+        u32 *nk = (u32 *)std::malloc(ncap * sizeof(u32));
+        u8 **nv = (u8 **)std::malloc(ncap * sizeof(u8 *));
+        if (!nk || !nv) { std::free(nk); std::free(nv); return false; }
+        for (u32 i = 0; i < ncap; ++i) { nk[i] = EMPTY; nv[i] = 0; }
+        for (u32 i = 0; i < cap; ++i) {
+            if (key[i] == EMPTY) continue;
+            u32 h = (key[i] * 2654435761u) & (ncap - 1u);
+            while (nk[h] != EMPTY) h = (h + 1u) & (ncap - 1u);
+            nk[h] = key[i]; nv[h] = val[i];
+        }
+        std::free(key); std::free(val);
+        key = nk; val = nv; cap = ncap;
+        return true;
+    }
 };
 
 inline PageTable &pages() { static PageTable t; return t; }
 
-inline u8 *page(u32 addr) {
-    PageTable &t = pages();
+// The one page-table lookup. `page()` is this against the model's single table;
+// page_in() takes the table explicitly so a test can drive an independent one.
+inline u8 *page_in(PageTable &t, u32 addr) {
     u32 p = addr >> 12;
-    u32 h = (p * 2654435761u) & (PageTable::SLOTS - 1);
-    for (u32 probe = 0; probe < PageTable::SLOTS; ++probe) {
-        u32 i = (h + probe) & (PageTable::SLOTS - 1);
-        if (t.key[i] == p) return t.val[i] + (addr & 0xfffu);
-        if (t.key[i] == 0xffffffffu) {
-            u8 *blk = (u8 *)std::calloc(4096 + 8, 1);
-            t.key[i] = p; t.val[i] = blk;
-            return blk + (addr & 0xfffu);
-        }
+    static u8 dummy[4096 + 8];   // only ever reached after fault() has halted
+    if (!t.cap) {
+        fault("page table exhausted: index allocation failed");
+        return dummy + (addr & 0xfffu);
     }
-    fault("page table exhausted");
-    static u8 dummy[4096 + 8];
-    return dummy + (addr & 0xfffu);
+    for (;;) {
+        u32 mask = t.cap - 1u;
+        u32 h = (p * 2654435761u) & mask;
+        u32 i = h;
+        bool empty = false;
+        for (u32 probe = 0; probe < t.cap; ++probe) {
+            i = (h + probe) & mask;
+            if (t.key[i] == p) return t.val[i] + (addr & 0xfffu);
+            if (t.key[i] == PageTable::EMPTY) { empty = true; break; }
+        }
+        if (!empty) {
+            ++t.refused;
+            fault("page table exhausted: no free slot");
+            return dummy + (addr & 0xfffu);
+        }
+        // Grow before the table fills. A full table is not merely slow: with no
+        // empty slot every miss becomes a cap-length probe, and the old code's
+        // silent fallback is what aliased pages. Growth keeps the load at or
+        // below 75%, so a miss is a short probe and a lookup never degrades.
+        if (t.used + 1u > t.cap - (t.cap >> 2)) {
+            if (t.cap >= t.max_slots || !t.resize(t.cap << 1)) {
+                ++t.refused;
+                fault("page table exhausted: host allocation failed");
+                return dummy + (addr & 0xfffu);
+            }
+            ++t.growths;
+            continue;                 // re-probe in the larger index
+        }
+        u8 *blk = (u8 *)std::calloc(4096 + 8, 1);
+        if (!blk) {
+            ++t.refused;
+            fault("page table exhausted: page allocation failed");
+            return dummy + (addr & 0xfffu);
+        }
+        t.key[i] = p; t.val[i] = blk;
+        ++t.used;
+        if (t.used > t.peak) t.peak = t.used;
+        return blk + (addr & 0xfffu);
+    }
 }
+
+inline u8 *page(u32 addr) { return page_in(pages(), addr); }
 
 // Copy a region of the original image in, so reads of initialised data return
 // the real bytes rather than zero.

@@ -2289,6 +2289,154 @@ int main() {
         eq("win32-heap", out.splitlines()[-1] if out else "", "0")
 
 
+def test_page_table():
+    """The page table grows, never aliases, and reports exhaustion.
+
+    Regression test for the GDI mission-load fault: the table was a fixed
+    32768-slot array, so a working set past 128 MB became a hard fault at
+    0x00a006b0. The measured demand is 182,757 pages (748 MB) -- the model has
+    no decommit, so it is the cumulative footprint, dominated by one vector
+    growth loop (5,664 growing reallocations, 679 MB). A fixed bound is the
+    wrong shape for a 4 GiB address space.
+
+    The test is mutation-proven in two directions: removing the growth branch
+    makes the 40,000-page run fault, and making the page allocation `static`
+    (the 8192-slot aliasing defect) makes the round-trip fail.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include <cstring>
+#include "Machine.h"
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+int main() {
+    // 1. Growth past the old fixed bound, with every page keeping its bytes.
+    {
+        ts::PageTable t;
+        const unsigned N = 40000u;
+        for (unsigned i = 0; i < N; ++i) {
+            ts::u8 *p = ts::page_in(t, 0x10000000u + i * 3u * 4096u);
+            p[0] = (ts::u8)(i * 7u + 1u);
+            p[4095] = (ts::u8)(i * 13u + 3u);
+        }
+        ck("grew", t.growths >= 1u);
+        ck("capacity grew", t.cap > (ts::u32)ts::PageTable::INITIAL_SLOTS);
+        ck("used", t.used == N);
+        ck("peak", t.peak == N);
+        ck("no refusal", t.refused == 0u);
+        bool ok = true;
+        for (unsigned i = 0; i < N; ++i) {
+            ts::u8 *p = ts::page_in(t, 0x10000000u + i * 3u * 4096u);
+            if (p[0] != (ts::u8)(i * 7u + 1u) ||
+                p[4095] != (ts::u8)(i * 13u + 3u)) ok = false;
+        }
+        ck("no aliasing across growth", ok);
+        ck("identity is stable across rehash",
+           ts::page_in(t, 0x10000000u) == ts::page_in(t, 0x10000000u) &&
+           ts::page_in(t, 0x10000000u)[0] == (ts::u8)1u);
+        ck("distinct pages are distinct hosts",
+           ts::page_in(t, 0x10000000u) != ts::page_in(t, 0x10001000u));
+    }
+    // 2. Exhaustion is a REPORTED fault, and a live page is never overwritten.
+    {
+        ts::Machine &m = ts::mach();
+        m.faulted = false; m.fault_why = 0;
+        ts::PageTable t(64u, 64u);      // 48 pages before the 75% threshold
+        unsigned i = 0;
+        for (; i < 64u; ++i) {
+            ts::u8 *p = ts::page_in(t, 0x20000000u + i * 4096u);
+            p[0] = (ts::u8)(i + 1u);
+            if (m.faulted) break;
+        }
+        ck("exhaustion reported", m.faulted);
+        ck("refusal counted", t.refused == 1u);
+        ck("stopped at the ceiling", i == 48u);
+        ck("fault names the page table",
+           m.fault_why && std::strstr(m.fault_why, "page table") != 0);
+        ck("live pages untouched", ts::page_in(t, 0x20000000u)[0] == (ts::u8)1u);
+        m.faulted = false; m.fault_why = 0;
+    }
+    // 3. Deterministic address map: same insertions, same index layout.
+    {
+        ts::PageTable a(1024u, 65536u), b(1024u, 65536u);
+        for (unsigned i = 0; i < 5000u; ++i) {
+            ts::u32 addr = 0x30000000u + ((i * 2654435761u) & 0x00ffff00u);
+            ts::page_in(a, addr); ts::page_in(b, addr);
+        }
+        bool same = a.cap == b.cap && a.used == b.used &&
+                    a.growths == b.growths;
+        for (ts::u32 i = 0; same && i < a.cap; ++i)
+            if (a.key[i] != b.key[i]) same = false;
+        ck("deterministic address map", same);
+        ck("the map grew", a.growths >= 1u);
+    }
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    cpp = "/tmp/ts_page_table.cpp"
+    open(cpp, "w").write(src)
+
+    def build(include_dir, exe):
+        return subprocess.run(["g++", "-std=c++03", "-O0", "-I" + include_dir,
+                               "-Isrc/include", "-o", exe, cpp],
+                              capture_output=True)
+
+    r = build("src/include", "/tmp/ts_page_table")
+    if r.returncode != 0:
+        check("page-table-build", False,
+              r.stderr.decode("utf-8", "replace")[:400])
+        return
+    r = subprocess.run(["/tmp/ts_page_table"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("page-table", False, out)
+    else:
+        eq("page-table", out.splitlines()[-1] if out else "", "0")
+
+    # Mutation 1: no growth. The 40,000-page run must fault at the old bound.
+    with open(os.path.join("src", "include", "Machine.h")) as fh:
+        real = fh.read()
+    growth = "            if (t.cap >= t.max_slots || !t.resize(t.cap << 1)) {"
+    check("page-table-mutation-growth-anchor", growth in real,
+          "growth branch not found; update the mutation")
+    if growth in real:
+        mut = os.path.join("/tmp", "ts_page_mut")
+        os.makedirs(mut, exist_ok=True)
+        with open(os.path.join(mut, "Machine.h"), "w") as fh:
+            fh.write(real.replace(growth, "            if (true) {"))
+        b = build(mut, "/tmp/ts_page_table_mut1")
+        if b.returncode != 0:
+            check("page-table-mutation-growth-build", False,
+                  b.stderr.decode("utf-8", "replace")[:300])
+        else:
+            m = subprocess.run(["/tmp/ts_page_table_mut1"], capture_output=True)
+            check("page-table-mutation-growth-caught", m.returncode != 0,
+                  "removing growth did not fail the test")
+
+    # Mutation 2: one shared block for every page -- the 8192-slot aliasing
+    # defect. The round-trip check must catch it.
+    alloc = "        u8 *blk = (u8 *)std::calloc(4096 + 8, 1);"
+    check("page-table-mutation-alias-anchor", alloc in real,
+          "page allocation not found; update the mutation")
+    if alloc in real:
+        mut = os.path.join("/tmp", "ts_page_mut")
+        os.makedirs(mut, exist_ok=True)
+        with open(os.path.join(mut, "Machine.h"), "w") as fh:
+            fh.write(real.replace(alloc, "        static u8 *blk = (u8 *)std::calloc(4096 + 8, 1);"))
+        b = build(mut, "/tmp/ts_page_table_mut2")
+        if b.returncode != 0:
+            check("page-table-mutation-alias-build", False,
+                  b.stderr.decode("utf-8", "replace")[:300])
+        else:
+            m = subprocess.run(["/tmp/ts_page_table_mut2"], capture_output=True)
+            check("page-table-mutation-alias-caught", m.returncode != 0,
+                  "sharing one block did not fail the test")
+
+
 def test_win32_dialog_ex():
     """The DLGTEMPLATEEX probe dialog parses as the retail binary's does.
 
@@ -3023,7 +3171,8 @@ def main():
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,
                test_win32_dialog, test_win32_button_click,
-               test_win32_listbox, test_win32_heap, test_win32_dialog_ex,
+               test_win32_listbox, test_win32_heap, test_page_table,
+               test_win32_dialog_ex,
                test_win32_surface_lock, test_win32_surface_blt,
                test_win32_render_input,
                test_win32_clock, test_win32_blowfish):

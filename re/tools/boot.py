@@ -598,6 +598,8 @@ def print_report(keys, lists, entries, build_note, elapsed):
         out.append("call at fault: " + fmt_name(entries, va, thunks))
     out.append("message loop: %s   (%s)"
                % (keys.get("message-loop", "?"), keys.get("message-calls", "")))
+    if "pages-used" in keys:
+        out.append("pages:  %s" % keys["pages-used"])
     # A stub whose argument count disagrees with the stack it was called on is a
     # silent defect: every later argument reads from the wrong slot. Report it
     # next to the message loop, not buried below the import tail.
