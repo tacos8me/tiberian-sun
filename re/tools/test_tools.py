@@ -2423,6 +2423,134 @@ int main() {
                   "disabling coalescing did not fail the test")
 
 
+def test_win32_heap_arena():
+    """The stub heap never hands out the surface arena's window.
+
+    Regression test for the blue "mission frame": the heap bumped up from
+    0x50000000, crossed 0x60000000 where Rendering.h kept the surface arena,
+    and overwrote the primary surface, so the frame was raw heap bytes read as
+    RGB565. The arena now lives at 0x10000000, and alloc_block reserves
+    [0x60000000, 0x68000000) so a future arena move cannot reintroduce it.
+    The test creates a real primary surface through ts::rnd, places a probe in
+    the reserved window, allocates >256 MB through the stub heap, and requires
+    both to survive. Mutation-proven: removing the skip makes the third block
+    land on the probe.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+static ts::u32 call(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
+    for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
+    ESP.d = sp; ts::ts_call_at(fn, 0x00c0ffeeu); return EAX.d;
+}
+int main() {
+    ts::register_win32_stubs();
+    const ts::u32 sp = 0x002ff000u;
+    ts::u32 ha = ts::stub_va("KERNEL32", "HeapAlloc");
+    ts::u32 hf = ts::stub_va("KERNEL32", "HeapFree");
+    ck("stubs resolve", ha && hf);
+
+    // The integrated primary surface, created the way the game creates it.
+    ts::rnd::Surface *prim =
+        ts::rnd::create_simple(0x006beed8u, 640u, 480u, 16u, true);
+    ck("primary surface created", prim != 0 && prim->pixels != 0u);
+    // A probe in the reserved window: what a future arena move back to
+    // 0x60000000 would look like.
+    ts::rnd::Surface probe;
+    probe.pixels = (ts::u32)ts::w32::SURFACE_ARENA_BASE;
+    probe.width = 64u; probe.height = 64u; probe.bpp = 16u;
+    probe.pitch = 128u;
+    const ts::u32 N = 64u * 64u;
+    for (ts::u32 i = 0; i < N; ++i) {
+        ts::st16(prim->pixels + i * 2u, (ts::u16)(i * 7u + 3u));
+        ts::st16(probe.pixels + i * 2u, (ts::u16)(i * 13u + 5u));
+    }
+
+    // More than 256 MB through the stub heap: enough to reach 0x60000000 from
+    // 0x50000000. Without the reserved window the heap lands on the probe.
+    const ts::u32 MB100 = 100u * 1024u * 1024u;
+    ts::u32 blocks[3];
+    for (unsigned k = 0; k < 3u; ++k) {
+        ts::u32 a3[3] = { 0x00010000u, 0u, MB100 };
+        blocks[k] = call(ha, a3, 3, sp);
+        ck("large heap allocation", blocks[k] != 0u);
+        ck("heap skips the surface arena",
+           blocks[k] + MB100 <= (ts::u32)ts::w32::SURFACE_ARENA_BASE ||
+           blocks[k] >= (ts::u32)ts::w32::SURFACE_ARENA_END);
+    }
+
+    bool prim_ok = true, probe_ok = true;
+    for (ts::u32 i = 0; i < N; ++i) {
+        if (ts::ld16(prim->pixels + i * 2u) != (ts::u16)(i * 7u + 3u))
+            prim_ok = false;
+        if (ts::ld16(probe.pixels + i * 2u) != (ts::u16)(i * 13u + 5u))
+            probe_ok = false;
+    }
+    ck("primary surface unchanged", prim_ok);
+    ck("reserved-window surface unchanged", probe_ok);
+
+    // The heap still frees and reuses after the large blocks.
+    for (unsigned k = 0; k < 3u; ++k) {
+        ts::u32 a3[3] = { 0x00010000u, 0u, blocks[k] };
+        call(hf, a3, 3, sp);
+    }
+    ts::u32 a3s[3] = { 0x00010000u, 0u, 64u };
+    ts::u32 r = call(ha, a3s, 3, sp);
+    ck("heap reuses a large block", r == blocks[0] || r == blocks[2]);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    cpp = "/tmp/ts_win32_heap_arena.cpp"
+    open(cpp, "w").write(src)
+
+    def build(include_dir, exe):
+        return subprocess.run(["g++", "-std=c++03", "-O0", "-I" + include_dir,
+                               "-Isrc/include", "-Ibuild/shim", "-o", exe, cpp],
+                              capture_output=True)
+
+    r = build("src/include", "/tmp/ts_win32_heap_arena")
+    if r.returncode != 0:
+        check("win32-heap-arena-build", False,
+              r.stderr.decode("utf-8", "replace")[:400])
+        return
+    r = subprocess.run(["/tmp/ts_win32_heap_arena"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-heap-arena", False, out)
+    else:
+        eq("win32-heap-arena", out.splitlines()[-1] if out else "", "0")
+
+    # Mutation: remove the reserved-window skip. The third 100 MB block then
+    # starts at 0x5c800020 and runs over the probe at 0x60000000.
+    with open(os.path.join("src", "include", "Win32Stubs.h")) as fh:
+        real = fh.read()
+    anchor = ("if (b < (u32)SURFACE_ARENA_END && "
+              "b + size + 16u > (u32)SURFACE_ARENA_BASE)")
+    check("win32-heap-arena-mutation-anchor", anchor in real,
+          "reserved-window skip not found; update the mutation")
+    if anchor in real:
+        mut = os.path.join("/tmp", "ts_arena_mut")
+        os.makedirs(mut, exist_ok=True)
+        with open(os.path.join(mut, "Win32Stubs.h"), "w") as fh:
+            fh.write(real.replace(anchor, "if (false && " + anchor[4:]))
+        b = build(mut, "/tmp/ts_win32_heap_arena_mut")
+        if b.returncode != 0:
+            check("win32-heap-arena-mutation-build", False,
+                  b.stderr.decode("utf-8", "replace")[:300])
+        else:
+            m = subprocess.run(["/tmp/ts_win32_heap_arena_mut"],
+                               capture_output=True)
+            check("win32-heap-arena-mutation-caught", m.returncode != 0,
+                  "removing the reserved window did not fail the test")
+
+
 def test_page_table():
     """The page table grows, never aliases, and reports exhaustion.
 
@@ -3305,7 +3433,8 @@ def main():
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,
                test_win32_dialog, test_win32_button_click,
-               test_win32_listbox, test_win32_heap, test_page_table,
+               test_win32_listbox, test_win32_heap, test_win32_heap_arena,
+               test_page_table,
                test_win32_dialog_ex,
                test_win32_surface_lock, test_win32_surface_blt,
                test_win32_render_input,

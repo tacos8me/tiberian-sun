@@ -77,11 +77,20 @@ inline u32 alloc_stub_va() {
 // CRT allocations and the game's own allocator in the same pages: the CRT's atexit
 // table landed at 0x20005900 and the game wrote 0x11/0x31 through its own
 // pointers into it, so exit walked 37 "handlers" that were never registered.
+// [0x60000000, 0x68000000) is reserved for the surface arena. It used to be
+// the arena's home, and the stub heap grew into it: by ~2.72e9 instructions the
+// heap had overwritten the primary surface, and the "frame" was heap bytes read
+// as RGB565. The arena now lives at 0x10000000 (Rendering.h), but alloc_block
+// still refuses this window so a future arena move cannot reintroduce the
+// collision. The heap and zero_block both go through alloc_block.
+enum { SURFACE_ARENA_BASE = 0x60000000u, SURFACE_ARENA_END = 0x68000000u };
 inline u32 &bump() { static u32 b = 0x50000000u; return b; }
 inline u32 alloc_block(u32 size, u32 align) {
     if (size == 0) size = 1;
     u32 &b = bump();
     b = (b + (align ? align - 1u : 0u)) & ~(align ? align - 1u : 0u);
+    if (b < (u32)SURFACE_ARENA_END && b + size + 16u > (u32)SURFACE_ARENA_BASE)
+        b = (u32)SURFACE_ARENA_END;   // skip the reserved window in one step
     u32 p = b;
     b += size + 16u;   // slack: a later overrun must not collide with the next
     return p;
