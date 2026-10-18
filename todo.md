@@ -1305,27 +1305,47 @@ a 20M/s floor, a cached-path >=1.4x `page_in_slow` ratio (measured 1.73-1.78),
 and that `boot.py` keeps `-O2`/`-fno-pie`; mutation-proven. `test_tools.py` is
 **94 checks**; `verify.py` PASSED, `test_runtime.py` 101, link OK, `--strict` 0.
 
-### [ ] The mission load is ~0.75-1e12 instructions of O(n^2) vector growth
-**The current blocker, and it is the game's own algorithm.** The loader rebuilds
-**22 `DynamicVectorClass` objects at `this+0x1280`** (object base `0x710cc8`,
-stride `0x18`) in `sub_005a35b0` — loop head `0x5a35cb`, tail `0x5a3760`
-(`add ebx,4; add esi,0x18; cmp ebx,0x58; jl`), called from `sub_005a1ba8` at
-`0x5a1bb8`. Each append goes through `SetCount` `0x55b050` -> `0x55b09a`, which
-reallocates `count*8` and copies every 8-byte entry, growth step ~10 — O(n²).
-At 100B it is on vector **7 of 22** (`ESI=0x712068`, `ECX=0x27146` = 160,070
-entries); vector 5->6 alone cost 50B instructions. Extrapolating, the load needs
-**~0.75-1e12 instructions** — 30-40 min at 400M/s, ~10 h at the old rate. The
-old "tens of billions" estimate was 20-30x low.
+### [ ] The 479B mission-load run goes wild
+**The 1.2e12-budget run got much further, then faulted.** It ran
+**478,970,534,425 instructions (479B)** and stopped at `0x00422de0`:
 
-**The old "tactical draw at ~4.07B" does not reproduce with correct memory** —
-it was measured while the heap collision was corrupting the loader's buffers.
+```
+why:  page table exhausted: page allocation failed
+eip:  0x00422ddd  add edi, dword ptr [edx + 0x10]
+regs: eax=0x9caa856e ecx=0x9caa856f edx=0x9d65508c ebx=0x67e7da4d
+      esp=0xf15d5f7c ebp=0xc3c48f90 esi=0x00000011 edi=0xc21638ed
+pages: 1,024,211 of 2,097,152 slots (peak 1,024,211, growths 6, refused 1)
+```
 
-*Next:* a 1.2e12-budget run is in flight (~50 min) to see whether the load
-completes and reaches the tactical phase. If it does, name the tactical stop and
-dump a frame; if not, the extrapolation needs revisiting. Do not change the
-game's growth algorithm; it is the binary's own behavior.
-*Done when:* the load completes and the tactical phase is reached, or the
-remaining cost is explained and bounded.
+The registers are wild across the top of the 4 GiB address space. The run made
+**7,771,444 unmapped calls**: **7 inside `.text`**, all targeting `0x00606060`
+from `sub_004f3b40` (`0x004f3b5f`/`0x004f3b6d`); 7,673,235 below `0x1000`; 98,202
+elsewhere. Coverage 158,971 / 9,630; render 9 surfaces, 171 blits, 10,484
+locks, 0 fills/flips; **the frame is 0 non-black (black)**.
+
+This is a new defect, not the O(n²) estimate failing: the loader ran far past
+100B, then a pointer table or stack went wild and the game called through
+`0x606060` (a repeated `0x60` byte pattern) and millions of below-`0x1000`
+targets. The page-table refusal is one symptom; the first wild call predates
+it.
+
+**Context on the O(n²) loader** (still the cost): 22 `DynamicVectorClass`
+objects at `this+0x1280` (base `0x710cc8`, stride `0x18`) in `sub_005a35b0`
+(loop `0x5a35cb`..`0x5a3760`), called from `sub_005a1ba8` at `0x5a1bb8`; each
+append goes through `SetCount` `0x55b050` -> `0x55b09a` and copies the whole
+buffer. At 100B it was on vector 7/22 (160,070 entries). The old "tactical draw
+at ~4.07B" was an artifact of the heap collision.
+
+*Next:* find the **first** wild call, not the flood. Add a diagnostic for the
+page-table refusal address; `TS_TRACE` `sub_004f3b40` and `0x00422de0`;
+`TS_WATCH` the pointer table/stack slots that produce `0x606060` and the
+below-`0x1000` targets. Determine whether (a) `0x606060` is a jump-table target
+that should be registered (like the earlier switch-table fix), (b) the loader is
+appending unbounded entries and overflowing a buffer, or (c) the 4 GiB address
+space is genuinely exhausted by the model's arena/heap. Fix the first proven
+cause, then re-run at ~500B (about 20 min at 400M/s).
+*Done when:* the 479B wild-call flood is explained and gone, and the run reaches
+the tactical phase or a new named stop with a non-black frame if it renders.
 
 ### [x] The mission writes pixels but never presents a frame — explained and fixed
 **The blue banded/grid frame was raw heap memory.** The game *does* present the
