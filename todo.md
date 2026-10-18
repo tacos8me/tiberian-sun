@@ -990,24 +990,58 @@ the stop is `0x00488800` (`sub_0048875c +0xa4`), coverage **55,798 / 4,767**; at
 PeekMessage=312,674 DispatchMessage=1 CreateWindowExA=1`, coverage **61,817 /
 5,171**; 0 unmapped, 0 imbalances, `--strict` exits 0.
 
-### [ ] The intro-movie playback pump — current blocker
-**The VQA decoder never executes.** At 80M the stop is `0x0064e156`
-(`sub_0064e14d +0x9`) inside the intro-movie playback pump `sub_0064dff0`
-(loop `0x64e0b8..0x64e242`). The VQA decoder (`0x679090`/`sub_00679360`) is never
-entered, and coverage freezes at **61,817 from 40M to 80M**.
+### [x] The intro-movie playback pump — fixed (frozen clock)
+**Was the current blocker.** At 80M the stop was `0x0064e156`
+(`sub_0064e14d +0x9`) inside the intro-movie pump `sub_0064dff0`
+(loop `0x64e0b8..0x64e242`), with coverage frozen at 61,817.
 
-The stream object (`ESI=0x508991e0`) has `[+0x150]=0x18` (the initialized bit
-set), so `sub_0067c920` skips setup, reads the frame callback at `[+0x54]`
-(NULL), and returns **-1**; the pump treats -1/-10 as "retry". `TS_WATCH` on
-`+0x54` records no store. The stream is otherwise alive: read callback
-`+0x44=0x64e920`, buffer `+0x764`, dimensions 800x480.
+**The stream callback at `+0x54` was a red herring.** It is `source[5]` of the
+player's stream-source struct, initialized from the static table at `0x6e0850`
+and never written by any instruction. The retail stream under Wine
+(`STREAM=0x01a0e800` at `0x67ca4a`) also has `+0x54 = 0`, with `+0x84=8`,
+`+0x88=1`, `+0x8c=2` — byte-for-byte the model's state. `sub_0067c920` treats a
+null callback as "no frame callback" and continues into the decoder.
 
-This is the **unreconstructed MS*/AVI layer**, not a missing import: all 341
-imports resolve, and only `WSOCK32!#116` and `OLEAUT32!#33` are generic,
-unrelated stubs. A movie-stream lane is investigating now. The movie path is
-**not working**; do not claim it or the menu is reached.
-*Done when:* the decoder executes, coverage advances past 61,817, and the next
-stop is named.
+**The real cause was the model clock.** `tick()` was a static counter that only
+`Sleep` advanced, and the movie pump polls `timeGetTime` in a busy loop and never
+sleeps. The VQA pacer `sub_006786a0` compares `FUN_0067d580()` (which reads
+`timeGetTime`) with `(frame+1)*60/fps`; frozen time returns **-10 ("too early")**
+at `0x678804` forever, never reaching `0x678811`, the branch that hands audio to
+the output callback and clears the descriptor's done bit (`[desc+0x14]=0`). The
+decoder's top check then returns **-9** at `0x67c9ba` forever. Measured before:
+`0x678811` hit once, `0x678804` hundreds of thousands of times.
+
+**Fixed in `65f8606`.** `tick() = tick_base() + mach().steps/10000`, with `Sleep`
+still advancing the base: deterministic, about 3x real time. A mutation-proven
+`win32-clock` test is in `a2083d5`; `test_tools.py` is now **73 checks**.
+
+Measured with `TS_CD`:
+- **80M:** stop `0x0067ccb7`, coverage 61,986 / 5,178, `PeekMessage=23,002`.
+- **200M:** the decoder runs and the first movie reaches its **last frame
+  (130/130)**; stop `0x0067e0ab` in the VQA codec.
+- **400M:** SHA-1 in the RNG seeder (`FUN_004dbe90`, "Init random number").
+- **800M:** line-clip/draw `FUN_00676030` (`0x00676101`), coverage 67,144.
+- **1.6B:** stop `0x004f698d`, coverage **78,070 / 6,166**. The game has opened
+  **TIBSUN.MIX (75 MB)** and probed **`TITLE.PCX`/`LOCAL.MIX`** — main-menu asset
+  initialization.
+
+### [ ] Main-menu asset init spins in a node list
+**The current blocker, after the movies complete.** At 1.6B the run stops at
+`0x004f698d`; a 3.2B budget (watchdog at 2.53B) reaches the same EIP
+(`0x004f698f`) with **identical coverage 78,070 / 6,166** and no new message
+pumping (`PeekMessage=248,971`). That is a real cycle, not a slow computation.
+
+The cycle is in the linked-list traversal helpers `FUN_004f6980` (follows `+8`)
+and `FUN_004f69b0` (follows `+4`) of the node class with vtable `0x69e7cc`,
+reached through `FUN_004b2f90`'s list at `DAT_007b2f9c`. The hypothesis is a node
+linked twice, or a link not cleared after the failed `TITLE.PCX`/`LOCAL.MIX`
+lookups.
+
+*Next:* diagnose against the retail at `0x4f6980` (Ghidra MCP + `tools/oracle.py`
+/`wine_env.sh`); determine whether the failed asset lookup should remove/free the
+node, or whether the model's traversal is wrong. Fix the first proven cause.
+*Done when:* coverage advances past 78,070 and the game reaches the main menu or
+the next named stop.
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and
