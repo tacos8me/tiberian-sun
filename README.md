@@ -43,6 +43,11 @@ It is **not yet a playable game**, and the source is not yet source-shaped.
   invoked its callback, so `WWMouseClass`'s pointer stayed `(0,0)`. The tactical
   input handler read that as off-screen and scrolled up-left every frame until
   the map clamp. Multimedia timers are now dispatched from the message pump.
+- **Scripted tactical input works.** A click selects the player's infantry
+  through the game's own hit-test, and a left-click on open ground issues a move
+  order: the unit's `CoordStruct` moves from cell (53,69) to (48,68). A sidebar
+  build-tab click also changes the tab state. In this build the right button is
+  edge-scroll, not an order.
 
 **What is recovered**
 
