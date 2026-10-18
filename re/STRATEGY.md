@@ -53,7 +53,7 @@ documentation says cannot exist.
 | boot (2.1B, default timeline) | New Campaign, NOD1, GDI1, OK; `GDI1A.MAP` read; GDI intro plays; stop `0x0067dc4f` (LCW decoder), depth 28, `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage **84,130 / 6,431**, `pages-used 9,029/32,768`; frame 194,131 non-black | same (`--timeout 600`) |
 | boot (4B, ESC skip) | stop `0x0055b0bb` (budget) after 4,000,000,001 instructions, depth 29; coverage **139,250 / 8,682**; pages **12,809/32,768**; 8 surfaces, 12 blits, 769 locks, 0 flips; frame 290,399 non-black (loading screen, md5 `6cb0e1ff…` = `re/out/render_2_6b.png`); **11.7 s wall** | same |
 | boot (100B, ESC skip) | stop `0x0055b0bc` (budget); pages **16,343/32,768**; loader on vector 7/22 with **160,070 entries**; **243.9 s wall** | same |
-| boot (500B, ESC skip) | **tactical HUD renders**: budget at **500,000,000,001** instructions, EIP `0x00543669` (3x4 matrix·vector transform), depth 100; pages **12,637/32,768** (refused 0); **0 unmapped**; coverage **158,667 / 9,607**; `GetMessage=19`, `DispatchMessage=19`, `PeekMessage=23,117,313`; 8 surfaces, **18,691,958 blits, 46,753,350 locks**; frame `re/out/frame_500b.png` md5 `4fc1cec7…`, **87,794 non-black** (Options, credits 5000, GDI radar eagle, build tabs/grid); **map viewport still black**. An independent reproduction was watchdog-stopped at 372,912,291,926 instructions (host contention) but matched pages, coverage, 0 unmapped and a byte-identical frame | same |
+| boot (500B, ESC skip) | **tactical HUD renders**: budget at **500,000,000,001** instructions, EIP `0x00543669` (3x4 matrix·vector transform), depth 100; pages **12,637/32,768** (refused 0); **0 unmapped**; coverage **158,667 / 9,607**; `GetMessage=19`, `DispatchMessage=19`, `PeekMessage=23,117,313`; 8 surfaces, **18,691,958 blits, 46,753,350 locks**; frame `re/out/frame_500b.png` md5 `4fc1cec7…`, **87,794 non-black** (Options, credits 5000, GDI radar eagle, build tabs/grid); **map viewport still black** — not a renderer defect: `TS_OBJECTS` n=0, `TS_MAPCELLS` 1,681 cells / 12 tiles / 0 revealed, all tactical passes execute and the reveal/sight updates do not; scenario object creation rejected every entry. An independent reproduction was watchdog-stopped at 372,912,291,926 instructions (host contention) but matched pages, coverage, 0 unmapped and a byte-identical frame | same |
 | boot (1.2e12, ESC skip) | historical, pre-`e5d7039`: fault at `0x00422de0` after 478,970,534,425 instructions, 1,024,211/2,097,152 pages, 7,771,444 unmapped calls, black frame; caused by the x87 D8 emitter bug (scale 108 instead of 1.125) and **does not reproduce** after the fix | same |
 | interpreter | **~400M instructions/s** (12-14x the old ~28.6M/s), byte-identical machine state; 4B 11.7 s, 20B 50.2 s, 100B 243.9 s | `test_machine_perf` + boot |
 | frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; vs retail: 102,836 pixels differ (33.48%), mean abs channel diff **1.06/255** over differing pixels (0.35 over frame), 506 pixels >8 | `tools/boot.py --frame` |
@@ -113,8 +113,8 @@ selectable main menu, the campaign list, and into the GDI campaign's intro movie
 on a Win32 layer that can load a file, create a window, dispatch messages, read
 the MIX index, build dialogs, take scripted input, hit-test a real button,
 populate a listbox, start a mission, and render the in-game tactical HUD — but
-cannot yet render the map viewport (it is still black), fire a timer, or play a
-sound.**
+cannot yet populate the world (scenario object creation yields zero objects, so
+the map viewport is fully shrouded and black), fire a timer, or play a sound.**
 
 ### The fact the docs do not contain
 
@@ -215,12 +215,19 @@ bytes.
     unmapped calls**, coverage 158,667/9,607, 8 surfaces with 18,691,958 blits
     and 46,753,350 locks. `re/out/frame_500b.png` (87,794 non-black) shows
     Options, credits 5000, the GDI radar eagle, and the build tabs/grid.
-14. **The black map viewport — the current blocker.** Only the HUD renders; the
-    map does not. Trace the terrain/map blits (destination surfaces, the primary
-    map rectangle now that the visible rect is `35,28,23,43` on a 99x108
-    surface) with per-surface counters and dumps; do not paint the map by hand.
-    The mission map does **not** render yet.
-15. **The interpreter — done.** 12-14x faster (~400M instructions/s vs
+14. **The black map — explained: the world is empty and fully shrouded.** Not a
+    renderer defect: the map surface is blitted to the primary every frame,
+    every tactical pass executes, `TS_OBJECTS` is n=0, and `TS_MAPCELLS` shows
+    1,681 cells allocated with 12 tile entries and 0 revealed, so the shroud
+    paints the viewport black.
+15. **Scenario object creation — the current blocker.** `FUN_0063b470`
+    (`[Units]`) and `FUN_0063b8f0` (structures) ran, but every entry was
+    rejected: owner-house `FUN_004c7470` → -1, type `FUN_0063e650` → -1,
+    `FUN_00630cc0` null, or placement `0xc4` → 0. `GDI1A.MAP` has 3 Nod
+    buggies, 17 infantry (3 GDI) and ~20 structures including the GDI
+    construction yard at (28,59). Do not inject objects by hand. The mission map
+    and units do **not** render yet.
+16. **The interpreter — done.** 12-14x faster (~400M instructions/s vs
     ~28.6M/s) with byte-identical machine state; `test_machine_perf` pins the
     hot path and is mutation-proven.
 
@@ -283,16 +290,20 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
   `EXPAND99..00`. Narrow-width flags (`f2e6ca9`) and the generator's
   `SetViewportOrgEx`/`SetWindowOrgEx` arity (`19ee16c`) are fixed too.
 - **Rendering, input, the movie path, menu selection, the mission start and the
-  tactical HUD work; the map viewport does not.** The model plays past the intro,
-  renders and selects the real menu, populates the campaign list from shipped
-  `BATTLE.INI`, and OK starts the GDI campaign: `GDI1A.MAP` is read and the GDI
-  intro movie plays (2.1B stop `0x0067dc4f`, 194,131 non-black frame). The 479B
-  out-of-bounds write was the x87 emitter (D8 one-register forms; 901
+  tactical HUD work; the world does not populate.** The model plays past the
+  intro, renders and selects the real menu, populates the campaign list from
+  shipped `BATTLE.INI`, and OK starts the GDI campaign: `GDI1A.MAP` is read and
+  the GDI intro movie plays (2.1B stop `0x0067dc4f`, 194,131 non-black frame).
+  The 479B out-of-bounds write was the x87 emitter (D8 one-register forms; 901
   instructions), fixed in `e5d7039`; the 500B run then renders the **tactical
-  HUD** (`re/out/frame_500b.png`, 87,794 non-black) with 0 unmapped calls. **The
-  map viewport is still black**, so the mission map does not render. The nested
-  MIX (`0xa8548fd9`, 317 entries) is mounted and read; the button art is not
-  painted (no `WM_PAINT` to children; retail does not draw it either).
+  HUD** (`re/out/frame_500b.png`, 87,794 non-black) with 0 unmapped calls. The
+  black map is **not** a renderer defect: the map surface is blitted every
+  frame, every tactical pass executes, `TS_OBJECTS` is n=0 and `TS_MAPCELLS`
+  shows 1,681 cells with 12 tiles and 0 revealed. Scenario object creation
+  rejected every entry (owner/type -1, factory null, placement `0xc4` → 0), so
+  the map and units do not render. The nested MIX (`0xa8548fd9`, 317 entries) is
+  mounted and read; the button art is not painted (no `WM_PAINT` to children;
+  retail does not draw it either).
 - **The VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls in 600 s, so
   model time barely advances during movies; ESC is the practical route to the
   mission load until the clock/pacing model is improved.
@@ -323,8 +334,8 @@ flags, the generator arity, the MS*/AVI movie path, rendering, input, menu
 selection and the campaign list/mission start are also done** (units 11–25
 below), as are **the growable page table, the heap reuse, the interpreter
 speedup, the 479B run, its diagnosis and the x87 fix, and the tactical HUD (units
-26–30)**. Units 6–10 remain, and **the black map viewport (unit 31) is the
-current blocker**.
+26–30), the empty-world diagnosis (unit 31)**. Units 6–10 remain, and **scenario
+object creation (unit 32) is the current blocker**.
 
 1. **Wine oracle (`tools/oracle.py`).** `tools/wine_env.sh` runs the retail game
    with the CD and a 640x480x16 screen; `oracle.py` attaches gdb, breaks at an
@@ -411,7 +422,7 @@ only honest way to close the rest.
 23. **Integrate rendering and input.** **Done (`5031e44` etc.):** `Rendering.h`
     and `Input.h` are wired through `Win32Stubs.h`; the model renders the real
     main menu (`re/out/frame.png`, 1.06/255 from retail on differing pixels);
-    `test_runtime.py` is 101 checks.
+    `test_runtime.py` is 110 checks.
 24. **Make the menu selectable.** **Done (`8474345` … `fa3e2a0`):** the six
     `BS_OWNERDRAW` buttons have real rectangles; press/release → `BN_CLICKED`
     reaches the game's own hit-test and `WM_COMMAND` path. New Campaign opens
@@ -450,14 +461,19 @@ only honest way to close the rest.
     1.125. The fix covers 901 non-pop one-operand x87 instructions and 951
     regenerated lines. After: scale 1.125, map surface 99x108, visible rect
     `35,28,23,43`, vptr intact, 0 OOB stores.
-31. **Render the map viewport.** **Open — the current blocker.** The 500B run
-    renders the tactical HUD (`re/out/frame_500b.png`, 87,794 non-black) with 0
-    unmapped calls, but the map area is black. Add per-surface blit/lock
-    counters and surface dumps; find the terrain blits' destination and whether
-    the map is an offscreen surface never composited, or the primary map
-    rectangle is clipped/scrolled wrongly. *Exit:* the map viewport renders
-    terrain/tiles in the dumped frame, or the next precise renderer defect is
-    named.
+31. **Explain the black map viewport.** **Done (`707c96d`):** not a renderer
+    defect. The map surface is blitted to the primary every frame and every
+    tactical pass executes, but `TS_OBJECTS` is n=0 and `TS_MAPCELLS` shows
+    1,681 cells allocated with 12 tile entries and 0 revealed, so the shroud
+    paints the viewport black. Heights decode (IsoMapPack5 works).
+32. **Fix scenario object creation.** **Open — the current blocker.**
+    `FUN_0063b470` (`[Units]`) and `FUN_0063b8f0` (structures) ran, but every
+    entry was rejected: owner-house `FUN_004c7470` → -1, type `FUN_0063e650`
+    → -1, `FUN_00630cc0` null, or placement `0xc4` → 0. Check the `[Units]`
+    count, type lists (`rules.ini`/`art.ini`), house initialization and the INI
+    parser/string/float paths. Do not inject objects by hand. *Exit:*
+    `TS_OBJECTS` n>0, cells are revealed, and the map viewport renders
+    terrain/units in the frame.
 
 ---
 
@@ -651,13 +667,17 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     EIP `0x00543669`, 0 unmapped, pages 12,637/32,768, coverage 158,667/9,607,
     18,691,958 blits, 46,753,350 locks; `re/out/frame_500b.png` (87,794
     non-black) shows the HUD.
-34. **OPEN (new) — the map viewport is black.** Only the HUD renders; the
-    mission map does not. Trace the terrain/map blits (destination surfaces,
-    primary map rectangle) with per-surface counters and dumps; do not paint the
-    map by hand. **The current blocker.**
-35. **OPEN (new) — the VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls
+34. **RESOLVED — the black map is an empty, fully shrouded world (`707c96d`).**
+    The map surface is blitted every frame and every tactical pass executes;
+    `TS_OBJECTS` is n=0 and `TS_MAPCELLS` shows 1,681 cells allocated with 12
+    tile entries and 0 revealed, so the shroud paints the viewport black.
+35. **OPEN (new) — scenario object creation yields zero objects.** `FUN_0063b470`
+    (`[Units]`) and `FUN_0063b8f0` (structures) ran, but every entry was
+    rejected (owner/type -1, factory null, placement `0xc4` → 0). **The current
+    blocker.** The map and units do not render.
+36. **OPEN (new) — the VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls
     in 600 s; ESC is the practical route to the mission load meanwhile.
-36. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
+37. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
     `0x11` before the MIX-read fix; the current run never reaches shutdown.
 
 ---

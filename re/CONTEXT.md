@@ -50,7 +50,7 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   workload, wide-vs-byte checksum `88188416`, page straddles, a 20M/s floor, a
   cached-path ratio of 1.73-1.78, and the `-O2`/`-fno-pie` build flags), and
   the x87-form tests that caught the D8 one-register emitter bug
-- `test_runtime.py` — 101 checks for the rendering/input layers (`Rendering.h`,
+- `test_runtime.py` — 110 checks for the rendering/input layers (`Rendering.h`,
   `Input.h`), mutation-proven; includes a standalone frame selftest
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
   (`determinism`)
@@ -81,10 +81,14 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   on vector 7/22 with 160,070 entries. At 500B it stops at the budget after
   500,000,000,001 instructions at `0x00543669`, with 0 unmapped calls, pages
   12,637/32,768, coverage 158,667/9,607, 18,691,958 blits and 46,753,350 locks,
-  and renders the **tactical HUD** (`re/out/frame_500b.png`, 87,794 non-black);
-  the map viewport is still black. An independent 500B reproduction was
-  watchdog-stopped at 372,912,291,926 instructions but matched pages, coverage,
-  0 unmapped and a byte-identical frame. The Exit Game script reaches
+  and renders the **tactical HUD** (`re/out/frame_500b.png`, 87,794 non-black).
+  At 6B, `TS_OBJECTS` is **n=0, array=NULL** and `TS_MAPCELLS` shows **1,681
+  cells allocated, 12 tile entries, 0 revealed, 0 fogged** (heights decode);
+  `--surfaces` gives primary 87,794 non-black (HUD), map 472x480 non-black 7,080
+  (rows 0-22), radar 99x108 **0**; `TS_EXEC_CHECK` shows all 11 tactical passes
+  executing and all 5 reveal/sight updates not. An independent 500B reproduction
+  was watchdog-stopped at 372,912,291,926 instructions but matched pages,
+  coverage, 0 unmapped and a byte-identical frame. The Exit Game script reaches
   `ExitProcess(0)` at `0x00684529` after 1,707,666,895 instructions
   (86,400 / 6,654). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA`
   is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0
@@ -106,28 +110,33 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
   (`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416).
 
-**Current runtime blocker** (queued in `todo.md`): the **black map viewport**.
-The model renders and selects the main menu (the six `BS_OWNERDRAW` buttons have
-real rectangles; press/release → `BN_CLICKED` reaches the game's own hit-test),
-New Campaign opens `RT_DIALOG` 148 at step 1,688,503,557, the listbox is
-populated from the shipped `BATTLE.INI` `[Battles]`, GDI1 is selected, and the
-game reads `GDI1A.MAP` from `MAPS01.MIX` and plays the GDI intro. The 479B
-out-of-bounds write was the **x87 emitter** (D8 one-register forms rendered as
-pop forms; 901 instructions), fixed in `e5d7039`; after the fix the tactical
-zoom is 1.125, the map surface 99x108, the visible rect `35,28,23,43`, the vptr
-`0x006a5dfc`, and there are 0 OOB stores. A 500B run renders the **tactical
-HUD** (`re/out/frame_500b.png`, 87,794 non-black: Options, credits 5000, GDI
-radar eagle, build tabs/grid) with 0 unmapped calls, 12,637 pages, 18,691,958
-blits and 46,753,350 locks. **The map viewport is still black**, so the mission
-map does not render; the next step is tracing the terrain/map blits (destination
-surfaces, primary map rectangle) with per-surface counters and dumps, not
-painting the map by hand. The VQA frame-wait path is also stub-bound, so movie
-pacing is not retail pacing. The nested MIX (`0xa8548fd9`, 317 entries) is
-mounted and read; the button art is not painted (no `WM_PAINT` to children;
-retail does not draw it either). Rendering, input, the movie path, the dialog
-layer, CD path, narrow-width flags, MIX index read, Blowfish cipher, menu
-selection, the campaign list, the mission start and the x87 fix are done; the
-interpreter is 12-14x faster; the shutdown ESP corruption is dormant.
+**Current runtime blocker** (queued in `todo.md`): **scenario object creation
+produces zero objects**. The model renders and selects the main menu (the six
+`BS_OWNERDRAW` buttons have real rectangles; press/release → `BN_CLICKED`
+reaches the game's own hit-test), New Campaign opens `RT_DIALOG` 148 at step
+1,688,503,557, the listbox is populated from the shipped `BATTLE.INI`
+`[Battles]`, GDI1 is selected, and the game reads `GDI1A.MAP` from `MAPS01.MIX`
+and plays the GDI intro. The 479B out-of-bounds write was the **x87 emitter**
+(D8 one-register forms rendered as pop forms; 901 instructions), fixed in
+`e5d7039`; after the fix the tactical zoom is 1.125, the map surface 99x108, the
+visible rect `35,28,23,43`, the vptr `0x006a5dfc`, and there are 0 OOB stores. A
+500B run renders the **tactical HUD** (`re/out/frame_500b.png`, 87,794
+non-black: Options, credits 5000, GDI radar eagle, build tabs/grid) with 0
+unmapped calls, 12,637 pages, 18,691,958 blits and 46,753,350 locks. The black
+map is **not** a renderer defect: the map surface is blitted to the primary every
+frame and every tactical pass executes, but `TS_OBJECTS` is **n=0** and
+`TS_MAPCELLS` shows 1,681 cells allocated with 12 tile entries and **0
+revealed**, so the shroud paints the viewport black. `FUN_0063b470` (`[Units]`)
+and `FUN_0063b8f0` (structures) ran, but every entry was rejected (owner-house
+`FUN_004c7470` → -1, type `FUN_0063e650` → -1, `FUN_00630cc0` null, or placement
+`0xc4` → 0). A lane is tracing that path; do not inject objects by hand. **The
+mission map and units do not render.** The VQA frame-wait path is also
+stub-bound, so movie pacing is not retail pacing. The nested MIX (`0xa8548fd9`,
+317 entries) is mounted and read; the button art is not painted (no `WM_PAINT`
+to children; retail does not draw it either). Rendering, input, the movie path,
+the dialog layer, CD path, narrow-width flags, MIX index read, Blowfish cipher,
+menu selection, the campaign list, the mission start and the x87 fix are done;
+the interpreter is 12-14x faster; the shutdown ESP corruption is dormant.
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the

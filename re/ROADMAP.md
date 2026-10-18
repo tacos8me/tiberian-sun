@@ -328,7 +328,11 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
   credits 5000, the GDI radar eagle, build tabs/grid. An independent 500B-budget
   reproduction was watchdog-stopped at 372,912,291,926 instructions (host
   contention) but matched pages, coverage, 0 unmapped and a byte-identical
-  frame. **The map viewport is still black.**
+  frame. **The map viewport is still black**, and it is not a renderer defect:
+  `TS_OBJECTS` is n=0, `TS_MAPCELLS` shows 1,681 cells allocated with 12 tile
+  entries and 0 revealed, and `TS_EXEC_CHECK` shows every tactical pass running
+  while the reveal/sight updates do not. Scenario object creation rejected every
+  `[Units]`/`[Structures]` entry.
 - Historical (pre-`e5d7039`): the 1.2e12 run faulted at 479B with 7,771,444
   unmapped calls and a black frame. The root cause was the **x87 emitter**: D8
   one-register forms were rendered as pop forms, so `fdiv st(1)` computed
@@ -391,7 +395,7 @@ the tests compare them against the CPU's own flags. `test_tools.py` is 101 check
 surfaces through `ts::rnd` (`Rendering.h`) and input through `ts::input`
 (`Input.h`); `SCREEN_W/H` are 640x480 and `--frame` dumps the primary surface.
 The model renders the real main menu (`re/out/frame.png`, within 1.06/255 of
-retail on the pixels that differ). `test_runtime.py` runs 101 checks,
+retail on the pixels that differ). `test_runtime.py` runs 110 checks,
 mutation-proven.
 
 **The menu is selectable (`8474345` … `fa3e2a0`).** `DLGTEMPLATEEX` is parsed;
@@ -415,19 +419,23 @@ intro movie plays. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and
 read; the button art is not painted (no `WM_PAINT` to children; retail does not
 draw it either).
 
-**The current blocker is the black map viewport.** ESC at model-ms 192,000 skips
-the movie and the loader runs. The 479B out-of-bounds write was the **x87
+**The current blocker is scenario object creation.** ESC at model-ms 192,000
+skips the movie and the loader runs. The 479B out-of-bounds write was the **x87
 emitter** (D8 one-register forms rendered as pop forms; 901 instructions
 affected), fixed in `e5d7039`; after the fix the tactical zoom is **1.125**, the
 map surface **99x108**, the visible rect **35,28,23,43**, the vptr
-**`0x006a5dfc`**, and there are **0** OOB stores. A 500B run now renders the
-real **tactical HUD** (`re/out/frame_500b.png`, 87,794 non-black: Options,
-credits 5000, GDI radar eagle, build tabs/grid) with **0 unmapped calls**,
-12,637 pages, 18,691,958 blits and 46,753,350 locks. **The map viewport itself
-is still black**; only the HUD renders, and the mission map does not render yet.
-The next step is tracing the terrain/map blits (destination surfaces, the
-primary map rectangle) with per-surface counters and surface dumps; do not paint
-the map by hand. The VQA frame-wait is stub-bound (~68M `PeekMessageA` in 600
+**`0x006a5dfc`**, and there are **0** OOB stores. A 500B run renders the real
+**tactical HUD** (`re/out/frame_500b.png`, 87,794 non-black: Options, credits
+5000, GDI radar eagle, build tabs/grid) with **0 unmapped calls**, 12,637 pages,
+18,691,958 blits and 46,753,350 locks. The black map is **not** a renderer
+defect: the map surface is blitted to the primary every frame and every tactical
+pass executes, but `TS_OBJECTS` is **n=0** and `TS_MAPCELLS` shows 1,681 cells
+allocated with **12** tile entries and **0 revealed**, so the shroud paints the
+viewport black. `FUN_0063b470` (`[Units]`) and `FUN_0063b8f0` (structures) ran,
+but every entry was rejected (owner-house `FUN_004c7470` → -1, type
+`FUN_0063e650` → -1, `FUN_00630cc0` null, or placement `0xc4` → 0). A lane is
+tracing that path; do not inject objects by hand. **The mission map and units do
+not render yet.** The VQA frame-wait is stub-bound (~68M `PeekMessageA` in 600
 s), so ESC is the practical route meanwhile.
 
 **The oracle premise is now inverted.** `tools/wine_env.sh` gives the retail
@@ -442,15 +450,13 @@ campaign, and plays the GDI intro; the oracle remains the target for the mission
 UI.
 
 Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
-  1. Trace the terrain/map blits so the map viewport renders. Add per-surface
-     blit/lock counters and a way to dump individual surfaces (`Rendering.h`);
-     find which destination surfaces the terrain blits target and whether the
-     map is drawn into an offscreen surface that is never composited, or the
-     primary's map rectangle is clipped/scrolled wrongly now that the visible
-     rect is `35,28,23,43` on a 99x108 surface. Compare with the retail `+ddraw`
-     sequence where possible. Do not paint the map by hand. Exit: the map
-     viewport renders terrain/tiles in the dumped frame, or the next precise
-     renderer defect is named.
+  1. Fix scenario object creation. `TS_TRACE`/`TS_PEEK` on `FUN_0063b470` to
+     read the `[Units]` count and the first entry's owner/type lookups; check
+     whether `rules.ini`/`art.ini` type lists and house initialization are
+     populated (the model has real file I/O and `TS_DATA`), and whether the INI
+     parser, string ops or float math diverge. Fix the first proven cause; do
+     not inject objects by hand. Exit: `TS_OBJECTS` n>0, cells are revealed, and
+     the map viewport renders terrain/units in the frame.
   2. Improve the VQA frame pacing: the frame-wait makes ~68M `PeekMessageA` calls
      in 600 s, so model time barely advances during movies. Exit: the movie
      advances on the clock, not the message count, and ESC is optional.
@@ -476,10 +482,11 @@ default timeline reaches **2,100,000,001 instructions** (the budget) in the LCW
 video decoder at `0x0067dc4f` during the GDI campaign's intro movie; with ESC the
 run reaches **500,000,000,001 instructions** (the budget) inside the renderer and
 **renders the tactical HUD** (`re/out/frame_500b.png`, 87,794 non-black) with 0
-unmapped calls — the map viewport is still black. The pre-fix 479B out-of-bounds
-bitmap/vptr fault (the x87 D8 emitter bug) no longer occurs. The 20M stop is
-still `0x00488800`. Before the stack-leak fix it was 1,011,817 instructions
-ending in `ExitProcess(1)`.
+unmapped calls — the map viewport is still black because the world is empty and
+fully shrouded (`TS_OBJECTS` n=0; 1,681 cells, 12 tiles, 0 revealed). The pre-fix
+479B out-of-bounds bitmap/vptr fault (the x87 D8 emitter bug) no longer occurs.
+The 20M stop is still `0x00488800`. Before the stack-leak fix it was 1,011,817
+instructions ending in `ExitProcess(1)`.
 Each stop is a precise, actionable finding rather than a wall, because the
 harness reports the stop EIP, the instruction bytes there, the containing
 function and generated source line, and the ordered import calls -- and

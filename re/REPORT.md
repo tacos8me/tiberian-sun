@@ -90,10 +90,32 @@ locks**. `re/out/frame_500b.png` (640x480, md5 `4fc1cec7…`, **87,794
 non-black**) shows Options, credits 5000, the GDI radar eagle, and the build
 tabs/grid. An independent 500B-budget reproduction was stopped by its watchdog
 at 372,912,291,926 instructions under host contention but matched the pages,
-coverage, 0 unmapped calls and a byte-identical frame. **The map viewport is
-still black** — only the HUD renders, so the mission map does not render. The next step is tracing the terrain/map blits
-(destination surfaces, the primary map rectangle now that the visible rect is
-`35,28,23,43` on a 99x108 surface); do not paint the map by hand.
+coverage, 0 unmapped calls and a byte-identical frame.
+
+**The black map is not a renderer defect — the world is empty and fully
+shrouded.** The per-surface trace shows the 472x480 map surface blitted to the
+primary once per frame (`last_src=0x5060c4e4`; the two map surfaces swap on
+scroll), the sidebar composited, and the radar 99x108 surface **0 non-black**;
+the primary's 87,794 non-black pixels are the HUD, and the map surface is black
+below row 23. `TS_EXEC_CHECK` shows every tactical pass executing (`0x4b2ff0`
+map render, `0x5f6e50`, `0x5f6360`/`0x5f8c00` terrain, `0x452ab0` tile draw,
+`0x478f00` shape blit, `0x5f90e0`/`0x452330`/`0x5fa220` shroud, `0x5a0b90`/
+`0x5a4080` radar), while the reveal/sight updates (`0x476000`, `0x4760f0`,
+`0x477670`, `0x513bf0`, `0x476180`) do **not** execute. `TS_OBJECTS` is **n=0,
+array=NULL**; `TS_MAPCELLS` shows **1,681 cells allocated, 12 with a
+tile/overlay index, 0 revealed, 0 fogged**, with heights decoded (604/671/562),
+so `IsoMapPack5` works and the terrain template/object layer is absent. The
+shroud therefore paints the viewport black and the terrain loop has only 12
+cells to draw. `FUN_00543620` runs with sane callers; no frame was hand-painted.
+
+**Scenario object creation produces zero objects — the current blocker.**
+`FUN_0063b470` (`[Units]`) and `FUN_0063b8f0` (structures) ran, but **every
+entry was rejected**: owner-house `FUN_004c7470` → -1, type `FUN_0063e650` → -1,
+`FUN_00630cc0` returning null, or placement slot `0xc4` returning 0 (which
+destroys the object). The shipped `GDI1A.MAP` has 3 Nod buggies, 17 infantry
+(3 GDI) and ~20 structures including the GDI construction yard at (28,59). A lane
+is tracing the creation path; do not inject objects by hand. **The mission map
+and units do not render.**
 
 The earlier 1.2e12-budget flood (7,771,444 unmapped calls, 1,024,211 / 2,097,152
 pages, black frame, fault at `0x00422de0` after 478,970,534,425 instructions) is
@@ -123,6 +145,11 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
   **18,691,958 blits, 46,753,350 locks**; frame `re/out/frame_500b.png` (md5
   `4fc1cec7…`, **87,794** non-black) — the tactical HUD; **map viewport still
   black**.
+- World state (6B, ESC skip): `TS_OBJECTS` **n=0, array=NULL**; `TS_MAPCELLS`
+  **alloc=1,681, tiles=12, seen=0, fog=0** (heights 604/671/562); per-surface
+  primary non-black 87,794 (HUD), map 472x480 non-black 7,080 (rows 0-22),
+  radar 99x108 **0**; `TS_EXEC_CHECK` all 11 tactical passes executed, all 5
+  reveal/sight updates not executed.
 - ESC-skip script, 1.2e12 (historical, pre-`e5d7039`): fault at `0x00422de0`
   after 478,970,534,425 instructions, pages **1,024,211 / 2,097,152**,
   **7,771,444 unmapped calls**, black frame; does not reproduce after the x87
@@ -415,21 +442,25 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   machine state.** Measured on the mission-load run: 4B in 11.7 s (341.9M/s),
   20B in 50.2 s (398.4M/s), 100B in 243.9 s (410.0M/s); the old rate was
   ~28.6M/s. `test_machine_perf` pins the hot path.
-- **The tactical HUD renders; the map viewport does not.** The page table is
-  growable (2,097,152-page cap) and the heap reuses freed blocks, so at 4B the
-  load uses 12,809 pages (50 MB) instead of 377,796 (1.44 GiB) and presents the
-  GDI loading screen (`re/out/render_2_6b.png`, 290,399 non-black). The 479B
-  out-of-bounds write was the **x87 emitter** (D8 one-register forms rendered as
-  pop forms; 901 instructions affected), fixed in `e5d7039`; after the fix the
-  tactical zoom is 1.125, the map surface 99x108, the visible rect
+- **The tactical HUD renders; the world is empty and fully shrouded.** The page
+  table is growable (2,097,152-page cap) and the heap reuses freed blocks, so at
+  4B the load uses 12,809 pages (50 MB) instead of 377,796 (1.44 GiB) and
+  presents the GDI loading screen (`re/out/render_2_6b.png`, 290,399 non-black).
+  The 479B out-of-bounds write was the **x87 emitter** (D8 one-register forms
+  rendered as pop forms; 901 instructions affected), fixed in `e5d7039`; after
+  the fix the tactical zoom is 1.125, the map surface 99x108, the visible rect
   `35,28,23,43`, the vptr `0x006a5dfc`, and there are 0 OOB stores. The 500B run
   renders `re/out/frame_500b.png` (87,794 non-black: Options, credits 5000, GDI
   radar eagle, build tabs/grid) with 0 unmapped calls, 12,637 pages, 18,691,958
-  blits and 46,753,350 locks. **The map viewport is still black**, so the
-  mission map does not render; tracing the terrain/map blits is the next step.
-  The VQA frame-wait path is also stub-bound, so playback pacing is not the
-  retail pacing. The button art is not painted (no `WM_PAINT` to children;
-  retail does not draw it either).
+  blits and 46,753,350 locks. **The black map is not a renderer defect**: the
+  map surface is blitted every frame and every tactical pass executes, but
+  `TS_OBJECTS` is n=0 and `TS_MAPCELLS` shows 1,681 cells allocated with 12 tile
+  entries and 0 revealed, so the shroud paints it black. Scenario object
+  creation rejected every `[Units]`/`[Structures]` entry (owner/type -1,
+  factory null, placement `0xc4` → 0). **The mission map and units do not
+  render.** The VQA frame-wait path is also stub-bound, so playback pacing is
+  not the retail pacing. The button art is not painted (no `WM_PAINT` to
+  children; retail does not draw it either).
 - **The boot has 0 unmapped calls and 0 stack imbalances**; the link test passes
   and `boot.py --strict` exits 0.
 - **The Blowfish cipher, the MIX index read and the dialog layer are fixed.**

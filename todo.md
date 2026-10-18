@@ -1208,7 +1208,7 @@ game's own `MixFileClass` lookup, `GDI1A.MAP` is in **MAPS01.MIX on CD1** and
   recorded above.
 - Frames: `/tmp/default_mission.png` (GDI intro), `/tmp/gdi_mission.png`
   (live-action briefing), `/tmp/gdi_skip.png` (290,399 non-black).
-- Gates: `verify.py` PASSED, `test_tools.py` **101**, `test_runtime.py` 101,
+- Gates: `verify.py` PASSED, `test_tools.py` **101**, `test_runtime.py` 110,
   `--strict` 0, link OK.
 
 ### [x] The page table is exhausted during the mission load — fixed
@@ -1305,7 +1305,7 @@ A perf regression test (`test_machine_perf`) pins the hot path: a 40M-iteration
 workload, wide-vs-byte checksum `88188416`, page straddles, the watchpoint path,
 a 20M/s floor, a cached-path >=1.4x `page_in_slow` ratio (measured 1.73-1.78),
 and that `boot.py` keeps `-O2`/`-fno-pie`; mutation-proven. `test_tools.py` is
-**101 checks**; `verify.py` PASSED, `test_runtime.py` 101, link OK, `--strict` 0.
+**101 checks**; `verify.py` PASSED, `test_runtime.py` 110, link OK, `--strict` 0.
 
 ### [x] The 479B mission-load run goes wild — diagnosed
 **The first wild call is deterministic and fully explained.** It occurs at
@@ -1401,7 +1401,7 @@ non-black). Its blit/lock counts (13,915,030 / 34,810,395) are lower only
 because it ran fewer instructions.
 
 Pipeline exit 0, `VERIFICATION PASSED`, link OK (492 TUs), tool tests **101**
-(was 94; new x87-form and header-ownership tests), runtime 101, `--strict` 0.
+(was 94; new x87-form and header-ownership tests), runtime 110, `--strict` 0.
 
 ### [x] The tactical map viewport is still black — explained (empty world)
 **The renderer is correct; the world is empty and fully shrouded.** The

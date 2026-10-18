@@ -25,7 +25,7 @@ offset it can express, and it passes 3,073/3,073. **The link stage is green**:
 measured this session, `link: OK (492 translation units)`, `ts_link_test: OK`,
 exit **0**, 20,000,001 instructions, `MESSAGE LOOP: reached -- GetMessage 1,
 PeekMessage 5, DispatchMessage 1`, 0 unmapped. `test_tools.py` runs **101**
-checks and `test_runtime.py` **101** (mutation-proven). A full
+checks and `test_runtime.py` **110** (mutation-proven). A full
 `./tools/pipeline.sh` ran **exit 0** in the disasm-correction lane (8m51s,
 recorded in `todo.md`); it was not re-run in this worktree. The link was the
 expensive stage when last timed (about 471 s).
@@ -133,16 +133,34 @@ instructions (host contention) but matched pages (12,637), coverage
 (158,667 / 9,607), 0 unmapped and a **byte-identical frame**; its blit/lock
 counts are lower only because it ran fewer instructions.
 
-**The current blocker is the black map viewport.** Only the HUD renders; the
-map does not. The renderer is running (18.7M blits, 46.8M locks) and the run
-ends only at the budget, so this is not a fault. The next step is tracing the
-terrain/map blits — destination surfaces, and the primary's map rectangle now
-that the visible rect is `35,28,23,43` on a 99x108 surface — with per-surface
-counters and surface dumps. Do not paint the map by hand. **The mission map does
-not render yet.** The VQA frame-wait is stub-bound (~68M `PeekMessageA` in 600
-s), so ESC is the practical route meanwhile; it is secondary. The earlier 479B
-flood (7,771,444 unmapped calls, 1,024,211 / 2,097,152 pages, black frame) is
-historical and no longer occurs.
+**The black map is not a renderer defect — the world is empty and fully
+shrouded.** The per-surface trace shows the 472x480 map surface blitted to the
+primary once per frame (`last_src=0x5060c4e4`; the two map surfaces swap on
+scroll), the sidebar composited, and the radar 99x108 surface **0 non-black**;
+the primary's 87,794 non-black pixels are the HUD, and the map surface is black
+below row 23. `TS_EXEC_CHECK` shows every tactical pass executing (`0x4b2ff0`
+map render, `0x5f6e50`, `0x5f6360`/`0x5f8c00` terrain, `0x452ab0` tile draw,
+`0x478f00` shape blit, `0x5f90e0`/`0x452330`/`0x5fa220` shroud, `0x5a0b90`/
+`0x5a4080` radar), while the reveal/sight updates (`0x476000`, `0x4760f0`,
+`0x477670`, `0x513bf0`, `0x476180`) do **not** execute. `TS_OBJECTS` is **n=0,
+array=NULL**; `TS_MAPCELLS` shows **1,681 cells allocated, 12 with a
+tile/overlay index, 0 revealed, 0 fogged**, with heights decoded (604/671/562),
+so `IsoMapPack5` works and the terrain template/object layer is absent. The
+shroud therefore paints the viewport black and the terrain loop has only 12
+cells to draw. `FUN_00543620` executes with sane callers; no frame was
+hand-painted.
+
+**The current blocker is scenario object creation.** `FUN_0063b470` (`[Units]`)
+and `FUN_0063b8f0` (structures) ran, but **every entry was rejected**: owner-house
+`FUN_004c7470` → -1, type `FUN_0063e650` → -1, `FUN_00630cc0` returning null, or
+placement slot `0xc4` returning 0 (which destroys the object). The shipped
+`GDI1A.MAP` has 3 Nod buggies, 17 infantry (3 GDI) and ~20 structures including
+the GDI construction yard at (28,59). A lane is tracing that path; do not inject
+objects by hand. **The mission map and units do not render yet.** The VQA
+frame-wait is stub-bound (~68M `PeekMessageA` in 600 s), so ESC is the practical
+route meanwhile; it is secondary. The earlier 479B flood (7,771,444 unmapped
+calls, 1,024,211 / 2,097,152 pages, black frame) is historical and no longer
+occurs.
 
 **The recovery was corrected (`9e5703f` + `ad62afc`).** 213 static switch tables
 are now data (was 12), including three hole tables (`0x683c10`, `0x683d98`,
@@ -277,6 +295,7 @@ Measured state:
 | **boot (4B, ESC skip)** | **4,000,000,001 instructions** (budget) at `0x0055b0bb`, depth 29; coverage **139,250 / 8,682**; pages **12,809 / 32,768**; 8 surfaces, 12 blits, 769 locks, 0 flips; frame `/tmp/mission_4b.png` **290,399 non-black**, md5 `6cb0e1ff…` = `re/out/render_2_6b.png` (loading screen); **11.7 s wall** |
 | **boot (100B, ESC skip)** | **100,000,000,001 instructions** (budget) at `0x0055b0bc`; pages **16,343 / 32,768**; loader on vector 7/22 with **160,070 entries** (`TS_PEEK` `0x712068`); **243.9 s wall** |
 | **boot (500B, ESC skip)** | **500,000,000,001 instructions** (budget) at `0x00543669` (3x4 matrix·vector transform), depth 100; pages **12,637 / 32,768** (refused 0); **0 unmapped**; coverage **158,667 / 9,607**; `GetMessage=19`, `DispatchMessage=19`, `PeekMessage=23,117,313`; 8 surfaces, **18,691,958 blits, 46,753,350 locks**; frame `re/out/frame_500b.png` md5 `4fc1cec7…`, **87,794 non-black** — the tactical HUD; **map viewport still black** |
+| **world state (6B, ESC skip)** | `TS_OBJECTS`: **n=0, array=NULL**; `TS_MAPCELLS`: **alloc=1,681, tiles=12, seen=0, fog=0** (heights 604/671/562 decode); per-surface: primary non-black 87,794 (HUD), map 472x480 non-black 7,080 (rows 0-22), radar 99x108 **0**; `TS_EXEC_CHECK`: all 11 tactical passes executed, all 5 reveal/sight updates not executed |
 | **boot (1.2e12 budget, ESC skip)** | historical, pre-x87-fix: first wild call deterministic at step 478,300,935,316; flood faulted at `0x00422de0` after 478,970,534,425 instructions with 1,024,211 / 2,097,152 pages and 7,771,444 unmapped calls; **does not reproduce after `e5d7039`** |
 | **interpreter speed** | **~400M instructions/s** (12-14x the old ~28.6M/s), byte-identical state; 4B 11.7 s, 20B 50.2 s, 100B 243.9 s |
 | **frame** | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, **254,610 / 307,200 non-black**; vs retail `/tmp/retail.png`: 102,836 pixels differ (33.48%), mean abs channel diff **1.06/255** over differing pixels (0.35 over frame), 506 pixels differ by >8 (retail version text) |
@@ -331,7 +350,7 @@ Coverage is achieved in three tiers:
 | Whole-tree link + entry-point run | 492 TUs | done |
 | Binary-anchored member verification | 4,285/4,289 (99.9%), gated | done |
 | Tool unit tests | 101 checks, mutation-proven | done |
-| Runtime tests | 101 checks (rendering/input), mutation-proven | done |
+| Runtime tests | 110 checks (rendering/input), mutation-proven | done |
 
 ### Verification performed
 
@@ -524,13 +543,19 @@ Coverage is achieved in three tiers:
       `0x00543669`, depth 100, pages 12,637/32,768, **0 unmapped**, coverage
       158,667/9,607, 8 surfaces with 18,691,958 blits and 46,753,350 locks;
       frame `re/out/frame_500b.png` (87,794 non-black) shows the HUD.
-- [ ] **The map viewport is still black — the current blocker.** Only the HUD
-      renders. The renderer is running (18.7M blits, 46.8M locks) and the run
-      ends only at the budget, so this is not a fault. Trace the terrain/map
-      blits (destination surfaces, the primary map rectangle now that the
-      visible rect is `35,28,23,43` on a 99x108 surface) with per-surface
-      counters and surface dumps. Do not paint the map by hand. **The mission
-      map does not render yet.**
+- [x] **The black map is explained: the world is empty and fully shrouded
+      (`707c96d`).** The renderer is correct: the map surface is blitted to the
+      primary every frame, every tactical pass executes, and no frame was
+      hand-painted. `TS_OBJECTS` is n=0 and `TS_MAPCELLS` shows 1,681 cells
+      allocated with 12 tile entries and 0 revealed, so the shroud paints the
+      viewport black. `FUN_00543620` runs with sane callers.
+- [ ] **Scenario object creation produces zero objects — the current blocker.**
+      `FUN_0063b470` (`[Units]`) and `FUN_0063b8f0` (structures) ran, but every
+      entry was rejected: owner-house `FUN_004c7470` → -1, type `FUN_0063e650`
+      → -1, `FUN_00630cc0` null, or placement `0xc4` → 0 (destroying the
+      object). `GDI1A.MAP` has 3 Nod buggies, 17 infantry (3 GDI) and ~20
+      structures including the GDI construction yard at (28,59). Do not inject
+      objects by hand. **The mission map and units do not render yet.**
 - [ ] **The VQA player's frame-wait is stub-bound — secondary.** ~68M
       `PeekMessageA` calls in 600 s; ESC is the practical route to the mission
       load meanwhile.
@@ -560,15 +585,19 @@ Coverage is achieved in three tiers:
   list comes from shipped `BATTLE.INI` and OK selects GDI. `GDI1A.MAP` is read
   from MAPS01.MIX and the GDI intro plays (stop `0x0067dc4f`, frame 194,131
   non-black). The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read.
-- **The tactical HUD renders; the map viewport does not.** The 479B
+- **The tactical HUD renders; the world is empty and fully shrouded.** The 479B
   out-of-bounds write was the x87 D8 emitter form (901 instructions), fixed in
   `e5d7039`; after the fix the tactical zoom is 1.125, the map surface 99x108,
   the visible rect `35,28,23,43`, the vptr intact and there are 0 OOB stores.
   The 500B run renders `re/out/frame_500b.png` (87,794 non-black: Options,
   credits 5000, GDI radar eagle, build tabs/grid) with 0 unmapped calls,
-  12,637 pages, 18,691,958 blits and 46,753,350 locks. The **map viewport is
-  still black**; tracing the terrain/map blits is the next step, and the
-  mission map does not render yet.
+  12,637 pages, 18,691,958 blits and 46,753,350 locks. The black map is not a
+  renderer defect: the map surface is blitted every frame and every tactical
+  pass executes, but `TS_OBJECTS` is n=0 and `TS_MAPCELLS` shows 1,681 cells
+  allocated with 12 tile entries and 0 revealed, so the shroud paints it black.
+  Scenario object creation rejected every `[Units]`/`[Structures]` entry
+  (owner/type -1, factory null, placement `0xc4` → 0). The mission map and
+  units do not render yet.
 - **The VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls in 600 s, so
   ESC is the practical route to the mission load meanwhile.
 - **Shutdown corrupts ESP, but the path is dormant.** WinMain returned with ESP
@@ -708,13 +737,20 @@ tools/boot.py  (TS_CD=../work/cd1)
     frame: re/out/frame_500b.png, md5 4fc1cec7..., 87,794 non-black
           = the tactical HUD (Options, credits 5000, GDI radar, build tabs);
           the map viewport is still black
+  --budget 6000000000, ESC skip, TS_OBJECTS=1 TS_MAPCELLS=1 --surfaces:
+    objects: n=0 array=0x00000000
+    mapcells: alloc=1681 tiles=12 seen=0 fog=0; heights 604/671/562 decode
+    surfaces: primary non-black 87794 (HUD); map 472x480 non-black 7080
+              (rows 0-22); radar 99x108 non-black 0
+    TS_EXEC_CHECK: all 11 tactical passes executed; all 5 reveal/sight
+              updates (0x476000, 0x4760f0, 0x477670, 0x513bf0, 0x476180) not
   --budget 1200000000000, ESC skip (1.2e12), historical pre-e5d7039:
     fault at 0x00422de0 after 478,970,534,425 instructions; pages
     1,024,211/2,097,152; 7,771,444 unmapped calls; black frame; does not
     reproduce after the x87 D8 fix
 
 tools/test_runtime.py
-  RUNTIME TEST PASSED (101 checks, mutation-proven); frame dump produced
+  RUNTIME TEST PASSED (110 checks, mutation-proven); frame dump produced
 
 re/out/frame_500b.png
   640x480, md5 4fc1cec7..., 87,794 non-black: the tactical HUD

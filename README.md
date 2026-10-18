@@ -77,10 +77,23 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
   independent 500B-budget reproduction was stopped by its watchdog at
   372,912,291,926 instructions under host contention but matched the pages,
   coverage, 0 unmapped calls and a byte-identical frame.
-- **The map viewport is still black.** Only the HUD renders; the mission map does
-  not. A lane is tracing the terrain/map blits (destination surfaces, primary map
-  rectangle). The VQA frame-wait path is also stub-bound, so movie pacing is not
-  retail pacing.
+- **The map viewport is black because the world is empty and fully shrouded —
+  not because of a renderer defect.** The per-surface trace shows the 472x480 map
+  surface blitted to the primary once per frame, the sidebar composited, and the
+  radar 99x108 surface 0 non-black; the primary's 87,794 non-black pixels are the
+  HUD. `TS_EXEC_CHECK` shows every tactical pass executing (map render, terrain,
+  tile draw, shape blit, shroud, radar) while the reveal/sight updates do not.
+  `TS_OBJECTS` is **n=0, array=NULL**; `TS_MAPCELLS` shows **1,681 cells
+  allocated, 12 with a tile/overlay index, 0 revealed, 0 fogged**, with heights
+  decoded (604/671/562), so `IsoMapPack5` works and the terrain template/object
+  layer is absent. Scenario object creation rejected every entry: `FUN_0063b470`
+  (`[Units]`) and `FUN_0063b8f0` (structures) ran, but owner-house
+  `FUN_004c7470` → -1, type `FUN_0063e650` → -1, `FUN_00630cc0` null, or
+  placement `0xc4` → 0 (destroying the object). The shipped `GDI1A.MAP` has 3
+  Nod buggies, 17 infantry (3 GDI) and ~20 structures including the GDI
+  construction yard at (28,59). A lane is tracing the creation path; **the map
+  and units do not render.** The VQA frame-wait path is also stub-bound, so
+  movie pacing is not retail pacing.
 - **The GDI loading screen renders.** At a 4B budget the ESC-skip run stops at
   `0x0055b0bb` with 12,809 pages, 12 blits and 769 locks; the frame is 640x480,
   290,399 non-black, md5 `6cb0e1fff05f9250adda298e644f1266`, byte-identical to
@@ -102,9 +115,9 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 | virtuals named | 5,557 of 9,810 slot pairs (56.6%); 917 distinct names (281 semantic) |
 | headers | 266 total, 265 compile standalone at `-m32` |
 | verification gate | 9 checks, fail-closed, passing; check 9 confirms 3,073/3,073 offsets |
-| tool tests | 101 checks, several mutation-proven; `test_runtime.py` 101 more (rendering/input) |
+| tool tests | 101 checks, several mutation-proven; `test_runtime.py` 110 more (rendering/input) |
 | interpreter | ~400M instructions/s (12-14x the old ~28.6M/s), byte-identical state; 4B in 11.7 s, 100B in 243.9 s |
-| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders and selects the main menu**; campaign list from `BATTLE.INI`; **starts the GDI mission and plays its intro**; 20M stop `0x00488800` (55,774 / 4,764), 2.1B stop `0x0067dc4f` (84,130 / 6,431; pages 9,029 / 32,768), 4B ESC-skip stop `0x0055b0bb` (139,250 / 8,682; pages 12,809), 100B ESC-skip stop `0x0055b0bc` (pages 16,343), **500B ESC-skip: budget at `0x00543669`, 0 unmapped, pages 12,637 / 32,768, coverage 158,667 / 9,607, 18,691,958 blits, 46,753,350 locks**, Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions (86,400 / 6,654); 0 unmapped at 20M/2.1B/4B/100B/500B; current blocker is the black map viewport, so the mission map does not render |
+| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders and selects the main menu**; campaign list from `BATTLE.INI`; **starts the GDI mission and plays its intro**; 20M stop `0x00488800` (55,774 / 4,764), 2.1B stop `0x0067dc4f` (84,130 / 6,431; pages 9,029 / 32,768), 4B ESC-skip stop `0x0055b0bb` (139,250 / 8,682; pages 12,809), 100B ESC-skip stop `0x0055b0bc` (pages 16,343), **500B ESC-skip: budget at `0x00543669`, 0 unmapped, pages 12,637 / 32,768, coverage 158,667 / 9,607, 18,691,958 blits, 46,753,350 locks**, Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions (86,400 / 6,654); 0 unmapped at 20M/2.1B/4B/100B/500B; current blocker is scenario object creation (`TS_OBJECTS` n=0, `TS_MAPCELLS` 1,681/12/0 revealed), so the world is empty, fully shrouded, and the map and units do not render |
 | frame | `re/out/frame_500b.png`: 640x480, md5 `4fc1cec7…`, 87,794 non-black, the tactical HUD (Options, credits 5000, GDI radar eagle, build tabs/grid). `re/out/frame.png` (main menu, md5 `0fdf2636…`, 254,610 non-black; 1.06/255 mean channel difference from retail on differing pixels), `re/out/mission.png` (GDI intro title, 194,131 non-black) and `re/out/render_2_6b.png` (loading screen, 290,399 non-black, md5 `6cb0e1ff…`) |
 
 **Measure, don't trust prose.** `python3 tools/harness.py metrics` prints the
@@ -183,8 +196,8 @@ calls**, coverage **158,667 / 9,607**, `GetMessage=19`, `DispatchMessage=19`,
 `PeekMessage=23,117,313`, 8 surfaces with **18,691,958 blits and 46,753,350
 locks**. `--frame` dumps `re/out/frame_500b.png` (640x480, md5 `4fc1cec7…`,
 87,794 non-black): Options, credits 5000, the GDI radar eagle, and the build
-tabs/grid. **The map viewport is still black**; the HUD is the furthest rendered
-frame.
+tabs/grid. **The map viewport is still black** — the world is empty and fully
+shrouded (see below); the HUD is the furthest rendered frame.
 
 The 479B out-of-bounds write that preceded this was the **x87 emitter**:
 `tools/emit_x86.py` rendered the D8 one-register forms as pop forms, so
@@ -207,19 +220,25 @@ renders and is selectable through the game's own hit-test and `WM_COMMAND` path;
 the nested MIX (`0xa8548fd9`, 317 entries) is mounted and read. The campaign
 list is populated from the shipped `BATTLE.INI`, GDI1 is selected, the game
 starts the mission and plays the GDI intro, and the 500B run renders the
-**tactical HUD**. **The current blocker is the black map viewport**: only the
-HUD renders. The 479B out-of-bounds write is fixed (x87 D8 one-register forms;
-901 instructions), and the earlier flood no longer occurs (0 unmapped calls at
-500B). The next step is tracing the terrain/map blits (destination surfaces and
-the primary map rectangle); do not paint the map by hand. The VQA frame-wait
-path is also stub-bound, so movie pacing is not retail pacing; the button art is
-not painted (no `WM_PAINT` to children; retail does not draw it either). The
-shutdown ESP defect is dormant.
+**tactical HUD**. **The current blocker is scenario object creation**: the black
+map is not a renderer defect. The map surface is blitted to the primary every
+frame and every tactical pass executes, but `TS_OBJECTS` is **n=0** and
+`TS_MAPCELLS` shows 1,681 cells allocated with 12 tile entries and **0
+revealed**, so the shroud paints the viewport black. `FUN_0063b470` (`[Units]`)
+and `FUN_0063b8f0` (structures) ran, but every entry was rejected (owner-house
+`FUN_004c7470` → -1, type `FUN_0063e650` → -1, `FUN_00630cc0` null, or placement
+`0xc4` → 0). A lane is tracing that path; do not inject objects by hand. The
+479B out-of-bounds write is fixed (x87 D8 one-register forms; 901 instructions),
+and the earlier flood no longer occurs (0 unmapped calls at 500B). The VQA
+frame-wait path is also stub-bound, so movie pacing is not retail pacing; the
+button art is not painted (no `WM_PAINT` to children; retail does not draw it
+either). The shutdown ESP defect is dormant.
 
 The model has diagnostics for this work: `TS_TRACE=0xADDR`, `TS_PEEK=0xADDR`,
 `TS_SCAN=start,count`, `TS_WATCH=0xADDR`, `TS_WATCH_RING`, `TS_STOP_UNMAPPED=1`,
-`TS_HEAP_AT`, `TS_FOLLOW`, `TS_FUNC_ENTERED`, `TS_FILE_TRACE=1`, plus
-`bad_calls`, `stack_imbalances` and a per-callee ESP tracker. "What is ESP
+`TS_HEAP_AT`, `TS_FOLLOW`, `TS_FUNC_ENTERED`, `--surfaces`, `--surface-dump`,
+`TS_BLITLOG`, `TS_EXEC_CHECK`, `TS_OBJECTS`, `TS_MAPCELLS`, `TS_FILE_TRACE=1`,
+plus `bad_calls`, `stack_imbalances` and a per-callee ESP tracker. "What is ESP
 here?" is answered by running the machine, not by counting pushes by hand.
 
 ## The retail oracle
