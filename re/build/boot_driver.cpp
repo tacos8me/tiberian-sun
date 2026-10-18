@@ -1228,11 +1228,16 @@ void objects_report() {
                 u32 o = ts::ld32(arr + i * 4u);
                 std::printf("    [%u] obj=0x%08x", i, o);
                 if (o >= 0x00400000u && o < 0x80000000u) {
-                    u32 pos = ts::ld32(o + 0x14u);
-                    std::printf(" vptr=0x%08x pos=(%d,%d)",
-                                (unsigned)ts::ld32(o),
-                                (int)(short)(pos & 0xffffu),
-                                (int)(short)(pos >> 16));
+                    // ObjectClass +0x40 is the 12-byte CoordStruct (three ints,
+                    // 256 leptons per cell); +0x14 is m_NextObject, not a
+                    // position, so reading it as two shorts prints heap
+                    // pointers. The reveal pass converts Coord>>8 to a cell.
+                    int cx = (int)ts::ld32(o + 0x40u);
+                    int cy = (int)ts::ld32(o + 0x44u);
+                    int cz = (int)ts::ld32(o + 0x48u);
+                    std::printf(" vptr=0x%08x coord=(%d,%d,%d) cell=(%d,%d)",
+                                (unsigned)ts::ld32(o), cx, cy, cz,
+                                cx >> 8, cy >> 8);
                 }
                 std::printf("\n");
             }
