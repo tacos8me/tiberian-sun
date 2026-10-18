@@ -5,9 +5,10 @@ Written against HEAD `8ce1ebe`; the figures below were re-measured on
 instead of measured say so. Anything I could not verify says **unverified**.
 Re-measure before trusting this file: `python3 tools/harness.py metrics
 --no-append`. The boot, frame, link-test and oracle figures were re-measured
-after the menu-selection merge (`boot.py` with `TS_CD` at 20M/1.9B and the Exit
-Game script, `link_test.py`, `test_runtime.py`, `wine_env.sh`); the full
-`pipeline.sh` run recorded in `todo.md` (exit 0, 8m51s) was not re-run here.
+after the campaign-selection/mission-start merge (`boot.py` with `TS_CD` at 20M
+and 2.1B, plus the ESC-skip script, `link_test.py`, `test_runtime.py`,
+`wine_env.sh`); the full `pipeline.sh` run recorded in `todo.md` (exit 0, 8m51s)
+was not re-run here.
 
 This is not a status report (`PROGRESS.md` is). It is the argument about what to
 do next and what it costs.
@@ -49,8 +50,8 @@ documentation says cannot exist.
 | functions reachable from entry `0x6854e3` by direct edges | **69 (0.16%)** | BFS over `callees` |
 | functions declared by the reconstructed headers | **3,024 of 43,557 (6.9%)** | unique `sub_*` in `src/generated/*.cpp` |
 | boot (20M, `TS_CD`) | **20,000,001 instructions** (budget) at `0x00488800` (`sub_0048875c +0xa4`), depth 19, **0 unmapped targets, 0 stack imbalances**, message loop **reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), **55,774 distinct instructions / 4,764 of 45,947 functions entered**; CD read (`D:\TS1.dsk`, `EXPAND99..00`); primary surface `0x006beed8`=1 | `tools/boot.py` (`TS_CD=../work/cd1`) |
-| boot (1.9B, default script) | New Campaign clicked; menu exits result 1; `RT_DIALOG` 148 "Select Campaign:" at step 1,688,503,557; stop `0x0045fa8e` (dialog modal loop), depth 28, `GetMessage=7`, `PeekMessage=14,572,933`, `DispatchMessage=7`, coverage **78,504 / 6,191** | same (`--timeout 600`) |
-| boot (1.9B, Exit Game script) | `ExitProcess(0)` at `0x00684529` after **1,707,666,895** instructions, depth 28, `GetMessage=6`, `PeekMessage=11,216,667`, `DispatchMessage=6`, coverage **86,400 / 6,654** | same |
+| boot (2.1B, default timeline) | New Campaign, NOD1, GDI1, OK; `GDI1A.MAP` read; GDI intro plays; stop `0x0067dc4f` (LCW decoder), depth 28, `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage **84,130 / 6,431**, `pages-used 11,058/32,768`; frame 194,131 non-black | same (`--timeout 600`) |
+| boot (3.0B, ESC skip) | fault at `0x00a006b0` (HeapAlloc thunk) after **2,580,698,410** instructions, depth 29; **page table exhausted 32768/32768**; coverage 139,223 / 8,678; mission load does **not** complete | same |
 | frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; vs retail: 102,836 pixels differ (33.48%), mean abs channel diff **1.06/255** over differing pixels (0.35 over frame), 506 pixels >8 | `tools/boot.py --frame` |
 | link test | **OK, exit 0**, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled | `tools/link_test.py` |
 | boot strict gate | **exit 0**, 0 garbage call targets | `boot.py --no-build --strict` |
@@ -67,18 +68,18 @@ In words:
    reader can *call* is 6.9% of the program.
 3. **The runtime is the product.** What exists is a run of the game's own
    startup that **delivers messages, reads the CD and the MIX index, builds its
-   real dialogs, renders and selects the main menu, and opens "Select
-   Campaign:"**: at 1.9B the default timeline clicks New Campaign, the menu
-   exits with result 1, and dialog 148 is created at step 1,688,503,557; the
-   stop is its modal loop at `0x0045fa8e` (78,504 / 6,191), with 0 unmapped
-   calls and 0 stack imbalances. Clicking Exit Game reaches `ExitProcess(0)` at
-   `0x00684529` after 1,707,666,895 instructions. `re/out/frame.png` is 640x480
-   and within **1.06/255** mean channel difference of the retail screenshot on
-   the pixels that differ. COM registration, message delivery, the dialog layer,
+   real dialogs, renders and selects the main menu, populates the campaign list,
+   starts the GDI campaign, and plays its intro movie**: at 2.1B the stop is the
+   LCW decoder `0x0067dc4f` (`pages-used 11,058/32,768`), with the GDI title
+   frame (194,131 non-black). `re/out/frame.png` is 640x480 and within
+   **1.06/255** mean channel difference of the retail screenshot on the pixels
+   that differ. COM registration, message delivery, the dialog layer,
    narrow-width flags, the Blowfish cipher, the stack tracker, the teardown
-   calls, signed `idiv`, rendering, input and menu selection are all fixed. The
-   current blocker is the **empty campaign listbox** (1109): the model
-   implements no listbox/combobox/trackbar content, so **no mission starts**.
+   calls, signed `idiv`, rendering, input, menu selection, the listbox/trackbar
+   layer and the mission start are all fixed. The current blocker is the **page
+   table during the mission load**: ESC skips the movie, the loader touches every
+   slot, and the run faults at `0x00a006b0` with 32,768/32,768 pages used. The
+   mission load does **not** complete.
 4. **The Win32 layer is real where the game has been, and fiction where it has
    not** (`Win32Stubs.h`, read):
    - File I/O: **real** — a host root, case-insensitive paths, a 64-entry handle
@@ -96,12 +97,13 @@ In words:
      string table; the DirectSound warning text is still the format string.
 
 So: **structure recovered, instructions transcribed, layout compiler-confirmed,
-and a runtime that has executed 1.9 billion instructions through message
-delivery, the CD/MIX path, real dialogs and the intro movie to a rendered,
-selectable main menu, and on into the "Select Campaign:" dialog, on a Win32 layer
-that can load a file, create a window, dispatch messages, read the MIX index,
-build dialogs, take scripted input, hit-test a real button and show a frame —
-but cannot yet populate a listbox, start a mission, fire a timer, or play a
+and a runtime that has executed 2.1 billion instructions through message
+delivery, the CD/MIX path, real dialogs, the intro movie, a rendered and
+selectable main menu, the campaign list, and into the GDI campaign's intro movie,
+on a Win32 layer that can load a file, create a window, dispatch messages, read
+the MIX index, build dialogs, take scripted input, hit-test a real button,
+populate a listbox, start a mission and show a frame — but cannot yet complete
+the mission load (the fixed page table is exhausted), fire a timer, or play a
 sound.**
 
 ### The fact the docs do not contain
@@ -175,22 +177,25 @@ bytes.
    and that includes image mapping, so treat it as an upper bound on cost, not a
    clean throughput. A 30 fps budget is ~330k instructions/frame. If a TS frame
    costs millions, the interpreter is 10–30× too slow. Measure before promising.
-9. **The MS*/AVI movie layer — done.** The model now plays past the intro and
-   reaches the menu. With the default script at 1.9B it clicks New Campaign and
-   stops in the Select Campaign dialog's modal loop at `0x0045fa8e`
-   (`PeekMessage=14,572,933`, `DispatchMessage=7`, 78,504 / 6,191); Exit Game
-   reaches `ExitProcess(0)`. The rendering/input integration (`Rendering.h`,
-   `Input.h`) is what made the menu visible and clickable.
+9. **The MS*/AVI movie layer — done.** The model plays past the intro, reaches
+   the menu, starts the GDI campaign, and plays the GDI intro movie: at 2.1B the
+   stop is the LCW decoder `0x0067dc4f` (84,130 / 6,431, `pages-used
+   11,058/32,768`, 194,131 non-black frame). The rendering/input integration
+   (`Rendering.h`, `Input.h`) is what made the menu visible and clickable.
 10. **Menu-item selection — done.** `DLGTEMPLATEEX` is parsed, the six
     `BS_OWNERDRAW` buttons have real rectangles, and press/release →
     `BN_CLICKED` reaches the game's own hit-test and `WM_COMMAND` path. New
     Campaign opens `RT_DIALOG` 148 "Select Campaign:"; Exit Game reaches
     `ExitProcess(0)`. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and
     read.
-11. **Listbox content — the current blocker.** The campaign listbox (1109) is
-    empty because no listbox/combobox/trackbar messages are implemented
-    (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so no mission can be selected or
-    started.
+11. **Campaign list and mission start — done.** Shipped `BATTLE.INI`
+    (`[Battles] 1=GDI1, 2=NOD1`) feeds listbox 1109 through the model's full
+    listbox/trackbar layer; OK selects GDI, `GDI1A.MAP` is read from MAPS01.MIX,
+    and the GDI intro movie plays (2.1B stop `0x0067dc4f`, 84,130 / 6,431).
+12. **The page table — the current blocker.** ESC skips the movie, the loader
+    touches every slot, and the run faults at `0x00a006b0` after 2,580,698,410
+    instructions with 32,768/32,768 pages used. The mission load does **not**
+    complete.
 
 **Not on the path:** naming the 2,458 `vfunc_N` slots, source-shaping 45,947
 transcriptions, the last 110 KB of `.text`, re-deriving member offsets. All four
@@ -250,14 +255,19 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
   (`DRIVE_CDROM`, label `TS1`), and the game reads `D:\TS1.dsk` and enumerates
   `EXPAND99..00`. Narrow-width flags (`f2e6ca9`) and the generator's
   `SetViewportOrgEx`/`SetWindowOrgEx` arity (`19ee16c`) are fixed too.
-- **Rendering, input, the movie path and menu selection work; the campaign
-  listbox does not.** The model plays past the intro, renders the real menu
-  (`re/out/frame.png`), and clicks New Campaign through the game's own hit-test;
-  the menu exits and `RT_DIALOG` 148 "Select Campaign:" opens. Exit Game reaches
-  `ExitProcess(0)`. But the model implements no listbox/combobox/trackbar
-  content, so listbox 1109 is empty and **no mission starts**. The nested MIX
-  (`0xa8548fd9`, 317 entries) is mounted and read; the button art is not painted
-  (no `WM_PAINT` to children; retail does not draw it either).
+- **Rendering, input, the movie path, menu selection and the mission start
+  work; the mission load does not.** The model plays past the intro, renders and
+  selects the real menu, populates the campaign list from shipped `BATTLE.INI`,
+  and OK starts the GDI campaign: `GDI1A.MAP` is read and the GDI intro movie
+  plays (2.1B stop `0x0067dc4f`, 194,131 non-black frame). ESC skips the movie,
+  but the mission loader then exhausts the fixed page table at `0x00a006b0`
+  (32,768/32,768). **The mission load does not complete and no mission is
+  rendered.** The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read;
+  the button art is not painted (no `WM_PAINT` to children; retail does not draw
+  it either).
+- **The VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls in 600 s, so
+  model time barely advances during movies; ESC is the practical route to the
+  mission load until the clock/pacing model is improved.
 - **The shutdown ESP defect is dormant.** WinMain returned at ~7.66M
   instructions with ESP `0x11` (entry `0x2fff84`) before the MIX-read fix; the
   current run never reaches shutdown. It is the same class as the original
@@ -281,9 +291,10 @@ Wine oracle reaches the main menu, the stack leak is fixed, the control-flow gat
 is in `gen_code.py`, boot reports coverage and target classification, and file
 I/O is real); **message delivery, the Blowfish cipher, the MIX index read, the
 stack tracker, the teardown calls, signed `idiv`, the dialog layer, narrow-width
-flags, the generator arity, the MS*/AVI movie path, rendering, input and menu
-selection are also done** (units 11–24 below). Units 6–10 remain, and **listbox
-content (unit 25) is the current blocker**.
+flags, the generator arity, the MS*/AVI movie path, rendering, input, menu
+selection and the campaign list/mission start are also done** (units 11–25
+below). Units 6–10 remain, and **the page table during the mission load (unit
+26) is the current blocker**.
 
 1. **Wine oracle (`tools/oracle.py`).** `tools/wine_env.sh` runs the retail game
    with the CD and a 640x480x16 screen; `oracle.py` attaches gdb, breaks at an
@@ -299,7 +310,7 @@ content (unit 25) is the current blocker**.
 4. **Make the boot report coverage.** `boot.py` prints `coverage: N distinct
    instructions; N of 45,947 recovered functions entered` and classifies unmapped
    targets (`below 0x1000`, `.rdata`, `elsewhere`). Measured now (with `TS_CD`):
-   55,774 distinct instructions / 4,764 functions at 20M, 77,982 / 6,150 at 1.9B,
+   55,774 distinct instructions / 4,764 functions at 20M, 84,130 / 6,431 at 2.1B,
    **0 unmapped**, `--strict` exits **0**. **Done.**
 5. **Real file I/O.** Real `CreateFileA`/`ReadFile`/`WriteFile`/`SetFilePointer`/
    `GetFileSize`/`CloseHandle` over a host root, handles as real objects.
@@ -360,13 +371,13 @@ only honest way to close the rest.
 20. **Fix narrow-width flags.** **Done (`f2e6ca9`):** width-aware
     `f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`; the vsprintf `%` and the
     CD-drive scan are correct, and the flags are compared against the CPU's own.
-    `test_tools.py` is 77 checks.
+    `test_tools.py` is 79 checks.
 21. **Make the CD path work.** **Done:** with `TS_CD`, `CreateFileA("D:\TS1.dsk")`
     succeeds, `GetDriveTypeA` no longer receives `%c:\`, and `EXPAND99..00` are
     enumerated.
 22. **Implement the MS*/AVI movie layer.** **Done:** the model plays past the
-    intro and reaches the menu (default script at 1.9B now stops in the Select
-    Campaign dialog's modal loop at `0x0045fa8e`, 78,504 / 6,191).
+    intro, reaches the menu, starts the GDI campaign, and plays its intro movie
+    (2.1B stop `0x0067dc4f`, 84,130 / 6,431).
 23. **Integrate rendering and input.** **Done (`5031e44` etc.):** `Rendering.h`
     and `Input.h` are wired through `Win32Stubs.h`; the model renders the real
     main menu (`re/out/frame.png`, 1.06/255 from retail on differing pixels);
@@ -377,11 +388,18 @@ only honest way to close the rest.
     `RT_DIALOG` 148 "Select Campaign:"; Exit Game reaches `ExitProcess(0)`.
     `0x7b2ab8`/`0x7b0d38` do not change; the signal is the dialog result through
     `GWL_USERDATA`.
-25. **Implement listbox/combobox/trackbar content.** **Open — the current
-    blocker.** The campaign listbox (1109) is empty (`LB_ADDSTRING`/
-    `LB_GETCURSEL` are no-ops), so no mission can be selected or started.
-    *Exit:* the list is populated, a scripted selection is made, OK starts a
-    mission, and the next screen or stop is named.
+25. **Implement listbox/combobox/trackbar content and the mission start.**
+    **Done (`1966cc1` + `4b7ef9b`):** the list source is shipped `BATTLE.INI`;
+    the model implements the full listbox/trackbar layer, real `FindFirstFileA`
+    enumeration and a read-only `TS_DATA` root. OK selects GDI, `GDI1A.MAP` is
+    read, and the GDI intro movie plays (2.1B stop `0x0067dc4f`, 84,130 / 6,431,
+    194,131 non-black frame).
+26. **Fix the page-table exhaustion during the mission load.** **Open — the
+    current blocker.** ESC skips the movie; the loader touches every slot and
+    faults at `0x00a006b0` after 2,580,698,410 instructions with
+    32,768/32,768 pages used. *Exit:* the load passes `0x00a006b0`, peak
+    pages-used is recorded, and the next stop is named (ideally mission
+    rendering).
 
 ---
 
@@ -446,7 +464,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     headerless = 1,216). Measured this session.
 11. **RESOLVED — `CONTEXT.md` called `verify.py` "the 8-check gate".** It now
     says nine, describes check 9, and lists `link_test.py` (492 TUs),
-    `test_tools.py` (now 77 checks) and the import distinction (`8467f84`).
+    `test_tools.py` (now 79 checks) and the import distinction (`8467f84`).
 12. **OPEN — the framing error, which is the expensive one.** `ROADMAP.md` §2.3
     used to close with "for a decompilation that is the difference between 'it
     builds' and 'it is the game'". The sentence is gone and §4 now cross-
@@ -530,7 +548,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
 25. **RESOLVED — narrow-width flags (`f2e6ca9`) and generator arity
     (`19ee16c`).** Width-aware flag derivation fixes the vsprintf `%` and the
     CD-drive scan; `SetViewportOrgEx`/`SetWindowOrgEx` take 4 arguments and
-    `--stack-check` is 342/0. `test_tools.py` is 77 checks.
+    `--stack-check` is 342/0. `test_tools.py` is 79 checks.
 26. **RESOLVED — the intro-movie path and the rendered main menu.** The model
     plays past the intro and renders the menu: `re/out/frame.png` (md5
     `0fdf2636…`, 254,610 / 307,200 non-black) differs from the retail screenshot
@@ -543,13 +561,20 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     1,688,503,557; Exit Game reaches `ExitProcess(0)` at `0x00684529` after
     1,707,666,895 instructions. `0x7b2ab8`/`0x7b0d38` do not change; the signal
     is the dialog result through `GWL_USERDATA`.
-28. **OPEN (new) — the "Select Campaign:" listbox is empty.** The model
-    implements no listbox/combobox/trackbar content (`LB_ADDSTRING`/
-    `LB_GETCURSEL` are no-ops), so nothing can be selected and **no mission
-    starts**. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read, but
-    the button art is not painted (no `WM_PAINT` to children; retail does not
-    draw it either).
-29. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
+28. **RESOLVED — the campaign list and mission start (`1966cc1` + `4b7ef9b`).**
+    Shipped `BATTLE.INI` (`[Battles] 1=GDI1, 2=NOD1`) feeds listbox 1109; the
+    model implements the full listbox/trackbar layer, `FindFirstFileA` host
+    enumeration and a read-only `TS_DATA` root. OK selects GDI, `GDI1A.MAP` is
+    read from MAPS01.MIX, and the GDI intro movie plays (2.1B stop
+    `0x0067dc4f`, `pages-used 11,058/32,768`, 194,131 non-black frame).
+29. **OPEN (new) — the page table is exhausted during the mission load.** ESC
+    skips the movie; the loader touches every slot and faults at `0x00a006b0`
+    after 2,580,698,410 instructions with 32,768/32,768 pages used.
+    `PageTable::SLOTS` is 32,768 (128 MB); the demand may be legitimate or a
+    leak. The mission load does **not** complete.
+30. **OPEN (new) — the VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls
+    in 600 s; ESC is the practical route to the mission load meanwhile.
+31. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
     `0x11` before the MIX-read fix; the current run never reaches shutdown.
 
 ---

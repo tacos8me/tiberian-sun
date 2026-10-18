@@ -44,9 +44,8 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
 - `verify_members_binary.py` — re-derives member offsets from the binary's own
   code (4,285 of 4,289 confirmed, 99.9%)
 - `link_test.py` — links all 492 translation units into a program and runs it;
-  measured **OK, exit 0**, message loop reached and dispatching
-  (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped
-- `test_tools.py` — 77 unit tests for the tools themselves
+  measured **OK, exit 0**, message loop reached, 0 unmapped
+- `test_tools.py` — 79 unit tests for the tools themselves
 - `test_runtime.py` — 101 checks for the rendering/input layers (`Rendering.h`,
   `Input.h`), mutation-proven; includes a standalone frame selftest
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
@@ -61,16 +60,23 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   `--frame` dumps the primary surface and `--input-script` selects a timeline
   (the default timeline is built in; `TS_INPUT_SCRIPT=` disables it). Measured
   with `TS_CD`: 20M stops at `0x00488800` (55,774 / 4,764); the default script at
-  1.9B clicks New Campaign, the menu exits with result 1, `RT_DIALOG` 148
-  "Select Campaign:" is created at step 1,688,503,557, and the stop is its modal
-  loop at `0x0045fa8e` (`GetMessage=7`, `PeekMessage=14,572,933`,
-  `DispatchMessage=7`; 78,504 / 6,191). The Exit Game script reaches
-  `ExitProcess(0)` at `0x00684529` after 1,707,666,895 instructions
-  (86,400 / 6,654). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA`
-  is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0
-  stack imbalances**; `--no-build --strict` exits **0**. `re/out/frame.png` is
-  the rendered main menu (640x480, md5 `0fdf2636…`, 254,610 / 307,200
-  non-black).
+  2.1B clicks New Campaign, the menu exits with result 1, `RT_DIALOG` 148
+  "Select Campaign:" is created at step 1,688,503,557, its listbox is populated
+  from the shipped `BATTLE.INI` `[Battles]` (`1=GDI1, 2=NOD1`), GDI1 is selected
+  and OK starts the mission: the game reads `GDI1A.MAP` from `MAPS01.MIX` and
+  plays the GDI intro. The stop is `0x0067dc4f` (LCW decode during intro
+  playback; `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`;
+  84,130 / 6,431; pages used **11,058 / 32,768**). The intro frame is
+  `/tmp/gdi_intro_model.png` (640x480, 194,131 non-black, md5
+  `ccdb46d448a90e487e513bc1daf2ff8b`). An ESC-skip script at 3.0B faults at
+  `0x00a006b0` (the `HeapAlloc` thunk) after 2,580,698,410 instructions with the
+  page table exhausted at **32,768 / 32,768** (139,223 / 8,678). The Exit Game
+  script reaches `ExitProcess(0)` at `0x00684529` after 1,707,666,895
+  instructions (86,400 / 6,654). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only
+  `MessageBoxA` is the DirectSound warning at `0x484456` (`type=0x30`); **0
+  unmapped calls, 0 stack imbalances**; `--no-build --strict` exits **0**.
+  `re/out/frame.png` is the rendered main menu (640x480, md5 `0fdf2636…`,
+  254,610 / 307,200 non-black).
 - `wine_run.sh` / `wine_env.sh` — run the **retail** binary under Wine.
   `wine_env.sh` supplies the CD (`d:`, label `TS1`, `TS1.DSK`) and a
   640x480x16 screen; measured, the retail game reaches its **main menu**
@@ -86,17 +92,22 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
   (`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416).
 
-**Current runtime blocker** (queued in `todo.md`): the **empty "Select Campaign:"
-listbox**. The model renders and selects the main menu (the six `BS_OWNERDRAW`
-buttons have real rectangles; press/release → `BN_CLICKED` reaches the game's own
-hit-test), New Campaign opens `RT_DIALOG` 148 at step 1,688,503,557, and Exit Game
-reaches `ExitProcess(0)`. But the model implements no listbox/combobox/trackbar
-content (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so listbox 1109 is empty and
-**no mission starts**. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and
-read; the button art is not painted (no `WM_PAINT` to children; retail does not
-draw it either). Rendering, input, the movie path, the dialog layer, CD path,
-narrow-width flags, MIX index read, Blowfish cipher and menu selection are
-fixed; the shutdown ESP corruption is dormant.
+**Current runtime blocker** (queued in `todo.md`): the **page table**, which
+exhausts during mission load and stops the run. The model renders and selects the
+main menu (the six `BS_OWNERDRAW` buttons have real rectangles; press/release →
+`BN_CLICKED` reaches the game's own hit-test), New Campaign opens `RT_DIALOG` 148
+at step 1,688,503,557, the listbox is populated from the shipped `BATTLE.INI`
+`[Battles]`, GDI1 is selected, and the game reads `GDI1A.MAP` from `MAPS01.MIX`
+and plays the GDI intro. **The mission load does not complete**: the default
+timeline stops at `0x0067dc4f` with 11,058 / 32,768 pages used, and an ESC-skip
+script faults at `0x00a006b0` with the table exhausted at 32,768 / 32,768.
+Widening `PageTable::SLOTS` is the fix; the VQA frame-wait path is also
+stub-bound, so movie pacing is not retail pacing. The nested MIX (`0xa8548fd9`,
+317 entries) is mounted and read; the button art is not painted (no `WM_PAINT` to
+children; retail does not draw it either). Rendering, input, the movie path, the
+dialog layer, CD path, narrow-width flags, MIX index read, Blowfish cipher, menu
+selection, the campaign list and mission start are fixed; the shutdown ESP
+corruption is dormant.
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the
