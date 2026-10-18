@@ -19,8 +19,8 @@ INTEGRATION POINTS (the exact lines to add to Win32Stubs.h, not applied here):
       #include "Input.h"
 
   forward declarations (before dd_CreateSurface)
-      inline u32 make_surface(u32 desc_va = 0u, u32 def_w = 800u,
-                              u32 def_h = 600u);
+      inline u32 make_surface(u32 desc_va = 0u, u32 def_w = 640u,
+                              u32 def_h = 480u);
       void k_sfs_Blt(); void k_sfs_BltFast(); void k_sfs_Flip();
       void k_sfs_Unlock(); void k_sfs_GetPixelFormat();
       void k_sfs_SetPalette(); void k_sfs_SetColorKey(); void k_sfs_GetCaps();
@@ -66,9 +66,34 @@ INTEGRATION POINTS (the exact lines to add to Win32Stubs.h, not applied here):
       TS_BEGIN(sfs_GetPixelFormat) stub_done(2, ts::rnd::write_pixel_format(arg(0), arg(1))); TS_END
       TS_BEGIN(sfs_SetColorKey)    stub_done(3, ts::rnd::set_color_key(arg(0), arg(1), arg(2))); TS_END
       TS_BEGIN(sfs_SetPalette)     stub_done(2, ts::rnd::set_palette(arg(0), arg(1))); TS_END
+      TS_BEGIN(sfs_GetAttachedSurface)
+          u32 child = ts::rnd::attached_obj(arg(0));
+          if (!child) {
+              child = make_surface(0u, ts::rnd::width_of(arg(0)),
+                                   ts::rnd::height_of(arg(0)));
+              ts::rnd::link(arg(0), child);
+          }
+          if (arg(2)) st32(arg(2), child);
+          stub_done(3, 0u);
+      TS_END
+
+  nargs table: the IDirectDrawSurface Blt entry (index 5) changes 5 -> 6. The
+  override makes the table entry unused for slot 5, but the table should not
+  keep a claim the binary refutes.
 
   dd_CreatePalette
       if (arg(3)) { u32 pal = make_dd_palette(); ts::rnd::palette_create(pal, arg(2)); st32(arg(3), pal); }
+      // make_dd_palette: over[5] = &k_dd_palette_SetEntries;
+      TS_BEGIN(dd_palette_SetEntries)
+          // SetEntries(this, dwFlags, dwStartingEntry, dwCount, lpEntries)
+          stub_done(5, ts::rnd::palette_set_entries(arg(0), arg(2), arg(3), arg(4)));
+      TS_END
+      // The palette nargs table also says 4 for GetEntries/SetEntries; both
+      // have four parameters plus this, so 5 is correct. The game does not use
+      // palettes at 16bpp, so this is completeness rather than a startup path.
+
+  frame dump (after the run, wherever the driver reports)
+      ts::rnd::dump_primary_png("out/frame.png");
 
   input (USER32)
       TS_BEGIN(GetAsyncKeyState) stub_done(1, ts::input::async_key_state(arg(0))); TS_END
