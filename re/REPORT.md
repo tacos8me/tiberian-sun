@@ -72,9 +72,11 @@ its own O(n²) `DynamicVectorClass` growth (22 vectors at `this+0x1280`,
 the cost. At a 100B budget it is on vector **7/22** with **160,070 entries**
 (`TS_PEEK 0x712068`: count and capacity `0x27146`, growth step 10) and has not
 finished. **The 479B wild call is diagnosed.** The first wild call is
-deterministic at step **478,300,935,316** (three runs agree): `call dword ptr
-[edx+0x2c]` at `0x005fa96b` → `0x46000062`, with EDX=`0x006a5dfe` =
-**TerrainClass vtable `0x6a5dfc` + 2** (COL `0x6b6f38`, `.?AVTerrainClass@@`).
+deterministic at step **478,300,935,316** (three runs agree, and this session's
+independent `TS_STOP_UNMAPPED=1` run stops at the same step with EIP
+`0x005fa96b`, EDX=`0x6a5dfe`, ECX=ESI=`0x526dbdc0`): `call dword ptr [edx+0x2c]`
+at `0x005fa96b` → `0x46000062`, with EDX=`0x006a5dfe` = **TerrainClass vtable
+`0x6a5dfc` + 2** (COL `0x6b6f38`, `.?AVTerrainClass@@`).
 The correct slot `0x2c` is `0x624610`; the misaligned read `[0x6a5e2a]` yields
 `0x46000062`. The vptr byte was corrupted at step **478,300,008,280** by
 `mov byte ptr [edx], cl` at **`0x005a3558`** (`FUN_005a34e0`, the "cell seen"

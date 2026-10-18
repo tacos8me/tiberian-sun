@@ -78,7 +78,8 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   with 12,809 pages and the GDI loading screen (290,399 non-black, md5
   `6cb0e1fff05f9250adda298e644f1266` = `re/out/render_2_6b.png`); at 100B it is
   on vector 7/22 with 160,070 entries. The first wild call is deterministic at
-  step 478,300,935,316: `call [edx+0x2c]` at `0x005fa96b` → `0x46000062`,
+  step 478,300,935,316 (confirmed by an independent `TS_STOP_UNMAPPED=1` run):
+  `call [edx+0x2c]` at `0x005fa96b` → `0x46000062`,
   EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2, after `FUN_005a34e0`'s
   bitmap setter wrote 34,062 B before its bitmap at `0x005a3558`. At a 1.2e12
   budget it faults at `0x00422de0` after 478,970,534,425 instructions with

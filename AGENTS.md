@@ -280,8 +280,10 @@ budget it is on vector 7/22 with **160,070 entries** (`TS_PEEK` at `0x712068`:
 count and capacity both `0x27146`, growth step 10) and has not finished.
 
 **The first wild call is deterministic and diagnosed.** At step
-**478,300,935,316** (three independent runs agree exactly) the game executes
-`call dword ptr [edx+0x2c]` at `0x005fa96b` → `0x46000062` with
+**478,300,935,316** (three independent runs agree exactly, and a fourth — this
+session's `TS_STOP_UNMAPPED=1` run — stops at the same step with EIP
+`0x005fa96b`, EDX=`0x6a5dfe`, ECX=ESI=`0x526dbdc0`, target `0x46000062`) the
+game executes `call dword ptr [edx+0x2c]` at `0x005fa96b` → `0x46000062` with
 EDX=`0x006a5dfe` = **TerrainClass vtable `0x6a5dfc` + 2** (COL `0x6b6f38`,
 `.?AVTerrainClass@@`). The correct slot `0x2c` is `0x624610`; the misaligned read
 `[0x6a5e2a]` yields `0x46000062`. The vptr byte was corrupted at step
@@ -706,8 +708,9 @@ with `TS_PEEK` through `./build/boot_driver`. Re-run these rather than trusting
 this list. The boot and frame figures below were re-measured after the
 interpreter-speed merge; the 479B fault figures and the deterministic
 first-wild-call step are the diagnosis lane's three agreeing runs and the
-1.2e12-budget run, recorded in `todo.md`; the 500B reproduction is this
-session's.
+1.2e12-budget run, recorded in `todo.md`; this session independently reproduced
+the step with `TS_STOP_UNMAPPED=1` (480B, 1,315.2 s) and the flood with a 500B
+run.
 
 **How far off "complete" is this project.** The layers are far apart. Read this
 before quoting any single number. `ROADMAP.md` states each of these as a

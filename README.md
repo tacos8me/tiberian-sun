@@ -58,8 +58,10 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
   out-of-bounds bitmap write.** ESC skips the intro and the loader runs; its own
   O(n²) `DynamicVectorClass` growth dominates (at 100B it is on vector 7/22 with
   160,070 entries). The first wild call is **deterministic at step
-  478,300,935,316** (three runs agree): `call [edx+0x2c]` at `0x005fa96b` →
-  `0x46000062`, with EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2. At
+  478,300,935,316** (three runs agree, and this session's independent
+  `TS_STOP_UNMAPPED=1` run stops at the same step): `call [edx+0x2c]` at
+  `0x005fa96b` → `0x46000062`, with EDX=`0x6a5dfe` = TerrainClass vtable
+  `0x6a5dfc` + 2. At
   step 478,300,008,280, `mov byte ptr [edx], cl` at `0x005a3558`
   (`FUN_005a34e0`, the "cell seen" bitmap setter) wrote to `0x526dbdc0`; its
   target `0x526d6072` minus bitmap base `[0x711fa4]=0x526de580` gives index

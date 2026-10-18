@@ -1309,9 +1309,10 @@ and that `boot.py` keeps `-O2`/`-fno-pie`; mutation-proven. `test_tools.py` is
 
 ### [x] The 479B mission-load run goes wild — diagnosed
 **The first wild call is deterministic and fully explained.** It occurs at
-**step 478,300,935,316** (three independent runs agree exactly):
-`call dword ptr [edx+0x2c]` at `0x005fa96b` -> `0x46000062`, depth 7, ESP sane
-(`0x002ff34c`). EDX = `0x006a5dfe`; ESI/ECX = `0x526dbdc0`.
+**step 478,300,935,316** (three independent runs agree exactly; a fourth,
+`TS_STOP_UNMAPPED=1`, stops at the same step with the same registers and
+target): `call dword ptr [edx+0x2c]` at `0x005fa96b` -> `0x46000062`, depth 7,
+ESP sane (`0x002ff34c`). EDX = `0x006a5dfe`; ESI/ECX = `0x526dbdc0`.
 
 The object is element 2 of the layer-2 list (`[0x76a864] = 0x526debe0`). Its
 vptr is **`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2** (COL `0x6b6f38`,
@@ -1342,7 +1343,10 @@ step with identical registers and targets. The 479B runs differ only in the
 flood's *termination* (1,023,599 / 1,023,748 / 1,024,211 pages) because the
 refusal is a host `calloc` at the 32-bit VA limit, whose exact point depends on
 the process's address-space layout. The game state is deterministic; the
-nondeterminism is not the cause.
+nondeterminism is not the cause. A fourth run with `TS_STOP_UNMAPPED=1`
+(480B budget, 1,315.2 s) halts at the same step with EIP `0x005fa96b`,
+EAX=2, ECX=ESI=`0x526dbdc0`, EDX=`0x6a5dfe`, ESP=`0x002ff34c`, target
+`0x46000062`, 25,773 pages (growths 1, refused 0) and exactly 1 unmapped call.
 
 **The model executes the game faithfully.** The remaining divergence is the
 coordinate-space mismatch: the visible rect must be scaled into surface space.
