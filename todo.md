@@ -1251,21 +1251,56 @@ refused 0)**; `GetMessage=19 PeekMessage=13,549,425 DispatchMessage=19`;
 
 **The mission still does not render** — see the two entries below.
 
-### [ ] The mission load is dominated by vector-growth reallocations
-**Measured; the load is correct but slow and memory-hungry.** 5,664
-`DynamicVectorClass` reallocations at `0x0055b050` account for 93.5% of the
-fresh-page HeapAlloc bytes (679 MB cumulative) and ~1.5e9 instructions, and
-they drive the 1.44 GiB footprint because the model has no decommit. The retail
-does one allocation (<=273,680 B) because a real heap extends/coalesces in
-place.
+### [x] The mission load is dominated by vector-growth reallocations — fixed
+**Was measured as 5,664 `DynamicVectorClass` reallocations at `0x0055b050`,
+93.5% of fresh-page HeapAlloc bytes (679 MB cumulative), driving the 1.44 GiB
+footprint.** The model had no decommit, and the old heap could not reuse a
+block whose successor was live.
 
-*Fix:* in `Win32Stubs.h`'s heap, coalesce free blocks and extend the most
-recent block in place when a reallocation is the last live block (or add a
-size-class free list). Do not change allocation semantics: the game must still
-see distinct blocks and valid contents.
-*Done when:* the mission load's peak pages and instruction count drop
-substantially, no correctness test regresses, and the load either completes or
-reaches the next named blocker faster.
+**Fixed in `5d65211`..`7998c7a`.** The heap is now a contiguous,
+address-ordered block chain with a doubly linked free list threaded through
+free payloads: `HeapFree` coalesces with a free predecessor/successor;
+`HeapReAlloc` grows in place into a free successor or the arena end and only
+copies when it must; allocation splits put remainders back on the list.
+`alloc_block` also reserves `[0x60000000,0x68000000)` so the surface arena can
+never be overwritten. Semantics are unchanged (live blocks never overlap,
+handed-out blocks read zero, `HeapSize`/contents preserved). Tests: **89
+checks**, including `test_win32_heap` (realloc-in-place, coalescing, no
+aliasing, contents, loader growth bounded, live-flag after absorbing a
+successor) and `test_win32_heap_arena` (real primary surface + probe in the
+reserved window + >256 MB allocation, both unchanged); both mutation-proven. A
+60,000-op randomized stress test found 0 failures.
+
+Measured at 4B: pages **377,796 (1.44 GiB) -> 12,809 (50.0 MB)**, growths
+**4 -> 0**, 11,696 of 12,253 allocations reused (95.5%), peak live 30.3 MB;
+the frame is the real GDI loading screen, md5 `6cb0e1ff…` (290,399 non-black),
+byte-identical to `out/render_2_6b.png`. At 30B: 63,031 of 63,598 reused
+(99.1%), footprint flat at 14,111 pages (55 MB).
+
+### [ ] The mission load is instruction-bound in the game's O(n^2) vector growth
+**The current blocker, and it is the game's own algorithm, not memory.** With
+correct memory the loader is still in `sub_0055b09a` at 30B instructions,
+walking a sequence of static vectors in `.bss` (`ESI = 0x711fd8`, `0x711ff0`,
+`0x712008`, `0x712020`, `0x712038`; one new vector every ~5-10B instructions).
+The current vector holds **127,760 entries** (`ECX=0x1f310`) and the new
+capacity is count+10, so every reallocation copies the whole buffer. Coverage is
+unchanged at 139,250 instructions / 8,682 functions and the frame stays the
+loading screen. This is the binary's own growth step (10, cited in
+`VectorClass.h`), not a heap defect. Measured throughput is **~28.6M
+instructions/s** (20B: 698 s; 30B: 1,048 s), and the load needs tens of
+billions.
+
+**The old "tactical draw at ~4.07B" does not reproduce with correct memory** —
+it was measured while the heap collision was corrupting the loader's buffers.
+
+*Next:* profile the run (`perf record -g -p <pid> -- sleep 8`;
+`kernel.perf_event_paranoid` must be 1) and optimize the interpreter hot path —
+`insn()` overhead, page lookup, generated-code dispatch, `rep movsd`/memcpy,
+heap zeroing. Target **>=100M instructions/s** (STRATEGY) or at least a 2-4x
+speedup, measured with `--budget`, without changing game semantics. If a
+generator change is needed, run the full pipeline and re-verify.
+*Done when:* the load completes or reaches the tactical phase within a
+practical budget, with the speed measured and the frame/stop reported.
 
 ### [x] The mission writes pixels but never presents a frame — explained and fixed
 **The blue banded/grid frame was raw heap memory.** The game *does* present the
@@ -1304,23 +1339,21 @@ a wrapped count. They are 64-bit now; `boot_driver` parses `--budget` with
 `strtoull` and prints `%llu`. The earlier "4.5e9" run actually executed
 5,140,407,947 instructions and reported 845,440,651.
 
-### [ ] The tactical phase is black and has 21 delta-table calls
-**The next render blocker, after the arena fix.** The iso-map build completes
-around 4.0e9 and the game enters the tactical draw (`sub_005d9990` →
-`sub_00593f30`). Between 4.0e9 and the stop the primary is **0 non-black** with
-15 blits and 8,097 locks, and there are **21 unmapped calls** whose targets are
-sliding windows over a small-integer delta table (`0x000000db`,
-`0xffffff6a..6d`). A longer run (5.14e9 actual) ends in `sub_00675ba0` with
-`ESP=0x844`, `ESI=0x8ec`, `EAX=0xffffff6c`, and no new coverage for 1.07e9
-instructions.
+### [ ] The tactical phase is black and has 21 delta-table calls — not reached with correct memory
+**The earlier measurement was taken under the heap collision and does not
+reproduce.** With the arena/heap fixes, the loader is still in
+`sub_0055b09a` at 30B instructions (see the entry above); it has not reached the
+tactical draw (`sub_005d9990` → `sub_00593f30`). The old run reported 15 blits,
+8,097 locks, a 0-non-black primary, 21 unmapped delta-table calls
+(`0x000000db`, `0xffffff6a..6d`), and a 5.14e9 stop in `sub_00675ba0` with
+`ESP=0x844`, `ESI=0x8ec`, `EAX=0xffffff6c`. Treat those as symptoms of the
+corrupted loader buffers until re-measured with correct memory.
 
-*Next:* re-run with the arena fix at 2.722e9 and 4e9 (expect the loading-screen
-md5 at both); restore tactical throughput (heap lane); then re-run with the
-wrapped counter fixed and see whether the 21 delta-table calls vanish (if so
-they were an object allocated into a freed arena-range block and overwritten by
-surface writes); then trace the 3 new blits/locks that leave the primary black.
-*Done when:* the tactical phase renders a non-black frame, or the next defect is
-named precisely.
+*Next:* after the speed work lets the load complete, re-measure this phase. If
+the 21 delta-table calls persist, they are a real defect (an object overwritten
+or a missing registration); if they vanish, they were the collision.
+*Done when:* the tactical phase is reached with correct memory and either
+renders a non-black frame or names the next defect precisely.
 
 ### [ ] The VQA player's frame-wait is stub-bound
 **Secondary; skipping works.** The movie player's frame-wait loop makes ~68M
