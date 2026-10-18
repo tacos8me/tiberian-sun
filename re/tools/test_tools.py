@@ -1920,6 +1920,9 @@ int main() {
     ck("button rectangle", w1 && w1->x == 56 && w1->y == 20 &&
                             w1->cx == 195 && w1->cy == 29);
     ck("button is a Button", w1 && w1->atom == 0x80u);
+    // The text must be terminated: a reused window slot that held a longer
+    // string used to leave a suffix ("Cancelission") on the new control.
+    ck("button text is exact", w1 && !std::strcmp(w1->text, "New Campaign"));
 
     // GetWindowRect is in screen coordinates: 167+56, 120+20.
     ts::u32 r = 0x00302000u;

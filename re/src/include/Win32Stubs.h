@@ -2585,8 +2585,10 @@ inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
             c->y = dlg_muldiv(ccy, base_y, 8);
             c->cx = dlg_muldiv(ccxx, base_x, 4);
             c->cy = dlg_muldiv(ccyy, base_y, 8);
-            for (unsigned t = 0; t + 1u < sizeof(c->text) && ctext[t]; ++t)
+            unsigned t = 0;
+            for (; t + 1u < sizeof(c->text) && ctext[t]; ++t)
                 c->text[t] = ctext[t];
+            c->text[t] = 0;   // the slot may have held a longer string
         }
     }
 
