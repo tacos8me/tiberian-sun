@@ -11,22 +11,30 @@ The game **does** present a frame after the mission load starts: the GDI mission
 **loading screen** (mech artwork, "ANALYZING COMBAT ZONE. TOPOGRAPHY..."), fully
 drawn at 2.6e9 instructions and unchanged at 2.7e9.
 
-It never presents a **mission** frame for two independent reasons:
+It never presents a **mission** frame for three independent reasons:
 
-1. **The load is not finished.** At 4e9 instructions the game is still inside
-   the isometric-map build, `DynamicVectorClass::Grow` at `0x0055b050` /
-   `0x0055b09a`, copying ~32,000 8-byte entries for the second of 22 map
-   layers. No DirectDraw call is made after 2.6e9 instructions, so no later
-   frame can be presented at any of the budgets measured here.
-2. **The framebuffer is destroyed in place.** The model's Win32 stub heap is an
-   unbounded bump allocator starting at `0x50000000`
-   (`Win32Stubs.h:80`). The DirectDraw surface pixel arena starts at
-   `0x60000000` (`Rendering.h:116`). When the heap cursor crosses
-   `0x60002000` (the primary surface's first pixel) at about **2.722e9**
-   instructions, the load's heap traffic overwrites the primary surface
-   pixel-for-pixel. The blue banded/grid frame is that overwrite: raw heap
-   memory read as RGB565. It is not a loading screen, not an uninitialised
-   surface, and not a partially drawn mission.
+1. **The framebuffer is destroyed in place.** The model's Win32 stub heap is an
+   unbounded bump allocator starting at `0x50000000` (`Win32Stubs.h:80`). The
+   DirectDraw surface pixel arena starts at `0x60000000` (`Rendering.h:116`).
+   When the heap cursor crosses `0x60002000` (the primary surface's first
+   pixel) at about **2.722e9** instructions, the load's heap traffic overwrites
+   the primary surface pixel-for-pixel. The blue banded/grid frame is that
+   overwrite: raw heap memory read as RGB565. It is not a loading screen, not
+   an uninitialised surface, and not a partially drawn mission.
+2. **The model is too slow to finish the load.** The isometric-map build
+   (`DynamicVectorClass::Grow` at `0x0055b050` / `0x0055b09a`) completes around
+   4.0e9 instructions, and the game then enters the tactical draw
+   (`0x005d9990` -> `0x00593f30`). At **4,074,750,319 instructions** the
+   900-second wall-clock watchdog fires: the model's throughput has fallen from
+   ~26M instructions/s (at 4e9, 1.5 GB) to ~4.5M/s (at 4.07e9, 2.9 GB, 722,815
+   page-table slots). The run is stopped inside a per-cell draw loop, not
+   inside the loader.
+3. **The tactical phase produces a black primary and new unmapped calls.**
+   Between 4.0e9 and the watchdog stop the game issues 3 more blits and 7,328
+   more locks (12 -> 15 blits, 769 -> 8,097 locks) and the primary frame becomes
+   **0 non-black pixels**. The same interval produces **21 unmapped calls**
+   (2 targets below `0x1000`, 19 elsewhere; 0 inside `.text`) that are absent
+   at 4e9. No mission pixels are presented at the stop.
 
 The DirectDraw wiring is correct: the game never calls `Flip` (neither does the
 retail binary), it presents by locking the primary and writing it, and the
@@ -46,16 +54,22 @@ gamedir, `--frame` dump of the primary surface. The boot report's
 | 2.7227e9 | same | same | `out/render_partial.png` md5 `a5440448c1f4fc057631a9280ec4ac80` | 197,813 | `0x60053760` |
 | 3.2e9 | same | same | `out/render_3_2b.png` md5 `ab01ed73fe1682f3ceab242c4422416a` | 191,093 | `0x7c6a2b20` |
 | 4.0e9 | `0x0055b0b8` `sub_0055b09a +0x1e` | same | byte-identical to 3.2e9 (md5 `ab01ed73…`) | 191,093 | (dest `0xac0431e0`) |
+| 4.0747e9 | **watchdog** at `0x005940d8` `sub_00593f30 +0x1a8` (900 s) | 8 surfaces, **15 blits**, 0 fills, **8,097 locks**, 0 flips | `out/render_6b.png` md5 `fab3ec8fbf7b5c7de8041b90a78c6c31` | **0** | (722,815 pages) |
 
-Two facts fall out of the table:
+Three facts fall out of the table:
 
-* **All rendering happens before 2.6e9.** The counters are identical at 2.6,
-  3.2 and 4.0e9: the mission load issues no `Blt`, `Lock`, `Unlock` or `Flip`
-  after the loading screen is drawn.
-* **The frame changes exactly once, then freezes.** 2.6e9 and 2.7e9 are
-  byte-identical (the loading screen). 3.2e9 and 4.0e9 are byte-identical (the
-  heap pattern). The only interval in which the primary changes is the heap
-  crossing, and nothing the game does afterwards writes it again.
+* **The pre-tactical load issues no DirectDraw calls after the loading
+  screen.** The counters are identical at 2.6, 3.2 and 4.0e9: no `Blt`,
+  `Lock`, `Unlock` or `Flip` occurs between the loading screen and the end of
+  the iso-map build.
+* **The frame changes at the heap crossing, freezes, then changes again in the
+  tactical phase.** 2.6e9 and 2.7e9 are byte-identical (the loading screen);
+  3.2e9 and 4.0e9 are byte-identical (the heap pattern); 4.07e9 is all black
+  after the tactical draw begins.
+* **The tactical phase is where the wall clock runs out.** The 6e9-budget run
+  stops at 4.0747e9 by watchdog after 900 s, with the page table at 722,815
+  slots and 2.9 GB RSS. The instruction rate over that run is ~4.5M/s, against
+  ~26M/s for the 4e9 run (152 s, 377,796 slots).
 
 Commands (logs: `/tmp/render_gdb2.log`, `/tmp/render_state*.log`):
 
@@ -166,7 +180,7 @@ model renders is within 1.06/255 of retail on the pixels that differ
 `k_sfs_Flip` is wired at slot 11 (`Win32Stubs.h:4893`) and its body increments
 `stat_flips()` (`Rendering.h:664`). The gdb breakpoint on `ts::rnd::flip` is
 **never hit** in the 4e9 run. The retail trace has **0** `ddraw_surface1_Flip`
-calls in 6,176 trace lines. The game presents by `Blt`/`Lock` into the primary,
+calls in 9,854 trace lines. The game presents by `Blt`/`Lock` into the primary,
 never by flipping a back buffer. 0 flips is the game's behaviour, not a missing
 slot or an uncounted call.
 
@@ -219,28 +233,46 @@ The 4e9 stop is the **second** layer vector (`0x00711fd8` = the first layer's
 2.7227e9 (`BIGVEC capacity=20010 esi=0x711fa8`, `render_callers4.log`). The
 cost is the game's own O(n²) vector growth executed one machine instruction at
 a time by the model; it is not a stub defect and not a leak. This is the
-"mission load is dominated by vector-growth reallocations" entry in `todo.md`,
-and it is the next blocker after the address-space fix.
+"mission load is dominated by vector-growth reallocations" entry in `todo.md`.
+
+**The iso-map build ends by ~4.0e9.** Between the 4.0e9 stop and the 4.0747e9
+watchdog stop the game leaves the vector loop and enters the tactical draw:
+
+* `FUN_005d9990` (transcribed `sub_005d9990`, `code_0121.cpp`) calls
+  `FUN_00593f30` (`sub_00593f30`, `code_0105.cpp:6139`);
+* `FUN_00593f30` loops over the visible tactical-map cell counts at
+  `param_1+0x1514/0x1518/0x151c` and calls the shape blitter `FUN_00478f00`
+  for each, then calls `FUN_005a0b90`;
+* the watchdog EIP `0x005940d8` is inside one of those per-cell loops
+  (`sub_00593f30 +0x1a8`), at call depth 100.
+
+In that interval the render counters move for the first time since 2.6e9:
+**15 blits** (was 12), **8,097 locks** (was 769), and the primary frame is
+**all black** (0 non-black). The same interval produces **21 unmapped calls**
+(2 below `0x1000`, 19 elsewhere; 0 inside `.text`) that are not present at
+4e9. Those are new correctness defects in the tactical-draw path (or
+consequences of the corrupted surface arena) and are the next thing to trace,
+after the address-space fix and with a run fast enough to pass 4.07e9.
 
 ## 6. Retail comparison
 
 `tools/oracle_render_retail.sh` (new, this lane) runs the retail `GAME.EXE`
 under Wine with `WINEDEBUG=+ddraw`, dismisses the startup dialogs, and captures
 a screenshot at each stage. The DirectDraw contract measured through the
-startup movies and the main menu (`/tmp/retail_render2/ddraw.log`, 6,176
-lines):
+startup movies and the main menu (`/tmp/retail_render2/ddraw.log`, 9,854
+lines, 597 `surface_update_frontbuffer` calls):
 
 | call | retail | model (4e9) |
 |---|---|---|
-| `IDirectDrawSurface::Blt` | **244** (14 colour-fill `0x1000400`, 230 copies `0x1000000`) | 12 |
-| `IDirectDrawSurface::Lock` | **380** | 769 |
+| `IDirectDrawSurface::Blt` | **250** (15 colour-fill `0x1000400`, 235 copies `0x1000000`) | 12 |
+| `IDirectDrawSurface::Lock` | **651** | 769 |
 | `IDirectDrawSurface::Flip` | **0** | 0 |
 | `CreateSurface` | 7 | 8 (the model creates one extra small surface) |
 
 The retail copies are `dst (0,40) src=015F0FF0` x220 (movie frames into a
-640x400 letterbox), `dst (0,0) src=015F0FF0` x9, and one self-blit; the
-colour-fills are 14 `dst (0,0) src=00000000 flags=0x1000400`. Presentation is
-`Blt` to the primary `015F02B8` followed by
+640x400 letterbox), `dst (0,0) src=015F0FF0` x14, and one self-blit; the
+colour-fills are 14 `dst (0,0) src=00000000` plus one UI fill at
+`(169,234)`. Presentation is `Blt` to the primary `015F02B8` followed by
 `ddraw_surface_update_frontbuffer`. **No Flip anywhere.**
 
 The counts are not stage-matched: the retail run reached the title/menu only,
@@ -312,21 +344,34 @@ any budget. `tools/test_runtime.py` already owns the surface-layer tests; add
 a case that allocates >256 MB through the stub heap and asserts the primary's
 pixel bytes are unchanged, so the regression cannot come back silently.
 
-### 7b. The next blocker (after 7a)
+### 7b. The next blockers (after 7a)
 
-The mission load's instruction cost. With the framebuffer protected, the run
-still needs a budget large enough to finish the 22-layer iso-map build; at 4e9
-it is in layer 2. This is not a defect in the model's Windows layer: the
-retail executes the same O(n²) growth and finishes in well under a second on
-real hardware, while the model pays ~8 interpreted instructions per 8-byte
-entry copy. Measure the completion budget with a single long run (the heap
-lane is already running 12e9); then either accept the budget for a
-mission-frame demonstration or reduce the per-instruction cost (the heap
-free-list work reduces memory and page-table pressure but **not** the copy
-count).
+In order:
+
+1. **Throughput.** The 4.07e9 stop is the 900-second watchdog, not the
+   instruction budget. The model is at 722,815 page-table slots / 2.9 GB RSS
+   and ~4.5M instructions/s, down from ~26M/s at 4e9. The iso-map build is
+   done; the tactical draw is the phase that now needs the budget. The heap
+   lane's free-list/coalescing work is aimed exactly at this (fewer fresh
+   pages, lower RSS); if it does not restore the rate, profile `ts::page` with
+   `perf record -g` as `AGENTS.md` describes. Until the run passes 4.07e9 in
+   reasonable wall time, the tactical phase cannot be measured.
+2. **The 21 unmapped calls.** 2 targets below `0x1000` and 19 elsewhere, all
+   appearing after 4.0e9 and none inside `.text`. The boot report carries the
+   target and call-site samples; this lane's watchdog run filtered them out, so
+   the first measurement after (1) is a run with the full report (or a gdb
+   breakpoint on the unmapped-call recorder) to name the call sites. They are
+   either a missing model binding in the tactical draw or a consequence of the
+   corrupted surface arena; 7a distinguishes the two.
+3. **The black primary.** At 4.07e9 the primary is 0 non-black while 3 new
+   blits and 8,097 locks have run. Trace those 3 blits (dst/src/flags) and the
+   lock targets: either the tactical draw presents to an offscreen that is
+   never copied to the primary, or it clears the primary and the actual cell
+   draw has not run yet at the watchdog. That is the same class of question as
+   the original entry, now at the correct phase.
 
 Do not chase the 0-fill divergence before 7a: the model's menu frame already
-matches retail, and the missing 14 startup colour-fills are not what blanks
+matches retail, and the missing 15 startup/UI colour-fills are not what blanks
 the mission frame.
 
 ## 8. Evidence index
@@ -336,6 +381,7 @@ the mission frame.
 | `out/render_2_6b.png` | intact loading screen, md5 `6cb0e1ff…` (the 2.7e9 frame is byte-identical) |
 | `out/render_partial.png` | heap boundary at row ~260, md5 `a5440448…` |
 | `out/render_3_2b.png` | frozen heap pattern, md5 `ab01ed73…` (the 4.0e9 frame is byte-identical) |
+| `out/render_6b.png` | black primary at the tactical phase, md5 `fab3ec8fbf7b5c7de8041b90a78c6c31` |
 | `/tmp/render_gdb2.log` | 4e9 gdb trace: 7 `CREATE`, 12 `BLT`, 769 `LOCK`, 0 `FLIP` |
 | `/tmp/render_state*.log` | surface table + `bump()` at 2.7 / 2.7227 / 3.2e9 |
 | `/tmp/render_callers3.log`, `/tmp/render_callers4.log` | blit/lock/grow call chains |
