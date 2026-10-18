@@ -1699,6 +1699,151 @@ int main() {
         eq("win32-message-queue", out.splitlines()[-1] if out else "", "0")
 
 
+def test_win32_timer():
+    """Multimedia timers dispatch their callback from the message pump.
+
+    Regression test for the render offset: timeSetEvent returned a timer id and
+    never called the callback. WWMouseClass installs a 16 ms periodic callback
+    that reads GetCursorPos and stores it at mouse+0x18/+0x1c, so with no
+    callback the modelled pointer stayed (0,0); the tactical input handler read
+    that as "pointer outside the screen" and scrolled the display to the map
+    clamp, putting the revealed base in the viewport's bottom-right corner.
+
+    Checks the callback's five arguments, that a periodic timer fires once per
+    period, that a one-shot timer fires once, and that timeKillEvent stops it.
+    Mutation-proven: replacing the callback dispatch with a no-op fails it.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+
+// What a TIMECALLBACK records. __stdcall with five arguments.
+static ts::u32 g_calls, g_id, g_umsg, g_user, g_d1, g_d2;
+static void fake_timer() {
+    ++g_calls;
+    g_id   = ts::ld32(ESP.d + 4u);
+    g_umsg = ts::ld32(ESP.d + 8u);
+    g_user = ts::ld32(ESP.d + 12u);
+    g_d1   = ts::ld32(ESP.d + 16u);
+    g_d2   = ts::ld32(ESP.d + 20u);
+    ESP.d += 4u + 20u;   // return address and five arguments
+}
+
+static ts::u32 call_stub(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
+    for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
+    ESP.d = sp;
+    ts::ts_call_at(fn, 0x00c0ffeeu);
+    return EAX.d;
+}
+
+// The model clock is 1 ms per 10,000 retired instructions.
+static void advance_ms(unsigned ms) { ts::mach().steps += (unsigned long long)ms * 10000ull; }
+
+int main() {
+    ts::register_win32_stubs();
+    const ts::u32 sp = 0x002ff000u, msg = 0x00300200u;
+    const ts::u32 proc_va = 0x00c0de02u;
+    ts::ts_register(proc_va, &fake_timer);
+
+    ts::u32 tset = ts::stub_va("WINMM", "timeSetEvent");
+    ts::u32 tkill = ts::stub_va("WINMM", "timeKillEvent");
+    ts::u32 peek = ts::stub_va("USER32", "PeekMessageA");
+    ck("timer stubs resolve", tset && tkill && peek);
+
+    // A 16 ms periodic timer, as WWMouseClass installs.
+    ts::u32 a5[5] = { 16u, 1u, proc_va, 0x1234u, 1u };
+    g_calls = 0;
+    ts::u32 id = call_stub(tset, a5, 5, sp);
+    ck("timeSetEvent returns an id", id != 0u);
+    ck("timeSetEvent pops 5 args", ESP.d == sp + 20u);
+    ck("timer does not fire before its period", (advance_ms(15), g_calls == 0u));
+
+    ts::u32 pm[5] = { msg, 0u, 0u, 0u, 1u };
+    advance_ms(1);                       // now due
+    call_stub(peek, pm, 5, sp);
+    ck("timer fired from the message pump", g_calls == 1u);
+    ck("callback uTimerID", g_id == id);
+    ck("callback uMsg is 0 for TIME_CALLBACK_FUNCTION", g_umsg == 0u);
+    ck("callback dwUser", g_user == 0x1234u);
+    ck("callback dw1/dw2", g_d1 == 0u && g_d2 == 0u);
+
+    call_stub(peek, pm, 5, sp);
+    ck("periodic timer does not refire without time passing", g_calls == 1u);
+    advance_ms(16);
+    call_stub(peek, pm, 5, sp);
+    ck("periodic timer fires again next period", g_calls == 2u);
+
+    ts::u32 a1[1] = { id };
+    call_stub(tkill, a1, 1, sp);
+    ck("timeKillEvent pops 1 arg", ESP.d == sp + 4u);
+    advance_ms(16);
+    call_stub(peek, pm, 5, sp);
+    ck("killed timer does not fire", g_calls == 2u);
+
+    // TIME_ONESHOT (fuEvent bit 0 clear) fires once and deactivates.
+    ts::u32 a5o[5] = { 16u, 1u, proc_va, 0x5678u, 0u };
+    g_calls = 0;
+    ts::u32 oid = call_stub(tset, a5o, 5, sp);
+    ck("one-shot timer id", oid != 0u);   // an id may be reused after a kill
+    advance_ms(16);
+    call_stub(peek, pm, 5, sp);
+    ck("one-shot timer fired", g_calls == 1u);
+    advance_ms(16);
+    call_stub(peek, pm, 5, sp);
+    ck("one-shot timer did not refire", g_calls == 1u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    cpp = "/tmp/ts_win32_timer.cpp"
+    open(cpp, "w").write(src)
+
+    def build(include_dir, exe):
+        return subprocess.run(["g++", "-std=c++03", "-O0", "-I" + include_dir,
+                               "-Isrc/include", "-Ibuild/shim", "-o", exe, cpp],
+                              capture_output=True)
+
+    r = build("src/include", "/tmp/ts_win32_timer")
+    if r.returncode != 0:
+        check("win32-timer-build", False,
+              r.stderr.decode("utf-8", "replace")[:400])
+        return
+    r = subprocess.run(["/tmp/ts_win32_timer"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-timer", False, out)
+    else:
+        eq("win32-timer", out.splitlines()[-1] if out else "", "0")
+
+    # Mutation: drop the callback dispatch, i.e. the old "register a timer and
+    # never call it" behaviour. The callback then never runs.
+    with open(os.path.join("src", "include", "Win32Stubs.h")) as fh:
+        real = fh.read()
+    anchor = "ts_call_at(t[i].proc, 0x00fed100u);"
+    check("win32-timer-mutation-anchor", anchor in real,
+          "timer callback dispatch not found; update the mutation")
+    if anchor in real:
+        mut = os.path.join("/tmp", "ts_timer_mut")
+        os.makedirs(mut, exist_ok=True)
+        with open(os.path.join(mut, "Win32Stubs.h"), "w") as fh:
+            fh.write(real.replace(anchor, "(void)t[i].proc;"))
+        b = build(mut, "/tmp/ts_win32_timer_mut")
+        if b.returncode != 0:
+            check("win32-timer-mutation-build", False,
+                  b.stderr.decode("utf-8", "replace")[:300])
+        else:
+            m = subprocess.run(["/tmp/ts_win32_timer_mut"], capture_output=True)
+            check("win32-timer-mutation-caught", m.returncode != 0,
+                  "removing the timer callback dispatch did not fail the test")
+
+
 def test_win32_dialog():
     """The dialog layer: template controls, WM_INITDIALOG, and scripted input.
 
@@ -3807,6 +3952,7 @@ def main():
                test_machine_stack, test_machine_mmx,
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,
+               test_win32_timer,
                test_win32_dialog, test_win32_button_click,
                test_win32_listbox, test_win32_heap, test_win32_heap_arena,
                test_page_table, test_machine_perf,
