@@ -1,13 +1,26 @@
 # Default front-end timeline (New Campaign, NOD1, GDI1, OK) plus ESC at
 # 192,000 ms to skip the GDI intro movie. The tactical map is first rendered
 # at instruction step ~2.686e9, which is ~269,600 model-ms (the model clock
-# advances 1 ms per 10,000 instructions), so the tactical events start well
-# after the mission is up.
+# advances 1 ms per 10,000 instructions plus the game's Sleep calls), so the
+# tactical events start well after the mission is up.
 #
-# 600,000 ms: click the infantry drawn at screen (238,378) in the 20B frame
-#             (the sprite's feet are around y=390).
-# 601,000 ms: right-click open ground at (300,420), a few cells away, to
-#             issue a move order for the selected unit.
+# 600,000 ms: left-click the player's infantry drawn at screen (240,390).
+#             The hit-test resolves it to the InfantryClass at cell (53,69);
+#             the click's action path adds it to the selection (0x56ee20).
+# 601,000 ms: left-click open ground at (180,330), ~5 cells away. With a
+#             selection live, the map's click dispatcher (0x5cf390) calls the
+#             selected object's vtable+0x6c (0x4d0ae0 -> 0x4a4270), which
+#             issues the move order. Measured at 7e9 instructions: the unit's
+#             CoordStruct goes from (13632,17856,624) cell (53,69) to
+#             (12352,17600,624) cell (48,68).
+#
+# A RIGHT-click does not order in this binary. The right-button-down handler
+# (0x5cff5e) calls 0x474520, which is literally `ret 4` (bytes c2 04 00), and
+# the right-button-up handler (0x5d0017) calls 0x474530, every branch of which
+# aborts/clears state and whose fallback calls FUN_0045fe80 -- the deselect-all
+# walk over the selection list (each object's vtable+0x130 = 0x56eda0). A
+# scripted right-click at the same destination leaves every CoordStruct
+# unchanged and executes no order method (0x4d0ae0 gets 0 hits).
 @170000 mousemove 320 220
 @170100 lbuttondown
 @170150 lbuttonup
@@ -25,6 +38,6 @@
 @600000 mousemove 240 390
 @600100 lbuttondown
 @600200 lbuttonup
-@601000 mousemove 300 420
-@601100 rbuttondown
-@601200 rbuttonup
+@601000 mousemove 180 330
+@601100 lbuttondown
+@601200 lbuttonup
