@@ -22,6 +22,7 @@ adding one: if it cannot fail, it is not worth the runtime.
   Machine stack           -- push/pop balance
   Machine mmx lanes       -- differential against lane-array reference code
   Machine boot regressions -- call_ptr balance, rep ECX, jmp_indirect, maps
+  Machine perf            -- the hot path's checksum and a throughput floor
   gen_code tails          -- cross-function tail targets are found
   disasm jump tables      -- table bytes are data, their entries are starts
   Win32 module exports    -- handles name modules, CoCreateInstance writes *ppv
@@ -2699,6 +2700,127 @@ int main() {
                   "sharing one block did not fail the test")
 
 
+def test_machine_perf():
+    """The per-instruction hot path stays fast and still produces the same bytes.
+
+    A speed change that cannot be measured is not done, and an optimization
+    that quietly changes the model is worse than a slow one. This compiles a
+    fixed workload against Machine.h at the boot's own flags (-O2 -m32
+    -fno-pie) and checks three things:
+
+      * the wide-access fast path (ld32/st32) agrees with the byte-wise page
+        view on addresses that straddle a page boundary;
+      * a store whose range contains the write watchpoint still takes the byte
+        path and records the EIP;
+      * the workload's checksum is the value the model produced before the
+        optimization, and throughput is above a floor.
+
+    The checksum is the correctness half: the loop touches two pages through
+    insn/ld32/st32/add32/cmp32 and sums what it reads back, so a cache that
+    aliases pages, a fast path that misses the straddling case, or a changed
+    flag/arithmetic result changes it. The speed half is a ratio: the same
+    workload run through page_in_slow(), the probe path, so the host's clock
+    cancels out. Measured 1.73-1.78 on the development host; removing the
+    cache makes it 0.91, and changing add32 by one changes the checksum.
+
+    The absolute floor (20M iterations/s) only catches a gross regression such
+    as losing -O2; boot.py's flags are also checked directly, because -O0 still
+    reaches ~34M/s and would slip past a higher floor on a slower host.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include <cstring>
+#include <ctime>
+#include "Machine.h"
+int main() {
+    int fails = 0;
+    ts::Machine &m = ts::mach();
+    m.step_limit = 0;
+    // The fast path must equal the byte-wise view, including page straddles.
+    for (unsigned a = 0x20000000u; a < 0x20003000u; a += 7u) {
+        ts::u32 v = a * 2654435761u;
+        ts::st32(a, v);
+        ts::u32 ref = (ts::u32)ts::page(a)[0] | ((ts::u32)ts::page(a+1)[0] << 8) |
+                      ((ts::u32)ts::page(a+2)[0] << 16) | ((ts::u32)ts::page(a+3)[0] << 24);
+        if (ts::ld32(a) != ref) ++fails;
+        if (ref != v) ++fails;
+    }
+    // A watched address inside the store's range must still be seen.
+    m.watch_va = 0x20000002u; m.watch_hits = 0; m.eip = 0x401234u;
+    ts::st32(0x20000000u, 0x11223344u);
+    if (m.watch_hits != 1u || m.watch_from[0] != 0x401234u) ++fails;
+    m.watch_va = 0;
+    // Fixed workload: the shape of the mission loader's copy loop (two pages,
+    // an instruction hook, an add, a compare).
+    const unsigned N = 40000000u;
+    ts::u32 sum = 0;
+    std::clock_t t0 = std::clock();
+    for (unsigned i = 0; i < N; ++i) {
+        ts::u32 a = 0x30000000u + (i & 0x3ffu) * 4u;
+        ts::u32 b = 0x30010000u + (i & 0x3ffu) * 4u;
+        ts::insn(0x401000u + (i & 0xffu));
+        ts::u32 v = ts::ld32(a);
+        ts::st32(b, ts::add32(v, i));
+        ts::cmp32(v, i);
+        sum += ts::ld32(b);
+    }
+    double fast = double(std::clock() - t0) / CLOCKS_PER_SEC;
+    // The same operations through page_in_slow(), the probe path: the ratio
+    // measures the page cache, not the host's clock.
+    ts::PageTable &t = ts::pages();
+    t0 = std::clock();
+    for (unsigned i = 0; i < N; ++i) {
+        ts::u32 a = 0x30000000u + (i & 0x3ffu) * 4u;
+        ts::u32 b = 0x30010000u + (i & 0x3ffu) * 4u;
+        ts::insn(0x401000u + (i & 0xffu));
+        ts::u32 v; std::memcpy(&v, ts::page_in_slow(t, a), 4);
+        ts::u32 w = ts::add32(v, i);
+        std::memcpy(ts::page_in_slow(t, b), &w, 4);
+        ts::cmp32(v, i);
+        ts::u32 r; std::memcpy(&r, ts::page_in_slow(t, b), 4);
+        sum += r;
+    }
+    double slow = double(std::clock() - t0) / CLOCKS_PER_SEC;
+    std::printf("%d %.1f %.1f %u\n", fails, (double)N / fast,
+                (double)N / slow, sum);
+    return 0;
+}
+'''
+    open("/tmp/ts_perf_test.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O2", "-m32", "-fno-pie",
+                        "-Isrc/include", "-Ibuild/shim", "-no-pie",
+                        "-o", "/tmp/ts_perf_test", "/tmp/ts_perf_test.cpp"],
+                       capture_output=True)
+    if r.returncode != 0:
+        check("machine-perf-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_perf_test"], capture_output=True)
+    parts = r.stdout.decode().split()
+    if len(parts) != 4:
+        check("machine-perf-run", False, r.stdout.decode()[:200])
+        return
+    fails, fast, slow, checksum = int(parts[0]), float(parts[1]), float(parts[2]), parts[3]
+    eq("machine-perf-correct", fails, 0)
+    # The value the pre-optimization model produced; it must not move.
+    eq("machine-perf-checksum", checksum, "88188416")
+    check("machine-perf-throughput", fast >= 20e6,
+          "%.1f iterations/s, floor 20M -- the build lost -O2" % fast)
+    # The cache hit must be materially cheaper than the probe path. Measured
+    # 1.73-1.78 on the development host; removing the cache makes it 1.0.
+    check("machine-perf-page-cache", fast >= 1.4 * slow,
+          "cache path %.1f/s vs probe path %.1f/s -- the page cache was lost"
+          % (fast, slow))
+
+    # The boot's build flags are part of the speed result: -O0 leaves every
+    # helper a real call. A revert here would pass every other check.
+    import boot
+    check("machine-perf-boot-flags",
+          "-O2" in boot.CXXFLAGS and "-fno-pie" in boot.CXXFLAGS,
+          "boot.py CXXFLAGS lost -O2/-fno-pie: %r" % (boot.CXXFLAGS,))
+
+
 def test_win32_dialog_ex():
     """The DLGTEMPLATEEX probe dialog parses as the retail binary's does.
 
@@ -3434,7 +3556,7 @@ def main():
                test_win32_module_exports, test_win32_message_queue,
                test_win32_dialog, test_win32_button_click,
                test_win32_listbox, test_win32_heap, test_win32_heap_arena,
-               test_page_table,
+               test_page_table, test_machine_perf,
                test_win32_dialog_ex,
                test_win32_surface_lock, test_win32_surface_blt,
                test_win32_render_input,
