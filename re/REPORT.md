@@ -43,31 +43,48 @@ reaches **`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instruction
 `0x7b2ab8` (front-end-active) and `0x7b0d38` (game mode) do not change; the
 selection signal is the dialog procedure's result code through `GWL_USERDATA`.
 
+**The campaign list works and a mission starts.** Dialog 148's listbox 1109 is
+populated from the shipped `BATTLE.INI` `[Battles]` section (`1=GDI1, 2=NOD1`),
+not from a hardcoded table, and the listbox/trackbar control layer implements
+`LB_ADDSTRING`/`LB_GETCURSEL`/`TBM_*` so a row can be selected. The default
+timeline selects **GDI1**, presses OK, and the game reads **`GDI1A.MAP`** out of
+`MAPS01.MIX` on the CD. The **GDI intro movie then plays**: `VQA` decoding runs
+and the model presents the GDI title card ("SEPTEMBER 2, 2030 / GDI SPACE
+STATION PHILADELPHIA"). That frame was captured to
+`/tmp/gdi_intro_model.png` (640x480, **194,131 non-black pixels**, md5
+`ccdb46d448a90e487e513bc1daf2ff8b`); the committed `re/out/frame.png` remains the
+main-menu evidence.
+
+**The mission load does not complete.** The current blocker is the machine
+model's **page table**, not a missing game feature: with the default timeline the
+run stops at `0x0067dc4f` (the LCW decoder inside intro playback) with
+**11,058 of 32,768** pages used, and an ESC-skip script that tries to leave the
+movie faults at `0x00a006b0` (the `HeapAlloc` thunk) after **2,580,698,410**
+instructions with the table exhausted at **32,768 / 32,768**. Widening
+`PageTable::SLOTS` is the next fix. Separately, the VQA frame-wait path is
+stub-bound: the movie advances only as fast as the model services its wait, so
+playback pacing is not yet the retail pacing.
+
 Boot states, all with **0 unmapped calls and 0 stack imbalances**:
 - 20M: stop `0x00488800`, coverage **55,774 / 4,764**.
-- default scripted input, 1.9B: stop `0x0045fa8e` in the Select Campaign dialog's
-  modal loop, `GetMessage=7`, `PeekMessage=14,572,933`, `DispatchMessage=7`,
-  coverage **78,504 / 6,191**.
-- Exit Game script, 1.9B: `ExitProcess(0)` at `0x00684529` after 1,707,666,895
-  instructions, `GetMessage=6`, `PeekMessage=11,216,667`, `DispatchMessage=6`,
-  coverage **86,400 / 6,654**.
+- default timeline, 2.1B: stop `0x0067dc4f` (LCW decode during intro playback),
+  `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage
+  **84,130 / 6,431**, pages used **11,058 / 32,768**, frame
+  `/tmp/gdi_intro_model.png` **194,131** non-black.
+- ESC-skip script, 3.0B: fault at `0x00a006b0` after **2,580,698,410**
+  instructions, `why: page table exhausted`, pages **32,768 / 32,768**, coverage
+  **139,223 / 8,678**.
 `boot.py --strict` exits 0 and `tools/link_test.py` passes (exit 0). A full
 `./tools/pipeline.sh` ran exit 0 in the disasm-correction lane (8m51s, per
-`todo.md`); it was not re-run here.
-
-The **current blocker is the empty "Select Campaign:" listbox**. Dialog 148 is
-up (135,187 370x243) with listbox 1109, Cancel, OK, Slider3, Difficulty and
-Harder, but the model implements no listbox/combobox/trackbar content
-(`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so nothing can be selected and **no
-mission starts**. The nested MIX (`0xa8548fd9`, 317 entries, 111 PCX) is mounted
-and read, but the button art is not painted because no `WM_PAINT` reaches the
-child controls; the retail also draws no buttons here.
+`todo.md`); it was not re-run here. The nested MIX (`0xa8548fd9`, 317 entries,
+111 PCX) is mounted and read, but the dialog's button art is not painted because
+no `WM_PAINT` reaches the child controls; the retail also draws no buttons here.
 
 The **retail** binary, run under Wine with the CD and a 640x480x16 screen
 (`tools/wine_env.sh`), reaches its **main menu** (screenshot md5
 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s). That is the
-differential oracle: the model renders and selects the same menu and reaches the
-campaign dialog.
+differential oracle: the model renders and selects the same menu, reaches the
+campaign dialog, starts the GDI campaign and plays its intro.
 
 The retail oracle also measured what `blowfish.dll` registers
 (`re/out/blowfish_oracle.md`, `tools/oracle_blowfish.py`,
@@ -329,17 +346,26 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   `link_test.py` reports `341 of 341 IAT slots written` and `0 with no stub`.
   The old "16,383 calls read 0" claim described the pre-`Image.h` model and is
   retracted.
-- **The model renders and selects the main menu, and opens "Select Campaign:".**
-  The frame is `re/out/frame.png` (md5 `0fdf2636…`, 254,610 / 307,200 non-black;
-  versus retail, 102,836 pixels differ (33.48%), mean absolute channel
-  difference 1.06/255 over the differing pixels, 506 pixels >8). New Campaign
-  exits the menu with result 1 and creates `RT_DIALOG` 148 at step 1,688,503,557;
-  Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions. The
-  nested MIX (`0xa8548fd9`, 317 entries) is mounted and read.
-- **The "Select Campaign:" listbox is empty.** No listbox/combobox/trackbar
-  content is implemented (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so no
-  campaign can be selected and **no mission starts**. The button art is not
-  painted (no `WM_PAINT` to children; retail does not draw it either).
+- **The model renders and selects the main menu, fills "Select Campaign:", and
+  starts the GDI mission.** The menu frame is `re/out/frame.png` (md5
+  `0fdf2636…`, 254,610 / 307,200 non-black; versus retail, 102,836 pixels differ
+  (33.48%), mean absolute channel difference 1.06/255 over the differing pixels,
+  506 pixels >8). New Campaign exits the menu with result 1 and creates
+  `RT_DIALOG` 148 at step 1,688,503,557; Exit Game reaches `ExitProcess(0)`
+  after 1,707,666,895 instructions. Dialog 148's listbox is populated from the
+  shipped `BATTLE.INI` `[Battles]` (`1=GDI1, 2=NOD1`), the default timeline
+  selects GDI1 and presses OK, and the game reads `GDI1A.MAP` from `MAPS01.MIX`
+  and plays the GDI intro. The intro frame is `/tmp/gdi_intro_model.png` (640x480,
+  194,131 non-black, md5 `ccdb46d448a90e487e513bc1daf2ff8b`). The nested MIX
+  (`0xa8548fd9`, 317 entries) is mounted and read.
+- **The mission load does not complete: the page table exhausts.** With the
+  default timeline the run stops at `0x0067dc4f` (LCW decode during intro
+  playback) with 11,058 / 32,768 pages used; an ESC-skip script faults at
+  `0x00a006b0` (the `HeapAlloc` thunk) after 2,580,698,410 instructions with the
+  table exhausted at 32,768 / 32,768. This is a model limit
+  (`PageTable::SLOTS`), not a missing game feature. The VQA frame-wait path is
+  also stub-bound, so playback pacing is not the retail pacing. The button art is
+  not painted (no `WM_PAINT` to children; retail does not draw it either).
 - **The boot has 0 unmapped calls and 0 stack imbalances**; the link test passes
   and `boot.py --strict` exits 0.
 - **The Blowfish cipher, the MIX index read and the dialog layer are fixed.**

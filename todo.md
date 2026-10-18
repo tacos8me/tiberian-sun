@@ -393,7 +393,7 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: **77 checks passed** (measured this session). Not
+`tools/test_tools.py`: **79 checks passed** (re-measured for this pass). Not
 golden-count assertions -- every one is a regression test for a defect that
 actually shipped, or a differential test against an independent implementation.
 Four are proven to fail when the defect is reintroduced (mutating
@@ -920,7 +920,7 @@ recovered stream contains only 32-bit `div`/`idiv` (no 8/16-bit forms), so there
 is no live 8/16-bit defect. Tests: `test_machine_div` (the boot case, sign
 combinations, overflow, divide-by-zero, and a 200,000-pair differential sweep)
 and `test_win32_surface_lock` (slot 25, five arguments, ESP returns at
-`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **77 checks**.
+`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **79 checks**.
 
 Measured with `TS_ROOT=.../gamedir`: the idiv is passed. New stop is **budget
 exhaustion at `0x00488800` after 20,000,001 instructions** with `TS_CD`, depth
@@ -1099,7 +1099,7 @@ Measured:
   loop; `GetMessage=7 PeekMessage=14,572,933 DispatchMessage=7`; 78,504 / 6,191.
 - Exit Game script, 1.9B: `ExitProcess(0)` at `0x00684529` after 1,707,666,895
   instructions; 86,400 / 6,654; 0 unmapped, 0 imbalances.
-- Gates: `VERIFICATION PASSED`, **77** tool tests, 101 runtime checks,
+- Gates: `VERIFICATION PASSED`, **79** tool tests, 101 runtime checks,
   `--strict` exits 0.
 
 **Scripted input is delivered but does not leave the menu.** Ten messages are
@@ -1141,7 +1141,8 @@ Measured (default timeline: `mousemove 320 220` + click):
   frame) inside that dialog's modal loop: `PeekMessage=14,572,933`,
   `DispatchMessage=7`, input-target `0x2000b`, **0 unmapped**. Window table:
   dialog 148 at (135,187 370x243) with "Select Campaign:", listbox 1109,
-  Cancel, OK, Slider3, Difficulty, Harder.
+  Cancel, OK, Slider3, Difficulty, Harder. (This was the state before the
+  listbox layer; the mission-start entry below supersedes it.)
 - Clicking **Exit Game** (screen 320,391) instead reaches `ExitProcess(0)` at
   `0x00684529` after 1,707,666,895 instructions — the game leaves the menu and
   exits.
@@ -1273,8 +1274,10 @@ First run: `CreateFileA("\\.\MONO")` -- the sound device name.
 budget, at the message loop) when COM registration was fixed, to the CRT exit
 path once message delivery and Blowfish landed, to the dialog-setup loop after
 the MIX-read and teardown fixes, to the intro-movie pump after the dialog and
-narrow-flag fixes, and now into the **rendered main menu** once the
-Rendering.h/Input.h integration landed. Use `TS_CD` to model `D:`.
+narrow-flag fixes, through the **rendered main menu** and the campaign dialog,
+and now into the **GDI intro movie** after the listbox/mission-start work
+landed; the page table exhausts on the way to the mission proper. Use `TS_CD`
+to model `D:`.
 
 ### [x] Make the boot a one-command measurement
 `tools/boot.py` builds (cached), runs with a budget and a timeout, and prints
@@ -1286,12 +1289,17 @@ exhausted at `0x00488800`, depth 19, `sub_0048875c +0xa4`), **message loop
 reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`,
 `DispatchMessage=1`), **55,774 distinct instructions / 4,764 of 45,947 functions
 entered**, and **0 unmapped calls, 0 stack imbalances**. With the default
-scripted input at `--budget 1900000000` (`--timeout 600`) the timeline clicks New
+scripted input at `--budget 2100000000` (`--timeout 600`) the timeline clicks New
 Campaign, the menu exits with result 1, `RT_DIALOG` 148 is created at step
-1,688,503,557, and the stop is its modal loop at `0x0045fa8e` (`GetMessage=7`,
-`PeekMessage=14,572,933`, `DispatchMessage=7`; 78,504 / 6,191). The Exit Game
-script reaches `ExitProcess(0)` at `0x00684529` after 1,707,666,895 instructions
-(86,400 / 6,654). `--frame` dumps the primary surface. `--no-build --strict` is the gate:
+1,688,503,557, its listbox is populated from `BATTLE.INI`, GDI1 is selected and
+OK starts the mission (`GDI1A.MAP` from `MAPS01.MIX`, then the GDI intro), and
+the stop is `0x0067dc4f` in the LCW decoder (`GetMessage=17`,
+`PeekMessage=13,565,102`, `DispatchMessage=17`; 84,130 / 6,431; pages used
+11,058 / 32,768). An ESC-skip script at `--budget 3000000000` faults at
+`0x00a006b0` after 2,580,698,410 instructions with the page table exhausted at
+32,768 / 32,768 (139,223 / 8,678). The Exit Game script reaches `ExitProcess(0)`
+at `0x00684529` after 1,707,666,895 instructions (86,400 / 6,654). `--frame`
+dumps the primary surface. `--no-build --strict` is the gate:
 it exits **0**. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild`,
 `--no-build`, `--input-script` and the `TS_CD` drive model are documented in the
 tool's header.
@@ -1323,11 +1331,20 @@ tool's header.
   `BN_CLICKED` reaches the game's own hit-test and `WM_COMMAND` path. New
   Campaign opens `RT_DIALOG` 148 "Select Campaign:" at step 1,688,503,557; Exit
   Game reaches `ExitProcess(0)` after 1,707,666,895 instructions.
-- **The current blocker is the empty "Select Campaign:" listbox.** No
-  listbox/combobox/trackbar content is implemented (`LB_ADDSTRING`/`LB_GETCURSEL`
-  are no-ops), so nothing can be selected and **no mission starts**. The nested
-  MIX (`0xa8548fd9`, 317 entries) is mounted and read; the button art is not
-  painted (no `WM_PAINT` to children; retail does not draw it either).
+- **The campaign list works and the GDI mission starts.** Dialog 148's listbox
+  is populated from the shipped `BATTLE.INI` `[Battles]` (`1=GDI1, 2=NOD1`), the
+  listbox/trackbar message layer is implemented, GDI1 is selected, and the game
+  reads `GDI1A.MAP` from `MAPS01.MIX` and plays the GDI intro (frame
+  `/tmp/gdi_intro_model.png`, 640x480, 194,131 non-black, md5
+  `ccdb46d448a90e487e513bc1daf2ff8b`).
+- **The current blocker is the page table, and the mission load does not
+  complete.** The default timeline stops at `0x0067dc4f` with 11,058 / 32,768
+  pages used; an ESC-skip script faults at `0x00a006b0` (the `HeapAlloc` thunk)
+  after 2,580,698,410 instructions with the table exhausted at 32,768 / 32,768.
+  `PageTable::SLOTS` is the limit. The VQA frame-wait path is also stub-bound, so
+  movie pacing is not retail pacing. The nested MIX (`0xa8548fd9`, 317 entries)
+  is mounted and read; the button art is not painted (no `WM_PAINT` to children;
+  retail does not draw it either).
 - **The Blowfish cipher is implemented and proven** (`345aae7`), and the MIX
   index read is fixed: all 27 blocks are read and the 17 records match
   `tools/mix.py` 17/17.

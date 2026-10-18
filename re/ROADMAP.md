@@ -8,8 +8,8 @@ Figures in this file were re-measured on 2026-10-17 with `harness.py metrics`,
 `verify.py`, `verify_members_binary.py`, `test_tools.py`, `boot.py` (and
 `--no-build --strict`), `link_test.py`, `wine_env.sh`, and direct counts over
 `out/` and `src/generated/`. The boot, frame and recovery figures were
-re-measured after the menu-selection merge; the full `pipeline.sh` run recorded
-in `todo.md` (exit 0, 8m51s) was not re-run here.
+re-measured after the campaign-selection/mission-start merge; the full
+`pipeline.sh` run recorded in `todo.md` (exit 0, 8m51s) was not re-run here.
 
 The point of this document is to say **what is actually left**, what the
 *smallest* honest size of that work is, and in what order it can be done — not to
@@ -304,13 +304,16 @@ does not draw; the rest is RGB565 quantization.
 
 Boot states, all with **0 unmapped calls and 0 stack imbalances**:
 - 20M: stop `0x00488800` (`sub_0048875c +0xa4`), coverage **55,774 / 4,764**.
-- default scripted input, 1.9B (`--timeout 600`): the timeline clicks New
-  Campaign, the menu exits with result 1, `RT_DIALOG` **148 "Select Campaign:"**
-  is created at step **1,688,503,557**, and the stop is that dialog's modal loop
-  at `0x0045fa8e` (`GetMessage=7`, `PeekMessage=14,572,933`, `DispatchMessage=7`;
-  coverage **78,504 / 6,191**).
-- Exit Game script, 1.9B: **`ExitProcess(0)`** at `0x00684529` after
-  **1,707,666,895** instructions (coverage 86,400 / 6,654).
+- default timeline, 2.1B (`--timeout 600`): New Campaign, NOD1, GDI1, OK. The
+  campaign dialog is destroyed, `GDI1A.MAP` is read, and the **GDI intro movie
+  plays**; the stop is the LCW decoder at `0x0067dc4f` (`sub_0067daa0`),
+  `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage
+  **84,130 / 6,431**, `pages-used 11,058/32,768`. The frame is the GDI title
+  (`/tmp/gdi_intro_model.png`, 194,131 non-black).
+- same timeline + ESC at model-ms 192,000, 3.0B: the movie is skipped and the
+  mission load **faults at `0x00a006b0` (HeapAlloc thunk) after 2,580,698,410
+  instructions** with **page table exhausted 32768/32768**; coverage 139,223 /
+  8,678. The mission load does **not** complete.
 `boot.py --strict` exits **0** and the link test passes. The only message box is
 the expected DirectSound warning at `0x484456` (`type=0x30`), and the
 primary-surface check passes (`TS_PEEK=0x006beed8` → 1).
@@ -337,7 +340,8 @@ tracker (`d047496`), the null teardown calls (`47d26eb`) and signed `idiv`
 runs and the game leaves the spin. `IBlowfish` is standard Blowfish-ECB, proven
 by four known-answer vectors and a byte-identical `tools/mix.py` cross-check on
 the shipped TIBSUN.MIX index (`2ce3171bdbecb40e` → `110090d97904849a`, count 17,
-body 75,094,416); the page-table exhaustion at `0x00a006b0` is gone. The stack
+body 75,094,416); the Blowfish-era page-table exhaustion at `0x00a006b0` is
+gone (a new one occurs during the mission load; see below). The stack
 tracker went from **111,682 false imbalances to 0**, and the five null teardown
 calls had one root cause — `IDirectDrawSurface::Lock` popped 4 arguments instead
 of 5 — now fixed, so the boot has **0 unmapped calls** and `--strict` exits 0.
@@ -350,7 +354,7 @@ runs. A CD drive model (`TS_CD`) was added. `SetViewportOrgEx`/`SetWindowOrgEx`
 take 4 arguments (the stubs popped 3, leaking 8 bytes); `19ee16c` fixes the
 generator table (`--stack-check` 342/0). `Machine.h` has width-aware
 `f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`, so 8/16-bit flags are correct;
-the tests compare them against the CPU's own flags. `test_tools.py` is 77 checks.
+the tests compare them against the CPU's own flags. `test_tools.py` is 79 checks.
 
 **Rendering and input are integrated (`5031e44` etc.).** `Win32Stubs.h` routes
 surfaces through `ts::rnd` (`Rendering.h`) and input through `ts::input`
@@ -369,13 +373,25 @@ path. New Campaign opens `RT_DIALOG` 148 "Select Campaign:"; Exit Game reaches
 (game mode) do not change; the selection signal is the dialog procedure's result
 code through `GWL_USERDATA`.
 
-**The current blocker is the empty "Select Campaign:" listbox.** Dialog 148 is
-up (135,187 370x243) with listbox 1109, Cancel, OK, Slider3, Difficulty and
-Harder, but the model implements no listbox/combobox/trackbar content
-(`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so nothing can be selected and **no
-mission starts**. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read,
-but the button art is not painted (no `WM_PAINT` to children; retail does not
+**The campaign list works and the mission starts (`1966cc1` + `4b7ef9b`).** The
+list source is the shipped `BATTLE.INI` (`[Battles] 1=GDI1, 2=NOD1`, committed as
+`re/realdata/BATTLE.INI`). The game's dialog procedure `0x004db8b0` feeds listbox
+1109 via `LB_ADDSTRING` in `WM_INITDIALOG` and sets `LB_SETCURSEL 0`; OK reads
+`LB_GETCURSEL` and `TBM_GETPOS` (trackbar 1295). The model implements the full
+listbox/trackbar layer, real `FindFirstFileA` host enumeration, and a read-only
+`TS_DATA` root. OK selects GDI, `GDI1A.MAP` is read from MAPS01.MIX, and the GDI
+intro movie plays. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and
+read; the button art is not painted (no `WM_PAINT` to children; retail does not
 draw it either).
+
+**The current blocker is the page table during the mission load.** ESC at
+model-ms 192,000 skips the movie; the loader touches every slot and faults at
+`0x00a006b0` with `pages-used 32768/32768`. `PageTable::SLOTS` is 32,768 (128 MB).
+`HeapFree` now reuses freed blocks, but this path grows through the game's own
+arena. A lane is measuring whether the demand is legitimate or a leak, then
+making the table dynamically growable or fixing the leak. **The mission load does
+not complete and no mission is rendered.** The VQA frame-wait is stub-bound
+(~68M `PeekMessageA` in 600 s), so ESC is the practical route meanwhile.
 
 **The oracle premise is now inverted.** `tools/wine_env.sh` gives the retail
 binary an X screen at 640x480x16 and a `DRIVE_CDROM` `d:` labelled `TS1` holding
@@ -384,21 +400,26 @@ binary an X screen at 640x480x16 and a `DRIVE_CDROM` `d:` labelled `TS1` holding
 60 s (screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`). The earlier claim that
 it "gives up early" is retracted. Remaining oracle limits: main-menu buttons/text
 are not drawn because the PCX assets live inside a nested MIX entry, and there is
-no audio. The model now renders and selects the same menu and reaches the
-campaign dialog; the oracle remains the target for the campaign UI.
+no audio. The model now renders and selects the same menu, starts the GDI
+campaign, and plays the GDI intro; the oracle remains the target for the mission
+UI.
 
 Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
-  1. Implement listbox/combobox/trackbar content (`LB_ADDSTRING`,
-     `LB_GETCURSEL`, …) and the campaign list source the game feeds it, so the
-     "Select Campaign:" listbox (1109) has entries. Exit: the list is populated,
-     a scripted selection is made, OK (screen 355,397) starts a mission, and the
-     next screen or stop is named (with a frame dump if it renders).
-  2. Paint the dialog controls: send `WM_PAINT` to child windows so the nested
+  1. Fix the page-table exhaustion during the mission load. Measure the peak
+     demand over the `GDI1A.MAP` load; if it is legitimate, make the page table
+     dynamically growable (or hash-based) while keeping exhaustion a **reported
+     fault**; if it is a leak, fix the leak. Exit: the load passes `0x00a006b0`,
+     peak pages-used is recorded, and the next stop is named (ideally mission
+     rendering).
+  2. Improve the VQA frame pacing: the frame-wait makes ~68M `PeekMessageA` calls
+     in 600 s, so model time barely advances during movies. Exit: the movie
+     advances on the clock, not the message count, and ESC is optional.
+  3. Paint the dialog controls: send `WM_PAINT` to child windows so the nested
      MIX's button art (`0xa8548fd9`, 317 entries, 111 PCX) is drawn; widen the
-     pixel comparison past the art layer. Non-blocking for selection.
-  3. Instruction-level differential: `tools/oracle.py 0xADDR --compare` at
+     pixel comparison past the art layer. Non-blocking.
+  4. Instruction-level differential: `tools/oracle.py 0xADDR --compare` at
      checkpoints the model and the retail binary both reach.
-  4. Keep the shutdown ESP defect (`0x11` on WinMain return) queued: it is
+  5. Keep the shutdown ESP defect (`0x11` on WinMain return) queued: it is
      dormant now but will matter as soon as shutdown is reached again.
 
 **The lesson worth keeping from this phase.** The game exits immediately unless
@@ -411,11 +432,11 @@ wrong value is harder to diagnose than one that fails loudly.
 
 The honest measure of progress here is not "does it run" but **how far into the
 game's own code it gets before it needs something we have not modelled**. The
-measured figure is **1,900,000,001 instructions** (the budget) ending in the
-"Select Campaign:" dialog's modal loop at `0x0045fa8e`, after the menu-selection
-work; the Exit Game path reaches `ExitProcess(0)` at 1,707,666,895 instructions,
-and the 20M stop is still `0x00488800`. Before the stack-leak fix it was 1,011,817
-instructions ending in `ExitProcess(1)`.
+measured figure is **2,100,000,001 instructions** (the budget) ending in the LCW
+video decoder at `0x0067dc4f` during the GDI campaign's intro movie; with ESC the
+mission load faults at `0x00a006b0` after 2,580,698,410 instructions with the
+page table exhausted. The 20M stop is still `0x00488800`. Before the stack-leak
+fix it was 1,011,817 instructions ending in `ExitProcess(1)`.
 Each stop is a precise, actionable finding rather than a wall, because the
 harness reports the stop EIP, the instruction bytes there, the containing
 function and generated source line, and the ordered import calls -- and

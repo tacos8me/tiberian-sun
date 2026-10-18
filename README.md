@@ -31,10 +31,19 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
   result 1 and opens `RT_DIALOG` **148, "Select Campaign:"** at step
   **1,688,503,557**; Exit Game reaches **`ExitProcess(0)`** after 1,707,666,895
   instructions. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read.
-- **The "Select Campaign:" listbox is empty.** The model implements no
-  listbox/combobox/trackbar content (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops),
-  so no campaign can be selected and **no mission starts**. The button art is not
-  painted (no `WM_PAINT` to children; retail does not draw it either).
+- **The campaign list works and the GDI mission starts.** Dialog 148's listbox is
+  populated from the shipped `BATTLE.INI` `[Battles]` (`1=GDI1, 2=NOD1`), the
+  listbox/trackbar message layer is implemented, GDI1 is selected, and the game
+  reads `GDI1A.MAP` from `MAPS01.MIX` and **plays the GDI intro** (frame
+  `/tmp/gdi_intro_model.png`, 640x480, 194,131 non-black, md5
+  `ccdb46d448a90e487e513bc1daf2ff8b`). The button art is not painted (no
+  `WM_PAINT` to children; retail does not draw it either).
+- **The mission load does not complete: the page table exhausts.** The default
+  timeline stops at `0x0067dc4f` (LCW decode during intro playback) with
+  11,058 / 32,768 pages used; an ESC-skip script faults at `0x00a006b0` (the
+  `HeapAlloc` thunk) after 2,580,698,410 instructions with the table exhausted at
+  32,768 / 32,768. This is a model limit (`PageTable::SLOTS`). The VQA frame-wait
+  path is also stub-bound, so movie pacing is not retail pacing.
 - The **retail** game reaches its **main menu** under Wine on this host; that is
   the project's external oracle.
 - Every function body is generated machine transcription, one instruction per
@@ -52,8 +61,8 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 | virtuals named | 5,557 of 9,810 slot pairs (56.6%); 917 distinct names (281 semantic) |
 | headers | 266 total, 265 compile standalone at `-m32` |
 | verification gate | 9 checks, fail-closed, passing; check 9 confirms 3,073/3,073 offsets |
-| tool tests | 77 checks, several mutation-proven; `test_runtime.py` 101 more (rendering/input) |
-| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders and selects the main menu**; 20M stop `0x00488800` (55,774 / 4,764), 1.9B New Campaign opens dialog 148 and stops at `0x0045fa8e` (78,504 / 6,191), Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions (86,400 / 6,654); 0 unmapped, 0 stack imbalances; current blocker is the empty campaign listbox |
+| tool tests | 79 checks, several mutation-proven; `test_runtime.py` 101 more (rendering/input) |
+| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders and selects the main menu**; campaign list from `BATTLE.INI`; **starts the GDI mission and plays its intro**; 20M stop `0x00488800` (55,774 / 4,764), 2.1B stop `0x0067dc4f` (84,130 / 6,431; pages 11,058 / 32,768), ESC-skip faults at `0x00a006b0` after 2,580,698,410 instructions (139,223 / 8,678; pages 32,768 / 32,768), Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions (86,400 / 6,654); 0 unmapped, 0 stack imbalances; current blocker is the page table, so the mission load does not complete |
 | frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; 1.06/255 mean channel difference from retail on differing pixels |
 
 **Measure, don't trust prose.** `python3 tools/harness.py metrics` prints the
@@ -103,12 +112,17 @@ coverage: 55,774 distinct instructions; 4,764 of 45,947 recovered functions
 unmapped calls: 0 (0 inside .text); stack imbalances: 0
 ```
 
-At `--budget 1900000000 --timeout 600` the default scripted input clicks New
+At `--budget 2100000000 --timeout 600` the default scripted input clicks New
 Campaign: the menu exits with result 1, `RT_DIALOG` **148, "Select Campaign:"**
-is created at step **1,688,503,557**, and the stop is that dialog's modal loop at
-`0x0045fa8e` (`GetMessage=7`, `PeekMessage=14,572,933`, `DispatchMessage=7`;
-78,504 / 6,191). A script that clicks Exit Game instead reaches
-**`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instructions
+is created at step **1,688,503,557**, its listbox is populated from the shipped
+`BATTLE.INI` `[Battles]` (`1=GDI1, 2=NOD1`), GDI1 is selected, OK starts the
+mission, and the game reads `GDI1A.MAP` from `MAPS01.MIX` and plays the GDI
+intro. The stop is `0x0067dc4f` (LCW decode during playback) at the
+2.1-billion-instruction budget (`GetMessage=17`, `PeekMessage=13,565,102`,
+`DispatchMessage=17`; 84,130 / 6,431; pages used **11,058 / 32,768**). The intro
+frame captured to `/tmp/gdi_intro_model.png` is 640x480, 194,131 non-black, md5
+`ccdb46d448a90e487e513bc1daf2ff8b`. A script that clicks Exit Game instead
+reaches **`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instructions
 (86,400 / 6,654). `--frame out/frame.png` dumps the rendered menu; the committed
 frame is 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, with 254,610 / 307,200
 non-black pixels, and differs from the retail screenshot by a mean channel
@@ -119,12 +133,16 @@ TIBSUN.MIX first index block decrypts byte-identically), the MIX index read is
 fixed (27/27 blocks, 17/17 records), the dialog layer reads LANGUAGE.DLL's own
 templates, and narrow-width flags are derived from the operand width. The menu
 renders and is selectable through the game's own hit-test and `WM_COMMAND` path;
-the nested MIX (`0xa8548fd9`, 317 entries) is mounted and read. **The current
-blocker is the empty "Select Campaign:" listbox**: no listbox/combobox/trackbar
-content is implemented (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so no
-campaign can be selected and **no mission starts**. The button art is not painted
-(no `WM_PAINT` to children; retail does not draw it either). The shutdown ESP
-defect is dormant.
+the nested MIX (`0xa8548fd9`, 317 entries) is mounted and read. The campaign
+list is populated from the shipped `BATTLE.INI`, GDI1 is selected, and the game
+starts the mission and plays the GDI intro. **The mission load does not
+complete: the current blocker is the page table.** The default timeline stops at
+`0x0067dc4f` with 11,058 / 32,768 pages used, and an ESC-skip script faults at
+`0x00a006b0` (the `HeapAlloc` thunk) after **2,580,698,410** instructions with the
+table exhausted at **32,768 / 32,768** (139,223 / 8,678). `PageTable::SLOTS` is
+the limit. The VQA frame-wait path is also stub-bound, so movie pacing is not
+retail pacing; the button art is not painted (no `WM_PAINT` to children; retail
+does not draw it either). The shutdown ESP defect is dormant.
 
 The model has diagnostics for this work: `TS_TRACE=0xADDR`, `TS_PEEK=0xADDR`,
 `TS_SCAN=start,count`, `TS_WATCH=0xADDR`, `TS_FILE_TRACE=1`, plus `bad_calls`,
