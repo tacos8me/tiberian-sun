@@ -1865,6 +1865,102 @@ int main() {
         eq("win32-surface-lock", out.splitlines()[-1] if out else "", "0")
 
 
+def test_win32_surface_blt():
+    """IDirectDrawSurface::Blt and BltFast own all six __stdcall words.
+
+    Regression test for the four-byte-per-Blt leak. The game's own call at
+    0x4883f1..0x4883f5 pushes this, lpDstRect, lpSrcSurface, lpSrcRect,
+    dwFlags and lpDDBltFx; the vtable declared five. The retail performs 210
+    Blt calls before the menu, so 840 bytes of ESP drift accumulated and the
+    stack-relative reads on the menu path went wrong -- at 0x4db807
+    FUN_004da790's call to FUN_005da290 ended up inserting a list node twice,
+    which made the node's next pointer point at itself and the next traversal
+    spin forever (stop 0x004f698d, coverage frozen at 78,070 / 6,166). With
+    the six-word count the run reaches its budget in the message pump.
+
+    Also pins IDirectDraw::GetDisplayMode's descriptor: dwRGBBitCount is at
+    +0x54 (the game reads it at 0x48768f), not ddsCaps.dwCaps at +0x68.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+
+int main() {
+    ts::reset();
+    ts::register_win32_stubs();
+
+    const ts::u32 sp = 0x002ff000u;
+    ts::u32 surf = ts::w32::make_surface();
+    ck("make_surface returns an object", surf != 0);
+    ts::u32 vt = ts::ld32(surf);
+    ts::u32 blt = ts::ld32(vt + 5u * 4u);        // IDirectDrawSurface::Blt
+    ck("Blt slot is registered", blt != 0);
+    ts::st32(sp + 0u, surf);            // this
+    ts::st32(sp + 4u, 0x00300000u);     // lpDstRect
+    ts::st32(sp + 8u, 0u);              // lpSrcSurface
+    ts::st32(sp + 12u, 0u);             // lpSrcRect
+    ts::st32(sp + 16u, 0x01000400u);    // dwFlags
+    ts::st32(sp + 20u, 0u);             // lpDDBltFx
+    ESP.d = sp;
+    ts::ts_call_at(blt, 0x00c0ffeeu);
+    ck("Blt pops return address + six arguments", ESP.d == sp + 0x18u);
+    ck("Blt does not fault", !ts::mach().faulted);
+
+    const ts::u32 sp2 = 0x002ff100u;
+    ts::u32 bltfast = ts::ld32(vt + 7u * 4u);    // IDirectDrawSurface::BltFast
+    ck("BltFast slot is registered", bltfast != 0);
+    for (int i = 0; i < 6; ++i) ts::st32(sp2 + 4u * (ts::u32)i, i == 0 ? surf : 0u);
+    ESP.d = sp2;
+    ts::ts_call_at(bltfast, 0x00c0ffeeu);
+    ck("BltFast pops return address + six arguments", ESP.d == sp2 + 0x18u);
+
+    ts::u32 dd = ts::w32::make_directdraw();
+    ck("make_directdraw returns an object", dd != 0);
+    ts::u32 dvt = ts::ld32(dd);
+    ts::u32 gdm = ts::ld32(dvt + 12u * 4u);      // IDirectDraw::GetDisplayMode
+    const ts::u32 desc = 0x00300200u;
+    const ts::u32 sp3 = 0x002ff200u;
+    ts::st32(sp3 + 0u, dd);             // this
+    ts::st32(sp3 + 4u, desc);           // lpDDSurfaceDesc
+    ESP.d = sp3;
+    ts::ts_call_at(gdm, 0x00c0ffeeu);
+    // ts_call_at pushes the return address BELOW the caller's ESP, so a
+    // correct __stdcall return leaves ESP at caller_ESP + 4*nargs.
+    ck("GetDisplayMode owns its two argument words", ESP.d == sp3 + 8u);
+    ck("GetDisplayMode fills dwSize", ts::ld32(desc + 0u) == 108u);
+    ck("GetDisplayMode fills a nonzero width/height",
+       ts::ld32(desc + 8u) != 0u && ts::ld32(desc + 12u) != 0u);
+    ck("GetDisplayMode writes dwRGBBitCount at +0x54",
+       ts::ld32(desc + 0x54u) == 16u);
+    ck("GetDisplayMode leaves ddsCaps.dwCaps (+0x68) clear",
+       ts::ld32(desc + 0x68u) == 0u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_surface_blt.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_surface_blt",
+                        "/tmp/ts_surface_blt.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-surface-blt-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_surface_blt"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-surface-blt", False, out)
+    else:
+        eq("win32-surface-blt", out.splitlines()[-1] if out else "", "0")
+
+
 def test_win32_clock():
     """The clock must advance with executed work, not only with Sleep.
 
@@ -2138,7 +2234,8 @@ def main():
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,
                test_win32_dialog,
-               test_win32_surface_lock, test_win32_clock, test_win32_blowfish):
+               test_win32_surface_lock, test_win32_surface_blt,
+               test_win32_clock, test_win32_blowfish):
         try:
             fn()
         except Exception as exc:  # a tool that raises is a failure, not a skip

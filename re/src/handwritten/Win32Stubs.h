@@ -2872,9 +2872,10 @@ TS_END
 
 TS_BEGIN(dd_GetDisplayMode)
     // DDSURFACEDESC: +0 dwSize, +4 dwFlags, +8 dwHeight, +12 dwWidth,
-    // +104 ddpfPixelFormat.dwRGBBitCount. The mode is the screen this model
-    // reports from GetSystemMetrics: a program that asks both and is told
-    // different sizes sizes its surfaces for the wrong screen.
+    // +0x54 ddpfPixelFormat.dwRGBBitCount, +0x68 ddsCaps.dwCaps. The game's
+    // own wrapper reads the bit count at +0x54 (0x48768f: (*(u32*)(p+0x54)+7)>>3)
+    // and reads a caps bit at +0x68 (0x48769b). Writing the bit count at +0x68
+    // set a caps bit and left +0x54 zero, so bytes-per-pixel became 0.
     u32 p = arg(1);
     if (p) {
         for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
@@ -2882,7 +2883,7 @@ TS_BEGIN(dd_GetDisplayMode)
         st32(p + 4u, 0x00000041u);   // DDSD_WIDTH|DDSD_HEIGHT|DDSD_PIXELFORMAT
         st32(p + 8u, SCREEN_H);
         st32(p + 12u, SCREEN_W);
-        st32(p + 104u, SCREEN_BPP);
+        st32(p + 0x54u, SCREEN_BPP); // ddpfPixelFormat.dwRGBBitCount
     }
     stub_done(2, 0u);
 TS_END
@@ -3950,7 +3951,14 @@ inline u32 make_surface() {
         "IDirectDrawSurface::ChangeUniquenessValue",
     };
     static const u8 nargs[45] = {
-        3, 1, 1, 2, 2, 5, 3, 6, 3, 4, 4, 3, 3, 2, 2, 2, 3, 2, 2, 3,
+        // Slot 5 (Blt) is SIX words, not five. The game's own call at
+        // 0x4883f1..0x4883f5 pushes this, lpDstRect, lpSrcSurface, lpSrcRect,
+        // dwFlags and lpDDBltFx, and a __stdcall callee owns all of them. With
+        // five the stub left one dword on the stack on every Blt (the retail
+        // performs 210 of them before the menu), drifting ESP by 840 bytes --
+        // the same class of stack corruption that has broken the list/teardown
+        // paths before.
+        3, 1, 1, 2, 2, 6, 3, 6, 3, 4, 4, 3, 3, 2, 2, 2, 3, 2, 2, 3,
         2, 2, 2, 3, 1, 5, 2, 1, 2, 3, 3, 2, 2, 4, 2, 3, 2, 2, 2, 3,
         4, 3, 2, 2, 1,
     };
