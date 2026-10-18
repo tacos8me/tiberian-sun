@@ -1244,6 +1244,15 @@ void objects_report() {
                 (unsigned)ts::ld32(0x007b0c08u), (unsigned)ts::ld32(0x007b0c00u),
                 (unsigned)ts::ld32(0x007b2c48u), (unsigned)ts::ld32(0x007b2c40u),
                 (unsigned)ts::ld32(0x007afce0u));
+    // The local player's house. `DAT_007b0b7c + 0xe0` is the current object
+    // index the tactical click path reads and writes (FUN_00475d00), so the
+    // pointer at 0x7b0b7c is the player's HouseClass. An object's owner house
+    // is at +0xEC (FUN_0060e7b0 stores its second argument there), which is
+    // what tells a friendly unit (selectable) from an enemy one (the click
+    // produces attack action 7 instead of a selection).
+    u32 player_house = ts::ld32(0x007b0b7cu);
+    std::printf("  player: house=0x%08x current_object=%d\n",
+                player_house, (int)ts::ld32(0x007b0b7cu + 0xe0u));
     // Where each world object actually is. The reveal pass walks these
     // registries and reveals around +0x14, so a wrong packed position here is
     // exactly what puts the revealed patch in the wrong place.
@@ -1272,9 +1281,12 @@ void objects_report() {
                     int cx = (int)ts::ld32(o + 0x40u);
                     int cy = (int)ts::ld32(o + 0x44u);
                     int cz = (int)ts::ld32(o + 0x48u);
-                    std::printf(" vptr=0x%08x coord=(%d,%d,%d) cell=(%d,%d)",
+                    u32 owner = ts::ld32(o + 0xecu);
+                    std::printf(" vptr=0x%08x coord=(%d,%d,%d) cell=(%d,%d)"
+                                " owner=0x%08x player=%d",
                                 (unsigned)ts::ld32(o), cx, cy, cz,
-                                cx >> 8, cy >> 8);
+                                cx >> 8, cy >> 8, owner,
+                                owner && owner == player_house ? 1 : 0);
                     // Is the object's own cell revealed? This is what decides
                     // whether the shroud shows the object at all.
                     u32 mp = 0x00710d28u;
