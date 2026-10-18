@@ -506,15 +506,13 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
     }
     std::printf("unmodelled: %lu\n", m.unmodelled_insns);
     // Page-table occupancy. The model hands out one host page per distinct 4 KB
-    // of the 32-bit address space, and the table is fixed at 32768 slots. A
-    // nearly-full table turns every new page into a 32768-slot linear probe,
-    // which is a wall-clock cliff, not a fault: the run does not stop, it
-    // crawls. A long run that suddenly slows is this number.
+    // of the 32-bit address space; the table grows, so `used` is the working
+    // set and `peak` its high-water mark. A run that crawls is a table at a high
+    // load factor, which is why growth is reported.
     {
-        unsigned used = 0;
-        for (int i = 0; i < (int)ts::PageTable::SLOTS; ++i)
-            if (ts::pages().key[i] != 0xffffffffu) ++used;
-        std::printf("pages-used: %u of %d\n", used, (int)ts::PageTable::SLOTS);
+        ts::PageTable &pt = ts::pages();
+        std::printf("pages-used: %u of %u slots (peak %u, growths %u, refused %u)\n",
+                    pt.used, pt.cap, pt.peak, pt.growths, pt.refused);
     }
     std::printf("import-calls: %lu\n", g_import_calls);
     std::printf("distinct-imports: %lu\n", distinct_imports());
