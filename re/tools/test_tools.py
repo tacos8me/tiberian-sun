@@ -1972,6 +1972,257 @@ int main() {
         eq("win32-button-click", out.splitlines()[-1] if out else "", "0")
 
 
+def test_win32_listbox():
+    """The listbox/trackbar message layer and the campaign list's data source.
+
+    The "Select Campaign:" procedure (0x4db8b0) fills listbox 1109 in
+    WM_INITDIALOG with SendMessageA(LB_ADDSTRING) and reads the choice back with
+    LB_GETCURSEL when OK is pressed. With no listbox layer the list was empty
+    and OK stored -1. This pins:
+
+      * the listbox messages (ADD/INSERT/DELETE/RESET/GETCOUNT/GETTEXT/
+        GETTEXTLEN/GETCURSEL/SETCURSEL/GETSEL/FINDSTRING) through the same
+        dispatch table the boot uses;
+      * a click on a listbox row selects it and queues WM_COMMAND with
+        LBN_SELCHANGE (1), which is what the LBS_NOTIFY style asks for;
+      * the trackbar messages the dialog's WM_INITDIALOG and OK handler use
+        (TBM_SETRANGE/TBM_SETPOS/TBM_GETPOS);
+      * FindFirstFileA really enumerates the host directory and finds the
+        shipped BATTLE.INI in the data root, whose [Battles] section is the
+        campaign list source.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include <cstring>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+static ts::u32 call(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
+    for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
+    ESP.d = sp; ts::ts_call_at(fn, 0x00c0ffeeu); return EAX.d;
+}
+static ts::u32 put_w(ts::u32 p, const char *s) {
+    for (; *s; ++s, p += 2u) ts::st16(p, (ts::u16)*s);
+    ts::st16(p, 0u); return p + 2u;
+}
+static ts::u32 put_ctl(ts::u32 p, ts::u32 style, ts::i32 x, ts::i32 y,
+                       ts::i32 cx, ts::i32 cy, ts::u32 id,
+                       ts::u32 catom, const char *cls, const char *text) {
+    p = (p + 3u) & ~3u;
+    ts::st32(p + 0u, style); ts::st32(p + 4u, 0u);
+    ts::st16(p + 8u, (ts::u16)x); ts::st16(p + 10u, (ts::u16)y);
+    ts::st16(p + 12u, (ts::u16)cx); ts::st16(p + 14u, (ts::u16)cy);
+    ts::st16(p + 16u, (ts::u16)id);
+    ts::u32 q = p + 18u;
+    if (catom) { ts::st16(q, 0xffffu); ts::st16(q + 2u, (ts::u16)catom); q += 4u; }
+    else if (cls) q = put_w(q, cls);
+    else { ts::st16(q, 0u); q += 2u; }
+    if (text) q = put_w(q, text);
+    else { ts::st16(q, 0u); q += 2u; }
+    ts::st16(q, 0u);            // cbCreationData
+    return q + 2u;
+}
+static ts::u32 put_str(ts::u32 p, const char *s) {
+    for (; *s; ++s, ++p) ts::st8(p, (ts::u8)*s);
+    ts::st8(p, 0u); return p + 1u;
+}
+// Drain the queue, delivering every message. Returns the last WM_COMMAND
+// wParam (LOWORD id, HIWORD notification) and its lParam.
+static ts::u32 pump(ts::u32 peek, ts::u32 disp, ts::u32 msg, ts::u32 sp,
+                    ts::u32 *out_lp) {
+    ts::u32 wp = 0u;
+    if (out_lp) *out_lp = 0u;
+    for (unsigned i = 0; i < 32u; ++i) {
+        ts::u32 pm[5] = { msg, 0u, 0u, 0u, 1u };
+        if (!call(peek, pm, 5, sp)) break;
+        if (ts::ld32(msg + 4u) == 0x0111u) {
+            wp = ts::ld32(msg + 8u);
+            if (out_lp) *out_lp = ts::ld32(msg + 12u);
+        }
+        ts::u32 a1[1] = { msg };
+        call(disp, a1, 1, sp);
+    }
+    return wp;
+}
+
+int main() {
+    ts::register_win32_stubs();
+    const ts::u32 sp = 0x002ff000u, msg = 0x00301000u, tpl = 0x00300000u;
+    const ts::u32 str1 = 0x00310000u, str2 = 0x00310100u, buf = 0x00310200u;
+    ts::u32 cw   = ts::stub_va("USER32", "CreateWindowExA");
+    ts::u32 cd   = ts::stub_va("USER32", "CreateDialogIndirectParamA");
+    ts::u32 gdi  = ts::stub_va("USER32", "GetDlgItem");
+    ts::u32 sm   = ts::stub_va("USER32", "SendMessageA");
+    ts::u32 peek = ts::stub_va("USER32", "PeekMessageA");
+    ts::u32 disp = ts::stub_va("USER32", "DispatchMessageA");
+    ck("stubs resolve", cw && cd && gdi && sm && peek && disp);
+
+    ts::u32 a12[12] = { 0,0,0,0, 0,0, 640,480, 0,0, 0x00400000u, 0 };
+    ts::u32 parent = call(cw, a12, 12, sp);
+    ck("parent window", parent != 0u);
+
+    // Classic DLGTEMPLATE, DS_SETFONT 8pt, the campaign dialog's three
+    // control classes: ListBox (atom 0x83), msctls_trackbar32 (a class
+    // string, no atom) and Button (atom 0x80).
+    ts::st32(tpl + 0u, 0x40u); ts::st32(tpl + 4u, 0u);
+    ts::st16(tpl + 8u, 3u);
+    ts::st16(tpl + 10u, 0u); ts::st16(tpl + 12u, 0u);
+    ts::st16(tpl + 14u, 246u); ts::st16(tpl + 16u, 149u);
+    ts::st16(tpl + 18u, 0u); ts::st16(tpl + 20u, 0u); ts::st16(tpl + 22u, 0u);
+    ts::st16(tpl + 24u, 8u);
+    ts::u32 p = put_w(tpl + 26u, "MS Sans Serif");
+    p = put_ctl(p, 0x50000151u, 22, 28, 206, 51, 1109u, 0x0083u, 0, 0);
+    p = put_ctl(p, 0x50000018u, 22, 98, 206, 15, 1295u, 0u,
+                "msctls_trackbar32", "Slider3");
+    put_ctl(p, 0x5000000bu, 121, 121, 50, 16, 1u, 0x0080u, 0, "OK");
+
+    ts::u32 a5[5] = { 0x00400000u, tpl, parent, 0u, 0u };
+    ts::u32 dlg = call(cd, a5, 5, sp);
+    ck("dialog created", dlg != 0u);
+    ts::w32::WinRec *d = ts::w32::win_find(dlg);
+    // 246x149 DLU at the 6x13 DS_SETFONT base unit is 369x242, centred.
+    ck("dialog centred", d && d->x == 135 && d->y == 119 &&
+                         d->cx == 369 && d->cy == 242);
+
+    ts::u32 a2[2] = { dlg, 1109u };
+    ts::u32 lbh = call(gdi, a2, 2, sp);
+    ts::u32 a2b[2] = { dlg, 1295u };
+    ts::u32 tbh = call(gdi, a2b, 2, sp);
+    ts::u32 a2c[2] = { dlg, 1u };
+    ts::u32 okh = call(gdi, a2c, 2, sp);
+    ts::w32::WinRec *lb = ts::w32::win_find(lbh);
+    ts::w32::WinRec *tb = ts::w32::win_find(tbh);
+    ck("listbox found", lb && ts::w32::is_listbox(lb));
+    ck("trackbar found", tb && ts::w32::is_trackbar(tb));
+    ck("trackbar class name kept", tb && !std::strcmp(tb->cls, "msctls_trackbar32"));
+    ck("ok button found", okh != 0u);
+
+    // -- listbox content ----------------------------------------------------
+    put_str(str1, "GDI Campaign - Evolutionary Response");
+    put_str(str2, "Brotherhood of Nod Campaign - Deus ex Kane");
+    ts::u32 a5a[5] = { lbh, 0x0180u, 0u, str1, 0u };
+    ck("LB_ADDSTRING 0", call(sm, a5a, 5, sp) == 0u);
+    ts::u32 a5b[5] = { lbh, 0x0180u, 0u, str2, 0u };
+    ck("LB_ADDSTRING 1", call(sm, a5b, 5, sp) == 1u);
+    ts::u32 a5c[5] = { lbh, 0x018bu, 0u, 0u, 0u };
+    ck("LB_GETCOUNT is 2", call(sm, a5c, 5, sp) == 2u);
+    ts::u32 a5d[5] = { lbh, 0x018au, 1u, 0u, 0u };
+    ck("LB_GETTEXTLEN", call(sm, a5d, 5, sp) == 42u);
+    ts::u32 a5e[5] = { lbh, 0x0189u, 1u, buf, 0u };
+    call(sm, a5e, 5, sp);
+    ck("LB_GETTEXT", !std::strcmp(ts::w32::ld_cstr(buf),
+        "Brotherhood of Nod Campaign - Deus ex Kane"));
+    ts::u32 a5f[5] = { lbh, 0x0188u, 0u, 0u, 0u };
+    ck("LB_GETCURSEL is none", call(sm, a5f, 5, sp) == 0xffffffffu);
+    ts::u32 a5g[5] = { lbh, 0x0186u, 1u, 0u, 0u };
+    ck("LB_SETCURSEL 1", call(sm, a5g, 5, sp) == 0u);
+    ck("LB_GETCURSEL is 1", call(sm, a5f, 5, sp) == 1u);
+
+    // Insert at 0, delete it, and reset: the content is a list, not one slot.
+    put_str(str1 + 0x80u, "First");
+    ts::u32 a5h[5] = { lbh, 0x0181u, 0u, str1 + 0x80u, 0u };
+    ck("LB_INSERTSTRING 0", call(sm, a5h, 5, sp) == 0u);
+    ts::u32 a5i[5] = { lbh, 0x0189u, 0u, buf, 0u };
+    call(sm, a5i, 5, sp);
+    ck("inserted text is first", !std::strcmp(ts::w32::ld_cstr(buf), "First"));
+    ck("count after insert", call(sm, a5c, 5, sp) == 3u);
+    ts::u32 a5j[5] = { lbh, 0x0182u, 0u, 0u, 0u };
+    ck("LB_DELETESTRING 0", call(sm, a5j, 5, sp) == 2u);
+    ts::u32 a5k[5] = { lbh, 0x0184u, 0u, 0u, 0u };
+    call(sm, a5k, 5, sp);
+    ck("LB_RESETCONTENT empties", call(sm, a5c, 5, sp) == 0u);
+
+    // Re-add the two campaigns; the dialog's WM_INITDIALOG selects index 0.
+    call(sm, a5a, 5, sp);
+    call(sm, a5b, 5, sp);
+    ts::u32 a5z[5] = { lbh, 0x0186u, 0u, 0u, 0u };
+    call(sm, a5z, 5, sp);
+
+    // -- trackbar -----------------------------------------------------------
+    ts::u32 a5t[5] = { tbh, 0x0406u, 1u, 0x00020000u, 0u };  // TBM_SETRANGE 0..2
+    ck("TBM_SETRANGE", call(sm, a5t, 5, sp) == 0u);
+    ts::u32 a5u[5] = { tbh, 0x0405u, 1u, 2u, 0u };           // TBM_SETPOS 2
+    ck("TBM_SETPOS", call(sm, a5u, 5, sp) == 0u);
+    ts::u32 a5v[5] = { tbh, 0x0400u, 0u, 0u, 0u };           // TBM_GETPOS
+    ck("TBM_GETPOS is 2", call(sm, a5v, 5, sp) == 2u);
+
+    // -- a click selects a row and notifies LBN_SELCHANGE -------------------
+    // Dialog (135,119); listbox client (33,45), rows 13 px: row 1 is at
+    // screen (135+33+30, 119+45+1+13+6) = (198,184).
+    ts::w32::input_init_once();
+    ck("script loaded", ts::input::load_script(
+        "@0 mousemove 198 184\n@0 lbuttondown\n@0 lbuttonup\n"));
+    ts::u32 lp = 0u, wp = pump(peek, disp, msg, sp, &lp);
+    ck("listbox click notifies", (wp & 0xffffu) == 1109u && (wp >> 16) == 1u);
+    ck("notification lParam is the listbox", lp == lbh);
+    ck("click selected row 1", ts::w32::win_find(lbh)->lb_sel == 1u);
+    ck("LB_GETCURSEL after click", call(sm, a5f, 5, sp) == 1u);
+
+    // OK: client (181,196 75x26) -> screen (135+181+37, 119+196+13).
+    ck("ok script", ts::input::load_script(
+        "@0 mousemove 353 328\n@0 lbuttondown\n@0 lbuttonup\n"));
+    wp = pump(peek, disp, msg, sp, &lp);
+    ck("OK queues BN_CLICKED id 1", (wp & 0xffffu) == 1u && (wp >> 16) == 0u);
+    ck("OK lParam is the button", lp == okh);
+
+    // -- the campaign list's data source ------------------------------------
+    ts::u32 ff = ts::stub_va("KERNEL32", "FindFirstFileA");
+    ts::u32 fn = ts::stub_va("KERNEL32", "FindNextFileA");
+    ts::u32 fc = ts::stub_va("KERNEL32", "FindClose");
+    ts::u32 cf = ts::stub_va("KERNEL32", "CreateFileA");
+    ts::u32 rf = ts::stub_va("KERNEL32", "ReadFile");
+    ts::u32 ch = ts::stub_va("KERNEL32", "CloseHandle");
+    const ts::u32 fd = 0x00320000u, fbuf = 0x00330000u, got = 0x00340000u;
+    ts::u32 a2f[2] = { ts::w32::lit("BATTLE*.INI"), fd };
+    ts::u32 fh = call(ff, a2f, 2, sp);
+    ck("FindFirstFileA(BATTLE*.INI) found", fh != 0xffffffffu);
+    ck("found the shipped BATTLE.INI",
+       !std::strcmp(ts::w32::ld_cstr(fd + 0x2cu), "BATTLE.INI"));
+    ts::u32 a2n[2] = { fh, fd };
+    ck("one match", call(fn, a2n, 2, sp) == 0u);
+    ts::u32 a1c[1] = { fh };
+    call(fc, a1c, 1, sp);
+
+    ts::u32 a7[7] = { ts::w32::lit("BATTLE.INI"), 0x80000000u, 1u, 0u, 3u, 0u, 0u };
+    ts::u32 bf = call(cf, a7, 7, sp);
+    ck("BATTLE.INI opens", bf != 0xffffffffu);
+    ts::u32 a5r[5] = { bf, fbuf, 0xffffu, got, 0u };
+    call(rf, a5r, 5, sp);
+    ts::u32 a1h[1] = { bf };
+    call(ch, a1h, 1, sp);
+    ts::u32 n = ts::ld32(got);
+    ck("BATTLE.INI read", n > 100u && n < 0xffffu);
+    static char text[0x10000];
+    for (ts::u32 i = 0; i < n; ++i) text[i] = (char)ts::ld8(fbuf + i);
+    text[n] = 0;
+    ck("BATTLE.INI has [Battles]", std::strstr(text, "[Battles]") != 0);
+    ck("Battles lists GDI1", std::strstr(text, "GDI1") != 0);
+    ck("Battles lists NOD1", std::strstr(text, "NOD1") != 0);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_listbox.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_listbox",
+                        "/tmp/ts_win32_listbox.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-listbox-build", False,
+              r.stderr.decode("utf-8", "replace")[:500])
+        return
+    r = subprocess.run(["/tmp/ts_win32_listbox"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-listbox", False, out)
+    else:
+        eq("win32-listbox", out.splitlines()[-1] if out else "", "0")
+
+
 def test_win32_dialog_ex():
     """The DLGTEMPLATEEX probe dialog parses as the retail binary's does.
 
@@ -2706,7 +2957,7 @@ def main():
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,
                test_win32_dialog, test_win32_button_click,
-               test_win32_dialog_ex,
+               test_win32_listbox, test_win32_dialog_ex,
                test_win32_surface_lock, test_win32_surface_blt,
                test_win32_render_input,
                test_win32_clock, test_win32_blowfish):
