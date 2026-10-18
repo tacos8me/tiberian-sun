@@ -144,6 +144,7 @@ struct Machine {
     // EIP that made it. Lives in Machine (not at namespace scope) because
     // namespace-scope `inline` variables need C++17 and this tree is C++03.
     u32 watch_va;
+    u32 watch_zero;      // record zero stores too (who CLEARED this field)
     u32 watch_hits;
     u32 watch_from[8];
     u32 watch_val[8];
@@ -210,6 +211,35 @@ struct Machine {
     u32 trace_ring_eax[8];
     u32 trace_ring_count;
     unsigned long long trace_ring_step[8];
+    // Multi-address probe (TS_PROBE=0xADDR,...). trace_va answers one address;
+    // a creation path is a chain of decisions at different addresses (section
+    // count, first token, owner lookup, type lookup, placement) and each needs
+    // the registers *after* a different call. Eight addresses x eight hits,
+    // with a short printable snapshot of the string EAX and ECX point at, so a
+    // token can be read without a second 20-minute run.
+    static const unsigned PROBE_MAX = 16;
+    static const unsigned PROBE_HITS = 8;
+    static const unsigned PROBE_STR = 24;
+    struct ProbeHit {
+        unsigned long long step;
+        u32 esp, ebp, eax, ebx, ecx, edx, esi, edi;
+        u32 a0, a1;          // [esp+4], [esp+8]: the first two stack arguments
+        char eax_str[PROBE_STR];
+        char ecx_str[PROBE_STR];
+    };
+    u32 probe_va[PROBE_MAX];
+    u32 probe_n;
+    u32 probe_hits[PROBE_MAX];
+    ProbeHit probe_rec[PROBE_MAX][PROBE_HITS];
+    // 4096-bit Bloom filter over the probe addresses. insn() runs 500 billion
+    // times; a linear scan of 16 addresses per instruction would cost more than
+    // the run. One multiply/shift/test rejects all but ~0.4% of instructions.
+    u32 probe_filter[128];
+    // Optional hook run at a probe hit, after the registers are recorded. The
+    // caller saves/restores the machine state around it; it exists so a
+    // diagnostic can query a live object (the scenario INI at mission-init
+    // entry) that does not survive to the end of the run.
+    void (*probe_hook)(u32 va);
     unsigned long stub_dispatches;
     // The argument count the most recent stub popped, recorded by stub_done in
     // Win32Stubs.h. A __stdcall stub owns its arguments, so a correct call ends
@@ -428,7 +458,7 @@ inline void reset() {
     m.stop_on_unmapped = 0;
     m.fault_addr = 0; m.fault_page = 0; m.fault_used = 0; m.fault_cap = 0;
     m.bad_call_n = 0;
-    m.watch_va = 0; m.watch_hits = 0;
+    m.watch_va = 0; m.watch_hits = 0; m.watch_zero = 0;
     m.watch_ring_n = 0;
     for (unsigned wi = 0; wi < (unsigned)Machine::WATCH_RING_ADDRS; ++wi)
         m.watch_ring_count[wi] = 0;
@@ -438,6 +468,10 @@ inline void reset() {
     m.stub_dispatches = 0; m.stub_last_nargs = 0; m.stub_last_depth = 0;
     m.stack_imbalances = 0; m.stack_imbalance_n = 0;
     m.trace_va = 0; m.trace_n = 0; m.trace_ring_count = 0; m.leak_n = 0;
+    m.probe_n = 0; m.probe_hook = 0;
+    for (unsigned pi = 0; pi < (unsigned)Machine::PROBE_MAX; ++pi)
+        m.probe_hits[pi] = 0;
+    for (unsigned pi = 0; pi < 128u; ++pi) m.probe_filter[pi] = 0;
     m.bad_calls = 0;
     if (m.exec_map && m.exec_map_hi > m.exec_map_lo)
         std::memset(m.exec_map, 0, (m.exec_map_hi - m.exec_map_lo + 7u) / 8u);
@@ -482,6 +516,50 @@ inline void mark_map(u8 *map, u32 lo, u32 hi, u32 va) {
 // Defined with the memory helpers below; declared here because the trace ring
 // reads the caller's stack argument.
 inline u32 ld32(u32 a);
+inline u8 ld8(u32 a);
+
+// Snapshot up to PROBE_STR-1 printable bytes of a model string. A probe is a
+// diagnostic and must not fault on a wild register, so an implausible pointer
+// yields an empty string rather than a page fault.
+inline void probe_snapshot(char *dst, u32 a) {
+    unsigned i = 0;
+    if (a < 0x00010000u || a >= 0x80000000u) { dst[0] = 0; return; }
+    for (; i + 1u < Machine::PROBE_STR; ++i) {
+        u8 c = ld8(a + i);
+        if (!c) break;
+        dst[i] = (c >= 0x20u && c < 0x7fu) ? (char)c : '.';
+    }
+    dst[i] = 0;
+}
+
+// Record one hit at every configured probe address. Called from insn() only
+// when probe_n is non-zero, so a normal run pays one predictable branch.
+inline u32 probe_bit(u32 va) {
+    return (va * 2654435761u) >> 20 & 4095u;
+}
+
+inline void probe_slow(u32 va) {
+    Machine &m = mach();
+    u32 bit = probe_bit(va);
+    if (!(m.probe_filter[bit >> 5] & (1u << (bit & 31u)))) return;
+    for (u32 i = 0; i < m.probe_n; ++i) {
+        if (m.probe_va[i] != va) continue;
+        u32 h = m.probe_hits[i];
+        if (h < Machine::PROBE_HITS) {
+            Machine::ProbeHit &r = m.probe_rec[i][h];
+            r.step = m.steps;
+            r.esp = ESP.d; r.ebp = EBP.d; r.eax = EAX.d; r.ebx = EBX.d;
+            r.ecx = ECX.d; r.edx = EDX.d; r.esi = ESI.d; r.edi = EDI.d;
+            r.a0 = ld32(ESP.d + 4u);
+            r.a1 = ld32(ESP.d + 8u);
+            probe_snapshot(r.eax_str, EAX.d);
+            probe_snapshot(r.ecx_str, ECX.d);
+        }
+        ++m.probe_hits[i];
+        if (m.probe_hook) m.probe_hook(va);
+        return;
+    }
+}
 
 #if defined(__GNUC__)
 __attribute__((noinline))
@@ -555,6 +633,8 @@ inline void insn(u32 va) {
             esp_guard_hit(prev, va);
         m.esp_prev = ESP.d;
     }
+    if (m.probe_n)
+        probe_slow(va);
     if (m.trace_va || m.faulted || (m.step_limit && m.steps > m.step_limit))
         insn_slow(va);
 }
@@ -776,7 +856,9 @@ inline bool watch_ring_overlaps(u32 a, u32 w) {
 
 inline void st8 (u32 a, u8 v) {
     Machine &m = mach();
-    if (m.watch_va && a == m.watch_va && v && m.watch_hits < 8u) {
+    // watch_zero records zero stores too: "who cleared this field" is the
+    // question a nonzero-only watch cannot answer.
+    if (m.watch_va && a == m.watch_va && (v || m.watch_zero) && m.watch_hits < 8u) {
         m.watch_from[m.watch_hits] = m.eip;
         m.watch_val[m.watch_hits] = v;
         ++m.watch_hits;
