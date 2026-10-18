@@ -4,11 +4,11 @@ Written after a full audit of the tree. Every figure below was measured, not
 estimated; the commands that produce them are named. Re-measure before trusting
 this file (`python3 tools/harness.py metrics --no-append`).
 
-Figures in this file were re-measured on 2026-10-17 with `harness.py metrics`,
+Figures in this file were re-measured on 2026-10-18 with `harness.py metrics`,
 `verify.py`, `verify_members_binary.py`, `test_tools.py`, `boot.py` (and
 `--no-build --strict`), `link_test.py`, `wine_env.sh`, and direct counts over
-`out/` and `src/generated/`. The boot, frame and recovery figures were
-re-measured after the campaign-selection/mission-start merge; the full
+`out/` and `src/generated/`. The boot and frame figures were re-measured after
+the multimedia-timer fix (`f1b4bc6`) that centres the tactical view; the full
 `pipeline.sh` run recorded in `todo.md` (exit 0, 8m51s) was not re-run here.
 
 The point of this document is to say **what is actually left**, what the
@@ -302,7 +302,9 @@ pixels differ at all (33.48%)**, the mean absolute channel difference is
 **506 pixels differ by more than 8**, all in the retail version text the model
 does not draw; the rest is RGB565 quantization.
 
-Boot states, all with **0 unmapped calls and 0 stack imbalances**:
+Boot states, all with **0 unmapped calls and 0 stack imbalances**. The
+20M/2.1B/4B/100B rows predate the multimedia-timer fix; the 20B/500B rows are
+post-fix:
 - 20M: stop `0x00488800` (`sub_0048875c +0xa4`), coverage **55,774 / 4,764**,
   pages **3,538 / 32,768**.
 - default timeline, 2.1B (`--timeout 600`): New Campaign, NOD1, GDI1, OK. The
@@ -319,22 +321,29 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
   `re/out/render_2_6b.png`). 11.7 s wall.
 - ESC skip at 100B: stop `0x0055b0bc` (budget), pages **16,343 / 32,768**; the
   loader is on vector 7/22 with **160,070 entries** (`TS_PEEK 0x712068`). 243.9 s.
-- ESC skip at 20B: stop `0x0041398c` (budget) after 20,000,000,001 instructions,
-  depth 100; `GetMessage=19`, `PeekMessage=13,797,235`, `DispatchMessage=19`;
-  pages **13,698 / 32,768**; coverage **230,640 / 13,415**; 8 surfaces,
-  **57,074 blits / 254,041 locks**; **0 unmapped calls**.
-- ESC skip at 500B (after the TLS/CLSID fixes): the **tactical HUD plus the
-  revealed base area** render. Budget at 500,000,000,001 instructions, EIP
-  `0x0042322c`, **2,201 s**; coverage **230,658 / 13,417**; 8 surfaces,
-  **1,942,509 blits, 5,971,443 locks**; **0 unmapped calls**. Frame
-  `re/out/frame_500b_objects.png` (md5 `e788f40b…`, **93,404 non-black**):
-  terrain, the GDI construction yard and a unit, plus the HUD. The scenario
+- ESC skip at 20B (after the timer fix): stop `0x00695dad` (budget) after
+  20,000,000,001 instructions, depth 100; `GetMessage=19`,
+  `PeekMessage=13,760,224`, `DispatchMessage=19`; pages **13,698 / 32,768**;
+  coverage **231,260 / 13,433**; 8 surfaces, **25,913 blits / 156,314 locks**;
+  **0 unmapped calls**; WWMouse `(355,397)`, scroll `(-408,1248)`, visible rect
+  `(53,45,23,43)`, map surface 96,220 non-black, primary 176,809.
+- ESC skip at 500B (after the timer fix): the **tactical map centred on the
+  camera target** renders. Budget at 500,000,000,001 instructions; **0 unmapped
+  calls**; pages **13,698**; coverage **231,365 / 13,437**; message loop
+  dispatching. Frame `re/out/frame_500b_centered.png` (md5 `e8ba8219…`,
+  **176,796 non-black**): terrain, structures, units, a Tiberium field, the HUD
+  and the mouse cursor; the remaining black is unexplored shroud. The scenario
   creates `[Units] 3`, `[Infantry] 17`, `[Structures] 36` (registries: 4
-  ObjectClass, 21 infantry, 36 buildings, 7 houses). **The map is mostly
-  shroud**: `TS_MAPCELLS` shows 1,681 cells allocated with **34 seen, 34
-  fogged**, and the revealed patch is clipped to the bottom edge of the 472x480
-  viewport instead of centred on the base. `TS_OBJECTS` n=0 is the per-frame
-  renderer list `0x7b2d98`, not the world.
+  ObjectClass, 21 infantry, 36 buildings, 7 houses). The whole 512x512
+  `TS_MAPCELLS` array shows **5,985 allocated, 193 tiles, 1,124 seen** (bbox
+  (34,57)-(83,102)); the camera target is the shipped `HomeCell=98` → cell
+  (68,76). `TS_OBJECTS` n=0 is the per-frame renderer list `0x7b2d98`, not the
+  world.
+- Historical (pre-timer): 20B stopped at `0x0041398c` with coverage 230,640 /
+  13,415, 57,074 blits / 254,041 locks; 500B stopped at `0x0042322c` with
+  coverage 230,658 / 13,417, 1,942,509 blits / 5,971,443 locks and frame
+  `re/out/frame_500b_objects.png` (93,404 non-black), the revealed area in the
+  viewport's bottom-right corner. Superseded by `f1b4bc6`.
 - Historical (pre-TLS/CLSID): ESC skip at 500B stopped at `0x00543669` with
   pages 12,637/32,768, coverage 158,667/9,607 and 18,691,958 blits; frame
   `re/out/frame_500b.png` (87,794 non-black) was the HUD alone; `TS_MAPCELLS`
@@ -395,7 +404,7 @@ runs. A CD drive model (`TS_CD`) was added. `SetViewportOrgEx`/`SetWindowOrgEx`
 take 4 arguments (the stubs popped 3, leaking 8 bytes); `19ee16c` fixes the
 generator table (`--stack-check` 342/0). `Machine.h` has width-aware
 `f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`, so 8/16-bit flags are correct;
-the tests compare them against the CPU's own flags. `test_tools.py` is 103 checks.
+the tests compare them against the CPU's own flags. `test_tools.py` is 106 checks.
 
 **Rendering and input are integrated (`5031e44` etc.).** `Win32Stubs.h` routes
 surfaces through `ts::rnd` (`Rendering.h`) and input through `ts::input`
@@ -425,29 +434,35 @@ intro movie plays. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and
 read; the button art is not painted (no `WM_PAINT` to children; retail does not
 draw it either).
 
-**The current blocker is the shroud reveal and the tactical camera origin.** ESC
-at model-ms 192,000 skips the movie and the loader runs. The 479B out-of-bounds
-write was the **x87 emitter** (D8 one-register forms rendered as pop forms; 901
-instructions affected), fixed in `e5d7039`; after the fix the tactical zoom is
-**1.125**, the map surface **99x108**, the visible rect **35,28,23,43**, the
-vptr **`0x006a5dfc`**, and there are **0** OOB stores. The TLS (`c61f060`) and
+**The tactical view is centred, and the next work item is scripted tactical
+input.** ESC at model-ms 192,000 skips the movie and the loader runs. The 479B
+out-of-bounds write was the **x87 emitter** (D8 one-register forms rendered as
+pop forms; 901 instructions affected), fixed in `e5d7039`; after the fix the
+tactical zoom is **1.125**, the map surface **99x108**, the vptr
+**`0x006a5dfc`**, and there are **0** OOB stores. The TLS (`c61f060`) and
 CLSID/class-factory (`8163162`) fixes then create the scenario's objects:
 `[Units] 3`, `[Infantry] 17`, `[Structures] 36`, all placements 1; registries 4
-ObjectClass, 21 infantry, 36 buildings, 7 houses. A 500B run renders the real
-**tactical HUD plus the revealed base area**
-(`re/out/frame_500b_objects.png`, 93,404 non-black: terrain, the GDI
-construction yard, a unit) with **0 unmapped calls**, 8 surfaces, 1,942,509
-blits and 5,971,443 locks. The black map is **not** a renderer defect: the map
-surface is blitted to the primary every frame and every tactical pass executes.
-`TS_MAPCELLS` shows 1,681 cells allocated with **34 seen, 34 fogged** and 12
-tile entries; the revealed patch is **clipped to the bottom edge of the 472x480
-viewport** instead of centred on the base. The next work is the reveal radius
-(seen/fog bits at cell `+0xa4`; the reveal/sight updates `0x476000`, `0x4760f0`,
-`0x477670`, `0x513bf0`, `0x476180`) and the camera origin / visible-rect
-computation (`35,28,23,43`). Do not hand-paint the map or inject cells.
-`TS_OBJECTS` n=0 is the per-frame renderer list `0x7b2d98`, not the world. **The
-map renders only the 34 revealed cells; the rest is shroud.** The VQA frame-wait
-is stub-bound (~68M `PeekMessageA` in 600 s), so ESC is the practical route
+ObjectClass, 21 infantry, 36 buildings, 7 houses. The **multimedia-timer fix
+(`f1b4bc6`)** centres the view: `timeSetEvent` returned a timer id and never
+invoked its callback, so `WWMouseClass`'s position stayed `(0,0)`; the tactical
+input handler read that as "pointer outside the screen" and scrolled up-left
+every frame to the map clamp `(-820,988)`. A timer table plus `timer_pump()`
+now dispatches due callbacks from `PeekMessageA`/`GetMessageA` with the real
+five-argument `TIMECALLBACK` signature, periodic/one-shot handling and
+`timeKillEvent`. Measured at 20B: WWMouse `(355,397)`, scroll `(-408,1248)`,
+visible rect `(53,45,23,43)`, map surface 96,220 non-black (was 12,703),
+primary 176,809. A 500B run renders the **tactical map centred on the camera
+target** (`re/out/frame_500b_centered.png`, 176,796 non-black: terrain,
+structures, units, Tiberium, HUD and cursor) with **0 unmapped calls**. The
+black is **not** a renderer defect: the map surface is blitted to the primary
+every frame and every tactical pass executes. The whole 512x512 `TS_MAPCELLS`
+array shows **5,985 allocated, 193 tiles, 1,124 seen** (bbox (34,57)-(83,102));
+the old "34 seen" figure was a windowing defect that scanned only the INI's
+48x63 `[Map] Size` window. The camera target is the shipped `[Basic]
+HomeCell=98` / `[Waypoints] 98=76068` → cell (68,76), decoded by `0x5c802a` and
+applied by `0x47661d`; that is scenario data, not a defect. `TS_OBJECTS` n=0 is
+the per-frame renderer list `0x7b2d98`, not the world. The VQA frame-wait is
+stub-bound (~68M `PeekMessageA` in 600 s), so ESC is the practical route
 meanwhile.
 
 **The oracle premise is now inverted.** `tools/wine_env.sh` gives the retail
@@ -462,14 +477,11 @@ campaign, and plays the GDI intro; the oracle remains the target for the mission
 UI.
 
 Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
-  1. Fix the shroud reveal and the tactical camera origin. Only 34 of 1,681
-     cells are seen, and the revealed patch is clipped to the bottom edge of the
-     472x480 viewport instead of centred on the base. Inspect the seen/fog bits
-     at cell `+0xa4`, the reveal/sight updates (`0x476000`, `0x4760f0`,
-     `0x477670`, `0x513bf0`, `0x476180`) and the camera origin / visible-rect
-     computation (`35,28,23,43`). Do not hand-paint the map or inject cells.
-     Exit: the base area is centred and the revealed radius matches the retail
-     screenshot at the same model time.
+  1. Scripted tactical input. Select a unit and issue a move order, then verify
+     its `CoordStruct` (`ObjectClass +0x40`, 256 leptons/cell) changes; also
+     check whether the sidebar build buttons respond. Exit: the model's own
+     hit-test selects a unit and its coordinate changes after an order. Do not
+     claim playability before this passes.
   2. Improve the VQA frame pacing: the frame-wait makes ~68M `PeekMessageA` calls
      in 600 s, so model time barely advances during movies. Exit: the movie
      advances on the clock, not the message count, and ESC is optional.
@@ -494,12 +506,12 @@ game's own code it gets before it needs something we have not modelled**. The
 default timeline reaches **2,100,000,001 instructions** (the budget) in the LCW
 video decoder at `0x0067dc4f` during the GDI campaign's intro movie; with ESC the
 run reaches **500,000,000,001 instructions** (the budget) inside the renderer and
-**renders the tactical HUD plus the revealed base area**
-(`re/out/frame_500b_objects.png`, 93,404 non-black) with 0 unmapped calls. The
-scenario creates its units and structures, but only **34 of 1,681 cells** are
-seen and fogged, and the revealed patch is clipped to the bottom edge of the
-viewport, so the rest of the map is shroud. The pre-fix 479B out-of-bounds
-bitmap/vptr fault (the x87 D8 emitter bug) no longer occurs.
+**renders the tactical map centred on the camera target**
+(`re/out/frame_500b_centered.png`, 176,796 non-black: terrain, structures,
+units, Tiberium, HUD and cursor) with 0 unmapped calls. The scenario creates its
+units and structures; the whole 512x512 cell array shows 5,985 allocated / 193
+tiles / 1,124 seen, and the remaining black is unexplored shroud. The pre-fix
+479B out-of-bounds bitmap/vptr fault (the x87 D8 emitter bug) no longer occurs.
 The 20M stop is still `0x00488800`. Before the stack-leak fix it was 1,011,817
 instructions ending in `ExitProcess(1)`.
 Each stop is a precise, actionable finding rather than a wall, because the

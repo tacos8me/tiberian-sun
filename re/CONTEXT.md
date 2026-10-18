@@ -45,7 +45,7 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   code (4,285 of 4,289 confirmed, 99.9%)
 - `link_test.py` — links all 492 translation units into a program and runs it;
   measured **OK, exit 0**, message loop reached, 0 unmapped
-- `test_tools.py` — 103 unit tests for the tools themselves, including
+- `test_tools.py` — 106 unit tests for the tools themselves, including
   `test_machine_perf`, which pins the interpreter hot path (40M-iteration
   workload, wide-vs-byte checksum `88188416`, page straddles, a 20M/s floor, a
   cached-path ratio of 1.73-1.78, and the `-O2`/`-fno-pie` build flags), and
@@ -78,23 +78,25 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   100B in 243.9 s, byte-identical state. At 4B the stop is `0x0055b0bb` (budget)
   with 12,809 pages and the GDI loading screen (290,399 non-black, md5
   `6cb0e1fff05f9250adda298e644f1266` = `re/out/render_2_6b.png`); at 100B it is
-  on vector 7/22 with 160,070 entries. At 20B it stops at the budget at
-  `0x0041398c`, with `GetMessage=19`, `PeekMessage=13,797,235`,
-  `DispatchMessage=19`, pages 13,698/32,768, coverage 230,640/13,415, 8
-  surfaces, 57,074 blits / 254,041 locks and 0 unmapped. At 500B it stops at the
-  budget after 500,000,000,001 instructions at `0x0042322c` (2,201 s), with 0
-  unmapped calls, coverage 230,658/13,417, 8 surfaces, 1,942,509 blits and
-  5,971,443 locks, and renders the **tactical HUD plus the revealed base area**
-  (`re/out/frame_500b_objects.png`, 640x480, md5 `e788f40b…`, 93,404
-  non-black: terrain, the GDI construction yard, a unit). The scenario creates
-  its world: `[Houses] 7`, `[Units] 3`, `[Infantry] 17`, `[Structures] 36`; all
-  3 unit and all 17 infantry placements return 1; registries hold 4 ObjectClass
-  (`0x77bbe0`), 21 infantry (`0x7b0c08`), 36 buildings (`0x7b2c48`) and 7 houses
-  (`0x7afce0`). `TS_MAPCELLS` shows **1,681 cells allocated, 12 tile entries, 34
-  seen, 34 fogged** (heights decode), and the revealed patch is clipped to the
-  bottom edge of the 472x480 viewport; the rest is shroud. `TS_OBJECTS` also
-  prints `n=0` because it reads `0x7b2d98`, a per-frame renderer list, not the
-  world. The Exit Game script reaches
+  on vector 7/22 with 160,070 entries. After the multimedia-timer fix (`f1b4bc6`)
+  the 20B run stops at the budget at `0x00695dad`, with `GetMessage=19`,
+  `PeekMessage=13,760,224`, `DispatchMessage=19`, pages 13,698/32,768, coverage
+  231,260/13,433, 8 surfaces, 25,913 blits / 156,314 locks and 0 unmapped;
+  WWMouse `(355,397)`, scroll `(-408,1248)`, visible rect `(53,45,23,43)`, map
+  surface 96,220 non-black, primary 176,809. The 500B run has 0 unmapped, pages
+  13,698, coverage 231,365/13,437, and renders the **tactical map centred on the
+  camera target** (`re/out/frame_500b_centered.png`, 640x480, md5 `e8ba8219…`,
+  **176,796 non-black**: terrain, structures, units, a Tiberium field, the HUD
+  and the mouse cursor). The scenario creates its world: `[Houses] 7`,
+  `[Units] 3`, `[Infantry] 17`, `[Structures] 36`; all 3 unit and all 17
+  infantry placements return 1; registries hold 4 ObjectClass (`0x77bbe0`), 21
+  infantry (`0x7b0c08`), 36 buildings (`0x7b2c48`) and 7 houses (`0x7afce0`).
+  `TS_MAPCELLS` over the whole 512x512 array shows **5,985 allocated, 193
+  tiles, 1,124 seen** (bbox (34,57)-(83,102)); the camera target is the shipped
+  `[Basic] HomeCell=98` / `[Waypoints] 98=76068` → cell (68,76). `TS_OBJECTS`
+  also prints `n=0` because it reads `0x7b2d98`, a per-frame renderer list, not
+  the world; it now reports each object's `CoordStruct` and whether its own cell
+  is seen. The Exit Game script reaches
   `ExitProcess(0)` at `0x00684529` after 1,707,666,895 instructions
   (86,400 / 6,654). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA`
   is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0
@@ -118,39 +120,52 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
   (`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416).
 
-**Current runtime blocker** (queued in `todo.md`): **the shroud reveal and the
-tactical camera origin**. The model renders and selects the main menu (the six
-`BS_OWNERDRAW` buttons have real rectangles; press/release → `BN_CLICKED`
-reaches the game's own hit-test), New Campaign opens `RT_DIALOG` 148 at step
-1,688,503,557, the listbox is populated from the shipped `BATTLE.INI`
-`[Battles]`, GDI1 is selected, and the game reads `GDI1A.MAP` from `MAPS01.MIX`
-and plays the GDI intro. The 479B out-of-bounds write was the **x87 emitter**
-(D8 one-register forms rendered as pop forms; 901 instructions), fixed in
-`e5d7039`; after the fix the tactical zoom is 1.125, the map surface 99x108, the
-visible rect `35,28,23,43`, the vptr `0x006a5dfc`, and there are 0 OOB stores.
-The TLS (`c61f060`) and CLSID/class-factory (`8163162`) fixes then create the
+**The next runtime work item** (queued in `todo.md`): **scripted tactical
+input**. The model renders and selects the main menu (the six `BS_OWNERDRAW`
+buttons have real rectangles; press/release → `BN_CLICKED` reaches the game's own
+hit-test), New Campaign opens `RT_DIALOG` 148 at step 1,688,503,557, the listbox
+is populated from the shipped `BATTLE.INI` `[Battles]`, GDI1 is selected, and
+the game reads `GDI1A.MAP` from `MAPS01.MIX` and plays the GDI intro. The 479B
+out-of-bounds write was the **x87 emitter** (D8 one-register forms rendered as
+pop forms; 901 instructions), fixed in `e5d7039`; after the fix the tactical zoom
+is 1.125, the map surface 99x108, the vptr `0x006a5dfc`, and there are 0 OOB
+stores. The TLS (`c61f060`) and CLSID/class-factory (`8163162`) fixes create the
 scenario's objects: `[Units] 3`, `[Infantry] 17`, `[Structures] 36`, with all 3
 unit and all 17 infantry placements returning 1; registries hold 4 ObjectClass,
-21 infantry, 36 buildings and 7 houses. A 500B run renders the **tactical HUD
-plus the revealed base area** (`re/out/frame_500b_objects.png`, 93,404
-non-black: terrain, the GDI construction yard, a unit) with 0 unmapped calls,
-8 surfaces, 1,942,509 blits and 5,971,443 locks. The black map is **not** a
-renderer defect: the map surface is blitted to the primary every frame and every
-tactical pass executes. `TS_MAPCELLS` shows 1,681 cells allocated with 12 tile
-entries and **34 seen, 34 fogged**, and the revealed patch is clipped to the
-bottom edge of the 472x480 viewport instead of centred on the base. The next work
-is the reveal radius (seen/fog bits at cell `+0xa4`; the reveal/sight updates
-`0x476000`, `0x4760f0`, `0x477670`, `0x513bf0`, `0x476180`) and the camera
-origin / visible-rect computation (`35,28,23,43`). Do not hand-paint the map or
-inject cells. `TS_OBJECTS` n=0 is the per-frame renderer list `0x7b2d98`, not
-the world. **The map renders only the 34 revealed cells; the rest is shroud.**
-The VQA frame-wait path is also stub-bound, so movie pacing is not retail pacing.
-The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read; the button art is
-not painted (no `WM_PAINT` to children; retail does not draw it either).
-Rendering, input, the movie path, the dialog layer, CD path, narrow-width flags,
-MIX index read, Blowfish cipher, menu selection, the campaign list, the mission
-start, scenario object creation and the x87 fix are done; the interpreter is
-12-14x faster; the shutdown ESP corruption is dormant.
+21 infantry, 36 buildings and 7 houses. The **multimedia-timer fix (`f1b4bc6`)**
+centres the view: `timeSetEvent` never dispatched its callback, so WWMouse stayed
+`(0,0)`, the tactical input handler read that as off-screen, and the display
+scrolled up-left every frame to the map clamp `(-820,988)`. A timer table plus
+`timer_pump()` now dispatches due callbacks from `PeekMessageA`/`GetMessageA`
+with the real five-argument `TIMECALLBACK` signature, periodic/one-shot handling
+and `timeKillEvent`; `win32-timer` is mutation-proven. Measured at 20B: WWMouse
+`(355,397)`, scroll `(-408,1248)`, visible rect `(53,45,23,43)`, map surface
+96,220 non-black (was 12,703), primary 176,809. The 500B run renders the
+**tactical map centred on the camera target**
+(`re/out/frame_500b_centered.png`, 176,796 non-black: terrain, structures, units,
+a Tiberium field, the HUD and the mouse cursor) with 0 unmapped calls. The black
+is **not** a renderer defect: the map surface is blitted to the primary every
+frame and every tactical pass executes. The whole 512x512 cell array shows
+**5,985 allocated, 193 tiles, 1,124 seen** (bbox (34,57)-(83,102)); the earlier
+"34 seen" figure was a `TS_MAPCELLS` windowing defect that scanned only the INI's
+48x63 `[Map] Size` window. The camera target is the shipped `[Basic] HomeCell=98`
+/ `[Waypoints] 98=76068` → cell (68,76), decoded by `0x5c802a` and applied by
+`0x47661d`; that is scenario data, not a defect. The reveal pipeline runs
+(`0x4732b0` executed 1,634 times from the per-object pass); `FogOfWar=no` and
+`ShroudGrow=no` in the shipped `rules.ini`, so those passes correctly do not run.
+The render offset was **not** the transform: the renderer draws at
+`world - (scroll - half_viewport)` and maps the camera cell exactly to the
+viewport centre. `TS_OBJECTS` n=0 is the per-frame renderer list `0x7b2d98`, not
+the world. **Next:** select a unit and issue a move order, then verify its
+`CoordStruct` (`ObjectClass +0x40`, 256 leptons/cell) changes; also check whether
+the sidebar build buttons respond. Do not claim playability. The VQA frame-wait
+path is also stub-bound, so movie pacing is not retail pacing. The nested MIX
+(`0xa8548fd9`, 317 entries) is mounted and read; the button art is not painted
+(no `WM_PAINT` to children; retail does not draw it either). Rendering, input,
+the movie path, the dialog layer, CD path, narrow-width flags, MIX index read,
+Blowfish cipher, menu selection, the campaign list, the mission start, scenario
+object creation, the x87 fix and the tactical camera/timer fix are done; the
+interpreter is 12-14x faster; the shutdown ESP corruption is dormant.
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the
