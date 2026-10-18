@@ -1164,21 +1164,73 @@ never runs. The retail also draws no buttons in this environment (its `+win`
 trace shows the controls created, visible and laid out; the screenshot has no
 buttons), so this is a separate failure that does not block selection.
 
-### [ ] The "Select Campaign:" listbox is empty
-**The current blocker.** The dialog is up (148 at 135,187 370x243) with
-"Select Campaign:", listbox 1109, Cancel, OK, Slider3, Difficulty, Harder, but
-the model's control-message layer implements no listbox/combobox/trackbar
-content: `LB_ADDSTRING`/`LB_GETCURSEL` are no-ops, so the list is empty and
-nothing can be selected.
+### [x] The "Select Campaign:" listbox is empty — fixed; the mission starts
+**The model now selects a campaign and starts the GDI mission.**
 
-*Next:* implement listbox content and selection (and the campaign list source
-the game feeds into `LB_ADDSTRING`), then click **OK** (id 1, client
-(182,197,76,27), screen (355,397)) to start a mission. The dialog/control paint
-path (`WM_PAINT` to children) is a separate issue that also affects retail; it
-is not required for selection.
-*Done when:* the listbox contains the campaign entries, a scripted selection is
-made, OK starts a mission, and the next screen or stop is named (with a frame
-dump if it renders).
+The list source is the shipped **`BATTLE.INI`** (inside `TIBSUN.MIX`, committed
+as `re/realdata/BATTLE.INI`):
+
+```
+[Battles]
+1=GDI1
+2=NOD1
+[GDI1] Description=GDI Campaign - Evolutionary Response
+[NOD1] Description=Brotherhood of Nod Campaign - Deus ex Kane
+```
+
+The game's dialog procedure `0x004db8b0` (RT_DIALOG 148) feeds the listbox in
+`WM_INITDIALOG`: for `DAT_007b0b38` entries it calls
+`SendMessageA(listbox 1109, LB_ADDSTRING, 0, campaign[i]+0x268)` and then
+`LB_SETCURSEL 0`; the strings are the campaigns' `Description` values (slot 25
+of the campaign class at `0x004467d0`). **OK** (id 1) reads `LB_GETCURSEL` and
+`TBM_GETPOS` (trackbar 1295).
+
+Implemented in `Win32Stubs.h`: the full listbox message layer (ADD/INSERT/
+DELETE/RESETCONTENT, GETCOUNT, GETTEXT/GETTEXTLEN, GETCURSEL/SETCURSEL/GETSEL/
+SETSEL, FINDSTRING/EXACT, ITEMFROMPOINT, click-to-select with `LBN_SELCHANGE`)
+and the trackbar (`TBM_SETRANGE/SETPOS/GETPOS`). `FindFirstFileA` now enumerates
+the real host, and a read-only shipped-data root (`TS_DATA`, default `realdata`)
+serves `BATTLE.INI`, since the CD's INSTALL tree has none.
+
+Measured (default timeline: New Campaign, row 1 NOD1, row 0 GDI1, OK; with the
+game's own `MixFileClass` lookup, `GDI1A.MAP` is in **MAPS01.MIX on CD1** and
+`NOD1A.MAP` in **MAPS02.MIX on CD2**, so the default ends on GDI):
+- After OK the campaign dialog is destroyed, `GDI1A.MAP` is read, and the **GDI
+  campaign intro movie plays**. At 2.1e9 the stop is the budget inside the LCW
+  video decoder (`0x0067dc4f`, `sub_0067daa0`), `pages-used 11058/32768`.
+- The frame is the GDI intro title ("SEPTEMBER 2, 2030 / GDI SPACE STATION
+  PHILADELPHIA"), **194,131 non-black pixels**.
+- ESC at model-ms 192,000 skips the movie; the mission load continues and then
+  faults at step **2,580,698,410** at `0x00a006b0` (the `HeapAlloc` thunk) with
+  **page table exhausted, 32768/32768**.
+- Frames: `/tmp/default_mission.png` (GDI intro), `/tmp/gdi_mission.png`
+  (live-action briefing), `/tmp/gdi_skip.png` (290,399 non-black).
+- Gates: `verify.py` PASSED, `test_tools.py` **79**, `test_runtime.py` 101,
+  `--strict` 0, link OK.
+
+### [ ] The page table is exhausted during the mission load
+**The current blocker.** `Machine.h`'s `PageTable::SLOTS` is 32,768 (128 MB).
+During `GDI1A.MAP`'s load the model touches every slot, `page()` degrades to a
+full-table probe and faults at `0x00a006b0` with `pages-used 32768/32768`.
+`HeapFree` now reuses freed blocks, but this path's growth is not through the
+model's `HeapFree` (the game suballocates from its own arena), so the fault step
+is unchanged.
+
+*Next:* measure the actual peak demand during the load. If it is legitimate,
+make the page table dynamically growable (or hash-based) rather than a fixed
+array, and keep exhaustion a **reported fault** — never silent aliasing. If the
+growth is a model leak (an allocation that should have been freed), fix the leak
+instead of only raising the capacity.
+*Done when:* the mission load passes `0x00a006b0` and the next stop is named
+(ideally the mission rendering); peak pages-used is recorded.
+
+### [ ] The VQA player's frame-wait is stub-bound
+**Secondary; skipping works.** The movie player's frame-wait loop makes ~68M
+`PeekMessageA` calls in 600 s, so model time barely advances during movies. The
+clock now moves with executed instructions, but the movie pacing still consumes
+the budget. ESC at model-ms 192,000 is the practical route to the mission load
+until the clock/pacing model is improved. Scope this after the page-table fix;
+do not let it mask real progress.
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and
