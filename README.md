@@ -7,13 +7,16 @@ original program's own instruction stream against a machine model.
 
 ## Progress screenshot
 
-![The reconstructed model rendering the retail Tiberian Sun tactical HUD](re/out/frame_500b.png)
+![The reconstructed model rendering the retail Tiberian Sun tactical HUD and the revealed base area](re/out/frame_500b_objects.png)
 
-*The model's own 640x480 render of the in-game tactical HUD: Options, credits,
-the GDI radar eagle, build tabs and the build grid (87,794 non-black pixels).
-The main menu (`re/out/frame.png`), the GDI intro (`re/out/mission.png`) and the
-mission loading screen (`re/out/render_2_6b.png`) are committed alongside it.
-The map viewport is still black; the HUD is the furthest rendered frame.*
+*The model's own 640x480 render: the in-game tactical HUD (Options, credits, the
+GDI radar eagle, build tabs and the build grid) plus the revealed base area at
+the bottom of the map viewport — terrain, the GDI construction yard and a unit
+(93,404 non-black pixels). The rest of the viewport is shroud: 34 of 1,681 cells
+are seen, which is the next thing to fix. The main menu
+(`re/out/frame.png`), the GDI intro (`re/out/mission.png`), the mission loading
+screen (`re/out/render_2_6b.png`) and the earlier HUD-only frame
+(`re/out/frame_500b.png`) are committed alongside it.*
 
 ## Status
 
@@ -77,23 +80,25 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
   independent 500B-budget reproduction was stopped by its watchdog at
   372,912,291,926 instructions under host contention but matched the pages,
   coverage, 0 unmapped calls and a byte-identical frame.
-- **The map viewport is black because the world is empty and fully shrouded —
-  not because of a renderer defect.** The per-surface trace shows the 472x480 map
-  surface blitted to the primary once per frame, the sidebar composited, and the
-  radar 99x108 surface 0 non-black; the primary's 87,794 non-black pixels are the
-  HUD. `TS_EXEC_CHECK` shows every tactical pass executing (map render, terrain,
-  tile draw, shape blit, shroud, radar) while the reveal/sight updates do not.
-  `TS_OBJECTS` is **n=0, array=NULL**; `TS_MAPCELLS` shows **1,681 cells
-  allocated, 12 with a tile/overlay index, 0 revealed, 0 fogged**, with heights
-  decoded (604/671/562), so `IsoMapPack5` works and the terrain template/object
-  layer is absent. Scenario object creation rejected every entry: `FUN_0063b470`
-  (`[Units]`) and `FUN_0063b8f0` (structures) ran, but owner-house
-  `FUN_004c7470` → -1, type `FUN_0063e650` → -1, `FUN_00630cc0` null, or
-  placement `0xc4` → 0 (destroying the object). The shipped `GDI1A.MAP` has 3
-  Nod buggies, 17 infantry (3 GDI) and ~20 structures including the GDI
-  construction yard at (28,59). A lane is tracing the creation path; **the map
-  and units do not render.** The VQA frame-wait path is also stub-bound, so
-  movie pacing is not retail pacing.
+- **The scenario world is created, and the map viewport now shows the base.**
+  Scenario object creation rejected every entry because two stubs lied.
+  `TlsGetValue` always returned 0 and `TlsSetValue` stored nothing, so the CRT's
+  `_getptd` block never persisted and `FUN_006837ea` (strtok) returned only the
+  first token of each `owner,type,...` line; `FUN_0063e650(NULL)` was -1 and the
+  entry was dropped. `CLSIDFromString` also wrote 16 zero bytes and returned
+  S_OK, so every `Locomotor={...}` became CLSID_NULL, `CoCreateInstance` handed
+  back a generic 3-slot IUnknown, and its `call [vtable+0xc]` at `0x630e2d`
+  called 0 — leaking its arguments and walking ESP over `FUN_0063b470`'s saved
+  EBP, after which mission init called the infantry and structures readers with
+  `this=0x9a80`. Both are fixed (real TLS slots; real GUID parsing plus the
+  game's own `IClassFactory` from `CoRegisterClassObject`). The world registries
+  now hold **4 ObjectClass, 21 infantry, 36 buildings, 7 houses**;
+  `TS_MAPCELLS` reports **34 of 1,681 cells seen**. The remaining black is
+  **shroud**, not a missing render: the revealed patch is clipped to the bottom
+  edge of the 472x480 viewport instead of centred on the base, so the next work
+  is the shroud-reveal radius (cell `+0xa4` seen/fog bits) and the tactical
+  camera origin/visible-rect computation, not the renderer. The VQA frame-wait
+  path is also stub-bound, so movie pacing is not retail pacing.
 - **The GDI loading screen renders.** At a 4B budget the ESC-skip run stops at
   `0x0055b0bb` with 12,809 pages, 12 blits and 769 locks; the frame is 640x480,
   290,399 non-black, md5 `6cb0e1fff05f9250adda298e644f1266`, byte-identical to
@@ -117,8 +122,8 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 | verification gate | 9 checks, fail-closed, passing; check 9 confirms 3,073/3,073 offsets |
 | tool tests | 101 checks, several mutation-proven; `test_runtime.py` 110 more (rendering/input) |
 | interpreter | ~400M instructions/s (12-14x the old ~28.6M/s), byte-identical state; 4B in 11.7 s, 100B in 243.9 s |
-| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders and selects the main menu**; campaign list from `BATTLE.INI`; **starts the GDI mission and plays its intro**; 20M stop `0x00488800` (55,774 / 4,764), 2.1B stop `0x0067dc4f` (84,130 / 6,431; pages 9,029 / 32,768), 4B ESC-skip stop `0x0055b0bb` (139,250 / 8,682; pages 12,809), 100B ESC-skip stop `0x0055b0bc` (pages 16,343), **500B ESC-skip: budget at `0x00543669`, 0 unmapped, pages 12,637 / 32,768, coverage 158,667 / 9,607, 18,691,958 blits, 46,753,350 locks**, Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions (86,400 / 6,654); 0 unmapped at 20M/2.1B/4B/100B/500B; current blocker is scenario object creation (`TS_OBJECTS` n=0, `TS_MAPCELLS` 1,681/12/0 revealed), so the world is empty, fully shrouded, and the map and units do not render |
-| frame | `re/out/frame_500b.png`: 640x480, md5 `4fc1cec7…`, 87,794 non-black, the tactical HUD (Options, credits 5000, GDI radar eagle, build tabs/grid). `re/out/frame.png` (main menu, md5 `0fdf2636…`, 254,610 non-black; 1.06/255 mean channel difference from retail on differing pixels), `re/out/mission.png` (GDI intro title, 194,131 non-black) and `re/out/render_2_6b.png` (loading screen, 290,399 non-black, md5 `6cb0e1ff…`) |
+| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders and selects the main menu**; campaign list from `BATTLE.INI`; **starts the GDI mission and plays its intro**; 20M stop `0x00488800` (55,774 / 4,764), 2.1B stop `0x0067dc4f` (84,130 / 6,431; pages 9,029 / 32,768), 4B ESC-skip stop `0x0055b0bb` (139,250 / 8,682; pages 12,809), 20B ESC-skip stop `0x0041398c`, pages 13,698, coverage 230,640 / 13,415, 57,074 blits / 254,041 locks, **500B ESC-skip: budget at `0x0042322c`, 0 unmapped, coverage 230,658 / 13,417, 1,942,509 blits / 5,971,443 locks**, Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions (86,400 / 6,654); 0 unmapped at 20M/2.1B/4B/20B/500B; the world is populated (4 ObjectClass / 21 infantry / 36 buildings / 7 houses) and 34 of 1,681 cells are seen, so the remaining black viewport is shroud, not a missing render |
+| frame | `re/out/frame_500b_objects.png`: 640x480, md5 `e788f40b…`, 93,404 non-black, the tactical HUD plus the revealed base area (terrain, GDI construction yard, a unit). `re/out/frame_500b.png` (HUD only, md5 `4fc1cec7…`, 87,794 non-black), `re/out/frame.png` (main menu, md5 `0fdf2636…`, 254,610 non-black; 1.06/255 mean channel difference from retail on differing pixels), `re/out/mission.png` (GDI intro title, 194,131 non-black) and `re/out/render_2_6b.png` (loading screen, 290,399 non-black, md5 `6cb0e1ff…`) |
 
 **Measure, don't trust prose.** `python3 tools/harness.py metrics` prints the
 real state; these figures drift as the tools improve. `AGENTS.md` records the

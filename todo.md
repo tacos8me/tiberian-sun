@@ -1443,23 +1443,56 @@ with sane callers (`EDI=0x5078b020`, matrix `0x5078bdb4`). No frame was
 hand-painted. Run: 500B at `0x00543669`, depth 100, 2,412.8 s; frame
 `out/frame_500b.png` unchanged (md5 `4fc1cec7…`).
 
-### [ ] Scenario object creation produces zero objects
-**The current blocker.** `FUN_0063b470` (the `[Units]` reader/creator, called
-at mission-init progress `0x48`) and the structures reader `FUN_0063b8f0` ran,
-but **every entry was rejected**: owner-house lookup `FUN_004c7470` -> -1, type
-lookup `FUN_0063e650` -> -1, `FUN_00630cc0` returning null, or placement slot
-`0xc4` returning 0 (which destroys the object). The shipped `GDI1A.MAP` has
-3 Nod buggies, 17 infantry (3 GDI) and ~20 structures including the GDI
-construction yard at (28,59), so these should exist.
+**Superseded (kept as the diagnostic record).** The world is no longer empty:
+`c61f060` and `8163162` fixed the two stubs behind scenario object creation, and
+the registries now hold 4 ObjectClass / 21 infantry / 36 buildings / 7 houses
+with 34 cells seen. The renderer conclusion above still stands.
 
-*Next:* `TS_TRACE`/`TS_PEEK` on `FUN_0063b470` to read the `[Units]` count (EAX
-after `FUN_004d5610`) and the first entry's owner/type lookups. Check whether
-`rules.ini`/`art.ini` type lists and the house initialization are populated
-(the model has real file I/O and `TS_DATA`), and whether the INI parser, string
-ops or float math diverge. Fix the first proven cause; do not inject objects by
-hand.
-*Done when:* the world has objects (`TS_OBJECTS` n>0), cells are revealed, and
-the map viewport renders terrain/units in the frame.
+### [x] Scenario object creation produced zero objects — fixed (two lying stubs)
+**Was the blocker.** `FUN_0063b470` (the `[Units]` reader/creator) and the
+structures reader `FUN_0063b8f0` ran, but **every entry was rejected**. Two
+chained stub defects, both fixed:
+
+1. **TLS** (`c61f060`). `TlsGetValue` always returned 0 and `TlsSetValue` stored
+   nothing, so the CRT's `_getptd` block never persisted. `FUN_006837ea`
+   (strtok) keeps its cursor at `ptd+0x18`, so it returned the first token and
+   NULL for every later token; `FUN_0063e650(NULL)` was -1 and every entry was
+   dropped. Proven on the game's own tokenizer with `TS_STRTOK_TEST`: before
+   `"Nod"`, NULL, NULL; after `"Nod"`, `"BGGY"`, `"256"`.
+2. **CLSID + class factories** (`8163162`). `CLSIDFromString` wrote 16 zero
+   bytes and returned S_OK, so every `Locomotor={...}` became CLSID_NULL; the
+   unit constructor's `call [vtable+0xc]` at `0x630e2d` called 0, and each such
+   call leaked its arguments (the model pops only the return address), walking
+   ESP **0x54 bytes** over the saved EBP at `0x63b4c3`. Mission init then called
+   the infantry/structures readers with `this=0x9a80` and they read 0 sections.
+   `CoRegisterClassObject` was also a no-op, discarding the ~50 factories
+   WinMain registers; `CoCreateInstance` now delegates to the game's own
+   `IClassFactory`.
+
+Measured at mission init (`TS_PROBE`/`TS_INI_AT`): the scenario INI holds
+`[Houses] 7`, `[Units] 3`, `[Infantry] 17`, `[Structures] 36`; owner `"Nod"` ->
+house 1, type `"BGGY"` -> 0x18, placement slot `0xc4` -> 1 for all 3 units and
+all 17 infantry. After the fixes the world registries are **ObjectClass 4,
+infantry 21, buildings 36, houses 7**; `TS_MAPCELLS` reports **34 seen / 34
+fogged** of 1,681 cells, and `out/frame_500b_objects.png` (93,404 non-black)
+shows terrain, the GDI construction yard and a unit in the viewport.
+
+*Done when:* the world has objects and cells are revealed — met. Tests:
+`win32-tls` and `win32-clsid`, both mutation-proven (`test_tools.py` 103).
+
+### [ ] The shroud reveals only 34 cells and the base sits at the viewport edge
+**The current blocker.** The world is populated, but only 34 of 1,681 cells are
+seen and the revealed patch is clipped to the **bottom edge** of the 472x480
+viewport rather than centred on the base. The black is therefore shroud, not a
+missing render: the map surface is blitted to the primary every frame and every
+tactical pass executes.
+
+*Next:* the shroud-reveal radius (cell `+0xa4` seen/fog bits, the reveal/sight
+updates `0x476000`, `0x4760f0`, `0x477670`, `0x513bf0`, `0x476180`) and the
+tactical camera origin / visible-rect computation (`35,28,23,43`). Compare
+against the retail oracle where useful; do not paint the map by hand.
+*Done when:* the revealed area is centred on the base and the viewport shows the
+terrain around it.
 
 **Diagnostics now available:** `--surfaces`, `--surface-dump`, `TS_BLITLOG`,
 `TS_EXEC_CHECK`, `TS_OBJECTS`, `TS_MAPCELLS` (commits `b883a10`, `693d3fb`).
