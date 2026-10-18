@@ -242,7 +242,7 @@ default scripted input (New Campaign, NOD1, GDI1, OK),
   stop 0x0067dc4f (LCW video decoder, sub_0067daa0), depth 28
   GetMessage=17 PeekMessage=13565102 DispatchMessage=17 CreateWindowExA=1
   coverage 84130 / 6431; pages-used 11058 of 32768
-  frame /tmp/gdi_intro_model.png: 640x480, 194131 non-black pixels
+  frame re/out/mission.png: 640x480, 194131 non-black pixels
 
 same timeline + ESC at model-ms 192000:
   fault at 0x00a006b0 (HeapAlloc thunk) after 2580698410 instructions, depth 29
@@ -306,7 +306,7 @@ CD1** (`NOD1A.MAP` is in MAPS02.MIX on CD2). The **GDI intro movie plays**: at
 2.1e9 the stop is the LCW video decoder at `0x0067dc4f` (`sub_0067daa0`),
 `pages-used 11058/32768`, and the frame is the GDI intro title ("SEPTEMBER 2,
 2030 / GDI SPACE STATION PHILADELPHIA"), **194,131 non-black pixels**
-(`/tmp/gdi_intro_model.png`).
+(`re/out/mission.png`).
 
 **The nested MIX is mounted and read.** `TIBSUN.MIX` entry `0xa8548fd9`
 (18,044,736 B at offset 22,111,980) is a 317-entry archive containing 111 PCX
@@ -654,7 +654,7 @@ measurable exit criterion rather than a percentage.
 | Verification | **9 checks green, link test green** | `verify.py` passes all nine (265/265, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS; about 6 s last timed). `link_test.py` exits **0** (`link: OK`, 492 TUs, message loop reached and dispatching, 0 unmapped). `test_tools.py` runs **79** checks and `test_runtime.py` **101** (mutation-proven). A full `./tools/pipeline.sh` ran **exit 0** in the disasm-correction lane (8m51s, per `todo.md`); it was not re-run in this worktree |
 | **Semantics** | **~9%** | 5,557 of 9,810 slots carry a name (56.6%), but only **917 distinct names** and **281 distinct semantic** ones — most of the coverage is shared-stub propagation. 291 members named across 20 classes; `e2e_rules.py` resolves 96.2% of them against the shipped `rules.ini` |
 | **Modifiability** | **minimal** | there is still no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is the hand-written headers |
-| **Behaviour** | **starts the GDI campaign and plays the intro; the mission load exhausts the page table** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`). With `TS_CD`/`TS_DATA` the game reads the CD, builds its real LANGUAGE.DLL dialogs, plays past the intro, **renders the main menu**, and the default timeline clicks New Campaign (six `BS_OWNERDRAW` buttons, real rectangles) → `RT_DIALOG` 148 "Select Campaign:" at step 1,688,503,557. The campaign list comes from shipped `BATTLE.INI` (`[Battles] 1=GDI1, 2=NOD1`); the model's listbox/trackbar layer feeds it and OK selects GDI. `GDI1A.MAP` is read from MAPS01.MIX and the **GDI intro movie plays**: at 2.1e9 the stop is the LCW decoder `0x0067dc4f`, `pages-used 11058/32768`, frame `/tmp/gdi_intro_model.png` (194,131 non-black, the GDI title). ESC skips the movie and the mission load then **faults at step 2,580,698,410 at `0x00a006b0` (HeapAlloc thunk) with page table exhausted 32768/32768**. **0 unmapped calls, 0 stack imbalances**; `boot.py --strict` exits **0**. **The mission load does not complete and no mission is rendered.** The retail binary reaches its main menu under `tools/wine_env.sh` |
+| **Behaviour** | **starts the GDI campaign and plays the intro; the mission load exhausts the page table** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`). With `TS_CD`/`TS_DATA` the game reads the CD, builds its real LANGUAGE.DLL dialogs, plays past the intro, **renders the main menu**, and the default timeline clicks New Campaign (six `BS_OWNERDRAW` buttons, real rectangles) → `RT_DIALOG` 148 "Select Campaign:" at step 1,688,503,557. The campaign list comes from shipped `BATTLE.INI` (`[Battles] 1=GDI1, 2=NOD1`); the model's listbox/trackbar layer feeds it and OK selects GDI. `GDI1A.MAP` is read from MAPS01.MIX and the **GDI intro movie plays**: at 2.1e9 the stop is the LCW decoder `0x0067dc4f`, `pages-used 11058/32768`, frame `re/out/mission.png` (194,131 non-black, the GDI title). ESC skips the movie and the mission load then **faults at step 2,580,698,410 at `0x00a006b0` (HeapAlloc thunk) with page table exhausted 32768/32768**. **0 unmapped calls, 0 stack imbalances**; `boot.py --strict` exits **0**. **The mission load does not complete and no mission is rendered.** The retail binary reaches its main menu under `tools/wine_env.sh` |
 
 So: *the binary is explained, its instructions are transcribed, the layout is
 compiler-confirmed, and the game's own startup now runs cleanly through real
@@ -663,7 +663,7 @@ campaign list, and into the GDI campaign's intro movie.* The model creates a
 window, dispatches messages, reads the MIX index and the CD, renders the menu
 (`out/frame.png`, within 1.06/255 of retail on the pixels that differ), clicks
 New Campaign and OK through the game's own hit-test, reads `GDI1A.MAP`, and
-plays the GDI intro (`/tmp/gdi_intro_model.png`, 194,131 non-black). But the
+plays the GDI intro (`re/out/mission.png`, 194,131 non-black). But the
 mission load then exhausts the fixed page table at `0x00a006b0`, so **the
 mission does not complete and no mission is rendered**. The binding constraint is
 no longer recovery, transcription or layout — all three are done. It is

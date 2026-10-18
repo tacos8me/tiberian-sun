@@ -75,7 +75,7 @@ campaign dialog is destroyed, **`GDI1A.MAP`** is read from **MAPS01.MIX on CD1**
 the stop is the LCW video decoder at `0x0067dc4f` (`sub_0067daa0`),
 `pages-used 11058/32768`; the frame is the GDI intro title ("SEPTEMBER 2, 2030 /
 GDI SPACE STATION PHILADELPHIA"), **194,131 non-black pixels**
-(`/tmp/gdi_intro_model.png`). The nested MIX (`TIBSUN.MIX` entry `0xa8548fd9`,
+(`re/out/mission.png`). The nested MIX (`TIBSUN.MIX` entry `0xa8548fd9`,
 317 entries, 111 PCX) is mounted and read; the button art is not painted because
 no `WM_PAINT` reaches the child controls (retail does not draw it either).
 
@@ -606,7 +606,7 @@ tools/boot.py  (TS_CD=../work/cd1)
   --budget 2100000000, default timeline (New Campaign, NOD1, GDI1, OK):
     stop 0x0067dc4f (LCW decoder); GetMessage=17 PeekMessage=13,565,102
     DispatchMessage=17; 84,130 / 6,431; pages-used 11,058/32,768
-    frame: /tmp/gdi_intro_model.png, 640x480, 194,131 non-black
+    frame: re/out/mission.png, 640x480, 194,131 non-black
   --budget 3000000000, same timeline + ESC at model-ms 192000:
     fault at 0x00a006b0 (HeapAlloc thunk) after 2,580,698,410 instructions
     why: page table exhausted, 32768 of 32768; coverage 139,223 / 8,678

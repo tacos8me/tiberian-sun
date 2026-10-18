@@ -1335,7 +1335,7 @@ tool's header.
   is populated from the shipped `BATTLE.INI` `[Battles]` (`1=GDI1, 2=NOD1`), the
   listbox/trackbar message layer is implemented, GDI1 is selected, and the game
   reads `GDI1A.MAP` from `MAPS01.MIX` and plays the GDI intro (frame
-  `/tmp/gdi_intro_model.png`, 640x480, 194,131 non-black, md5
+  `re/out/mission.png`, 640x480, 194,131 non-black, md5
   `ccdb46d448a90e487e513bc1daf2ff8b`).
 - **The current blocker is the page table, and the mission load does not
   complete.** The default timeline stops at `0x0067dc4f` with 11,058 / 32,768

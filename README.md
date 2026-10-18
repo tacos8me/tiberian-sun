@@ -35,7 +35,7 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
   populated from the shipped `BATTLE.INI` `[Battles]` (`1=GDI1, 2=NOD1`), the
   listbox/trackbar message layer is implemented, GDI1 is selected, and the game
   reads `GDI1A.MAP` from `MAPS01.MIX` and **plays the GDI intro** (frame
-  `/tmp/gdi_intro_model.png`, 640x480, 194,131 non-black, md5
+  `re/out/mission.png`, 640x480, 194,131 non-black, md5
   `ccdb46d448a90e487e513bc1daf2ff8b`). The button art is not painted (no
   `WM_PAINT` to children; retail does not draw it either).
 - **The mission load does not complete: the page table exhausts.** The default
@@ -120,7 +120,7 @@ mission, and the game reads `GDI1A.MAP` from `MAPS01.MIX` and plays the GDI
 intro. The stop is `0x0067dc4f` (LCW decode during playback) at the
 2.1-billion-instruction budget (`GetMessage=17`, `PeekMessage=13,565,102`,
 `DispatchMessage=17`; 84,130 / 6,431; pages used **11,058 / 32,768**). The intro
-frame captured to `/tmp/gdi_intro_model.png` is 640x480, 194,131 non-black, md5
+frame captured to `re/out/mission.png` is 640x480, 194,131 non-black, md5
 `ccdb46d448a90e487e513bc1daf2ff8b`. A script that clicks Exit Game instead
 reaches **`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instructions
 (86,400 / 6,654). `--frame out/frame.png` dumps the rendered menu; the committed

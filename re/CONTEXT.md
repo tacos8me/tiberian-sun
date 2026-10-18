@@ -67,7 +67,7 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   plays the GDI intro. The stop is `0x0067dc4f` (LCW decode during intro
   playback; `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`;
   84,130 / 6,431; pages used **11,058 / 32,768**). The intro frame is
-  `/tmp/gdi_intro_model.png` (640x480, 194,131 non-black, md5
+  `re/out/mission.png` (640x480, 194,131 non-black, md5
   `ccdb46d448a90e487e513bc1daf2ff8b`). An ESC-skip script at 3.0B faults at
   `0x00a006b0` (the `HeapAlloc` thunk) after 2,580,698,410 instructions with the
   page table exhausted at **32,768 / 32,768** (139,223 / 8,678). The Exit Game

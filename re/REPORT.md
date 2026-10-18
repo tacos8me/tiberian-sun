@@ -51,7 +51,7 @@ timeline selects **GDI1**, presses OK, and the game reads **`GDI1A.MAP`** out of
 `MAPS01.MIX` on the CD. The **GDI intro movie then plays**: `VQA` decoding runs
 and the model presents the GDI title card ("SEPTEMBER 2, 2030 / GDI SPACE
 STATION PHILADELPHIA"). That frame was captured to
-`/tmp/gdi_intro_model.png` (640x480, **194,131 non-black pixels**, md5
+`re/out/mission.png` (640x480, **194,131 non-black pixels**, md5
 `ccdb46d448a90e487e513bc1daf2ff8b`); the committed `re/out/frame.png` remains the
 main-menu evidence.
 
@@ -70,7 +70,7 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
 - default timeline, 2.1B: stop `0x0067dc4f` (LCW decode during intro playback),
   `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage
   **84,130 / 6,431**, pages used **11,058 / 32,768**, frame
-  `/tmp/gdi_intro_model.png` **194,131** non-black.
+  `re/out/mission.png` **194,131** non-black.
 - ESC-skip script, 3.0B: fault at `0x00a006b0` after **2,580,698,410**
   instructions, `why: page table exhausted`, pages **32,768 / 32,768**, coverage
   **139,223 / 8,678**.
@@ -355,7 +355,7 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   after 1,707,666,895 instructions. Dialog 148's listbox is populated from the
   shipped `BATTLE.INI` `[Battles]` (`1=GDI1, 2=NOD1`), the default timeline
   selects GDI1 and presses OK, and the game reads `GDI1A.MAP` from `MAPS01.MIX`
-  and plays the GDI intro. The intro frame is `/tmp/gdi_intro_model.png` (640x480,
+  and plays the GDI intro. The intro frame is `re/out/mission.png` (640x480,
   194,131 non-black, md5 `ccdb46d448a90e487e513bc1daf2ff8b`). The nested MIX
   (`0xa8548fd9`, 317 entries) is mounted and read.
 - **The mission load does not complete: the page table exhausts.** With the

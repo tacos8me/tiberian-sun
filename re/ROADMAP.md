@@ -309,7 +309,7 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
   plays**; the stop is the LCW decoder at `0x0067dc4f` (`sub_0067daa0`),
   `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage
   **84,130 / 6,431**, `pages-used 11,058/32,768`. The frame is the GDI title
-  (`/tmp/gdi_intro_model.png`, 194,131 non-black).
+  (`re/out/mission.png`, 194,131 non-black).
 - same timeline + ESC at model-ms 192,000, 3.0B: the movie is skipped and the
   mission load **faults at `0x00a006b0` (HeapAlloc thunk) after 2,580,698,410
   instructions** with **page table exhausted 32768/32768**; coverage 139,223 /
