@@ -1306,74 +1306,69 @@ a 20M/s floor, a cached-path >=1.4x `page_in_slow` ratio (measured 1.73-1.78),
 and that `boot.py` keeps `-O2`/`-fno-pie`; mutation-proven. `test_tools.py` is
 **94 checks**; `verify.py` PASSED, `test_runtime.py` 101, link OK, `--strict` 0.
 
-### [ ] The 479B mission-load run goes wild
-**The 1.2e12-budget run got much further, then faulted.** It ran
-**478,970,534,425 instructions (479B)** and stopped at `0x00422de0`:
+### [x] The 479B mission-load run goes wild — diagnosed
+**The first wild call is deterministic and fully explained.** It occurs at
+**step 478,300,935,316** (three independent runs agree exactly):
+`call dword ptr [edx+0x2c]` at `0x005fa96b` -> `0x46000062`, depth 7, ESP sane
+(`0x002ff34c`). EDX = `0x006a5dfe`; ESI/ECX = `0x526dbdc0`.
 
-```
-why:  page table exhausted: page allocation failed
-eip:  0x00422ddd  add edi, dword ptr [edx + 0x10]
-regs: eax=0x9caa856e ecx=0x9caa856f edx=0x9d65508c ebx=0x67e7da4d
-      esp=0xf15d5f7c ebp=0xc3c48f90 esi=0x00000011 edi=0xc21638ed
-pages: 1,024,211 of 2,097,152 slots (peak 1,024,211, growths 6, refused 1)
-```
+The object is element 2 of the layer-2 list (`[0x76a864] = 0x526debe0`). Its
+vptr is **`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2** (COL `0x6b6f38`,
+`.?AVTerrainClass@@`). The correct slot `0x2c` is `0x624610`; the misaligned
+read `[0x6a5e2a]` is `0x46000062`. The 7 in-text `0x606060` calls are the same
+mechanism on another TerrainClass (`0x6a5dfc | 0x00200000 = 0x6a7dfc`, and
+`[0x6a7dfc+0xb4] = [0x6a7eb0] = 0x606060`).
 
-The registers are wild across the top of the 4 GiB address space. The run made
-**7,771,444 unmapped calls**: **7 inside `.text`**, all targeting `0x00606060`
-from `sub_004f3b40` (`0x004f3b5f`/`0x004f3b6d`); 7,673,235 below `0x1000`; 98,202
-elsewhere. Coverage 158,971 / 9,630; render 9 surfaces, 171 blits, 10,484
-locks, 0 fills/flips; **the frame is 0 non-black (black)**.
+**The corruption:** the constructor wrote the vptr byte `0xfc` at step
+2,505,750,667 (`0x622fc5`); at step **478,300,008,280** the byte at
+`0x526dbdc0` was overwritten with `0xfe` by `mov byte ptr [edx], cl` at
+**`0x005a3558`** (`FUN_005a34e0`, the "cell seen" bitmap setter). Target
+`0x526d6072`; bitmap base `[0x711fa4] = 0x526de580`; index =
+`67*(-4068)+65 = -272,491` — a negative map y. `FUN_005a34e0`'s y check is
+ineffective (`jge` skips the height check when y>=0, and the negative branch
+can never reject), and `FUN_005a4080` passes a **visible rect in map-pixel
+space** (`x=-2008, y=28, w=2125, h=4176`) into an index space of the **scaled
+67x108 surface**. The write lands 34,062 bytes before the bitmap, on the
+object's vptr. The wild ESP and 7.7M garbage calls are downstream.
 
-This is a new defect, not the O(n²) estimate failing: the loader ran far past
-100B, then a pointer table or stack went wild and the game called through
-`0x606060` (a repeated `0x60` byte pattern) and millions of below-`0x1000`
-targets. The page-table refusal is one symptom; the first wild call predates
-it.
+**Page refusal:** fault address `0x755d6ec4`, page `0x755d6`, 1,023,599 of
+2,097,152 slots used (48.8%), 1 refused. The table had room;
+1,023,599 x 4,104 B is ~4.2 GB — the **32-bit process's own address space**,
+not a table cap. The page histogram is a uniform wild walk.
 
-A 500B-budget reproduction (2026-10-18) faulted at the same EIP after
-**478,968,556,708** instructions, depth 100, with **1,023,748 / 2,097,152** pages
-and **7,734,028** unmapped calls (7 in `.text`, the same `0x606060` sites from
-`0x004f3b5f`/`0x004f3b6d`; 7,635,819 below `0x1000`; 98,202 elsewhere), coverage
-158,971 / 9,630, the same render counters (9 surfaces, 171 blits, 10,484 locks,
-0 flips) and a 0-non-black frame. The flood reproduces in character; the exact
-length is not bit-identical between runs (479B vs 478.97B, ~0.0004%).
+**Nondeterminism explained:** three runs stop at the identical first-unmapped
+step with identical registers and targets. The 479B runs differ only in the
+flood's *termination* (1,023,599 / 1,023,748 / 1,024,211 pages) because the
+refusal is a host `calloc` at the 32-bit VA limit, whose exact point depends on
+the process's address-space layout. The game state is deterministic; the
+nondeterminism is not the cause.
 
-**Context on the O(n²) loader** (still the cost): 22 `DynamicVectorClass`
-objects at `this+0x1280` (base `0x710cc8`, stride `0x18`) in `sub_005a35b0`
-(loop `0x5a35cb`..`0x5a3760`), called from `sub_005a1ba8` at `0x5a1bb8`; each
-append goes through `SetCount` `0x55b050` -> `0x55b09a` and copies the whole
-buffer. At 100B it was on vector 7/22 (160,070 entries). The old "tactical draw
-at ~4.07B" was an artifact of the heap collision.
+**The model executes the game faithfully.** The remaining divergence is the
+coordinate-space mismatch: the visible rect must be scaled into surface space.
 
-*Next:* find the **first** wild call, not the flood. Add a diagnostic for the
-page-table refusal address; `TS_TRACE` `sub_004f3b40` and `0x00422de0`;
-`TS_WATCH` the pointer table/stack slots that produce `0x606060` and the
-below-`0x1000` targets. Determine whether (a) `0x606060` is a jump-table target
-that should be registered (like the earlier switch-table fix), (b) the loader is
-appending unbounded entries and overflowing a buffer, or (c) the 4 GiB address
-space is genuinely exhausted by the model's arena/heap. Fix the first proven
-cause, then re-run at ~500B (about 20 min at 400M/s).
-*Done when:* the 479B wild-call flood is explained and gone, and the run reaches
-the tactical phase or a new named stop with a non-black frame if it renders.
+### [ ] The visible rect is in map-pixel space, not surface space
+**The current blocker, and the next fix is in the game's zoom/scale math.**
+`FUN_005a4080` hands `FUN_005a34e0` a rect in map-pixel coordinates
+(2125x4176) while the bitmap/index are the scaled 67x108 surface. The scale
+lives at `[0x710d28+0x1490]`, set in `FUN_005a1bd0` from
+`min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the screen rect. The visible
+rect must be scaled into surface space before the bitmap index is computed.
 
-### [ ] The 479B flood is not bit-identical between runs
-**Measured, and it matters for every diagnosis at this scale.** Two independent
-500B-budget runs faulted at the same EIP (`0x00422de0`) and in the same
-character, but with different counts: 478,968,556,708 vs 478,970,534,425
-instructions; 1,023,748 vs 1,024,211 pages; 7,734,028 vs 7,771,444 unmapped
-calls (same 7 in-text `0x606060` sites; 7,635,819 vs 7,673,235 below `0x1000`;
-98,202 elsewhere). The difference is ~0.0004%, but the model is supposed to be
-deterministic.
+*Next:* decompile `FUN_005a1bd0`, `FUN_005a4080`, `FUN_0067faf0` and
+`FUN_005a34e0` (Ghidra MCP), and determine whether the model's zoom/scale
+computation (x87 rounding, integer conversion, map dimensions) or a
+transcription differs from the retail. The retail works, so a model divergence
+is the likely cause; do not ship a clamp or widen the bitmap, which would mask
+it. Fix the first proven divergence, then re-run at ~500B (about 20 min at
+400M/s).
+*Done when:* the out-of-bounds write is gone, the vptr is intact, and the run
+reaches the tactical phase or a new named stop (with a frame if it renders).
 
-*Candidate sources:* `FindFirstFileA`/directory enumeration order (real host
-enumeration was added for `BATTLE.INI`), host `time()`/`rand()`/
-`GetTickCount`/`QueryPerformanceCounter` stubs, uninitialised memory whose
-value leaks into a pointer, or host allocation addresses used as model values.
-*Next:* run the same budget twice with a deterministic harness and diff the
-first divergence; identify and remove the host-dependent input, or document why
-it is unavoidable.
-*Done when:* two runs at the same budget produce identical counts/state, or the
-source is identified and justified.
+**Secondary, unreachable:** the switch index table at `0x48e43c` is classified
+as 1 byte because the gap seeder already created a span at `0x48e43d`; that
+span decodes table data as code and contains `add esp, [ebp-0x61ffb726]` at
+`0x48e453`. No dword or branch references `0x48e43d`, so it never executes.
+Fix it with the next disassembly pass, not as part of this defect.
 
 ### [x] The mission writes pixels but never presents a frame — explained and fixed
 **The blue banded/grid frame was raw heap memory.** The game *does* present the
