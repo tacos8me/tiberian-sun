@@ -1481,8 +1481,32 @@ shows terrain, the GDI construction yard and a unit in the viewport.
 *Done when:* the world has objects and cells are revealed — met. Tests:
 `win32-tls` and `win32-clsid`, both mutation-proven (`test_tools.py` 103).
 
-### [ ] The viewport draws the revealed area at its bottom-right corner
-**The current blocker.** Two earlier readings were wrong and are corrected here.
+### [x] The viewport draws the revealed area at its bottom-right corner — fixed
+**Fixed in `f1b4bc6`.** The renderer was not mis-centring: it draws at
+`world − (scroll − half_viewport)` and maps the camera cell exactly to the
+viewport centre. The offset came from the **scroll having been driven to the
+map-boundary clamp**. `timeSetEvent` was a `TS_RET` stub: it returned a timer id
+and never invoked the callback. The only writer of `WWMouseClass`'s position
+(`[this+0x18]/[this+0x1c]`) is the 16 ms multimedia-timer callback `0x6725d0`,
+which calls `GetCursorPos`; with the callback never dispatched the position
+stayed `(0,0)`. `FUN_005cf850` (the tactical input/scroll handler) read `(0,0)`
+as "pointer outside the screen" and issued an up-left scroll command every
+frame; the scroll ran to the clamp `(-820,988)`, the visible rect clamped to the
+map minimum `(35,28,23,43)`, and the revealed area rendered in the bottom-right
+corner. A timer table plus `timer_pump()` now dispatches due callbacks from
+`PeekMessageA`/`GetMessageA` with the real five-argument `TIMECALLBACK`
+signature, periodic/one-shot handling and `timeKillEvent`.
+
+Measured at 20B: WWMouse position `(355,397)`, scroll `(-408,1248)` (the game's
+centring target), visible rect `(53,45,23,43)`, map surface **96,220** non-black
+(was 12,703), primary **176,809** non-black, 0 unmapped. The 500B frame
+`re/out/frame_500b_centered.png` (md5 `e8ba8219…`, **176,796** non-black) shows
+terrain, structures, units and a Tiberium field, with the HUD. Regression test
+`win32-timer` (`test_tools.py` now **106**, mutation-proven: removing the
+dispatch fails it).
+
+The black that remains is **unexplored shroud**, which is correct at mission
+start. Two earlier readings are corrected here.
 
 **The reveal is not the problem.** `TS_MAPCELLS` scanned only the INI's 48x63
 `[Map] Size` window and reported 34 seen cells. The cell grid is a 512x512
@@ -1501,21 +1525,23 @@ construction yard is at (28,59), ~30 cells away, and is not itself revealed;
 14 of 36 buildings around the home cell are. The `HomeCell` fallback branch
 (`0x4765cd`) did not execute. Do not override the shipped waypoint.
 
-**What is still wrong is the render offset.** 1,124 seen cells span ~50x46
-cells around (68,76), which is larger than the 472x480 viewport, so a correctly
-centred view should be almost entirely terrain. The frame instead draws the
+**What it looked like before the fix (kept as evidence).** 1,124 seen cells span
+~50x46 cells around (68,76), larger than the 472x480 viewport, so a correctly
+centred view should be almost entirely terrain. The frame instead drew the
 revealed area as a patch at the **bottom-right corner** (primary bbox roughly
-x 370-470, y 380-470), which places the camera target at the corner rather than
-the centre. The map surface is 472x480 with 12,703-12,800 non-black; the
-primary's 93,404 is the HUD plus that patch.
+x 370-470, y 380-470). The cause was the scroll, not the transform: see the fix
+above. After `f1b4bc6` the visible rect is `(53,45,23,43)` and the terrain fills
+the viewport around the camera.
 
-*Next:* the scroll/origin computation that turns the camera cell into a source
-rect — `FUN_005a4080` (visible rect, previously `35,28,23,43`), the Display
-scroll fields (`Display+0xd18/-0xd1c = (-820,988)` at 20B), and the map-surface
-blit source rect. Compute the expected screen position of a known cell (the
-GACNST at (28,59) or the HomeCell) and compare it with the rendered patch.
-Do not paint the map by hand and do not move the camera target.
-*Done when:* the revealed area is centred in the 472x480 viewport.
+### [ ] Tactical input does not yet drive play
+The pointer now reaches the game (WWMouse polls `GetCursorPos` through the timer
+callback), but selection and orders have not been exercised. Script a click on a
+unit and a right-click move order; check the unit's `CoordStruct`
+(`ObjectClass +0x40`, 256 leptons/cell) changes and the frame shows the move.
+Also check whether the sidebar build buttons respond.
+*Done when:* a scripted order moves a unit, measured from its coordinate before
+and after, with a committed frame.
+Do not move units by hand.
 
 **Diagnostics added by the investigation:** `TS_OBJECTS` now prints each
 registry object's `CoordStruct` (`ObjectClass +0x40`, 256 leptons/cell) and

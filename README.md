@@ -7,15 +7,13 @@ instruction stream against a model of the x86 machine it was written for.
 
 ## Progress screenshot
 
-![The reconstructed model rendering the Tiberian Sun tactical HUD and the revealed base area](re/out/frame_500b_objects.png)
+![The reconstructed model rendering the Tiberian Sun tactical map and HUD](re/out/frame_500b_centered.png)
 
-*The model's own 640x480 render: the in-game tactical HUD plus a revealed area
-of terrain, the GDI construction yard and a unit. The map reveals 1,124 cells
-around the scenario's `HomeCell`, but the viewport draws that area at its
-bottom-right corner instead of centring it; fixing the render offset is the
-current work item. The main menu (`re/out/frame.png`), the GDI intro
-(`re/out/mission.png`) and the loading screen (`re/out/render_2_6b.png`) are
-committed alongside it.*
+*The model's own 640x480 render of the GDI mission: terrain, structures, units
+and a Tiberium field, with the tactical HUD and the mouse cursor. The black at
+the top and right is unexplored shroud. The main menu (`re/out/frame.png`), the
+GDI intro (`re/out/mission.png`) and the loading screen
+(`re/out/render_2_6b.png`) are committed alongside it.*
 
 ## Status
 
@@ -38,10 +36,13 @@ It is **not yet a playable game**, and the source is not yet source-shaped.
   from the shipped `BATTLE.INI`, the GDI mission loads `GDI1A.MAP`, the intro
   plays, and the game reaches the **in-game tactical HUD** with a populated
   world: 3 units, 17 infantry and 36 structures, plus 7 houses.
-- The map reveals 1,124 cells around the scenario's `HomeCell` (cell 68,76), but
-  the viewport draws that area at its bottom-right corner instead of centring
-  it. That is the current blocker: the tactical camera origin/render offset, not
-  the reveal pipeline and not the renderer.
+- The tactical view is centred and renders the mission: terrain, structures,
+  units and Tiberium, with the mouse cursor. The black that remains is
+  unexplored shroud, as it should be at mission start.
+- The fix that unblocked it: `timeSetEvent` returned a timer id but never
+  invoked its callback, so `WWMouseClass`'s pointer stayed `(0,0)`. The tactical
+  input handler read that as off-screen and scrolled up-left every frame until
+  the map clamp. Multimedia timers are now dispatched from the message pump.
 
 **What is recovered**
 
