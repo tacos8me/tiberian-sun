@@ -1160,6 +1160,23 @@ void mapcells_report() {
     }
     std::printf("    alloc=%lu tiles=%lu seen=%lu fog=%lu flags_nonzero=%lu\n",
                 alloc, tiles, seen, fog, nonzero);
+    // The seen-cell set itself, not just its size: "34 cells" at the bottom
+    // edge of the map is a coordinate question, and a sample of six fixed
+    // cells cannot answer it. Bounded so a fully revealed map stays readable.
+    if (seen && seen <= 256u) {
+        std::printf("    seen:");
+        unsigned shown = 0;
+        for (unsigned y = 0; y < h && shown < 256u; ++y) {
+            for (unsigned x = 0; x < w && shown < 256u; ++x) {
+                u32 c = ts::ld32(cells + (y * 512u + x) * 4u);
+                if (!c) continue;
+                if (!(ts::ld32(c + 0xa4u) & 4u)) continue;
+                std::printf(" (%u,%u)", x, y);
+                ++shown;
+            }
+        }
+        std::printf("\n");
+    }
     static const unsigned sx[6] = { 0u, 24u, 47u, 10u, 28u, 40u };
     static const unsigned sy[6] = { 0u, 31u, 62u, 10u, 59u, 68u };
     for (unsigned i = 0; i < 6u; ++i) {
@@ -1191,6 +1208,36 @@ void objects_report() {
     std::printf("  world: objectclass=%u infantry=%u buildings=%u houses=%u\n",
                 (unsigned)ts::ld32(0x0077bbe0u), (unsigned)ts::ld32(0x007b0c08u),
                 (unsigned)ts::ld32(0x007b2c48u), (unsigned)ts::ld32(0x007afce0u));
+    // Where each world object actually is. The reveal pass walks these
+    // registries and reveals around +0x14, so a wrong packed position here is
+    // exactly what puts the revealed patch in the wrong place.
+    {
+        static const struct { const char *name; u32 count_va, array_va; } regs[3] = {
+            { "objectclass", 0x0077bbe0u, 0x0077bbb4u },
+            { "infantry",    0x007b0c08u, 0x007b0c2cu },
+            { "buildings",   0x007b2c48u, 0x007b2c3cu },
+        };
+        for (unsigned r = 0; r < 3u; ++r) {
+            u32 cnt = ts::ld32(regs[r].count_va);
+            u32 arr = ts::ld32(regs[r].array_va);
+            std::printf("  %s: n=%u array=0x%08x\n", regs[r].name,
+                        (unsigned)cnt, arr);
+            if (arr < 0x00400000u || arr >= 0x80000000u) continue;
+            unsigned lim = cnt < 64u ? (unsigned)cnt : 64u;
+            for (unsigned i = 0; i < lim; ++i) {
+                u32 o = ts::ld32(arr + i * 4u);
+                std::printf("    [%u] obj=0x%08x", i, o);
+                if (o >= 0x00400000u && o < 0x80000000u) {
+                    u32 pos = ts::ld32(o + 0x14u);
+                    std::printf(" vptr=0x%08x pos=(%d,%d)",
+                                (unsigned)ts::ld32(o),
+                                (int)(short)(pos & 0xffffu),
+                                (int)(short)(pos >> 16));
+                }
+                std::printf("\n");
+            }
+        }
+    }
     if (a < 0x00400000u || a >= 0x80000000u) return;
     unsigned show = n < 12u ? (unsigned)n : 12u;
     for (unsigned i = 0; i < show; ++i) {
