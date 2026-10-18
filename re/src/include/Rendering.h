@@ -99,9 +99,13 @@ enum {
     MAX_PALETTES                = 16,
     PALETTE_ENTRIES             = 256,
 
-    // DDBLTFX.dwFillColor, from the DirectX 6 DDBLTFX layout: 16 dwords
-    // precede it (dwSize .. dwColorSpaceHighValue).
-    DDBLTFX_FILLCOLOR           = 0x40u
+    // DDBLTFX.dwFillColor. The DirectX 6 layout puts it at +0x50, in a union
+    // after dwAlphaSrcConst (dwSize +0x00 .. dwAlphaSrcConst +0x4c). This is
+    // confirmed twice: the bundled ddraw.h's field order, and GAME.EXE's own
+    // fill helper, which stores the colour at 0x50 from its pushed argument
+    // (0x4883cd, `mov %ecx,0xb0(%esp)` after the fx push). The struct is 100
+    // bytes: dwFillColor +0x50, ddckDestColorkey +0x54, ddckSrcColorkey +0x5c.
+    DDBLTFX_FILLCOLOR           = 0x50u
 };
 
 // -- model-space memory ------------------------------------------------------
@@ -539,7 +543,7 @@ inline void blt_row(Surface *dst, Surface *src, i32 dx, i32 dy, i32 sx, i32 sy,
 }
 
 // Blt(this, dst_rect, src_surface, src_rect, flags, fx). Handles the two forms
-// the retail game uses: DDBLT_COLORFILL (src NULL, colour at fx+0x40) and a
+// the retail game uses: DDBLT_COLORFILL (src NULL, colour at fx+0x50) and a
 // source copy (197 of 210 calls in the measured trace).
 inline u32 blt(u32 dst_obj, u32 dst_rect_va, u32 src_obj, u32 src_rect_va,
                u32 flags, u32 fx_va) {
@@ -548,9 +552,9 @@ inline u32 blt(u32 dst_obj, u32 dst_rect_va, u32 src_obj, u32 src_rect_va,
 
     if (flags & DDBLT_COLORFILL) {
         // Measured on the retail binary with gdb at its own Blt call site
-        // (0x4883f5): all 11 startup colour fills carry dwFillColor = 0 (the
-        // whole DDBLTFX is zero except dwSize and a transient word at +0x50),
-        // so the game clears surfaces to black and blits art over them.
+        // (0x4883f5): the 11 startup colour fills carry dwFillColor at +0x50,
+        // zero for ten of them and 1 for one, so the game clears surfaces to
+        // black and blits art over them.
         u32 color = fx_va ? ld32(fx_va + DDBLTFX_FILLCOLOR) : 0u;
         Rect q = dst_rect_va ? rect_from(dst_rect_va) : whole(d);
         return fill_rect_obj(dst_obj, q, color);

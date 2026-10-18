@@ -144,7 +144,9 @@ bool test_surfaces(const char *png_path, const char *ppm_path) {
     check(is_rgb(OFF, 63, 63, 0, 255, 0), "offscreen (63,63) green");
 
     // Colour fill through Blt(DDBLT_COLORFILL): the form the retail game uses
-    // 13 times before its main menu.
+    // 13 times before its main menu. mk_fx writes the colour at DDBLTFX+0x50
+    // (dwFillColor) and leaves +0x40 zero, so reading the wrong offset would
+    // fill black and fail the blue checks below.
     u32 fx_blue = mk_fx(ts::rnd::pack_rgb(off, 0, 0, 255));
     u32 rc = mk_rect(16, 16, 48, 48);
     check(ts::rnd::blt(OFF, rc, 0u, 0u,
@@ -154,6 +156,17 @@ bool test_surfaces(const char *png_path, const char *ppm_path) {
     check(is_rgb(OFF, 16, 16, 0, 0, 255), "fill top-left blue");
     check(is_rgb(OFF, 47, 47, 0, 0, 255), "fill bottom-right blue");
     check(is_rgb(OFF, 48, 48, 0, 255, 0), "past fill still green");
+
+    // The fill colour is dwFillColor at +0x50, not the +0x40 field. Put a red
+    // herring at +0x40 and a blue colour at +0x50: the fill must be blue.
+    u32 fx_probe = mk_fx(ts::rnd::pack_rgb(off, 0, 0, 255));
+    ts::st32(fx_probe + 0x40u, ts::rnd::pack_rgb(off, 255, 0, 0));
+    u32 rc2 = mk_rect(48, 0, 64, 16);
+    check(ts::rnd::blt(OFF, rc2, 0u, 0u,
+                       ts::rnd::DDBLT_WAIT | ts::rnd::DDBLT_COLORFILL,
+                       fx_probe) == 0u, "probe fill returns DD_OK");
+    check(is_rgb(OFF, 50, 5, 0, 0, 255),
+          "colour fill reads dwFillColor at +0x50, not +0x40");
 
     // Copy through Blt(DDBLT_WAIT) with a source surface: the form used 197
     // times. TS_MUTATION_BLT_XOFF moves this one pixel right.
