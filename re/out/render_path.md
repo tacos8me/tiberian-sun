@@ -121,7 +121,7 @@ gdb/symbol artifact, not a second allocator: all eight are in the one
 
 ## 3. What the game actually calls
 
-### Blits: 12, all into the primary, none after 2.6e9
+### Blits: 12 in the load phase, 3 more in the tactical phase
 
 Every one of the 12 is identical in shape (gdb `render_callers3.log`):
 
@@ -144,7 +144,7 @@ then `Blt`. The model's `k_sfs_Blt` is six words (`Win32Stubs.h:4936`), matches
 the game's push count, and increments `stat_blits()` only after `find(dst)`
 succeeds (`Rendering.h:557-561`). The count is real.
 
-### Locks: 769, presentation is lock-and-write, not Flip
+### Locks: 769 in the load phase (8,097 by the tactical phase)
 
 Every lock goes through the game's own wrapper `sub_00487ad0`
 (`code_0037.cpp:3944`) -> `IDirectDrawSurface::Lock` (slot 25); the caller
@@ -170,7 +170,7 @@ dumped at all, and why "no frame is presented" is not a missing `Flip`.
 `stat_fills()` is incremented by `fill_rect_obj` (`Rendering.h:496`), which is
 reached from `Blt` when `flags & DDBLT_COLORFILL` (`Rendering.h:563-573`). The
 model's 0 fills means the game issued **no colour-fill `Blt`** in this run. The
-retail trace does issue them (14 with `flags 0x1000400` before the menu), so
+retail trace does issue them (15 with `flags 0x1000400` before the menu), so
 this is a real behavioural divergence, but not the blocker: the menu frame the
 model renders is within 1.06/255 of retail on the pixels that differ
 (`AGENTS.md`), so the missing fills do not leave a visible hole on this path.
@@ -201,13 +201,14 @@ Three measurements pin it:
    stripe/grid period is the 8-byte entry stride of the vector being copied
    (`0x0055b0be`: `mov ebx,[edx+eax*8-8]`).
 3. **It freezes because the game stops drawing.** 3.2e9 and 4.0e9 are
-   byte-identical, and no DirectDraw call occurs after 2.6e9. The primary is
-   abandoned holding whatever the heap last wrote there.
+   byte-identical, and no DirectDraw call occurs between 2.6e9 and 4.0e9. The
+   primary is abandoned holding whatever the heap last wrote there until the
+   tactical draw begins.
 
-The loading screen itself is real and correct: `out/render_2_6b.png` and
-`out/render_2_7b.png` are byte-identical and show the GDI mech, the status
-panel ("ANALYZING COMBAT ZONE. TOPOGRAPHY...", "GATHERING INTEL ON INVOLVED
-FACTIONS..."), and the GDI emblem — the game's own mission loading screen.
+The loading screen itself is real and correct: `out/render_2_6b.png` shows the
+GDI mech, the status panel ("ANALYZING COMBAT ZONE. TOPOGRAPHY...", "GATHERING
+INTEL ON INVOLVED FACTIONS..."), and the GDI emblem — the game's own mission
+loading screen. The 2.7e9 dump is byte-identical to it (md5 `6cb0e1ff…`).
 
 ## 5. Why the load is still running at 4e9
 
@@ -386,5 +387,5 @@ the mission frame.
 | `/tmp/render_state*.log` | surface table + `bump()` at 2.7 / 2.7227 / 3.2e9 |
 | `/tmp/render_callers3.log`, `/tmp/render_callers4.log` | blit/lock/grow call chains |
 | `/tmp/lockdist.log` | full lock census (762 of 769 visible) |
-| `/tmp/retail_render2/ddraw.log` | retail `+ddraw`, 244 Blt / 380 Lock / 0 Flip |
+| `/tmp/retail_render2/ddraw.log` | retail `+ddraw`, 250 Blt / 651 Lock / 0 Flip |
 | `tools/oracle_render_retail.sh` | the retail driver used for the comparison |
