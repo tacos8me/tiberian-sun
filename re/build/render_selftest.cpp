@@ -118,7 +118,8 @@ void draw_frame(u32 prim_obj) {
     }
 }
 
-bool test_surfaces(const char *png_path, const char *ppm_path) {
+bool test_surfaces(const char *png_path, const char *ppm_path,
+                   const char *surf_path) {
     const u32 PRIM = 0x11110001u;
     const u32 OFF  = 0x11110002u;
     const u32 BACK = 0x11110003u;
@@ -273,10 +274,29 @@ bool test_surfaces(const char *png_path, const char *ppm_path) {
     check(is_rgb(PRIM, 500, 300, 32, 240, 240), "frame cyan box");
     check(is_rgb(PRIM, 60, 80, 255, 255, 255), "frame diagonal pixel");
 
+    // Per-surface accounting. A global blit count cannot say which surface the
+    // pixels went to; these counters must name the destination and the source,
+    // and the written rectangle must match the blits above.
+    check(prim->blit_in >= 1u, "primary counts a blit in");
+    check(prim->fills >= 8u, "primary counts the colour fills");
+    check(off->blit_out >= 1u, "offscreen counts a blit out");
+    check(off->fills >= 2u, "offscreen counts its colour fills");
+    check(prim->locks >= 1u, "primary counts a lock");
+    check(prim->write_l <= 100 && prim->write_t <= 50 &&
+          prim->write_r >= 164 && prim->write_b >= 114,
+          "primary write rectangle covers the blit destination");
+    check(off->write_l <= 16 && off->write_r >= 64,
+          "offscreen write rectangle covers its fills");
+    check(off->last_dst == PRIM, "offscreen names the primary as its last destination");
+
+    // One PNG per surface, not only the primary: the boot uses this to show
+    // whether an offscreen that is never composited holds the missing pixels.
+    check(ts::rnd::dump_surface_png(1u, surf_path), "per-surface PNG dumped");
     check(ts::rnd::dump_png(prim, png_path), "PNG dumped");
     check(ts::rnd::dump_ppm(prim, ppm_path), "PPM dumped");
     std::printf("frame png: %s\n", png_path);
     std::printf("frame ppm: %s\n", ppm_path);
+    std::printf("surface png: %s\n", surf_path);
     return true;
 }
 
@@ -374,8 +394,9 @@ bool test_input() {
 int main(int argc, char **argv) {
     const char *png = argc > 1 ? argv[1] : "out/frame_selftest.png";
     const char *ppm = argc > 2 ? argv[2] : "out/frame_selftest.ppm";
+    const char *surf = argc > 3 ? argv[3] : "out/frame_selftest_surf1.png";
 
-    test_surfaces(png, ppm);
+    test_surfaces(png, ppm, surf);
     test_input();
 
     if (g_fail) {

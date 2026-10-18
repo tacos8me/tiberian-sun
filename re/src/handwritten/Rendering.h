@@ -229,16 +229,42 @@ struct Surface {
     Surface *attached;    // back buffer, if any
     u32 flips;
 
+    // Per-surface accounting. A global blit count says the renderer ran; it
+    // cannot say WHERE the pixels went. These do: `blit_in` is a copy or fill
+    // landing on this surface, `blit_out` is a copy reading it as the source,
+    // and `write_*` is the bounding box of every destination rectangle written
+    // by Blt/BltFast/Fill. `lock_*` is the bounding box of the Lock rectangles,
+    // which is where a caller that draws through lpSurface will write.
+    unsigned long blit_in, blit_out, fills, locks, logged;
+    i32 write_l, write_t, write_r, write_b;   // empty when write_r <= write_l
+    i32 lock_l, lock_t, lock_r, lock_b;
+    u32 last_src, last_dst;                   // last blit partner objects
+
     Surface()
         : obj(0), pixels(0), width(0), height(0), pitch(0), bpp(16),
           rmask(0x0000f800u), gmask(0x000007e0u), bmask(0x0000001fu),
           caps(0), primary(false), locked(false),
           lock_x(0), lock_y(0), lock_w(0), lock_h(0),
           has_colorkey(false), colorkey_low(0), colorkey_high(0),
-          has_palette(false), attached(0), flips(0) {
+          has_palette(false), attached(0), flips(0),
+          blit_in(0), blit_out(0), fills(0), locks(0), logged(0),
+          write_l(1), write_t(1), write_r(0), write_b(0),
+          lock_l(1), lock_t(1), lock_r(0), lock_b(0),
+          last_src(0), last_dst(0) {
         for (unsigned i = 0; i < PALETTE_ENTRIES; ++i) palette[i] = 0u;
     }
 };
+
+// Grow a rectangle to cover (l,t)-(r,b). An empty rectangle is l>=r.
+inline void note_rect(i32 &cl, i32 &ct, i32 &cr, i32 &cb,
+                      i32 l, i32 t, i32 r, i32 b) {
+    if (r <= l || b <= t) return;
+    if (cr <= cl) { cl = l; ct = t; cr = r; cb = b; return; }
+    if (l < cl) cl = l;
+    if (t < ct) ct = t;
+    if (r > cr) cr = r;
+    if (b > cb) cb = b;
+}
 
 inline Surface *surface_table() { static Surface t[MAX_SURFACES]; return t; }
 inline unsigned &surface_n() { static unsigned n = 0u; return n; }
@@ -263,6 +289,30 @@ inline Surface *find(u32 obj) {
 inline Surface *find_ptr(const Surface *s) { return const_cast<Surface *>(s); }
 
 inline u32 bytes_per_pixel(const Surface *s) { return (u32)(s->bpp >> 3); }
+
+// Per-surface blit logging. The tactical renderer issues millions of blits, so
+// the log is capped PER DESTINATION SURFACE: TS_BLITLOG=8 prints the first
+// eight copies into each surface, which is enough to see the terrain tile
+// shape without turning a 20-minute run into a 20 GB log. Default off.
+inline unsigned blitlog_cap() {
+    static unsigned cap = 0u;
+    static bool init = false;
+    if (!init) {
+        init = true;
+        const char *e = std::getenv("TS_BLITLOG");
+        if (e && *e) cap = (unsigned)std::strtoul(e, 0, 0);
+    }
+    return cap;
+}
+
+inline void log_blit(Surface *d, Surface *s, i32 dl, i32 dt, i32 dr, i32 db,
+                     i32 sl, i32 st, i32 sr, i32 sb, u32 flags) {
+    if (d->logged >= blitlog_cap()) return;
+    ++d->logged;
+    std::printf("blit dst=0x%08x src=0x%08x d=(%d,%d,%d,%d) "
+                "s=(%d,%d,%d,%d) flags=0x%08x\n",
+                d->obj, s ? s->obj : 0u, dl, dt, dr, db, sl, st, sr, sb, flags);
+}
 
 inline Surface *create_simple(u32 obj, u32 w, u32 h, u16 bpp, bool primary) {
     if (surface_n() >= (unsigned)MAX_SURFACES) return 0;
@@ -498,8 +548,11 @@ inline u32 fill_rect_obj(u32 obj, const Rect &rect, u32 raw) {
     Surface *s = find(obj);
     if (!s) return DDERR_INVALIDOBJECT;
     ++stat_fills();
+    ++s->fills;
     Rect q = rect;
     if (!clip_rect(q, s)) return DD_OK;
+    note_rect(s->write_l, s->write_t, s->write_r, s->write_b,
+              q.l, q.t, q.r, q.b);
     u32 bytes = bytes_per_pixel(s);
     for (i32 y = q.t; y < q.b; ++y) {
         u32 addr = s->pixels + (u32)y * s->pitch + (u32)q.l * bytes;
@@ -601,6 +654,15 @@ inline u32 blt(u32 dst_obj, u32 dst_rect_va, u32 src_obj, u32 src_rect_va,
     if (sq.t + h > (i32)s->height) h = (i32)s->height - sq.t;
     if (w <= 0 || h <= 0) return DD_OK;
 
+    ++d->blit_in;
+    ++s->blit_out;
+    note_rect(d->write_l, d->write_t, d->write_r, d->write_b,
+              dq.l, dq.t, dq.l + w, dq.t + h);
+    d->last_src = s->obj;
+    s->last_dst = d->obj;
+    log_blit(d, s, dq.l, dq.t, dq.l + w, dq.t + h,
+             sq.l, sq.t, sq.l + w, sq.t + h, flags);
+
     bool key = (flags & DDBLT_KEYSRC) && s->has_colorkey;
     u32 klow = s->colorkey_low, khigh = s->colorkey_high;
 
@@ -650,6 +712,14 @@ inline u32 blt_fast(u32 dst_obj, u32 x, u32 y, u32 src_obj, u32 src_rect_va,
     if (sq.l + w > (i32)s->width)  w = (i32)s->width  - sq.l;
     if (sq.t + h > (i32)s->height) h = (i32)s->height - sq.t;
     if (w <= 0 || h <= 0) return DD_OK;
+    ++d->blit_in;
+    ++s->blit_out;
+    note_rect(d->write_l, d->write_t, d->write_r, d->write_b,
+              dq.l, dq.t, dq.l + w, dq.t + h);
+    d->last_src = s->obj;
+    s->last_dst = d->obj;
+    log_blit(d, s, dq.l, dq.t, dq.l + w, dq.t + h,
+             sq.l, sq.t, sq.l + w, sq.t + h, flags);
     bool key = (f & DDBLT_KEYSRC) && s->has_colorkey;
     for (i32 row = 0; row < h; ++row)
         blt_row(d, s, dq.l, dq.t + row, sq.l, sq.t + row, w, key,
@@ -681,8 +751,11 @@ inline u32 lock(u32 obj, u32 rect_va, u32 desc_va, u32 flags) {
     Surface *s = find(obj);
     if (!s) return DDERR_INVALIDOBJECT;
     ++stat_locks();
+    ++s->locks;
     Rect q = rect_va ? rect_from(rect_va) : whole(s);
     if (!clip_rect(q, s)) return DDERR_INVALIDPARAMS;
+    note_rect(s->lock_l, s->lock_t, s->lock_r, s->lock_b,
+              q.l, q.t, q.r, q.b);
     s->locked = true;
     s->lock_x = (u32)q.l;
     s->lock_y = (u32)q.t;
@@ -934,6 +1007,32 @@ inline bool dump_primary_png(const char *path) {
 
 inline bool dump_primary_ppm(const char *path) {
     return dump_ppm(primary_surface(), path);
+}
+
+inline bool dump_surface_png(unsigned idx, const char *path) {
+    if (idx >= surface_n()) return false;
+    return dump_png(&surface_table()[idx], path);
+}
+
+// The per-surface table. This is the measurement the global counters cannot
+// give: which surface receives the terrain blits, whether that surface is ever
+// read as a source (composited), and where its written rectangle is. Printed
+// inside the boot report so tools/boot.py parses it like every other fact.
+inline void report_surfaces(std::FILE *f) {
+    Surface *t = surface_table();
+    for (unsigned i = 0; i < surface_n(); ++i) {
+        const Surface *s = &t[i];
+        std::fprintf(f, "  [%u] obj=0x%08x px=0x%08x %ux%u bpp=%u caps=0x%08x "
+                     "primary=%u blit_in=%lu blit_out=%lu fills=%lu locks=%lu "
+                     "write=(%d,%d,%d,%d) lockrect=(%d,%d,%d,%d) "
+                     "last_src=0x%08x last_dst=0x%08x nonblack=%lu\n",
+                     i, s->obj, s->pixels, s->width, s->height, (unsigned)s->bpp,
+                     s->caps, s->primary ? 1u : 0u,
+                     s->blit_in, s->blit_out, s->fills, s->locks,
+                     s->write_l, s->write_t, s->write_r, s->write_b,
+                     s->lock_l, s->lock_t, s->lock_r, s->lock_b,
+                     s->last_src, s->last_dst, nonblack_pixels(s));
+    }
 }
 
 }  // namespace rnd

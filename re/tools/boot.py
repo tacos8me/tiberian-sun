@@ -649,6 +649,8 @@ def print_report(keys, lists, entries, build_note, elapsed):
                    % (keys.get("render-surfaces", "?"), keys.get("render-blits", "?"),
                       keys.get("render-fills", "?"), keys.get("render-locks", "?"),
                       keys.get("render-flips", "?"), keys.get("input-messages", "?")))
+    for line in lists.get("surfaces", []):
+        out.append("  " + line)
     if keys.get("frame-dump"):
         out.append("frame:  %s (%s, %s non-black pixels)"
                    % (keys.get("frame-dump", "?"), keys.get("frame-size", "?"),
@@ -666,13 +668,16 @@ def parse_args(argv):
     opt = {"image": "bin/GAME.EXE", "budget": 20000000, "timeout": 60,
            "depth": 20000, "imports": 12, "calls": 8, "watch": False,
            "json": False, "rebuild": False, "no_build": False,
-           "strict": False, "frame": None, "input_script": None}
+           "strict": False, "frame": None, "input_script": None,
+           "surfaces": False, "surface_dump": None}
     flags = {"--watch": "watch", "--json": "json", "--rebuild": "rebuild",
-             "--no-build": "no_build", "--strict": "strict"}
+             "--no-build": "no_build", "--strict": "strict",
+             "--surfaces": "surfaces"}
     values = {"--image": "image", "--budget": "budget", "--timeout": "timeout",
               "--depth": "depth", "--imports": "imports", "--calls": "calls",
               "--frame": "frame", "--dump-frame": "frame",
-              "--input-script": "input_script"}
+              "--input-script": "input_script",
+              "--surface-dump": "surface_dump"}
     i = 0
     while i < len(argv):
         arg = argv[i]
@@ -690,7 +695,8 @@ def parse_args(argv):
                     print("boot: %s needs a value" % arg)
                     return None
                 value = argv[i]
-            opt[key] = value if key in ("image", "frame", "input_script") else int(value)
+            opt[key] = (value if key in ("image", "frame", "input_script",
+                                         "surface_dump") else int(value))
         else:
             print("boot: unknown argument %s (try --help)" % arg)
             return None
@@ -725,6 +731,10 @@ def main(argv):
         cmd.append("--verbose")
     if opt["frame"]:
         cmd.append("--frame=%s" % opt["frame"])
+    if opt["surfaces"]:
+        cmd.append("--surfaces")
+    if opt["surface_dump"]:
+        cmd.append("--surface-dump=%s" % opt["surface_dump"])
 
     env = None
     if opt["input_script"]:

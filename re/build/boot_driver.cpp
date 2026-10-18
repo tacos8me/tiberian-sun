@@ -83,15 +83,18 @@ unsigned long popcount_map(const u8 *map, unsigned nbytes) {
 struct Options {
     const char *image;
     const char *frame;      // TS_FRAME_DUMP / --frame: dump the primary surface
+    const char *surface_dump;  // --surface-dump=PREFIX: PREFIX<i>.png per surface
     unsigned long long budget;   // 64-bit: budgets >= 2^32 must be expressible
     unsigned long depth_limit;
     unsigned wall_seconds;
     unsigned last_imports;
     unsigned last_calls;
     bool verbose;
+    bool surfaces;
     Options()
-        : image("bin/GAME.EXE"), frame(0), budget(20000000ul), depth_limit(20000ul),
-          wall_seconds(60u), last_imports(12u), last_calls(8u), verbose(false) {}
+        : image("bin/GAME.EXE"), frame(0), surface_dump(0), budget(20000000ul),
+          depth_limit(20000ul), wall_seconds(60u), last_imports(12u),
+          last_calls(8u), verbose(false), surfaces(false) {}
 };
 
 // The frame dump happens after the run, before the report, so the report can
@@ -702,6 +705,10 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
     std::printf("render-locks: %lu\n", ts::rnd::stat_locks());
     std::printf("render-flips: %lu\n", ts::rnd::stat_flips());
     std::printf("input-messages: %lu\n", ts::w32::input_messages());
+    if (o.surfaces) {
+        std::printf("surfaces:\n");
+        ts::rnd::report_surfaces(stdout);
+    }
     if (o.frame) {
         std::printf("frame-dump: %s\n", o.frame);
         std::printf("frame-ok: %u\n", g_frame_ok ? 1u : 0u);
@@ -861,6 +868,8 @@ bool parse_args(int argc, char **argv, Options &o) {
         const char *a = argv[i];
         if (starts_with(a, "--image="))         o.image = a + 8;
         else if (starts_with(a, "--frame="))    o.frame = a + 8;
+        else if (starts_with(a, "--surface-dump=")) o.surface_dump = a + 15;
+        else if (!std::strcmp(a, "--surfaces")) o.surfaces = true;
         else if (starts_with(a, "--budget="))   o.budget = std::strtoull(a + 9, 0, 10);
         else if (starts_with(a, "--timeout="))  o.wall_seconds = (unsigned)std::strtoul(a + 10, 0, 10);
         else if (starts_with(a, "--depth="))    o.depth_limit = std::strtoul(a + 8, 0, 10);
@@ -870,7 +879,8 @@ bool parse_args(int argc, char **argv, Options &o) {
         else if (!std::strcmp(a, "--help") || !std::strcmp(a, "-h")) {
             std::printf("usage: boot_driver [--image=PATH] [--budget=N] "
                         "[--timeout=SECONDS] [--depth=N] [--imports=N] [--calls=N] "
-                        "[--frame=PATH] [--verbose]\n");
+                        "[--frame=PATH] [--surfaces] [--surface-dump=PREFIX] "
+                        "[--verbose]\n");
             return false;
         } else {
             std::fprintf(stderr, "boot_driver: unknown argument %s\n", a);
@@ -977,6 +987,17 @@ int main(int argc, char **argv) {
             g_frame_h = s->height;
             g_frame_nonblack = ts::rnd::nonblack_pixels(s);
         }
+    }
+    // One PNG per surface, so "the terrain went to an offscreen nobody blits"
+    // can be read directly instead of inferred from counters.
+    if (opt.surface_dump && *opt.surface_dump) {
+        unsigned n = ts::rnd::surface_n();
+        for (unsigned i = 0; i < n; ++i) {
+            char path[512];
+            std::snprintf(path, sizeof path, "%s%u.png", opt.surface_dump, i);
+            ts::rnd::dump_surface_png(i, path);
+        }
+        std::printf("surface-dump: %u file(s) at %s<i>.png\n", n, opt.surface_dump);
     }
 
     mix_lookup_report();

@@ -294,8 +294,9 @@ def check_ppm(path):
 def run_selftest(exe, tmp, tag):
     png = os.path.join(tmp, tag + ".png")
     ppm = os.path.join(tmp, tag + ".ppm")
-    r = run([exe, png, ppm])
-    return r, png, ppm
+    surf = os.path.join(tmp, tag + "_surf1.png")
+    r = run([exe, png, ppm, surf])
+    return r, png, ppm, surf
 
 
 def main():
@@ -306,7 +307,7 @@ def main():
         exe = build(tmp, "selftest")
         if not exe:
             return report()
-        r, png, ppm = run_selftest(exe, tmp, "frame")
+        r, png, ppm, surf = run_selftest(exe, tmp, "frame")
         if r.returncode != 0:
             fail("selftest exited %d:\n%s%s" % (r.returncode, r.stdout, r.stderr))
         elif "SELFTEST PASSED" not in r.stdout:
@@ -322,12 +323,32 @@ def main():
             check_ppm(ppm)
         else:
             fail("selftest wrote no PPM")
+        # The per-surface dump: the offscreen (index 1) must be 64x64 with its
+        # green clear and the blue colour-fill visible. This is the path the
+        # boot uses to dump a surface that is never the primary.
+        if os.path.exists(surf):
+            try:
+                sw, sh, srows = decode_png(surf)
+            except Exception as e:  # noqa: BLE001
+                fail("surface PNG decode: %s" % e)
+            else:
+                if (sw, sh) != (64, 64):
+                    fail("surface PNG is %dx%d, expected 64x64" % (sw, sh))
+                elif not near(pixel(srows, 0, 0), (0, 255, 0)):
+                    fail("surface PNG (0,0) is %r, expected green" % (pixel(srows, 0, 0),))
+                elif not near(pixel(srows, 20, 20), (0, 0, 255)):
+                    fail("surface PNG (20,20) is %r, expected blue fill"
+                         % (pixel(srows, 20, 20),))
+                else:
+                    print("[4b] per-surface PNG decoded: 64x64 offscreen, green + blue fill")
+        else:
+            fail("selftest wrote no per-surface PNG")
 
         # Mutation 1: the blit copy lands one pixel to the right. The pixel
         # checks must notice, or they are not checking the copy.
         m1 = build(tmp, "selftest_blt_mutant", ["-DTS_MUTATION_BLT_XOFF"])
         if m1:
-            r1, _, _ = run_selftest(m1, tmp, "mutant_blt")
+            r1, _, _, _ = run_selftest(m1, tmp, "mutant_blt")
             if r1.returncode == 0 or "SELFTEST FAILED" not in r1.stdout:
                 fail("mutation BLT_XOFF was not caught (rc=%d)\n%s"
                      % (r1.returncode, r1.stdout))
@@ -339,7 +360,7 @@ def main():
         # must notice, or they are not checking the key table.
         m2 = build(tmp, "selftest_key_mutant", ["-DTS_MUTATION_KEY_ZERO"])
         if m2:
-            r2, _, _ = run_selftest(m2, tmp, "mutant_key")
+            r2, _, _, _ = run_selftest(m2, tmp, "mutant_key")
             if r2.returncode == 0 or "SELFTEST FAILED" not in r2.stdout:
                 fail("mutation KEY_ZERO was not caught (rc=%d)\n%s"
                      % (r2.returncode, r2.stdout))
