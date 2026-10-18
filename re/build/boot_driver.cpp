@@ -676,7 +676,11 @@ int main(int argc, char **argv) {
     std::signal(SIGALRM, on_watchdog);
     watchdog_start(opt.wall_seconds);
 
-    bool returned = false;
+    // volatile: setjmp/longjmp makes a non-volatile local modified after
+    // setjmp indeterminate when it is read after the longjmp. At -O0 this
+    // happened to live in memory; at -O2 it is a register and the report would
+    // print the wrong answer.
+    volatile bool returned = false;
     std::fflush(stdout);
     if (setjmp(halt) == 0) {
         ts::ts_call(kEntryPoint);

@@ -128,7 +128,14 @@ def sync_handwritten():
                 print("boot: %s reported a problem after the header copy" % args[0])
                 print("  " + text.strip().replace("\n", "\n  ")[:800])
     return n
-CXXFLAGS = ["-std=c++03", "-O0", "-m32"] + INCLUDE
+# -O2 is what makes the model's per-instruction helpers (insn, page, the flag
+# helpers) inline instead of costing a call each: the whole interpreter is
+# header-only, so -O0 leaves every one of them a real call through a PLT-less
+# direct branch plus a stack frame. -fno-pie removes the __x86.get_pc_thunk
+# indirection that -O0+PIE emitted on every access to mach()/pages(). Both are
+# code generation only; the C++03 semantics the model depends on are unchanged.
+CXXFLAGS = ["-std=c++03", "-O2", "-m32", "-fno-pie"] + INCLUDE
+LDFLAGS = ["-no-pie"]
 
 
 def sources():
@@ -254,7 +261,7 @@ def build(rebuild):
             return False, time.time() - started, (len(todo), 0)
         save_manifest(man)
 
-    link = ["g++"] + CXXFLAGS + ["-o", BINARY] + \
+    link = ["g++"] + CXXFLAGS + LDFLAGS + ["-o", BINARY] + \
            [objects[s] for s in srcs]
     r = subprocess.run(link, capture_output=True)
     if r.returncode != 0:
