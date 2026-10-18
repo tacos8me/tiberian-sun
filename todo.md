@@ -1277,30 +1277,55 @@ the frame is the real GDI loading screen, md5 `6cb0e1ff…` (290,399 non-black),
 byte-identical to `out/render_2_6b.png`. At 30B: 63,031 of 63,598 reused
 (99.1%), footprint flat at 14,111 pages (55 MB).
 
-### [ ] The mission load is instruction-bound in the game's O(n^2) vector growth
-**The current blocker, and it is the game's own algorithm, not memory.** With
-correct memory the loader is still in `sub_0055b09a` at 30B instructions,
-walking a sequence of static vectors in `.bss` (`ESI = 0x711fd8`, `0x711ff0`,
-`0x712008`, `0x712020`, `0x712038`; one new vector every ~5-10B instructions).
-The current vector holds **127,760 entries** (`ECX=0x1f310`) and the new
-capacity is count+10, so every reallocation copies the whole buffer. Coverage is
-unchanged at 139,250 instructions / 8,682 functions and the frame stays the
-loading screen. This is the binary's own growth step (10, cited in
-`VectorClass.h`), not a heap defect. Measured throughput is **~28.6M
-instructions/s** (20B: 698 s; 30B: 1,048 s), and the load needs tens of
-billions.
+### [x] Interpreter speed — 12-14x, target exceeded
+**Was ~28.6M instructions/s; now ~400M/s, with byte-identical machine state.**
+Measured on the mission-load run (`TS_ROOT`/`TS_CD`/`TS_DATA`, `esc_skip.txt`):
+
+| budget | before | after | instructions/s |
+|---|---|---|---|
+| 4B | 137.1 s | **11.5 s** | 29.2M -> **347.8M** (11.9x) |
+| 20B | 698 s | **50.2 s** | 28.65M -> **398.4M** (13.9x) |
+| 30B | 1,048 s | **74.4 s** | 28.6M -> **403.2M** (14.1x) |
+| 50B | — | 123.0 s | 406.5M |
+| 100B | — | 243.2 s | 411.2M |
+
+State is byte-identical at every budget: same stop EIP, registers, pages,
+coverage and frame. Changes (all semantics-preserving): build at `-O2
+-fno-pie`/`-no-pie`; a 256-entry direct-mapped page cache (positive hits only;
+blocks never move on resize); single-page wide `ld16/st16/ld32/st32` with one
+lookup + `memcpy` when not straddling a page; `insn()`'s cold path moved to
+`noinline insn_slow()`; inlined page-cache hit, `page()` and flag helpers;
+`count_of()` caches the last import name instead of `strcmp`-scanning 342 rows
+per stub call. Rejected as measured-slower/larger: `always_inline` on `insn`
+(234 MB binary) and on `ld32/st32` (114 MB, 5% for 2.2x size).
+
+A perf regression test (`test_machine_perf`) pins the hot path: a 40M-iteration
+workload, wide-vs-byte checksum `88188416`, page straddles, the watchpoint path,
+a 20M/s floor, a cached-path >=1.4x `page_in_slow` ratio (measured 1.73-1.78),
+and that `boot.py` keeps `-O2`/`-fno-pie`; mutation-proven. `test_tools.py` is
+**94 checks**; `verify.py` PASSED, `test_runtime.py` 101, link OK, `--strict` 0.
+
+### [ ] The mission load is ~0.75-1e12 instructions of O(n^2) vector growth
+**The current blocker, and it is the game's own algorithm.** The loader rebuilds
+**22 `DynamicVectorClass` objects at `this+0x1280`** (object base `0x710cc8`,
+stride `0x18`) in `sub_005a35b0` — loop head `0x5a35cb`, tail `0x5a3760`
+(`add ebx,4; add esi,0x18; cmp ebx,0x58; jl`), called from `sub_005a1ba8` at
+`0x5a1bb8`. Each append goes through `SetCount` `0x55b050` -> `0x55b09a`, which
+reallocates `count*8` and copies every 8-byte entry, growth step ~10 — O(n²).
+At 100B it is on vector **7 of 22** (`ESI=0x712068`, `ECX=0x27146` = 160,070
+entries); vector 5->6 alone cost 50B instructions. Extrapolating, the load needs
+**~0.75-1e12 instructions** — 30-40 min at 400M/s, ~10 h at the old rate. The
+old "tens of billions" estimate was 20-30x low.
 
 **The old "tactical draw at ~4.07B" does not reproduce with correct memory** —
 it was measured while the heap collision was corrupting the loader's buffers.
 
-*Next:* profile the run (`perf record -g -p <pid> -- sleep 8`;
-`kernel.perf_event_paranoid` must be 1) and optimize the interpreter hot path —
-`insn()` overhead, page lookup, generated-code dispatch, `rep movsd`/memcpy,
-heap zeroing. Target **>=100M instructions/s** (STRATEGY) or at least a 2-4x
-speedup, measured with `--budget`, without changing game semantics. If a
-generator change is needed, run the full pipeline and re-verify.
-*Done when:* the load completes or reaches the tactical phase within a
-practical budget, with the speed measured and the frame/stop reported.
+*Next:* a 1.2e12-budget run is in flight (~50 min) to see whether the load
+completes and reaches the tactical phase. If it does, name the tactical stop and
+dump a frame; if not, the extrapolation needs revisiting. Do not change the
+game's growth algorithm; it is the binary's own behavior.
+*Done when:* the load completes and the tactical phase is reached, or the
+remaining cost is explained and bounded.
 
 ### [x] The mission writes pixels but never presents a frame — explained and fixed
 **The blue banded/grid frame was raw heap memory.** The game *does* present the
