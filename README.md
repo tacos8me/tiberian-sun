@@ -5,6 +5,15 @@ A reverse-engineering project that takes the retail PC release of
 it as compilable, documented C++ source — and, increasingly, executes the
 original program's own instruction stream against a machine model.
 
+## Progress screenshot
+
+![The reconstructed model rendering the retail Tiberian Sun main menu](re/out/frame.png)
+
+*The model's own 640x480 render of the game's main menu: 254,610 non-black
+pixels, mean channel difference 1.06/255 against the retail screenshot. The
+GDI intro frame (`re/out/mission.png`) and the mission loading screen
+(`re/out/render_2_6b.png`) are committed alongside it.*
+
 ## Status
 
 The reconstructed source **compiles, links and runs**. The binary is recovered,
