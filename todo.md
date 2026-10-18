@@ -1108,20 +1108,76 @@ return 1, which requires `[0x7b0d38]` nonzero and != 5 (it is 0), and the
 selection flag `0x7b2ab8` has only its menu-init store (`0x4da7b8`). No menu
 item was selected.
 
-### [ ] Menu-item selection and the nested-MIX button art
-**The current blocker.** The model renders the menu, but its scripted clicks
-are probes: neither the model nor the retail draws the menu's buttons/text in
-this environment, because their PCX assets live inside `TIBSUN.MIX`'s **nested
-MIX entry `0xa8548fd9` (317 entries)**. There is no visible target, and the
-hit-test/selection flag is never set.
+### [x] Menu-item selection and the nested-MIX button art — fixed
+**The model leaves the main menu and opens "Select Campaign:".** LANGUAGE.DLL
+`RT_DIALOG` **226** is the main menu: template 204x147 DLU, `DS_SETFONT` 8pt
+"MS Sans Serif"; dialog units map by the measured 6x13 base unit
+(`MulDiv(x,6,4)`, `MulDiv(y,13,8)`), so the dialog is 306x239, centred at
+(167,120) and moved to **(167,187)**. Its six `BS_OWNERDRAW` buttons (class atom
+0x80) and result codes:
 
-*Next:* locate the menu screen's button control list/rectangles — the object
-that hit-tests the mouse and sets `0x7b2ab8` — or load the nested-MIX PCX assets
-and draw the buttons. Trace the MIX/PCX load path with `TS_FILE_TRACE` and the
-Ghidra MCP (`0x4da7b8` init, `0x5898f0` exit check, `0x7b0d38`, `0x7b2ab8`).
-Then aim a scripted click at a real button.
-*Done when:* a scripted click changes `0x7b2ab8`/`0x7b0d38`, the game leaves the
-menu, and the next screen or stop is named (with a frame dump if it renders).
+| id | control | client rect (x,y,cx,cy) | screen rect | result |
+|---|---|---|---|---|
+| 0x617 (1559) | New Campaign | 56,20,195,29 | (223,207)-(418,236) | 1 |
+| 0x619 (1561) | Load Mission | 56,54,195,29 | (223,241)-(418,270) | 2 |
+| 0x61A (1562) | Multiplayer Game | 56,88,195,29 | (223,275)-(418,304) | 3 |
+| 0x3EB (1003) | Intro / Sneak Peek | 56,122,195,29 | (223,309)-(418,338) | 4 |
+| 0x55C (1372) | Options | 56,156,195,29 | (223,343)-(418,372) | 5 |
+| 0x3EE (1006) | Exit Game | 56,190,195,29 | (223,377)-(418,406) | 6 |
+
+The game subclasses each button at `0x57b2c0` (`FUN_0057a260`,
+`SetWindowLongA(GWL_WNDPROC)`), lays it out on custom message `0x497`
+(`FUN_0057e7c0`), and the dialog procedure `0x4dd670` handles only `WM_COMMAND`,
+writing the result code through the `GWL_USERDATA` pointer `FUN_004dd2a0`
+installs. The model now performs press/release -> `BN_CLICKED` in
+`dialog_mouse`, so the click reaches the game's own `WM_COMMAND` path.
+
+Measured (default timeline: `mousemove 320 220` + click):
+- The click hits button `0x20003`, queues `WM_COMMAND id=1559`; the menu loop
+  exits with result 1 and the game creates `LANGUAGE.DLL` `RT_DIALOG` **148,
+  "Select Campaign:"** at step **1,688,503,557**.
+- At 1.9e9 the stop is the budget at `0x0045fa8e` (`FUN_0045f960`, front-end
+  frame) inside that dialog's modal loop: `PeekMessage=14,572,933`,
+  `DispatchMessage=7`, input-target `0x2000b`, **0 unmapped**. Window table:
+  dialog 148 at (135,187 370x243) with "Select Campaign:", listbox 1109,
+  Cancel, OK, Slider3, Difficulty, Harder.
+- Clicking **Exit Game** (screen 320,391) instead reaches `ExitProcess(0)` at
+  `0x00684529` after 1,707,666,895 instructions — the game leaves the menu and
+  exits.
+- Frames: `/tmp/campaign_final.png` (menu background, 254,610 non-black; the
+  renderer does not rasterise the dialog), `/tmp/exit.png` (0 non-black).
+
+**Correction:** `0x7b2ab8` and `0x7b0d38` do not change. `0x7b2ab8` is the
+front-end-active flag (still 1) and `0x7b0d38` the game mode (still 0 because
+the game is still in the front-end). The selection signal is the dialog
+procedure's result code through `GWL_USERDATA`, read by `FUN_004dd2a0`.
+
+**The nested MIX is mounted and read.** `TIBSUN.MIX` entry `0xa8548fd9`
+(18,044,736 B at offset 22,111,980) is a 317-entry archive containing 111 PCX
+files, including the 176x29 button art. `TS_FILE_TRACE` shows the nested header
+(4-byte flags, 80-byte key block, 8-byte index blocks — the Blowfish index
+decrypt) and nested bodies at ~27.5M. The art is still not painted because the
+model never sends `WM_PAINT` to child controls (`UpdateWindow` paints only the
+passed window; `InvalidateRect` is a no-op), so the button subclass paint path
+never runs. The retail also draws no buttons in this environment (its `+win`
+trace shows the controls created, visible and laid out; the screenshot has no
+buttons), so this is a separate failure that does not block selection.
+
+### [ ] The "Select Campaign:" listbox is empty
+**The current blocker.** The dialog is up (148 at 135,187 370x243) with
+"Select Campaign:", listbox 1109, Cancel, OK, Slider3, Difficulty, Harder, but
+the model's control-message layer implements no listbox/combobox/trackbar
+content: `LB_ADDSTRING`/`LB_GETCURSEL` are no-ops, so the list is empty and
+nothing can be selected.
+
+*Next:* implement listbox content and selection (and the campaign list source
+the game feeds into `LB_ADDSTRING`), then click **OK** (id 1, client
+(182,197,76,27), screen (355,397)) to start a mission. The dialog/control paint
+path (`WM_PAINT` to children) is a separate issue that also affects retail; it
+is not required for selection.
+*Done when:* the listbox contains the campaign entries, a scripted selection is
+made, OK starts a mission, and the next screen or stop is named (with a frame
+dump if it renders).
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and
