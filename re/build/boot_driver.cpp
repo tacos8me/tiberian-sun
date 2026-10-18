@@ -1223,23 +1223,36 @@ void objects_report() {
     std::printf("objects: n=%u array=0x%08x\n", (unsigned)n, a);
     // 0x7b2d98 is a per-frame list the renderer walks, so it can legitimately
     // be empty at an arbitrary stop. The world itself lives in the class
-    // registries: ObjectClass (0x77bbe0), InfantryClass (0x7b0c08),
-    // BuildingClass (0x7b2c48) and the live houses (0x7afce0).
-    std::printf("  world: objectclass=%u infantry=%u buildings=%u houses=%u\n",
-                (unsigned)ts::ld32(0x0077bbe0u), (unsigned)ts::ld32(0x007b0c08u),
-                (unsigned)ts::ld32(0x007b2c48u), (unsigned)ts::ld32(0x007afce0u));
+    // registries: ObjectClass (0x77bbd0 and 0x77bbb0), InfantryClass
+    // (0x7b0bf8), BuildingClass (0x7b2c38) and the live houses (0x7afce0).
+    //
+    // These are DynamicVectorClass instances, so the count is at +8 and the
+    // data pointer at +4; +0x10 is CAPACITY, not count. An earlier version
+    // read +0x10 as n and, for infantry, +0x24 (a different vector) as the
+    // array, which printed "infantry: n=21 array=0" while 21 infantry were
+    // alive. The layout is fixed by the constructors: 0x4a80f0 (ObjectClass
+    // vector A), 0x4a8270 (vector B), 0x4a7f70 (InfantryClass), 0x4a7ff0
+    // (BuildingClass).
+    std::printf("  world: objectclass.A=%u/%u objectclass.B=%u/%u "
+                "infantry=%u/%u buildings=%u/%u houses=%u\n",
+                (unsigned)ts::ld32(0x0077bbd8u), (unsigned)ts::ld32(0x0077bbe0u),
+                (unsigned)ts::ld32(0x0077bbb8u), (unsigned)ts::ld32(0x0077bbc0u),
+                (unsigned)ts::ld32(0x007b0c00u), (unsigned)ts::ld32(0x007b0c08u),
+                (unsigned)ts::ld32(0x007b2c40u), (unsigned)ts::ld32(0x007b2c48u),
+                (unsigned)ts::ld32(0x007afce0u));
     // Where each world object actually is. The reveal pass walks these
     // registries and reveals around +0x14, so a wrong packed position here is
     // exactly what puts the revealed patch in the wrong place.
     {
-        static const struct { const char *name; u32 count_va, array_va; } regs[3] = {
-            { "objectclass", 0x0077bbe0u, 0x0077bbb4u },
-            { "infantry",    0x007b0c08u, 0x007b0c2cu },
-            { "buildings",   0x007b2c48u, 0x007b2c3cu },
+        static const struct { const char *name; u32 data_va, count_va; } regs[4] = {
+            { "objectclass.A", 0x0077bbd4u, 0x0077bbd8u },
+            { "objectclass.B", 0x0077bbb4u, 0x0077bbb8u },
+            { "infantry",      0x007b0bfcu, 0x007b0c00u },
+            { "buildings",     0x007b2c3cu, 0x007b2c40u },
         };
-        for (unsigned r = 0; r < 3u; ++r) {
+        for (unsigned r = 0; r < 4u; ++r) {
             u32 cnt = ts::ld32(regs[r].count_va);
-            u32 arr = ts::ld32(regs[r].array_va);
+            u32 arr = ts::ld32(regs[r].data_va);
             std::printf("  %s: n=%u array=0x%08x\n", regs[r].name,
                         (unsigned)cnt, arr);
             if (arr < 0x00400000u || arr >= 0x80000000u) continue;
