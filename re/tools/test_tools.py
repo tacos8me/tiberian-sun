@@ -2098,6 +2098,21 @@ int main() {
     ck("GetAsyncKeyState sees the key up",
        ts::input::async_key_state(0x41u) == 0u);
 
+    // -- the screen geometry every Win32 answer is derived from -------------
+    // 640x480 is the retail mode (measured under Wine), not the 800x600 of the
+    // movie stream's buffer. GetSystemMetrics, the window defaults and the
+    // DirectDraw display descriptor all read this one pair.
+    ts::u32 gsm = ts::w32::find_by_name("GetSystemMetrics");
+    ck("GetSystemMetrics has a stub", gsm != 0);
+    ts::st32(sp3 + 0u, 0u);             // SM_CXSCREEN
+    ESP.d = sp3;
+    ts::ts_call_at(gsm, 0x00c0ffeeu);
+    ck("SM_CXSCREEN is 640", EAX.d == 640u);
+    ts::st32(sp3 + 0u, 1u);             // SM_CYSCREEN
+    ESP.d = sp3;
+    ts::ts_call_at(gsm, 0x00c0ffeeu);
+    ck("SM_CYSCREEN is 480", EAX.d == 480u);
+
     // -- cursor position is the scripted pointer ----------------------------
     ts::input::set_cursor(123, 45);
     const ts::u32 pt = 0x00305000u;
