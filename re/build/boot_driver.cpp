@@ -82,6 +82,7 @@ unsigned long popcount_map(const u8 *map, unsigned nbytes) {
 // -- the run ----------------------------------------------------------------
 struct Options {
     const char *image;
+    const char *frame;      // TS_FRAME_DUMP / --frame: dump the primary surface
     unsigned long budget;
     unsigned long depth_limit;
     unsigned wall_seconds;
@@ -89,9 +90,17 @@ struct Options {
     unsigned last_calls;
     bool verbose;
     Options()
-        : image("bin/GAME.EXE"), budget(20000000ul), depth_limit(20000ul),
+        : image("bin/GAME.EXE"), frame(0), budget(20000000ul), depth_limit(20000ul),
           wall_seconds(60u), last_imports(12u), last_calls(8u), verbose(false) {}
 };
+
+// The frame dump happens after the run, before the report, so the report can
+// say whether the dump succeeded and how much of it is not black. A blank PNG
+// is a real measurement; a missing PNG is a defect in the dump path.
+bool          g_frame_ok = false;
+unsigned      g_frame_w = 0, g_frame_h = 0;
+unsigned long g_frame_nonblack = 0;
+unsigned long g_frame_surfaces = 0;
 
 bool     g_timed_out = false;
 jmp_buf *g_halt = 0;
@@ -483,6 +492,22 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
     std::printf("import-calls: %lu\n", g_import_calls);
     std::printf("distinct-imports: %lu\n", distinct_imports());
     print_message_loop();
+    // The rendering layer's own state. A run can reach the menu and still draw
+    // nothing (a blank primary surface); these counters say whether the game
+    // blitted at all, and the dump path says whether the pixels are readable.
+    std::printf("render-surfaces: %lu\n", (unsigned long)ts::rnd::surface_n());
+    std::printf("render-blits: %lu\n", ts::rnd::stat_blits());
+    std::printf("render-fills: %lu\n", ts::rnd::stat_fills());
+    std::printf("render-locks: %lu\n", ts::rnd::stat_locks());
+    std::printf("render-flips: %lu\n", ts::rnd::stat_flips());
+    std::printf("input-messages: %lu\n", ts::w32::input_messages());
+    if (o.frame) {
+        std::printf("frame-dump: %s\n", o.frame);
+        std::printf("frame-ok: %u\n", g_frame_ok ? 1u : 0u);
+        std::printf("frame-size: %ux%u\n", g_frame_w, g_frame_h);
+        std::printf("frame-nonblack: %lu\n", g_frame_nonblack);
+        std::printf("frame-surfaces: %lu\n", g_frame_surfaces);
+    }
     print_last_calls(o.last_calls);
     print_last_imports(o.last_imports);
     print_import_counts(12);
@@ -525,6 +550,7 @@ bool parse_args(int argc, char **argv, Options &o) {
     for (int i = 1; i < argc; ++i) {
         const char *a = argv[i];
         if (starts_with(a, "--image="))         o.image = a + 8;
+        else if (starts_with(a, "--frame="))    o.frame = a + 8;
         else if (starts_with(a, "--budget="))   o.budget = std::strtoul(a + 9, 0, 10);
         else if (starts_with(a, "--timeout="))  o.wall_seconds = (unsigned)std::strtoul(a + 10, 0, 10);
         else if (starts_with(a, "--depth="))    o.depth_limit = std::strtoul(a + 8, 0, 10);
@@ -534,7 +560,7 @@ bool parse_args(int argc, char **argv, Options &o) {
         else if (!std::strcmp(a, "--help") || !std::strcmp(a, "-h")) {
             std::printf("usage: boot_driver [--image=PATH] [--budget=N] "
                         "[--timeout=SECONDS] [--depth=N] [--imports=N] [--calls=N] "
-                        "[--verbose]\n");
+                        "[--frame=PATH] [--verbose]\n");
             return false;
         } else {
             std::fprintf(stderr, "boot_driver: unknown argument %s\n", a);
@@ -552,6 +578,11 @@ int main(int argc, char **argv) {
     Options opt;
     if (!parse_args(argc, argv, opt)) return 1;
     g_verbose = opt.verbose;
+    // TS_FRAME_DUMP is the environment form; --frame wins when both are given.
+    if (!opt.frame || !*opt.frame) {
+        const char *env = std::getenv("TS_FRAME_DUMP");
+        if (env && *env) opt.frame = env;
+    }
 
     ts::register_all_recovered();
 
@@ -591,6 +622,20 @@ int main(int argc, char **argv) {
     watchdog_stop();
     m.halt = 0;
     g_halt = 0;
+
+    // Dump the primary surface as the run left it. This is after the halt (a
+    // fault, a budget stop or the watchdog), so it reads the frame the game was
+    // in the middle of drawing rather than a clean shutdown it never reached.
+    if (opt.frame && *opt.frame) {
+        const ts::rnd::Surface *s = ts::rnd::primary();
+        g_frame_surfaces = ts::rnd::surface_n();
+        g_frame_ok = ts::rnd::dump_primary_png(opt.frame);
+        if (s) {
+            g_frame_w = s->width;
+            g_frame_h = s->height;
+            g_frame_nonblack = ts::rnd::nonblack_pixels(s);
+        }
+    }
 
     print_report(opt, returned, esp0);
     std::fflush(stdout);

@@ -99,9 +99,13 @@ enum {
     MAX_PALETTES                = 16,
     PALETTE_ENTRIES             = 256,
 
-    // DDBLTFX.dwFillColor, from the DirectX 6 DDBLTFX layout: 16 dwords
-    // precede it (dwSize .. dwColorSpaceHighValue).
-    DDBLTFX_FILLCOLOR           = 0x40u
+    // DDBLTFX.dwFillColor. The DirectX 6 layout puts it at +0x50, in a union
+    // after dwAlphaSrcConst (dwSize +0x00 .. dwAlphaSrcConst +0x4c). This is
+    // confirmed twice: the bundled ddraw.h's field order, and GAME.EXE's own
+    // fill helper, which stores the colour at 0x50 from its pushed argument
+    // (0x4883cd, `mov %ecx,0xb0(%esp)` after the fx push). The struct is 100
+    // bytes: dwFillColor +0x50, ddckDestColorkey +0x54, ddckSrcColorkey +0x5c.
+    DDBLTFX_FILLCOLOR           = 0x50u
 };
 
 // -- model-space memory ------------------------------------------------------
@@ -235,6 +239,14 @@ struct Surface {
 inline Surface *surface_table() { static Surface t[MAX_SURFACES]; return t; }
 inline unsigned &surface_n() { static unsigned n = 0u; return n; }
 inline Surface *&primary_surface() { static Surface *p = 0; return p; }
+
+// Operation counters. A frame that is blank because the game never blitted and
+// a frame that is blank because every blit landed off-surface look identical in
+// a PNG; these say which. They are cheap and the boot report prints them.
+inline unsigned long &stat_blits() { static unsigned long n = 0; return n; }
+inline unsigned long &stat_fills() { static unsigned long n = 0; return n; }
+inline unsigned long &stat_locks() { static unsigned long n = 0; return n; }
+inline unsigned long &stat_flips() { static unsigned long n = 0; return n; }
 
 inline Surface *find(u32 obj) {
     if (!obj) return 0;
@@ -481,6 +493,7 @@ inline u32 write_caps(u32 obj, u32 va) {
 inline u32 fill_rect_obj(u32 obj, const Rect &rect, u32 raw) {
     Surface *s = find(obj);
     if (!s) return DDERR_INVALIDOBJECT;
+    ++stat_fills();
     Rect q = rect;
     if (!clip_rect(q, s)) return DD_OK;
     u32 bytes = bytes_per_pixel(s);
@@ -539,18 +552,19 @@ inline void blt_row(Surface *dst, Surface *src, i32 dx, i32 dy, i32 sx, i32 sy,
 }
 
 // Blt(this, dst_rect, src_surface, src_rect, flags, fx). Handles the two forms
-// the retail game uses: DDBLT_COLORFILL (src NULL, colour at fx+0x40) and a
+// the retail game uses: DDBLT_COLORFILL (src NULL, colour at fx+0x50) and a
 // source copy (197 of 210 calls in the measured trace).
 inline u32 blt(u32 dst_obj, u32 dst_rect_va, u32 src_obj, u32 src_rect_va,
                u32 flags, u32 fx_va) {
     Surface *d = find(dst_obj);
     if (!d) return DDERR_INVALIDOBJECT;
+    ++stat_blits();
 
     if (flags & DDBLT_COLORFILL) {
         // Measured on the retail binary with gdb at its own Blt call site
-        // (0x4883f5): all 11 startup colour fills carry dwFillColor = 0 (the
-        // whole DDBLTFX is zero except dwSize and a transient word at +0x50),
-        // so the game clears surfaces to black and blits art over them.
+        // (0x4883f5): the 11 startup colour fills carry dwFillColor at +0x50,
+        // zero for ten of them and 1 for one, so the game clears surfaces to
+        // black and blits art over them.
         u32 color = fx_va ? ld32(fx_va + DDBLTFX_FILLCOLOR) : 0u;
         Rect q = dst_rect_va ? rect_from(dst_rect_va) : whole(d);
         return fill_rect_obj(dst_obj, q, color);
@@ -610,6 +624,7 @@ inline u32 blt_fast(u32 dst_obj, u32 x, u32 y, u32 src_obj, u32 src_rect_va,
     Surface *d = find(dst_obj);
     Surface *s = find(src_obj);
     if (!d || !s) return DDERR_INVALIDOBJECT;
+    ++stat_blits();
     Rect sq = src_rect_va ? rect_from(src_rect_va) : whole(s);
     if (sq.r <= sq.l || sq.b <= sq.t) return DD_OK;
     Rect dq;
@@ -646,6 +661,7 @@ inline u32 flip(u32 obj, u32 target_obj, u32 flags) {
     (void)flags;
     Surface *s = find(obj);
     if (!s) return DDERR_INVALIDOBJECT;
+    ++stat_flips();
     Surface *t = target_obj ? find(target_obj) : s->attached;
     if (!t) return DD_OK;   // nothing to flip to; a no-op is the honest answer
     u32 p = s->pixels; s->pixels = t->pixels; t->pixels = p;
@@ -660,6 +676,7 @@ inline u32 lock(u32 obj, u32 rect_va, u32 desc_va, u32 flags) {
     (void)flags;
     Surface *s = find(obj);
     if (!s) return DDERR_INVALIDOBJECT;
+    ++stat_locks();
     Rect q = rect_va ? rect_from(rect_va) : whole(s);
     if (!clip_rect(q, s)) return DDERR_INVALIDPARAMS;
     s->locked = true;
@@ -894,6 +911,18 @@ inline bool dump_png(const Surface *s, const char *path) {
 }
 
 inline const Surface *primary() { return primary_surface(); }
+
+// How much of a surface is not black. A dumped frame that is entirely zero is
+// a real answer ("nothing was drawn"), and it has to be distinguishable from a
+// dump that failed; the boot report prints this next to the dump path.
+inline unsigned long nonblack_pixels(const Surface *s) {
+    if (!s) return 0u;
+    unsigned long n = 0u;
+    for (u32 y = 0; y < s->height; ++y)
+        for (u32 x = 0; x < s->width; ++x)
+            if (get_px(s, x, y) != 0u) ++n;
+    return n;
+}
 
 inline bool dump_primary_png(const char *path) {
     return dump_png(primary_surface(), path);
