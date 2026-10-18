@@ -751,6 +751,11 @@ def main(argv):
         keys = dict(keys)
         keys["build"] = note
         keys["elapsed-seconds"] = round(elapsed, 2)
+        # The heap's own counters (Win32Stubs.h, TS_HEAP_STATS=1) arrive on
+        # stderr at exit; without this they are lost in --json mode.
+        heap = [ln for ln in stderr.splitlines() if ln.startswith("heap:")]
+        if heap:
+            keys["heap"] = heap[-1]
         keys["lists"] = lists
         stop_va = (hexwords(keys.get("fault-eip", "")) or hexwords(keys.get("eip", "")) or [0])[0]
         entry = function_at(entries, stop_va)
