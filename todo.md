@@ -1040,8 +1040,51 @@ lookups.
 *Next:* diagnose against the retail at `0x4f6980` (Ghidra MCP + `tools/oracle.py`
 /`wine_env.sh`); determine whether the failed asset lookup should remove/free the
 node, or whether the model's traversal is wrong. Fix the first proven cause.
+
+**A candidate root cause from the rendering lane:** `IDirectDrawSurface::Blt`
+takes **6** words, not 5 (`this, dest, src, srcrect, flags, fx`). The current
+slot stub pops 5, so every Blt leaks 4 bytes; the retail performs **210 Blt**
+calls before the menu. That is 840 bytes of stack drift — the same class that
+produced the earlier node-list/teardown corruption. The lane was told to check
+this before chasing the list.
+
 *Done when:* coverage advances past 78,070 and the game reaches the main menu or
 the next named stop.
+
+### [x] Standalone rendering/input layer — built and tested
+**Built ahead of the menu.** `Rendering.h` provides per-surface memory with
+pitch and 16bpp RGB565, `Lock`/`Unlock`, `Blt`/`BltFast`/`Fill`/`Flip`,
+`GetSurfaceDesc`/`GetCaps`/`GetPixelFormat`, palette support, and a PNG/PPM
+frame dump. `Input.h` provides scripted key/mouse state, cursor, and synthesized
+messages. Both are standalone and do not yet touch `Win32Stubs.h`.
+
+Retail measurements (`+ddraw` trace and gdb at `0x4883f5`): **210 Blt** (197
+copies flags `0x01000000`, 13 colour fills `0x01000400`), **195 Lock**
+(`0x1`), 7 `CreateSurface`, **0 Flip, 0 SetPalette, 0 GetPixelFormat** before
+the menu. Every surface is 16bpp RGB565 (`f800/07e0/001f`), pitch `width*2`;
+primary 640x480, offscreen 64x64 / 472x480 / 168x480 / 640x480. The startup
+colour fills use `dwFillColor = 0` (clear to black).
+
+Tests: `tools/test_runtime.py` -> **RUNTIME TEST PASSED** (99 selftest checks,
+PNG decoded independently, PPM pixel checked, two mutations caught). Synthetic
+640x480 frame: `out/frame_selftest.png` md5 `4e2d4e579162a2a669caa2f49b75b16d`.
+The exact integration patch is in `tools/test_runtime.py`'s docstring.
+
+### [ ] Integrate Rendering.h/Input.h into Win32Stubs.h
+**Queued behind the list-cycle lane** (it owns `Win32Stubs.h`). The patch is
+documented in `tools/test_runtime.py`: include the two headers; route
+`make_surface`/`dd_CreateSurface`/`dd_GetDisplayMode` into `ts::rnd`; override
+surface slots 5 (Blt, **6 words**), 7 (BltFast, 6), 11 (Flip, 3), 14 (GetCaps),
+21 (GetPixelFormat), 22 (GetSurfaceDesc), 25 (Lock), 29 (SetColorKey), 31
+(SetPalette), 32 (Unlock); route the input functions and `PeekMessageA` through
+`ts::input`; dump `ts::rnd::dump_primary_png("out/frame.png")` after a run.
+
+Also fix while integrating: `dd_GetDisplayMode` writes `dwRGBBitCount` at +0x68
+(`ddsCaps.dwCaps`) instead of +0x54; `SCREEN_W/H` are 800x600 while the retail
+mode is 640x480.
+*Done when:* the boot with `TS_CD` reaches the menu (or the next named stop),
+`out/frame.png` shows the menu art rather than a blank frame, and the frame is
+diffed against the retail screenshot (`tools/wine_env.sh`). Keep `--strict` at 0.
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and
