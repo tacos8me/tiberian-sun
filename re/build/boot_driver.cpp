@@ -1143,23 +1143,59 @@ void mapcells_report() {
         std::printf("  cell array pointer is not a model pointer\n");
         return;
     }
-    if (w == 0u || w > 512u) w = 48u;
-    if (h == 0u || h > 512u) h = 63u;
+    // The cell array is a 512x512 pointer grid (n=262144) whatever +0xfc/+0x100
+    // say: this map's objects sit at cell (84,54), so a 48x63 window counts a
+    // fraction of the map and misses revealed cells entirely. Scan the array.
+    (void)w; (void)h;
+    w = 512u; h = 512u;
     unsigned long alloc = 0, tiles = 0, seen = 0, fog = 0, nonzero = 0;
+    unsigned ax0 = 512u, ay0 = 512u, ax1 = 0u, ay1 = 0u;
+    unsigned sx0 = 512u, sy0 = 512u, sx1 = 0u, sy1 = 0u;
     for (unsigned y = 0; y < h; ++y) {
         for (unsigned x = 0; x < w; ++x) {
             u32 c = ts::ld32(cells + (y * 512u + x) * 4u);
             if (!c) continue;
             ++alloc;
+            if (x < ax0) ax0 = x;
+            if (y < ay0) ay0 = y;
+            if (x > ax1) ax1 = x;
+            if (y > ay1) ay1 = y;
             u32 t = ts::ld32(c + 0x30u), f = ts::ld32(c + 0xa4u);
             if (t != 0xffffffffu) ++tiles;
-            if (f & 4u) ++seen;
+            if (f & 4u) {
+                ++seen;
+                if (x < sx0) sx0 = x;
+                if (y < sy0) sy0 = y;
+                if (x > sx1) sx1 = x;
+                if (y > sy1) sy1 = y;
+            }
             if (f & 0x20u) ++fog;
             if (f) ++nonzero;
         }
     }
     std::printf("    alloc=%lu tiles=%lu seen=%lu fog=%lu flags_nonzero=%lu\n",
                 alloc, tiles, seen, fog, nonzero);
+    if (alloc)
+        std::printf("    alloc bbox=(%u,%u)-(%u,%u)\n", ax0, ay0, ax1, ay1);
+    if (seen)
+        std::printf("    seen bbox=(%u,%u)-(%u,%u)\n", sx0, sy0, sx1, sy1);
+    // The seen-cell set itself, not just its size: "34 cells" at the bottom
+    // edge of the map is a coordinate question, and a sample of six fixed
+    // cells cannot answer it. Bounded so a fully revealed map stays readable.
+    if (seen && seen <= 512u) {
+        std::printf("    seen:");
+        unsigned shown = 0;
+        for (unsigned y = 0; y < h && shown < 512u; ++y) {
+            for (unsigned x = 0; x < w && shown < 512u; ++x) {
+                u32 c = ts::ld32(cells + (y * 512u + x) * 4u);
+                if (!c) continue;
+                if (!(ts::ld32(c + 0xa4u) & 4u)) continue;
+                std::printf(" (%u,%u)", x, y);
+                ++shown;
+            }
+        }
+        std::printf("\n");
+    }
     static const unsigned sx[6] = { 0u, 24u, 47u, 10u, 28u, 40u };
     static const unsigned sy[6] = { 0u, 31u, 62u, 10u, 59u, 68u };
     for (unsigned i = 0; i < 6u; ++i) {
@@ -1191,6 +1227,50 @@ void objects_report() {
     std::printf("  world: objectclass=%u infantry=%u buildings=%u houses=%u\n",
                 (unsigned)ts::ld32(0x0077bbe0u), (unsigned)ts::ld32(0x007b0c08u),
                 (unsigned)ts::ld32(0x007b2c48u), (unsigned)ts::ld32(0x007afce0u));
+    // Where each world object actually is. The reveal pass walks these
+    // registries and reveals around +0x14, so a wrong packed position here is
+    // exactly what puts the revealed patch in the wrong place.
+    {
+        static const struct { const char *name; u32 count_va, array_va; } regs[3] = {
+            { "objectclass", 0x0077bbe0u, 0x0077bbb4u },
+            { "infantry",    0x007b0c08u, 0x007b0c2cu },
+            { "buildings",   0x007b2c48u, 0x007b2c3cu },
+        };
+        for (unsigned r = 0; r < 3u; ++r) {
+            u32 cnt = ts::ld32(regs[r].count_va);
+            u32 arr = ts::ld32(regs[r].array_va);
+            std::printf("  %s: n=%u array=0x%08x\n", regs[r].name,
+                        (unsigned)cnt, arr);
+            if (arr < 0x00400000u || arr >= 0x80000000u) continue;
+            unsigned lim = cnt < 64u ? (unsigned)cnt : 64u;
+            for (unsigned i = 0; i < lim; ++i) {
+                u32 o = ts::ld32(arr + i * 4u);
+                std::printf("    [%u] obj=0x%08x", i, o);
+                if (o >= 0x00400000u && o < 0x80000000u) {
+                    // ObjectClass +0x40 is the 12-byte CoordStruct (three ints,
+                    // 256 leptons per cell); +0x14 is m_NextObject, not a
+                    // position, so reading it as two shorts prints heap
+                    // pointers. The reveal pass converts Coord>>8 to a cell.
+                    int cx = (int)ts::ld32(o + 0x40u);
+                    int cy = (int)ts::ld32(o + 0x44u);
+                    int cz = (int)ts::ld32(o + 0x48u);
+                    std::printf(" vptr=0x%08x coord=(%d,%d,%d) cell=(%d,%d)",
+                                (unsigned)ts::ld32(o), cx, cy, cz,
+                                cx >> 8, cy >> 8);
+                    // Is the object's own cell revealed? This is what decides
+                    // whether the shroud shows the object at all.
+                    u32 mp = 0x00710d28u;
+                    u32 cs = ts::ld32(mp + 0x168u);
+                    unsigned gx = (unsigned)(cx >> 8), gy = (unsigned)(cy >> 8);
+                    if (cs >= 0x00400000u && cs < 0x80000000u && gx < 512u && gy < 512u) {
+                        u32 c = ts::ld32(cs + (gy * 512u + gx) * 4u);
+                        std::printf(" seen=%d", c && (ts::ld32(c + 0xa4u) & 4u) ? 1 : 0);
+                    }
+                }
+                std::printf("\n");
+            }
+        }
+    }
     if (a < 0x00400000u || a >= 0x80000000u) return;
     unsigned show = n < 12u ? (unsigned)n : 12u;
     for (unsigned i = 0; i < show; ++i) {
