@@ -1906,6 +1906,9 @@ inline void input_pump() {
             i32 y = (i32)(i16)(l >> 16);
             l = ((u32)(u16)(x - tw->x)) | ((u32)(u16)(y - tw->y) << 16);
         }
+        if (std::getenv("TS_INPUT_TRACE"))
+            std::fprintf(stderr, "input: step=%lu target=0x%08x msg=0x%04x w=0x%08x l=0x%08x\n",
+                         (unsigned long)mach().steps, target, m, w, l);
         msg_push(target, m, w, l);
         ++input_msg_count();
     }
@@ -2035,11 +2038,20 @@ inline void dialog_mouse(u32 hwnd, u32 msg, u32 lparam) {
         pressed_dialog() = hwnd;
         pressed_control() = b ? b->hwnd : 0u;
         if (b) focus_handle() = b->hwnd;        // a button takes the focus
+        if (std::getenv("TS_INPUT_TRACE"))
+            std::fprintf(stderr, "input: LBUTTONDOWN at (%d,%d) in 0x%08x -> %s 0x%08x\n",
+                         x, y, hwnd, b ? "button" : "no button", b ? b->hwnd : 0u);
     } else if (msg == 0x0202u) {                // WM_LBUTTONUP
         if (pressed_dialog() != hwnd) return;
         WinRec *b = button_at(hwnd, x, y);
-        if (b && b->hwnd == pressed_control())
+        if (b && b->hwnd == pressed_control()) {
             msg_push(hwnd, 0x0111u, b->id, b->hwnd);   // WM_COMMAND, BN_CLICKED
+            if (std::getenv("TS_INPUT_TRACE"))
+                std::fprintf(stderr, "input: LBUTTONUP at (%d,%d) -> WM_COMMAND id=%u\n",
+                             x, y, b->id);
+        } else if (std::getenv("TS_INPUT_TRACE")) {
+            std::fprintf(stderr, "input: LBUTTONUP at (%d,%d) -> no click\n", x, y);
+        }
         pressed_dialog() = 0u;
         pressed_control() = 0u;
     }
@@ -2579,8 +2591,8 @@ inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
     }
 
     if (win_trace_on()) {
-        std::fprintf(stderr, "win: dialog 0x%08x created at (%d,%d %dx%d)\n",
-                     h, d->x, d->y, d->cx, d->cy);
+        std::fprintf(stderr, "win: dialog 0x%08x created at (%d,%d %dx%d) step=%lu\n",
+                     h, d->x, d->y, d->cx, d->cy, (unsigned long)mach().steps);
         for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i) {
             WinRec &c = wins()[i];
             if (!c.hwnd || c.parent != h) continue;
@@ -2594,12 +2606,14 @@ inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
     // that takes the default focus (0 here) and lParam is dwInitParam.
     call_wndproc(proc, h, 0x0110u, 0u, init);
 
-    // A scripted input source: press the dialog's default button. The command
-    // is queued, not delivered here, so the game's own PeekMessage/GetMessage/
-    // DispatchMessage loop carries it to the dialog procedure.
-    u32 btn = dlg_default_button(h);
-    if (btn) msg_push(h, 0x0111u, btn, dlg_item(h, btn));
-    // Input now belongs to this dialog (see input_target). The game's menu
+    // No button is pressed here. An earlier version queued a WM_COMMAND for
+    // the dialog's default button as a "scripted input source"; that is a fake
+    // selection, and it dismissed the game's real screens the instant they
+    // appeared (the "Select Campaign:" dialog 148 has an OK button, so it
+    // closed in 57,000 instructions and the menu came back). Input now comes
+    // from Input.h and is turned into a WM_COMMAND only when a press and
+    // release land on the same control (dialog_mouse).
+    // Input belongs to this dialog (see input_target). The game's menu
     // dialog has no default button -- its six controls are owner-draw -- so the
     // only way it can be answered is a mouse click, which is what dialog_mouse
     // turns into the WM_COMMAND its procedure expects. A parentless dialog is

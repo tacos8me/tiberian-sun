@@ -1744,16 +1744,18 @@ int main() {
     ts::u32 a1i[1] = { ok };
     ck("IsWindowEnabled reads it back", call_stub(isw, a1i, 1, sp) == 0u);
 
-    // The scripted WM_COMMAND is queued for the default button, not sent.
+    // Creating a dialog presses nothing. The old model queued a WM_COMMAND for
+    // the default button as a fake scripted input, which dismissed real screens
+    // (the game's "Select Campaign:" dialog has an OK button and closed itself
+    // 57,000 instructions after the menu selected it). A click is the only
+    // thing that may produce a WM_COMMAND now; test_win32_button_click covers it.
     ts::u32 pm[5] = { msg, 0u, 0u, 0u, 1u };
-    ck("PeekMessage sees the scripted WM_COMMAND", call_stub(peek, pm, 5, sp) == 1u);
-    ck("WM_COMMAND hwnd", ts::ld32(msg + 0u) == dlg);
-    ck("WM_COMMAND message", ts::ld32(msg + 4u) == 0x0111u);
-    ck("WM_COMMAND control id is IDOK", ts::ld32(msg + 8u) == 1u);
-    ck("WM_COMMAND lParam is the control", ts::ld32(msg + 12u) == ok);
+    ck("CreateDialog queues no WM_COMMAND", call_stub(peek, pm, 5, sp) == 0u);
 
-    // Dispatching it runs the dialog procedure the game stored.
+    // Dispatching a message reaches the dialog procedure the game stored.
+    ts::w32::msg_push(dlg, 0x0111u, 1u, ok);
     ts::u32 a1m[1] = { msg };
+    ck("PeekMessage sees the pushed WM_COMMAND", call_stub(peek, pm, 5, sp) == 1u);
     g_calls = 0;
     call_stub(disp, a1m, 1, sp);
     ck("DispatchMessageA reaches the dialog proc", g_calls == 1u);
@@ -1790,6 +1792,290 @@ int main() {
         check("win32-dialog", False, out)
     else:
         eq("win32-dialog", out.splitlines()[-1] if out else "", "0")
+
+
+def test_win32_button_click():
+    """A click on a dialog's owner-draw Button becomes the game's WM_COMMAND.
+
+    The menu's six controls are BS_OWNERDRAW buttons (LANGUAGE.DLL RT_DIALOG
+    226). The dialog procedure handles WM_COMMAND and nothing else, so the only
+    way a click can select an item is USER32's press/release -> BN_CLICKED
+    translation, which this model performs in dialog_mouse. This pins:
+
+      * dialog units scale by the measured 6x13 base unit (130x18 -> 195x29
+        with DS_SETFONT, 8x16 without);
+      * a (0,0) dialog is centred in its parent (the retail menu is 306x239 at
+        167,120);
+      * GetWindowRect returns screen coordinates, so the game's own layout pass
+        (GetWindowRect - GetWindowRect(parent)) keeps the button where the
+        template put it;
+      * a press and release on the same button queue exactly one WM_COMMAND
+        with that control's id and handle;
+      * a release off the button, or a press on the background, queues none.
+
+    The game's own selection path then consumes that WM_COMMAND: the menu's
+    dialog procedure stores the result code the menu loop reads, which is what
+    leaves the menu.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+
+static ts::u32 call(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
+    for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
+    ESP.d = sp;
+    ts::ts_call_at(fn, 0x00c0ffeeu);
+    return EAX.d;
+}
+
+static ts::u32 put_face(ts::u32 p, const char *s) {
+    for (; *s; ++s, p += 2u) ts::st16(p, (ts::u16)*s);
+    ts::st16(p, 0u);
+    return p + 2u;
+}
+
+static ts::u32 put_ctl(ts::u32 p, ts::u32 style, ts::i32 x, ts::i32 y,
+                       ts::i32 cx, ts::i32 cy, ts::u32 id, const char *text) {
+    p = (p + 3u) & ~3u;
+    ts::st32(p + 0u, style);
+    ts::st32(p + 4u, 0u);
+    ts::st16(p + 8u, (ts::u16)x);  ts::st16(p + 10u, (ts::u16)y);
+    ts::st16(p + 12u, (ts::u16)cx); ts::st16(p + 14u, (ts::u16)cy);
+    ts::st16(p + 16u, (ts::u16)id);
+    ts::st16(p + 18u, 0xffffu); ts::st16(p + 20u, 0x0080u);   // "Button"
+    p = put_face(p + 22u, text);
+    ts::st16(p, 0u);                                           // cbCreationData
+    return p + 2u;
+}
+
+// Drain the queue, delivering every message. Returns the id of the last
+// WM_COMMAND seen (0 if none) and its lParam.
+static ts::u32 pump(ts::u32 peek, ts::u32 disp, ts::u32 msg, ts::u32 sp,
+                    ts::u32 *out_lp) {
+    ts::u32 id = 0u;
+    if (out_lp) *out_lp = 0u;
+    for (unsigned i = 0; i < 32u; ++i) {
+        ts::u32 pm[5] = { msg, 0u, 0u, 0u, 1u };
+        if (!call(peek, pm, 5, sp)) break;
+        ts::u32 m = ts::ld32(msg + 4u);
+        if (m == 0x0111u) {
+            id = ts::ld32(msg + 8u);
+            if (out_lp) *out_lp = ts::ld32(msg + 12u);
+        }
+        ts::u32 a1[1] = { msg };
+        call(disp, a1, 1, sp);
+    }
+    return id;
+}
+
+int main() {
+    ts::register_win32_stubs();
+    const ts::u32 sp = 0x002ff000u, msg = 0x00301000u;
+    ts::u32 cw = ts::stub_va("USER32", "CreateWindowExA");
+    ts::u32 cd = ts::stub_va("USER32", "CreateDialogIndirectParamA");
+    ts::u32 gdi = ts::stub_va("USER32", "GetDlgItem");
+    ts::u32 peek = ts::stub_va("USER32", "PeekMessageA");
+    ts::u32 disp = ts::stub_va("USER32", "DispatchMessageA");
+    ck("stubs resolve", cw && cd && gdi && peek && disp);
+
+    ts::u32 a12[12] = { 0,0,0,0, 0,0, 640,480, 0,0, 0x00400000u, 0 };
+    ts::u32 parent = call(cw, a12, 12, sp);
+    ck("parent window", parent != 0u);
+
+    // Classic DLGTEMPLATE, DS_SETFONT 8pt, two owner-draw buttons.
+    const ts::u32 tpl = 0x00300000u;
+    ts::st32(tpl + 0u, 0x40u);          // DS_SETFONT
+    ts::st32(tpl + 4u, 0u);
+    ts::st16(tpl + 8u, 2u);             // cdit
+    ts::st16(tpl + 10u, 0u); ts::st16(tpl + 12u, 0u);
+    ts::st16(tpl + 14u, 204u); ts::st16(tpl + 16u, 147u);
+    ts::st16(tpl + 18u, 0u); ts::st16(tpl + 20u, 0u); ts::st16(tpl + 22u, 0u);
+    ts::st16(tpl + 24u, 8u);            // point size
+    ts::u32 p = put_face(tpl + 26u, "MS Sans Serif");
+    p = put_ctl(p, 0x5000000bu, 37, 12, 130, 18, 0x617u, "New Campaign");
+    put_ctl(p, 0x5000000bu, 37, 33, 130, 18, 0x619u, "Load Mission");
+
+    ts::u32 a5[5] = { 0x00400000u, tpl, parent, 0u, 0u };
+    ts::u32 dlg = call(cd, a5, 5, sp);
+    ck("dialog created", dlg != 0u);
+
+    // 204x147 DLU at 6x13 is 306x239, centred in 640x480 at (167,120).
+    ts::w32::WinRec *d = ts::w32::win_find(dlg);
+    ck("dialog centred", d && d->x == 167 && d->y == 120 &&
+                         d->cx == 306 && d->cy == 239);
+
+    ts::u32 a2[2] = { dlg, 0x617u };
+    ts::u32 b1 = call(gdi, a2, 2, sp);
+    ts::u32 a2b[2] = { dlg, 0x619u };
+    ts::u32 b2 = call(gdi, a2b, 2, sp);
+    ck("two controls", b1 != 0u && b2 != 0u && b1 != b2);
+    ts::w32::WinRec *w1 = ts::w32::win_find(b1);
+    // 37x12 130x18 DLU -> 56x20 195x29 (MulDiv with the 6x13 base unit).
+    ck("button rectangle", w1 && w1->x == 56 && w1->y == 20 &&
+                            w1->cx == 195 && w1->cy == 29);
+    ck("button is a Button", w1 && w1->atom == 0x80u);
+
+    // GetWindowRect is in screen coordinates: 167+56, 120+20.
+    ts::u32 r = 0x00302000u;
+    ts::u32 gw = ts::stub_va("USER32", "GetWindowRect");
+    ts::u32 a2r[2] = { b1, r };
+    call(gw, a2r, 2, sp);
+    ck("GetWindowRect screen coords", ts::ld32(r) == 223u && ts::ld32(r + 4u) == 140u &&
+                                     ts::ld32(r + 8u) == 418u && ts::ld32(r + 12u) == 169u);
+
+    ts::w32::input_init_once();
+    ck("input loaded", ts::input::load_script(
+        "@0 mousemove 320 154\n@0 lbuttondown\n@0 lbuttonup\n"));
+
+    // The screen point (320,154) is the centre of button 0x617: the dialog is
+    // at (167,120) and the button at (56,20,195,29), so 167+56+97, 120+20+14.
+    ts::u32 lp = 0u, id = pump(peek, disp, msg, sp, &lp);
+    ck("click selected New Campaign", id == 0x617u);
+    ck("WM_COMMAND lParam is the control", lp == b1);
+
+    // A click on the dialog background selects nothing.
+    ck("background script", ts::input::load_script(
+        "@0 mousemove 180 100\n@0 lbuttondown\n@0 lbuttonup\n"));
+    ck("background click has no command", pump(peek, disp, msg, sp, &lp) == 0u);
+
+    // Press on the button, release outside it: no click.
+    ck("drag-off script", ts::input::load_script(
+        "@0 mousemove 320 154\n@0 lbuttondown\n@1 mousemove 180 100\n@1 lbuttonup\n"));
+    ck("drag-off has no command", pump(peek, disp, msg, sp, &lp) == 0u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_button_click.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_button_click",
+                        "/tmp/ts_win32_button_click.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-button-click-build", False,
+              r.stderr.decode("utf-8", "replace")[:400])
+        return
+    r = subprocess.run(["/tmp/ts_win32_button_click"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-button-click", False, out)
+    else:
+        eq("win32-button-click", out.splitlines()[-1] if out else "", "0")
+
+
+def test_win32_dialog_ex():
+    """The DLGTEMPLATEEX probe dialog parses as the retail binary's does.
+
+    The game builds a DLGTEMPLATEEX in .data and creates it to measure dialog
+    base units. Parsing it as a classic DLGTEMPLATE produced 32 garbage controls
+    and a -65536x4 client rect, and the game then scaled the whole menu by that
+    bogus ratio. This pins the extended header, the extended font block and the
+    32-bit item ids against the retail +win trace, which created the two
+    controls at 26,37 231x37 and 21,98 236x41.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+static ts::u32 call(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
+    for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
+    ESP.d = sp; ts::ts_call_at(fn, 0x00c0ffeeu); return EAX.d;
+}
+static ts::u32 put_w(ts::u32 p, const char *s) {
+    for (; *s; ++s, p += 2u) ts::st16(p, (ts::u16)*s);
+    ts::st16(p, 0u); return p + 2u;
+}
+int main() {
+    ts::register_win32_stubs();
+    const ts::u32 sp = 0x002ff000u, tpl = 0x00300000u;
+    ts::u32 cw = ts::stub_va("USER32", "CreateWindowExA");
+    ts::u32 cd = ts::stub_va("USER32", "CreateDialogIndirectParamA");
+    ts::u32 a12[12] = { 0,0,0,0, 0,0, 640,480, 0,0, 0x00400000u, 0 };
+    ts::u32 parent = call(cw, a12, 12, sp);
+
+    // DLGTEMPLATEEX: dlgVer, signature, helpID, exStyle, style, cdit, rect.
+    ts::st16(tpl + 0u, 1u); ts::st16(tpl + 2u, 0xffffu);
+    ts::st32(tpl + 4u, 0u);            // helpID
+    ts::st32(tpl + 8u, 0x20u);         // exStyle
+    ts::st32(tpl + 12u, 0x80000040u);  // WS_POPUP | DS_SETFONT
+    ts::st16(tpl + 16u, 2u);           // cDlgItems
+    ts::st16(tpl + 18u, 0u); ts::st16(tpl + 20u, 0u);
+    ts::st16(tpl + 22u, 200u); ts::st16(tpl + 24u, 100u);
+    ts::st16(tpl + 26u, 0u); ts::st16(tpl + 28u, 0u); ts::st16(tpl + 30u, 0u);
+    // Extended font: pointsize, weight, typeface, then italic+charset.
+    ts::st16(tpl + 32u, 8u); ts::st16(tpl + 34u, 0u);
+    ts::u32 p = put_w(tpl + 36u, "MS Sans Serif");
+    p += 2u;                            // italic + charset
+    // Item 1: helpID, exStyle, style, rect, 32-bit id, class, text, extra.
+    p = (p + 3u) & ~3u;
+    ts::st32(p + 0u, 0u); ts::st32(p + 4u, 0x20u); ts::st32(p + 8u, 0x58020000u);
+    ts::st16(p + 12u, 17u); ts::st16(p + 14u, 23u);
+    ts::st16(p + 16u, 154u); ts::st16(p + 18u, 23u);
+    ts::st32(p + 20u, 0xffffffffu);
+    ts::st16(p + 24u, 0xffffu); ts::st16(p + 26u, 0x0082u);   // "Static"
+    p = put_w(p + 28u, "This is a dialog of known size");
+    ts::st16(p, 0u); p += 2u;
+    p = (p + 3u) & ~3u;
+    ts::st32(p + 0u, 0u); ts::st32(p + 4u, 0x20u); ts::st32(p + 8u, 0x58020000u);
+    ts::st16(p + 12u, 14u); ts::st16(p + 14u, 60u);
+    ts::st16(p + 16u, 157u); ts::st16(p + 18u, 25u);
+    ts::st32(p + 20u, 0xffffffffu);
+    ts::st16(p + 24u, 0xffffu); ts::st16(p + 26u, 0x0082u);
+    p = put_w(p + 28u, "Please don't change the size");
+    ts::st16(p, 0u);
+
+    ts::u32 a5[5] = { 0x00400000u, tpl, 0u, 0u, 0u };
+    ts::u32 dlg = call(cd, a5, 5, sp);
+    ck("extended dialog created", dlg != 0u);
+    ts::w32::WinRec *d = ts::w32::win_find(dlg);
+    // 200x100 DLU at 6x13 is 300x163; no parent, so no centring.
+    ck("extended dialog size", d && d->cx == 300 && d->cy == 163 && d->x == 0);
+
+    unsigned n = 0;
+    ts::w32::WinRec *c0 = 0, *c1 = 0;
+    for (unsigned i = 0; i < ts::w32::MAX_WINDOWS; ++i) {
+        ts::w32::WinRec &w = ts::w32::wins()[i];
+        if (!w.hwnd || w.parent != dlg) continue;
+        if (n == 0) c0 = &w; else if (n == 1) c1 = &w;
+        ++n;
+    }
+    ck("exactly two controls", n == 2u);
+    ck("item 1 rect", c0 && c0->x == 26 && c0->y == 37 &&
+                       c0->cx == 231 && c0->cy == 37);
+    ck("item 1 id and class", c0 && c0->id == 0xffffffffu && c0->atom == 0x82u);
+    ck("item 1 text", c0 && !std::strcmp(c0->text,
+        "This is a dialog of known size"));
+    ck("item 2 rect", c1 && c1->x == 21 && c1->y == 98 &&
+                       c1->cx == 236 && c1->cy == 41);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_dialog_ex.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_dialog_ex",
+                        "/tmp/ts_win32_dialog_ex.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-dialog-ex-build", False,
+              r.stderr.decode("utf-8", "replace")[:400])
+        return
+    r = subprocess.run(["/tmp/ts_win32_dialog_ex"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-dialog-ex", False, out)
+    else:
+        eq("win32-dialog-ex", out.splitlines()[-1] if out else "", "0")
 
 
 def test_win32_surface_lock():
@@ -2416,7 +2702,8 @@ def main():
                test_machine_stack, test_machine_mmx,
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,
-               test_win32_dialog,
+               test_win32_dialog, test_win32_button_click,
+               test_win32_dialog_ex,
                test_win32_surface_lock, test_win32_surface_blt,
                test_win32_render_input,
                test_win32_clock, test_win32_blowfish):
