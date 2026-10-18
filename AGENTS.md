@@ -239,11 +239,6 @@ At `--budget 80000000` the stop is `0x0064e156` (`sub_0064e14d +0x9`), depth 24,
 coverage **61,817 / 5,171**. At larger budgets the model reaches the menu:
 
 ```
-no input, --budget 1650000000:
-  stop 0x0045fa8b (menu frame/animation path), depth 28
-  GetMessage=1 PeekMessage=10490282 DispatchMessage=1 CreateWindowExA=1
-  coverage 77619 / 6132
-
 default scripted input, --budget 1900000000 --timeout 600:
   stop 0x0045fa8e (Select Campaign dialog's modal loop), depth 28
   GetMessage=7 PeekMessage=14572933 DispatchMessage=7 CreateWindowExA=1
