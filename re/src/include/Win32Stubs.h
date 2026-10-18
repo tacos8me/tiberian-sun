@@ -5648,7 +5648,8 @@ inline unsigned long &count_of(const char *fn) {
     // linear strcmp scan of all 342 rows per call measured 14% of that run.
     // Remember the last name in a COPY: ord_name() returns a rotating static
     // buffer, so the pointer alone is not a key. A change of name rescans.
-    static char last[64];
+    // 96 bytes covers every key: FallbackDef::name and pending_query are 80.
+    static char last[96];
     static unsigned long *slot = 0;
     if (slot && !std::strcmp(last, fn)) return *slot;
     unsigned n = 0;

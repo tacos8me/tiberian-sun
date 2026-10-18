@@ -1634,4 +1634,6 @@ inline void jmp_indirect(u32 target) { ts_tail(target); }
 
 }  // namespace ts
 
+#undef TS_HOT_INLINE
+
 #endif  // TS_MACHINE_H
