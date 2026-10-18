@@ -17,7 +17,8 @@ traceable to binary evidence, and a human can confidently edit it" is the bar.
 ts1.bin ts2.bin ts1.cue ts2.cue   raw MODE2/2352 CD images (input, gitignored)
 work/                             extracted ISO trees (derived, gitignored)
 re/
-  bin/GAME.EXE                    the target binary (SHA256 in REPORT.md)
+  bin/GAME.EXE                    the target binary (SHA256 in REPORT.md);
+                                  local only, not tracked -- supply a copy
   tools/                          recovery + generation tooling
   tools/pipeline.sh               one-command full regeneration
   out/                            recovered data (JSON, text)

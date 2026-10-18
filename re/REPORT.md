@@ -331,7 +331,7 @@ has a forwarder in `src/generated/` (see [Verification](#verification)).
 
 ```
 re/
-  bin/GAME.EXE              the target binary
+  bin/GAME.EXE              the target binary (local copy; not tracked)
   tools/                    recovery + generation tooling
   tools/pipeline.sh         one-command full regeneration + verification
   tools/harness.py          metrics + determinism harness

@@ -44,3 +44,9 @@ gamedir/
 
 # Agent worktrees (Claude Code), local-only.
 .claude/worktrees/
+
+# Westwood game binaries: proprietary assets, not redistributed. The pipeline
+# reads a local GAME.EXE from re/bin/, and LANGUAGE.DLL/SUN.EXE are reference
+# material for the dialog and launcher paths, but none of them are tracked.
+re/bin/*.EXE
+re/bin/*.DLL

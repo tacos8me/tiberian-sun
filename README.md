@@ -89,7 +89,7 @@ is the project's external oracle.
 
 ```
 re/
-  bin/GAME.EXE        target binary
+  bin/GAME.EXE        target binary (local copy; not tracked)
   tools/              recovery, generation, verification and boot tooling
   out/                recovered data and committed frames
   src/include/        reconstructed headers (generated; do not hand-edit)
@@ -126,4 +126,5 @@ Claude Code.
 
 Tiberian Sun and its assets are © 1999 Electronic Arts / Westwood Studios. This
 repository contains only reconstructed source and derived data; the original
-game binaries are included solely as the reference target.
+Westwood binaries are **not** redistributed. Supply a local copy of `GAME.EXE`
+at `re/bin/GAME.EXE` to run the pipeline.
