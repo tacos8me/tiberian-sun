@@ -644,7 +644,7 @@ TS_BEGIN(HeapAlloc)
     // model's page-table exhaustion into the value that caused it.
     if (std::getenv("TS_FILE_TRACE") && size > 0x08000000u)
         std::fprintf(stderr, "win32stubs: HeapAlloc(size=0x%08x) -- implausible "
-                             "allocation, step %lu\n", size, mach().steps);
+                             "allocation, step %llu\n", size, (unsigned long long)mach().steps);
     stub_done(3, heap_alloc(size));
 TS_END
 
@@ -1129,8 +1129,9 @@ TS_BEGIN(ReadFile)
     // the bytes it expected) is otherwise impossible to attribute.
     if (std::getenv("TS_FILE_TRACE"))
         std::fprintf(stderr, "win32stubs: ReadFile(h=0x%08x want=%u) -> %u "
-                             "(pos=%ld, step=%lu)\n", h, want, n,
-                     f ? std::ftell(f->f) : -1L, mach().steps);
+                             "(pos=%ld, step=%llu)\n", h, want, n,
+                     f ? std::ftell(f->f) : -1L,
+                     (unsigned long long)mach().steps);
     stub_done(5, 1u);
 TS_END
 
@@ -4732,9 +4733,9 @@ TS_BEGIN(bf_SetKey)
         bf_set_key(blowfish_key(), len);
         if (std::getenv("TS_FILE_TRACE"))
             std::fprintf(stderr, "win32stubs: IBlowfish::SetKey len=%u key=%02x%02x%02x%02x "
-                                 "(caller 0x%08x, step %lu)\n", len,
+                                 "(caller 0x%08x, step %llu)\n", len,
                          ld8(key), ld8(key + 1u), ld8(key + 2u), ld8(key + 3u),
-                         ld32(ESP.d), mach().steps);
+                         ld32(ESP.d), (unsigned long long)mach().steps);
         stub_done(3, 0u);
     }
 TS_END
@@ -4789,9 +4790,9 @@ TS_BEGIN(bf_Decrypt)
         }
         if (std::getenv("TS_FILE_TRACE"))
             std::fprintf(stderr, "win32stubs: IBlowfish::Decrypt len=%u src=%02x%02x%02x%02x "
-                                 "(caller 0x%08x, step %lu)\n", len,
+                                 "(caller 0x%08x, step %llu)\n", len,
                          ld8(src), ld8(src + 1u), ld8(src + 2u), ld8(src + 3u),
-                         ld32(ESP.d), mach().steps);
+                         ld32(ESP.d), (unsigned long long)mach().steps);
         for (; i < len; ++i) st8(dst + i, ld8(src + i));
         stub_done(4, 0u);
     }
