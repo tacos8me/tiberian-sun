@@ -1143,31 +1143,50 @@ void mapcells_report() {
         std::printf("  cell array pointer is not a model pointer\n");
         return;
     }
-    if (w == 0u || w > 512u) w = 48u;
-    if (h == 0u || h > 512u) h = 63u;
+    // The cell array is a 512x512 pointer grid (n=262144) whatever +0xfc/+0x100
+    // say: this map's objects sit at cell (84,54), so a 48x63 window counts a
+    // fraction of the map and misses revealed cells entirely. Scan the array.
+    (void)w; (void)h;
+    w = 512u; h = 512u;
     unsigned long alloc = 0, tiles = 0, seen = 0, fog = 0, nonzero = 0;
+    unsigned ax0 = 512u, ay0 = 512u, ax1 = 0u, ay1 = 0u;
+    unsigned sx0 = 512u, sy0 = 512u, sx1 = 0u, sy1 = 0u;
     for (unsigned y = 0; y < h; ++y) {
         for (unsigned x = 0; x < w; ++x) {
             u32 c = ts::ld32(cells + (y * 512u + x) * 4u);
             if (!c) continue;
             ++alloc;
+            if (x < ax0) ax0 = x;
+            if (y < ay0) ay0 = y;
+            if (x > ax1) ax1 = x;
+            if (y > ay1) ay1 = y;
             u32 t = ts::ld32(c + 0x30u), f = ts::ld32(c + 0xa4u);
             if (t != 0xffffffffu) ++tiles;
-            if (f & 4u) ++seen;
+            if (f & 4u) {
+                ++seen;
+                if (x < sx0) sx0 = x;
+                if (y < sy0) sy0 = y;
+                if (x > sx1) sx1 = x;
+                if (y > sy1) sy1 = y;
+            }
             if (f & 0x20u) ++fog;
             if (f) ++nonzero;
         }
     }
     std::printf("    alloc=%lu tiles=%lu seen=%lu fog=%lu flags_nonzero=%lu\n",
                 alloc, tiles, seen, fog, nonzero);
+    if (alloc)
+        std::printf("    alloc bbox=(%u,%u)-(%u,%u)\n", ax0, ay0, ax1, ay1);
+    if (seen)
+        std::printf("    seen bbox=(%u,%u)-(%u,%u)\n", sx0, sy0, sx1, sy1);
     // The seen-cell set itself, not just its size: "34 cells" at the bottom
     // edge of the map is a coordinate question, and a sample of six fixed
     // cells cannot answer it. Bounded so a fully revealed map stays readable.
-    if (seen && seen <= 256u) {
+    if (seen && seen <= 512u) {
         std::printf("    seen:");
         unsigned shown = 0;
-        for (unsigned y = 0; y < h && shown < 256u; ++y) {
-            for (unsigned x = 0; x < w && shown < 256u; ++x) {
+        for (unsigned y = 0; y < h && shown < 512u; ++y) {
+            for (unsigned x = 0; x < w && shown < 512u; ++x) {
                 u32 c = ts::ld32(cells + (y * 512u + x) * 4u);
                 if (!c) continue;
                 if (!(ts::ld32(c + 0xa4u) & 4u)) continue;
