@@ -3610,6 +3610,88 @@ int main() {
         eq("win32-blowfish", out.splitlines()[-1] if out else "", "0")
 
 
+def test_win32_tls():
+    """TlsSetValue must store and TlsGetValue must return it.
+
+    Regression test for the shipped defect: both were `TS_RET` stubs (get
+    returned 0, set returned 1 and stored nothing). The C runtime keeps its
+    per-thread data -- errno, locale, and strtok's cursor -- in a TlsAlloc
+    slot, so a non-storing TlsGetValue made every `_getptd` call allocate a
+    fresh zeroed block. FUN_006837ea (strtok) then returned the first token and
+    NULL for every token after it, which is why the scenario's
+    "owner,type,..." entries lost their type and no unit was created.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+
+int main() {
+    ts::reset();
+    const ts::u32 sp = 0x002ff000u;
+
+    // TlsAlloc: no stack arguments, result in EAX.
+    ESP.d = sp;
+    ts::w32::k_TlsAlloc();
+    ts::u32 i0 = EAX.d;
+    ck("TlsAlloc returns an index", i0 != 0xffffffffu);
+    ESP.d = sp;
+    ts::w32::k_TlsAlloc();
+    ts::u32 i1 = EAX.d;
+    ck("TlsAlloc returns distinct indices", i0 != i1);
+
+    // TlsGetValue before a set is NULL, as Windows specifies.
+    ts::st32(sp + 4u, i0);
+    ESP.d = sp;
+    ts::w32::k_TlsGetValue();
+    ck("TlsGetValue is NULL before TlsSetValue", EAX.d == 0u);
+
+    // TlsSetValue(slot, value) then TlsGetValue(slot) returns it, twice.
+    const ts::u32 val = 0x00543210u;
+    ts::st32(sp + 4u, i0);
+    ts::st32(sp + 8u, val);
+    ESP.d = sp;
+    ts::w32::k_TlsSetValue();
+    ck("TlsSetValue succeeds", EAX.d == 1u);
+    for (int pass = 0; pass < 2; ++pass) {
+        ts::st32(sp + 4u, i0);
+        ESP.d = sp;
+        ts::w32::k_TlsGetValue();
+        ck("TlsGetValue returns the stored value on every call",
+           EAX.d == val);
+    }
+
+    // The slots are independent.
+    ts::st32(sp + 4u, i1);
+    ESP.d = sp;
+    ts::w32::k_TlsGetValue();
+    ck("a second slot is independent", EAX.d == 0u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_tls.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_tls",
+                        "/tmp/ts_win32_tls.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-tls-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_win32_tls"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-tls", False, out)
+    else:
+        eq("win32-tls", out.splitlines()[-1] if out else "", "0")
+
+
 def main():
     for fn in (test_emit_masking, test_emit_in_out, test_emit_loop_tail,
                test_emit_ret, test_emit_x87_one_operand,
@@ -3628,7 +3710,7 @@ def main():
                test_win32_dialog_ex,
                test_win32_surface_lock, test_win32_surface_blt,
                test_win32_render_input,
-               test_win32_clock, test_win32_blowfish):
+               test_win32_clock, test_win32_blowfish, test_win32_tls):
         try:
             fn()
         except Exception as exc:  # a tool that raises is a failure, not a skip

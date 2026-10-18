@@ -886,10 +886,41 @@ TS_BEGIN(InterlockedDecrement)
 TS_END
 
 // -- TLS ---------------------------------------------------------------------
-TS_RET(TlsAlloc, 0, 0u)
-TS_RET(TlsFree, 1, 1u)
-TS_RET(TlsGetValue, 1, 0u)
-TS_RET(TlsSetValue, 2, 1u)
+// A real per-slot store, because the C runtime keeps its per-thread data in a
+// TlsAlloc slot: `_getptd` (FUN_006879b9) returns that block and the CRT keeps
+// errno, the locale pointer and **strtok's cursor** in it. Returning 0 from
+// TlsGetValue and ignoring TlsSetValue made every _getptd call allocate a fresh
+// zeroed block, so FUN_006837ea (strtok) returned the first token and NULL for
+// every token after it -- which is why the scenario's "owner,type,..." entries
+// lost their type and no unit was ever created. The model is single-threaded,
+// so a flat table indexed by slot is the whole contract.
+inline u32 *tls_slots() { static u32 s[64]; return s; }
+inline u32 &tls_next_slot() { static u32 n; return n; }
+
+TS_BEGIN(TlsAlloc)
+    u32 &n = tls_next_slot();
+    if (n >= 64u) { stub_done(0, 0xffffffffu); }   // TLS_OUT_OF_INDEXES
+    u32 idx = n++;
+    tls_slots()[idx] = 0;
+    stub_done(0, idx);
+TS_END
+
+TS_BEGIN(TlsGetValue)
+    u32 idx = arg(0);
+    stub_done(1, idx < 64u ? tls_slots()[idx] : 0u);
+TS_END
+
+TS_BEGIN(TlsSetValue)
+    u32 idx = arg(0), v = arg(1);
+    if (idx < 64u) tls_slots()[idx] = v;
+    stub_done(2, idx < 64u ? 1u : 0u);
+TS_END
+
+TS_BEGIN(TlsFree)
+    u32 idx = arg(0);
+    if (idx < 64u) tls_slots()[idx] = 0;
+    stub_done(1, 1u);
+TS_END
 
 // -- exception handling ------------------------------------------------------
 TS_RET(IsBadReadPtr, 2, 0u)
