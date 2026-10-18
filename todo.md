@@ -1403,21 +1403,66 @@ because it ran fewer instructions.
 Pipeline exit 0, `VERIFICATION PASSED`, link OK (492 TUs), tool tests **101**
 (was 94; new x87-form and header-ownership tests), runtime 101, `--strict` 0.
 
-### [ ] The tactical map viewport is still black
-**The current blocker, after the HUD renders.** The 500B frame shows the real
-tactical HUD, but the map viewport (the large left area) is black. The renderer
-is clearly running — **18.7M blits, 46.8M locks** — and the run ends only at the
-budget inside the vertex transform, so this is not a fault.
+### [x] The tactical map viewport is still black — explained (empty world)
+**The renderer is correct; the world is empty and fully shrouded.** The
+instrumented 500B run reproduces the pre-instrumentation counters exactly
+(18,691,958 blits, 46,753,350 locks), so the counters are sound. Per-surface
+trace:
 
-*Next:* trace where the terrain/map blits go. Which destination surfaces do the
-terrain blits target? Is the map drawn into an offscreen surface that is never
-composited to the primary? Is the primary's map rectangle clipped/scrolled
-wrongly now that the visible rect is 35,28,23,43 on a 99x108 surface? Add
-per-surface blit/lock counters and a way to dump individual surfaces
-(`Rendering.h`), and compare with the retail `+ddraw` sequence where possible.
-Fix the first proven cause; do not paint the map by hand.
-*Done when:* the map viewport renders terrain/tiles in the dumped frame (or the
-next precise renderer defect is named).
+| surface | size | blits in / out | locks | non-black |
+|---|---|---|---|---|
+| primary `0x5060c470` | 640x480 | 9,345,958 / 0 | 557 | 87,794 (HUD only) |
+| `0x5060c4e4` | 472x480 | 9,345,943 / 9,345,971 | 46,729,604 | 7,080-7,190, **rows 0-22 only** |
+| `0x5060c504` | 472x480 | 57 / 9,345,971 | 679 | 7,080, rows 0-15 |
+| sidebar `0x5060c524` | 168x480 | 0 / 0 | 1,487 | 80,604 (HUD) |
+| radar `0x52ab9fd0` | 99x108 | 0 / 0 | 20,505 (~2 draws) | **0** |
+
+Composition exists and is correct: the map surface is blitted to the primary
+once per frame (`last_src=0x5060c4e4`), the two 472x480 surfaces swap on scroll
+(`d=(13,29,472,480)`), and the sidebar is composited. The map surface is black
+below row 23.
+
+**`TS_EXEC_CHECK`:** every tactical pass executes — `0x4b2ff0` (map render),
+`0x5f6e50`, `0x5f6360`/`0x5f8c00` (terrain layer), `0x452ab0` (tile draw),
+`0x478f00` (shape blit), `0x5f90e0`/`0x452330`/`0x5fa220` (shroud),
+`0x5a0b90`/`0x5a4080` (radar). The reveal/sight updates (`0x476000`,
+`0x4760f0`, `0x477670`, `0x513bf0`, `0x476180`) did **not** execute.
+
+**`TS_OBJECTS`:** **n=0, array=NULL** — the world contains no objects.
+**`TS_MAPCELLS`** (map object `0x710d28`, cells `0x50e1a020`): over the 48x63
+map, 1,681 cells allocated, **12** with a tile/overlay index (`+0x30 != -1`),
+**0 revealed** (`flags&4`), 0 fogged (`flags&0x20`). Cell heights were applied
+(604/671/562), so `IsoMapPack5` did decode; the terrain *template/object* layer
+is what is absent.
+
+So the viewport is black because the mission instantiated an **empty, fully
+shrouded world**: no unit or structure exists to reveal a cell, the shroud pass
+paints the viewport black, and the terrain loop has only 12 cells to draw. This
+is not a `Rendering.h` or vertex-transform defect — `FUN_00543620` executes
+with sane callers (`EDI=0x5078b020`, matrix `0x5078bdb4`). No frame was
+hand-painted. Run: 500B at `0x00543669`, depth 100, 2,412.8 s; frame
+`out/frame_500b.png` unchanged (md5 `4fc1cec7…`).
+
+### [ ] Scenario object creation produces zero objects
+**The current blocker.** `FUN_0063b470` (the `[Units]` reader/creator, called
+at mission-init progress `0x48`) and the structures reader `FUN_0063b8f0` ran,
+but **every entry was rejected**: owner-house lookup `FUN_004c7470` -> -1, type
+lookup `FUN_0063e650` -> -1, `FUN_00630cc0` returning null, or placement slot
+`0xc4` returning 0 (which destroys the object). The shipped `GDI1A.MAP` has
+3 Nod buggies, 17 infantry (3 GDI) and ~20 structures including the GDI
+construction yard at (28,59), so these should exist.
+
+*Next:* `TS_TRACE`/`TS_PEEK` on `FUN_0063b470` to read the `[Units]` count (EAX
+after `FUN_004d5610`) and the first entry's owner/type lookups. Check whether
+`rules.ini`/`art.ini` type lists and the house initialization are populated
+(the model has real file I/O and `TS_DATA`), and whether the INI parser, string
+ops or float math diverge. Fix the first proven cause; do not inject objects by
+hand.
+*Done when:* the world has objects (`TS_OBJECTS` n>0), cells are revealed, and
+the map viewport renders terrain/units in the frame.
+
+**Diagnostics now available:** `--surfaces`, `--surface-dump`, `TS_BLITLOG`,
+`TS_EXEC_CHECK`, `TS_OBJECTS`, `TS_MAPCELLS` (commits `b883a10`, `693d3fb`).
 
 **Secondary:** `gen_headers`' name-based lookup still conflates
 `ts::rnd::Surface` with the recovered global class in a few paths. Header
