@@ -83,7 +83,7 @@ unsigned long popcount_map(const u8 *map, unsigned nbytes) {
 struct Options {
     const char *image;
     const char *frame;      // TS_FRAME_DUMP / --frame: dump the primary surface
-    unsigned long budget;
+    unsigned long long budget;   // 64-bit: budgets >= 2^32 must be expressible
     unsigned long depth_limit;
     unsigned wall_seconds;
     unsigned last_imports;
@@ -385,11 +385,11 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
     std::printf("imports-bound: %u\n", g_bind_n);
     std::printf("entry: 0x%08x\n", kEntryPoint);
     std::printf("esp-start: 0x%08lx\n", esp0);
-    std::printf("budget: %lu\n", o.budget);
+    std::printf("budget: %llu\n", o.budget);
     std::printf("depth-limit: %lu\n", o.depth_limit);
     std::printf("watchdog: %u\n", o.wall_seconds);
     std::printf("stop: %s\n", stop);
-    std::printf("steps: %lu\n", m.steps);
+    std::printf("steps: %llu\n", m.steps);
     std::printf("depth: %lu\n", m.call_depth_max);
     std::printf("depth-exceeded: %lu\n", m.depth_exceeded);
     std::printf("eip: 0x%08x\n", m.eip);
@@ -542,7 +542,7 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
         std::printf("fault-bytes: ");
         print_bytes(m.fault_eip);
         std::printf("\n");
-        std::printf("fault-steps: %lu\n", m.fault_steps);
+        std::printf("fault-steps: %llu\n", m.fault_steps);
         std::printf("fault-depth: %lu\n", m.fault_depth);
         std::printf("fault-regs: ");
         print_regs(m.fault_reg);
@@ -555,7 +555,7 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
     }
     if (g_timed_out) {
         std::printf("watchdog-eip: 0x%08x\n", m.eip);
-        std::printf("watchdog-steps: %lu\n", m.steps);
+        std::printf("watchdog-steps: %llu\n", m.steps);
     }
     if (m.unmapped_sample_n) {
         std::printf("unmapped-sample:");
@@ -614,7 +614,7 @@ bool parse_args(int argc, char **argv, Options &o) {
         const char *a = argv[i];
         if (starts_with(a, "--image="))         o.image = a + 8;
         else if (starts_with(a, "--frame="))    o.frame = a + 8;
-        else if (starts_with(a, "--budget="))   o.budget = std::strtoul(a + 9, 0, 10);
+        else if (starts_with(a, "--budget="))   o.budget = std::strtoull(a + 9, 0, 10);
         else if (starts_with(a, "--timeout="))  o.wall_seconds = (unsigned)std::strtoul(a + 10, 0, 10);
         else if (starts_with(a, "--depth="))    o.depth_limit = std::strtoul(a + 8, 0, 10);
         else if (starts_with(a, "--imports="))  o.last_imports = (unsigned)std::strtoul(a + 10, 0, 10);

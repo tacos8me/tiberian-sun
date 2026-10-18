@@ -1267,20 +1267,60 @@ see distinct blocks and valid contents.
 substantially, no correctness test regresses, and the load either completes or
 reaches the next named blocker faster.
 
-### [ ] The mission writes pixels but never presents a frame
-**Measured after the page-table fix.** The 4B run reports 8 surfaces, **769
-locks, 12 blits, 0 fills, 0 flips**; the post-ESC frame is a structured blue
-banded/grid pattern, and the stop is inside the vector copy loop
-(`sub_0055b09a`) with ~29k 8-byte entries being copied. The game is writing
-pixels but never presenting a game frame.
+### [x] The mission writes pixels but never presents a frame — explained and fixed
+**The blue banded/grid frame was raw heap memory.** The game *does* present the
+mission **loading screen** at 2.6e9 (`out/render_2_6b.png`, md5 `6cb0e1ff…`,
+290,399 non-black). It never presents a mission frame because the stub heap
+bumps from `0x50000000` while `Rendering.h` placed surface pixels at
+`0x60000000`: by ~2.722e9 instructions the heap had consumed 260.7 rows of the
+primary. `out/render_partial.png` shows the boundary exactly — heap pattern
+down to row ~259, a black zeroed block, then the intact loading screen.
 
-*Next:* investigate the render path after the load. Is the game drawing to an
-offscreen/back surface that is never flipped? Are `Fill`/`Flip` calls missing
-from the stub vtable, or does the game use `Blt` to the primary? Compare with
-the retail `+ddraw` trace during mission load. The blue banded/grid frame may be
-a loading screen or a partially initialized surface; identify it.
-*Done when:* a mission frame is presented and dumped, or the next render blocker
-is named precisely.
+Measured render path (`out/render_path.md`): 8 surfaces, all 16bpp RGB565;
+primary `0x5060c470` at pixels `0x60002000` (640x480), 640x480 offscreen
+`0x5060c544` at `0x6019ca00`, plus six others. In the load phase: 12 blits, all
+`dst=primary`, `src=offscreen`, flags `0x01000000`, slot 5 Blt, call site
+`0x0048823d` (`sub_00488029` from `sub_00487cf0`); 769 locks via
+`sub_00487ad0` (gdb census: 251 primary, 507 offscreen, 4 one-time; caller
+`sub_00675dc0`). **0 fills and 0 flips are the game's behaviour, not missing
+slots**: it uses Blt colour-fill (none in this run; retail issues 15), Flip slot
+11 is wired and counted, the gdb breakpoint is never hit, and the retail
+`+ddraw` trace has 0 `Flip` in 9,854 lines. Presentation is Blt/Lock into the
+primary plus `surface_update_frontbuffer` in retail.
+
+**Fixed:** `Rendering.h`'s arena now starts at `0x10000000` (worst case 64
+surfaces ends at `0x14b00000`), clear of the image, stack, heap and stub VAs.
+**Verified:** the 2.7227e9 run after the arena move stops at `0x0055b0b8` with
+67,169 / 131,072 pages (2 growths), 12 blits, 769 locks, and a frame whose md5
+is **`6cb0e1ff…`** — byte-identical to the committed `out/render_2_6b.png`
+loading screen (290,399 non-black). The heap no longer overwrites the
+framebuffer. The heap lane is adding a durable reservation of
+`[0x60000000,0x68000000)` in `alloc_block` plus a >256 MB allocation test that
+asserts the primary pixels are unchanged.
+
+**Measurement defect fixed:** `Machine.steps`/`step_limit`/`fault_steps` were
+32-bit on the `-m32` build, so budgets ≥2^32 never fired and long runs reported
+a wrapped count. They are 64-bit now; `boot_driver` parses `--budget` with
+`strtoull` and prints `%llu`. The earlier "4.5e9" run actually executed
+5,140,407,947 instructions and reported 845,440,651.
+
+### [ ] The tactical phase is black and has 21 delta-table calls
+**The next render blocker, after the arena fix.** The iso-map build completes
+around 4.0e9 and the game enters the tactical draw (`sub_005d9990` →
+`sub_00593f30`). Between 4.0e9 and the stop the primary is **0 non-black** with
+15 blits and 8,097 locks, and there are **21 unmapped calls** whose targets are
+sliding windows over a small-integer delta table (`0x000000db`,
+`0xffffff6a..6d`). A longer run (5.14e9 actual) ends in `sub_00675ba0` with
+`ESP=0x844`, `ESI=0x8ec`, `EAX=0xffffff6c`, and no new coverage for 1.07e9
+instructions.
+
+*Next:* re-run with the arena fix at 2.722e9 and 4e9 (expect the loading-screen
+md5 at both); restore tactical throughput (heap lane); then re-run with the
+wrapped counter fixed and see whether the 21 delta-table calls vanish (if so
+they were an object allocated into a freed arena-range block and overwritten by
+surface writes); then trace the 3 new blits/locks that leave the primary black.
+*Done when:* the tactical phase renders a non-black frame, or the next defect is
+named precisely.
 
 ### [ ] The VQA player's frame-wait is stub-bound
 **Secondary; skipping works.** The movie player's frame-wait loop makes ~68M

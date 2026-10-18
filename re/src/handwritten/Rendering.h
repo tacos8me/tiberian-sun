@@ -110,10 +110,14 @@ enum {
 
 // -- model-space memory ------------------------------------------------------
 // Pixel memory lives in the machine model's address space, not on the host
-// heap: the transcribed program addresses it with st8/ld8. 0x60000000 is clear
+// heap: the transcribed program addresses it with st8/ld8. 0x10000000 is clear
 // of the image (0x400000..0x698000), the model stack (0x300000), the Win32
-// stub allocator (0x50000000) and the synthetic stub VAs (0x7f000000+).
-inline u32 &mem_bump() { static u32 b = 0x60000000u; return b; }
+// stub allocator (0x50000000) and the synthetic stub VAs (0x7f000000+). It used
+// to be 0x60000000, which the stub heap grows into: by ~2.72e9 instructions the
+// heap had overwritten the primary surface and the loading screen, and the
+// "frame" was raw heap memory read as RGB565. Worst case here (64 surfaces of
+// 640x480x4) ends at 0x14b00000, still below the heap.
+inline u32 &mem_bump() { static u32 b = 0x10000000u; return b; }
 
 inline u32 mem_alloc(u32 size, u32 align) {
     if (size == 0u) size = 1u;

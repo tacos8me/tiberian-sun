@@ -73,8 +73,10 @@ struct Machine {
     // Both fields existed before this instrumentation and were never written.
     u32 eip;
     // Runaway guard: a transcription is only useful if it terminates.
-    unsigned long steps;
-    unsigned long step_limit;
+    // 64-bit: on the -m32 host build `unsigned long` is 32 bits, so a budget
+    // above 2^32 never fired and long runs reported a wrapped step count.
+    unsigned long long steps;
+    unsigned long long step_limit;
     bool faulted;
     bool step_limit_hit;
     const char *fault_why;
@@ -85,7 +87,7 @@ struct Machine {
     jmp_buf *halt;
     // Snapshot taken once, the first time fault() fires.
     u32 fault_eip;
-    unsigned long fault_steps;
+    unsigned long long fault_steps;
     unsigned long fault_depth;
     Reg fault_reg[8];
     u32 fault_calls[8];
