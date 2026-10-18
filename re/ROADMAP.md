@@ -325,8 +325,10 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
   coverage **158,667 / 9,607**; `GetMessage=19`, `DispatchMessage=19`,
   `PeekMessage=23,117,313`; 8 surfaces, **18,691,958 blits, 46,753,350 locks**.
   Frame `re/out/frame_500b.png` (md5 `4fc1cec7…`, **87,794 non-black**): Options,
-  credits 5000, the GDI radar eagle, build tabs/grid. **The map viewport is
-  still black.**
+  credits 5000, the GDI radar eagle, build tabs/grid. An independent 500B-budget
+  reproduction was watchdog-stopped at 372,912,291,926 instructions (host
+  contention) but matched pages, coverage, 0 unmapped and a byte-identical
+  frame. **The map viewport is still black.**
 - Historical (pre-`e5d7039`): the 1.2e12 run faulted at 479B with 7,771,444
   unmapped calls and a black frame. The root cause was the **x87 emitter**: D8
   one-register forms were rendered as pop forms, so `fdiv st(1)` computed

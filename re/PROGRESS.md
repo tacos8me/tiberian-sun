@@ -127,7 +127,11 @@ calls**; coverage **158,667 / 9,607**; message loop dispatching (`GetMessage=19`
 `DispatchMessage=19`, `PeekMessage=23,117,313`); 8 surfaces with **18,691,958
 blits and 46,753,350 locks**. `re/out/frame_500b.png` (640x480, md5 `4fc1cec7…`,
 **87,794 non-black**) shows Options, credits 5000, the GDI radar eagle, and the
-build tabs/grid — the first in-game frame the model has rendered.
+build tabs/grid — the first in-game frame the model has rendered. An independent
+500B-budget reproduction was stopped by the 1800 s watchdog at 372,912,291,926
+instructions (host contention) but matched pages (12,637), coverage
+(158,667 / 9,607), 0 unmapped and a **byte-identical frame**; its blit/lock
+counts are lower only because it ran fewer instructions.
 
 **The current blocker is the black map viewport.** Only the HUD renders; the
 map does not. The renderer is running (18.7M blits, 46.8M locks) and the run

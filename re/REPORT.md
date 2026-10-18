@@ -88,8 +88,10 @@ message loop dispatching (`GetMessage=19`, `DispatchMessage=19`,
 `PeekMessage=23,117,313`) and 8 surfaces with **18,691,958 blits and 46,753,350
 locks**. `re/out/frame_500b.png` (640x480, md5 `4fc1cec7…`, **87,794
 non-black**) shows Options, credits 5000, the GDI radar eagle, and the build
-tabs/grid. **The map viewport is still black** — only the HUD renders, so the
-mission map does not render. The next step is tracing the terrain/map blits
+tabs/grid. An independent 500B-budget reproduction was stopped by its watchdog
+at 372,912,291,926 instructions under host contention but matched the pages,
+coverage, 0 unmapped calls and a byte-identical frame. **The map viewport is
+still black** — only the HUD renders, so the mission map does not render. The next step is tracing the terrain/map blits
 (destination surfaces, the primary map rectangle now that the visible rect is
 `35,28,23,43` on a 99x108 surface); do not paint the map by hand.
 

@@ -73,7 +73,10 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
   (`GetMessage=19`, `DispatchMessage=19`, `PeekMessage=23,117,313`), 8 surfaces
   with **18,691,958 blits and 46,753,350 locks**. The frame
   `re/out/frame_500b.png` (640x480, md5 `4fc1cec7…`, **87,794 non-black**) shows
-  Options, credits 5000, the GDI radar eagle, and the build tabs/grid.
+  Options, credits 5000, the GDI radar eagle, and the build tabs/grid. An
+  independent 500B-budget reproduction was stopped by its watchdog at
+  372,912,291,926 instructions under host contention but matched the pages,
+  coverage, 0 unmapped calls and a byte-identical frame.
 - **The map viewport is still black.** Only the HUD renders; the mission map does
   not. A lane is tracing the terrain/map blits (destination surfaces, primary map
   rectangle). The VQA frame-wait path is also stub-bound, so movie pacing is not

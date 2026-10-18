@@ -82,7 +82,9 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   500,000,000,001 instructions at `0x00543669`, with 0 unmapped calls, pages
   12,637/32,768, coverage 158,667/9,607, 18,691,958 blits and 46,753,350 locks,
   and renders the **tactical HUD** (`re/out/frame_500b.png`, 87,794 non-black);
-  the map viewport is still black. The Exit Game script reaches
+  the map viewport is still black. An independent 500B reproduction was
+  watchdog-stopped at 372,912,291,926 instructions but matched pages, coverage,
+  0 unmapped and a byte-identical frame. The Exit Game script reaches
   `ExitProcess(0)` at `0x00684529` after 1,707,666,895 instructions
   (86,400 / 6,654). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA`
   is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0
