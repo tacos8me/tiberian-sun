@@ -2347,6 +2347,21 @@ int main() {
         ck("growth pattern reuses memory", grew < 4u * 33120u);
     }
 
+    // Grow into a free successor: free y, then realloc x (which is adjacent to
+    // y) past its own capacity. The pointer stays and x must remain live.
+    ts::u32 x = call(ha, a3, 3, sp);
+    ts::u32 y = call(ha, a3, 3, sp);
+    ck("absorb test blocks are adjacent", y >= x + 100u);
+    for (unsigned i = 0; i < 100u; ++i) ts::st8(x + i, 0x77u);
+    ts::u32 a3y[3] = { 0x00010000u, 0u, y };
+    call(hf, a3y, 3, sp);
+    ts::u32 ar4x[4] = { 0x00010000u, 0u, x, 150u };
+    ts::u32 xr = call(hr, ar4x, 4, sp);
+    ck("realloc absorbs a free successor", xr == x);
+    ck("absorbed realloc preserves contents", all_bytes(xr, 0u, 100u, 0x77u));
+    ck("absorbed realloc zeroes the tail", all_bytes(xr, 100u, 150u, 0u));
+    ck("absorbed block stays live", !ts::w32::heap_is_free(xr - 16u));
+
     // A larger request cannot use a 100-byte block.
     ts::u32 a3big[3] = { 0x00010000u, 0u, 4096u };
     ts::u32 p3 = call(ha, a3big, 3, sp);

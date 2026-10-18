@@ -567,7 +567,8 @@ inline bool heap_grow_in_place(u32 p, u32 want) {
     u32 q = heap_next(p);
     if (q && heap_is_free(q) && heap_adjacent(p, q) &&
         cap + (u32)HEAP_HDR + heap_cap(q) >= want) {
-        heap_absorb_next(p);
+        heap_absorb_next(p);                    // merges q, marks p free
+        heap_set_cap(p, heap_cap(p), false);    // p stays live
         ++heap_stats().inplace;
         return true;
     }
@@ -635,8 +636,19 @@ TS_BEGIN(HeapReAlloc)
     ++heap_stats().reallocs;
     if (!old) { stub_done(4, heap_alloc(size)); return; }
     u32 p = old - (u32)HEAP_HDR;
-    u32 old_size = ld32(p);
+    // A pointer this heap did not hand out gets a fresh block rather than a
+    // header read out of whatever it points into.
+    if (p < (u32)HEAP_BASE || p >= bump() || (p & 7u)) {
+        stub_done(4, heap_alloc(size));
+        return;
+    }
     u32 cap = heap_cap(p);
+    if (cap < (u32)HEAP_MIN || cap > 0x08000000u ||
+        p + (u32)HEAP_HDR + cap > bump()) {
+        stub_done(4, heap_alloc(size));
+        return;
+    }
+    u32 old_size = ld32(p);
     // A shrink (or same size) keeps the block where it is.
     if (size <= cap) {
         st32(p, size);
