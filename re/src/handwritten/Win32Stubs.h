@@ -377,6 +377,73 @@ TS_END
 TS_RET(HeapDestroy, 1, 1u)
 TS_RET(GetProcessHeap, 0, 0x00010000u)
 
+// -- heap --------------------------------------------------------------------
+// The model hands out pages from a bump cursor and never reused a freed block,
+// so a program that allocates and frees in a loop -- the mission loader and the
+// VQA player both do -- touched a new 4 KB page on every iteration. The page
+// table is fixed (Machine.h: 32768 pages = 128 MB); when it fills, page()
+// degrades to a full-table linear probe and then faults. Measured: the GDI
+// mission load after the briefing exhausted it at step 2,580,698,410 inside a
+// HeapFree/HeapAlloc pair. A first-fit free list makes the loop reuse its
+// memory, which is what the real heap does.
+struct FreeBlock { u32 ptr; u32 size; };
+inline FreeBlock *free_blocks() { static FreeBlock f[4096]; return f; }
+inline unsigned &free_count() { static unsigned n = 0; return n; }
+enum { HEAP_BASE = 0x50000000 };   // alloc_block's region
+
+// Return a HeapAlloc/LocalAlloc/GlobalAlloc block to the free list. The block
+// header is the size dword 16 bytes below the pointer the caller was given.
+inline void heap_release(u32 user) {
+    if (!user) return;
+    u32 p = user - 16u;
+    u32 size = ld32(p);
+    if (p < (u32)HEAP_BASE || p >= bump()) return;
+    if (size == 0u || size > 0x08000000u) return;
+    FreeBlock *f = free_blocks();
+    unsigned n = free_count();
+    for (unsigned i = 0; i < n; ++i)
+        if (f[i].ptr == p) return;              // double free: keep one entry
+    if (n >= (unsigned)(sizeof free_blocks() / sizeof f[0])) return;  // leak
+    f[n].ptr = p; f[n].size = size;
+    free_count() = n + 1u;
+}
+
+// A header pointer for a block of at least `size`, reusing a freed block when
+// one fits; 0 when none does.
+inline u32 heap_take(u32 size) {
+    FreeBlock *f = free_blocks();
+    unsigned n = free_count();
+    for (unsigned i = 0; i < n; ++i) {
+        if (f[i].size >= size) {
+            u32 p = f[i].ptr;
+            f[i] = f[n - 1u];
+            free_count() = n - 1u;
+            st32(p, size);
+            return p;
+        }
+    }
+    return 0u;
+}
+
+// Allocate and zero. The zeroing is a correctness requirement, not a
+// convenience: fresh pages from the OS are zero, and the CRT relies on it --
+// its atexit table is scanned for non-null slots, so a table of stale bytes
+// "contains" 37 registered handlers that were never registered, and exit calls
+// all 37 as function pointers. That produced calls to 0x11 and 0x6a4e08 from
+// 0x6844dd and, via the return addresses they leaked, an ESI that made the CRT
+// call WinMain at an address inside ExitProcess. A reused block must therefore
+// be zeroed too.
+inline u32 heap_alloc(u32 size) {
+    u32 p = heap_take(size);
+    if (!p) {
+        p = alloc_block(size, 8u);
+        st32(p, size);
+    }
+    u32 q = p + 16u;
+    for (u32 i = 0; i < size; i += 4u) st32(q + i, 0u);
+    return q;
+}
+
 TS_BEGIN(HeapAlloc)
     u32 size = arg(2);
     // A size this large is never a real request: it is a length the caller
@@ -386,24 +453,11 @@ TS_BEGIN(HeapAlloc)
     if (std::getenv("TS_FILE_TRACE") && size > 0x08000000u)
         std::fprintf(stderr, "win32stubs: HeapAlloc(size=0x%08x) -- implausible "
                              "allocation, step %lu\n", size, mach().steps);
-    u32 p = alloc_block(size, 8u);
-    st32(p, size);
-    u32 q = p + 16u;
-    // Zero the block. Not a convenience -- a correctness requirement. Fresh pages
-    // from the OS are zero, and the CRT relies on it: its atexit table is scanned
-    // for non-null slots, so a table of stale bytes "contains" 37 registered
-    // handlers that were never registered, and exit calls all 37 as function
-    // pointers. That produced calls to 0x11 and 0x6a4e08 from 0x6844dd and, via
-    // the return addresses they leaked, an ESI that made the CRT call WinMain at
-    // an address inside ExitProcess. HEAP_ZERO_MEMORY asks for this explicitly;
-    // a real heap's first use of a page is zero whether you ask or not.
-    for (u32 i = 0; i < size; i += 4u) st32(q + i, 0u);
-    stub_done(3, q);
+    stub_done(3, heap_alloc(size));
 TS_END
 
 TS_BEGIN(HeapFree)
-    // Nothing is reused; the block stays valid, which is why a use-after-free
-    // in the program reads plausible bytes instead of nothing.
+    heap_release(arg(2));
     stub_done(3, 1u);
 TS_END
 
@@ -414,29 +468,29 @@ TS_END
 
 TS_BEGIN(HeapReAlloc)
     u32 old = arg(2), size = arg(3);
-    u32 np = alloc_block(size, 8u);
+    u32 nq = heap_alloc(size);
     if (old) {
         u32 n = ld32(old - 16u);
-        for (u32 i = 0; i < n && i < size; ++i) st8(np + 16u + i, ld8(old + i));
+        for (u32 i = 0; i < n && i < size; ++i) st8(nq + i, ld8(old + i));
+        heap_release(old);
     }
-    st32(np, size);
-    stub_done(4, np + 16u);
+    stub_done(4, nq);
 TS_END
 
 TS_BEGIN(LocalAlloc)
-    u32 size = arg(1);
-    u32 p = alloc_block(size, 8u);
-    st32(p, size);
-    stub_done(2, p + 16u);
+    stub_done(2, heap_alloc(arg(1)));
 TS_END
-TS_RET(LocalFree, 1, 0u)
-TS_RET(GlobalFree, 1, 0u)
+TS_BEGIN(LocalFree)
+    heap_release(arg(0));
+    stub_done(1, 0u);
+TS_END
+TS_BEGIN(GlobalFree)
+    heap_release(arg(0));
+    stub_done(1, 0u);
+TS_END
 
 TS_BEGIN(GlobalAlloc)
-    u32 size = arg(1);
-    u32 p = alloc_block(size, 8u);
-    st32(p, size);
-    stub_done(2, p + 16u);
+    stub_done(2, heap_alloc(arg(1)));
 TS_END
 
 // -- virtual memory ----------------------------------------------------------
@@ -667,6 +721,17 @@ inline const char *ts_root() {
     return (r && *r) ? r : "../gamedir";
 }
 
+// The shipped data files the project extracts from TIBSUN.MIX live in
+// re/realdata (rules.ini, art.ini, BATTLE.INI, ...). An installed game has
+// them in its own directory; the model's host root is the CD's INSTALL tree,
+// which does not. They are a read-only fallback root, so a file the game asks
+// for is the shipped file rather than a miss -- the campaign list is exactly
+// this case (BATTLE.INI's [Battles] section).
+inline const char *ts_data_root() {
+    const char *r = std::getenv("TS_DATA");
+    return (r && *r) ? r : "realdata";
+}
+
 // The CD is a second host root, because it is a second *drive* to the game.
 // GetCDClass (0x4a7600) scans c:..z: with GetDriveTypeA and keeps the letters
 // that answer DRIVE_CDROM; Force_CD_Available then requires one of them to
@@ -722,19 +787,14 @@ inline bool resolve_ci(const char *dir, const char *want, char *out, size_t outn
     return ok;
 }
 
-// Map a Windows path to a host path. A drive prefix selects the root: D: is
-// the CD when TS_CD names one, and every other drive is the install root.
-// Then each component is resolved case-insensitively.
-inline bool host_path(const char *win, char *out, size_t outn) {
-    if (!win || !*win) return false;
+// Map a Windows path to a host path under one root. Each component is
+// resolved case-insensitively; a component that does not exist is kept
+// literally so a caller about to create the file still gets a usable path.
+inline bool host_path_in(const char *base, const char *win, char *out, size_t outn) {
     char buf[512];
     std::snprintf(buf, sizeof buf, "%s", win);
     char *p = buf;
-    const char *base = ts_root();
-    if (p[0] && p[1] == ':') {
-        if (path_is_cd_drive(p)) base = ts_cd_root();
-        p += 2;
-    }
+    if (p[0] && p[1] == ':') p += 2;
     while (*p == '\\' || *p == '/') ++p;
     std::snprintf(out, outn, "%s", base);
     char *save = 0;
@@ -742,12 +802,35 @@ inline bool host_path(const char *win, char *out, size_t outn) {
         if (!*tok) continue;
         if (!strcmp(tok, ".") || !strcmp(tok, "..")) continue;
         char next[512];
-        if (!resolve_ci(out, tok, next, sizeof next)) {
-            // Not present under any spelling: keep the literal name so a caller
-            // that is about to create the file still gets a usable path.
+        if (!resolve_ci(out, tok, next, sizeof next))
             std::snprintf(next, sizeof next, "%s/%s", out, tok);
-        }
         std::snprintf(out, outn, "%s", next);
+    }
+    return true;
+}
+
+inline bool host_file_exists(const char *p) {
+    struct stat st;
+    return stat(p, &st) == 0;
+}
+
+// Map a Windows path to a host path. A drive prefix selects the root: D: is
+// the CD when TS_CD names one, and every other drive is the install root.
+// A file the install root does not have is looked for in the shipped-data
+// root, which is how the game sees BATTLE.INI and the other files an
+// installation extracts from TIBSUN.MIX.
+inline bool host_path(const char *win, char *out, size_t outn) {
+    if (!win || !*win) return false;
+    const char *base = ts_root();
+    bool cd = false;
+    if (win[0] && win[1] == ':') {
+        if (path_is_cd_drive(win)) { base = ts_cd_root(); cd = true; }
+    }
+    host_path_in(base, win, out, outn);
+    if (!cd && !host_file_exists(out)) {
+        char alt[512];
+        host_path_in(ts_data_root(), win, alt, sizeof alt);
+        if (host_file_exists(alt)) std::snprintf(out, outn, "%s", alt);
     }
     return true;
 }
@@ -894,27 +977,133 @@ TS_BEGIN(GetOverlappedResult)
     stub_done(4, 1u);
 TS_END
 
-TS_BEGIN(FindFirstFileA)
-    // One match, named after the pattern's extension: a caller looking for
-    // *.mix is handed tsdata.mix rather than a name from another directory.
-    const char *pat = ld_cstr(arg(0));
-    const char *dot = std::strrchr(pat, '.');
-    u32 p = arg(1);
-    for (u32 i = 0; i < 0x140u; ++i) st8(p + i, 0);
-    st32(p + 0u, 0x20u);                 // dwFileAttributes
-    st32(p + 0x1cu, 0u);                 // nFileSizeLow
-    const char *base = "tsdata";
-    u32 i = 0;
-    for (; base[i]; ++i) st8(p + 0x2cu + i, (u8)base[i]);
-    if (dot && dot[1]) {
-        u32 j = 0;
-        for (; dot[j] && i + j < 260u; ++j) st8(p + 0x2cu + i + j, (u8)dot[j]);
+// -- directory enumeration ---------------------------------------------------
+// FindFirstFileA used to answer every pattern with one fabricated match named
+// after the extension ("tsdata.INI"), which no file layer could open. The game
+// finds its per-install data with this call -- RULES*.INI, ART*.INI,
+// BATTLE*.INI -- so a fabricated name made every one of those scans read
+// nothing. This enumerates the host directory and matches the pattern the way
+// Windows does, case-insensitively.
+inline char ci_lower(char c) { return (c >= 'A' && c <= 'Z') ? (char)(c + 32) : c; }
+
+inline bool glob_ci(const char *pat, const char *name) {
+    const char *p = pat, *n = name, *star = 0, *mark = 0;
+    while (*n) {
+        if (*p == '?' || (*p && ci_lower(*p) == ci_lower(*n))) { ++p; ++n; }
+        else if (*p == '*') { star = p++; mark = n; }
+        else if (star) { p = star + 1; n = ++mark; }
+        else return false;
     }
-    stub_done(2, 0x00090000u);
+    while (*p == '*') ++p;
+    return *p == 0;
+}
+
+struct FindRec {
+    int used;
+    unsigned count, next;
+    char names[64][64];
+    unsigned long sizes[64];
+    unsigned attrs[64];
+};
+inline FindRec *finds() { static FindRec f[8]; return f; }
+enum { FIND_HANDLE_BASE = 0x000a0001, FIND_SLOTS = 8, FIND_MAX = 64 };
+
+inline void find_add(FindRec *fr, const char *dir, const char *pat) {
+    DIR *d = opendir(dir[0] ? dir : ".");
+    if (!d) return;
+    while (struct dirent *e = readdir(d)) {
+        if (fr->count >= (unsigned)FIND_MAX) break;
+        if (!std::strcmp(e->d_name, ".") || !std::strcmp(e->d_name, "..")) continue;
+        if (!glob_ci(pat, e->d_name)) continue;
+        char full[512];
+        std::snprintf(full, sizeof full, "%s/%s", dir[0] ? dir : ".", e->d_name);
+        struct stat st;
+        unsigned long sz = 0;
+        unsigned attr = 0x20u;
+        if (stat(full, &st) == 0) {
+            if (S_ISDIR(st.st_mode)) attr = 0x10u;
+            else sz = (unsigned long)st.st_size;
+        }
+        std::snprintf(fr->names[fr->count], sizeof fr->names[0], "%s", e->d_name);
+        fr->sizes[fr->count] = sz;
+        fr->attrs[fr->count] = attr;
+        ++fr->count;
+    }
+    closedir(d);
+}
+
+inline void find_fill(u32 p, const FindRec *fr, unsigned i) {
+    for (u32 k = 0; k < 0x140u; ++k) st8(p + k, 0);
+    st32(p + 0x00u, fr->attrs[i]);                 // dwFileAttributes
+    st32(p + 0x1cu, 0u);                           // nFileSizeHigh
+    st32(p + 0x20u, (u32)fr->sizes[i]);            // nFileSizeLow
+    u32 n = 0;
+    for (; fr->names[i][n] && n < 259u; ++n)
+        st8(p + 0x2cu + n, (u8)fr->names[i][n]);   // cFileName
+    st8(p + 0x2cu + n, 0u);
+}
+
+TS_BEGIN(FindFirstFileA)
+    const char *pat = ld_cstr(arg(0));
+    u32 p = arg(1);
+    char path[512];
+    std::snprintf(path, sizeof path, "%s", pat);
+    char *slash = 0;
+    for (char *q = path; *q; ++q) if (*q == '\\' || *q == '/') slash = q;
+    char dir[512];
+    dir[0] = 0;
+    const char *namepat = path;
+    if (slash) {
+        *slash = 0;
+        namepat = slash + 1;
+        std::snprintf(dir, sizeof dir, "%s", path);
+    }
+    FindRec *fr = 0;
+    for (unsigned i = 0; i < (unsigned)FIND_SLOTS; ++i)
+        if (!finds()[i].used) { fr = &finds()[i]; break; }
+    if (!fr) { stub_done(2, 0xffffffffu); return; }
+    fr->used = 1; fr->count = 0; fr->next = 0;
+    bool cd = (pat[0] && pat[1] == ':' && path_is_cd_drive(pat));
+    const char *roots[2];
+    unsigned nr = 0;
+    if (cd) { if (ts_cd_root()[0]) roots[nr++] = ts_cd_root(); }
+    else { roots[nr++] = ts_root(); roots[nr++] = ts_data_root(); }
+    for (unsigned r = 0; r < nr; ++r) {
+        char hd[512];
+        if (dir[0]) host_path_in(roots[r], dir, hd, sizeof hd);
+        else std::snprintf(hd, sizeof hd, "%s", roots[r]);
+        find_add(fr, hd, namepat);
+        if (fr->count) break;   // the first root with a match owns the search
+    }
+    if (!fr->count) {
+        fr->used = 0;
+        if (std::getenv("TS_FILE_TRACE"))
+            std::fprintf(stderr, "win32stubs: FindFirstFileA(\"%s\") -> no match\n", pat);
+        stub_done(2, 0xffffffffu);
+        return;
+    }
+    find_fill(p, fr, 0);
+    fr->next = 1;
+    if (std::getenv("TS_FILE_TRACE"))
+        std::fprintf(stderr, "win32stubs: FindFirstFileA(\"%s\") -> \"%s\" (%u match(es))\n",
+                     pat, fr->names[0], fr->count);
+    stub_done(2, (u32)FIND_HANDLE_BASE + (u32)(fr - finds()));
 TS_END
 
-TS_RET(FindNextFileA, 2, 0u)   // one match, then no more
-TS_RET(FindClose, 1, 1u)
+TS_BEGIN(FindNextFileA)
+    u32 i = arg(0) - (u32)FIND_HANDLE_BASE;
+    if (i >= (u32)FIND_SLOTS || !finds()[i].used) { stub_done(2, 0u); return; }
+    FindRec *fr = &finds()[i];
+    if (fr->next >= fr->count) { stub_done(2, 0u); return; }
+    find_fill(arg(1), fr, fr->next++);
+    stub_done(2, 1u);
+TS_END
+
+TS_BEGIN(FindClose)
+    u32 i = arg(0) - (u32)FIND_HANDLE_BASE;
+    if (i < (u32)FIND_SLOTS) finds()[i].used = 0;
+    stub_done(1, 1u);
+TS_END
 
 TS_BEGIN(GetFullPathNameA)
     u32 src = arg(0), cch = arg(1), buf = arg(2), part = arg(3);
@@ -1432,6 +1621,18 @@ struct WinRec {
     u8  extra[64];   // window extra bytes: DWLP_MSGRESULT 0, DLGPROC 4, USER 8
     i32 x, y, cx, cy;   // window rect, in screen coordinates
     char text[64];
+    // The class name a DLGITEMTEMPLATE writes when it names a class instead of
+    // using a system atom. The "Select Campaign:" dialog's Slider3 is
+    // "msctls_trackbar32", which has no atom, so the message layer needs the
+    // string to tell it apart from a Static control (also atom 0).
+    char cls[24];
+    // Listbox content. lb_items points at an array of 128 model pointers, each
+    // the copy of a string the game added with LB_ADDSTRING. lb_sel is
+    // 0xffffffff when nothing is selected, as LB_GETCURSEL reports it.
+    u32 lb_count, lb_sel, lb_items;
+    // Trackbar state: TBM_SETRANGE/TBM_SETPOS and the queries the dialog's OK
+    // handler makes (TBM_GETPOS).
+    u32 tb_pos, tb_min, tb_max;
 };
 inline WinRec *wins() { static WinRec w[MAX_WINDOWS]; return w; }
 
@@ -1631,6 +1832,9 @@ inline WinRec *win_child_new(u32 parent, u32 id) {
     win_zero_extra(w);
     w->x = w->y = w->cx = w->cy = 0;
     w->text[0] = 0;
+    w->cls[0] = 0;
+    w->lb_count = 0u; w->lb_sel = 0xffffffffu; w->lb_items = 0u;
+    w->tb_pos = 0u; w->tb_min = 0u; w->tb_max = 0u;
     return w;
 }
 
@@ -1647,6 +1851,263 @@ inline u32 dlg_item(u32 hdlg, u32 id) {
     if (d->has_template) return 0u;
     c = win_child_new(hdlg, id);
     return c ? c->hwnd : 0u;
+}
+
+// -- control messages -------------------------------------------------------
+// A dialog's controls are system classes, and the game talks to them with
+// SendMessageA/SendDlgItemMessageA. Their answers ARE the dialog's state: the
+// "Select Campaign:" procedure (0x4db8b0) fills listbox 1109 with LB_ADDSTRING
+// in WM_INITDIALOG and reads the choice back with LB_GETCURSEL when OK is
+// pressed. An unimplemented listbox therefore makes the screen empty and the
+// OK a no-op -- which is exactly what it did.
+//
+// The class is the system atom from the template (0x83 = ListBox). A trackbar
+// has no atom: its template names "msctls_trackbar32", so WinRec keeps the
+// class string.
+enum { LB_MAX_ITEMS = 128, LB_ITEM_HEIGHT = 13, LB_ERR = 0xffffffffu };
+
+// TS_CTL_TRACE=1 -- listbox content, selection and clicks. A dialog that reads
+// its answer back with LB_GETCURSEL is otherwise invisible: the answer is
+// model state, not a register a trace can show.
+inline bool ctl_trace_on() {
+    static int on = -1;
+    if (on < 0) on = std::getenv("TS_CTL_TRACE") ? 1 : 0;
+    return on != 0;
+}
+
+inline bool is_listbox(const WinRec *w) { return w && w->atom == 0x83u; }
+inline bool is_trackbar(const WinRec *w) {
+    return w && w->atom == 0u && !std::strcmp(w->cls, "msctls_trackbar32");
+}
+
+// The copied string of item `i`, or 0 when there is none.
+inline u32 lb_item(const WinRec *w, u32 i) {
+    if (!w || !w->lb_items || i >= w->lb_count) return 0u;
+    return ld32(w->lb_items + i * 4u);
+}
+
+inline u32 lb_add(WinRec *w, u32 at, u32 src) {
+    if (!w || w->lb_count >= (u32)LB_MAX_ITEMS) return LB_ERR;
+    if (!w->lb_items) {
+        w->lb_items = alloc_block((u32)LB_MAX_ITEMS * 4u, 4u);
+        for (u32 i = 0; i < (u32)LB_MAX_ITEMS; ++i) st32(w->lb_items + i * 4u, 0u);
+    }
+    if (at > w->lb_count) at = w->lb_count;
+    for (u32 i = w->lb_count; i > at; --i)
+        st32(w->lb_items + i * 4u, ld32(w->lb_items + (i - 1u) * 4u));
+    u32 len = src ? c_strlen(src) : 0u;
+    u32 dst = alloc_block(len + 1u, 1u);
+    for (u32 i = 0; i < len; ++i) st8(dst + i, ld8(src + i));
+    st8(dst + len, 0u);
+    st32(w->lb_items + at * 4u, dst);
+    ++w->lb_count;
+    if (ctl_trace_on())
+        std::fprintf(stderr, "ctl: listbox 0x%08x add[%u] \"%s\" (count %u)\n",
+                     w->hwnd, at, ld_cstr(dst), w->lb_count);
+    return at;
+}
+
+inline u32 lb_delete(WinRec *w, u32 at) {
+    if (!w || at >= w->lb_count) return LB_ERR;
+    for (u32 i = at; i + 1u < w->lb_count; ++i)
+        st32(w->lb_items + i * 4u, ld32(w->lb_items + (i + 1u) * 4u));
+    st32(w->lb_items + (w->lb_count - 1u) * 4u, 0u);
+    --w->lb_count;
+    if (w->lb_sel == at) w->lb_sel = 0xffffffffu;
+    else if (w->lb_sel != 0xffffffffu && w->lb_sel > at) --w->lb_sel;
+    return w->lb_count;
+}
+
+inline char lc_ascii(char c) { return ci_lower(c); }
+
+// Case-insensitive prefix compare of a model string against a host string.
+inline bool model_prefix_ci(u32 a, const char *b) {
+    u32 i = 0;
+    for (; b[i]; ++i) {
+        char ca = (char)ld8(a + i);
+        if (!ca) return false;
+        if (lc_ascii(ca) != lc_ascii(b[i])) return false;
+    }
+    return true;
+}
+
+// The item index at a point in the listbox's own client coordinates, or
+// LB_ERR. A listbox has a one-pixel border and a fixed item height; the
+// template's font is 8pt MS Sans Serif, whose line height is 13.
+inline u32 lb_index_at(const WinRec *w, i32 lx, i32 ly) {
+    if (!w || lx < 0 || ly < 0 || lx >= w->cx || ly >= w->cy) return LB_ERR;
+    i32 y = ly - 1;
+    if (y < 0) return LB_ERR;
+    u32 i = (u32)(y / (i32)LB_ITEM_HEIGHT);
+    return i < w->lb_count ? i : LB_ERR;
+}
+
+// The shown listbox of a dialog whose rectangle contains a dialog-client point.
+inline WinRec *listbox_at(u32 hdlg, i32 x, i32 y) {
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i) {
+        WinRec &w = wins()[i];
+        if (!w.hwnd || w.parent != hdlg || !is_listbox(&w) || !w.shown) continue;
+        if (x >= w.x && x < w.x + w.cx && y >= w.y && y < w.y + w.cy) return &w;
+    }
+    return 0;
+}
+
+// The trackbar of a dialog whose rectangle contains a dialog-client point.
+inline WinRec *trackbar_at(u32 hdlg, i32 x, i32 y) {
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i) {
+        WinRec &w = wins()[i];
+        if (!w.hwnd || w.parent != hdlg || !is_trackbar(&w) || !w.shown) continue;
+        if (x >= w.x && x < w.x + w.cx && y >= w.y && y < w.y + w.cy) return &w;
+    }
+    return 0;
+}
+
+// A control notification: WM_COMMAND to the parent, HIWORD = the code
+// (LBN_SELCHANGE = 1, BN_CLICKED = 0), LOWORD = the control id.
+inline void control_notify(WinRec *w, u32 code) {
+    if (!w || !w->parent) return;
+    msg_push(w->parent, 0x0111u, (code << 16) | (w->id & 0xffffu), w->hwnd);
+}
+
+// Handle a system-control message. Returns false when the message is not one
+// this layer implements, so the caller can still reach a subclassed procedure.
+inline bool control_message(WinRec *w, u32 msg, u32 wp, u32 lp, u32 *out) {
+    if (!w) return false;
+    if (is_listbox(w)) {
+        switch (msg) {
+        case 0x0180u:                                  // LB_ADDSTRING
+            *out = lb_add(w, w->lb_count, lp); return true;
+        case 0x0181u:                                  // LB_INSERTSTRING
+            *out = lb_add(w, wp == 0xffffffffu ? w->lb_count : wp, lp); return true;
+        case 0x0182u:                                  // LB_DELETESTRING
+            *out = lb_delete(w, wp); return true;
+        case 0x0184u:                                  // LB_RESETCONTENT
+            w->lb_count = 0u; w->lb_sel = 0xffffffffu; *out = 0u; return true;
+        case 0x0185u: {                                // LB_SETSEL
+            if (lp == 0xffffffffu) w->lb_sel = wp ? 0u : 0xffffffffu;
+            else if (lp < w->lb_count) w->lb_sel = wp ? lp : 0xffffffffu;
+            *out = 0u; return true;
+        }
+        case 0x0186u:                                  // LB_SETCURSEL
+            if (wp == 0xffffffffu) { w->lb_sel = 0xffffffffu; *out = 0u; }
+            else if (wp < w->lb_count) { w->lb_sel = wp; *out = 0u; }
+            else *out = LB_ERR;
+            if (ctl_trace_on())
+                std::fprintf(stderr, "ctl: listbox 0x%08x SETCURSEL %u -> sel %d\n",
+                             w->hwnd, wp, (int)w->lb_sel);
+            return true;
+        case 0x0187u:                                  // LB_GETSEL
+            *out = (wp < w->lb_count && w->lb_sel == wp) ? 1u : 0u; return true;
+        case 0x0188u:                                  // LB_GETCURSEL
+            *out = w->lb_sel;
+            if (ctl_trace_on())
+                std::fprintf(stderr, "ctl: listbox 0x%08x GETCURSEL -> %d (count %u)\n",
+                             w->hwnd, (int)w->lb_sel, w->lb_count);
+            return true;
+        case 0x0189u: {                                // LB_GETTEXT
+            u32 s = lb_item(w, wp);
+            if (!s) { *out = LB_ERR; return true; }
+            u32 n = c_strlen(s);
+            if (lp) { for (u32 i = 0; i <= n; ++i) st8(lp + i, ld8(s + i)); }
+            *out = n; return true;
+        }
+        case 0x018au: {                                // LB_GETTEXTLEN
+            u32 s = lb_item(w, wp);
+            *out = s ? c_strlen(s) : LB_ERR; return true;
+        }
+        case 0x018bu:                                  // LB_GETCOUNT
+            *out = w->lb_count; return true;
+        case 0x018eu:                                  // LB_GETTOPINDEX
+            *out = 0u; return true;
+        case 0x018fu:                                  // LB_FINDSTRING
+            *out = LB_ERR;
+            if (lp) {
+                u32 start = (wp == 0xffffffffu) ? 0u : wp + 1u;
+                for (u32 i = start; i < w->lb_count; ++i)
+                    if (model_prefix_ci(lb_item(w, i), ld_cstr(lp))) { *out = i; break; }
+            }
+            return true;
+        case 0x0190u:                                  // LB_GETSELCOUNT
+            *out = w->lb_sel == 0xffffffffu ? 0u : 1u; return true;
+        case 0x0197u:                                  // LB_SETTOPINDEX
+            *out = 0u; return true;
+        case 0x0199u:                                  // LB_GETITEMDATA
+            *out = (wp < w->lb_count) ? 0u : LB_ERR; return true;
+        case 0x019au:                                  // LB_SETITEMDATA
+            *out = (wp < w->lb_count) ? 1u : LB_ERR; return true;
+        case 0x01a2u:                                  // LB_FINDSTRINGEXACT
+            *out = LB_ERR;
+            if (lp) {
+                const char *want = ld_cstr(lp);
+                for (u32 i = 0; i < w->lb_count; ++i) {
+                    u32 s = lb_item(w, i);
+                    if (model_prefix_ci(s, want) && !ld8(s + (u32)std::strlen(want))) {
+                        *out = i; break;
+                    }
+                }
+            }
+            return true;
+        case 0x01a9u: {                                // LB_ITEMFROMPOINT
+            i32 x = (i32)(i16)(lp & 0xffffu), y = (i32)(i16)(lp >> 16);
+            u32 i = lb_index_at(w, x, y);
+            *out = (i == LB_ERR) ? 1u << 16 : i;
+            return true;
+        }
+        default: break;
+        }
+    }
+    if (is_trackbar(w)) {
+        switch (msg) {
+        case 0x0400u: *out = w->tb_pos; return true;             // TBM_GETPOS
+        case 0x0401u: *out = w->tb_min; return true;             // TBM_GETRANGEMIN
+        case 0x0402u: *out = w->tb_max; return true;             // TBM_GETRANGEMAX
+        case 0x0405u: w->tb_pos = lp; *out = 0u; return true;    // TBM_SETPOS
+        case 0x0406u:                                            // TBM_SETRANGE
+            w->tb_min = lp & 0xffffu;
+            w->tb_max = (lp >> 16) & 0xffffu;
+            if (w->tb_pos < w->tb_min) w->tb_pos = w->tb_min;
+            if (w->tb_pos > w->tb_max) w->tb_pos = w->tb_max;
+            *out = 0u; return true;
+        case 0x0407u: w->tb_min = lp; *out = 0u; return true;    // TBM_SETRANGEMIN
+        case 0x0408u: w->tb_max = lp; *out = 0u; return true;    // TBM_SETRANGEMAX
+        case 0x0409u: case 0x040au: *out = 0u; return true;      // CLEARTICS / SETSEL
+        case 0x0410u: *out = 0u; return true;                    // TBM_GETNUMTICS
+        case 0x0412u: *out = 1u; return true;                    // TBM_GETPAGESIZE
+        case 0x0415u: *out = 0u; return true;                    // TBM_SETPAGESIZE
+        case 0x0417u: *out = 0u; return true;                    // TBM_SETLINESIZE
+        case 0x0418u: *out = 1u; return true;                    // TBM_GETLINESIZE
+        default: break;
+        }
+    }
+    // Text messages are the same on every control, including a listbox whose
+    // WM_GETTEXT answers with the selected item (as USER32 does).
+    if (msg == 0x000cu) {                                    // WM_SETTEXT
+        win_copy(w->text, sizeof(w->text), lp); *out = 1u; return true;
+    }
+    if (msg == 0x000du) {                                    // WM_GETTEXT
+        const char *src = w->text;
+        u32 n = 0;
+        if (is_listbox(w) && w->lb_sel != 0xffffffffu) {
+            u32 s = lb_item(w, w->lb_sel);
+            if (s) {
+                if (lp) { u32 i = 0; for (; i + 1u < wp && ld8(s + i); ++i) st8(lp + i, ld8(s + i)); st8(lp + i, 0u); }
+                *out = c_strlen(s); return true;
+            }
+        }
+        while (src[n]) ++n;
+        if (lp) {
+            u32 i = 0;
+            for (; i + 1u < wp && src[i]; ++i) st8(lp + i, (u8)src[i]);
+            st8(lp + i, 0u);
+        }
+        *out = n; return true;
+    }
+    if (msg == 0x000eu) {                                    // WM_GETTEXTLENGTH
+        *out = is_listbox(w) && w->lb_sel != 0xffffffffu
+               ? c_strlen(lb_item(w, w->lb_sel)) : (u32)std::strlen(w->text);
+        return true;
+    }
+    return false;
 }
 
 // The default button a scripted click presses: IDOK when the template declares
@@ -1771,6 +2232,10 @@ TS_BEGIN(CreateWindowExA)
         win_zero_extra(w);
         w->x = x; w->y = y; w->cx = cx; w->cy = cy;
         win_copy(w->text, sizeof(w->text), title);
+        w->cls[0] = 0;
+        if (clsname && clsname >= 0x10000u) win_copy(w->cls, sizeof(w->cls), clsname);
+        w->lb_count = 0u; w->lb_sel = 0xffffffffu; w->lb_items = 0u;
+        w->tb_pos = 0u; w->tb_min = 0u; w->tb_max = 0u;
         if (!wnd_handle()) wnd_handle() = h;
         // Windows sends WM_NCCREATE and then WM_CREATE from inside
         // CreateWindowEx, and a program that initialises in WM_CREATE expects
@@ -1849,12 +2314,27 @@ inline unsigned long input_messages() { return input_msg_count(); }
 // which is what makes the game's menu loop return.
 inline const char *default_input_script() {
     return
-        "# Default timeline: click New Campaign once the intro movies are over.\n"
+        "# Default timeline: New Campaign, pick a campaign, press OK.\n"
+        "# The menu button rectangles are the recovered ones (LANGUAGE.DLL\n"
+        "# RT_DIALOG 226): New Campaign is screen (223,207)-(418,236). The\n"
+        "# campaign dialog (RT_DIALOG 148) is moved by the game to (135,187);\n"
+        "# its listbox 1109 is at client (33,46 309x83) and its rows are 13 px,\n"
+        "# so (200,252) is row 1 (NOD1) and (200,240) is row 0 (GDI1). The\n"
+        "# timeline selects NOD1 and then GDI1 so the selection change is real;\n"
+        "# the GDI campaign's first scenario (GDI1A.MAP) is on CD1, while NOD1A\n"
+        "# is on CD2. OK (id 1) is at client (182,197 75x26), screen (355,397).\n"
         "@170000 mousemove 320 220\n"
         "@170100 lbuttondown\n"
         "@170150 lbuttonup\n"
-        "@180000 keydown 0x0d\n"
-        "@180050 keyup   0x0d\n";
+        "@180000 mousemove 200 252\n"
+        "@180100 lbuttondown\n"
+        "@180150 lbuttonup\n"
+        "@185000 mousemove 200 240\n"
+        "@185100 lbuttondown\n"
+        "@185150 lbuttonup\n"
+        "@190000 mousemove 355 397\n"
+        "@190100 lbuttondown\n"
+        "@190150 lbuttonup\n";
 }
 
 inline void input_init_once() {
@@ -1992,6 +2472,14 @@ TS_BEGIN(SendMessageA)
                 r = call_wndproc(wins()[i].proc, wins()[i].hwnd, msg, wp, lp);
     } else {
         WinRec *w = win_find(hwnd);
+        // A system control (listbox, trackbar, the text messages every control
+        // answers) is the model's own code, not a window procedure: its answer
+        // is state the dialog reads back. Only a message this layer does not
+        // implement falls through to a subclassed procedure.
+        if (w && w->parent && control_message(w, msg, wp, lp, &r)) {
+            stub_done(4, r);
+            return;
+        }
         u32 proc = w ? w->proc : (hwnd == wnd_handle() ? wnd_proc() : 0u);
         r = call_wndproc(proc, hwnd, msg, wp, lp);
     }
@@ -2035,12 +2523,40 @@ inline void dialog_mouse(u32 hwnd, u32 msg, u32 lparam) {
     i32 y = (i32)(i16)(lparam >> 16);
     if (msg == 0x0201u) {                       // WM_LBUTTONDOWN
         WinRec *b = button_at(hwnd, x, y);
+        // A listbox selects on button-down and notifies its parent with
+        // LBN_SELCHANGE, which is what the "Select Campaign:" listbox's
+        // LBS_NOTIFY style asks for. The selection is the value the dialog's
+        // OK handler reads back with LB_GETCURSEL.
+        WinRec *lb = b ? 0 : listbox_at(hwnd, x, y);
+        WinRec *tb = (b || lb) ? 0 : trackbar_at(hwnd, x, y);
         pressed_dialog() = hwnd;
-        pressed_control() = b ? b->hwnd : 0u;
-        if (b) focus_handle() = b->hwnd;        // a button takes the focus
+        pressed_control() = b ? b->hwnd : (lb ? lb->hwnd : (tb ? tb->hwnd : 0u));
+        if (b || lb || tb) focus_handle() = pressed_control();
+        if (lb) {
+            u32 idx = lb_index_at(lb, x - lb->x, y - lb->y);
+            if (ctl_trace_on())
+                std::fprintf(stderr, "ctl: click listbox 0x%08x at (%d,%d) local (%d,%d) -> index %d of %u\n",
+                             lb->hwnd, x, y, x - lb->x, y - lb->y, (int)idx, lb->lb_count);
+            if (idx != LB_ERR && idx != lb->lb_sel) {
+                lb->lb_sel = idx;
+                control_notify(lb, 1u);         // LBN_SELCHANGE
+            }
+        } else if (tb) {
+            // The thumb follows the click; the dialog's WM_HSCROLL handler
+            // only relabels the difficulty, but the position is the value OK
+            // reads with TBM_GETPOS.
+            i32 span = tb->cx > 2 ? tb->cx - 2 : 1;
+            i32 px = x - tb->x - 1;
+            if (px < 0) px = 0;
+            if (px > span) px = span;
+            u32 range = tb->tb_max > tb->tb_min ? tb->tb_max - tb->tb_min : 0u;
+            tb->tb_pos = tb->tb_min + (u32)((px * (i32)range) / span);
+            msg_push(hwnd, 0x0114u, 0u, tb->hwnd);   // WM_HSCROLL
+        }
         if (std::getenv("TS_INPUT_TRACE"))
             std::fprintf(stderr, "input: LBUTTONDOWN at (%d,%d) in 0x%08x -> %s 0x%08x\n",
-                         x, y, hwnd, b ? "button" : "no button", b ? b->hwnd : 0u);
+                         x, y, hwnd, b ? "button" : (lb ? "listbox" : (tb ? "trackbar" : "none")),
+                         pressed_control());
     } else if (msg == 0x0202u) {                // WM_LBUTTONUP
         if (pressed_dialog() != hwnd) return;
         WinRec *b = button_at(hwnd, x, y);
@@ -2201,6 +2717,9 @@ TS_BEGIN(DestroyWindow)
     u32 hwnd = arg(0);
     WinRec *w = win_find(hwnd);
     if (w) {
+        if (win_trace_on())
+            std::fprintf(stderr, "win: DestroyWindow(0x%08x)%s from 0x%08x\n",
+                         hwnd, w->is_dialog ? " dialog" : "", ld32(ESP.d));
         for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
             if (wins()[i].hwnd && wins()[i].parent == hwnd) wins()[i].hwnd = 0u;
         w->hwnd = 0u;
@@ -2514,6 +3033,9 @@ inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
     win_zero_extra(d);
     d->x = x; d->y = y; d->cx = cx; d->cy = cy;
     d->text[0] = 0;
+    d->cls[0] = 0;
+    d->lb_count = 0u; d->lb_sel = 0xffffffffu; d->lb_items = 0u;
+    d->tb_pos = 0u; d->tb_min = 0u; d->tb_max = 0u;
     u32 h = d->hwnd;
 
     if (tpl && cdit) {
@@ -2563,10 +3085,12 @@ inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
             }
             u32 q = p + (ex ? 24u : 18u);
             u32 catom = 0u;
+            char ccls[24];
+            ccls[0] = 0;
             u16 cv = (u16)ld16(q);
             if (cv == 0xffffu) { catom = ld16(q + 2u); q += 4u; }
             else if (cv == 0u) q += 2u;
-            else q = dlg_var_end(q);
+            else { win_copy_w(ccls, sizeof ccls, q); q = dlg_var_end(q); }
             char ctext[64];
             ctext[0] = 0;
             u16 tv = (u16)ld16(q);
@@ -2580,6 +3104,9 @@ inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
             c->style = cstyle;
             c->exstyle = cexstyle;
             c->atom = catom;
+            unsigned cn = 0;
+            for (; cn + 1u < sizeof(c->cls) && ccls[cn]; ++cn) c->cls[cn] = ccls[cn];
+            c->cls[cn] = 0;
             c->shown = (cstyle & 0x10000000u) ? 1u : 0u;   // WS_VISIBLE
             c->x = dlg_muldiv(ccx, base_x, 4);
             c->y = dlg_muldiv(ccy, base_y, 8);
@@ -2647,27 +3174,17 @@ TS_BEGIN(GetDlgItemTextA)
 TS_END
 
 TS_BEGIN(SendDlgItemMessageA)
-    // The control messages a dialog's own code sends: text, and a button's
-    // check state. Everything else answers 0, which is what a control with no
-    // such message returns.
+    // The control messages a dialog's own code sends. The listbox/trackbar and
+    // the text messages are shared with SendMessageA; a button's check state is
+    // the only message that is specific to this entry point.
     u32 h = dlg_item(arg(0), arg(1)), msg = arg(2), wp = arg(3), lp = arg(4), r = 0u;
     WinRec *w = win_find(h);
     if (w) {
-        if (msg == 0x000cu) {                       // WM_SETTEXT
-            win_copy(w->text, sizeof(w->text), lp);
-            r = 1u;
-        } else if (msg == 0x000du) {                // WM_GETTEXT
-            u32 n = 0;
-            while (w->text[n]) ++n;
-            if (lp) {
-                u32 i = 0;
-                for (; i + 1u < wp && w->text[i]; ++i) st8(lp + i, (u8)w->text[i]);
-                st8(lp + i, 0u);
-            }
-            r = n;
-        } else if (msg == 0x000eu) {                // WM_GETTEXTLENGTH
-            while (w->text[r]) ++r;
-        } else if (msg == 0x00f1u) {                // BM_SETCHECK
+        if (control_message(w, msg, wp, lp, &r)) {
+            stub_done(5, r);
+            return;
+        }
+        if (msg == 0x00f1u) {                       // BM_SETCHECK
             w->extra[0] = (u8)wp;
         } else if (msg == 0x00f0u) {                // BM_GETCHECK
             r = w->extra[0];
@@ -2682,6 +3199,9 @@ TS_BEGIN(EndDialog)
     u32 h = arg(0);
     WinRec *w = win_find(h);
     if (w) {
+        if (win_trace_on())
+            std::fprintf(stderr, "win: EndDialog(0x%08x, %u) from 0x%08x\n",
+                         h, arg(1), ld32(ESP.d));
         for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
             if (wins()[i].hwnd && wins()[i].parent == h) wins()[i].hwnd = 0u;
         w->hwnd = 0u;
@@ -2780,14 +3300,22 @@ TS_RET(DialogBoxIndirectParamA, 5, 1u)
 TS_BEGIN(CreateDialogParamA)
     u32 hinst = arg(0), name = arg(1), parent = arg(2), proc = arg(3), init = arg(4);
     u32 tpl = dialog_template_by_id(hinst, name);
-    stub_done(5, tpl ? dialog_create(tpl, parent, proc, init) : 0u);
+    u32 h = tpl ? dialog_create(tpl, parent, proc, init) : 0u;
+    if (win_trace_on())
+        std::fprintf(stderr, "win: CreateDialogParamA(%u) -> 0x%08x from 0x%08x\n",
+                     name, h, ld32(ESP.d));
+    stub_done(5, h);
 TS_END
 
 TS_BEGIN(CreateDialogIndirectParamA)
     // CreateDialogIndirectParamA(hInstance, lpTemplate, hWndParent,
     // lpDialogFunc, dwInitParam). Creates the dialog and its controls from the
     // template, sends WM_INITDIALOG synchronously, and returns the handle.
-    stub_done(5, dialog_create(arg(1), arg(2), arg(3), arg(4)));
+    u32 h = dialog_create(arg(1), arg(2), arg(3), arg(4));
+    if (win_trace_on())
+        std::fprintf(stderr, "win: CreateDialogIndirectParamA -> 0x%08x from 0x%08x\n",
+                     h, ld32(ESP.d));
+    stub_done(5, h);
 TS_END
 
 TS_BEGIN(SetWindowLongA)
