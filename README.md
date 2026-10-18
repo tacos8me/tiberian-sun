@@ -18,12 +18,18 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
   thunks, reaches the game's own **message loop**, decrypts the TIBSUN.MIX index
   with a real Blowfish-ECB implementation (all 27 index blocks, 17/17 records
   matching `tools/mix.py`), reads the CD (`TS_CD` models `D:`), builds its real
-  LANGUAGE.DLL dialogs, and then reaches the **intro-movie playback pump**. The
-  movie does not play: the VQA decoder never executes because the stream's frame
-  callback `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump
-  retries. That is the unreconstructed MS*/AVI layer, and the current blocker.
-  The run has **0 unmapped calls and 0 stack imbalances**, and `boot.py
-  --strict` exits 0. The movie path and the menu are **not reached**.
+  LANGUAGE.DLL dialogs, plays past the intro, and **renders the real main
+  menu**. The committed `re/out/frame.png` is 640x480, md5
+  `0fdf2636c2643ce2510ae67fb9ca9e26`, with 254,610 / 307,200 non-black pixels;
+  against the retail screenshot, 102,836 pixels differ (33.48%) but the mean
+  absolute channel difference is **1.06/255** on the pixels that differ, and only
+  506 pixels differ by more than 8 (the retail version text). The run has **0
+  unmapped calls and 0 stack imbalances**, and `boot.py --strict` exits 0.
+- **The menu is not selectable yet.** Scripted input is delivered and consumed,
+  but exit needs `0x5898f0` to return 1 (`[0x7b0d38]` nonzero and != 5, currently
+  0) and `0x7b2ab8` has only its menu-init store; the button/text PCX assets are
+  in the nested MIX entry `0xa8548fd9` (317 entries), so the click points are
+  probes. The game does **not** leave the menu.
 - The **retail** game reaches its **main menu** under Wine on this host; that is
   the project's external oracle.
 - Every function body is generated machine transcription, one instruction per
@@ -39,10 +45,11 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 | member offsets recovered | 4,289 (4,285 confirmed against the binary, 99.9%; 4 refuted) |
 | named members | 291 across 20 classes |
 | virtuals named | 5,557 of 9,810 slot pairs (56.6%); 917 distinct names (281 semantic) |
-| headers | 264 total, 263 compile standalone at `-m32` |
+| headers | 266 total, 265 compile standalone at `-m32` |
 | verification gate | 9 checks, fail-closed, passing; check 9 confirms 3,073/3,073 offsets |
-| tool tests | 72 checks, several mutation-proven |
-| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX index read and CD path correct; real LANGUAGE.DLL dialogs; 20M budget at `0x00488800` (55,798 / 4,767), 80M at `0x0064e156` (61,817 / 5,171); 0 unmapped, 0 stack imbalances; current blocker is the intro-movie pump |
+| tool tests | 75 checks, several mutation-proven; `test_runtime.py` 101 more (rendering/input) |
+| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders the main menu**; 20M stop `0x00488800` (55,774 / 4,764), 1.65B no input `0x0045fa8b` (77,619 / 6,132), 1.9B scripted `0x0055f78e` (77,982 / 6,150); 0 unmapped, 0 stack imbalances; current blocker is menu selection |
+| frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; 1.06/255 mean channel difference from retail on differing pixels |
 
 **Measure, don't trust prose.** `python3 tools/harness.py metrics` prints the
 real state; these figures drift as the tools improve. `AGENTS.md` records the
@@ -57,6 +64,7 @@ python3 tools/verify.py src/include build/shim # the 9-check gate (about 6 s)
 python3 tools/verify_members_binary.py         # re-derives offsets from the binary
 python3 tools/link_test.py                     # links 492 TUs and runs the entry point
 python3 tools/test_tools.py                    # tests the tools themselves
+python3 tools/test_runtime.py                  # rendering/input layer tests
 python3 tools/harness.py metrics --no-append   # measured state
 python3 tools/harness.py determinism --run     # two clean runs, byte-diffed
 ```
@@ -85,24 +93,28 @@ directory as a `DRIVE_CDROM` labelled `TS1`, which is what lets the game find
 ```
 message loop: reached  (GetMessage=1 PeekMessage=5 DispatchMessage=1 CreateWindowExA=1)
 stop: instruction budget exhausted at 0x00488800 after 20,000,001 instructions
-why:  the game reaches the intro-movie playback pump (no fault, no exit)
-coverage: 55,798 distinct instructions; 4,767 of 45,947 recovered functions
+why:  the run is in the intro/menu path (no fault, no exit)
+coverage: 55,774 distinct instructions; 4,764 of 45,947 recovered functions
 unmapped calls: 0 (0 inside .text); stack imbalances: 0
 ```
 
-At `--budget 80000000` the stop is `0x0064e156`, `PeekMessage=312,674`, coverage
-61,817 / 5,171. The VQA decoder never executes because the stream's frame
-callback `[+0x54]` is NULL; the pump retries. That is the unreconstructed
-MS*/AVI layer, recorded in `todo.md`.
+At larger budgets the model reaches the menu: no input at `--budget 1650000000`
+stops at `0x0045fa8b` (77,619 / 6,132); the default scripted input at
+`--budget 1900000000 --timeout 600` stops in the menu message pump `0x0055f78e`
+with `GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11` (77,982 /
+6,150). `--frame out/frame.png` dumps the rendered menu; the committed frame is
+640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, with 254,610 / 307,200
+non-black pixels, and differs from the retail screenshot by a mean channel
+difference of 1.06/255 on the pixels that differ.
 
 Real Blowfish-ECB is implemented and proven against `tools/mix.py` (the shipped
 TIBSUN.MIX first index block decrypts byte-identically), the MIX index read is
 fixed (27/27 blocks, 17/17 records), the dialog layer reads LANGUAGE.DLL's own
-templates, and narrow-width flags are derived from the operand width. Coverage
-freezes at 61,817 / 5,171 from 40M because the intro-movie pump retries without
-executing the VQA decoder — the unreconstructed MS*/AVI layer, recorded in
-`todo.md`. The shutdown ESP defect is dormant (the run no longer reaches
-shutdown).
+templates, and narrow-width flags are derived from the operand width. The menu
+renders but is **not selectable**: `0x5898f0` needs `[0x7b0d38]` nonzero and
+!= 5 (currently 0), `0x7b2ab8` has only its menu-init store, and the button PCX
+assets are in the nested MIX entry `0xa8548fd9`, so the scripted clicks are
+probes. The game does not leave the menu. The shutdown ESP defect is dormant.
 
 The model has diagnostics for this work: `TS_TRACE=0xADDR`, `TS_PEEK=0xADDR`,
 `TS_SCAN=start,count`, `TS_WATCH=0xADDR`, `TS_FILE_TRACE=1`, plus `bad_calls`,
@@ -162,8 +174,10 @@ regenerates `realdata/` from `TIBSUN.MIX`.
 - **1,876** referenced strings, including `rules.ini` field names — the original
   struct member names, recovered verbatim.
 - A working machine model (`src/handwritten/Machine.h`), a PE image mapper and
-  import resolver (`Image.h`), and a Win32/DirectDraw/DirectSound/COM stub layer
-  (`Win32Stubs.h`) faithful enough to run the game's startup.
+  import resolver (`Image.h`), a per-surface RGB565 rendering layer
+  (`Rendering.h`), a scripted input layer (`Input.h`), and a
+  Win32/DirectDraw/DirectSound/COM stub layer (`Win32Stubs.h`) faithful enough
+  to run the game's startup and render its main menu.
 
 ## Layout
 

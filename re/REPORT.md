@@ -7,7 +7,7 @@ The retail PC release of **Command & Conquer: Tiberian Sun** (Westwood Studios,
 declaration tree.
 
 **Verification status: `tools/verify.py` prints `VERIFICATION PASSED` with nine
-checks.** 263 of the 264 headers under `src/include/` compile standalone at the
+checks.** 265 of the 266 headers under `src/include/` compile standalone at the
 target ABI (`g++ -m32 -std=c++03 -fsyntax-only`; `ts_prelude.h` is the shared
 prelude and is included rather than compiled on its own), and the combined
 translation unit `build/tu_all.cpp` compiles. Every vtable→class binding in the
@@ -20,30 +20,40 @@ The recovered **machine code is transcribed**, not stubbed: 45,947 functions
 instruction lines (100%, 0 unmodelled), rendered against the machine model in
 `src/handwritten/Machine.h`. The whole tree — 492 translation units — **links
 into a program**, and that program runs the original PE entry point against the
-model: with `TS_CD` (the modelled `D:`), **20,000,001 instructions** (the budget)
-ending at `0x00488800` (`sub_0048875c +0xa4`), with **`CreateWindowExA=1`,
-`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`** — the game's own
-**message loop**, reached and dispatching. The CD path is correct
-(`D:\TS1.dsk`, `EXPAND99..00`), the dialogs are real (LANGUAGE.DLL's templates),
-and the narrow-width flag fix makes the vsprintf/CD-scan paths correct. Coverage
-is **55,798 distinct instructions; 4,767 of 45,947 recovered functions entered**
-at 20M, and **61,817 / 5,171** at an 80M budget, where the stop is `0x0064e156`.
-**0 unmapped calls, 0 stack imbalances**; `boot.py --strict` exits 0 and
-`tools/link_test.py` passes (exit 0). A full `./tools/pipeline.sh` ran exit 0 in
-the disasm-correction lane (8m51s, per `todo.md`); it was not re-run here.
+model: with `TS_CD` (the modelled `D:`), it reads the CD (`D:\TS1.dsk`,
+`EXPAND99..00`), builds its real LANGUAGE.DLL dialogs, plays past the intro, and
+**renders the real main menu**. The committed `re/out/frame.png` is 640x480, md5
+`0fdf2636c2643ce2510ae67fb9ca9e26`, with **254,610 / 307,200 non-black pixels**
+(title logo, GDI/Nod wheel, emblems). Against the retail screenshot
+(`/tmp/retail.png`, md5 `58cb9c0b…`), **102,836 pixels differ at all (33.48%)**,
+the mean absolute channel difference is **1.06/255 over the differing pixels**
+(0.35 over the whole frame), and only **506 pixels differ by more than 8**, all
+in the bottom-right retail version text the model does not draw; the rest is
+RGB565 quantization.
 
-The game then reaches the **intro-movie playback pump** (`sub_0064dff0`), which
-is the current blocker: the VQA decoder never executes because the stream's
-frame callback `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump
-retries; coverage freezes at 61,817 / 5,171 from 40M. This is the unreconstructed
-MS*/AVI layer, not a missing import. The movie path is **not working**, and the
-menu is not reached.
+Boot states, all with **0 unmapped calls and 0 stack imbalances**:
+- 20M: stop `0x00488800`, coverage **55,774 / 4,764**.
+- no input, 1.65B: stop `0x0045fa8b` (menu frame/animation path), coverage
+  **77,619 / 6,132**.
+- default scripted input, 1.9B: stop `0x0055f78e` (menu message pump),
+  `GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`, coverage
+  **77,982 / 6,150**.
+`boot.py --strict` exits 0 and `tools/link_test.py` passes (exit 0). A full
+`./tools/pipeline.sh` ran exit 0 in the disasm-correction lane (8m51s, per
+`todo.md`); it was not re-run here.
+
+The **current blocker is menu-item selection**: scripted input is delivered and
+the key queue consumes it, but exit needs `0x5898f0` to return 1 (`[0x7b0d38]`
+nonzero and != 5, currently 0), and `0x7b2ab8` has only its menu-init store. The
+buttons/text are not drawn because their PCX assets live in `TIBSUN.MIX`'s
+nested MIX entry `0xa8548fd9` (317 entries), so the scripted click points are
+probes. The menu is **not selectable**, and the game does **not** leave it.
 
 The **retail** binary, run under Wine with the CD and a 640x480x16 screen
 (`tools/wine_env.sh`), reaches its **main menu** (screenshot md5
 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s). That is the
-differential oracle: the model reaches message delivery, the CD/MIX path and
-real dialogs, but not the movie or the menu.
+differential oracle: the model now renders the same menu frame, but its menu is
+not selectable.
 
 The retail oracle also measured what `blowfish.dll` registers
 (`re/out/blowfish_oracle.md`, `tools/oracle_blowfish.py`,
@@ -67,7 +77,7 @@ manifest's vtable bindings match the binary, and that the tree links. It does
 not prove the disassembly is correct, it does not verify data-member *types* or
 ordering, and the transcription is **not source-shaped** — it is faithful to
 what the machine does and is not claimed to be the shape the original source
-had. Measured naming: 4,496 of 6,954 header virtual declarations are named
+had. Measured naming: 4,499 of 6,957 header virtual declarations are named
 (64.7%; 2,458 remain `vfunc_N`), representing 5,557 named `(class, slot)` pairs
 and 917 distinct names (281 semantic); 291 of 3,526 non-vptr members are named
 (8.3%).
@@ -164,8 +174,8 @@ and deepened by three further recovery passes:
 - **calling conventions and arity** (`tools/gen_signatures.py`): **43,557**
   signatures (`__thiscall` 11,478, `__stdcall` 10,728, `__cdecl` 9,642, and
   11,716 with no convention recovered);
-- **virtual naming** (`tools/name_virtuals.py`): **4,496** named virtual
-  declarations (64.7% of the 6,954 the harness counts) and **5,557** named
+- **virtual naming** (`tools/name_virtuals.py`): **4,499** named virtual
+  declarations (64.7% of the 6,957 the harness counts) and **5,557** named
   `(class, slot)` pairs, from **917** distinct names (**281** semantic). The
   remaining **2,458** declarations are honestly named `vfunc_N` rather than
   guessed. (`tools/harness.py metrics` reports `virtuals_named` and
@@ -193,7 +203,7 @@ re/
   out/class_manifest.json   749 classes, 9,810 virtual slots
   out/members.json          4,289 member-offset records
   out/signatures.json       43,557 signatures
-  src/include/*.h           264 headers (263 standalone-compilable + prelude)
+  src/include/*.h           266 headers (265 standalone-compilable + prelude)
   src/generated/code/       45,947 machine-code transcriptions + registration
   src/generated/*.cpp       6,962 forwarders across 310 translation units
   src/handwritten/          hand-written, evidence-backed headers
@@ -219,7 +229,7 @@ is missing, rather than running a subset and printing `VERIFICATION PASSED`.
 Current output:
 
 ```
-[1] standalone compile: 263/263
+[1] standalone compile: 265/265
 [2] combined TU compile: PASS
 [3] class coverage: 749/749 (100.0%)
 [4] vtable->class bindings: 749/749 verified
@@ -305,11 +315,15 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   `link_test.py` reports `341 of 341 IAT slots written` and `0 with no stub`.
   The old "16,383 calls read 0" claim described the pre-`Image.h` model and is
   retracted.
-- **The game reaches the intro-movie playback pump, and the movie does not
-  play.** The VQA decoder never executes because the stream's frame callback
-  `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump retries;
-  coverage freezes at 61,817 / 5,171. This is the unreconstructed MS*/AVI layer,
-  not a missing import. The movie path and the menu are **not reached**.
+- **The model renders the real main menu, but it is not selectable.** The frame
+  is `re/out/frame.png` (md5 `0fdf2636…`, 254,610 / 307,200 non-black; versus
+  retail, 102,836 pixels differ (33.48%), mean absolute channel difference
+  1.06/255 over the differing pixels, 506 pixels >8). Scripted input is
+  delivered and consumed, but exit needs `0x5898f0` to return 1
+  (`[0x7b0d38]` nonzero and != 5, currently 0) and `0x7b2ab8` has only its
+  menu-init store. The button/text PCX assets are in the nested MIX entry
+  `0xa8548fd9` (317 entries), so the click points are probes. The game does
+  **not** leave the menu.
 - **The boot has 0 unmapped calls and 0 stack imbalances**; the link test passes
   and `boot.py --strict` exits 0.
 - **The Blowfish cipher, the MIX index read and the dialog layer are fixed.**

@@ -7,9 +7,9 @@ this file (`python3 tools/harness.py metrics --no-append`).
 Figures in this file were re-measured on 2026-10-17 with `harness.py metrics`,
 `verify.py`, `verify_members_binary.py`, `test_tools.py`, `boot.py` (and
 `--no-build --strict`), `link_test.py`, `wine_env.sh`, and direct counts over
-`out/` and `src/generated/`. The boot and recovery figures were re-measured
-after the dialog, narrow-width-flag and generator-arity merges; the full
-`pipeline.sh` run recorded in `todo.md` (exit 0, 8m51s) was not re-run here.
+`out/` and `src/generated/`. The boot, frame and recovery figures were
+re-measured after the rendering/input integration; the full `pipeline.sh` run
+recorded in `todo.md` (exit 0, 8m51s) was not re-run here.
 
 The point of this document is to say **what is actually left**, what the
 *smallest* honest size of that work is, and in what order it can be done — not to
@@ -73,7 +73,7 @@ replaced with different numbers for the same claim: the host-width problem they
 described no longer exists in the build the gate runs. Measured now:
 
 ```
-verify.py -m32 standalone headers : 263/263
+verify.py -m32 standalone headers : 265/265
 verify.py -m32 combined TU        : PASS
 ```
 
@@ -113,8 +113,8 @@ named (class, slot) pairs in out/virtual_names.json   5,557  (56.6%)
 distinct name strings among those pairs                 917
   excluding destructors and QI/AddRef/Release            281
 classes with at least one naming record                  702
-virtual declarations in the generated headers          6,954
-  named declarations                                   4,496  (64.7%)
+virtual declarations in the generated headers          6,957
+  named declarations                                   4,499  (64.7%)
   vfunc_N declarations                                 2,458
 ```
 
@@ -122,7 +122,7 @@ The distinction, stated once: a **slot instance** is a `(class, slot)` pair in
 the manifest (9,810). A **named pair** is one of those that carries a name
 (5,557). A **distinct name** is a unique name string (917; 281 if destructors
 and COM boilerplate are excluded). The headers declare only the virtuals a class
-introduces or overrides, so they contain 6,954 declarations — fewer than 9,810
+introduces or overrides, so they contain 6,957 declarations — fewer than 9,810
 slot instances because 65.1% of slot instances are inherited. `harness.py
 metrics` prints `virtual_names: 702`; that key counts **classes with a naming
 record**, not distinct name strings, and should not be quoted as a name count.
@@ -167,7 +167,7 @@ ts::mov_r32(EAX.d, 0u);     //   0x006829a7  mov eax, 0
 This is faithful and gated, and it is **not source**. A human can read it against
 the recovered listing line for line, but cannot meaningfully *edit* it. The
 hand-editable surface today is 49 headers under `src/handwritten/`; the other
-headers under `src/include/` (264 total) and all the code are regenerated.
+headers under `src/include/` (266 total) and all the code are regenerated.
 
 So: the tree is compilable and increasingly documented, and it is only
 *marginally* modifiable. This is the long pole and it needs a different
@@ -246,7 +246,7 @@ council rounds fit — one lane per evidence source, with disjoint files.*
 - **2.5** Member naming from INI store sites, extending `name_members.py` beyond
   the current 20 classes / 291 names.
 
-Exit: ≥60% of the 6,954 header virtual declarations named with a per-name
+Exit: ≥60% of the 6,957 header virtual declarations named with a per-name
 evidence record; arity check gated; ≥50% of the 3,526 non-vptr members named.
 
 ### P3 — Source-shaping (the long pole)
@@ -286,22 +286,32 @@ loop" with `PeekMessage=137,295`. That was retracted: the model let
 was one the real game never ran. The current claim is from a run that never
 calls `ExitProcess`.
 
-What is true, measured after the dialog, narrow-width-flag and generator-arity
-merges: the game maps at its real VAs and resolves **341/341** PE
-import-directory thunks (309 by name, 32 by ordinal, across 13 DLLs). The stub
-table holds 342 rows because it also carries `COMCTL32!DllGetVersion`, which is
-not an import — the CRT reaches it through `GetProcAddress`. With `TS_CD` (the
-modelled `D:`) the CD path is correct end-to-end: `CreateFileA("D:\TS1.dsk")`
-succeeds, `GetDriveTypeA` no longer receives `%c:\`, and the game enumerates
+What is true, measured after the rendering/input integration: the game maps at
+its real VAs and resolves **341/341** PE import-directory thunks (309 by name, 32
+by ordinal, across 13 DLLs). The stub table holds 342 rows because it also
+carries `COMCTL32!DllGetVersion`, which is not an import — the CRT reaches it
+through `GetProcAddress`. With `TS_CD` (the modelled `D:`) the CD path is correct
+end-to-end: `CreateFileA("D:\TS1.dsk")` succeeds and the game enumerates
 `EXPAND99..EXPAND00` (100 files). The dialogs are real (LANGUAGE.DLL's 60
-templates and string table). At the default 20M budget the stop is `0x00488800`
-(`sub_0048875c +0xa4`), depth 19, `CreateWindowExA=1`, `GetMessage=1`,
-`PeekMessage=5`, `DispatchMessage=1`, coverage **55,798 / 4,767**. At
-`--budget 80000000` the stop is `0x0064e156` (`sub_0064e14d +0x9`), depth 24,
-`PeekMessage=312,674`, coverage **61,817 / 5,171**, frozen from 40M. **0 unmapped
-calls, 0 stack imbalances**; `boot.py --strict` exits **0** and the link test
-passes. The only message box is the expected DirectSound warning at `0x484456`
-(`type=0x30`), and the primary-surface check passes (`TS_PEEK=0x006beed8` → 1).
+templates and string table), and the model **renders the real main menu**:
+`re/out/frame.png` is 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, with
+**254,610 / 307,200 non-black pixels** (title logo, GDI/Nod wheel, emblems).
+Against the retail screenshot (`/tmp/retail.png`, md5 `58cb9c0b…`), **102,836
+pixels differ at all (33.48%)**, the mean absolute channel difference is
+**1.06/255 over the differing pixels** (0.35 over the whole frame), and only
+**506 pixels differ by more than 8**, all in the retail version text the model
+does not draw; the rest is RGB565 quantization.
+
+Boot states, all with **0 unmapped calls and 0 stack imbalances**:
+- 20M: stop `0x00488800` (`sub_0048875c +0xa4`), coverage **55,774 / 4,764**.
+- no input, 1.65B: stop `0x0045fa8b` (menu frame/animation path), coverage
+  **77,619 / 6,132**.
+- default scripted input, 1.9B (`--timeout 600`): stop `0x0055f78e` (message
+  pump), `GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`,
+  coverage **77,982 / 6,150**.
+`boot.py --strict` exits **0** and the link test passes. The only message box is
+the expected DirectSound warning at `0x484456` (`type=0x30`), and the
+primary-surface check passes (`TS_PEEK=0x006beed8` → 1).
 
 **The recovery was corrected (`9e5703f` + `ad62afc`).** 213 static switch tables
 are now data (was 12), including three hole tables (`0x683c10`, `0x683d98`,
@@ -338,17 +348,22 @@ runs. A CD drive model (`TS_CD`) was added. `SetViewportOrgEx`/`SetWindowOrgEx`
 take 4 arguments (the stubs popped 3, leaking 8 bytes); `19ee16c` fixes the
 generator table (`--stack-check` 342/0). `Machine.h` has width-aware
 `f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`, so 8/16-bit flags are correct;
-the tests compare them against the CPU's own flags. `test_tools.py` is 72 checks.
+the tests compare them against the CPU's own flags. `test_tools.py` is 75 checks.
 
-**The current blocker is the intro-movie playback pump.** At 80M the stop is
-`0x0064e156` (`sub_0064e14d +0x9`) inside `sub_0064dff0` (loop
-`0x64e0b8..0x64e242`). The VQA decoder never executes: the stream object
-(`ESI=0x508991e0`) has `[+0x150]=0x18`, so `sub_0067c920` skips setup, reads the
-frame callback `[+0x54]` (NULL), and returns -1, which the pump retries.
-`TS_WATCH` on `+0x54` records no store. The stream is otherwise alive (read
-callback `+0x44=0x64e920`, buffer `+0x764`, dimensions 800x480). This is the
-unreconstructed MS*/AVI layer, not a missing import. The movie path is **not
-working**, and the menu is not reached.
+**Rendering and input are integrated (`5031e44` etc.).** `Win32Stubs.h` routes
+surfaces through `ts::rnd` (`Rendering.h`) and input through `ts::input`
+(`Input.h`); `SCREEN_W/H` are 640x480 and `--frame` dumps the primary surface.
+The model renders the real main menu (`re/out/frame.png`, within 1.06/255 of
+retail on the pixels that differ). `test_runtime.py` runs 101 checks,
+mutation-proven.
+
+**The current blocker is menu-item selection.** Scripted input is delivered and
+the key queue consumes it, but no item is selected: exit needs `0x5898f0` to
+return 1 (`[0x7b0d38]` nonzero and != 5, currently 0), and the selection flag
+`0x7b2ab8` has only its menu-init store. The buttons/text are not drawn because
+their PCX assets live in `TIBSUN.MIX`'s nested MIX entry `0xa8548fd9` (317
+entries), so the scripted click points are probes. The menu is **not
+selectable**, and the game does **not** leave it.
 
 **The oracle premise is now inverted.** `tools/wine_env.sh` gives the retail
 binary an X screen at 640x480x16 and a `DRIVE_CDROM` `d:` labelled `TS1` holding
@@ -357,18 +372,17 @@ binary an X screen at 640x480x16 and a `DRIVE_CDROM` `d:` labelled `TS1` holding
 60 s (screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`). The earlier claim that
 it "gives up early" is retracted. Remaining oracle limits: main-menu buttons/text
 are not drawn because the PCX assets live inside a nested MIX entry, and there is
-no audio. So the model reaches the loop but not the menu, and the oracle is the
-target.
+no audio. The model now renders the same menu frame; the oracle remains the
+target for the selectable UI.
 
 Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
-  1. Implement the MS*/AVI movie-stream layer the intro pump expects: make the
-     VQA decoder (`0x679090`/`sub_00679360`) execute, which means giving the
-     stream object a frame callback at `[+0x54]` and the state `sub_0067c920`
-     expects, then frame timing and surface presentation. Exit: the decoder
-     executes, coverage advances past 61,817, and the next stop is named.
-  2. Make the model reach the main menu: real rendering (per-surface memory and
-     real `Blt`/`Flip`), the nested-MIX PCX assets, and the stubs the menu path
-     needs. The retail oracle now shows the target.
+  1. Make the menu selectable: locate the control list/rectangles that hit-test
+     the mouse and set `0x7b2ab8`, and either draw the buttons or aim a click at
+     a real target. Exit: `0x7b2ab8`/`0x7b0d38` change, the game leaves the
+     menu, and the next screen or stop is named (with a frame dump).
+  2. Load the nested-MIX PCX button/text assets (`0xa8548fd9`, 317 entries) so
+     the menu's controls are visible, and widen the pixel comparison past the
+     art layer.
   3. Instruction-level differential: `tools/oracle.py 0xADDR --compare` at
      checkpoints the model and the retail binary both reach.
   4. Keep the shutdown ESP defect (`0x11` on WinMain return) queued: it is
@@ -384,10 +398,10 @@ wrong value is harder to diagnose than one that fails loudly.
 
 The honest measure of progress here is not "does it run" but **how far into the
 game's own code it gets before it needs something we have not modelled**. The
-measured figure is **20,000,001 instructions** (the budget) ending in the
-intro-movie playback pump at `0x00488800` (and `0x0064e156` at an 80M budget),
-after the dialog, CD, Blowfish and narrow-flag fixes. Before the stack-leak fix
-it was 1,011,817 instructions ending in `ExitProcess(1)`.
+measured figure is **1,900,000,001 instructions** (the budget) ending in the
+menu's message pump at `0x0055f78e`, after the rendering/input integration; the
+20M stop is still `0x00488800`. Before the stack-leak fix it was 1,011,817
+instructions ending in `ExitProcess(1)`.
 Each stop is a precise, actionable finding rather than a wall, because the
 harness reports the stop EIP, the instruction bytes there, the containing
 function and generated source line, and the ordered import calls -- and

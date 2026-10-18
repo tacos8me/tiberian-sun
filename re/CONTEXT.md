@@ -46,7 +46,9 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
 - `link_test.py` — links all 492 translation units into a program and runs it;
   measured **OK, exit 0**, message loop reached and dispatching
   (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped
-- `test_tools.py` — 72 unit tests for the tools themselves
+- `test_tools.py` — 75 unit tests for the tools themselves
+- `test_runtime.py` — 101 checks for the rendering/input layers (`Rendering.h`,
+  `Input.h`), mutation-proven; includes a standalone frame selftest
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
   (`determinism`)
 - `gen_win32_stubs.py` — generates `Win32Stubs.h` from the PE import directory
@@ -55,15 +57,17 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   refuses to write when a `TS_RET` body's argument count disagrees with `NARGS`;
   `--evidence` reports per-ordinal agreement.
 - `boot.py` — builds and runs the image against the model. `TS_ROOT` selects the
-  ordinary file root; **`TS_CD`** models `D:` (`DRIVE_CDROM`, label `TS1`).
-  Measured with `TS_CD`: **20,000,001 instructions** (budget) at `0x00488800`
-  (`sub_0048875c +0xa4`, intro-movie pump), `CreateWindowExA=1`,
-  `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1` — message loop **reached
-  and dispatching**; CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA`
-  is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0
-  stack imbalances**; coverage 55,798 distinct instructions / 4,767 of 45,947
-  functions; at `--budget 80000000` the stop is `0x0064e156` and coverage is
-  61,817 / 5,171. `--no-build --strict` exits **0**.
+  ordinary file root; **`TS_CD`** models `D:` (`DRIVE_CDROM`, label `TS1`);
+  `--frame` dumps the primary surface and `--input-script` selects a timeline
+  (the default timeline is built in; `TS_INPUT_SCRIPT=` disables it). Measured
+  with `TS_CD`: 20M stops at `0x00488800` (55,774 / 4,764); no input at 1.65B
+  stops at `0x0045fa8b` in the menu frame/animation path (77,619 / 6,132); the
+  default script at 1.9B stops at `0x0055f78e` in the menu message pump
+  (`GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`; 77,982 /
+  6,150). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA` is the
+  DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0 stack
+  imbalances**; `--no-build --strict` exits **0**. `re/out/frame.png` is the
+  rendered main menu (640x480, md5 `0fdf2636…`, 254,610 / 307,200 non-black).
 - `wine_run.sh` / `wine_env.sh` — run the **retail** binary under Wine.
   `wine_env.sh` supplies the CD (`d:`, label `TS1`, `TS1.DSK`) and a
   640x480x16 screen; measured, the retail game reaches its **main menu**
@@ -79,13 +83,14 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
   (`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416).
 
-**Current runtime blocker** (queued in `todo.md`): the **intro-movie playback
-pump** (`sub_0064dff0`). The VQA decoder never executes because the stream's
-frame callback `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump
-retries; coverage freezes at 61,817 / 5,171 from 40M. This is the unreconstructed
-MS*/AVI layer, not a missing import. The movie path and the menu are **not
-reached**. The dialog layer, CD path, narrow-width flags, MIX index read and
-Blowfish cipher are fixed; the shutdown ESP corruption is dormant.
+**Current runtime blocker** (queued in `todo.md`): **menu-item selection**. The
+model renders the real main menu, but no item is selected: `0x5898f0` needs
+`[0x7b0d38]` nonzero and != 5 (currently 0), `0x7b2ab8` has only its menu-init
+store, and the button/text PCX assets are in `TIBSUN.MIX`'s nested MIX entry
+`0xa8548fd9` (317 entries), so the scripted clicks are probes. The menu is **not
+selectable** and the game does **not** leave it. Rendering, input, the movie
+path, the dialog layer, CD path, narrow-width flags, MIX index read and Blowfish
+cipher are fixed; the shutdown ESP corruption is dormant.
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the
@@ -131,6 +136,13 @@ registers and port I/O. Transcribed bodies read their arguments from this model,
 interface, the model is where the values actually are. Hand-written callers reach
 recovered code through `ts::ts_invoke`; generated forwarders call the
 transcription by name and read the result from `ts::ret_eax()`.
+
+Two more hand-written headers are **our model, not recovered data**:
+`Rendering.h` (`ts::rnd`: per-surface RGB565 memory, pitch, `Lock`/`Unlock`,
+`Blt`/`BltFast`/`Fill`/`Flip`, descriptors, palette, PNG/PPM frame dump) and
+`Input.h` (`ts::input`: scripted key/mouse state, cursor, synthesized messages).
+`Win32Stubs.h` routes the surface and input calls through them, which is what
+lets the model render the main menu and take scripted input.
 
 ## Output conventions
 - Reconstructed headers go in `re/src/include/`

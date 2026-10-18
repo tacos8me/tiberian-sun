@@ -20,7 +20,7 @@ is quoted it is because the *change* matters, not because the value is current.
 Naming quantities are easy to conflate, so state them the same way everywhere:
 **9,810** vtable `(class, slot)` instances; **5,557** named pairs; **917**
 distinct name strings (**281** semantic, excluding destructors and
-QI/AddRef/Release); **6,954** virtual declarations in the headers (**4,496**
+QI/AddRef/Release); **6,957** virtual declarations in the headers (**4,499**
 named + **2,458** `vfunc_N`); **702** classes with a naming record (this is what
 `harness.py metrics` prints as `virtual_names` -- it is not a count of distinct
 names). `PROGRESS.md` states the same distinction once in full.
@@ -345,9 +345,9 @@ quantities and is retracted. Measured on 2026-10-17:
 - **5,557** of those carry a name in `out/virtual_names.json` (56.6%).
 - **917** distinct name strings; **281** excluding destructors and
   QI/AddRef/Release.
-- The generated headers declare **6,954** virtuals: **4,496 named** (64.7%) and
+- The generated headers declare **6,957** virtuals: **4,499 named** (64.7%) and
   **2,458 `vfunc_N`**. Headers declare only what a class introduces or
-  overrides, which is why 6,954 is smaller than 9,810.
+  overrides, which is why 6,957 is smaller than 9,810.
 - `harness.py metrics` prints `virtual_names: 702`; that key counts **classes
   with a naming record**, not distinct names. Do not quote it as a name count.
 
@@ -369,7 +369,7 @@ base's slot count times (subclasses + 1)):
 The top 18 bases cover 13,011 slot-instances. An inheritance-propagation engine
 is the prerequisite: 917 distinct names currently cover 5,557 named pairs, and
 each new base name can cover its whole subtree.
-*Done when:* >=60% of the 6,954 header virtual declarations are named, each
+*Done when:* >=60% of the 6,957 header virtual declarations are named, each
 citing its rule and the concrete signal it keyed on. Do not loosen a rule to
 raise the ratio.
 
@@ -393,7 +393,7 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: **72 checks passed** (measured this session). Not
+`tools/test_tools.py`: **75 checks passed** (measured this session). Not
 golden-count assertions -- every one is a regression test for a defect that
 actually shipped, or a differential test against an independent implementation.
 Four are proven to fail when the defect is reintroduced (mutating
@@ -406,7 +406,7 @@ check). Wired into the pipeline as stage 0b.
 `-m32` and fails closed when `g++-multilib` is absent. Measured this session:
 
 ```
-[1] standalone compile: 263/263
+[1] standalone compile: 265/265
 [2] combined TU compile: PASS
 [9] compiler-confirmed member offsets: PASS (3073/3073 asserted)
 ```
@@ -743,7 +743,7 @@ Measured at that commit: the page-table exhaustion at `0x00a006b0` was
 **gone**. The later MIX-read, disasm, tracker, `idiv`, dialog and narrow-flag
 fixes moved the stop to the intro-movie pump at `0x00488800`; the current
 measurement is `GetMessage=1 PeekMessage=5 DispatchMessage=1 CreateWindowExA=1`,
-coverage 55,798 / 4,767 of 45,947, **0 unmapped, 0 imbalances**, `--strict` exit
+coverage 55,774 / 4,764 of 45,947, **0 unmapped, 0 imbalances**, `--strict` exit
 0. The
 game's own `SetKey(56, 82060323...)` and the correct decryptions are visible in
 `TS_FILE_TRACE`.
@@ -920,12 +920,12 @@ recovered stream contains only 32-bit `div`/`idiv` (no 8/16-bit forms), so there
 is no live 8/16-bit defect. Tests: `test_machine_div` (the boot case, sign
 combinations, overflow, divide-by-zero, and a 200,000-pair differential sweep)
 and `test_win32_surface_lock` (slot 25, five arguments, ESP returns at
-`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **72 checks**.
+`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **75 checks**.
 
 Measured with `TS_ROOT=.../gamedir`: the idiv is passed. New stop is **budget
 exhaustion at `0x00488800` after 20,000,001 instructions** with `TS_CD`, depth
 19, inside `sub_0048875c +0xa4`; `GetMessage=1 PeekMessage=5 DispatchMessage=1
-CreateWindowExA=1`; coverage **55,798 / 4,767 of 45,947**; **0 unmapped calls,
+CreateWindowExA=1`; coverage **55,774 / 4,764 of 45,947**; **0 unmapped calls,
 0 stack imbalances**; `--strict` exits 0.
 
 ### [x] The game is alive in a dialog-setup loop — fixed
@@ -985,7 +985,7 @@ is exactly those two rows and `--stack-check` is 342/0.
 Measured with `TS_CD` (the modelled `D:`): the CD path is correct end-to-end —
 `CreateFileA("D:\TS1.dsk")` succeeds, `GetDriveTypeA` no longer receives `%c:\`,
 and the game enumerates `EXPAND99..EXPAND00` (100 files), proving `%02d`. At 20M
-the stop is `0x00488800` (`sub_0048875c +0xa4`), coverage **55,798 / 4,767**; at
+the stop is `0x00488800` (`sub_0048875c +0xa4`), coverage **55,774 / 4,764**; at
 80M the stop is `0x0064e156` (`sub_0064e14d +0x9`), depth 24, `GetMessage=1
 PeekMessage=312,674 DispatchMessage=1 CreateWindowExA=1`, coverage **61,817 /
 5,171**; 0 unmapped, 0 imbalances, `--strict` exits 0.
@@ -1163,23 +1163,28 @@ First run: `CreateFileA("\\.\MONO")` -- the sound device name.
 1,011,817 to 7,038,765 when the stack leak was fixed, to 20,000,001 (the
 budget, at the message loop) when COM registration was fixed, to the CRT exit
 path once message delivery and Blowfish landed, to the dialog-setup loop after
-the MIX-read and teardown fixes, and now to the intro-movie playback pump
-(`0x00488800` at 20M, `0x0064e156` at 80M) once the dialog and narrow-flag fixes
-landed. Use `TS_CD` to model `D:`.
+the MIX-read and teardown fixes, to the intro-movie pump after the dialog and
+narrow-flag fixes, and now into the **rendered main menu** once the
+Rendering.h/Input.h integration landed. Use `TS_CD` to model `D:`.
 
 ### [x] Make the boot a one-command measurement
 `tools/boot.py` builds (cached), runs with a budget and a timeout, and prints
 instructions, depth, stop/fault EIP with instruction bytes, import calls by name,
-the last N call targets, coverage and unmapped-target classification. Measured:
+the last N call targets, coverage, unmapped-target classification and the render
+counters. Measured:
 `python3 tools/boot.py` (with `TS_CD`) reports **20,000,001 instructions** (budget
 exhausted at `0x00488800`, depth 19, `sub_0048875c +0xa4`), **message loop
 reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`,
-`DispatchMessage=1`), **55,798 distinct instructions / 4,767 of 45,947 functions
-entered**, and **0 unmapped calls, 0 stack imbalances**. At `--budget 80000000`
-the stop is `0x0064e156`, coverage **61,817 / 5,171**, `PeekMessage=312,674`.
-`--no-build --strict` is the gate: it exits **0**. `--json`, `--watch`,
-`--imports N`, `--budget N`, `--rebuild`, `--no-build` and the `TS_CD` drive
-model are documented in the tool's header.
+`DispatchMessage=1`), **55,774 distinct instructions / 4,764 of 45,947 functions
+entered**, and **0 unmapped calls, 0 stack imbalances**. With no input at
+`--budget 1650000000` the stop is `0x0045fa8b` in the menu frame/animation path
+(77,619 / 6,132); with the default scripted input at `--budget 1900000000`
+(`--timeout 600`) the stop is `0x0055f78e` in the message pump
+(`GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`; 77,982 /
+6,150). `--frame` dumps the primary surface. `--no-build --strict` is the gate:
+it exits **0**. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild`,
+`--no-build`, `--input-script` and the `TS_CD` drive model are documented in the
+tool's header.
 *Done when:* `python3 tools/boot.py` reproduces the boot and reports it. **Met.**
 
 ## Standing caveats
@@ -1196,11 +1201,20 @@ model are documented in the tool's header.
   dialog templates, sends `WM_INITDIALOG`, and `DispatchMessage` runs. The
   narrow-width flag defect is fixed (`f2e6ca9`) and the CD path works end-to-end
   with `TS_CD` (`D:\TS1.dsk`, `EXPAND99..00`).
-- **The current blocker is the intro-movie playback pump**
-  (`sub_0064dff0`, `0x0064e156` at 80M): the VQA decoder never executes because
-  the stream's frame callback `[+0x54]` is NULL and `sub_0067c920` returns -1,
-  which the pump retries. This is the unreconstructed MS*/AVI layer, not a
-  missing import. The movie path is **not working**; neither is the menu.
+- **The model renders the real main menu.** `out/frame.png` is committed
+  (640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black
+  pixels). Against `/tmp/retail.png` (`58cb9c0b…`), 102,836 pixels differ at all
+  (33.48%), the mean absolute channel difference is **1.06/255 over the differing
+  pixels** (0.35 over the whole frame), and only 506 pixels differ by more than
+  8, all in the retail version text the model does not draw. The rest is RGB565
+  quantization.
+- **The current blocker is menu-item selection.** Scripted input is delivered
+  and the key queue consumes it, but no item is selected: exit needs `0x5898f0`
+  to return 1 (`[0x7b0d38]` nonzero and != 5, currently 0), and `0x7b2ab8` has
+  only its menu-init store. The buttons/text are not drawn because their PCX
+  assets live in `TIBSUN.MIX`'s nested MIX entry `0xa8548fd9` (317 entries), so
+  the scripted click points are probes. The menu is **not selectable** and the
+  game does **not** leave it.
 - **The Blowfish cipher is implemented and proven** (`345aae7`), and the MIX
   index read is fixed: all 27 blocks are read and the 17 records match
   `tools/mix.py` 17/17.

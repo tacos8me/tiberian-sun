@@ -4,10 +4,10 @@ Written against HEAD `8ce1ebe`; the figures below were re-measured on
 2026-10-17 with the commands named in each row. Numbers quoted from a document
 instead of measured say so. Anything I could not verify says **unverified**.
 Re-measure before trusting this file: `python3 tools/harness.py metrics
---no-append`. The boot, link-test and oracle figures were re-measured after the
-dialog, narrow-width-flag and generator-arity merges (`boot.py` with `TS_CD`,
-`link_test.py`, `wine_env.sh`); the full `pipeline.sh` run recorded in
-`todo.md` (exit 0, 8m51s) was not re-run here.
+--no-append`. The boot, frame, link-test and oracle figures were re-measured
+after the rendering/input integration (`boot.py` with `TS_CD` at 20M/1.65B/1.9B,
+`link_test.py`, `test_runtime.py`, `wine_env.sh`); the full `pipeline.sh` run
+recorded in `todo.md` (exit 0, 8m51s) was not re-run here.
 
 This is not a status report (`PROGRESS.md` is). It is the argument about what to
 do next and what it costs.
@@ -33,7 +33,7 @@ documentation says cannot exist.
 | Measure | Value | How |
 |---|---|---|
 | `verify.py` | **PASSED**, 9 checks, ~6 s | `tools/verify.py src/include build/shim` |
-| checks 1/3/4/5/6 | 263 headers, 749/749 classes, 749/749 bindings, 219/219, 220/220 | same |
+| checks 1/3/4/5/6 | 265 headers, 749/749 classes, 749/749 bindings, 219/219, 220/220 | same |
 | check 7 | 1,317/1,317 member offsets, 206 classes | same |
 | check 8 (arity) | **331/1,116 match, 785 divergence**, reported not gated | same |
 | check 9 (`offsetof`) | **3,073/3,073 compiler-confirmed** | same |
@@ -43,13 +43,15 @@ documentation says cannot exist.
 | `.text` | 95.86% as code, 99.99% attributed; 213 switch tables / 6,388 B | metrics |
 | classes / slots | 749 / 9,810, 0 unseeded | metrics |
 | member offsets / named | 4,289 / **291** | metrics |
-| virtual slots | **5,557** named `(class, slot)` pairs of 9,810; **917** distinct names (**281** semantic); headers declare 4,496 named + 2,458 `vfunc_N`; `metrics`' `virtual_names: 702` counts *classes with a naming record*, not names | metrics + `out/virtual_names.json` |
+| virtual slots | **5,557** named `(class, slot)` pairs of 9,810; **917** distinct names (**281** semantic); headers declare 4,499 named + 2,458 `vfunc_N`; `metrics`' `virtual_names: 702` counts *classes with a naming record*, not names | metrics + `out/virtual_names.json` |
 | indirect call sites | **18,056 of 60,449 (29.9%)** | walked `insns` |
 | functions with no direct caller | **31,834 (73.1%)** | direct-edge graph from `callees` |
 | functions reachable from entry `0x6854e3` by direct edges | **69 (0.16%)** | BFS over `callees` |
 | functions declared by the reconstructed headers | **3,024 of 43,557 (6.9%)** | unique `sub_*` in `src/generated/*.cpp` |
-| boot (20M, `TS_CD`) | **20,000,001 instructions** (budget) at `0x00488800` (`sub_0048875c +0xa4`, intro-movie pump), **3,451 import calls, 93 distinct imports**, depth 19, **0 unmapped targets, 0 stack imbalances**, message loop **reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), **55,798 distinct instructions / 4,767 of 45,947 functions entered**; CD read (`D:\TS1.dsk`, `EXPAND99..00`); primary surface `0x006beed8`=1 | `tools/boot.py` (`TS_CD=../work/cd1`) |
-| boot (80M, `TS_CD`) | **80,000,001 instructions** at `0x0064e156` (`sub_0064e14d +0x9`), depth 24, `PeekMessage=312,674`, coverage **61,817 / 5,171**, frozen from 40M | same |
+| boot (20M, `TS_CD`) | **20,000,001 instructions** (budget) at `0x00488800` (`sub_0048875c +0xa4`), depth 19, **0 unmapped targets, 0 stack imbalances**, message loop **reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), **55,774 distinct instructions / 4,764 of 45,947 functions entered**; CD read (`D:\TS1.dsk`, `EXPAND99..00`); primary surface `0x006beed8`=1 | `tools/boot.py` (`TS_CD=../work/cd1`) |
+| boot (1.65B, no input) | stop `0x0045fa8b` (menu frame/animation path), depth 28, `PeekMessage=10,490,282`, coverage **77,619 / 6,132** | same |
+| boot (1.9B, default script) | stop `0x0055f78e` (message pump), depth 28, `GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`, coverage **77,982 / 6,150** | same (`--timeout 600`) |
+| frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; vs retail: 102,836 pixels differ (33.48%), mean abs channel diff **1.06/255** over differing pixels (0.35 over frame), 506 pixels >8 | `tools/boot.py --frame` |
 | link test | **OK, exit 0**, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled | `tools/link_test.py` |
 | boot strict gate | **exit 0**, 0 garbage call targets | `boot.py --no-build --strict` |
 | retail oracle | reaches the **main menu**, 640x480, screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s | `tools/wine_env.sh` |
@@ -63,36 +65,40 @@ In words:
    direct call graph reaches 69 functions from `main`, and the headers bind to
    3,024 of 43,557 functions. Whatever "named" means in the metrics, the tree a
    reader can *call* is 6.9% of the program.
-3. **The runtime is the product.** What exists is a **20-million-instruction**
-   run of the game's own startup that **delivers messages, reads the CD and the
-   MIX index, and builds its real dialogs**: `CreateWindowExA=1`,
-   `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`. COM registration,
-   message delivery, the dialog layer, narrow-width flags, the Blowfish cipher,
-   the stack tracker, the teardown calls and signed `idiv` are all fixed; the
-   boot has **0 unmapped calls and 0 stack imbalances**. The current blocker is
-   the **intro-movie playback pump** (`sub_0064dff0`): the VQA decoder never
-   executes because the stream's frame callback `[+0x54]` is NULL, so coverage
-   freezes at 61,817 / 5,171 from 40M. That is the unreconstructed MS*/AVI
-   layer, not a missing import.
+3. **The runtime is the product.** What exists is a run of the game's own
+   startup that **delivers messages, reads the CD and the MIX index, builds its
+   real dialogs, and renders the real main menu**: at 1.9B it stops in the menu
+   message pump (`GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`)
+   with 0 unmapped calls and 0 stack imbalances. `re/out/frame.png` is 640x480
+   and within **1.06/255** mean channel difference of the retail screenshot on
+   the pixels that differ. COM registration, message delivery, the dialog layer,
+   narrow-width flags, the Blowfish cipher, the stack tracker, the teardown
+   calls, signed `idiv`, rendering and input are all fixed. The current blocker
+   is **menu-item selection**: `0x5898f0` needs `[0x7b0d38]` nonzero and != 5
+   (currently 0), `0x7b2ab8` has only its menu-init store, and the button PCX
+   assets are in a nested MIX entry, so the click points are probes.
 4. **The Win32 layer is real where the game has been, and fiction where it has
    not** (`Win32Stubs.h`, read):
    - File I/O: **real** — a host root, case-insensitive paths, a 64-entry handle
      table, real `CreateFileA`/`ReadFile`/`WriteFile`/`SetFilePointer`/
      `GetFileSize`/`CloseHandle`. The old "there is no real file system" text is
      gone.
-   - Input: `GetAsyncKeyState`/`GetKeyState` return 0. No key can arrive.
+   - Input: **real and scripted** (`Input.h`): key/mouse state, cursor and
+     synthesized messages from a deterministic timeline; the default timeline
+     delivers 10 messages and the game's key queue consumes them.
    - Timers: `timeSetEvent` returns 1 and never fires its callback.
-   - Surfaces: `Lock` returns a real buffer that nothing reads; `Blt`/`Fill`/`Flip`
-     are no-ops. There is no way to see a frame.
-   - Strings: `LoadStringA` now has the correct arity (4) and returns 0; the
-     MessageBox text is empty because the string table is empty at that point.
+   - Surfaces: **real** (`Rendering.h`): per-surface RGB565 memory, `Lock`,
+     `Blt`/`BltFast`/`Fill`/`Flip`, descriptors and palette; `--frame` dumps the
+     primary surface. The main menu renders.
+   - Strings: `LoadStringA` has the correct arity (4) and reads LANGUAGE.DLL's
+     string table; the DirectSound warning text is still the format string.
 
 So: **structure recovered, instructions transcribed, layout compiler-confirmed,
-and a runtime that has executed 20,000,001 instructions through message delivery,
-the CD/MIX path and real dialogs into the intro-movie playback pump, on a Win32
-layer that can load a file, create a window, dispatch messages, read the MIX
-index and build dialogs but cannot yet decode a movie, read a key, fire a timer,
-or show a pixel.**
+and a runtime that has executed 1.9 billion instructions through message
+delivery, the CD/MIX path, real dialogs and the intro movie to a rendered main
+menu, on a Win32 layer that can load a file, create a window, dispatch messages,
+read the MIX index, build dialogs, take scripted input and show a frame — but
+cannot yet select a menu item, fire a timer, or play a sound.**
 
 ### The fact the docs do not contain
 
@@ -165,12 +171,17 @@ bytes.
    and that includes image mapping, so treat it as an upper bound on cost, not a
    clean throughput. A 30 fps budget is ~330k instructions/frame. If a TS frame
    costs millions, the interpreter is 10–30× too slow. Measure before promising.
-9. **The MS*/AVI movie layer — the current blocker.** The intro pump
-   (`sub_0064dff0`) retries because the stream's frame callback `[+0x54]` is
-   NULL and `sub_0067c920` returns -1; the VQA decoder never executes and
-   coverage freezes at 61,817 / 5,171. The model needs the stream state, frame
-   callback, decode and presentation the movie path consumes. This is not a
-   missing import (all 341 resolve).
+9. **The MS*/AVI movie layer — done.** The model now plays past the intro and
+   reaches the menu: no input at 1.65B stops in the menu frame/animation path
+   (`0x0045fa8b`, 77,619 / 6,132), and with the default script at 1.9B it stops
+   in the menu message pump (`0x0055f78e`, `PeekMessage=15,207,219`, 77,982 /
+   6,150). The rendering/input integration (`Rendering.h`, `Input.h`) is what
+   made the menu visible.
+10. **Menu-item selection — the current blocker.** The menu renders, but no item
+    is selected: `0x5898f0` needs `[0x7b0d38]` nonzero and != 5 (currently 0),
+    `0x7b2ab8` has only its menu-init store, and the button PCX assets are in
+    the nested MIX entry `0xa8548fd9` (317 entries), so the click points are
+    probes. The game does not leave the menu.
 
 **Not on the path:** naming the 2,458 `vfunc_N` slots, source-shaping 45,947
 transcriptions, the last 110 KB of `.text`, re-deriving member offsets. All four
@@ -202,11 +213,14 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
   direct caller, 30% of call sites indirect. A lifter's only real check is
   behavioural equivalence — which needs the oracle. Months, unbounded, and it
   makes nothing run.
-- **Graphics now has an oracle, but a partial one.** `tools/wine_env.sh` gives a
-  real main-menu screenshot (640x480, md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`),
-  so a model frame can be diffed against it. The menu's buttons/text are not
-  drawn in that screenshot because the PCX assets live inside a nested MIX
-  entry, so the oracle cannot yet adjudicate the UI layer.
+- **Graphics now has an oracle and a matching frame.** `tools/wine_env.sh` gives
+  a real main-menu screenshot (640x480, md5
+  `58cb9c0bb64a1bf11c6e9b28e96eca11`), and the model's committed
+  `re/out/frame.png` (md5 `0fdf2636…`) differs from it by a **1.06/255** mean
+  channel difference on the pixels that differ (0.35 over the whole frame), with
+  only 506 pixels >8. The menu's buttons/text are not drawn in either because
+  the PCX assets live inside a nested MIX entry, so the oracle cannot yet
+  adjudicate the UI controls.
 - **Sound stays silent without a mixer.** `DirectSoundCreate` now returns
   `DSERR_NODRIVER` (matching the retail no-audio environment), and no buffers are
   filled or mixed. Low priority, but do not discover it at the end.
@@ -227,11 +241,12 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
   (`DRIVE_CDROM`, label `TS1`), and the game reads `D:\TS1.dsk` and enumerates
   `EXPAND99..00`. Narrow-width flags (`f2e6ca9`) and the generator's
   `SetViewportOrgEx`/`SetWindowOrgEx` arity (`19ee16c`) are fixed too.
-- **The MS*/AVI movie layer is unreconstructed, and that is the current
-  blocker.** The intro pump (`sub_0064dff0`) retries because the stream's frame
-  callback `[+0x54]` is NULL and `sub_0067c920` returns -1; the VQA decoder
-  never executes and coverage freezes at 61,817 / 5,171. The movie path is **not
-  working**, and the menu is not reached.
+- **Rendering, input and the movie path work; menu selection does not.** The
+  model plays past the intro and renders the real menu (`re/out/frame.png`), and
+  scripted input is delivered and consumed. But `0x5898f0` still returns
+  non-1 (`[0x7b0d38]` is 0), `0x7b2ab8` has only its menu-init store, and the
+  button PCX assets are in the nested MIX entry `0xa8548fd9`, so the clicks are
+  probes. The game does **not** leave the menu.
 - **The shutdown ESP defect is dormant.** WinMain returned at ~7.66M
   instructions with ESP `0x11` (entry `0x2fff84`) before the MIX-read fix; the
   current run never reaches shutdown. It is the same class as the original
@@ -255,8 +270,9 @@ Wine oracle reaches the main menu, the stack leak is fixed, the control-flow gat
 is in `gen_code.py`, boot reports coverage and target classification, and file
 I/O is real); **message delivery, the Blowfish cipher, the MIX index read, the
 stack tracker, the teardown calls, signed `idiv`, the dialog layer, narrow-width
-flags and the generator arity are also done** (units 11–21 below). Units 6–10
-remain, and **the MS*/AVI movie layer (unit 22) is the current blocker**.
+flags, the generator arity, the MS*/AVI movie path, rendering and input are also
+done** (units 11–23 below). Units 6–10 remain, and **menu-item selection (unit
+24) is the current blocker**.
 
 1. **Wine oracle (`tools/oracle.py`).** `tools/wine_env.sh` runs the retail game
    with the CD and a 640x480x16 screen; `oracle.py` attaches gdb, breaks at an
@@ -272,7 +288,7 @@ remain, and **the MS*/AVI movie layer (unit 22) is the current blocker**.
 4. **Make the boot report coverage.** `boot.py` prints `coverage: N distinct
    instructions; N of 45,947 recovered functions entered` and classifies unmapped
    targets (`below 0x1000`, `.rdata`, `elsewhere`). Measured now (with `TS_CD`):
-   55,798 distinct instructions / 4,767 functions at 20M, 61,817 / 5,171 at 80M,
+   55,774 distinct instructions / 4,764 functions at 20M, 77,982 / 6,150 at 1.9B,
    **0 unmapped**, `--strict` exits **0**. **Done.**
 5. **Real file I/O.** Real `CreateFileA`/`ReadFile`/`WriteFile`/`SetFilePointer`/
    `GetFileSize`/`CloseHandle` over a host root, handles as real objects.
@@ -333,15 +349,23 @@ only honest way to close the rest.
 20. **Fix narrow-width flags.** **Done (`f2e6ca9`):** width-aware
     `f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`; the vsprintf `%` and the
     CD-drive scan are correct, and the flags are compared against the CPU's own.
-    `test_tools.py` is 72 checks.
+    `test_tools.py` is 75 checks.
 21. **Make the CD path work.** **Done:** with `TS_CD`, `CreateFileA("D:\TS1.dsk")`
     succeeds, `GetDriveTypeA` no longer receives `%c:\`, and `EXPAND99..00` are
     enumerated.
-22. **Implement the MS*/AVI movie layer.** **Open — the current blocker.** The
-    intro pump (`sub_0064dff0`) retries because the stream's frame callback
-    `[+0x54]` is NULL and `sub_0067c920` returns -1; the VQA decoder never
-    executes and coverage freezes at 61,817 / 5,171. *Exit:* the decoder
-    executes, coverage advances past 61,817, and the next stop is named.
+22. **Implement the MS*/AVI movie layer.** **Done:** the model plays past the
+    intro; no input at 1.65B stops in the menu frame/animation path
+    (`0x0045fa8b`, 77,619 / 6,132) and with the default script at 1.9B it stops
+    in the menu message pump (`0x0055f78e`, 77,982 / 6,150).
+23. **Integrate rendering and input.** **Done (`5031e44` etc.):** `Rendering.h`
+    and `Input.h` are wired through `Win32Stubs.h`; the model renders the real
+    main menu (`re/out/frame.png`, 1.06/255 from retail on differing pixels);
+    `test_runtime.py` is 101 checks.
+24. **Make the menu selectable.** **Open — the current blocker.** `0x5898f0`
+    needs `[0x7b0d38]` nonzero and != 5 (currently 0), `0x7b2ab8` has only its
+    menu-init store, and the button PCX assets are in the nested MIX entry
+    `0xa8548fd9`. *Exit:* a scripted click changes `0x7b2ab8`/`0x7b0d38`, the
+    game leaves the menu, and the next screen or stop is named.
 
 ---
 
@@ -368,8 +392,8 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
    **3,073/3,073**, and P0 is marked `[RESOLVED]` (`8467f84`).
 4. **RESOLVED — the virtual-naming denominator.** `ROADMAP.md` §2.4, `todo.md`
    and this file now use one measured set: **9,810** slot instances, **5,557**
-   named pairs, **917** distinct names (**281** semantic), **6,954** header
-   declarations (**4,496** named + **2,458** `vfunc_N`), **702** classes with a
+   named pairs, **917** distinct names (**281** semantic), **6,957** header
+   declarations (**4,499** named + **2,458** `vfunc_N`), **702** classes with a
    naming record. The distinction is stated once in `PROGRESS.md`; the old
    "1,500 / 8,280 / 3,409" mixed quantities and is retracted (`8467f84`).
 5. **RESOLVED — `src/generated/README.md` contradicted itself.** The sentence now
@@ -406,7 +430,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     headerless = 1,216). Measured this session.
 11. **RESOLVED — `CONTEXT.md` called `verify.py` "the 8-check gate".** It now
     says nine, describes check 9, and lists `link_test.py` (492 TUs),
-    `test_tools.py` (now 72 checks) and the import distinction (`8467f84`).
+    `test_tools.py` (now 75 checks) and the import distinction (`8467f84`).
 12. **OPEN — the framing error, which is the expensive one.** `ROADMAP.md` §2.3
     used to close with "for a decompilation that is the difference between 'it
     builds' and 'it is the game'". The sentence is gone and §4 now cross-
@@ -419,7 +443,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     6,388 B, 102 switch index tables / 145 B, 105,492 B padding, 376 B in 46
     runs (not 104 KB, 11 jump tables / 256 B, 356 B, 105,808 B, 554 B in 90
     runs); 9,810 vtable slots (not 9,780); 45,947 transcriptions / 912,879
-    instruction lines (not 43,668 / 897,193); 264 headers (not 262); 2,390 tail entries (not 1,846;
+    instruction lines (not 43,668 / 897,193); 266 headers (not 262); 2,390 tail entries (not 1,846;
     `shared_tail_entry_points` = 1,080 is a different quantity and is now
     labelled as such); 492 TUs (not 482); 4,289 member claims, 4,285 confirmed
     (not 4,326 / 4,322); check 7 1,317 offsets across 206 classes (not 2,186
@@ -490,13 +514,20 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
 25. **RESOLVED — narrow-width flags (`f2e6ca9`) and generator arity
     (`19ee16c`).** Width-aware flag derivation fixes the vsprintf `%` and the
     CD-drive scan; `SetViewportOrgEx`/`SetWindowOrgEx` take 4 arguments and
-    `--stack-check` is 342/0. `test_tools.py` is 72 checks.
-26. **OPEN (new) — the intro-movie playback pump is the current blocker.** The
-    VQA decoder never executes because the stream's frame callback `[+0x54]` is
-    NULL and `sub_0067c920` returns -1; coverage freezes at 61,817 / 5,171. This
-    is the unreconstructed MS*/AVI layer, not a missing import. The movie path
-    and the menu are **not reached**.
-27. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
+    `--stack-check` is 342/0. `test_tools.py` is 75 checks.
+26. **RESOLVED — the intro-movie path and the rendered main menu.** The model
+    plays past the intro and renders the menu: `re/out/frame.png` (md5
+    `0fdf2636…`, 254,610 / 307,200 non-black) differs from the retail screenshot
+    by **1.06/255** mean channel difference on the pixels that differ, with only
+    506 pixels >8. No input at 1.65B stops in the menu frame/animation path
+    (77,619 / 6,132); the default script at 1.9B stops in the menu message pump
+    (`PeekMessage=15,207,219`, 77,982 / 6,150).
+27. **OPEN (new) — menu-item selection is the current blocker.** `0x5898f0`
+    needs `[0x7b0d38]` nonzero and != 5 (currently 0), `0x7b2ab8` has only its
+    menu-init store, and the button PCX assets are in the nested MIX entry
+    `0xa8548fd9` (317 entries), so the scripted clicks are probes. The menu is
+    **not selectable**; the game does not leave it.
+28. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
     `0x11` before the MIX-read fix; the current run never reaches shutdown.
 
 ---
