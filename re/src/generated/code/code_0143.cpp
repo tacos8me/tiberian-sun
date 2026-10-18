@@ -4662,7 +4662,7 @@ void sub_00629707(void)
     ts::insn(0x0062970du); EDI.d = ts::ld32(8072788);   //   0x0062970d  mov      edi, dword ptr [0x7b2e54]
     ts::insn(0x00629713u); EAX.d = ts::ld32(EBX.d + ESI.d * 4);   //   0x00629713  mov      eax, dword ptr [ebx + esi*4]
     ts::insn(0x00629716u); ts::f_push((long double)(ts::i32)ts::ld32(EAX.d + 0x70));   //   0x00629716  fild     dword ptr [eax + 0x70]
-    ts::insn(0x00629719u); ts::f_arith(2, 1, 0, false, false);   //   0x00629719  fmul     st(1)
+    ts::insn(0x00629719u); ts::f_arith(2, 0, 1, false, false);   //   0x00629719  fmul     st(1)
     ts::insn(0x0062971bu); ts::ts_call_at(0x67faf0u, 0x629720u);   //   0x0062971b  call     0x67faf0
     ts::insn(0x00629720u); ECX.d = ts::ld32(EBX.d + ESI.d * 4);   //   0x00629720  mov      ecx, dword ptr [ebx + esi*4]
     ts::insn(0x00629723u); ECX.d = ts::add32(ECX.d, 0xe4u);   //   0x00629723  add      ecx, 0xe4

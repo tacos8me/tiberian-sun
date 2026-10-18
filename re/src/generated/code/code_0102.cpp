@@ -1000,9 +1000,9 @@ void sub_00583575(void)
     ts::insn(0x005835e4u); ts::st32(ESP.d + 0x3c, EAX.d);   //   0x005835e4  mov      dword ptr [esp + 0x3c], eax
     ts::insn(0x005835e8u); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x18));   //   0x005835e8  fild     dword ptr [esp + 0x18]
     ts::insn(0x005835ecu); ts::f_yl2x();   //   0x005835ec  fyl2x    
-    ts::insn(0x005835eeu); ts::f_arith(2, 1, 0, false, false);   //   0x005835ee  fmul     st(1)
+    ts::insn(0x005835eeu); ts::f_arith(2, 0, 1, false, false);   //   0x005835ee  fmul     st(1)
     ts::insn(0x005835f0u); ts::f_arith_mem(2, (long double)ts::ld_f64(6920768), false);   //   0x005835f0  fmul     qword ptr [0x699a40]
-    ts::insn(0x005835f6u); ts::f_arith(1, 1, 0, false, true);   //   0x005835f6  fsubr    st(1)
+    ts::insn(0x005835f6u); ts::f_arith(1, 0, 1, false, true);   //   0x005835f6  fsubr    st(1)
     ts::insn(0x005835f8u); ts::ts_call_at(0x67faf0u, 0x5835fdu);   //   0x005835f8  call     0x67faf0
     ts::insn(0x005835fdu); EBX.d = EAX.d;   //   0x005835fd  mov      ebx, eax
     ts::insn(0x005835ffu); ts::cmp32(EBX.d, 0xeu);   //   0x005835ff  cmp      ebx, 0xe

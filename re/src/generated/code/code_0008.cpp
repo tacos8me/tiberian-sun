@@ -4729,7 +4729,7 @@ void sub_0041c7a3(void)
     ts::insn(0x0041c7b4u); EAX.d = ts::ld32(ESP.d + 0x24);   //   0x0041c7b4  mov      eax, dword ptr [esp + 0x24]
     ts::insn(0x0041c7b8u); ts::f_arith_mem(0, (long double)(ts::i32)ts::ld32(ESP.d + 0x18), false);   //   0x0041c7b8  fiadd    dword ptr [esp + 0x18]
     ts::insn(0x0041c7bcu); ts::cmp32(ts::ld32(EAX.d + ESI.d * 4), ECX.d);   //   0x0041c7bc  cmp      dword ptr [eax + esi*4], ecx
-    ts::insn(0x0041c7bfu); ts::f_arith(0, 1, 0, false, false);   //   0x0041c7bf  fadd     st(1)
+    ts::insn(0x0041c7bfu); ts::f_arith(0, 0, 1, false, false);   //   0x0041c7bf  fadd     st(1)
     ts::insn(0x0041c7c1u); ts::st_f32(ESP.d + 0x18, (double)ts::f_pop());   //   0x0041c7c1  fstp     dword ptr [esp + 0x18]
     ts::insn(0x0041c7c5u); { ts::f_set(0, ts::f_peek(0)); (void)ts::f_pop(); }   //   0x0041c7c5  fstp     st(0)
     ts::insn(0x0041c7c7u); if (!M.zf) { goto L_0041c7df; }   //   0x0041c7c7  jne      0x41c7df

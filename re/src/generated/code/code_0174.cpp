@@ -4309,7 +4309,7 @@ void sub_0068e09e(void)
     ts::insn(0x0068e10au); ts::f_stsw();   //   0x0068e10a  fnstsw   ax
     ts::insn(0x0068e10cu); EAX.d = ts::and32(EAX.d, 0x100u);   //   0x0068e10c  and      eax, 0x100
     ts::insn(0x0068e111u); if (!M.zf) { goto L_0068e115; }   //   0x0068e111  jne      0x68e115
-    ts::insn(0x0068e113u); ts::f_arith(1, 1, 0, false, false);   //   0x0068e113  fsub     st(1)
+    ts::insn(0x0068e113u); ts::f_arith(1, 0, 1, false, false);   //   0x0068e113  fsub     st(1)
     L_0068e115:;
     ts::insn(0x0068e115u); ts::f_swap(1);   //   0x0068e115  fxch     st(1)
     ts::insn(0x0068e117u); ts::f_arith_mem(2, (long double)ts::ld_f64(7401004), false);   //   0x0068e117  fmul     qword ptr [0x70ee2c]
@@ -4689,7 +4689,7 @@ void sub_0068e356(void)
     ts::insn(0x0068e3c2u); ts::f_stsw();   //   0x0068e3c2  fnstsw   ax
     ts::insn(0x0068e3c4u); EAX.d = ts::and32(EAX.d, 0x100u);   //   0x0068e3c4  and      eax, 0x100
     ts::insn(0x0068e3c9u); if (!M.zf) { goto L_0068e3cd; }   //   0x0068e3c9  jne      0x68e3cd
-    ts::insn(0x0068e3cbu); ts::f_arith(1, 1, 0, false, false);   //   0x0068e3cb  fsub     st(1)
+    ts::insn(0x0068e3cbu); ts::f_arith(1, 0, 1, false, false);   //   0x0068e3cb  fsub     st(1)
     L_0068e3cd:;
     ts::insn(0x0068e3cdu); ts::f_swap(1);   //   0x0068e3cd  fxch     st(1)
     ts::insn(0x0068e3cfu); ts::f_arith_mem(2, (long double)ts::ld_f64(7401004), false);   //   0x0068e3cf  fmul     qword ptr [0x70ee2c]

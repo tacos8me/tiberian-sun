@@ -65,7 +65,7 @@ void sub_00535b80(void)
     ts::insn(0x00535c07u); ts::test8(AH, 0x41u);   //   0x00535c07  test     ah, 0x41
     ts::insn(0x00535c0au); if (!M.zf) { goto L_00535c18; }   //   0x00535c0a  jne      0x535c18
     ts::insn(0x00535c0cu); ts::f_push((long double)ts::ld_f64(6922600));   //   0x00535c0c  fld      qword ptr [0x69a168]
-    ts::insn(0x00535c12u); ts::f_arith(1, 1, 0, false, false);   //   0x00535c12  fsub     st(1)
+    ts::insn(0x00535c12u); ts::f_arith(1, 0, 1, false, false);   //   0x00535c12  fsub     st(1)
     ts::insn(0x00535c14u); ts::st_f64(ESP.d + 0x14, (double)ts::f_pop());   //   0x00535c14  fstp     qword ptr [esp + 0x14]
     L_00535c18:;
     ts::insn(0x00535c18u); ECX.d = 0x7d4850u;   //   0x00535c18  mov      ecx, 0x7d4850
@@ -124,7 +124,7 @@ void sub_00535be8(void)
     ts::insn(0x00535c07u); ts::test8(AH, 0x41u);   //   0x00535c07  test     ah, 0x41
     ts::insn(0x00535c0au); if (!M.zf) { goto L_00535c18; }   //   0x00535c0a  jne      0x535c18
     ts::insn(0x00535c0cu); ts::f_push((long double)ts::ld_f64(6922600));   //   0x00535c0c  fld      qword ptr [0x69a168]
-    ts::insn(0x00535c12u); ts::f_arith(1, 1, 0, false, false);   //   0x00535c12  fsub     st(1)
+    ts::insn(0x00535c12u); ts::f_arith(1, 0, 1, false, false);   //   0x00535c12  fsub     st(1)
     ts::insn(0x00535c14u); ts::st_f64(ESP.d + 0x14, (double)ts::f_pop());   //   0x00535c14  fstp     qword ptr [esp + 0x14]
     L_00535c18:;
     ts::insn(0x00535c18u); ECX.d = 0x7d4850u;   //   0x00535c18  mov      ecx, 0x7d4850
@@ -157,7 +157,7 @@ void sub_00535bff(void)
     ts::insn(0x00535c07u); ts::test8(AH, 0x41u);   //   0x00535c07  test     ah, 0x41
     ts::insn(0x00535c0au); if (!M.zf) { goto L_00535c18; }   //   0x00535c0a  jne      0x535c18
     ts::insn(0x00535c0cu); ts::f_push((long double)ts::ld_f64(6922600));   //   0x00535c0c  fld      qword ptr [0x69a168]
-    ts::insn(0x00535c12u); ts::f_arith(1, 1, 0, false, false);   //   0x00535c12  fsub     st(1)
+    ts::insn(0x00535c12u); ts::f_arith(1, 0, 1, false, false);   //   0x00535c12  fsub     st(1)
     ts::insn(0x00535c14u); ts::st_f64(ESP.d + 0x14, (double)ts::f_pop());   //   0x00535c14  fstp     qword ptr [esp + 0x14]
     L_00535c18:;
     ts::insn(0x00535c18u); ECX.d = 0x7d4850u;   //   0x00535c18  mov      ecx, 0x7d4850
@@ -2741,7 +2741,7 @@ void sub_00536eaa(void)
     ts::insn(0x00536eacu); ts::f_chs();   //   0x00536eac  fchs     
     ts::insn(0x00536eaeu); ts::st_f64(ESP.d + 0x40, (double)ts::f_pop());   //   0x00536eae  fstp     qword ptr [esp + 0x40]
     ts::insn(0x00536eb2u); ts::f_push((long double)ts::ld_f64(ESP.d + 0x80));   //   0x00536eb2  fld      qword ptr [esp + 0x80]
-    ts::insn(0x00536eb9u); ts::f_arith(1, 1, 0, false, false);   //   0x00536eb9  fsub     st(1)
+    ts::insn(0x00536eb9u); ts::f_arith(1, 0, 1, false, false);   //   0x00536eb9  fsub     st(1)
     ts::insn(0x00536ebbu); EAX.d = ts::ld32(6954308);   //   0x00536ebb  mov      eax, dword ptr [0x6a1d44]
     ts::insn(0x00536ec0u); EDX.d = ts::ld32(6954304);   //   0x00536ec0  mov      edx, dword ptr [0x6a1d40]
     ts::insn(0x00536ec6u); ts::st32(ESP.d + 0x5c, EAX.d);   //   0x00536ec6  mov      dword ptr [esp + 0x5c], eax
@@ -2852,7 +2852,7 @@ void sub_00536fb3(void)
     ts::insn(0x00536fd3u); ts::test8(AH, 0x41u);   //   0x00536fd3  test     ah, 0x41
     ts::insn(0x00536fd6u); if (M.zf) { ts::ts_tail(0x536fedu); return; }   //   0x00536fd6  je       0x536fed
     ts::insn(0x00536fd8u); ts::f_push((long double)ts::ld_f64(ESP.d + 0x38));   //   0x00536fd8  fld      qword ptr [esp + 0x38]
-    ts::insn(0x00536fdcu); ts::f_arith(0, 1, 0, false, false);   //   0x00536fdc  fadd     st(1)
+    ts::insn(0x00536fdcu); ts::f_arith(0, 0, 1, false, false);   //   0x00536fdc  fadd     st(1)
     ts::insn(0x00536fdeu); ts::f_compare_mem((long double)ts::ld_f64(ESP.d + 0x10), true);   //   0x00536fde  fcomp    qword ptr [esp + 0x10]
     ts::insn(0x00536fe2u); ts::f_stsw();   //   0x00536fe2  fnstsw   ax
     ts::insn(0x00536fe4u); ts::test8(AH, 0x1u);   //   0x00536fe4  test     ah, 1

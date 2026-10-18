@@ -5598,8 +5598,8 @@ void sub_005f1ce0(void)
     ts::insn(0x005f1d25u); EAX.d = ts::ld32(7425568);   //   0x005f1d25  mov      eax, dword ptr [0x714e20]
     ts::insn(0x005f1d2au); ts::f_arith_mem(2, (long double)ts::ld_f64(EAX.d + 0x470), false);   //   0x005f1d2a  fmul     qword ptr [eax + 0x470]
     ts::insn(0x005f1d30u); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x4));   //   0x005f1d30  fild     dword ptr [esp + 4]
-    ts::insn(0x005f1d34u); ts::f_arith(1, 1, 0, false, true);   //   0x005f1d34  fsubr    st(1)
-    ts::insn(0x005f1d36u); ts::f_arith(3, 1, 0, false, false);   //   0x005f1d36  fdiv     st(1)
+    ts::insn(0x005f1d34u); ts::f_arith(1, 0, 1, false, true);   //   0x005f1d34  fsubr    st(1)
+    ts::insn(0x005f1d36u); ts::f_arith(3, 0, 1, false, false);   //   0x005f1d36  fdiv     st(1)
     ts::insn(0x005f1d38u); ts::f_arith_mem(1, (long double)ts::ld_f64(6920296), true);   //   0x005f1d38  fsubr    qword ptr [0x699868]
     ts::insn(0x005f1d3eu); ts::f_arith_mem(2, (long double)ts::ld_f64(6967272), false);   //   0x005f1d3e  fmul     qword ptr [0x6a4fe8]
     ts::ts_tail(0x005f1d44u);   // span end 0x005f1d44: the last instruction
@@ -5617,8 +5617,8 @@ void sub_005f1d22(void)
     ts::insn(0x005f1d25u); EAX.d = ts::ld32(7425568);   //   0x005f1d25  mov      eax, dword ptr [0x714e20]
     ts::insn(0x005f1d2au); ts::f_arith_mem(2, (long double)ts::ld_f64(EAX.d + 0x470), false);   //   0x005f1d2a  fmul     qword ptr [eax + 0x470]
     ts::insn(0x005f1d30u); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x4));   //   0x005f1d30  fild     dword ptr [esp + 4]
-    ts::insn(0x005f1d34u); ts::f_arith(1, 1, 0, false, true);   //   0x005f1d34  fsubr    st(1)
-    ts::insn(0x005f1d36u); ts::f_arith(3, 1, 0, false, false);   //   0x005f1d36  fdiv     st(1)
+    ts::insn(0x005f1d34u); ts::f_arith(1, 0, 1, false, true);   //   0x005f1d34  fsubr    st(1)
+    ts::insn(0x005f1d36u); ts::f_arith(3, 0, 1, false, false);   //   0x005f1d36  fdiv     st(1)
     ts::insn(0x005f1d38u); ts::f_arith_mem(1, (long double)ts::ld_f64(6920296), true);   //   0x005f1d38  fsubr    qword ptr [0x699868]
     ts::insn(0x005f1d3eu); ts::f_arith_mem(2, (long double)ts::ld_f64(6967272), false);   //   0x005f1d3e  fmul     qword ptr [0x6a4fe8]
     ts::ts_tail(0x005f1d44u);   // span end 0x005f1d44: the last instruction

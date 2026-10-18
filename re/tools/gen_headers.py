@@ -30,6 +30,74 @@ _KEYWORDS = {"class", "struct", "const", "unsigned", "signed", "int",
 IB = 0x400000
 
 
+def _blank_cxx_noise(text):
+    """Blank comments and literals so brace counting cannot be confused.
+
+    Only the lengths and newlines are preserved; the result is not source.
+    """
+    out = []
+    i, n = 0, len(text)
+    state = None
+    while i < n:
+        c = text[i]
+        if state is None:
+            if c == '/' and i + 1 < n and text[i + 1] == '/':
+                state = 'line'; out.append('  '); i += 2; continue
+            if c == '/' and i + 1 < n and text[i + 1] == '*':
+                state = 'block'; out.append('  '); i += 2; continue
+            if c == '"': state = 'str'; out.append(' '); i += 1; continue
+            if c == "'": state = 'chr'; out.append(' '); i += 1; continue
+            out.append(c); i += 1; continue
+        if state == 'line':
+            out.append('\n' if c == '\n' else ' ')
+            if c == '\n':
+                state = None
+            i += 1; continue
+        if state == 'block':
+            if c == '*' and i + 1 < n and text[i + 1] == '/':
+                state = None; out.append('  '); i += 2; continue
+            out.append('\n' if c == '\n' else ' '); i += 1; continue
+        if c == '\\' and i + 1 < n:
+            out.append('  '); i += 2; continue
+        if (state == 'str' and c == '"') or (state == 'chr' and c == "'"):
+            state = None
+        out.append(' ' if c != '\n' else '\n'); i += 1
+    return ''.join(out)
+
+
+def _global_scope_types(text, global_only=True):
+    """Class/struct names a header defines outside any namespace.
+
+    `owned` decides which manifest classes get a generated header, so a name
+    that only appears inside a namespace must not claim the global class of the
+    same name. Rendering.h defines `ts::rnd::Surface`, which is not the
+    recovered global `class Surface`; treating it as owned stopped Surface.h
+    from being emitted, and BSurface/DSurface/XSurface then failed to compile
+    from a clean tree. `global_only=False` also accepts a type nested inside a
+    class body, which is how a few hand-written headers write a nested type.
+    """
+    clean = _blank_cxx_noise(text)
+    names = set()
+    depth = 0
+    ns = []                       # brace depth at which each namespace opened
+    for line in clean.splitlines():
+        s = line.strip()
+        opens_ns = re.match(r'namespace\s+[\w:]+\s*\{', s) is not None
+        m = re.match(r'(?:template\s*<[^>]*>\s*)?(?:class|struct)\s+(\w+)', s)
+        if m and not ns and (depth == 0 or not global_only):
+            names.add(m.group(1))
+        if opens_ns:
+            ns.append(depth)
+        for ch in line:
+            if ch == '{':
+                depth += 1
+            elif ch == '}':
+                depth -= 1
+                if ns and depth == ns[-1]:
+                    ns.pop()
+    return names
+
+
 class Bin:
     def __init__(self, path):
         self.data = open(path, "rb").read()
@@ -496,7 +564,13 @@ class DeclaredLayout:
                                 else self.srcdir, hdr)
             if os.path.exists(path):
                 src = open(path).read()
+                # Same namespace rule as the fallback scan below: a
+                # hand-written `ts::rnd::Surface` is not `class Surface`.
+                ns_ok = (self._ns_types(path, src)
+                         if key in self._manifest else None)
                 for cand in (ident, key):
+                    if ns_ok is not None and cand not in ns_ok:
+                        continue
                     if cand and class_body_span(src, cand) is not None:
                         res = (path, cand)
                         break
@@ -530,6 +604,11 @@ class DeclaredLayout:
             if res is not None and (res[1] not in names
                                     or not self._defines(res[0], res[1])):
                 res = None
+            if (res is not None and key in self._manifest
+                    and os.path.basename(res[0]) in self._hw_names()
+                    and res[1] not in self._ns_types(res[0])):
+                # The name matched, but only inside a namespace: not this class.
+                res = None
         if res is None:
             # Not a manifest class: an interface from ts_prelude.h, a mix-in
             # like StageClass, or a template head. Search the hand-written
@@ -544,7 +623,20 @@ class DeclaredLayout:
                     continue
                 for p in sorted(glob.glob(os.path.join(d, "*.h"))):
                     src = open(p).read()
+                    # A type declared inside a namespace is not the global
+                    # class the manifest names. Rendering.h's
+                    # `ts::rnd::Surface` used to answer for `class Surface`,
+                    # which made the recovered class look non-polymorphic.
+                    # Only a manifest class needs the check, and only a
+                    # hand-written header can supply a namespaced impostor:
+                    # this tool writes generated headers at global scope.
+                    ns_ok = (self._ns_types(p, src)
+                             if key in self._manifest
+                             and os.path.basename(p) in self._hw_names()
+                             else None)
                     for cand in cands:
+                        if ns_ok is not None and cand not in ns_ok:
+                            continue
                         if class_body_span(src, cand) is not None:
                             res = (p, cand)
                             break
@@ -570,6 +662,16 @@ class DeclaredLayout:
         except OSError:
             return False
         return any(n and class_body_span(src, n) is not None for n in names)
+
+    def _ns_types(self, path, src=None):
+        """Cached non-namespaced type names for a hand-written header."""
+        if not hasattr(self, "_ns_cache"):
+            self._ns_cache = {}
+        if path not in self._ns_cache:
+            if src is None:
+                src = open(path).read()
+            self._ns_cache[path] = _global_scope_types(src, global_only=False)
+        return self._ns_cache[path]
 
     def _hw_names(self):
         if not hasattr(self, "_hw_name_set"):
@@ -1383,10 +1485,7 @@ def main():
     if os.path.isdir(hw_dir):
         for hp in sorted(glob.glob(os.path.join(hw_dir, "*.h"))):
             hs = open(hp).read()
-            for hm in re.finditer(
-                    r"^(?:template\s*<[^>]*>\s*)?(?:class|struct)\s+(\w+)",
-                    hs, re.M):
-                owned.add(hm.group(1))
+            owned |= _global_scope_types(hs)
     # Fall back to the recorded artifact if the directory is absent.
     if not owned:
         owned_path = os.path.join(outdir, "handwritten_types.json")
