@@ -231,7 +231,7 @@ why:    instruction budget exhausted (sub_0048875c +0xa4)
 message loop: reached   (GetMessage=1 PeekMessage=5 DispatchMessage=1
                          CreateWindowExA=1)
 unmapped calls: 0
-coverage: 55798 distinct instructions; 4767 of 45947 recovered functions entered
+coverage: 55774 distinct instructions; 4764 of 45947 recovered functions entered
 ```
 
 At `--budget 80000000` the stop is `0x0064e156` (`sub_0064e14d +0x9`), depth 24,
