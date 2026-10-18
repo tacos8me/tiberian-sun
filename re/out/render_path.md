@@ -29,16 +29,18 @@ It never presents a **mission** frame for three independent reasons:
    ~26M instructions/s (at 4e9, 1.5 GB) to ~4.5M/s (at 4.07e9, 2.9 GB, 722,815
    page-table slots). The run is stopped inside a per-cell draw loop, not
    inside the loader.
-3. **The tactical phase produces a black primary, 21 unmapped calls, and then
-   loses the machine.** Between 4.0e9 and the watchdog stop the game issues 3
-   more blits and 7,328 more locks (12 -> 15 blits, 769 -> 8,097 locks) and the
-   primary frame becomes **0 non-black pixels**. The same interval produces
-   **21 unmapped calls** (2 targets below `0x1000`, 19 elsewhere; 0 inside
-   `.text`) that are absent at 4e9. A longer run (5.14e9 actual instructions)
-   shows the machine afterwards in `sub_00675ba0` with `ESP=0x00000844`,
-   `ESI=0x000008ec`, `EDI=0x000008fc` and `EAX=0xffffff6c` — coordinates and
-   map deltas in pointer registers — and no new coverage or render calls for
-   1.07e9 instructions. The unmapped targets are sliding 4-byte windows over a
+3. **The tactical phase produces a black primary, 21 unmapped calls, and a
+   context of coordinate/delta values.** Between 4.0e9 and the watchdog stop
+   the game issues 3 more blits and 7,328 more locks (12 -> 15 blits, 769 ->
+   8,097 locks) and the primary frame becomes **0 non-black pixels**. The same
+   interval produces **21 unmapped calls** (2 targets below `0x1000`, 19
+   elsewhere; 0 inside `.text`) that are absent at 4e9. A longer run (5.14e9
+   actual instructions) shows the machine afterwards in `sub_00675ba0` with
+   `ESP=0x00000844`, `ESI=0x000008ec`, `EDI=0x000008fc` and
+   `EAX=0xffffff6c`: values that are coordinates and map deltas rather than
+   pointers (whether the low ESP is a deliberate stack switch or corruption is
+   not established). It adds no new coverage and no render calls for 1.07e9
+   instructions. The unmapped targets are sliding 4-byte windows over a
    small-integer delta table (`0x000000db`, `0xffffff6a`..`0xffffff6d`), not
    code addresses. No mission pixels are presented at either stop.
 
@@ -407,11 +409,11 @@ In order:
    is aimed exactly at this (fewer fresh pages, lower RSS); if it does not
    restore the rate, profile `ts::page` with `perf record -g` as `AGENTS.md`
    describes.
-3. **The 21 unmapped calls and the lost machine.** The targets are the delta
-   table above, not code; after them the game runs 1.07e9 instructions in
-   `sub_00675ba0` with `ESP=0x844` and coordinate values in the pointer
-   registers, adding no coverage and no render calls. Apply 7a and re-run: if
-   the 21 calls and the garbage context disappear, they were the arena
+3. **The 21 unmapped calls and the corrupted-looking context.** The targets
+   are the delta table above, not code; after them the game runs 1.07e9
+   instructions in `sub_00675ba0` with `ESP=0x844` and coordinate values in
+   the pointer registers, adding no coverage and no render calls. Apply 7a and
+   re-run: if the 21 calls and the odd context disappear, they were the arena
    collision (an object allocated into a freed arena-range block and then
    overwritten by surface writes). If they persist, capture the call sites
    (the out-of-text sample records the target only; a gdb breakpoint on the
