@@ -858,6 +858,118 @@ void mix_lookup_report() {
     }
 }
 
+// -- post-run cell/exec diagnostics -----------------------------------------
+// TS_EXEC_CHECK=0xADDR,... -- did the run execute each address? The model keeps
+// one bit per byte of .text, so this answers "was the terrain pass reached"
+// without another instrumented build.
+void exec_check_report() {
+    const char *e = std::getenv("TS_EXEC_CHECK");
+    if (!e || !*e) return;
+    std::printf("exec-check:\n");
+    const char *p = e;
+    while (*p) {
+        char *end = 0;
+        unsigned long va = std::strtoul(p, &end, 0);
+        if (end == p) break;
+        bool hit = false;
+        if (va >= kTextLo && va < kTextHi) {
+            unsigned long off = va - kTextLo;
+            hit = ((g_exec_map[off >> 3] >> (off & 7u)) & 1u) != 0u;
+        }
+        std::printf("  0x%08lx %s\n", va, hit ? "executed" : "NOT executed");
+        p = (*end == ',') ? end + 1 : end;
+        while (*p == ' ') ++p;
+    }
+}
+
+// TS_MAPCELLS=1 -- find the map object by its cell array (the object whose
+// +0x168 is a pointer array and +0x16c its length, the shape FUN_00502060
+// indexes) and report the per-cell state the terrain and shroud passes read:
+// +0x30 tile type (-1 = no tile), +0xa4 visibility flags (bit 0x4 seen,
+// bit 0x20 fog), +0x24 land type, +0x28 height.
+void mapcells_report() {
+    const char *e = std::getenv("TS_MAPCELLS");
+    if (!e || !*e) return;
+    std::printf("mapcells:\n");
+    std::printf("  tile-types 0x007b0b9c:");
+    for (unsigned i = 0; i < 8; ++i)
+        std::printf(" %u=0x%08x", i, (unsigned)ts::ld32(0x007b0b9cu + i * 4u));
+    std::printf("\n");
+    // The map is a static object at 0x710d28: FUN_005f8c00 loads exactly that
+    // into ECX before `call 0x502060`, and its cell array pointer is 0x710e90.
+    const u32 v = 0x00710d28u;
+    u32 cells = ts::ld32(v + 0x168u);
+    u32 n = ts::ld32(v + 0x16cu);
+    unsigned w = (unsigned)ts::ld32(v + 0xfcu);
+    unsigned h = (unsigned)ts::ld32(v + 0x100u);
+    std::printf("  map obj=0x%08x cells=0x%08x n=%u w=%u h=%u "
+                "view=(%d,%d) sel=%d\n",
+                v, cells, n, w, h,
+                (int)ts::ld32(v + 0x5cu), (int)ts::ld32(v + 0x60u),
+                (int)ts::ld32(v + 0x94u));
+    if (cells < 0x00400000u || cells >= 0x80000000u || (cells & 3u)) {
+        std::printf("  cell array pointer is not a model pointer\n");
+        return;
+    }
+    if (w == 0u || w > 512u) w = 48u;
+    if (h == 0u || h > 512u) h = 63u;
+    unsigned long alloc = 0, tiles = 0, seen = 0, fog = 0, nonzero = 0;
+    for (unsigned y = 0; y < h; ++y) {
+        for (unsigned x = 0; x < w; ++x) {
+            u32 c = ts::ld32(cells + (y * 512u + x) * 4u);
+            if (!c) continue;
+            ++alloc;
+            u32 t = ts::ld32(c + 0x30u), f = ts::ld32(c + 0xa4u);
+            if (t != 0xffffffffu) ++tiles;
+            if (f & 4u) ++seen;
+            if (f & 0x20u) ++fog;
+            if (f) ++nonzero;
+        }
+    }
+    std::printf("    alloc=%lu tiles=%lu seen=%lu fog=%lu flags_nonzero=%lu\n",
+                alloc, tiles, seen, fog, nonzero);
+    static const unsigned sx[6] = { 0u, 24u, 47u, 10u, 28u, 40u };
+    static const unsigned sy[6] = { 0u, 31u, 62u, 10u, 59u, 68u };
+    for (unsigned i = 0; i < 6u; ++i) {
+        u32 c = ts::ld32(cells + (sy[i] * 512u + sx[i]) * 4u);
+        std::printf("    cell(%u,%u)=0x%08x", sx[i], sy[i], c);
+        if (c) {
+            std::printf(" tile=%d flags=0x%08x land=%d height=%d occ=0x%08x",
+                        (int)ts::ld32(c + 0x30u), (unsigned)ts::ld32(c + 0xa4u),
+                        (int)ts::ld32(c + 0x24u), (int)ts::ld32(c + 0x28u),
+                        (unsigned)ts::ld32(c + 0x3cu));
+        }
+        std::printf("\n");
+    }
+}
+
+// TS_OBJECTS=1 -- the live object list the main loop walks (0x7b2d98 count,
+// 0x7b2d8c array). An empty list after mission start means the mission placed
+// no units, which is also why no cell would be revealed.
+void objects_report() {
+    const char *e = std::getenv("TS_OBJECTS");
+    if (!e || !*e) return;
+    u32 n = ts::ld32(0x007b2d98u);
+    u32 a = ts::ld32(0x007b2d8cu);
+    std::printf("objects: n=%u array=0x%08x\n", (unsigned)n, a);
+    if (a < 0x00400000u || a >= 0x80000000u) return;
+    unsigned show = n < 12u ? (unsigned)n : 12u;
+    for (unsigned i = 0; i < show; ++i) {
+        u32 o = ts::ld32(a + i * 4u);
+        std::printf("  [%u] obj=0x%08x", i, o);
+        if (o >= 0x00400000u && o < 0x80000000u) {
+            // +0x14 is the packed position the renderer reads (FUN_005f5eb0);
+            // its two shorts are the cell x and y.
+            u32 pos = ts::ld32(o + 0x14u);
+            std::printf(" vptr=0x%08x pos=(%d,%d) flags=0x%08x",
+                        (unsigned)ts::ld32(o),
+                        (int)(short)(pos & 0xffffu), (int)(short)(pos >> 16),
+                        (unsigned)ts::ld32(o + 0x0cu));
+        }
+        std::printf("\n");
+    }
+}
+
 // -- arguments --------------------------------------------------------------
 bool starts_with(const char *s, const char *p) {
     return std::strncmp(s, p, std::strlen(p)) == 0;
@@ -1000,6 +1112,9 @@ int main(int argc, char **argv) {
         std::printf("surface-dump: %u file(s) at %s<i>.png\n", n, opt.surface_dump);
     }
 
+    exec_check_report();
+    objects_report();
+    mapcells_report();
     mix_lookup_report();
     print_report(opt, returned, esp0);
     std::fflush(stdout);
