@@ -581,7 +581,7 @@ TS_HOT_INLINE u8 *page_in(PageTable &t, u32 addr) {
     return page_in_slow(t, addr);
 }
 
-inline u8 *page(u32 addr) { return page_in(pages(), addr); }
+TS_HOT_INLINE u8 *page(u32 addr) { return page_in(pages(), addr); }
 
 // Copy a region of the original image in, so reads of initialised data return
 // the real bytes rather than zero.
@@ -707,11 +707,11 @@ TS_HOT_INLINE void f_dec_w(u32 a, u32 r, int w) {
     m.pf = parity8(r);
 }
 
-inline void f_log(u32 r) { f_log_w(r, 32); }
-inline void f_add(u32 a, u32 b, u32 r) { f_add_w(a, b, r, 32); }
-inline void f_sub(u32 a, u32 b, u32 r) { f_sub_w(a, b, r, 32); }
-inline void f_inc(u32 a, u32 r) { f_inc_w(a, r, 32); }
-inline void f_dec(u32 a, u32 r) { f_dec_w(a, r, 32); }
+TS_HOT_INLINE void f_log(u32 r) { f_log_w(r, 32); }
+TS_HOT_INLINE void f_add(u32 a, u32 b, u32 r) { f_add_w(a, b, r, 32); }
+TS_HOT_INLINE void f_sub(u32 a, u32 b, u32 r) { f_sub_w(a, b, r, 32); }
+TS_HOT_INLINE void f_inc(u32 a, u32 r) { f_inc_w(a, r, 32); }
+TS_HOT_INLINE void f_dec(u32 a, u32 r) { f_dec_w(a, r, 32); }
 
 // -- integer core -----------------------------------------------------------
 // Helpers take their operands by value and RETURN the result rather than taking
