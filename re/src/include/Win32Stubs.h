@@ -1772,8 +1772,11 @@ inline unsigned long input_messages() { return input_msg_count(); }
 // per 10,000 executed instructions, so the menu is up around instruction
 // 1.58e9). The events start just after that and repeat across a wide window so
 // that a small shift in the reach time still lands input on the menu rather
-// than in a movie. The positions are the left-hand button column and the centre
-// of the 640x480 menu; Return is the keyboard equivalent of "activate".
+// than in a movie. The coordinates are PROBES -- the centre and two points in
+// the left-hand third -- not recovered button rectangles: neither the retail
+// oracle's screenshot nor the model's draws the menu's buttons (their PCX
+// assets live inside a nested MIX entry), so there is no visible target to aim
+// at yet. Return is the conventional "activate" key.
 inline const char *default_input_script() {
     return
         "# Default timeline: menu input once the intro movies are over.\n"
