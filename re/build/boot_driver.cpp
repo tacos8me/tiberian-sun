@@ -1257,6 +1257,15 @@ void objects_report() {
                     std::printf(" vptr=0x%08x coord=(%d,%d,%d) cell=(%d,%d)",
                                 (unsigned)ts::ld32(o), cx, cy, cz,
                                 cx >> 8, cy >> 8);
+                    // Is the object's own cell revealed? This is what decides
+                    // whether the shroud shows the object at all.
+                    u32 mp = 0x00710d28u;
+                    u32 cs = ts::ld32(mp + 0x168u);
+                    unsigned gx = (unsigned)(cx >> 8), gy = (unsigned)(cy >> 8);
+                    if (cs >= 0x00400000u && cs < 0x80000000u && gx < 512u && gy < 512u) {
+                        u32 c = ts::ld32(cs + (gy * 512u + gx) * 4u);
+                        std::printf(" seen=%d", c && (ts::ld32(c + 0xa4u) & 4u) ? 1 : 0);
+                    }
                 }
                 std::printf("\n");
             }
