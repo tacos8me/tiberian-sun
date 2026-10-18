@@ -581,6 +581,22 @@ inline bool heap_grow_in_place(u32 p, u32 want) {
     return false;
 }
 
+// Zero a region of modelled memory a page at a time. The byte-wise st32 loop
+// this replaces did four page() lookups per dword; the heap zeroes every
+// allocation and the mission load allocates hundreds of KB at a time, so that
+// cost dominated the run's wall clock (profiled in heap_alloc). memset writes
+// the same bytes with one lookup per page. A zero store never triggered the
+// st8 watchpoint (it fires on non-zero bytes only), so nothing observable
+// changes.
+inline void heap_zero(u32 a, u32 n) {
+    while (n) {
+        u32 chunk = 4096u - (a & 0xfffu);
+        if (chunk > n) chunk = n;
+        std::memset(page(a), 0, chunk);
+        a += chunk; n -= chunk;
+    }
+}
+
 // Allocate and zero. The zeroing is a correctness requirement, not a
 // convenience: fresh pages from the OS are zero, and the CRT relies on it --
 // its atexit table is scanned for non-null slots, so a table of stale bytes
@@ -605,7 +621,9 @@ inline u32 heap_alloc(u32 size) {
     if (s.live > s.peak_live) s.peak_live = s.live;
     if (s.live_bytes > s.peak_bytes) s.peak_bytes = s.live_bytes;
     u32 q = p + (u32)HEAP_HDR;
-    for (u32 i = 0; i < size; i += 4u) st32(q + i, 0u);
+    u32 z = (size + 3u) & ~3u;          // the old dword loop's exact extent
+    if (z > used) z = used;
+    heap_zero(q, z);
     return q;
 }
 
@@ -664,7 +682,11 @@ TS_BEGIN(HeapReAlloc)
         HeapStats &st = heap_stats();
         st.live_bytes += grown - cap;
         if (st.live_bytes > st.peak_bytes) st.peak_bytes = st.live_bytes;
-        for (u32 i = old_size; i < size; i += 4u) st32(old + i, 0u);
+        if (size > old_size) {
+            u32 z = (size - old_size + 3u) & ~3u;
+            if (old_size + z > grown) z = grown - old_size;
+            heap_zero(old + old_size, z);
+        }
         st32(p, size);
         stub_done(4, old);
         return;
