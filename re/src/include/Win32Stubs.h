@@ -386,43 +386,198 @@ TS_RET(GetProcessHeap, 0, 0x00010000u)
 // mission load after the briefing exhausted it at step 2,580,698,410 inside a
 // HeapFree/HeapAlloc pair. A first-fit free list makes the loop reuse its
 // memory, which is what the real heap does.
-struct FreeBlock { u32 ptr; u32 size; };
-inline FreeBlock *free_blocks() { static FreeBlock f[4096]; return f; }
-inline unsigned &free_count() { static unsigned n = 0; return n; }
+//
+// The free list alone was not enough for the mission loader's vector growth.
+// DynamicVectorClass (0x0055b050) allocates a new buffer, copies, then frees
+// the old one; each request is larger than the block just freed, so first-fit
+// could never use it and the arena grew by every buffer ever allocated --
+// 5,664 reallocations, 679 MB. A real heap coalesces adjacent free blocks and
+// can extend the last block in place, so that is what this heap does:
+//
+//   * blocks are physically adjacent and doubly linked by address, so a free
+//     merges with a free predecessor and successor;
+//   * free blocks are threaded on their own doubly linked free list (through
+//     the first eight payload bytes), so allocation scans only free blocks;
+//   * HeapReAlloc grows a block in place when the block after it is free or it
+//     is the last block in the arena, and copies only when neither holds.
+//
+// Every block has a 16-byte header; the caller's pointer is header + 16:
+//
+//   +0x00  size   the byte count the caller asked for (what HeapSize reports)
+//   +0x04  cap    payload capacity, a multiple of 8; bit 0 is the free flag
+//   +0x08  prev   the previous block header in address order (0 for the first)
+//   +0x0c  next   the next block header in address order (0 for the last)
+//
+// Allocation semantics are unchanged: distinct live blocks never overlap, a
+// block reads as zero when it is handed out (the atexit defect below), and
+// HeapReAlloc preserves the old contents.
 enum { HEAP_BASE = 0x50000000 };   // alloc_block's region
+enum { HEAP_HDR = 16 };            // header bytes before every user pointer
+enum { HEAP_MIN = 8 };             // smallest payload (holds the free links)
 
-// Return a HeapAlloc/LocalAlloc/GlobalAlloc block to the free list. The block
-// header is the size dword 16 bytes below the pointer the caller was given.
-inline void heap_release(u32 user) {
-    if (!user) return;
-    u32 p = user - 16u;
-    u32 size = ld32(p);
-    if (p < (u32)HEAP_BASE || p >= bump()) return;
-    if (size == 0u || size > 0x08000000u) return;
-    FreeBlock *f = free_blocks();
-    unsigned n = free_count();
-    for (unsigned i = 0; i < n; ++i)
-        if (f[i].ptr == p) return;              // double free: keep one entry
-    if (n >= (unsigned)(sizeof free_blocks() / sizeof f[0])) return;  // leak
-    f[n].ptr = p; f[n].size = size;
-    free_count() = n + 1u;
+inline u32 &heap_first() { static u32 v = 0; return v; }
+inline u32 &heap_last() { static u32 v = 0; return v; }
+inline u32 &heap_free_head() { static u32 v = 0; return v; }
+
+inline u32 heap_cap(u32 p) { return ld32(p + 4u) & ~1u; }
+inline bool heap_is_free(u32 p) { return (ld32(p + 4u) & 1u) != 0u; }
+inline void heap_set_cap(u32 p, u32 cap, bool free) {
+    st32(p + 4u, (cap & ~1u) | (free ? 1u : 0u));
+}
+inline u32 heap_round8(u32 n) { return (n + 7u) & ~7u; }
+inline u32 heap_next(u32 p) { return ld32(p + 0x0cu); }
+inline u32 heap_prev(u32 p) { return ld32(p + 0x08u); }
+inline bool heap_adjacent(u32 a, u32 b) {
+    return a && b && a + (u32)HEAP_HDR + heap_cap(a) == b;
 }
 
-// A header pointer for a block of at least `size`, reusing a freed block when
-// one fits; 0 when none does.
-inline u32 heap_take(u32 size) {
-    FreeBlock *f = free_blocks();
-    unsigned n = free_count();
-    for (unsigned i = 0; i < n; ++i) {
-        if (f[i].size >= size) {
-            u32 p = f[i].ptr;
-            f[i] = f[n - 1u];
-            free_count() = n - 1u;
-            st32(p, size);
-            return p;
-        }
+// Free-list links live in the payload, which every free block has room for
+// (HEAP_MIN >= 8). Keeping them out of the header leaves the header fixed at
+// 16 bytes, so a block can grow without moving its user pointer.
+inline u32 heap_free_next(u32 p) { return ld32(p + HEAP_HDR); }
+inline u32 heap_free_prev(u32 p) { return ld32(p + HEAP_HDR + 4u); }
+inline void heap_set_free_next(u32 p, u32 v) { st32(p + HEAP_HDR, v); }
+inline void heap_set_free_prev(u32 p, u32 v) { st32(p + HEAP_HDR + 4u, v); }
+
+// Diagnostics. Off unless TS_HEAP_STATS is set; the printer is constructed
+// after the counters so it is destroyed before them.
+struct HeapStats {
+    unsigned long allocs, frees, reallocs, reused, splits, coalesces;
+    unsigned long inplace, moved, new_blocks;
+    unsigned long live, peak_live, live_bytes, peak_bytes;
+};
+inline HeapStats &heap_stats() { static HeapStats s = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; return s; }
+struct HeapStatsPrinter {
+    ~HeapStatsPrinter() {
+        if (!std::getenv("TS_HEAP_STATS")) return;
+        HeapStats &s = heap_stats();
+        std::fprintf(stderr,
+            "heap: allocs=%lu frees=%lu reallocs=%lu reused=%lu splits=%lu "
+            "coalesces=%lu inplace=%lu moved=%lu new=%lu live=%lu "
+            "peak-live=%lu live-bytes=%lu peak-bytes=%lu\n",
+            s.allocs, s.frees, s.reallocs, s.reused, s.splits, s.coalesces,
+            s.inplace, s.moved, s.new_blocks, s.live, s.peak_live,
+            s.live_bytes, s.peak_bytes);
     }
-    return 0u;
+};
+inline void heap_stats_arm() { static HeapStatsPrinter p; (void)p; }
+
+inline void heap_free_push(u32 p) {
+    u32 h = heap_free_head();
+    heap_set_free_prev(p, 0u);
+    heap_set_free_next(p, h);
+    if (h) heap_set_free_prev(h, p);
+    heap_free_head() = p;
+}
+inline void heap_free_unlink(u32 p) {
+    u32 a = heap_free_prev(p), b = heap_free_next(p);
+    if (a) heap_set_free_next(a, b);
+    else heap_free_head() = b;
+    if (b) heap_set_free_prev(b, a);
+}
+
+// Merge the block after `p` into `p`. Both are free and physically adjacent.
+inline void heap_absorb_next(u32 p) {
+    u32 q = heap_next(p);
+    heap_free_unlink(q);
+    u32 cap = heap_cap(p) + (u32)HEAP_HDR + heap_cap(q);
+    u32 r = heap_next(q);
+    st32(p + 0x0cu, r);
+    if (r) st32(r + 0x08u, p); else heap_last() = p;
+    heap_set_cap(p, cap, true);
+    ++heap_stats().coalesces;
+}
+
+inline void heap_coalesce(u32 p) {
+    u32 q = heap_next(p);
+    if (q && heap_is_free(q) && heap_adjacent(p, q)) heap_absorb_next(p);
+    u32 a = heap_prev(p);
+    if (a && heap_is_free(a) && heap_adjacent(a, p)) heap_absorb_next(a);
+}
+
+// Return a HeapAlloc/LocalAlloc/GlobalAlloc block to the free list, merging it
+// with a free neighbour. A pointer that is not a live block of this heap is
+// ignored, and a double free keeps the one entry.
+inline void heap_release(u32 user) {
+    if (!user) return;
+    u32 p = user - (u32)HEAP_HDR;
+    if (p < (u32)HEAP_BASE || p >= bump()) return;
+    if (p & 7u) return;                        // headers are 8-aligned
+    u32 raw = ld32(p + 4u);
+    u32 cap = raw & ~1u;
+    if (cap < (u32)HEAP_MIN || cap > 0x08000000u) return;
+    if (p + (u32)HEAP_HDR + cap > bump()) return;
+    if (raw & 1u) return;                      // already free: double free
+    heap_set_cap(p, cap, true);
+    heap_free_push(p);
+    heap_coalesce(p);
+    HeapStats &s = heap_stats();
+    ++s.frees;
+    if (s.live) --s.live;
+    s.live_bytes = (s.live_bytes >= cap) ? s.live_bytes - cap : 0u;
+}
+
+// A header pointer for a live block of at least `want` payload bytes, carved
+// from the first free block that fits; 0 when none does. A split returns the
+// tail to the free list rather than leaking it.
+inline u32 heap_take(u32 want, u32 size) {
+    u32 p = heap_free_head();
+    while (p && heap_cap(p) < want) p = heap_free_next(p);
+    if (!p) return 0u;
+    heap_free_unlink(p);
+    u32 cap = heap_cap(p);
+    if (cap - want >= (u32)(HEAP_HDR + HEAP_MIN)) {
+        u32 r = p + (u32)HEAP_HDR + want;
+        u32 nx = heap_next(p);
+        st32(r + 0x08u, p);
+        st32(r + 0x0cu, nx);
+        if (nx) st32(nx + 0x08u, r); else heap_last() = r;
+        st32(p + 0x0cu, r);
+        heap_set_cap(r, cap - want - (u32)HEAP_HDR, true);
+        heap_free_push(r);
+        cap = want;
+        ++heap_stats().splits;
+    }
+    heap_set_cap(p, cap, false);
+    st32(p, size);
+    return p;
+}
+
+// A fresh block at the end of the arena. alloc_block reserves exactly the
+// 16-byte header plus the payload, so consecutive blocks are adjacent unless a
+// non-heap alloc_block call intervened; heap_adjacent() checks that.
+inline u32 heap_new_block(u32 cap) {
+    u32 p = alloc_block(cap, 8u);
+    st32(p, 0u);
+    heap_set_cap(p, cap, false);
+    st32(p + 0x08u, heap_last());
+    st32(p + 0x0cu, 0u);
+    if (heap_last()) st32(heap_last() + 0x0cu, p);
+    else heap_first() = p;
+    heap_last() = p;
+    ++heap_stats().new_blocks;
+    return p;
+}
+
+// Grow `p` to `want` payload bytes without moving it: into a free successor,
+// or into the end of the arena when `p` is the last allocation. The contents
+// stay where they are.
+inline bool heap_grow_in_place(u32 p, u32 want) {
+    u32 cap = heap_cap(p);
+    u32 q = heap_next(p);
+    if (q && heap_is_free(q) && heap_adjacent(p, q) &&
+        cap + (u32)HEAP_HDR + heap_cap(q) >= want) {
+        heap_absorb_next(p);
+        ++heap_stats().inplace;
+        return true;
+    }
+    if (!q && p + (u32)HEAP_HDR + cap == bump()) {
+        bump() = p + (u32)HEAP_HDR + want;
+        heap_set_cap(p, want, false);
+        ++heap_stats().inplace;
+        return true;
+    }
+    return false;
 }
 
 // Allocate and zero. The zeroing is a correctness requirement, not a
@@ -434,12 +589,21 @@ inline u32 heap_take(u32 size) {
 // call WinMain at an address inside ExitProcess. A reused block must therefore
 // be zeroed too.
 inline u32 heap_alloc(u32 size) {
-    u32 p = heap_take(size);
-    if (!p) {
-        p = alloc_block(size, 8u);
-        st32(p, size);
-    }
-    u32 q = p + 16u;
+    HeapStats &s = heap_stats();
+    heap_stats_arm();
+    u32 want = heap_round8(size ? size : 1u);
+    if (want < (u32)HEAP_MIN) want = (u32)HEAP_MIN;
+    u32 p = heap_take(want, size);
+    if (p) ++s.reused;
+    else p = heap_new_block(want);
+    st32(p, size);
+    u32 used = heap_cap(p);
+    ++s.allocs;
+    ++s.live;
+    s.live_bytes += used;
+    if (s.live > s.peak_live) s.peak_live = s.live;
+    if (s.live_bytes > s.peak_bytes) s.peak_bytes = s.live_bytes;
+    u32 q = p + (u32)HEAP_HDR;
     for (u32 i = 0; i < size; i += 4u) st32(q + i, 0u);
     return q;
 }
@@ -468,12 +632,35 @@ TS_END
 
 TS_BEGIN(HeapReAlloc)
     u32 old = arg(2), size = arg(3);
-    u32 nq = heap_alloc(size);
-    if (old) {
-        u32 n = ld32(old - 16u);
-        for (u32 i = 0; i < n && i < size; ++i) st8(nq + i, ld8(old + i));
-        heap_release(old);
+    ++heap_stats().reallocs;
+    if (!old) { stub_done(4, heap_alloc(size)); return; }
+    u32 p = old - (u32)HEAP_HDR;
+    u32 old_size = ld32(p);
+    u32 cap = heap_cap(p);
+    // A shrink (or same size) keeps the block where it is.
+    if (size <= cap) {
+        st32(p, size);
+        stub_done(4, old);
+        return;
     }
+    // Grow in place when the block after it is free or it is the last block.
+    // The caller sees the same pointer and the old contents are untouched; the
+    // new tail reads as zero, as a fresh block from heap_alloc would.
+    u32 want = heap_round8(size);
+    if (heap_grow_in_place(p, want)) {
+        u32 grown = heap_cap(p);
+        HeapStats &st = heap_stats();
+        st.live_bytes += grown - cap;
+        if (st.live_bytes > st.peak_bytes) st.peak_bytes = st.live_bytes;
+        for (u32 i = old_size; i < size; i += 4u) st32(old + i, 0u);
+        st32(p, size);
+        stub_done(4, old);
+        return;
+    }
+    u32 nq = heap_alloc(size);
+    for (u32 i = 0; i < old_size && i < size; ++i) st8(nq + i, ld8(old + i));
+    heap_release(old);
+    ++heap_stats().moved;
     stub_done(4, nq);
 TS_END
 

@@ -2224,13 +2224,19 @@ int main() {
 
 
 def test_win32_heap():
-    """HeapFree returns a block to the heap and HeapAlloc reuses it, zeroed.
+    """HeapFree reuses and coalesces blocks; HeapReAlloc extends in place.
 
-    Regression test for the page-table exhaustion the GDI mission load hit:
-    HeapFree was a no-op, so an alloc/free loop touched a new 4 KB page every
-    iteration until Machine.h's fixed 32768-page table filled and page()
-    faulted. The check that matters is identity -- the same pointer comes back
-    -- plus the zeroing the CRT's atexit scan depends on.
+    Regression tests for two defects the GDI mission load hit. HeapFree was a
+    no-op, so an alloc/free loop touched a new 4 KB page every iteration until
+    Machine.h's fixed 32768-page table filled and page() faulted. Then the
+    first-fit free list still could not serve the loader's vector growth:
+    DynamicVectorClass allocates a larger buffer, copies, then frees the old
+    one, so every request exceeded the only free block and the arena grew by
+    every buffer ever allocated -- 5,664 reallocations, 679 MB. The checks that
+    matter are identity on reuse, coalescing of adjacent frees, in-place growth
+    of the last block, contents preserved, zeroed fresh bytes, and no overlap
+    between live blocks. The coalescing check is mutation-proven: disabling
+    heap_coalesce() makes the 150-byte request miss the merged block.
     """
     import subprocess
     src = r'''
@@ -2244,13 +2250,20 @@ static ts::u32 call(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
     for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
     ESP.d = sp; ts::ts_call_at(fn, 0x00c0ffeeu); return EAX.d;
 }
+static bool all_bytes(ts::u32 p, unsigned from, unsigned to, ts::u8 v) {
+    for (unsigned i = from; i < to; ++i) if (ts::ld8(p + i) != v) return false;
+    return true;
+}
 int main() {
     ts::register_win32_stubs();
     const ts::u32 sp = 0x002ff000u;
     ts::u32 ha = ts::stub_va("KERNEL32", "HeapAlloc");
     ts::u32 hf = ts::stub_va("KERNEL32", "HeapFree");
     ts::u32 hs = ts::stub_va("KERNEL32", "HeapSize");
-    ck("stubs resolve", ha && hf && hs);
+    ts::u32 hr = ts::stub_va("KERNEL32", "HeapReAlloc");
+    ck("stubs resolve", ha && hf && hs && hr);
+
+    // A freed block is reused, and its contents are cleared.
     ts::u32 a3[3] = { 0x00010000u, 0u, 100u };
     ts::u32 p1 = call(ha, a3, 3, sp);
     ck("first alloc", p1 != 0u);
@@ -2262,21 +2275,100 @@ int main() {
     ts::u32 p2 = call(ha, a3, 3, sp);
     ck("reuses the freed block", p2 == p1);
     ck("reused block is zeroed", ts::ld8(p2) == 0u && ts::ld8(p2 + 99u) == 0u);
-    // A larger request cannot use the 100-byte block.
-    ts::u32 a3b[3] = { 0x00010000u, 0u, 4096u };
-    ts::u32 p3 = call(ha, a3b, 3, sp);
+
+    // HeapReAlloc grows the last block in place: same pointer, old contents,
+    // zeroed tail.
+    for (unsigned i = 0; i < 100u; ++i) ts::st8(p2 + i, 0x11u);
+    ts::u32 ar4[4] = { 0x00010000u, 0u, p2, 200u };
+    ts::u32 q1 = call(hr, ar4, 4, sp);
+    ck("realloc last block stays put", q1 == p2);
+    ck("realloc preserves contents", all_bytes(q1, 0u, 100u, 0x11u));
+    ck("realloc zeroes the new tail", all_bytes(q1, 100u, 200u, 0u));
+    ts::u32 a3s2[3] = { 0x00010000u, 0u, q1 };
+    ck("HeapSize after realloc", call(hs, a3s2, 3, sp) == 200u);
+
+    // Three live blocks must not overlap and must keep their own contents.
+    ts::u32 a = call(ha, a3, 3, sp);
+    ts::u32 b = call(ha, a3, 3, sp);
+    ts::u32 c = call(ha, a3, 3, sp);
+    ck("three live blocks are distinct",
+       a && b && c && a != b && b != c && a != c);
+    ck("no overlap between live blocks", a + 100u <= b && b + 100u <= c);
+    for (unsigned i = 0; i < 100u; ++i) {
+        ts::st8(a + i, 0xa1u); ts::st8(b + i, 0xb2u); ts::st8(c + i, 0xc3u);
+    }
+    ck("contents are per-block", all_bytes(a, 0u, 100u, 0xa1u) &&
+                                 all_bytes(b, 0u, 100u, 0xb2u) &&
+                                 all_bytes(c, 0u, 100u, 0xc3u));
+
+    // Coalescing: two adjacent freed blocks together satisfy a request that
+    // neither can alone, and the merged block is the one handed back.
+    ts::u32 a3b[3] = { 0x00010000u, 0u, b };
+    call(hf, a3b, 3, sp);
+    ts::u32 a3a[3] = { 0x00010000u, 0u, a };
+    call(hf, a3a, 3, sp);
+    ts::u32 a3d[3] = { 0x00010000u, 0u, 150u };
+    ts::u32 d = call(ha, a3d, 3, sp);
+    ck("coalesced free blocks satisfy a larger request", d == a);
+    ck("coalesced block does not overlap the live block", d + 150u <= c);
+
+    // A realloc that cannot extend in place moves the block and preserves it.
+    ts::u32 e = call(ha, a3, 3, sp);
+    ts::u32 f = call(ha, a3, 3, sp);
+    ck("realloc test blocks are adjacent", f >= e + 100u);
+    for (unsigned i = 0; i < 100u; ++i) ts::st8(e + i, 0x5au);
+    ts::u32 ar4b[4] = { 0x00010000u, 0u, e, 400u };
+    ts::u32 g = call(hr, ar4b, 4, sp);
+    ck("realloc that cannot extend moves", g != e);
+    ck("moved realloc preserves contents", all_bytes(g, 0u, 100u, 0x5au));
+    ck("moved realloc zeroes the tail", all_bytes(g, 100u, 400u, 0u));
+    ck("moved block does not overlap", g + 400u <= f || f + 100u <= g);
+
+    // The mission loader's own pattern (DynamicVectorClass, 0x0055b050):
+    // allocate a slightly larger buffer, copy, free the old one. The arena
+    // must not grow by every buffer ever allocated -- without coalescing this
+    // 400-step run grows by the cumulative ~6.8 MB instead of a few KB.
+    {
+        ts::u32 base = ts::w32::bump();
+        ts::u32 cur = 0, cursz = 0;
+        for (unsigned k = 0; k < 400u; ++k) {
+            ts::u32 nsz = 1200u + k * 80u;
+            ts::u32 a3n[3] = { 0x00010000u, 0u, nsz };
+            ts::u32 np = call(ha, a3n, 3, sp);
+            if (cur) {
+                for (unsigned i = 0; i < cursz; ++i)
+                    ts::st8(np + i, ts::ld8(cur + i));
+                ts::u32 a3o[3] = { 0x00010000u, 0u, cur };
+                call(hf, a3o, 3, sp);
+            }
+            cur = np; cursz = nsz;
+        }
+        ts::u32 grew = ts::w32::bump() - base;
+        ck("growth pattern reuses memory", grew < 4u * 33120u);
+    }
+
+    // A larger request cannot use a 100-byte block.
+    ts::u32 a3big[3] = { 0x00010000u, 0u, 4096u };
+    ts::u32 p3 = call(ha, a3big, 3, sp);
     ck("larger request is a new block", p3 != 0u && p3 != p1);
+
     // Freeing a pointer outside the model's heap is ignored, not recorded.
     ts::u32 a3bad[3] = { 0x00010000u, 0u, 0x00401000u };
     ck("foreign free is ignored", call(hf, a3bad, 3, sp) == 1u);
+
     std::printf("%d\n", fails);
     return fails ? 1 : 0;
 }
 '''
-    open("/tmp/ts_win32_heap.cpp", "w").write(src)
-    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
-                        "-Ibuild/shim", "-o", "/tmp/ts_win32_heap",
-                        "/tmp/ts_win32_heap.cpp"], capture_output=True)
+    cpp = "/tmp/ts_win32_heap.cpp"
+    open(cpp, "w").write(src)
+
+    def build(include_dir, exe):
+        return subprocess.run(["g++", "-std=c++03", "-O0", "-I" + include_dir,
+                               "-Isrc/include", "-Ibuild/shim", "-o", exe, cpp],
+                              capture_output=True)
+
+    r = build("src/include", "/tmp/ts_win32_heap")
     if r.returncode != 0:
         check("win32-heap-build", False,
               r.stderr.decode("utf-8", "replace")[:400])
@@ -2287,6 +2379,33 @@ int main() {
         check("win32-heap", False, out)
     else:
         eq("win32-heap", out.splitlines()[-1] if out else "", "0")
+
+    # Mutation: disable coalescing. The two adjacent freed 100-byte blocks no
+    # longer merge, so the 150-byte request misses the block it must reuse.
+    with open(os.path.join("src", "include", "Win32Stubs.h")) as fh:
+        real = fh.read()
+    anchors = [
+        "if (q && heap_is_free(q) && heap_adjacent(p, q))",
+        "if (a && heap_is_free(a) && heap_adjacent(a, p))",
+    ]
+    check("win32-heap-mutation-anchor", all(x in real for x in anchors),
+          "coalesce branch not found; update the mutation")
+    if all(x in real for x in anchors):
+        mut = os.path.join("/tmp", "ts_heap_mut")
+        os.makedirs(mut, exist_ok=True)
+        text = real
+        for x in anchors:
+            text = text.replace(x, "if (false && " + x[4:])
+        with open(os.path.join(mut, "Win32Stubs.h"), "w") as fh:
+            fh.write(text)
+        b = build(mut, "/tmp/ts_win32_heap_mut")
+        if b.returncode != 0:
+            check("win32-heap-mutation-build", False,
+                  b.stderr.decode("utf-8", "replace")[:300])
+        else:
+            m = subprocess.run(["/tmp/ts_win32_heap_mut"], capture_output=True)
+            check("win32-heap-mutation-caught", m.returncode != 0,
+                  "disabling coalescing did not fail the test")
 
 
 def test_page_table():
