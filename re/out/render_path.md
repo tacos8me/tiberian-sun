@@ -29,12 +29,26 @@ It never presents a **mission** frame for three independent reasons:
    ~26M instructions/s (at 4e9, 1.5 GB) to ~4.5M/s (at 4.07e9, 2.9 GB, 722,815
    page-table slots). The run is stopped inside a per-cell draw loop, not
    inside the loader.
-3. **The tactical phase produces a black primary and new unmapped calls.**
-   Between 4.0e9 and the watchdog stop the game issues 3 more blits and 7,328
-   more locks (12 -> 15 blits, 769 -> 8,097 locks) and the primary frame becomes
-   **0 non-black pixels**. The same interval produces **21 unmapped calls**
-   (2 targets below `0x1000`, 19 elsewhere; 0 inside `.text`) that are absent
-   at 4e9. No mission pixels are presented at the stop.
+3. **The tactical phase produces a black primary, 21 unmapped calls, and then
+   loses the machine.** Between 4.0e9 and the watchdog stop the game issues 3
+   more blits and 7,328 more locks (12 -> 15 blits, 769 -> 8,097 locks) and the
+   primary frame becomes **0 non-black pixels**. The same interval produces
+   **21 unmapped calls** (2 targets below `0x1000`, 19 elsewhere; 0 inside
+   `.text`) that are absent at 4e9. A longer run (5.14e9 actual instructions)
+   shows the machine afterwards in `sub_00675ba0` with `ESP=0x00000844`,
+   `ESI=0x000008ec`, `EDI=0x000008fc` and `EAX=0xffffff6c` — coordinates and
+   map deltas in pointer registers — and no new coverage or render calls for
+   1.07e9 instructions. The unmapped targets are sliding 4-byte windows over a
+   small-integer delta table (`0x000000db`, `0xffffff6a`..`0xffffff6d`), not
+   code addresses. No mission pixels are presented at either stop.
+
+A measurement defect also surfaced: `Machine::steps` is a 32-bit
+`unsigned long`, and `boot_driver` clamps a budget above `0xffffffff` to
+`4294967295` while `insn()` tests `steps > step_limit`. A budget at or above
+`2^32` can therefore never fire, and the reported step count is modulo
+`2^32`. The "4.5e9" run reports 845,440,651 after actually executing
+**5,140,407,947** (`4,294,967,296 + 845,440,651`); only the watchdog stopped
+it. Budgets below `2^32` (the 4e9 run) are unaffected.
 
 The DirectDraw wiring is correct: the game never calls `Flip` (neither does the
 retail binary), it presents by locking the primary and writing it, and the
@@ -55,6 +69,7 @@ gamedir, `--frame` dump of the primary surface. The boot report's
 | 3.2e9 | same | same | `out/render_3_2b.png` md5 `ab01ed73fe1682f3ceab242c4422416a` | 191,093 | `0x7c6a2b20` |
 | 4.0e9 | `0x0055b0b8` `sub_0055b09a +0x1e` | same | byte-identical to 3.2e9 (md5 `ab01ed73…`) | 191,093 | (dest `0xac0431e0`) |
 | 4.0747e9 | **watchdog** at `0x005940d8` `sub_00593f30 +0x1a8` (900 s) | 8 surfaces, **15 blits**, 0 fills, **8,097 locks**, 0 flips | `out/render_6b.png` md5 `fab3ec8fbf7b5c7de8041b90a78c6c31` | **0** | (722,815 pages) |
+| 5.1404e9 actual (request 4.5e9, clamped, reported 845,440,651) | **watchdog** at `0x00675c35` `sub_00675ba0 +0x95` (1800 s) | same 15 / 0 / 8,097 / 0 | byte-identical to the 6b frame | **0** | (722,815 pages) |
 
 Three facts fall out of the table:
 
@@ -251,9 +266,36 @@ In that interval the render counters move for the first time since 2.6e9:
 **15 blits** (was 12), **8,097 locks** (was 769), and the primary frame is
 **all black** (0 non-black). The same interval produces **21 unmapped calls**
 (2 below `0x1000`, 19 elsewhere; 0 inside `.text`) that are not present at
-4e9. Those are new correctness defects in the tactical-draw path (or
-consequences of the corrupted surface arena) and are the next thing to trace,
-after the address-space fix and with a run fast enough to pass 4.07e9.
+4e9.
+
+A second, longer run (`--budget 4500000000`, clamped to `0xffffffff`, watchdog
+1800 s) actually executes **5,140,407,947** instructions (the reported
+845,440,651 is modulo 2^32) and stops in `sub_00675ba0` (`0x00675c35`, the
+surface blitter) with:
+
+```
+regs: eax=0xffffff6c ecx=0x000000a8 edx=0x00000a00 ebx=0x0000000c
+      esp=0x00000844 ebp=0x00000a00 esi=0x000008ec edi=0x000008fc
+```
+
+`ESP=0x844`, `ESI=0x8ec`, `EDI=0x8fc` are not stack or object addresses, and
+`EAX=0xffffff6c` is one of the unmapped targets' values. The 16 sampled
+unmapped targets are sliding 4-byte windows over a delta table:
+
+```
+0xffff6900 0x00dbffff 0x6a000000 0xffffff6a 0x0000dbff 0xff6b0000
+0xdbffffff 0x000000db 0xffff6c00 0x00dbffff 0x6d000000 0xffffff6d
+0x0000dbff 0xff6e0000 0xdbffffff 0x000000db
+```
+
+The most economical explanation is the same address-space collision: after the
+heap cursor passed the arena, `heap_release` can put a freed block that lies
+inside `0x60000000..0x602cc288` on the free list, and `heap_take` can hand it
+to a later game object. Surface writes then overwrite that object's vtable or
+fields, so the game reads map deltas as a vtable and calls them. The
+alternative is an independent binding defect in the tactical draw. The test
+that distinguishes them is 7a followed by the same run: if the 21 unmapped
+calls disappear, they were the collision.
 
 ## 6. Retail comparison
 
@@ -349,22 +391,33 @@ pixel bytes are unchanged, so the regression cannot come back silently.
 
 In order:
 
-1. **Throughput.** The 4.07e9 stop is the 900-second watchdog, not the
+1. **Fix the step counter before the next long run.** `Machine::steps` is a
+   32-bit `unsigned long`, `boot_driver` clamps a budget above `0xffffffff`
+   to `4294967295`, and `insn()` tests `steps > step_limit`. A budget at or
+   above `2^32` never fires and the reported count wraps. Until this is fixed
+   (make `steps`/`step_limit` 64-bit, or clamp below `2^32` and report the
+   wrap), every run over 4.29e9 instructions is reported modulo 2^32 and is
+   bounded only by the wall clock. This already affects the concurrent 12e9
+   measurement.
+2. **Throughput.** The 4.07e9 stop is the 900-second watchdog, not the
    instruction budget. The model is at 722,815 page-table slots / 2.9 GB RSS
-   and ~4.5M instructions/s, down from ~26M/s at 4e9. The iso-map build is
-   done; the tactical draw is the phase that now needs the budget. The heap
-   lane's free-list/coalescing work is aimed exactly at this (fewer fresh
-   pages, lower RSS); if it does not restore the rate, profile `ts::page` with
-   `perf record -g` as `AGENTS.md` describes. Until the run passes 4.07e9 in
-   reasonable wall time, the tactical phase cannot be measured.
-2. **The 21 unmapped calls.** 2 targets below `0x1000` and 19 elsewhere, all
-   appearing after 4.0e9 and none inside `.text`. The boot report carries the
-   target and call-site samples; this lane's watchdog run filtered them out, so
-   the first measurement after (1) is a run with the full report (or a gdb
-   breakpoint on the unmapped-call recorder) to name the call sites. They are
-   either a missing model binding in the tactical draw or a consequence of the
-   corrupted surface arena; 7a distinguishes the two.
-3. **The black primary.** At 4.07e9 the primary is 0 non-black while 3 new
+   and ~4.5M instructions/s, down from ~26M/s at 4e9; the 1800-second run
+   covers only 5.14e9. The iso-map build is done; the tactical draw is the
+   phase that now needs the budget. The heap lane's free-list/coalescing work
+   is aimed exactly at this (fewer fresh pages, lower RSS); if it does not
+   restore the rate, profile `ts::page` with `perf record -g` as `AGENTS.md`
+   describes.
+3. **The 21 unmapped calls and the lost machine.** The targets are the delta
+   table above, not code; after them the game runs 1.07e9 instructions in
+   `sub_00675ba0` with `ESP=0x844` and coordinate values in the pointer
+   registers, adding no coverage and no render calls. Apply 7a and re-run: if
+   the 21 calls and the garbage context disappear, they were the arena
+   collision (an object allocated into a freed arena-range block and then
+   overwritten by surface writes). If they persist, capture the call sites
+   (the out-of-text sample records the target only; a gdb breakpoint on the
+   `unmapped_sample` store, or a small `Machine.h` instrumentation in a
+   scratch clone, gives `m.eip`).
+4. **The black primary.** At 4.07e9 the primary is 0 non-black while 3 new
    blits and 8,097 locks have run. Trace those 3 blits (dst/src/flags) and the
    lock targets: either the tactical draw presents to an offscreen that is
    never copied to the primary, or it clears the primary and the actual cell
@@ -387,5 +440,6 @@ the mission frame.
 | `/tmp/render_state*.log` | surface table + `bump()` at 2.7 / 2.7227 / 3.2e9 |
 | `/tmp/render_callers3.log`, `/tmp/render_callers4.log` | blit/lock/grow call chains |
 | `/tmp/lockdist.log` | full lock census (762 of 769 visible) |
+| `/tmp/render_45b_full.log` | 5.14e9 actual run: unmapped targets, wrapped step count, blitter stop |
 | `/tmp/retail_render2/ddraw.log` | retail `+ddraw`, 250 Blt / 651 Lock / 0 Flip |
 | `tools/oracle_render_retail.sh` | the retail driver used for the comparison |
