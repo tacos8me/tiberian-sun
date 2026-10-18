@@ -1351,29 +1351,76 @@ EAX=2, ECX=ESI=`0x526dbdc0`, EDX=`0x6a5dfe`, ESP=`0x002ff34c`, target
 **The model executes the game faithfully.** The remaining divergence is the
 coordinate-space mismatch: the visible rect must be scaled into surface space.
 
-### [ ] The visible rect is in map-pixel space, not surface space
-**The current blocker, and the next fix is in the game's zoom/scale math.**
-`FUN_005a4080` hands `FUN_005a34e0` a rect in map-pixel coordinates
-(2125x4176) while the bitmap/index are the scaled 67x108 surface. The scale
-lives at `[0x710d28+0x1490]`, set in `FUN_005a1bd0` from
-`min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the screen rect. The visible
-rect must be scaled into surface space before the bitmap index is computed.
+### [x] The visible rect is in map-pixel space — fixed (x87 D8 emitter)
+**The root cause was the x87 emitter, not the game.** `tools/emit_x86.py`
+rendered the **D8 one-register x87 forms** as if they were the pop forms:
+`fdiv st(1)` (D8 F1) is `ST(0) = ST(0)/ST(1)`, but the emitter wrote
+`ST(1) = ST(1)/ST(0)` and left ST(0) holding the divisor. Capstone prints both
+encodings with one operand, so nothing distinguished them. **901 non-pop
+one-operand x87 instructions** across the tree were affected; the 692 pop forms
+were already right.
 
-*Next:* decompile `FUN_005a1bd0`, `FUN_005a4080`, `FUN_0067faf0` and
-`FUN_005a34e0` (Ghidra MCP), and determine whether the model's zoom/scale
-computation (x87 rounding, integer conversion, map dimensions) or a
-transcription differs from the retail. The retail works, so a model divergence
-is the likely cause; do not ship a clamp or widen the bitmap, which would mask
-it. Fix the first proven divergence, then re-run at ~500B (about 20 min at
-400M/s).
-*Done when:* the out-of-bounds write is gone, the vptr is intact, and the run
-reaches the tactical phase or a new named stop (with a frame if it renders).
+`FUN_005a1bd0` computes the tactical zoom with exactly that instruction
+(`0x5a1ccd`, `0x5a1d18`). The buggy code stored **140** as the first candidate
+and then **108** as the final `[0x710d28+0x1490]` for every map. With scale 108,
+`FUN_005a4080` built the visible rect from the measured `472/48/464/24` as
+`trunc(2*472*108/48)+1 = 2125` by `trunc(2*464*108/24) = 4176` — the exact rect
+in the diagnosis. `FUN_005a34e0` then indexed the 67x108 cell-seen bitmap with
+`67*(-4068)+65 = -272,491` and wrote on the TerrainClass vptr.
+
+**Fixed in `e5d7039`** (emitter + 951 regenerated x87 lines + tests + a
+clean-tree `gen_headers` unblock). Measured after:
+
+| | pre-fix | post-fix |
+|---|---|---|
+| scale `[0x7121b8]` | 108.0 | **1.125** (`0x3f900000`) |
+| map surface | 67x108 | **99x108** |
+| visible rect | -2008, 28, 2125, 4176 | **35, 28, 23, 43** |
+| vptr `0x526dbdc0` | `0x6a5dfe` (vtable+2) | **`0x006a5dfc`** |
+| OOB stores at `0x5a3558` | the corrupting write | **0** |
+
+GDI1A is MAPS01.MIX entry `0xb5a58b4a` (`NextScenario=GDI2A.map`),
+`[Map] Size=0,0,48,63`.
+
+**500B run:** budget at 500,000,000,001 instructions, EIP `0x00543669`
+(`sub_00543620`, a 3x4 matrix·vector transform in the renderer), depth 100;
+**pages 12,637 / 32,768, refused 0; unmapped 0** (all categories);
+coverage 158,667 instructions / 9,607 functions; message loop dispatching
+(`GetMessage=19`, `DispatchMessage=19`, `PeekMessage=23,117,313`); render
+8 surfaces, **18,691,958 blits, 46,753,350 locks**. Frame
+`re/out/frame_500b.png`: 640x480, md5 `4fc1cec7…`, **87,794 non-black** — the
+**tactical HUD** (Options, radar with the GDI eagle, credits 5000, build tabs
+and build grid). This is the first in-game frame the model has rendered.
+
+Pipeline exit 0, `VERIFICATION PASSED`, link OK (492 TUs), tool tests **101**
+(was 94; new x87-form and header-ownership tests), runtime 101, `--strict` 0.
+
+### [ ] The tactical map viewport is still black
+**The current blocker, after the HUD renders.** The 500B frame shows the real
+tactical HUD, but the map viewport (the large left area) is black. The renderer
+is clearly running — **18.7M blits, 46.8M locks** — and the run ends only at the
+budget inside the vertex transform, so this is not a fault.
+
+*Next:* trace where the terrain/map blits go. Which destination surfaces do the
+terrain blits target? Is the map drawn into an offscreen surface that is never
+composited to the primary? Is the primary's map rectangle clipped/scrolled
+wrongly now that the visible rect is 35,28,23,43 on a 99x108 surface? Add
+per-surface blit/lock counters and a way to dump individual surfaces
+(`Rendering.h`), and compare with the retail `+ddraw` sequence where possible.
+Fix the first proven cause; do not paint the map by hand.
+*Done when:* the map viewport renders terrain/tiles in the dumped frame (or the
+next precise renderer defect is named).
+
+**Secondary:** `gen_headers`' name-based lookup still conflates
+`ts::rnd::Surface` with the recovered global class in a few paths. Header
+emission and the ownership scan are namespace-aware now, but a hand-written
+header that shares a name with a recovered class remains a hazard.
 
 **Secondary, unreachable:** the switch index table at `0x48e43c` is classified
 as 1 byte because the gap seeder already created a span at `0x48e43d`; that
 span decodes table data as code and contains `add esp, [ebp-0x61ffb726]` at
 `0x48e453`. No dword or branch references `0x48e43d`, so it never executes.
-Fix it with the next disassembly pass, not as part of this defect.
+Fix it with the next disassembly pass.
 
 ### [x] The mission writes pixels but never presents a frame — explained and fixed
 **The blue banded/grid frame was raw heap memory.** The game *does* present the

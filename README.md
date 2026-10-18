@@ -7,12 +7,13 @@ original program's own instruction stream against a machine model.
 
 ## Progress screenshot
 
-![The reconstructed model rendering the retail Tiberian Sun main menu](re/out/frame.png)
+![The reconstructed model rendering the retail Tiberian Sun tactical HUD](re/out/frame_500b.png)
 
-*The model's own 640x480 render of the game's main menu: 254,610 non-black
-pixels, mean channel difference 1.06/255 against the retail screenshot. The
-GDI intro frame (`re/out/mission.png`) and the mission loading screen
-(`re/out/render_2_6b.png`) are committed alongside it.*
+*The model's own 640x480 render of the in-game tactical HUD: Options, credits,
+the GDI radar eagle, build tabs and the build grid (87,794 non-black pixels).
+The main menu (`re/out/frame.png`), the GDI intro (`re/out/mission.png`) and the
+mission loading screen (`re/out/render_2_6b.png`) are committed alongside it.
+The map viewport is still black; the HUD is the furthest rendered frame.*
 
 ## Status
 
