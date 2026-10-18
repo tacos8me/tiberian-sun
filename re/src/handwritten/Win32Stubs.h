@@ -1802,12 +1802,18 @@ inline void input_init_once() {
     if (done) return;
     done = true;
     const char *path = std::getenv("TS_INPUT_SCRIPT");
-    if (path && *path) {
-        if (!ts::input::load_file(path))
+    if (path) {
+        // Set-but-empty means "no scripted input", so a caller can turn the
+        // default timeline off without creating a file.
+        if (!*path) {
+            ts::input::load_script("");
+            std::printf("input: disabled (TS_INPUT_SCRIPT is empty)\n");
+        } else if (!ts::input::load_file(path)) {
             std::printf("input: script %s: %s\n", path, ts::input::last_error());
-        else
+        } else {
             std::printf("input: script %s, %u event(s)\n", path,
                         ts::input::st().nevents);
+        }
     } else {
         ts::input::load_script(default_input_script());
         std::printf("input: default timeline, %u event(s)\n",

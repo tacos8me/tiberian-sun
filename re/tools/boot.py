@@ -634,12 +634,13 @@ def print_report(keys, lists, entries, build_note, elapsed):
                       keys.get("unmapped-elsewhere", "?")))
     # The rendering layer: whether the game drew at all, and where the frame
     # went. A blank dump is a measurement, not a failure; a missing one is.
-    if keys.get("frame-dump"):
+    if "render-surfaces" in keys:
         out.append("render: %s surfaces, %s blits, %s fills, %s locks, %s flips; "
                    "%s scripted input message(s)"
                    % (keys.get("render-surfaces", "?"), keys.get("render-blits", "?"),
                       keys.get("render-fills", "?"), keys.get("render-locks", "?"),
                       keys.get("render-flips", "?"), keys.get("input-messages", "?")))
+    if keys.get("frame-dump"):
         out.append("frame:  %s (%s, %s non-black pixels)"
                    % (keys.get("frame-dump", "?"), keys.get("frame-size", "?"),
                       keys.get("frame-nonblack", "?")))
