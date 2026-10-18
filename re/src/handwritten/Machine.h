@@ -222,12 +222,63 @@ struct Machine {
     // counted separately.
     unsigned long unmapped_in_text;
     unsigned long unmapped_in_gap;
+    // First-N unmapped calls with the register state at the call site. The
+    // 16-slot samples above are target-only, and a flood of garbage (7.7M calls
+    // on the 479B mission-load run) buries the first one. The first calls are
+    // the only ones that say what went wrong: by the time the flood is running
+    // the state is already lost. `kind` is 0 for a `call` and 1 for a tail
+    // transfer. `steps` places the event in the run so a later one can be
+    // bisected to.
+    enum { UNMAPPED_RECS = 64 };
+    struct UnmappedRec {
+        u32 to, from, kind, depth;
+        unsigned long long steps;
+        u32 esp, ebp, eax, ebx, ecx, edx, esi, edi;
+    };
+    UnmappedRec unmapped_rec[UNMAPPED_RECS];
+    unsigned unmapped_rec_n;
+    // In-.text unmapped calls carry the same register state: that is the case
+    // where the target is real code and the pointer chain to it is the defect.
+    struct TextUnmappedRec {
+        u32 to, from, depth;
+        unsigned long long steps;
+        u32 esp, ebp, eax, ecx, edx, esi, edi;
+    };
+    TextUnmappedRec unmapped_text_rec[16];
+    unsigned unmapped_text_rec_n;
+    // TS_STOP_UNMAPPED=1 halts at the first unregistered target with the
+    // machine intact, so a long run ends where the defect starts instead of
+    // where the flood exhausts the page table.
+    u32 stop_on_unmapped;
+    // TS_ESP_GUARD=1 checks ESP at every instruction against the game's stack
+    // range and records the instruction that left it. A wild ESP turns every
+    // later push/ret into a page allocation and an unregistered call; the
+    // interesting event is the instruction that moved it, not the flood.
+    u32 esp_guard;
+    u32 esp_guard_stop;
+    u32 esp_prev;
+    struct EspRec {
+        u32 prev_eip, eip, esp, ebp, eax, ecx, edx;
+        unsigned long long steps;
+    };
+    EspRec esp_bad[8];
+    unsigned esp_bad_n;
+    // Why the page table refused an insertion. `fault_addr` is the address whose
+    // page was demanded; the rest is the table state at that moment, which
+    // separates a wild address from a host allocation failure.
+    u32 fault_addr;
+    u32 fault_page;
+    u32 fault_used;
+    u32 fault_cap;
     // A tail transfer in flight: the VA a transcribed span continues at after
     // it returns. A recovered `jmp` to another span, and a span whose last
     // instruction does not transfer control, both continue the SAME invocation
     // -- the original pushes no return address -- so the dispatcher in ts_call
     // picks this up in place instead of nesting another host frame.
     u32 tail;
+    // The instruction that set `tail`, so an unregistered tail target can name
+    // the `jmp` that produced it rather than the call that started the frame.
+    u32 tail_from;
     u16 fpu_status;
     // Segment registers and the interrupt-enable flag. This model is flat, so
     // segments never affect an address, but the recovered code does push, pop
@@ -330,12 +381,17 @@ inline void reset() {
     m.unmapped_below_1000 = 0;
     m.unmapped_in_rdata = 0;
     m.unmapped_elsewhere = 0;
-    m.tail = 0;
+    m.tail = 0; m.tail_from = 0;
     m.unmodelled_insns = 0;
     m.call_depth = 0;
     m.depth_exceeded = 0;
     m.unmapped_sample_n = 0;
     m.unmapped_text_sample_n = 0;
+    m.unmapped_rec_n = 0;
+    m.unmapped_text_rec_n = 0;
+    m.esp_guard = 0; m.esp_guard_stop = 0; m.esp_bad_n = 0; m.esp_prev = 0;
+    m.stop_on_unmapped = 0;
+    m.fault_addr = 0; m.fault_page = 0; m.fault_used = 0; m.fault_cap = 0;
     m.bad_call_n = 0;
     m.watch_va = 0; m.watch_hits = 0;
     m.stub_dispatches = 0; m.stub_last_nargs = 0; m.stub_last_depth = 0;
@@ -402,15 +458,50 @@ inline void insn_slow(u32 va) {
     if (m.faulted && m.halt) longjmp(*m.halt, 1);
 }
 
+// ESP left the stack region, or moved further in one instruction than any real
+// prologue/epilogue does. `prev` is the instruction that made the move (insn()
+// is called at the START of each instruction, so the register state here is
+// what that instruction left behind). Recording it is the whole point: after a
+// wild ESP every later push/ret is garbage, and the flood is not the defect.
+#if defined(__GNUC__)
+__attribute__((noinline))
+#endif
+inline void esp_guard_hit(u32 prev, u32 va) {
+    Machine &m = mach();
+    if (m.esp_bad_n < 8u) {
+        Machine::EspRec &r = m.esp_bad[m.esp_bad_n++];
+        r.prev_eip = prev; r.eip = va; r.esp = ESP.d; r.ebp = EBP.d;
+        r.eax = EAX.d; r.ecx = ECX.d; r.edx = EDX.d;
+        r.steps = m.steps;
+    }
+    if (m.esp_guard_stop && !m.faulted) {
+        m.eip = prev;
+        fault("ESP outside the modelled stack");
+        if (m.halt) longjmp(*m.halt, 1);
+    }
+}
+
 // One call per transcribed instruction, emitted by tools/gen_code.py. It is the
 // only per-instruction hook in the model: it keeps eip, counts instructions,
 // and marks coverage. Anything that only happens on a trace, a budget stop or a
 // halt goes to insn_slow().
 inline void insn(u32 va) {
     Machine &m = mach();
+    u32 prev = m.eip;          // the instruction that just executed
     m.eip = va;
     ++m.steps;
     mark_map(m.exec_map, m.exec_map_lo, m.exec_map_hi, va);
+    // Off by default, so a normal run pays one predictable branch. When on, the
+    // range is the game's own stack (ESP starts at 0x300000 and grows down) and
+    // the delta catches a jump that stays inside the range. The largest real
+    // frame adjustment in the transcription is under 0x8000.
+    if (m.esp_guard && m.steps > 1u) {
+        i32 delta = (i32)(ESP.d - m.esp_prev);
+        if (ESP.d < 0x00100000u || ESP.d >= 0x00400000u ||
+            delta > 0x10000 || delta < -0x10000)
+            esp_guard_hit(prev, va);
+        m.esp_prev = ESP.d;
+    }
     if (m.trace_va || m.faulted || (m.step_limit && m.steps > m.step_limit))
         insn_slow(va);
 }
@@ -517,6 +608,20 @@ inline PageTable &pages() { static PageTable t; return t; }
 // The cache hit is the hot path and stays inline; a miss (probe, growth or the
 // first touch of a page) goes out of line so the inline body is a handful of
 // instructions at every load and store in the transcription.
+// A refusal is a report about an ADDRESS, not just a table. "page allocation
+// failed" at 1,024,211 of 2,097,152 slots is not a full table: it is the host
+// refusing the 4 KB block for one page, and which page decides whether the
+// demand is legitimate (a heap/stack working set) or a wild pointer walking the
+// address space. Record both the address and the table state before faulting.
+inline void page_fault(PageTable &t, u32 addr, u32 p, const char *why) {
+    Machine &m = mach();
+    m.fault_addr = addr;
+    m.fault_page = p;
+    m.fault_used = t.used;
+    m.fault_cap = t.cap;
+    fault(why);
+}
+
 #if defined(__GNUC__)
 __attribute__((noinline))
 #endif
@@ -526,7 +631,7 @@ inline u8 *page_in_slow(PageTable &t, u32 addr) {
     u32 ci = p & (PageTable::CACHE_SLOTS - 1u);
     static u8 dummy[4096 + 8];   // only ever reached after fault() has halted
     if (!t.cap) {
-        fault("page table exhausted: index allocation failed");
+        page_fault(t, addr, p, "page table exhausted: index allocation failed");
         return dummy + off;
     }
     for (;;) {
@@ -544,7 +649,7 @@ inline u8 *page_in_slow(PageTable &t, u32 addr) {
         }
         if (!empty) {
             ++t.refused;
-            fault("page table exhausted: no free slot");
+            page_fault(t, addr, p, "page table exhausted: no free slot");
             return dummy + off;
         }
         // Grow before the table fills. A full table is not merely slow: with no
@@ -554,7 +659,7 @@ inline u8 *page_in_slow(PageTable &t, u32 addr) {
         if (t.used + 1u > t.cap - (t.cap >> 2)) {
             if (t.cap >= t.max_slots || !t.resize(t.cap << 1)) {
                 ++t.refused;
-                fault("page table exhausted: host allocation failed");
+                page_fault(t, addr, p, "page table exhausted: host allocation failed");
                 return dummy + off;
             }
             ++t.growths;
@@ -563,7 +668,7 @@ inline u8 *page_in_slow(PageTable &t, u32 addr) {
         u8 *blk = (u8 *)std::calloc(4096 + 8, 1);
         if (!blk) {
             ++t.refused;
-            fault("page table exhausted: page allocation failed");
+            page_fault(t, addr, p, "page table exhausted: page allocation failed");
             return dummy + off;
         }
         t.key[i] = p; t.val[i] = blk;
@@ -965,6 +1070,51 @@ inline void count_unmapped_target(Machine &m, u32 va, u32 from) {
     }
 }
 
+// All the accounting for one unregistered target, in one place: the existing
+// samples and per-region counters, the first-N records with register state, and
+// the optional stop-at-first. `kind` is 0 for a `call`, 1 for a tail transfer.
+// The first records are what identify the defect; a run can produce millions of
+// these and only the first few carry the state that produced them.
+inline void note_unmapped(Machine &m, u32 va, u32 from, u32 kind) {
+    if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
+    m.unmapped_calls++;
+    if (!m.text_hi || va < m.text_lo || va >= m.text_hi) {
+        ++m.bad_calls;
+        if (va < 0x1000u) ++m.unmapped_below_1000;
+        else if (va >= 0x698000u && va < 0x6bb000u) ++m.unmapped_in_rdata;
+        else ++m.unmapped_elsewhere;
+        if (m.bad_call_n < 16) {
+            m.bad_call_from[m.bad_call_n] = from;
+            m.bad_call_to[m.bad_call_n] = va;
+            ++m.bad_call_n;
+        }
+    }
+    count_unmapped_target(m, va, from);
+    if (m.unmapped_rec_n < (unsigned)Machine::UNMAPPED_RECS) {
+        Machine::UnmappedRec &r = m.unmapped_rec[m.unmapped_rec_n++];
+        r.to = va; r.from = from; r.kind = kind; r.depth = (u32)m.call_depth;
+        r.steps = m.steps;
+        r.esp = ESP.d; r.ebp = EBP.d; r.eax = EAX.d; r.ebx = EBX.d;
+        r.ecx = ECX.d; r.edx = EDX.d; r.esi = ESI.d; r.edi = EDI.d;
+    }
+    if (m.text_hi && va >= m.text_lo && va < m.text_hi &&
+        m.unmapped_text_rec_n < 16u) {
+        Machine::TextUnmappedRec &r =
+            m.unmapped_text_rec[m.unmapped_text_rec_n++];
+        r.to = va; r.from = from; r.depth = (u32)m.call_depth;
+        r.steps = m.steps;
+        r.esp = ESP.d; r.ebp = EBP.d; r.eax = EAX.d; r.ecx = ECX.d;
+        r.edx = EDX.d; r.esi = ESI.d; r.edi = EDI.d;
+    }
+    if (m.stop_on_unmapped && !m.faulted) {
+        // Halt AT the call site with the registers untouched, so the report
+        // names the instruction that made the call and the pointer it used.
+        m.eip = from;
+        fault("first unmapped call");
+        if (m.halt) longjmp(*m.halt, 1);
+    }
+}
+
 inline void ts_call(u32 va) {
     Machine &m = mach();
     u32 from = m.eip;      // the call site, before eip is overwritten
@@ -973,20 +1123,7 @@ inline void ts_call(u32 va) {
     ++m.recent_call_n;
     Fn f = ts_lookup(va);
     if (!f) {
-        if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
-        m.unmapped_calls++;
-        if (!m.text_hi || va < m.text_lo || va >= m.text_hi) {
-            ++m.bad_calls;
-            if (va < 0x1000u) ++m.unmapped_below_1000;
-            else if (va >= 0x698000u && va < 0x6bb000u) ++m.unmapped_in_rdata;
-            else ++m.unmapped_elsewhere;
-            if (m.bad_call_n < 16) {
-                m.bad_call_from[m.bad_call_n] = from;
-                m.bad_call_to[m.bad_call_n] = va;
-                ++m.bad_call_n;
-            }
-        }
-        count_unmapped_target(m, va, from);
+        note_unmapped(m, va, from, 0u);
         return;
     }
     mark_map(m.func_map, m.func_map_lo, m.func_map_hi, va);
@@ -1010,25 +1147,13 @@ inline void ts_call(u32 va) {
         if (!m.tail) break;
         va = m.tail;
         m.tail = 0;
+        if (m.tail_from) from = m.tail_from;
         m.eip = va;
         m.recent_calls[m.recent_call_n & 7u] = va;
         ++m.recent_call_n;
         f = ts_lookup(va);
         if (!f) {
-            if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
-            m.unmapped_calls++;
-            if (!m.text_hi || va < m.text_lo || va >= m.text_hi) {
-                ++m.bad_calls;
-                if (va < 0x1000u) ++m.unmapped_below_1000;
-                else if (va >= 0x698000u && va < 0x6bb000u) ++m.unmapped_in_rdata;
-                else ++m.unmapped_elsewhere;
-                if (m.bad_call_n < 16) {
-                    m.bad_call_from[m.bad_call_n] = from;
-                    m.bad_call_to[m.bad_call_n] = va;
-                    ++m.bad_call_n;
-                }
-            }
-            count_unmapped_target(m, va, from);
+            note_unmapped(m, va, from, 1u);
             break;
         }
         mark_map(m.func_map, m.func_map_lo, m.func_map_hi, va);
@@ -1099,7 +1224,11 @@ inline void ts_call_at(u32 target, u32 ret) {
 // span, and the end of a span whose last instruction is not a transfer (the
 // original simply continues at the next address). Both name where to continue
 // and return; ts_call dispatches it in the frame already running.
-inline void ts_tail(u32 target) { mach().tail = target; }
+inline void ts_tail(u32 target) {
+    Machine &m = mach();
+    m.tail = target;
+    m.tail_from = m.eip;
+}
 
 // Invoke a recovered function from hand-written code.
 //

@@ -563,6 +563,77 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
             std::printf(" 0x%08x", m.unmapped_sample[i]);
         std::printf("\n");
     }
+    // The first unregistered calls, with the state that produced them. The
+    // flood after them is the same defect repeated; only these carry the
+    // pointer chain. `kind` 0 is a `call`, 1 a tail transfer.
+    if (m.unmapped_rec_n) {
+        std::printf("first-unmapped:\n");
+        for (unsigned i = 0; i < m.unmapped_rec_n; ++i) {
+            const ts::Machine::UnmappedRec &r = m.unmapped_rec[i];
+            std::printf("  #%u step=%llu %s to=0x%08x from=0x%08x depth=%u "
+                        "esp=0x%08x ebp=0x%08x eax=0x%08x ebx=0x%08x "
+                        "ecx=0x%08x edx=0x%08x esi=0x%08x edi=0x%08x\n",
+                        i, r.steps, r.kind ? "tail" : "call",
+                        r.to, r.from, r.depth, r.esp, r.ebp, r.eax, r.ebx,
+                        r.ecx, r.edx, r.esi, r.edi);
+        }
+    }
+    if (m.unmapped_text_rec_n) {
+        std::printf("first-unmapped-in-text:\n");
+        for (unsigned i = 0; i < m.unmapped_text_rec_n; ++i) {
+            const ts::Machine::TextUnmappedRec &r = m.unmapped_text_rec[i];
+            std::printf("  #%u step=%llu to=0x%08x from=0x%08x depth=%u "
+                        "esp=0x%08x ebp=0x%08x eax=0x%08x ecx=0x%08x "
+                        "edx=0x%08x esi=0x%08x edi=0x%08x\n",
+                        i, r.steps, r.to, r.from, r.depth, r.esp, r.ebp,
+                        r.eax, r.ecx, r.edx, r.esi, r.edi);
+        }
+    }
+    // The instruction that left the stack region. `prev` executed and moved
+    // ESP; `at` is the next instruction, where the guard noticed.
+    if (m.esp_bad_n) {
+        std::printf("esp-guard:\n");
+        for (unsigned i = 0; i < m.esp_bad_n; ++i) {
+            const ts::Machine::EspRec &r = m.esp_bad[i];
+            std::printf("  #%u step=%llu moved_by=0x%08x next=0x%08x "
+                        "esp=0x%08x ebp=0x%08x eax=0x%08x ecx=0x%08x edx=0x%08x\n",
+                        i, r.steps, r.prev_eip, r.eip, r.esp, r.ebp,
+                        r.eax, r.ecx, r.edx);
+        }
+    }
+    // Why the page table refused, and where its pages are. A refusal at 48.8%
+    // of the table is not a full index: it is one 4 KB host allocation the
+    // machine could not make, and the address says whether the demand is a
+    // legitimate working set or a wild pointer.
+    if (m.fault_addr) {
+        std::printf("fault-addr: 0x%08x\n", m.fault_addr);
+        std::printf("fault-page: 0x%05x\n", m.fault_page);
+        std::printf("fault-table: used=%u cap=%u\n", m.fault_used, m.fault_cap);
+    }
+    if (m.faulted || std::getenv("TS_PAGES")) {
+        // 1 MB regions: 4096 buckets over the 4 GiB space. The top few say
+        // whether the footprint is the heap, the stack, or a wild range.
+        static unsigned long hist[4096];
+        for (unsigned i = 0; i < 4096; ++i) hist[i] = 0;
+        ts::PageTable &pt = ts::pages();
+        unsigned long live = 0;
+        for (ts::u32 i = 0; i < pt.cap; ++i) {
+            if (pt.key[i] == ts::PageTable::EMPTY) continue;
+            ++hist[pt.key[i] >> 8];
+            ++live;
+        }
+        std::printf("page-regions: %lu live pages\n", live);
+        for (unsigned k = 0; k < 12; ++k) {
+            unsigned best = 0;
+            for (unsigned i = 1; i < 4096; ++i)
+                if (hist[i] > hist[best]) best = i;
+            if (!hist[best]) break;
+            std::printf("  0x%08x-0x%08x  %lu pages (%lu MB)\n",
+                        best << 20, ((best + 1u) << 20) - 1u,
+                        hist[best], (hist[best] * 4u) / 1024u);
+            hist[best] = 0;
+        }
+    }
     std::printf("boot-report: end\n");
 }
 
@@ -659,12 +730,20 @@ int main(int argc, char **argv) {
     ts::Machine &m = ts::mach();
     if (const char *t = std::getenv("TS_TRACE")) m.trace_va = (ts::u32)std::strtoul(t, 0, 0);
     if (const char *w = std::getenv("TS_WATCH")) m.watch_va = (ts::u32)std::strtoul(w, 0, 0);
+    // Diagnostics that stop at the FIRST defect instead of at the flood it
+    // causes. TS_STOP_UNMAPPED halts at the first unregistered target with the
+    // registers at the call site; TS_ESP_GUARD records the instruction that
+    // leaves the stack region and TS_ESP_STOP halts there.
+    if (std::getenv("TS_STOP_UNMAPPED")) m.stop_on_unmapped = 1;
+    if (std::getenv("TS_ESP_GUARD")) m.esp_guard = 1;
+    if (std::getenv("TS_ESP_STOP")) { m.esp_guard = 1; m.esp_guard_stop = 1; }
     m.text_lo = kTextLo;
     m.text_hi = kTextHi;
     m.exec_map = g_exec_map; m.exec_map_lo = kTextLo; m.exec_map_hi = kTextHi;
     m.func_map = g_func_map; m.func_map_lo = kTextLo; m.func_map_hi = kTextHi;
     m.r[4].d = kStackTop;                  // ESP: a plausible stack, not zero
     ts::push32(kSentinel);                 // what the entry point's final `ret` pops
+    m.esp_prev = m.r[4].d;                 // no delta on the first instruction
     const unsigned long esp0 = m.r[4].d;
     m.call_depth_limit = opt.depth_limit;
     m.step_limit = opt.budget;
