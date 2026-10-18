@@ -2223,6 +2223,72 @@ int main() {
         eq("win32-listbox", out.splitlines()[-1] if out else "", "0")
 
 
+def test_win32_heap():
+    """HeapFree returns a block to the heap and HeapAlloc reuses it, zeroed.
+
+    Regression test for the page-table exhaustion the GDI mission load hit:
+    HeapFree was a no-op, so an alloc/free loop touched a new 4 KB page every
+    iteration until Machine.h's fixed 32768-page table filled and page()
+    faulted. The check that matters is identity -- the same pointer comes back
+    -- plus the zeroing the CRT's atexit scan depends on.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+static ts::u32 call(ts::u32 fn, const ts::u32 *a, unsigned n, ts::u32 sp) {
+    for (unsigned i = 0; i < n; ++i) ts::st32(sp + i * 4u, a[i]);
+    ESP.d = sp; ts::ts_call_at(fn, 0x00c0ffeeu); return EAX.d;
+}
+int main() {
+    ts::register_win32_stubs();
+    const ts::u32 sp = 0x002ff000u;
+    ts::u32 ha = ts::stub_va("KERNEL32", "HeapAlloc");
+    ts::u32 hf = ts::stub_va("KERNEL32", "HeapFree");
+    ts::u32 hs = ts::stub_va("KERNEL32", "HeapSize");
+    ck("stubs resolve", ha && hf && hs);
+    ts::u32 a3[3] = { 0x00010000u, 0u, 100u };
+    ts::u32 p1 = call(ha, a3, 3, sp);
+    ck("first alloc", p1 != 0u);
+    for (unsigned i = 0; i < 100u; ++i) ts::st8(p1 + i, 0xa5u);
+    ts::u32 a3s[3] = { 0x00010000u, 0u, p1 };
+    ck("HeapSize", call(hs, a3s, 3, sp) == 100u);
+    ts::u32 a3f[3] = { 0x00010000u, 0u, p1 };
+    ck("free", call(hf, a3f, 3, sp) == 1u);
+    ts::u32 p2 = call(ha, a3, 3, sp);
+    ck("reuses the freed block", p2 == p1);
+    ck("reused block is zeroed", ts::ld8(p2) == 0u && ts::ld8(p2 + 99u) == 0u);
+    // A larger request cannot use the 100-byte block.
+    ts::u32 a3b[3] = { 0x00010000u, 0u, 4096u };
+    ts::u32 p3 = call(ha, a3b, 3, sp);
+    ck("larger request is a new block", p3 != 0u && p3 != p1);
+    // Freeing a pointer outside the model's heap is ignored, not recorded.
+    ts::u32 a3bad[3] = { 0x00010000u, 0u, 0x00401000u };
+    ck("foreign free is ignored", call(hf, a3bad, 3, sp) == 1u);
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_heap.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_heap",
+                        "/tmp/ts_win32_heap.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-heap-build", False,
+              r.stderr.decode("utf-8", "replace")[:400])
+        return
+    r = subprocess.run(["/tmp/ts_win32_heap"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-heap", False, out)
+    else:
+        eq("win32-heap", out.splitlines()[-1] if out else "", "0")
+
+
 def test_win32_dialog_ex():
     """The DLGTEMPLATEEX probe dialog parses as the retail binary's does.
 
@@ -2957,7 +3023,7 @@ def main():
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,
                test_win32_dialog, test_win32_button_click,
-               test_win32_listbox, test_win32_dialog_ex,
+               test_win32_listbox, test_win32_heap, test_win32_dialog_ex,
                test_win32_surface_lock, test_win32_surface_blt,
                test_win32_render_input,
                test_win32_clock, test_win32_blowfish):

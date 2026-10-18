@@ -377,6 +377,73 @@ TS_END
 TS_RET(HeapDestroy, 1, 1u)
 TS_RET(GetProcessHeap, 0, 0x00010000u)
 
+// -- heap --------------------------------------------------------------------
+// The model hands out pages from a bump cursor and never reused a freed block,
+// so a program that allocates and frees in a loop -- the mission loader and the
+// VQA player both do -- touched a new 4 KB page on every iteration. The page
+// table is fixed (Machine.h: 32768 pages = 128 MB); when it fills, page()
+// degrades to a full-table linear probe and then faults. Measured: the GDI
+// mission load after the briefing exhausted it at step 2,580,698,410 inside a
+// HeapFree/HeapAlloc pair. A first-fit free list makes the loop reuse its
+// memory, which is what the real heap does.
+struct FreeBlock { u32 ptr; u32 size; };
+inline FreeBlock *free_blocks() { static FreeBlock f[4096]; return f; }
+inline unsigned &free_count() { static unsigned n = 0; return n; }
+enum { HEAP_BASE = 0x50000000 };   // alloc_block's region
+
+// Return a HeapAlloc/LocalAlloc/GlobalAlloc block to the free list. The block
+// header is the size dword 16 bytes below the pointer the caller was given.
+inline void heap_release(u32 user) {
+    if (!user) return;
+    u32 p = user - 16u;
+    u32 size = ld32(p);
+    if (p < (u32)HEAP_BASE || p >= bump()) return;
+    if (size == 0u || size > 0x08000000u) return;
+    FreeBlock *f = free_blocks();
+    unsigned n = free_count();
+    for (unsigned i = 0; i < n; ++i)
+        if (f[i].ptr == p) return;              // double free: keep one entry
+    if (n >= (unsigned)(sizeof free_blocks() / sizeof f[0])) return;  // leak
+    f[n].ptr = p; f[n].size = size;
+    free_count() = n + 1u;
+}
+
+// A header pointer for a block of at least `size`, reusing a freed block when
+// one fits; 0 when none does.
+inline u32 heap_take(u32 size) {
+    FreeBlock *f = free_blocks();
+    unsigned n = free_count();
+    for (unsigned i = 0; i < n; ++i) {
+        if (f[i].size >= size) {
+            u32 p = f[i].ptr;
+            f[i] = f[n - 1u];
+            free_count() = n - 1u;
+            st32(p, size);
+            return p;
+        }
+    }
+    return 0u;
+}
+
+// Allocate and zero. The zeroing is a correctness requirement, not a
+// convenience: fresh pages from the OS are zero, and the CRT relies on it --
+// its atexit table is scanned for non-null slots, so a table of stale bytes
+// "contains" 37 registered handlers that were never registered, and exit calls
+// all 37 as function pointers. That produced calls to 0x11 and 0x6a4e08 from
+// 0x6844dd and, via the return addresses they leaked, an ESI that made the CRT
+// call WinMain at an address inside ExitProcess. A reused block must therefore
+// be zeroed too.
+inline u32 heap_alloc(u32 size) {
+    u32 p = heap_take(size);
+    if (!p) {
+        p = alloc_block(size, 8u);
+        st32(p, size);
+    }
+    u32 q = p + 16u;
+    for (u32 i = 0; i < size; i += 4u) st32(q + i, 0u);
+    return q;
+}
+
 TS_BEGIN(HeapAlloc)
     u32 size = arg(2);
     // A size this large is never a real request: it is a length the caller
@@ -386,24 +453,11 @@ TS_BEGIN(HeapAlloc)
     if (std::getenv("TS_FILE_TRACE") && size > 0x08000000u)
         std::fprintf(stderr, "win32stubs: HeapAlloc(size=0x%08x) -- implausible "
                              "allocation, step %lu\n", size, mach().steps);
-    u32 p = alloc_block(size, 8u);
-    st32(p, size);
-    u32 q = p + 16u;
-    // Zero the block. Not a convenience -- a correctness requirement. Fresh pages
-    // from the OS are zero, and the CRT relies on it: its atexit table is scanned
-    // for non-null slots, so a table of stale bytes "contains" 37 registered
-    // handlers that were never registered, and exit calls all 37 as function
-    // pointers. That produced calls to 0x11 and 0x6a4e08 from 0x6844dd and, via
-    // the return addresses they leaked, an ESI that made the CRT call WinMain at
-    // an address inside ExitProcess. HEAP_ZERO_MEMORY asks for this explicitly;
-    // a real heap's first use of a page is zero whether you ask or not.
-    for (u32 i = 0; i < size; i += 4u) st32(q + i, 0u);
-    stub_done(3, q);
+    stub_done(3, heap_alloc(size));
 TS_END
 
 TS_BEGIN(HeapFree)
-    // Nothing is reused; the block stays valid, which is why a use-after-free
-    // in the program reads plausible bytes instead of nothing.
+    heap_release(arg(2));
     stub_done(3, 1u);
 TS_END
 
@@ -414,29 +468,29 @@ TS_END
 
 TS_BEGIN(HeapReAlloc)
     u32 old = arg(2), size = arg(3);
-    u32 np = alloc_block(size, 8u);
+    u32 nq = heap_alloc(size);
     if (old) {
         u32 n = ld32(old - 16u);
-        for (u32 i = 0; i < n && i < size; ++i) st8(np + 16u + i, ld8(old + i));
+        for (u32 i = 0; i < n && i < size; ++i) st8(nq + i, ld8(old + i));
+        heap_release(old);
     }
-    st32(np, size);
-    stub_done(4, np + 16u);
+    stub_done(4, nq);
 TS_END
 
 TS_BEGIN(LocalAlloc)
-    u32 size = arg(1);
-    u32 p = alloc_block(size, 8u);
-    st32(p, size);
-    stub_done(2, p + 16u);
+    stub_done(2, heap_alloc(arg(1)));
 TS_END
-TS_RET(LocalFree, 1, 0u)
-TS_RET(GlobalFree, 1, 0u)
+TS_BEGIN(LocalFree)
+    heap_release(arg(0));
+    stub_done(1, 0u);
+TS_END
+TS_BEGIN(GlobalFree)
+    heap_release(arg(0));
+    stub_done(1, 0u);
+TS_END
 
 TS_BEGIN(GlobalAlloc)
-    u32 size = arg(1);
-    u32 p = alloc_block(size, 8u);
-    st32(p, size);
-    stub_done(2, p + 16u);
+    stub_done(2, heap_alloc(arg(1)));
 TS_END
 
 // -- virtual memory ----------------------------------------------------------
@@ -1812,6 +1866,15 @@ inline u32 dlg_item(u32 hdlg, u32 id) {
 // class string.
 enum { LB_MAX_ITEMS = 128, LB_ITEM_HEIGHT = 13, LB_ERR = 0xffffffffu };
 
+// TS_CTL_TRACE=1 -- listbox content, selection and clicks. A dialog that reads
+// its answer back with LB_GETCURSEL is otherwise invisible: the answer is
+// model state, not a register a trace can show.
+inline bool ctl_trace_on() {
+    static int on = -1;
+    if (on < 0) on = std::getenv("TS_CTL_TRACE") ? 1 : 0;
+    return on != 0;
+}
+
 inline bool is_listbox(const WinRec *w) { return w && w->atom == 0x83u; }
 inline bool is_trackbar(const WinRec *w) {
     return w && w->atom == 0u && !std::strcmp(w->cls, "msctls_trackbar32");
@@ -1838,6 +1901,9 @@ inline u32 lb_add(WinRec *w, u32 at, u32 src) {
     st8(dst + len, 0u);
     st32(w->lb_items + at * 4u, dst);
     ++w->lb_count;
+    if (ctl_trace_on())
+        std::fprintf(stderr, "ctl: listbox 0x%08x add[%u] \"%s\" (count %u)\n",
+                     w->hwnd, at, ld_cstr(dst), w->lb_count);
     return at;
 }
 
@@ -1926,11 +1992,18 @@ inline bool control_message(WinRec *w, u32 msg, u32 wp, u32 lp, u32 *out) {
             if (wp == 0xffffffffu) { w->lb_sel = 0xffffffffu; *out = 0u; }
             else if (wp < w->lb_count) { w->lb_sel = wp; *out = 0u; }
             else *out = LB_ERR;
+            if (ctl_trace_on())
+                std::fprintf(stderr, "ctl: listbox 0x%08x SETCURSEL %u -> sel %d\n",
+                             w->hwnd, wp, (int)w->lb_sel);
             return true;
         case 0x0187u:                                  // LB_GETSEL
             *out = (wp < w->lb_count && w->lb_sel == wp) ? 1u : 0u; return true;
         case 0x0188u:                                  // LB_GETCURSEL
-            *out = w->lb_sel; return true;
+            *out = w->lb_sel;
+            if (ctl_trace_on())
+                std::fprintf(stderr, "ctl: listbox 0x%08x GETCURSEL -> %d (count %u)\n",
+                             w->hwnd, (int)w->lb_sel, w->lb_count);
+            return true;
         case 0x0189u: {                                // LB_GETTEXT
             u32 s = lb_item(w, wp);
             if (!s) { *out = LB_ERR; return true; }
@@ -2244,15 +2317,21 @@ inline const char *default_input_script() {
         "# Default timeline: New Campaign, pick a campaign, press OK.\n"
         "# The menu button rectangles are the recovered ones (LANGUAGE.DLL\n"
         "# RT_DIALOG 226): New Campaign is screen (223,207)-(418,236). The\n"
-        "# campaign dialog (RT_DIALOG 148) is at (135,187); its listbox 1109 is\n"
-        "# at client (33,45) and its rows are 13 px, so y=252 is row 1 (NOD1).\n"
-        "# OK (id 1) is at client (181,196 75x26), screen (355,397).\n"
+        "# campaign dialog (RT_DIALOG 148) is moved by the game to (135,187);\n"
+        "# its listbox 1109 is at client (33,46 309x83) and its rows are 13 px,\n"
+        "# so (200,252) is row 1 (NOD1) and (200,240) is row 0 (GDI1). The\n"
+        "# timeline selects NOD1 and then GDI1 so the selection change is real;\n"
+        "# the GDI campaign's first scenario (GDI1A.MAP) is on CD1, while NOD1A\n"
+        "# is on CD2. OK (id 1) is at client (182,197 75x26), screen (355,397).\n"
         "@170000 mousemove 320 220\n"
         "@170100 lbuttondown\n"
         "@170150 lbuttonup\n"
         "@180000 mousemove 200 252\n"
         "@180100 lbuttondown\n"
         "@180150 lbuttonup\n"
+        "@185000 mousemove 200 240\n"
+        "@185100 lbuttondown\n"
+        "@185150 lbuttonup\n"
         "@190000 mousemove 355 397\n"
         "@190100 lbuttondown\n"
         "@190150 lbuttonup\n";
@@ -2455,6 +2534,9 @@ inline void dialog_mouse(u32 hwnd, u32 msg, u32 lparam) {
         if (b || lb || tb) focus_handle() = pressed_control();
         if (lb) {
             u32 idx = lb_index_at(lb, x - lb->x, y - lb->y);
+            if (ctl_trace_on())
+                std::fprintf(stderr, "ctl: click listbox 0x%08x at (%d,%d) local (%d,%d) -> index %d of %u\n",
+                             lb->hwnd, x, y, x - lb->x, y - lb->y, (int)idx, lb->lb_count);
             if (idx != LB_ERR && idx != lb->lb_sel) {
                 lb->lb_sel = idx;
                 control_notify(lb, 1u);         // LBN_SELCHANGE
@@ -2635,6 +2717,9 @@ TS_BEGIN(DestroyWindow)
     u32 hwnd = arg(0);
     WinRec *w = win_find(hwnd);
     if (w) {
+        if (win_trace_on())
+            std::fprintf(stderr, "win: DestroyWindow(0x%08x)%s from 0x%08x\n",
+                         hwnd, w->is_dialog ? " dialog" : "", ld32(ESP.d));
         for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
             if (wins()[i].hwnd && wins()[i].parent == hwnd) wins()[i].hwnd = 0u;
         w->hwnd = 0u;
@@ -3114,6 +3199,9 @@ TS_BEGIN(EndDialog)
     u32 h = arg(0);
     WinRec *w = win_find(h);
     if (w) {
+        if (win_trace_on())
+            std::fprintf(stderr, "win: EndDialog(0x%08x, %u) from 0x%08x\n",
+                         h, arg(1), ld32(ESP.d));
         for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
             if (wins()[i].hwnd && wins()[i].parent == h) wins()[i].hwnd = 0u;
         w->hwnd = 0u;
@@ -3212,14 +3300,22 @@ TS_RET(DialogBoxIndirectParamA, 5, 1u)
 TS_BEGIN(CreateDialogParamA)
     u32 hinst = arg(0), name = arg(1), parent = arg(2), proc = arg(3), init = arg(4);
     u32 tpl = dialog_template_by_id(hinst, name);
-    stub_done(5, tpl ? dialog_create(tpl, parent, proc, init) : 0u);
+    u32 h = tpl ? dialog_create(tpl, parent, proc, init) : 0u;
+    if (win_trace_on())
+        std::fprintf(stderr, "win: CreateDialogParamA(%u) -> 0x%08x from 0x%08x\n",
+                     name, h, ld32(ESP.d));
+    stub_done(5, h);
 TS_END
 
 TS_BEGIN(CreateDialogIndirectParamA)
     // CreateDialogIndirectParamA(hInstance, lpTemplate, hWndParent,
     // lpDialogFunc, dwInitParam). Creates the dialog and its controls from the
     // template, sends WM_INITDIALOG synchronously, and returns the handle.
-    stub_done(5, dialog_create(arg(1), arg(2), arg(3), arg(4)));
+    u32 h = dialog_create(arg(1), arg(2), arg(3), arg(4));
+    if (win_trace_on())
+        std::fprintf(stderr, "win: CreateDialogIndirectParamA -> 0x%08x from 0x%08x\n",
+                     h, ld32(ESP.d));
+    stub_done(5, h);
 TS_END
 
 TS_BEGIN(SetWindowLongA)

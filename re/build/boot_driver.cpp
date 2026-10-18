@@ -505,6 +505,17 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
                         m.bad_call_to[i], m.bad_call_from[i]);
     }
     std::printf("unmodelled: %lu\n", m.unmodelled_insns);
+    // Page-table occupancy. The model hands out one host page per distinct 4 KB
+    // of the 32-bit address space, and the table is fixed at 32768 slots. A
+    // nearly-full table turns every new page into a 32768-slot linear probe,
+    // which is a wall-clock cliff, not a fault: the run does not stop, it
+    // crawls. A long run that suddenly slows is this number.
+    {
+        unsigned used = 0;
+        for (int i = 0; i < (int)ts::PageTable::SLOTS; ++i)
+            if (ts::pages().key[i] != 0xffffffffu) ++used;
+        std::printf("pages-used: %u of %d\n", used, (int)ts::PageTable::SLOTS);
+    }
     std::printf("import-calls: %lu\n", g_import_calls);
     std::printf("distinct-imports: %lu\n", distinct_imports());
     print_message_loop();
@@ -555,6 +566,44 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
         std::printf("\n");
     }
     std::printf("boot-report: end\n");
+}
+
+// TS_MIX_LOOKUP=a,b,c -- after the run, ask the game's OWN MixFileClass
+// lookup (0x547a40) whether a name is in a mounted MIX, and report the offset
+// and size it answers. The lookup hashes the name itself, so this answers
+// "does the game think this file exists" without reimplementing the hash.
+// It must run after the entry point because the MIX list is empty before the
+// game mounts its archives.
+void mix_lookup_report() {
+    const char *list = std::getenv("TS_MIX_LOOKUP");
+    if (!list || !*list) return;
+    ts::Machine &m = ts::mach();
+    m.step_limit = m.steps + 20000000ul;
+    m.call_depth_limit = 20000u;
+    const ts::u32 name_va = 0x00520000u, mix_va = 0x00520100u,
+                   off_va = 0x00520200u, size_va = 0x00520300u;
+    std::printf("mix-lookup:\n");
+    const char *p = list;
+    while (*p) {
+        char name[128];
+        unsigned n = 0;
+        while (*p && *p != ',' && n + 1u < sizeof name) name[n++] = *p++;
+        name[n] = 0;
+        if (*p == ',') ++p;
+        if (!n) continue;
+        for (unsigned i = 0; i <= n; ++i) ts::st8(name_va + i, (ts::u8)name[i]);
+        ts::st32(mix_va, 0u); ts::st32(off_va, 0u); ts::st32(size_va, 0u);
+        ESP.d = kStackTop;
+        ts::push32(size_va);
+        ts::push32(off_va);
+        ts::push32(mix_va);
+        ECX.d = name_va;
+        EDX.d = 0u;
+        ts::ts_call_at(0x00547a40u, 0x00fed000u);
+        std::printf("  %-20s %s  offset=0x%08x size=0x%08x\n", name,
+                    EAX.d ? "found" : "MISS",
+                    (unsigned)ts::ld32(off_va), (unsigned)ts::ld32(size_va));
+    }
 }
 
 // -- arguments --------------------------------------------------------------
@@ -653,6 +702,7 @@ int main(int argc, char **argv) {
         }
     }
 
+    mix_lookup_report();
     print_report(opt, returned, esp0);
     std::fflush(stdout);
 
