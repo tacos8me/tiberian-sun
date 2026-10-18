@@ -240,6 +240,14 @@ inline Surface *surface_table() { static Surface t[MAX_SURFACES]; return t; }
 inline unsigned &surface_n() { static unsigned n = 0u; return n; }
 inline Surface *&primary_surface() { static Surface *p = 0; return p; }
 
+// Operation counters. A frame that is blank because the game never blitted and
+// a frame that is blank because every blit landed off-surface look identical in
+// a PNG; these say which. They are cheap and the boot report prints them.
+inline unsigned long &stat_blits() { static unsigned long n = 0; return n; }
+inline unsigned long &stat_fills() { static unsigned long n = 0; return n; }
+inline unsigned long &stat_locks() { static unsigned long n = 0; return n; }
+inline unsigned long &stat_flips() { static unsigned long n = 0; return n; }
+
 inline Surface *find(u32 obj) {
     if (!obj) return 0;
     Surface *t = surface_table();
@@ -485,6 +493,7 @@ inline u32 write_caps(u32 obj, u32 va) {
 inline u32 fill_rect_obj(u32 obj, const Rect &rect, u32 raw) {
     Surface *s = find(obj);
     if (!s) return DDERR_INVALIDOBJECT;
+    ++stat_fills();
     Rect q = rect;
     if (!clip_rect(q, s)) return DD_OK;
     u32 bytes = bytes_per_pixel(s);
@@ -549,6 +558,7 @@ inline u32 blt(u32 dst_obj, u32 dst_rect_va, u32 src_obj, u32 src_rect_va,
                u32 flags, u32 fx_va) {
     Surface *d = find(dst_obj);
     if (!d) return DDERR_INVALIDOBJECT;
+    ++stat_blits();
 
     if (flags & DDBLT_COLORFILL) {
         // Measured on the retail binary with gdb at its own Blt call site
@@ -614,6 +624,7 @@ inline u32 blt_fast(u32 dst_obj, u32 x, u32 y, u32 src_obj, u32 src_rect_va,
     Surface *d = find(dst_obj);
     Surface *s = find(src_obj);
     if (!d || !s) return DDERR_INVALIDOBJECT;
+    ++stat_blits();
     Rect sq = src_rect_va ? rect_from(src_rect_va) : whole(s);
     if (sq.r <= sq.l || sq.b <= sq.t) return DD_OK;
     Rect dq;
@@ -650,6 +661,7 @@ inline u32 flip(u32 obj, u32 target_obj, u32 flags) {
     (void)flags;
     Surface *s = find(obj);
     if (!s) return DDERR_INVALIDOBJECT;
+    ++stat_flips();
     Surface *t = target_obj ? find(target_obj) : s->attached;
     if (!t) return DD_OK;   // nothing to flip to; a no-op is the honest answer
     u32 p = s->pixels; s->pixels = t->pixels; t->pixels = p;
@@ -664,6 +676,7 @@ inline u32 lock(u32 obj, u32 rect_va, u32 desc_va, u32 flags) {
     (void)flags;
     Surface *s = find(obj);
     if (!s) return DDERR_INVALIDOBJECT;
+    ++stat_locks();
     Rect q = rect_va ? rect_from(rect_va) : whole(s);
     if (!clip_rect(q, s)) return DDERR_INVALIDPARAMS;
     s->locked = true;
@@ -898,6 +911,18 @@ inline bool dump_png(const Surface *s, const char *path) {
 }
 
 inline const Surface *primary() { return primary_surface(); }
+
+// How much of a surface is not black. A dumped frame that is entirely zero is
+// a real answer ("nothing was drawn"), and it has to be distinguishable from a
+// dump that failed; the boot report prints this next to the dump path.
+inline unsigned long nonblack_pixels(const Surface *s) {
+    if (!s) return 0u;
+    unsigned long n = 0u;
+    for (u32 y = 0; y < s->height; ++y)
+        for (u32 x = 0; x < s->width; ++x)
+            if (get_px(s, x, y) != 0u) ++n;
+    return n;
+}
 
 inline bool dump_primary_png(const char *path) {
     return dump_png(primary_surface(), path);

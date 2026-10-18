@@ -10,6 +10,8 @@
     python3 tools/boot.py --rebuild           # ignore the object cache
     python3 tools/boot.py --no-build          # reuse the last binary, do not compile
     python3 tools/boot.py --strict            # exit non-zero if a garbage call target remains
+    python3 tools/boot.py --frame out/frame.png   # dump the primary surface
+    python3 tools/boot.py --input-script s.txt    # scripted keys/clicks
     python3 tools/boot.py --help
 
 WHAT IT DOES
@@ -630,6 +632,18 @@ def print_report(keys, lists, entries, build_note, elapsed):
                    % (keys.get("unmapped-below-1000", "?"),
                       keys.get("unmapped-rdata", "?"),
                       keys.get("unmapped-elsewhere", "?")))
+    # The rendering layer: whether the game drew at all, and where the frame
+    # went. A blank dump is a measurement, not a failure; a missing one is.
+    if "render-surfaces" in keys:
+        out.append("render: %s surfaces, %s blits, %s fills, %s locks, %s flips; "
+                   "%s scripted input message(s)"
+                   % (keys.get("render-surfaces", "?"), keys.get("render-blits", "?"),
+                      keys.get("render-fills", "?"), keys.get("render-locks", "?"),
+                      keys.get("render-flips", "?"), keys.get("input-messages", "?")))
+    if keys.get("frame-dump"):
+        out.append("frame:  %s (%s, %s non-black pixels)"
+                   % (keys.get("frame-dump", "?"), keys.get("frame-size", "?"),
+                      keys.get("frame-nonblack", "?")))
     out.append("depth guard: %s truncations, unmodelled instructions: %s"
                % (keys.get("depth-exceeded", "?"), keys.get("unmodelled", "?")))
     print("\n".join(out))
@@ -643,11 +657,13 @@ def parse_args(argv):
     opt = {"image": "bin/GAME.EXE", "budget": 20000000, "timeout": 60,
            "depth": 20000, "imports": 12, "calls": 8, "watch": False,
            "json": False, "rebuild": False, "no_build": False,
-           "strict": False}
+           "strict": False, "frame": None, "input_script": None}
     flags = {"--watch": "watch", "--json": "json", "--rebuild": "rebuild",
              "--no-build": "no_build", "--strict": "strict"}
     values = {"--image": "image", "--budget": "budget", "--timeout": "timeout",
-              "--depth": "depth", "--imports": "imports", "--calls": "calls"}
+              "--depth": "depth", "--imports": "imports", "--calls": "calls",
+              "--frame": "frame", "--dump-frame": "frame",
+              "--input-script": "input_script"}
     i = 0
     while i < len(argv):
         arg = argv[i]
@@ -665,7 +681,7 @@ def parse_args(argv):
                     print("boot: %s needs a value" % arg)
                     return None
                 value = argv[i]
-            opt[key] = value if key == "image" else int(value)
+            opt[key] = value if key in ("image", "frame", "input_script") else int(value)
         else:
             print("boot: unknown argument %s (try --help)" % arg)
             return None
@@ -698,10 +714,18 @@ def main(argv):
            "--calls=%d" % opt["calls"]]
     if opt["watch"]:
         cmd.append("--verbose")
+    if opt["frame"]:
+        cmd.append("--frame=%s" % opt["frame"])
+
+    env = None
+    if opt["input_script"]:
+        env = dict(os.environ)
+        env["TS_INPUT_SCRIPT"] = opt["input_script"]
 
     started = time.time()
     try:
-        run = subprocess.run(cmd, capture_output=True, timeout=opt["timeout"] + 60)
+        run = subprocess.run(cmd, capture_output=True, timeout=opt["timeout"] + 60,
+                             env=env)
     except subprocess.TimeoutExpired:
         print("boot: the driver did not exit within %ds -- the wall-clock watchdog "
               "did not fire either, which is itself a defect" % (opt["timeout"] + 60))

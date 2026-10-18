@@ -1829,7 +1829,14 @@ int main() {
 
     // The game's five pushed words, oldest push first: hEvent, flags, desc,
     // rect, this. In memory at the caller's ESP that is this at +0.
-    const ts::u32 rect = 0x00300000u, desc = 0x00300100u, hevent = 0x00abcdeeu;
+    //
+    // lpDestRect is NULL: every Lock in the retail trace (195 of them before
+    // the menu) uses DDLOCK_WAIT and a NULL rect, which means the whole
+    // surface. A non-NULL rect pointing at zeroed memory is an EMPTY rect, and
+    // ts::rnd::lock correctly rejects it with DDERR_INVALIDPARAMS instead of
+    // inventing a lock -- the old stub ignored the rect, so this test used to
+    // pass a pointer it never read.
+    const ts::u32 rect = 0u, desc = 0x00300100u, hevent = 0x00abcdeeu;
     ts::st32(sp + 0u, surf);           // this
     ts::st32(sp + 4u, rect);           // lpDestRect
     ts::st32(sp + 8u, desc);           // lpDDSurfaceDesc
@@ -1959,6 +1966,182 @@ int main() {
         check("win32-surface-blt", False, out)
     else:
         eq("win32-surface-blt", out.splitlines()[-1] if out else "", "0")
+
+
+def test_win32_render_input():
+    """The surface vtable is wired to ts::rnd and PeekMessageA to ts::input.
+
+    Regression test for the integration: before it, every surface aliased one
+    static buffer, Blt/BltFast/Flip were no-ops, and the key-state stubs
+    returned 0, so the game could reach its menu input loop but could never
+    draw a frame or receive a key. This pins the four things the integration
+    actually has to do:
+
+      * CreateSurface parses the caller's DDSURFACEDESC (geometry, pitch);
+      * GetSurfaceDesc reports THAT surface's buffer, not a shared one;
+      * Blt copies pixels between two distinct surfaces;
+      * a scripted keydown becomes a WM_KEYDOWN in PeekMessageA's queue and
+        GetAsyncKeyState reports the key down.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+
+static void put_rect(ts::u32 va, int l, int t, int r, int b) {
+    ts::st32(va + 0u, (ts::u32)l); ts::st32(va + 4u, (ts::u32)t);
+    ts::st32(va + 8u, (ts::u32)r); ts::st32(va + 12u, (ts::u32)b);
+}
+
+int main() {
+    ts::reset();
+    ts::register_win32_stubs();
+
+    // -- CreateSurface parses the descriptor --------------------------------
+    const ts::u32 desc = 0x00301000u;
+    for (int i = 0; i < 108; ++i) ts::st8(desc + (ts::u32)i, 0);
+    ts::st32(desc + 0x08u, 200u);       // dwHeight
+    ts::st32(desc + 0x0cu, 320u);       // dwWidth
+    ts::st32(desc + 0x54u, 16u);        // dwRGBBitCount
+    ts::st32(desc + 0x68u, 0x40u);      // ddsCaps: DDSCAPS_OFFSCREENPLAIN
+    ts::u32 surf = ts::w32::make_surface(desc, 640u, 480u);
+    ck("make_surface returns an object", surf != 0);
+    const ts::rnd::Surface *s = ts::rnd::find(surf);
+    ck("surface is in the render layer", s != 0);
+    ck("descriptor width honoured", s && s->width == 320u);
+    ck("descriptor height honoured", s && s->height == 200u);
+    ck("pitch is width*2", s && s->pitch == 640u);
+
+    // -- GetSurfaceDesc reports that surface's own buffer -------------------
+    ts::u32 vt = ts::ld32(surf);
+    ts::u32 gsd = ts::ld32(vt + 22u * 4u);
+    const ts::u32 out = 0x00302000u;
+    const ts::u32 sp = 0x002ff000u;
+    ts::st32(sp + 0u, surf);
+    ts::st32(sp + 4u, out);
+    ESP.d = sp;
+    ts::ts_call_at(gsd, 0x00c0ffeeu);
+    ck("GetSurfaceDesc pops two words", ESP.d == sp + 8u);
+    ck("GetSurfaceDesc writes height", ts::ld32(out + 0x08u) == 200u);
+    ck("GetSurfaceDesc writes width", ts::ld32(out + 0x0cu) == 320u);
+    ck("GetSurfaceDesc writes pitch", ts::ld32(out + 0x10u) == 640u);
+    ck("GetSurfaceDesc writes lpSurface", ts::ld32(out + 0x24u) != 0u);
+    ck("GetSurfaceDesc writes bpp", ts::ld32(out + 0x54u) == 16u);
+    ck("GetSurfaceDesc's buffer is the surface's", s &&
+       ts::ld32(out + 0x24u) == s->pixels);
+
+    // -- Blt moves pixels between two distinct surfaces ---------------------
+    ts::u32 src = ts::w32::make_surface(0u, 2u, 2u);
+    ts::rnd::Surface *ss = ts::rnd::find(src);
+    ck("source surface created", ss != 0);
+    ck("source has its own buffer", ss && ss->pixels != s->pixels);
+    if (ss) {
+        ts::rnd::put_px(ss, 0u, 0u, 0xf800u);
+        ts::rnd::put_px(ss, 1u, 0u, 0x07e0u);
+        ts::rnd::put_px(ss, 0u, 1u, 0x001fu);
+        ts::rnd::put_px(ss, 1u, 1u, 0xffffu);
+    }
+    const ts::u32 drect = 0x00303000u, srect = 0x00303010u;
+    put_rect(drect, 0, 0, 2, 2);
+    put_rect(srect, 0, 0, 2, 2);
+    ts::u32 blt = ts::ld32(vt + 5u * 4u);
+    const ts::u32 sp2 = 0x002ff100u;
+    ts::st32(sp2 + 0u, surf);
+    ts::st32(sp2 + 4u, drect);
+    ts::st32(sp2 + 8u, src);
+    ts::st32(sp2 + 12u, srect);
+    ts::st32(sp2 + 16u, 0x01000000u);   // DDBLT_WAIT
+    ts::st32(sp2 + 20u, 0u);
+    ESP.d = sp2;
+    ts::ts_call_at(blt, 0x00c0ffeeu);
+    ck("Blt pops six words", ESP.d == sp2 + 0x18u);
+    ck("Blt copied top-left pixel", s && ts::rnd::get_px(s, 0u, 0u) == 0xf800u);
+    ck("Blt copied top-right pixel", s && ts::rnd::get_px(s, 1u, 0u) == 0x07e0u);
+    ck("Blt copied bottom-left pixel", s && ts::rnd::get_px(s, 0u, 1u) == 0x001fu);
+    ck("Blt counted", ts::rnd::stat_blits() >= 1u);
+
+    // -- scripted input becomes window messages and key state ---------------
+    ts::w32::input_init_once();     // mark initialised before replacing it
+    ck("script parses",
+       ts::input::load_script("@0 keydown 0x41\n@5000 keyup 0x41\n"));
+    ck("script has two events", ts::input::st().nevents == 2u);
+
+    const ts::u32 msg = 0x00304000u;
+    const ts::u32 sp3 = 0x002ff200u;
+    ts::u32 peek = ts::w32::find_by_name("PeekMessageA");
+    ck("PeekMessageA has a stub", peek != 0);
+    ts::st32(sp3 + 0u, msg);
+    ts::st32(sp3 + 4u, 0u);
+    ts::st32(sp3 + 8u, 0u);
+    ts::st32(sp3 + 12u, 0u);
+    ts::st32(sp3 + 16u, 1u);            // PM_REMOVE
+    ESP.d = sp3;
+    ts::ts_call_at(peek, 0x00c0ffeeu);
+    ck("PeekMessage pops five words", ESP.d == sp3 + 0x14u);
+    ck("PeekMessage returns a message", EAX.d == 1u);
+    ck("the message is WM_KEYDOWN", ts::ld32(msg + 4u) == 0x0100u);
+    ck("WM_KEYDOWN carries 'A'", ts::ld32(msg + 8u) == 0x41u);
+    ck("GetAsyncKeyState sees the key down",
+       ts::input::async_key_state(0x41u) == 0x8001u);
+    ck("scripted input message counted", ts::w32::input_messages() >= 1u);
+
+    // The keyup is at model-ms 5000; advance the clock past it.
+    ts::w32::tick_advance(5000u);
+    ESP.d = sp3;
+    ts::ts_call_at(peek, 0x00c0ffeeu);
+    ck("the second message is WM_KEYUP", ts::ld32(msg + 4u) == 0x0101u);
+    ck("GetAsyncKeyState sees the key up",
+       ts::input::async_key_state(0x41u) == 0u);
+
+    // -- the screen geometry every Win32 answer is derived from -------------
+    // 640x480 is the retail mode (measured under Wine), not the 800x600 of the
+    // movie stream's buffer. GetSystemMetrics, the window defaults and the
+    // DirectDraw display descriptor all read this one pair.
+    ts::u32 gsm = ts::w32::find_by_name("GetSystemMetrics");
+    ck("GetSystemMetrics has a stub", gsm != 0);
+    ts::st32(sp3 + 0u, 0u);             // SM_CXSCREEN
+    ESP.d = sp3;
+    ts::ts_call_at(gsm, 0x00c0ffeeu);
+    ck("SM_CXSCREEN is 640", EAX.d == 640u);
+    ts::st32(sp3 + 0u, 1u);             // SM_CYSCREEN
+    ESP.d = sp3;
+    ts::ts_call_at(gsm, 0x00c0ffeeu);
+    ck("SM_CYSCREEN is 480", EAX.d == 480u);
+
+    // -- cursor position is the scripted pointer ----------------------------
+    ts::input::set_cursor(123, 45);
+    const ts::u32 pt = 0x00305000u;
+    ts::u32 gcp = ts::w32::find_by_name("GetCursorPos");
+    ts::st32(sp3 + 0u, pt);
+    ESP.d = sp3;
+    ts::ts_call_at(gcp, 0x00c0ffeeu);
+    ck("GetCursorPos pops one word", ESP.d == sp3 + 4u);
+    ck("GetCursorPos x", ts::ld32(pt + 0u) == 123u);
+    ck("GetCursorPos y", ts::ld32(pt + 4u) == 45u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_render_input.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_render_input",
+                        "/tmp/ts_render_input.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-render-input-build", False,
+              r.stderr.decode("utf-8", "replace")[:400])
+        return
+    r = subprocess.run(["/tmp/ts_render_input"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-render-input", False, out)
+    else:
+        eq("win32-render-input", out.splitlines()[-1] if out else "", "0")
 
 
 def test_win32_clock():
@@ -2235,6 +2418,7 @@ def main():
                test_win32_module_exports, test_win32_message_queue,
                test_win32_dialog,
                test_win32_surface_lock, test_win32_surface_blt,
+               test_win32_render_input,
                test_win32_clock, test_win32_blowfish):
         try:
             fn()

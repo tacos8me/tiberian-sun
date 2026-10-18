@@ -46,6 +46,14 @@
 #include <cstring>
 
 #include "Machine.h"
+// The model's DirectDraw surfaces and scripted input. Rendering.h owns the
+// pixels (one pitch-sized buffer per surface, in the model's address space);
+// Input.h owns the key/mouse state and the window messages a script produces.
+// Both are header-only and include Machine.h themselves; the bodies below are
+// the only coupling, which keeps the COM/stub layer and the pixel layer
+// independently testable (tools/test_runtime.py).
+#include "Rendering.h"
+#include "Input.h"
 
 namespace ts {
 namespace w32 {
@@ -1400,7 +1408,13 @@ enum { MAX_WINDOWS = 128, MAX_CLASSES = 16, MAX_MSGS = 128 };
 // derived from: GetSystemMetrics, GetClientRect, the created window's size and
 // the DirectDraw display mode all agree, because a program that finds them
 // disagreeing takes its "this machine cannot do it" path.
-enum { SCREEN_W = 800, SCREEN_H = 600, SCREEN_BPP = 16 };
+//
+// 640x480 is the mode the retail binary actually runs in. Measured under Wine
+// with tools/wine_env.sh: the game asks DirectDraw for 640x480x16 and its
+// screenshot is 640x480. The model used to report 800x600, which is the size of
+// the movie stream object's buffer (+0x764), not the display mode; every
+// surface it then created was 25% wider than the art the game blits into it.
+enum { SCREEN_W = 640, SCREEN_H = 480, SCREEN_BPP = 16 };
 
 // How many times GetMessageA answers an empty queue with WM_NULL before it
 // answers 0. A real GetMessage blocks; this model cannot, and 0 is WM_QUIT, so
@@ -1743,10 +1757,91 @@ TS_BEGIN(GetMessageA)
     }
 TS_END
 
+// -- scripted input ----------------------------------------------------------
+// The game imports GetAsyncKeyState, GetKeyState, GetCursorPos and SetCursorPos
+// but no DirectInput, so every key and click it ever sees arrives as a window
+// message. Nothing in the model produced one, so the menu input loop polled an
+// empty queue forever. ts::input owns a deterministic timeline (a text script)
+// and turns each due event into the message Windows would have posted; this is
+// where that timeline is loaded and where its messages enter the queue.
+inline unsigned long &input_msg_count() { static unsigned long n = 0; return n; }
+inline unsigned long input_messages() { return input_msg_count(); }
+
+// The default timeline. The retail game reaches its main menu after the two
+// intro movies; in the model that is ~159,000 model-ms (the clock advances 1 ms
+// per 10,000 executed instructions, so the menu is up around instruction
+// 1.58e9). The events start just after that and repeat across a wide window so
+// that a small shift in the reach time still lands input on the menu rather
+// than in a movie. The coordinates are PROBES -- the centre and two points in
+// the left-hand third -- not recovered button rectangles: neither the retail
+// oracle's screenshot nor the model's draws the menu's buttons (their PCX
+// assets live inside a nested MIX entry), so there is no visible target to aim
+// at yet. Return is the conventional "activate" key.
+inline const char *default_input_script() {
+    return
+        "# Default timeline: menu input once the intro movies are over.\n"
+        "@162000 keydown 0x0d\n"
+        "@162050 keyup   0x0d\n"
+        "@170000 mousemove 320 240\n"
+        "@170100 lbuttondown\n"
+        "@170150 lbuttonup\n"
+        "@180000 mousemove 96 200\n"
+        "@180100 lbuttondown\n"
+        "@180150 lbuttonup\n"
+        "@190000 keydown 0x0d\n"
+        "@190050 keyup   0x0d\n"
+        "@200000 mousemove 96 260\n"
+        "@200100 lbuttondown\n"
+        "@200150 lbuttonup\n"
+        "@220000 mousemove 320 240\n"
+        "@220100 lbuttondown\n"
+        "@220150 lbuttonup\n"
+        "@240000 keydown 0x0d\n"
+        "@240050 keyup   0x0d\n";
+}
+
+inline void input_init_once() {
+    static bool done = false;
+    if (done) return;
+    done = true;
+    const char *path = std::getenv("TS_INPUT_SCRIPT");
+    if (path) {
+        // Set-but-empty means "no scripted input", so a caller can turn the
+        // default timeline off without creating a file.
+        if (!*path) {
+            ts::input::load_script("");
+            std::printf("input: disabled (TS_INPUT_SCRIPT is empty)\n");
+        } else if (!ts::input::load_file(path)) {
+            std::printf("input: script %s: %s\n", path, ts::input::last_error());
+        } else {
+            std::printf("input: script %s, %u event(s)\n", path,
+                        ts::input::st().nevents);
+        }
+    } else {
+        ts::input::load_script(default_input_script());
+        std::printf("input: default timeline, %u event(s)\n",
+                    ts::input::st().nevents);
+    }
+}
+
+// Move every due scripted event into the window queue. Called from PeekMessageA
+// (the game's own pump) so a message is never queued before the program is
+// ready to read it.
+inline void input_pump() {
+    input_init_once();
+    ts::input::advance(tick());
+    u32 m, w, l;
+    while (ts::input::pop_message(&m, &w, &l)) {
+        msg_push(wnd_handle(), m, w, l);
+        ++input_msg_count();
+    }
+}
+
 TS_BEGIN(PeekMessageA)
     // PeekMessageA(MSG*, hwnd, min, max, wRemoveMsg). 0 means "no message", and
     // that is the return value that keeps a game loop running: it says "carry
     // on with this frame", not "quit".
+    input_pump();
     u32 p = arg(0);
     MsgRec m;
     if (msg_pop(&m, arg(1), arg(2), arg(3), (arg(4) & 1u) != 0u)) {
@@ -2125,8 +2220,19 @@ TS_BEGIN(LoadStringA)
     stub_done(4, n);
 TS_END
 TS_RET(GetUpdateRect, 3, 1u)
-TS_RET(GetAsyncKeyState, 1, 0u)
-TS_RET(GetKeyState, 1, 0u)
+
+TS_BEGIN(GetAsyncKeyState)
+    // High bit: down now. Low bit: pressed since the previous call. The script's
+    // keydown/keyup events set both the message stream and this state, so a
+    // caller polling the key directly and a caller pumping messages agree.
+    input_init_once();
+    stub_done(1, ts::input::async_key_state(arg(0)));
+TS_END
+
+TS_BEGIN(GetKeyState)
+    input_init_once();
+    stub_done(1, ts::input::key_state(arg(0)));
+TS_END
 TS_RET(MapVirtualKeyA, 2, 0u)
 TS_RET(ToAscii, 5, 1u)
 TS_RET(RegisterHotKey, 4, 1u)
@@ -2472,7 +2578,8 @@ TS_END
 TS_BEGIN(GetSystemMetrics)
     // The screen this model reports. A program that asks for the desktop size
     // before creating its window uses this to pick a resolution, so it has to
-    // be the same 800x600 the window and the DirectDraw display mode use.
+    // be the same 640x480 the window and the DirectDraw display mode use (the
+    // mode the retail binary runs in; measured under Wine).
     u32 i = arg(0), r = 0u;
     switch (i) {
     case 0:  r = SCREEN_W; break;          // SM_CXSCREEN
@@ -2549,19 +2656,18 @@ TS_BEGIN(ShowCursor)
 TS_END
 
 TS_BEGIN(GetCursorPos)
-    static i32 cx = SCREEN_W / 2, cy = SCREEN_H / 2;
-    u32 p = arg(0);
-    st32(p + 0u, (u32)cx);
-    st32(p + 4u, (u32)cy);
+    // The scripted pointer, not a constant: a menu that hit-tests the pointer it
+    // warped and then reads back must see its own coordinates.
+    input_init_once();
+    ts::input::cursor_pos(arg(0));
     stub_done(1, 1u);
 TS_END
 
 TS_BEGIN(SetCursorPos)
     // Remembered, because a program that warps the pointer and then asks where
     // it is expects its own answer.
-    static i32 cx = SCREEN_W / 2, cy = SCREEN_H / 2;
-    cx = (i32)arg(0);
-    cy = (i32)arg(1);
+    input_init_once();
+    ts::input::set_cursor((i32)arg(0), (i32)arg(1));
     stub_done(2, 1u);
 TS_END
 
@@ -2846,9 +2952,23 @@ TS_BEGIN(dd_CreateClipper)
 TS_END
 
 TS_BEGIN(dd_CreatePalette)
-    // arg(0)=this, arg(1)=dwFlags, arg(2)=lpColorTable, arg(3)=**lplpPalette
-    if (arg(3)) st32(arg(3), make_dd_palette());
+    // arg(0)=this, arg(1)=dwFlags, arg(2)=lpColorTable, arg(3)=**lplpPalette.
+    // The entries are copied into the model palette now, so a later
+    // SetPalette(surface, palette) has real colours to install. The game runs
+    // at 16bpp and does not need this, but a palette object that exists and
+    // contains zeroes is the kind of plausible lie this layer avoids.
+    if (arg(3)) {
+        u32 pal = make_dd_palette();
+        ts::rnd::palette_create(pal, arg(2));
+        st32(arg(3), pal);
+    }
     stub_done(4, 0u);
+TS_END
+
+TS_BEGIN(dd_palette_SetEntries)
+    // SetEntries(this, dwFlags, dwStartingEntry, dwCount, lpEntries). COM is
+    // __stdcall with `this` as the first stack argument: five words.
+    stub_done(5, ts::rnd::palette_set_entries(arg(0), arg(2), arg(3), arg(4)));
 TS_END
 
 TS_BEGIN(dd_GetAvailableVidMem)
@@ -2871,20 +2991,13 @@ TS_BEGIN(dd_GetCaps)
 TS_END
 
 TS_BEGIN(dd_GetDisplayMode)
-    // DDSURFACEDESC: +0 dwSize, +4 dwFlags, +8 dwHeight, +12 dwWidth,
-    // +0x54 ddpfPixelFormat.dwRGBBitCount, +0x68 ddsCaps.dwCaps. The game's
-    // own wrapper reads the bit count at +0x54 (0x48768f: (*(u32*)(p+0x54)+7)>>3)
-    // and reads a caps bit at +0x68 (0x48769b). Writing the bit count at +0x68
-    // set a caps bit and left +0x54 zero, so bytes-per-pixel became 0.
-    u32 p = arg(1);
-    if (p) {
-        for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
-        st32(p + 0u, 108u);
-        st32(p + 4u, 0x00000041u);   // DDSD_WIDTH|DDSD_HEIGHT|DDSD_PIXELFORMAT
-        st32(p + 8u, SCREEN_H);
-        st32(p + 12u, SCREEN_W);
-        st32(p + 0x54u, SCREEN_BPP); // ddpfPixelFormat.dwRGBBitCount
-    }
+    // The game's own wrapper (0x4874c0) reads height +8, width +0xc, pitch
+    // +0x10, lpSurface +0x24, bit count +0x54 and ddsCaps +0x68. The old body
+    // wrote the bit count at +0x68, which is ddsCaps.dwCaps, so +0x54 read as
+    // zero and bytes-per-pixel became 0. Rendering.h's write_mode_desc writes
+    // the whole descriptor the wrapper reads, including the RGB masks the
+    // 16bpp path needs.
+    ts::rnd::write_mode_desc(arg(1), SCREEN_W, SCREEN_H, SCREEN_BPP);
     stub_done(2, 0u);
 TS_END
 
@@ -2894,13 +3007,22 @@ TS_BEGIN(dd_GetVerticalBlankStatus) st32(arg(1), 1u); stub_done(2, 0u); TS_END
 
 // Defined below with the surface vtable; declared here because CreateSurface
 // is the only caller and the vtable needs the stubs that come after it.
-inline u32 make_surface();
+// desc_va is the DDSURFACEDESC the caller passed (0 for a synthetic surface),
+// def_w/def_h are the geometry a descriptor that leaves width/height at zero
+// gets -- a primary-surface request carries no size of its own.
+inline u32 make_surface(u32 desc_va = 0u, u32 def_w = 640u, u32 def_h = 480u);
 
 TS_BEGIN(dd_CreateSurface)
     // A surface object with the same shape as the DirectDraw one: a pointer to
     // a vtable of registered stubs. ppSurface is at arg(2).
+    //
+    // The descriptor is handed to ts::rnd so the surface gets its own
+    // pitch-sized pixel buffer in the model's address space. 640x480 is the
+    // display mode the retail game sets (SetDisplayMode 640x400 then 640x480,
+    // measured); a primary request carries no width/height, so the defaults
+    // decide the front buffer's size.
     u32 out = arg(2);
-    if (out) st32(out, make_surface());
+    if (out) st32(out, make_surface(arg(1), 640u, 480u));
     stub_done(4, 0u);
 TS_END
 
@@ -3909,21 +4031,35 @@ inline u32 make_dd_palette() {
         "IDirectDrawPalette::GetEntries", "IDirectDrawPalette::SetEntries",
         "IDirectDrawPalette::Initialize",
     };
-    static const u8 nargs[7] = { 3, 1, 1, 2, 4, 4, 4 };
+    // GetEntries/SetEntries take four parameters PLUS `this`: five words, not
+    // four. (The old table said four, which is what the generic slot stub would
+    // have popped; the real SetEntries body below pops five.)
+    static const u8 nargs[7] = { 3, 1, 1, 2, 5, 5, 4 };
     Fn over[7] = { 0 };
+    over[5] = &k_dd_palette_SetEntries;   // SetEntries
     static u32 obj = 0;
     if (!obj) obj = make_com_object(names, nargs, over, 7);
     return obj;
 }
 
 
-void k_sfs_Lock();
+void k_sfs_Blt();
+void k_sfs_BltFast();
+void k_sfs_Flip();
+void k_sfs_GetCaps();
+void k_sfs_GetPixelFormat();
 void k_sfs_GetSurfaceDesc();
+void k_sfs_Lock();
+void k_sfs_SetColorKey();
+void k_sfs_SetPalette();
+void k_sfs_Unlock();
 void k_sfs_GetAttachedSurface();
-inline u32 make_surface() {
-    // IDirectDrawSurface, DirectX 6 slot order. Every slot is a stub; the two
-    // that hand back memory are given real bodies because a caller that locks
-    // a surface and draws into it must be handed somewhere to draw.
+inline u32 make_surface(u32 desc_va, u32 def_w, u32 def_h) {
+    // IDirectDrawSurface, DirectX 6 slot order. Every slot is a stub, but the
+    // ones the game's drawing path calls are overridden with ts::rnd bodies:
+    // each surface owns a real pitch-sized pixel buffer in the model's address
+    // space, so Blt/BltFast/Lock/Unlock move pixels instead of aliasing one
+    // static block, and the primary surface can be dumped as a frame.
     static const char *const names[45] = {
         "IDirectDrawSurface::QueryInterface", "IDirectDrawSurface::AddRef",
         "IDirectDrawSurface::Release", "IDirectDrawSurface::AddAttachedSurface",
@@ -3963,36 +4099,34 @@ inline u32 make_surface() {
         4, 3, 2, 2, 1,
     };
     Fn over[45] = { 0 };
-    over[25] = &k_sfs_Lock;          // Lock
-    over[22] = &k_sfs_GetSurfaceDesc;
+    over[5]  = &k_sfs_Blt;             // Blt
+    over[7]  = &k_sfs_BltFast;         // BltFast
+    over[11] = &k_sfs_Flip;            // Flip
     over[12] = &k_sfs_GetAttachedSurface;
+    over[14] = &k_sfs_GetCaps;         // GetCaps
+    over[21] = &k_sfs_GetPixelFormat;  // GetPixelFormat
+    over[22] = &k_sfs_GetSurfaceDesc;
+    over[25] = &k_sfs_Lock;            // Lock
+    over[29] = &k_sfs_SetColorKey;     // SetColorKey
+    over[31] = &k_sfs_SetPalette;      // SetPalette
+    over[32] = &k_sfs_Unlock;          // Unlock
     // One vtable, one object per surface: slot_defs() is a fixed table, so the
     // 45 slot definitions are built once and every surface shares them.
     static u32 vt = 0;
     if (!vt) vt = make_com_vtable(names, nargs, over, 45);
     u32 obj = alloc_block(16u, 4u);
     st32(obj, vt);
+    ts::rnd::create(desc_va, obj, def_w, def_h);
     return obj;
 }
 
 TS_BEGIN(sfs_GetSurfaceDesc)
     // DDSURFACEDESC as THIS GAME reads it, taken from its own wrapper at
     // 0x4874c0 / 0x487ad0: +8 dwHeight, +12 dwWidth, +0x10 lPitch,
-    // +0x24 lpSurface, +0x54 dwRGBBitCount. The wrapper computes
-    // bytes-per-pixel as (*(u32*)(desc+0x54) + 7) >> 3 and requires 2 for
-    // 16bpp; writing the bit count at +0x68 made that 0 and the game took its
-    // "Direct X" error path.
-    u32 p = arg(1);
-    if (p) {
-        for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
-        st32(p + 0u, 108u);
-        st32(p + 4u, 0x00000041u);
-        st32(p + 8u, SCREEN_H);
-        st32(p + 12u, SCREEN_W);
-        st32(p + 16u, SCREEN_W * 2u);   // lPitch
-        st32(p + 0x54u, SCREEN_BPP);    // ddpfPixelFormat.dwRGBBitCount
-    }
-    stub_done(2, 0u);
+    // +0x24 lpSurface, +0x54 dwRGBBitCount. ts::rnd::write_desc fills every one
+    // of those from the surface's own buffer, so two surfaces no longer report
+    // the same pixels.
+    stub_done(2, ts::rnd::get_surface_desc(arg(0), arg(1)));
 TS_END
 
 TS_BEGIN(sfs_Lock)
@@ -4000,29 +4134,63 @@ TS_BEGIN(sfs_Lock)
     // __stdcall, so `this` is the FIRST STACK ARGUMENT, not ECX: five words are
     // pushed, and the stub must pop all five. It used to pop four, leaking four
     // bytes on every Lock; the leak walked the caller's frame until EBP was
-    // zero and the game called through a null surface in its teardown. The
-    // game's own call site (0x487b31) pushes hEvent first, then flags, desc,
-    // rect and this, and has no add-esp cleanup, so the count is visible in
-    // the binary.
-    u32 p = arg(2);
-    static u32 buffer = 0;
-    if (!buffer) buffer = zero_block(SCREEN_W * SCREEN_H * 2u, 0x1000u);
-    if (p) {
-        for (u32 i = 0; i < 108u; ++i) st8(p + i, 0);
-        st32(p + 0u, 108u);
-        st32(p + 4u, 0x00000041u);
-        st32(p + 8u, SCREEN_H);
-        st32(p + 12u, SCREEN_W);
-        st32(p + 16u, SCREEN_W * 2u);   // lPitch: the surface's stride in bytes
-        st32(p + 0x24u, buffer);        // lpSurface: the wrapper reads +0x24
-        st32(p + 0x54u, SCREEN_BPP);    // ddpfPixelFormat.dwRGBBitCount
-    }
-    stub_done(5, 0u);
+    // zero and the game called through a null surface in its teardown.
+    // ts::rnd::lock writes the surface's own pixel pointer at +0x24 and marks
+    // the lock so a dump sees the pixels the game just drew.
+    stub_done(5, ts::rnd::lock(arg(0), arg(1), arg(2), arg(3)));
+TS_END
+
+TS_BEGIN(sfs_Unlock)
+    stub_done(2, ts::rnd::unlock(arg(0), arg(1)));
+TS_END
+
+TS_BEGIN(sfs_Blt)
+    // Blt(this, lpDestRect, lpDDSrcSurface, lpSrcRect, dwFlags, lpDDBltFx).
+    // Six words: the game's own call site at 0x4883f1 pushes six and has no
+    // add-esp cleanup. The body handles both forms the retail game uses --
+    // DDBLT_COLORFILL (13 startup fills, dwFillColor at fx+0x40) and a source
+    // copy (197 calls) -- including source colour keying.
+    stub_done(6, ts::rnd::blt(arg(0), arg(1), arg(2), arg(3), arg(4), arg(5)));
+TS_END
+
+TS_BEGIN(sfs_BltFast)
+    // BltFast(this, dwX, dwY, lpDDSrcSurface, lpSrcRect, dwTrans).
+    stub_done(6, ts::rnd::blt_fast(arg(0), arg(1), arg(2), arg(3), arg(4), arg(5)));
+TS_END
+
+TS_BEGIN(sfs_Flip)
+    // Flip(this, lpDDSurfaceTargetOverride, dwFlags).
+    stub_done(3, ts::rnd::flip(arg(0), arg(1), arg(2)));
+TS_END
+
+TS_BEGIN(sfs_GetCaps)
+    stub_done(2, ts::rnd::write_caps(arg(0), arg(1)));
+TS_END
+
+TS_BEGIN(sfs_GetPixelFormat)
+    stub_done(2, ts::rnd::write_pixel_format(arg(0), arg(1)));
+TS_END
+
+TS_BEGIN(sfs_SetColorKey)
+    // SetColorKey(this, dwFlags, lpDDColorKey).
+    stub_done(3, ts::rnd::set_color_key(arg(0), arg(1), arg(2)));
+TS_END
+
+TS_BEGIN(sfs_SetPalette)
+    stub_done(2, ts::rnd::set_palette(arg(0), arg(1)));
 TS_END
 
 TS_BEGIN(sfs_GetAttachedSurface)
-    u32 out = arg(2);
-    if (out) st32(out, make_surface());
+    // GetAttachedSurface(this, lpDDSCaps, lplpSurface). A back buffer is
+    // created on demand at the parent's geometry and linked to it, so a Flip
+    // has somewhere to go and a second surface does not alias the first.
+    u32 child = ts::rnd::attached_obj(arg(0));
+    if (!child) {
+        child = make_surface(0u, ts::rnd::width_of(arg(0)),
+                             ts::rnd::height_of(arg(0)));
+        ts::rnd::link(arg(0), child);
+    }
+    if (arg(2)) st32(arg(2), child);
     stub_done(3, 0u);
 TS_END
 
