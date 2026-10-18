@@ -1184,6 +1184,13 @@ void objects_report() {
     u32 n = ts::ld32(0x007b2d98u);
     u32 a = ts::ld32(0x007b2d8cu);
     std::printf("objects: n=%u array=0x%08x\n", (unsigned)n, a);
+    // 0x7b2d98 is a per-frame list the renderer walks, so it can legitimately
+    // be empty at an arbitrary stop. The world itself lives in the class
+    // registries: ObjectClass (0x77bbe0), InfantryClass (0x7b0c08),
+    // BuildingClass (0x7b2c48) and the live houses (0x7afce0).
+    std::printf("  world: objectclass=%u infantry=%u buildings=%u houses=%u\n",
+                (unsigned)ts::ld32(0x0077bbe0u), (unsigned)ts::ld32(0x007b0c08u),
+                (unsigned)ts::ld32(0x007b2c48u), (unsigned)ts::ld32(0x007afce0u));
     if (a < 0x00400000u || a >= 0x80000000u) return;
     unsigned show = n < 12u ? (unsigned)n : 12u;
     for (unsigned i = 0; i < show; ++i) {
