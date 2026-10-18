@@ -1,0 +1,34 @@
+# Default front-end timeline plus ESC at 192,000 ms (see esc_skip.txt).
+# At 600,000 ms, click the second build tab in the sidebar -- the "$" icon,
+# whose rectangle is roughly (516,140)-(552,175) on the 640x480 screen. The
+# click is deliberately followed by a move back into the map at 603,000 ms,
+# so a frame captured at the end shows the tab state without the cursor over
+# it. The clicked tab gains a highlighted border: the sidebar responded.
+#
+# The map message dispatcher does NOT handle this click: its hit-test
+# (0x5cf080) returns 0 for a point outside the map surface, so the
+# left-button handler exits at 0x5d0092. The tactical update polls the
+# buttons instead -- `push 1; call 0x4f2100` at 0x5cfc76 is
+# GetAsyncKeyState(VK_LBUTTON) -- and the sidebar action method
+# (0x5f45f0 -> 0x5da0a0, which converts the point to sidebar-local x-0x1e0)
+# runs every frame. The build grid itself has no entries in this mission
+# state, so there is no build button to exercise; the tab strip is the
+# responsive part.
+@170000 mousemove 320 220
+@170100 lbuttondown
+@170150 lbuttonup
+@180000 mousemove 200 252
+@180100 lbuttondown
+@180150 lbuttonup
+@185000 mousemove 200 240
+@185100 lbuttondown
+@185150 lbuttonup
+@190000 mousemove 355 397
+@190100 lbuttondown
+@190150 lbuttonup
+@192000 keydown 0x1b
+@192100 keyup 0x1b
+@600000 mousemove 530 150
+@600100 lbuttondown
+@600200 lbuttonup
+@603000 mousemove 300 300

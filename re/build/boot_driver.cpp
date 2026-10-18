@@ -1223,23 +1223,49 @@ void objects_report() {
     std::printf("objects: n=%u array=0x%08x\n", (unsigned)n, a);
     // 0x7b2d98 is a per-frame list the renderer walks, so it can legitimately
     // be empty at an arbitrary stop. The world itself lives in the class
-    // registries: ObjectClass (0x77bbe0), InfantryClass (0x7b0c08),
-    // BuildingClass (0x7b2c48) and the live houses (0x7afce0).
-    std::printf("  world: objectclass=%u infantry=%u buildings=%u houses=%u\n",
-                (unsigned)ts::ld32(0x0077bbe0u), (unsigned)ts::ld32(0x007b0c08u),
-                (unsigned)ts::ld32(0x007b2c48u), (unsigned)ts::ld32(0x007afce0u));
+    // registries: ObjectClass (0x77bbd0 and 0x77bbb0), InfantryClass
+    // (0x7b0bf8), BuildingClass (0x7b2c38) and the live houses (0x7afce0).
+    //
+    // These are DynamicVectorClass instances. The game's own append
+    // (FUN_004cb520) compares [base+0x10] with [base+8] and increments
+    // [base+0x10] after storing at data[old [base+0x10]], and Find
+    // (0x445540) loops over [base+0x10]: the CURRENT COUNT is at +0x10 and
+    // the capacity at +8. (The hand-written VectorClass.h names those two
+    // the other way round; the binary is the authority here.) An earlier
+    // version read +0x10 as n but took infantry's array from +0x24 of a
+    // different vector, printing "infantry: n=21 array=0" while 21 infantry
+    // were alive. The base objects are fixed by the constructors: 0x4a80f0
+    // (ObjectClass A), 0x4a8270 (B), 0x4a7f70 (InfantryClass), 0x4a7ff0
+    // (BuildingClass).
+    std::printf("  world: objectclass.A=%u/%u objectclass.B=%u/%u "
+                "infantry=%u/%u buildings=%u/%u houses=%u (count/capacity)\n",
+                (unsigned)ts::ld32(0x0077bbe0u), (unsigned)ts::ld32(0x0077bbd8u),
+                (unsigned)ts::ld32(0x0077bbc0u), (unsigned)ts::ld32(0x0077bbb8u),
+                (unsigned)ts::ld32(0x007b0c08u), (unsigned)ts::ld32(0x007b0c00u),
+                (unsigned)ts::ld32(0x007b2c48u), (unsigned)ts::ld32(0x007b2c40u),
+                (unsigned)ts::ld32(0x007afce0u));
+    // The local player's house. `DAT_007b0b7c + 0xe0` is the current object
+    // index the tactical click path reads and writes (FUN_00475d00), so the
+    // pointer at 0x7b0b7c is the player's HouseClass. An object's owner house
+    // is at +0xEC (FUN_0060e7b0 stores its second argument there), which is
+    // what tells a friendly unit (selectable) from an enemy one (the click
+    // produces attack action 7 instead of a selection).
+    u32 player_house = ts::ld32(0x007b0b7cu);
+    std::printf("  player: house=0x%08x current_object=%d\n",
+                player_house, (int)ts::ld32(0x007b0b7cu + 0xe0u));
     // Where each world object actually is. The reveal pass walks these
     // registries and reveals around +0x14, so a wrong packed position here is
     // exactly what puts the revealed patch in the wrong place.
     {
-        static const struct { const char *name; u32 count_va, array_va; } regs[3] = {
-            { "objectclass", 0x0077bbe0u, 0x0077bbb4u },
-            { "infantry",    0x007b0c08u, 0x007b0c2cu },
-            { "buildings",   0x007b2c48u, 0x007b2c3cu },
+        static const struct { const char *name; u32 data_va, count_va; } regs[4] = {
+            { "objectclass.A", 0x0077bbd4u, 0x0077bbe0u },
+            { "objectclass.B", 0x0077bbb4u, 0x0077bbc0u },
+            { "infantry",      0x007b0bfcu, 0x007b0c08u },
+            { "buildings",     0x007b2c3cu, 0x007b2c48u },
         };
-        for (unsigned r = 0; r < 3u; ++r) {
+        for (unsigned r = 0; r < 4u; ++r) {
             u32 cnt = ts::ld32(regs[r].count_va);
-            u32 arr = ts::ld32(regs[r].array_va);
+            u32 arr = ts::ld32(regs[r].data_va);
             std::printf("  %s: n=%u array=0x%08x\n", regs[r].name,
                         (unsigned)cnt, arr);
             if (arr < 0x00400000u || arr >= 0x80000000u) continue;
@@ -1255,9 +1281,12 @@ void objects_report() {
                     int cx = (int)ts::ld32(o + 0x40u);
                     int cy = (int)ts::ld32(o + 0x44u);
                     int cz = (int)ts::ld32(o + 0x48u);
-                    std::printf(" vptr=0x%08x coord=(%d,%d,%d) cell=(%d,%d)",
+                    u32 owner = ts::ld32(o + 0xecu);
+                    std::printf(" vptr=0x%08x coord=(%d,%d,%d) cell=(%d,%d)"
+                                " owner=0x%08x player=%d",
                                 (unsigned)ts::ld32(o), cx, cy, cz,
-                                cx >> 8, cy >> 8);
+                                cx >> 8, cy >> 8, owner,
+                                owner && owner == player_house ? 1 : 0);
                     // Is the object's own cell revealed? This is what decides
                     // whether the shroud shows the object at all.
                     u32 mp = 0x00710d28u;
