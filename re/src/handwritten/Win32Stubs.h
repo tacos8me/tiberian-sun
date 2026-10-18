@@ -4132,13 +4132,65 @@ TS_END
 TS_RET(OleInitialize, 1, 0u)
 TS_RET(OleUninitialize, 0, 0u)
 TS_RET(CoDisconnectObject, 2, 0u)
-TS_RET(CoRevokeClassObject, 1, 0u)
 TS_RET(OleRun, 1, 0u)
 TS_RET(OleSaveToStream, 2, 0u)
 TS_RET(OleLoadFromStream, 3, 0u)
-TS_RET(CoRegisterClassObject, 5, 0u)
 TS_RET(StgCreateDocfile, 4, 0u)
 TS_RET(StgOpenStorage, 6, 0u)
+
+// -- in-process class objects ------------------------------------------------
+// The game registers its own class factories with CoRegisterClassObject in
+// WinMain (FUN_005e5b80, ~50 of them) and the locomotor classes are among
+// them. Discarding the registration made CoCreateInstance(CLSID_locomotor)
+// fall through to a generic 3-slot IUnknown, and the unit constructor's
+// `call [vtable+0xc]` (slot 3) then called 0. Keep the factories and let
+// CoCreateInstance ask the game's own IClassFactory to create the object.
+struct ComClassReg {
+    u8 clsid[16];
+    u32 unk;        // the IClassFactory the game passed
+    u32 cookie;
+};
+inline ComClassReg *com_reg() { static ComClassReg r[64]; return r; }
+inline unsigned &com_reg_n() { static unsigned n; return n; }
+inline u32 &com_cookie_next() { static u32 c = 1; return c; }
+
+inline bool com_guid_eq(const u8 *a, u32 b) {
+    if (!b) return false;
+    for (unsigned i = 0; i < 16u; ++i)
+        if (a[i] != ld8(b + i)) return false;
+    return true;
+}
+
+inline u32 com_find_class(u32 clsid) {
+    ComClassReg *r = com_reg();
+    for (unsigned i = 0; i < com_reg_n(); ++i)
+        if (com_guid_eq(r[i].clsid, clsid)) return r[i].unk;
+    return 0;
+}
+
+TS_BEGIN(CoRegisterClassObject)
+    u32 clsid = arg(0), unk = arg(1), cookie = arg(4);
+    if (clsid && unk && com_reg_n() < 64u) {
+        ComClassReg &r = com_reg()[com_reg_n()++];
+        for (unsigned i = 0; i < 16u; ++i) r.clsid[i] = ld8(clsid + i);
+        r.unk = unk;
+        r.cookie = com_cookie_next()++;
+        if (cookie) st32(cookie, r.cookie);
+    }
+    stub_done(5, 0u);
+TS_END
+
+TS_BEGIN(CoRevokeClassObject)
+    u32 cookie = arg(0);
+    ComClassReg *r = com_reg();
+    for (unsigned i = 0; i < com_reg_n(); ++i) {
+        if (r[i].cookie != cookie) continue;
+        r[i] = r[com_reg_n() - 1u];
+        --com_reg_n();
+        break;
+    }
+    stub_done(1, 0u);
+TS_END
 
 TS_BEGIN(CoFileTimeNow)
     u32 p = arg(0);
@@ -4146,9 +4198,85 @@ TS_BEGIN(CoFileTimeNow)
     stub_done(1, 0u);
 TS_END
 
+// CLSIDFromString must PARSE the string, not answer S_OK with a zero GUID.
+// The scenario's types carry `Locomotor={4A582741-9839-11D1-B709-00A024DDAFD1}`
+// in rules.ini; the type reader (0x61f72f) turns that into the CLSID at
+// type+0x1dc, and the unit constructor passes it to CoCreateInstance. A stub
+// that returned a zero GUID made CoCreateInstance(CLSID_NULL) hand back a
+// generic IUnknown whose vtable slot 3 is null; the placement path called it,
+// and every such call leaked its arguments (the model pops only the return
+// address), which walked ESP over the saved EBP in FUN_0063b470. Mission init
+// then called the infantry and structures readers with `this=0x9a80` instead
+// of the scenario INI, so both read zero sections and created nothing.
+inline int hexval_w(u32 c) {
+    if (c >= '0' && c <= '9') return (int)(c - '0');
+    if (c >= 'a' && c <= 'f') return (int)(c - 'a') + 10;
+    if (c >= 'A' && c <= 'F') return (int)(c - 'A') + 10;
+    return -1;
+}
+
+// Parse the two documented forms: `{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}`
+// and the same without braces. The GUID layout is Data1/2/3 little-endian and
+// Data4 as written.
+inline bool parse_guid_w(u32 s, u8 *out) {
+    if (!s || !out) return false;
+    u32 i = 0;
+    while (ld16(s + i * 2u) == ' ' || ld16(s + i * 2u) == '\t') ++i;
+    if (ld16(s + i * 2u) == '{') ++i;
+    u32 d1 = 0, d2 = 0, d3 = 0;
+    int hv;
+    for (int k = 0; k < 8; ++k) {
+        hv = hexval_w(ld16(s + i * 2u));
+        if (hv < 0) return false;
+        d1 = (d1 << 4) | (u32)hv;
+        ++i;
+    }
+    if (ld16(s + i * 2u) != '-') return false;
+    ++i;
+    for (int k = 0; k < 4; ++k) {
+        hv = hexval_w(ld16(s + i * 2u));
+        if (hv < 0) return false;
+        d2 = (d2 << 4) | (u32)hv;
+        ++i;
+    }
+    if (ld16(s + i * 2u) != '-') return false;
+    ++i;
+    for (int k = 0; k < 4; ++k) {
+        hv = hexval_w(ld16(s + i * 2u));
+        if (hv < 0) return false;
+        d3 = (d3 << 4) | (u32)hv;
+        ++i;
+    }
+    if (ld16(s + i * 2u) != '-') return false;
+    ++i;
+    u8 tail[8];
+    for (int k = 0; k < 8; ++k) {
+        if (k == 2) {
+            if (ld16(s + i * 2u) != '-') return false;
+            ++i;
+        }
+        hv = hexval_w(ld16(s + i * 2u));
+        int lo = hexval_w(ld16(s + (i + 1u) * 2u));
+        if (hv < 0 || lo < 0) return false;
+        tail[k] = (u8)((hv << 4) | lo);
+        i += 2;
+    }
+    out[0] = (u8)d1; out[1] = (u8)(d1 >> 8);
+    out[2] = (u8)(d1 >> 16); out[3] = (u8)(d1 >> 24);
+    out[4] = (u8)d2; out[5] = (u8)(d2 >> 8);
+    out[6] = (u8)d3; out[7] = (u8)(d3 >> 8);
+    for (int k = 0; k < 8; ++k) out[8 + k] = tail[k];
+    return true;
+}
+
 TS_BEGIN(CLSIDFromString)
-    u32 p = arg(1);
-    for (u32 i = 0; i < 16u; ++i) st8(p + i, 0);
+    u32 str = arg(0), p = arg(1);
+    u8 guid[16];
+    if (!parse_guid_w(str, guid)) {
+        stub_done(2, 0x800401f3u);   // CO_E_CLASSSTRING
+        return;
+    }
+    for (u32 i = 0; i < 16u; ++i) st8(p + i, guid[i]);
     stub_done(2, 0u);
 TS_END
 
@@ -4912,8 +5040,27 @@ TS_BEGIN(CoCreateInstance)
     // is exactly what FUN_005e87a0 does (OleRun, then QueryInterface), and it
     // is why the registration path failed even before the DLL export mattered.
     u32 clsid = arg(0);
+    u32 outer = arg(1);
     u32 riid = arg(3);
     u32 out = arg(4);
+    // A class the game itself registered: ask its own IClassFactory to create
+    // the object. IClassFactory::CreateInstance is vtable slot 3 and is
+    // __stdcall with this as the first stack word.
+    u32 fac = com_find_class(clsid);
+    if (fac && out && ld32(fac) && ld32(ld32(fac) + 0xcu)) {
+        u32 create = ld32(ld32(fac) + 0xcu);
+        u32 save_esp = ESP.d;
+        ESP.d = 0x00380000u;
+        push32(out);
+        push32(riid);
+        push32(outer);
+        push32(fac);
+        ts_call_at(create, 0x00fed400u);
+        u32 hr = EAX.d;
+        ESP.d = save_esp;
+        stub_done(5, hr);
+        return;
+    }
     if (!out) {
         stub_done(5, 0x80004003u);   // E_POINTER
     } else if (!guid_bytes_are(riid, iid_iunknown()) &&

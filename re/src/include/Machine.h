@@ -144,6 +144,7 @@ struct Machine {
     // EIP that made it. Lives in Machine (not at namespace scope) because
     // namespace-scope `inline` variables need C++17 and this tree is C++03.
     u32 watch_va;
+    u32 watch_zero;      // record zero stores too (who CLEARED this field)
     u32 watch_hits;
     u32 watch_from[8];
     u32 watch_val[8];
@@ -222,6 +223,7 @@ struct Machine {
     struct ProbeHit {
         unsigned long long step;
         u32 esp, ebp, eax, ebx, ecx, edx, esi, edi;
+        u32 a0, a1;          // [esp+4], [esp+8]: the first two stack arguments
         char eax_str[PROBE_STR];
         char ecx_str[PROBE_STR];
     };
@@ -233,6 +235,11 @@ struct Machine {
     // times; a linear scan of 16 addresses per instruction would cost more than
     // the run. One multiply/shift/test rejects all but ~0.4% of instructions.
     u32 probe_filter[128];
+    // Optional hook run at a probe hit, after the registers are recorded. The
+    // caller saves/restores the machine state around it; it exists so a
+    // diagnostic can query a live object (the scenario INI at mission-init
+    // entry) that does not survive to the end of the run.
+    void (*probe_hook)(u32 va);
     unsigned long stub_dispatches;
     // The argument count the most recent stub popped, recorded by stub_done in
     // Win32Stubs.h. A __stdcall stub owns its arguments, so a correct call ends
@@ -451,7 +458,7 @@ inline void reset() {
     m.stop_on_unmapped = 0;
     m.fault_addr = 0; m.fault_page = 0; m.fault_used = 0; m.fault_cap = 0;
     m.bad_call_n = 0;
-    m.watch_va = 0; m.watch_hits = 0;
+    m.watch_va = 0; m.watch_hits = 0; m.watch_zero = 0;
     m.watch_ring_n = 0;
     for (unsigned wi = 0; wi < (unsigned)Machine::WATCH_RING_ADDRS; ++wi)
         m.watch_ring_count[wi] = 0;
@@ -461,7 +468,7 @@ inline void reset() {
     m.stub_dispatches = 0; m.stub_last_nargs = 0; m.stub_last_depth = 0;
     m.stack_imbalances = 0; m.stack_imbalance_n = 0;
     m.trace_va = 0; m.trace_n = 0; m.trace_ring_count = 0; m.leak_n = 0;
-    m.probe_n = 0;
+    m.probe_n = 0; m.probe_hook = 0;
     for (unsigned pi = 0; pi < (unsigned)Machine::PROBE_MAX; ++pi)
         m.probe_hits[pi] = 0;
     for (unsigned pi = 0; pi < 128u; ++pi) m.probe_filter[pi] = 0;
@@ -543,10 +550,13 @@ inline void probe_slow(u32 va) {
             r.step = m.steps;
             r.esp = ESP.d; r.ebp = EBP.d; r.eax = EAX.d; r.ebx = EBX.d;
             r.ecx = ECX.d; r.edx = EDX.d; r.esi = ESI.d; r.edi = EDI.d;
+            r.a0 = ld32(ESP.d + 4u);
+            r.a1 = ld32(ESP.d + 8u);
             probe_snapshot(r.eax_str, EAX.d);
             probe_snapshot(r.ecx_str, ECX.d);
         }
         ++m.probe_hits[i];
+        if (m.probe_hook) m.probe_hook(va);
         return;
     }
 }
@@ -846,7 +856,9 @@ inline bool watch_ring_overlaps(u32 a, u32 w) {
 
 inline void st8 (u32 a, u8 v) {
     Machine &m = mach();
-    if (m.watch_va && a == m.watch_va && v && m.watch_hits < 8u) {
+    // watch_zero records zero stores too: "who cleared this field" is the
+    // question a nonzero-only watch cannot answer.
+    if (m.watch_va && a == m.watch_va && (v || m.watch_zero) && m.watch_hits < 8u) {
         m.watch_from[m.watch_hits] = m.eip;
         m.watch_val[m.watch_hits] = v;
         ++m.watch_hits;

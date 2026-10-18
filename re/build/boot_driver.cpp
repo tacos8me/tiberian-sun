@@ -577,9 +577,9 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
                 const ts::Machine::ProbeHit &r = m.probe_rec[i][k];
                 std::printf("    step=%llu esp=0x%08x ebp=0x%08x eax=0x%08x "
                             "ebx=0x%08x ecx=0x%08x edx=0x%08x esi=0x%08x "
-                            "edi=0x%08x\n",
+                            "edi=0x%08x a0=0x%08x a1=0x%08x\n",
                             r.step, r.esp, r.ebp, r.eax, r.ebx, r.ecx, r.edx,
-                            r.esi, r.edi);
+                            r.esi, r.edi, r.a0, r.a1);
                 if (r.eax_str[0]) std::printf("      eax: \"%s\"\n", r.eax_str);
                 if (r.ecx_str[0]) std::printf("      ecx: \"%s\"\n", r.ecx_str);
             }
@@ -932,6 +932,93 @@ static void ini_entry(ts::u32 obj, const char *sec, unsigned idx,
     out[i] = 0;
 }
 
+// TS_INI_AT=0xADDR -- run the INI section query at a probe hit, with the INI
+// object taken from ECX. Mission-init entry (0x005c4200) is the one that
+// matters: its `this` is the scenario INI loaded from the map, and that object
+// is destroyed when the caller returns, so a post-run query cannot see it.
+// The machine state is saved and restored around the query; the game must not
+// notice it ran.
+static ts::u32 g_ini_at[8];
+static unsigned g_ini_at_n;
+static int g_ini_busy;
+
+static void ini_probe_hook(ts::u32 va) {
+    bool want = false;
+    for (unsigned i = 0; i < g_ini_at_n; ++i)
+        if (g_ini_at[i] == va) want = true;
+    if (!want || g_ini_busy) return;
+    g_ini_busy = 1;
+    ts::Machine &m = ts::mach();
+    ts::u32 save_r[8];
+    for (int i = 0; i < 8; ++i) save_r[i] = m.r[i].d;
+    ts::u32 save_esp = ESP.d, save_eip = m.eip, save_steps = m.steps;
+    ts::u32 save_depth = m.call_depth, save_rcn = m.recent_call_n;
+    ts::u8 save_cf = m.cf, save_pf = m.pf, save_af = m.af, save_zf = m.zf,
+            save_sf = m.sf, save_df = m.df, save_of = m.of;
+    ts::u32 obj = ECX.d;
+    // At the unit constructor, the first stack argument is the house object it
+    // was handed; house+0x1dc is the CLSID it passes to CoCreateInstance. A
+    // zero CLSID means the house was never initialised, and the generic
+    // IUnknown handed back has no slot 3 -- the null call at 0x00630e2d.
+    if (va == 0x00630cc0u) {
+        ts::u32 type = ts::ld32(ESP.d + 4u);
+        ts::u32 house = ts::ld32(ESP.d + 8u);
+        char name[40];
+        unsigned ni = 0;
+        ts::u32 np = ts::ld32(type + 0x14u);
+        if (np >= 0x00010000u && np < 0x80000000u)
+            for (; ni + 1u < sizeof name; ++ni) {
+                ts::u8 c = ts::ld8(np + ni);
+                if (!c) break;
+                name[ni] = (char)c;
+            }
+        name[ni] = 0;
+        std::printf("  ctor: type=0x%08x vtable=0x%08x name=\"%s\" "
+                    "clsid=%08x-%08x-%08x-%08x house=0x%08x\n",
+                    type, (unsigned)ts::ld32(type), name,
+                    (unsigned)ts::ld32(type + 0x1dcu),
+                    (unsigned)ts::ld32(type + 0x1e0u),
+                    (unsigned)ts::ld32(type + 0x1e4u),
+                    (unsigned)ts::ld32(type + 0x1e8u), house);
+        std::printf("    +0x10:");
+        for (unsigned k = 0; k < 8u; ++k)
+            std::printf(" %08x", (unsigned)ts::ld32(type + 0x10u + k * 4u));
+        std::printf("\n    +0x1d0:");
+        for (unsigned k = 0; k < 8u; ++k)
+            std::printf(" %08x", (unsigned)ts::ld32(type + 0x1d0u + k * 4u));
+        std::printf("\n");
+    }
+    if (va == 0x0061eb30u || va == 0x0063e480u) {
+        std::printf("  clsid-check @0x%08x: obj=0x%08x +0x1dc=%08x-%08x-%08x-%08x\n",
+                    va, (unsigned)ESI.d,
+                    (unsigned)ts::ld32(ESI.d + 0x1dcu),
+                    (unsigned)ts::ld32(ESI.d + 0x1e0u),
+                    (unsigned)ts::ld32(ESI.d + 0x1e4u),
+                    (unsigned)ts::ld32(ESI.d + 0x1e8u));
+    }
+    static const char *sections[] = {
+        "Houses", "Units", "Infantry", "Structures", "Basic", "Terrain",
+        "OverlayPack", "ScriptTypes"
+    };
+    std::printf("ini-at 0x%08x: object 0x%08x\n", va, obj);
+    for (unsigned s = 0; s < sizeof sections / sizeof sections[0]; ++s) {
+        ts::u32 n = ini_section_count(obj, sections[s]);
+        std::printf("  [%-13s] %u", sections[s], n);
+        char buf[128];
+        for (unsigned i = 0; i < n && i < 2u; ++i) {
+            ini_entry(obj, sections[s], i, buf, sizeof buf);
+            std::printf("  %u=%s", i, buf);
+        }
+        std::printf("\n");
+    }
+    for (int i = 0; i < 8; ++i) m.r[i].d = save_r[i];
+    ESP.d = save_esp; m.eip = save_eip; m.steps = save_steps;
+    m.call_depth = save_depth; m.recent_call_n = save_rcn;
+    m.cf = save_cf; m.pf = save_pf; m.af = save_af; m.zf = save_zf;
+    m.sf = save_sf; m.df = save_df; m.of = save_of;
+    g_ini_busy = 0;
+}
+
 void ini_lookup_report() {
     const char *list = std::getenv("TS_INI_LOOKUP");
     if (!list || !*list) return;
@@ -1188,7 +1275,19 @@ int main(int argc, char **argv) {
             p = (*end == ',') ? end + 1 : end;
         }
     }
+    if (const char *ia = std::getenv("TS_INI_AT")) {
+        const char *p = ia;
+        while (*p && g_ini_at_n < 8u) {
+            char *end = 0;
+            unsigned long va = std::strtoul(p, &end, 0);
+            if (end == p) break;
+            g_ini_at[g_ini_at_n++] = (ts::u32)va;
+            p = (*end == ',') ? end + 1 : end;
+        }
+        m.probe_hook = &ini_probe_hook;
+    }
     if (const char *w = std::getenv("TS_WATCH")) m.watch_va = (ts::u32)std::strtoul(w, 0, 0);
+    if (std::getenv("TS_WATCH_ZERO")) m.watch_zero = 1;
     if (const char *wr = std::getenv("TS_WATCH_RING")) {
         const char *p = wr;
         while (*p && m.watch_ring_n < (unsigned)ts::Machine::WATCH_RING_ADDRS) {

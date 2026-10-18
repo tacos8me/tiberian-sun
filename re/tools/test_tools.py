@@ -3692,6 +3692,109 @@ int main() {
         eq("win32-tls", out.splitlines()[-1] if out else "", "0")
 
 
+def test_win32_clsid():
+    """CLSIDFromString parses; class-object registration is remembered.
+
+    Two shipped defects in one test. CLSIDFromString used to write 16 zero
+    bytes and return S_OK, so every `Locomotor={4A582741-...}` in rules.ini
+    became CLSID_NULL; CoCreateInstance(CLSID_NULL) then handed back a generic
+    3-slot IUnknown whose slot 3 is past the vtable, and the unit constructor's
+    `call [vtable+0xc]` called 0. Each such call also leaked its arguments,
+    walking ESP over FUN_0063b470's saved EBP, so the infantry and structures
+    readers were called with `this=0x9a80` and read zero sections.
+
+    CoRegisterClassObject was a no-op too, so even with the right CLSID the
+    game's own ~50 class factories (WinMain, FUN_005e5b80) were discarded and
+    CoCreateInstance could not find the locomotor class.
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+
+static void wr_w(ts::u32 va, const char *s) {
+    unsigned i = 0;
+    for (; s[i]; ++i) ts::st16(va + i * 2u, (ts::u16)(unsigned char)s[i]);
+    ts::st16(va + i * 2u, 0);
+}
+
+int main() {
+    ts::reset();
+    const ts::u32 sp = 0x002ff000u;
+
+    // CLSIDFromString: the BGGY Locomotor from rules.ini.
+    const ts::u32 str = 0x00300000u, out = 0x00301000u;
+    wr_w(str, "{4A582741-9839-11D1-B709-00A024DDAFD1}");
+    ts::st32(sp + 4u, str);
+    ts::st32(sp + 8u, out);
+    ESP.d = sp;
+    ts::w32::k_CLSIDFromString();
+    ck("CLSIDFromString returns S_OK", EAX.d == 0u);
+    static const ts::u8 want[16] = {
+        0x41,0x27,0x58,0x4a, 0x39,0x98, 0xd1,0x11,
+        0xb7,0x09,0x00,0xa0, 0x24,0xdd,0xaf,0xd1
+    };
+    for (unsigned i = 0; i < 16u; ++i)
+        ck("CLSIDFromString writes the GUID bytes",
+           ts::ld8(out + i) == want[i]);
+
+    // An invalid string is an error, not a zero GUID with S_OK.
+    wr_w(str, "not-a-clsid");
+    ts::st32(sp + 4u, str);
+    ts::st32(sp + 8u, out);
+    ESP.d = sp;
+    ts::w32::k_CLSIDFromString();
+    ck("CLSIDFromString rejects a bad string",
+       EAX.d == 0x800401f3u);
+
+    // CoRegisterClassObject remembers CLSID -> IClassFactory and writes a
+    // cookie; CoRevokeClassObject forgets it.
+    const ts::u32 clsid = 0x00302000u, fac = 0x00303000u, cookie = 0x00304000u;
+    for (unsigned i = 0; i < 16u; ++i) ts::st8(clsid + i, want[i]);
+    ts::st32(fac, 0u);                 // no vtable needed for the registry test
+    ts::st32(sp + 4u, clsid);
+    ts::st32(sp + 8u, fac);
+    ts::st32(sp + 12u, 1u);
+    ts::st32(sp + 16u, 1u);
+    ts::st32(sp + 20u, cookie);
+    ESP.d = sp;
+    ts::w32::k_CoRegisterClassObject();
+    ck("CoRegisterClassObject returns S_OK", EAX.d == 0u);
+    ck("the factory is findable by CLSID", ts::w32::com_find_class(clsid) == fac);
+    ts::u32 ck_cookie = ts::ld32(cookie);
+    ck("a cookie is written", ck_cookie != 0u);
+
+    ts::st32(sp + 4u, ck_cookie);
+    ESP.d = sp;
+    ts::w32::k_CoRevokeClassObject();
+    ck("CoRevokeClassObject forgets the class",
+       ts::w32::com_find_class(clsid) == 0u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_clsid.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_clsid",
+                        "/tmp/ts_win32_clsid.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-clsid-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_win32_clsid"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-clsid", False, out)
+    else:
+        eq("win32-clsid", out.splitlines()[-1] if out else "", "0")
+
+
 def main():
     for fn in (test_emit_masking, test_emit_in_out, test_emit_loop_tail,
                test_emit_ret, test_emit_x87_one_operand,
@@ -3710,7 +3813,8 @@ def main():
                test_win32_dialog_ex,
                test_win32_surface_lock, test_win32_surface_blt,
                test_win32_render_input,
-               test_win32_clock, test_win32_blowfish, test_win32_tls):
+               test_win32_clock, test_win32_blowfish, test_win32_tls,
+               test_win32_clsid):
         try:
             fn()
         except Exception as exc:  # a tool that raises is a failure, not a skip
