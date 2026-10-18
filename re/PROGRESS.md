@@ -1,12 +1,14 @@
 # PROGRESS — Tiberian Sun reconstruction
 
-All figures below were re-measured on 2026-10-17, after merging the disasm,
-stack-tracker, teardown and signed-`idiv` lanes, with `python3 tools/harness.py
+All figures below were re-measured on 2026-10-17, after merging the dialog,
+narrow-width-flag and generator-arity lanes, with `python3 tools/harness.py
 metrics --no-append`, `python3 tools/verify.py src/include build/shim`,
 `python3 tools/verify_members_binary.py`, `python3 tools/test_tools.py`,
-`python3 tools/boot.py` (and `--no-build --strict`, plus a 200M-budget run),
-`python3 tools/link_test.py`, `tools/wine_env.sh`, and direct counts over `out/`
-and `src/generated/`. Re-run those rather than trusting this file.
+`python3 tools/boot.py` with `TS_CD` (and `--no-build --strict`, plus an
+80M-budget run), `python3 tools/link_test.py`, `tools/wine_env.sh`, and direct
+counts over `out/` and `src/generated/`. `TS_ROOT` selects the ordinary file
+root; `TS_CD` models the `D:` CD drive (`DRIVE_CDROM`, label `TS1`). Re-run
+those rather than trusting this file.
 
 **This file records state. `ROADMAP.md` records the plan** — what "done" means
 for documented/modifiable/compilable as measurable exit criteria, the corrected
@@ -20,34 +22,39 @@ the one that matters most: it makes the compiler confirm every recovered member
 offset it can express, and it passes 3,073/3,073. **The link stage is green**:
 measured this session, `link: OK (492 translation units)`, `ts_link_test: OK`,
 exit **0**, 20,000,001 instructions, `MESSAGE LOOP: reached -- GetMessage 1,
-PeekMessage 827, DispatchMessage 1`, 0 unmapped. `test_tools.py` runs **70**
+PeekMessage 5, DispatchMessage 1`, 0 unmapped. `test_tools.py` runs **72**
 checks. A full `./tools/pipeline.sh` ran **exit 0** in the disasm-correction
 lane (8m51s, recorded in `todo.md`); it was not re-run in this worktree. The link
 was the expensive stage when last timed (about 471 s).
 
-**The game is alive in a steady-state dialog-setup loop.** The image maps at its
-real VAs and all **341/341** PE import-directory thunks are written to stubs
-(`link_test.py`: `imports: 341 across 13 DLLs`, `resolve_imports() ... 341 of
-341 IAT slots written`, `traced thunks: 341 imports bound, 0 with no stub`). The
-original entry point 0x6854e3 runs until the **20,000,001-instruction budget** at
-`0x00422db9` (`sub_00422d64 +0x55`, a row-copy loop), depth 28:
-**`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`**,
-no fault and no `ExitProcess`. Coverage: **52,833 distinct instructions; 4,641 of
-45,947 recovered functions entered**; 9,132 import calls over 341 traced imports
-(104 distinct). At a 200M budget the counters scale (`PeekMessage` 39,443) while
-**coverage freezes at 52,858 / 4,643**, so the loop makes no progress. The only
-message box is the expected DirectSound warning at `0x484456` (`type=0x30`); the
-primary-surface check passes (`TS_PEEK=0x006beed8` → `1`). **0 unmapped calls, 0
-stack imbalances**; `boot.py --strict` exits **0**.
+**The game reaches the intro-movie playback pump; the movie does not play.** The
+image maps at its real VAs and all **341/341** PE import-directory thunks are
+written to stubs (`link_test.py`: `imports: 341 across 13 DLLs`, `resolve_imports()
+... 341 of 341 IAT slots written`, `traced thunks: 341 imports bound, 0 with no
+stub`). With `TS_CD` (the modelled `D:`), the CD path is correct end-to-end:
+`CreateFileA("D:\TS1.dsk")` succeeds, `GetDriveTypeA` no longer receives `%c:\`,
+and the game enumerates `EXPAND99..EXPAND00` (100 files), proving `%02d`. The
+dialogs are real (LANGUAGE.DLL's 60 templates and string table). At the default
+20M budget the stop is `0x00488800` (`sub_0048875c +0xa4`), depth 19:
+**`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`**,
+coverage **55,798 distinct instructions / 4,767 of 45,947 functions entered**.
+At `--budget 80000000` the stop is `0x0064e156` (`sub_0064e14d +0x9`), depth 24,
+`GetMessage=1`, `PeekMessage=312,674`, `DispatchMessage=1`, coverage **61,817 /
+5,171**; coverage freezes there from 40M. The only message box is the expected
+DirectSound warning at `0x484456` (`type=0x30`); the primary-surface check passes
+(`TS_PEEK=0x006beed8` → `1`). **0 unmapped calls, 0 stack imbalances**;
+`boot.py --strict` exits **0**.
 
-**The current blocker is the fake dialog layer.** The loop creates a dialog with
-`CreateDialogIndirectParamA`, then calls `GetDlgItem`/`EnableWindow`/`ShowWindow`
-on its controls and polls `PeekMessageA`. In the model,
-`CreateDialogIndirectParamA` is `TS_RET(..., 5, 0x00010002)` (no window, no
-`WM_INITDIALOG`), `GetDlgItem` always returns `0x00010003`, and `PeekMessageA`
-always returns 0, so `DispatchMessage` stays at 1. The CD check is ruled out (a
-`TS1`/`TS1.DSK` diagnostic changed nothing). A dialog/input lane is implementing
-real dialog creation and message delivery; the layer does **not** work yet.
+**The current blocker is the intro-movie playback pump (`sub_0064dff0`, loop
+`0x64e0b8..0x64e242`).** The VQA decoder (`0x679090`/`sub_00679360`) never
+executes: the stream object (`ESI=0x508991e0`) has `[+0x150]=0x18`, so
+`sub_0067c920` skips setup, reads the frame callback `[+0x54]` (NULL), and
+returns -1; the pump treats -1/-10 as "retry". `TS_WATCH` on `+0x54` records no
+store. The stream is otherwise alive (read callback `+0x44=0x64e920`, buffer
+`+0x764`, dimensions 800x480). This is the **unreconstructed MS*/AVI layer**,
+not a missing import (all 341 resolve; only `WSOCK32!#116` and `OLEAUT32!#33` are
+generic and unrelated). A movie-stream lane is investigating; the movie path is
+**not working**, and the menu is not reached.
 
 **The recovery was corrected (`9e5703f` + `ad62afc`).** 213 static switch tables
 are now data (was 12), including three hole tables (`0x683c10`, `0x683d98`,
@@ -70,9 +77,21 @@ imbalances**, `boot.py --strict` exits 0, link test passes.
 
 **Signed `idiv` is fixed (`16e21fa`).** `divmod64` now has true signed x86
 semantics (magnitudes + signs, correct overflow/divide-by-zero, `INT64_MIN / -1`
-handled), so the old divide-overflow stop is passed. `test_tools.py` runs **70**
-checks, including signed-division vectors, a 200,000-pair differential sweep and
-the `IDirectDrawSurface::Lock` 5-argument regression.
+handled), so the old divide-overflow stop is passed.
+
+**Narrow-width flags are fixed (`f2e6ca9`).** `Machine.h` now has width-aware
+`f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`; all 8/16-bit
+arithmetic/comparison feeds the operand width, and 32-bit is unchanged. Before
+the fix, `JLE`/`JG` on a byte was wrong, so the game's own vsprintf copied
+formats literally (`GetDriveTypeA("%c:\")`, `CreateFileA("EXPAND%02d.MIX")`) and
+the CD-drive scan stopped after `c`. The tests now compare every flag against the
+CPU's own flags via inline asm, including the `0x7f`/`0x80` boundary and the
+vsprintf `%` classification; mutation-proven (18 assertions fail with the old
+derivation). `19ee16c` then fixed the generator's `SetViewportOrgEx`/
+`SetWindowOrgEx` arity (4, not 3); the regenerated table diff is exactly those
+two rows and `--stack-check` is 342/0. `test_tools.py` runs **72** checks,
+including signed-division vectors, a 200,000-pair differential sweep and the
+`IDirectDrawSurface::Lock` 5-argument regression.
 
 **Earlier fixes still in force:** COM registration (`1580be3`), message delivery
 (`f3011ca`), the Blowfish cipher (`345aae7`, proven by four known-answer vectors
@@ -128,9 +147,10 @@ let `ExitProcess` return, so execution continued past a fatal exit and the
 `boot_driver` and `ts_link_test.cpp`; the link test's stub had the same defect
 (it set `g_halt` but not `m.halt`) and was fixed in `db612d1`. **The loop is now
 genuinely reached and dispatching, and the claim is backed by a run that never
-calls `ExitProcess`:** `CreateWindowExA=1`, `GetMessage=2`, `PeekMessage=5`,
+calls `ExitProcess`:** `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`,
 `DispatchMessage=1`; the run now ends on the 20,000,001-instruction budget at
-`0x00422db9`, in the dialog-setup loop. The old retracted `PeekMessage=137,295` is
+`0x00488800`, in the intro-movie playback pump. The old retracted
+`PeekMessage=137,295` is
 kept as history, not as evidence. The corrupted-argument defect that the first
 halt exposed is also fixed: the atexit walk leaked **108 bytes (27 dwords)**, so
 ESI held a return address; `ts_call_ptr` now delegates to `ts_call_at`, and the
@@ -163,9 +183,10 @@ Measured state:
 | static instructions in `out/functions.json` | 845,093 across 43,557 spans |
 | forwarder definitions | 6,962 across 310 class translation units; 3,024 distinct machine functions, 3,938 aliases (`src/generated/README.md`) |
 | destructor stubs (declared, no recovered address) | 229 |
-| **boot** | **20,000,001 instructions** (budget exhausted) at `0x00422db9` (`sub_00422d64 +0x55`), depth 28; `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`; **alive in a steady-state dialog-setup loop**; only `MessageBoxA` is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0 stack imbalances**; coverage **52,833 distinct instructions / 4,641 of 45,947 functions** (200M budget: 52,858 / 4,643); primary surface `TS_PEEK=0x006beed8` → 1 (`boot.py`, default `../gamedir`) |
+| **boot (20M, TS_CD)** | **20,000,001 instructions** (budget exhausted) at `0x00488800` (`sub_0048875c +0xa4`), depth 19; `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`; CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA` is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0 stack imbalances**; coverage **55,798 distinct instructions / 4,767 of 45,947 functions**; primary surface `TS_PEEK=0x006beed8` → 1 |
+| **boot (80M, TS_CD)** | **80,000,001 instructions** at `0x0064e156` (`sub_0064e14d +0x9`), depth 24; `GetMessage=1`, `PeekMessage=312,674`, `DispatchMessage=1`, `CreateWindowExA=1`; coverage **61,817 / 5,171**, frozen from 40M; intro-movie pump `sub_0064dff0` |
 | boot strict gate | exits **0**: 0 garbage call targets (`boot.py --no-build --strict`) |
-| link test | **OK**, exit 0, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled (`link_test.py`) |
+| link test | **OK**, exit 0, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled (`link_test.py`) |
 | retail oracle | reaches the **main menu**, 640x480, md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s (`wine_env.sh`) |
 
 ### The code is transcribed, not stubbed
@@ -214,19 +235,20 @@ Coverage is achieved in three tiers:
 | Class forwarders emitted | 6,962 | done |
 | Whole-tree link + entry-point run | 492 TUs | done |
 | Binary-anchored member verification | 4,285/4,289 (99.9%), gated | done |
-| Tool unit tests | 70 checks, mutation-proven | done |
+| Tool unit tests | 72 checks, mutation-proven | done |
 
 ### Verification performed
 
 - `tools/verify.py` runs **nine** checks (about 6 s last timed) and is
   **fail-closed**: a missing artifact exits non-zero naming what is missing,
   rather than running a subset and printing PASSED.
-- `tools/boot.py` runs the image for **20,000,001 instructions** (the budget,
-  at `0x00422db9`, the dialog-setup loop), reports the stop, import calls,
-  coverage and unmapped-target classification, and **reaches the message loop
-  with dispatch** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`,
+- `tools/boot.py` (with `TS_CD`) runs the image for **20,000,001 instructions**
+  (the budget, at `0x00488800`, the intro-movie pump), reports the stop, import
+  calls, coverage and unmapped-target classification, and **reaches the message
+  loop with dispatch** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`,
   `DispatchMessage=1`). `--strict` exits **0** with 0 garbage targets and 0
-  stack imbalances.
+  stack imbalances. At `--budget 80000000` the stop is `0x0064e156`, coverage
+  61,817 / 5,171.
 - `tools/link_test.py` links **492** translation units, runs the entry point,
   and **passes** (exit 0); the message loop is reached and dispatching, with 0
   unmapped calls.
@@ -243,7 +265,7 @@ Coverage is achieved in three tiers:
   catches a corrupted statement whose evidence comment is intact.
 - `tools/link_test.py` links the whole tree and runs it. See "defects found by
   the link" below for what it caught.
-- `tools/test_tools.py` runs **70** unit checks, each a regression test for a
+- `tools/test_tools.py` runs **72** unit checks, each a regression test for a
   shipped defect or a differential test against an independent implementation.
   Four of them are mutation-proven to fail when the defect is reintroduced.
 - Determinism: two clean pipeline runs produce **497 byte-identical artifacts**
@@ -341,12 +363,21 @@ Coverage is achieved in three tiers:
       (`47d26eb`).** 111,682 false imbalances -> 0; `Lock` now pops 5; 0 unmapped
       calls.
 - [x] **Signed `idiv` (`16e21fa`).** `divmod64` has true signed x86 semantics.
-- [ ] **The fake dialog layer — the current blocker.** `CreateDialogIndirectParamA`
-      creates no window and sends no `WM_INITDIALOG`, `GetDlgItem` returns a
-      constant, and `PeekMessageA` returns 0, so the game repeats the same
-      dialog setup forever (`DispatchMessage` stays 1; coverage freezes at
-      52,858 / 4,643 at 200M). A dialog/input lane is implementing it now; it
-      does **not** work yet.
+- [x] **The dialog layer (`f576607` + `c81c1f5`).** LANGUAGE.DLL's 60 dialog
+      templates and string table are read from the module's own `.rsrc`;
+      `CreateDialogIndirectParamA` builds the record and controls, sends
+      `WM_INITDIALOG`, and `DispatchMessage` runs. A CD drive model (`TS_CD`)
+      was added.
+- [x] **Narrow-width flags (`f2e6ca9`).** Width-aware
+      `f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`; the vsprintf `%` and
+      the CD-drive scan are correct; flags are compared against the CPU's own.
+- [x] **Generator arity (`19ee16c`).** `SetViewportOrgEx`/`SetWindowOrgEx` take
+      4; `--stack-check` is 342/0.
+- [ ] **The intro-movie playback pump — the current blocker.** The VQA decoder
+      (`0x679090`/`sub_00679360`) never executes because the stream's frame
+      callback `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump
+      retries. This is the unreconstructed MS*/AVI layer; the movie path is
+      **not working** and the menu is not reached.
 - [ ] **Shutdown corrupts ESP — dormant.** WinMain returned with ESP `0x11`
       before the MIX-read fix; the current run never reaches shutdown. Keep it
       queued.
@@ -368,16 +399,19 @@ Coverage is achieved in three tiers:
   machine does and is not claimed to be the shape the original source had.
 - **The boot has 0 unmapped calls and 0 stack imbalances**; `boot.py --strict`
   exits 0 and the link test passes.
-- **The game is alive in a steady-state dialog-setup loop.** The dialog layer is
-  fake (`CreateDialogIndirectParamA`, `GetDlgItem`, `PeekMessageA`), so
-  `DispatchMessage` stays 1 and coverage freezes at 52,858 / 4,643. This is the
-  current blocker; the layer does **not** work yet.
+- **The game reaches the intro-movie playback pump, and the movie does not
+  play.** The VQA decoder never executes because the stream's frame callback
+  `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump retries;
+  coverage freezes at 61,817 / 5,171 from 40M. This is the unreconstructed
+  MS*/AVI layer, not a missing import. The movie path and the menu are **not
+  reached**.
 - **Shutdown corrupts ESP, but the path is dormant.** WinMain returned with ESP
   `0x11` before the MIX-read fix; the current run never reaches shutdown.
-- **The Blowfish cipher and the MIX index read are fixed.** All 27 index blocks
-  are read and the 17 records match `tools/mix.py` 17/17. The retail oracle
-  reaches the main menu, but the menu's buttons/text are not drawn (PCX assets
-  inside a nested MIX entry) and audio is absent.
+- **The Blowfish cipher, the MIX index read and the dialog layer are fixed.**
+  All 27 index blocks are read (17/17 records match `mix.py`), and the game
+  builds its real LANGUAGE.DLL dialogs. The CD path is correct with `TS_CD`. The
+  retail oracle reaches the main menu, but the menu's buttons/text are not drawn
+  (PCX assets inside a nested MIX entry) and audio is absent.
 - **A transcription reads its arguments from the model, not from C++
   parameters.** Hand-written callers (the template headers) therefore reach the
   right code through `ts::ts_invoke`, but the values they pass are only
@@ -479,16 +513,18 @@ tools/link_test.py
   imports: 341 across 13 DLLs; 341 of 341 IAT slots written; 341 bound, 0 with no stub
   entry 0x006854e3 ran; 20,000,001 instructions (budget)
   0 unmapped calls; 0 unmodelled
-  MESSAGE LOOP: reached -- GetMessage 1, PeekMessage 827, DispatchMessage 1
+  MESSAGE LOOP: reached -- GetMessage 1, PeekMessage 5, DispatchMessage 1
 
-tools/boot.py
-  20,000,001 instructions (budget exhausted at 0x00422db9, dialog-setup loop)
-  CreateWindowExA=1 GetMessage=1 PeekMessage=827 DispatchMessage=1
+tools/boot.py  (TS_CD=../work/cd1)
+  20,000,001 instructions (budget exhausted at 0x00488800, intro-movie pump)
+  CreateWindowExA=1 GetMessage=1 PeekMessage=5 DispatchMessage=1
+  CreateFileA("D:\TS1.dsk") ok; EXPAND99..EXPAND00 enumerated
   only MessageBoxA: DirectSound warning at 0x484456 (type 0x30)
   message loop: reached and dispatching; unmapped calls: 0; stack imbalances: 0
-  coverage: 52,833 distinct instructions; 4,641 of 45,947 recovered functions entered
+  coverage: 55,798 distinct instructions; 4,767 of 45,947 recovered functions entered
   primary surface: TS_PEEK 0x006beed8 = 1
   --no-build --strict: exit 0
+  --budget 80000000: stop 0x0064e156, PeekMessage 312,674, coverage 61,817 / 5,171
   --budget 200000000: coverage 52,858 / 4,643; PeekMessage 39,443 (steady state)
 
 tools/wine_env.sh

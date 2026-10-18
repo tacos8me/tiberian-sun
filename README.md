@@ -17,12 +17,13 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 - The model boots the image at its real VAs, resolves all 341 PE import-directory
   thunks, reaches the game's own **message loop**, decrypts the TIBSUN.MIX index
   with a real Blowfish-ECB implementation (all 27 index blocks, 17/17 records
-  matching `tools/mix.py`), and then stays **alive in a steady-state
-  dialog-setup loop**. The dialog layer is fake (`CreateDialogIndirectParamA`
-  creates no window and sends no `WM_INITDIALOG`, `GetDlgItem` returns a
-  constant, `PeekMessageA` returns 0), so the game repeats the same setup
-  forever; that is the current blocker. The run has **0 unmapped calls and 0
-  stack imbalances**, and `boot.py --strict` exits 0.
+  matching `tools/mix.py`), reads the CD (`TS_CD` models `D:`), builds its real
+  LANGUAGE.DLL dialogs, and then reaches the **intro-movie playback pump**. The
+  movie does not play: the VQA decoder never executes because the stream's frame
+  callback `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump
+  retries. That is the unreconstructed MS*/AVI layer, and the current blocker.
+  The run has **0 unmapped calls and 0 stack imbalances**, and `boot.py
+  --strict` exits 0. The movie path and the menu are **not reached**.
 - The **retail** game reaches its **main menu** under Wine on this host; that is
   the project's external oracle.
 - Every function body is generated machine transcription, one instruction per
@@ -40,8 +41,8 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 | virtuals named | 5,557 of 9,810 slot pairs (56.6%); 917 distinct names (281 semantic) |
 | headers | 264 total, 263 compile standalone at `-m32` |
 | verification gate | 9 checks, fail-closed, passing; check 9 confirms 3,073/3,073 offsets |
-| tool tests | 70 checks, several mutation-proven |
-| boot | message loop reached and dispatching; real Blowfish-ECB; MIX index read correctly; 20M budget in a steady-state dialog-setup loop; 0 unmapped, 0 stack imbalances; current blocker is the fake dialog layer |
+| tool tests | 72 checks, several mutation-proven |
+| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX index read and CD path correct; real LANGUAGE.DLL dialogs; 20M budget at `0x00488800` (55,798 / 4,767), 80M at `0x0064e156` (61,817 / 5,171); 0 unmapped, 0 stack imbalances; current blocker is the intro-movie pump |
 
 **Measure, don't trust prose.** `python3 tools/harness.py metrics` prints the
 real state; these figures drift as the tools improve. `AGENTS.md` records the
@@ -71,29 +72,37 @@ both are wrong. That distinction matters when reading `VERIFICATION PASSED`.
 
 ```bash
 cd re
-python3 tools/boot.py            # cached build; reports the run in ~1 s
-python3 tools/boot.py --strict   # exit non-zero if a garbage call target remains
+TS_CD=../work/cd1 python3 tools/boot.py          # model D: as a TS1 CD-ROM
+python3 tools/boot.py --strict                   # exit non-zero if a garbage target remains
 ```
 
-The image maps at `0x400000` (no `.reloc`), all 341 import-directory thunks
-resolve to stubs, and the original entry point `0x6854e3` runs. The current
-measured stop:
+`TS_ROOT` selects the host root for ordinary files; `TS_CD` maps `D:` to a host
+directory as a `DRIVE_CDROM` labelled `TS1`, which is what lets the game find
+`D:\TS1.dsk` and its MIX files. The image maps at `0x400000` (no `.reloc`), all
+341 import-directory thunks resolve to stubs, and the original entry point
+`0x6854e3` runs. The current measured stop:
 
 ```
-message loop: reached  (GetMessage=1 PeekMessage=827 DispatchMessage=1 CreateWindowExA=1)
-stop: instruction budget exhausted at 0x00422db9 after 20,000,001 instructions
-why:  the game is alive in a steady-state dialog-setup loop (no fault, no exit)
-coverage: 52,833 distinct instructions; 4,641 of 45,947 recovered functions
+message loop: reached  (GetMessage=1 PeekMessage=5 DispatchMessage=1 CreateWindowExA=1)
+stop: instruction budget exhausted at 0x00488800 after 20,000,001 instructions
+why:  the game reaches the intro-movie playback pump (no fault, no exit)
+coverage: 55,798 distinct instructions; 4,767 of 45,947 recovered functions
 unmapped calls: 0 (0 inside .text); stack imbalances: 0
 ```
 
+At `--budget 80000000` the stop is `0x0064e156`, `PeekMessage=312,674`, coverage
+61,817 / 5,171. The VQA decoder never executes because the stream's frame
+callback `[+0x54]` is NULL; the pump retries. That is the unreconstructed
+MS*/AVI layer, recorded in `todo.md`.
+
 Real Blowfish-ECB is implemented and proven against `tools/mix.py` (the shipped
-TIBSUN.MIX first index block decrypts byte-identically), and the MIX index read
-is fixed: all 27 blocks are read and the 17 records match `mix.py` 17/17. At a
-200M budget the counters scale while coverage freezes at 52,858 / 4,643 — the
-game repeats the same dialog setup because the dialog layer is fake. That is the
-current blocker, recorded in `todo.md`; the shutdown ESP defect is dormant (the
-run no longer reaches shutdown).
+TIBSUN.MIX first index block decrypts byte-identically), the MIX index read is
+fixed (27/27 blocks, 17/17 records), the dialog layer reads LANGUAGE.DLL's own
+templates, and narrow-width flags are derived from the operand width. Coverage
+freezes at 61,817 / 5,171 from 40M because the intro-movie pump retries without
+executing the VQA decoder — the unreconstructed MS*/AVI layer, recorded in
+`todo.md`. The shutdown ESP defect is dormant (the run no longer reaches
+shutdown).
 
 The model has diagnostics for this work: `TS_TRACE=0xADDR`, `TS_PEEK=0xADDR`,
 `TS_SCAN=start,count`, `TS_WATCH=0xADDR`, `TS_FILE_TRACE=1`, plus `bad_calls`,

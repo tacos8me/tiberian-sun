@@ -8,7 +8,7 @@ Figures in this file were re-measured on 2026-10-17 with `harness.py metrics`,
 `verify.py`, `verify_members_binary.py`, `test_tools.py`, `boot.py` (and
 `--no-build --strict`), `link_test.py`, `wine_env.sh`, and direct counts over
 `out/` and `src/generated/`. The boot and recovery figures were re-measured
-after the disasm, stack-tracker, teardown and signed-`idiv` merges; the full
+after the dialog, narrow-width-flag and generator-arity merges; the full
 `pipeline.sh` run recorded in `todo.md` (exit 0, 8m51s) was not re-run here.
 
 The point of this document is to say **what is actually left**, what the
@@ -286,20 +286,22 @@ loop" with `PeekMessage=137,295`. That was retracted: the model let
 was one the real game never ran. The current claim is from a run that never
 calls `ExitProcess`.
 
-What is true, measured after the disasm, tracker and `idiv` merges: the game
-maps at its real VAs and resolves **341/341** PE import-directory thunks (309 by
-name, 32 by ordinal, across 13 DLLs). The stub table holds 342 rows because it
-also carries `COMCTL32!DllGetVersion`, which is not an import — the CRT reaches
-it through `GetProcAddress`. The game creates its window, **delivers
-`WM_ACTIVATEAPP`**, reads the MIX index correctly, and then repeats the same
-dialog setup: `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`,
-`DispatchMessage=1`. The run consumes the full **20,000,001-instruction budget**
-at `0x00422db9` (`sub_00422d64 +0x55`), depth 28. Coverage: **52,833 distinct
-instructions; 4,641 of 45,947 recovered functions entered**, freezing at 52,858 /
-4,643 at a 200M budget. **0 unmapped calls, 0 stack imbalances**; `boot.py
---strict` exits **0** and the link test passes. The only message box is the
-expected DirectSound warning at `0x484456` (`type=0x30`), and the primary-surface
-check passes (`TS_PEEK=0x006beed8` → 1).
+What is true, measured after the dialog, narrow-width-flag and generator-arity
+merges: the game maps at its real VAs and resolves **341/341** PE
+import-directory thunks (309 by name, 32 by ordinal, across 13 DLLs). The stub
+table holds 342 rows because it also carries `COMCTL32!DllGetVersion`, which is
+not an import — the CRT reaches it through `GetProcAddress`. With `TS_CD` (the
+modelled `D:`) the CD path is correct end-to-end: `CreateFileA("D:\TS1.dsk")`
+succeeds, `GetDriveTypeA` no longer receives `%c:\`, and the game enumerates
+`EXPAND99..EXPAND00` (100 files). The dialogs are real (LANGUAGE.DLL's 60
+templates and string table). At the default 20M budget the stop is `0x00488800`
+(`sub_0048875c +0xa4`), depth 19, `CreateWindowExA=1`, `GetMessage=1`,
+`PeekMessage=5`, `DispatchMessage=1`, coverage **55,798 / 4,767**. At
+`--budget 80000000` the stop is `0x0064e156` (`sub_0064e14d +0x9`), depth 24,
+`PeekMessage=312,674`, coverage **61,817 / 5,171**, frozen from 40M. **0 unmapped
+calls, 0 stack imbalances**; `boot.py --strict` exits **0** and the link test
+passes. The only message box is the expected DirectSound warning at `0x484456`
+(`type=0x30`), and the primary-surface check passes (`TS_PEEK=0x006beed8` → 1).
 
 **The recovery was corrected (`9e5703f` + `ad62afc`).** 213 static switch tables
 are now data (was 12), including three hole tables (`0x683c10`, `0x683d98`,
@@ -328,11 +330,25 @@ tracker went from **111,682 false imbalances to 0**, and the five null teardown
 calls had one root cause — `IDirectDrawSurface::Lock` popped 4 arguments instead
 of 5 — now fixed, so the boot has **0 unmapped calls** and `--strict` exits 0.
 
-**The current blocker is the fake dialog layer.** `CreateDialogIndirectParamA`
-creates no window and sends no `WM_INITDIALOG`, `GetDlgItem` returns a constant,
-and `PeekMessageA` returns 0, so the game repeats the same dialog setup forever
-and `DispatchMessage` stays at 1. The CD check is ruled out. A dialog/input lane
-is implementing it now; the layer does **not** work yet.
+**The dialog layer is real (`f576607` + `c81c1f5`), and narrow-width flags are
+fixed (`f2e6ca9` + `19ee16c`).** `Win32Stubs.h` reads LANGUAGE.DLL's own PE
+`.rsrc` (60 dialog templates and string table); `CreateDialogIndirectParamA`
+builds the record and controls, sends `WM_INITDIALOG`, and `DispatchMessage`
+runs. A CD drive model (`TS_CD`) was added. `SetViewportOrgEx`/`SetWindowOrgEx`
+take 4 arguments (the stubs popped 3, leaking 8 bytes); `19ee16c` fixes the
+generator table (`--stack-check` 342/0). `Machine.h` has width-aware
+`f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`, so 8/16-bit flags are correct;
+the tests compare them against the CPU's own flags. `test_tools.py` is 72 checks.
+
+**The current blocker is the intro-movie playback pump.** At 80M the stop is
+`0x0064e156` (`sub_0064e14d +0x9`) inside `sub_0064dff0` (loop
+`0x64e0b8..0x64e242`). The VQA decoder never executes: the stream object
+(`ESI=0x508991e0`) has `[+0x150]=0x18`, so `sub_0067c920` skips setup, reads the
+frame callback `[+0x54]` (NULL), and returns -1, which the pump retries.
+`TS_WATCH` on `+0x54` records no store. The stream is otherwise alive (read
+callback `+0x44=0x64e920`, buffer `+0x764`, dimensions 800x480). This is the
+unreconstructed MS*/AVI layer, not a missing import. The movie path is **not
+working**, and the menu is not reached.
 
 **The oracle premise is now inverted.** `tools/wine_env.sh` gives the retail
 binary an X screen at 640x480x16 and a `DRIVE_CDROM` `d:` labelled `TS1` holding
@@ -345,12 +361,11 @@ no audio. So the model reaches the loop but not the menu, and the oracle is the
 target.
 
 Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
-  1. Implement the dialog/input layer: create a real dialog window and control
-     handles, send `WM_INITDIALOG` to the dialog procedure, deliver
-     `WM_COMMAND`/`WM_ACTIVATEAPP` through the message queue so
-     `DispatchMessageA` runs, and provide a minimal input source. Exit:
-     `DispatchMessageA > 1`, coverage advances past 52,858, the setup loop
-     breaks, and the next stop is named.
+  1. Implement the MS*/AVI movie-stream layer the intro pump expects: make the
+     VQA decoder (`0x679090`/`sub_00679360`) execute, which means giving the
+     stream object a frame callback at `[+0x54]` and the state `sub_0067c920`
+     expects, then frame timing and surface presentation. Exit: the decoder
+     executes, coverage advances past 61,817, and the next stop is named.
   2. Make the model reach the main menu: real rendering (per-surface memory and
      real `Blt`/`Flip`), the nested-MIX PCX assets, and the stubs the menu path
      needs. The retail oracle now shows the target.
@@ -370,9 +385,9 @@ wrong value is harder to diagnose than one that fails loudly.
 The honest measure of progress here is not "does it run" but **how far into the
 game's own code it gets before it needs something we have not modelled**. The
 measured figure is **20,000,001 instructions** (the budget) ending in the
-steady-state dialog-setup loop at `0x00422db9`, after message delivery, the
-Blowfish cipher and the MIX-read fix. Before the stack-leak fix it was 1,011,817
-instructions ending in `ExitProcess(1)`.
+intro-movie playback pump at `0x00488800` (and `0x0064e156` at an 80M budget),
+after the dialog, CD, Blowfish and narrow-flag fixes. Before the stack-leak fix
+it was 1,011,817 instructions ending in `ExitProcess(1)`.
 Each stop is a precise, actionable finding rather than a wall, because the
 harness reports the stop EIP, the instruction bytes there, the containing
 function and generated source line, and the ordered import calls -- and

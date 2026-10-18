@@ -393,7 +393,7 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: **70 checks passed** (measured this session). Not
+`tools/test_tools.py`: **72 checks passed** (measured this session). Not
 golden-count assertions -- every one is a regression test for a defect that
 actually shipped, or a differential test against an independent implementation.
 Four are proven to fail when the defect is reintroduced (mutating
@@ -613,8 +613,9 @@ calls, `boot.py --strict` exits 0.
 
 **Superseded by later commits:** message delivery (`f3011ca`) made the loop
 dispatch, the Blowfish cipher (`345aae7`) replaced the identity copy, and the
-MIX-read/teardown fixes carried the run into the steady-state dialog-setup loop
-at `0x00422db9` with **0 unmapped calls** and `--strict` exiting 0.
+MIX-read/teardown fixes carried the run into the dialog loop, and the later
+dialog/narrow-flag fixes carried it to the intro-movie pump at `0x00488800`,
+with **0 unmapped calls** and `--strict` exiting 0.
 
 ### [x] Write `DDSURFACEDESC` fields where the game reads them
 The game's `DSurface` wrapper (`0x4874c0`/`0x487ad0`) reads `dwRGBBitCount` at
@@ -739,10 +740,11 @@ index: key `82060323...`, ciphertext `2ce3171bdbecb40e` decrypts to
 regression test; `tools/test_tools.py` now runs **70** checks.
 
 Measured at that commit: the page-table exhaustion at `0x00a006b0` was
-**gone**. The later MIX-read, disasm, tracker and `idiv` fixes moved the stop to
-the steady-state dialog-setup loop at `0x00422db9`; the current measurement is
-`GetMessage=1 PeekMessage=827 DispatchMessage=1 CreateWindowExA=1`, coverage
-52,833 / 4,641 of 45,947, **0 unmapped, 0 imbalances**, `--strict` exit 0. The
+**gone**. The later MIX-read, disasm, tracker, `idiv`, dialog and narrow-flag
+fixes moved the stop to the intro-movie pump at `0x00488800`; the current
+measurement is `GetMessage=1 PeekMessage=5 DispatchMessage=1 CreateWindowExA=1`,
+coverage 55,798 / 4,767 of 45,947, **0 unmapped, 0 imbalances**, `--strict` exit
+0. The
 game's own `SetKey(56, 82060323...)` and the correct decryptions are visible in
 `TS_FILE_TRACE`.
 
@@ -918,13 +920,12 @@ recovered stream contains only 32-bit `div`/`idiv` (no 8/16-bit forms), so there
 is no live 8/16-bit defect. Tests: `test_machine_div` (the boot case, sign
 combinations, overflow, divide-by-zero, and a 200,000-pair differential sweep)
 and `test_win32_surface_lock` (slot 25, five arguments, ESP returns at
-`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **70 checks**.
+`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **72 checks**.
 
 Measured with `TS_ROOT=.../gamedir`: the idiv is passed. New stop is **budget
-exhaustion at `0x00422db9` after 20,000,001 instructions**, depth 28, inside
-`sub_00422d64 +0x55` (a row-copy loop calling the virtual memcpy at
-`0x006764c0`); `GetMessage=1 PeekMessage=827 DispatchMessage=1
-CreateWindowExA=1`; coverage **52,833 / 4,641 of 45,947**; **0 unmapped calls,
+exhaustion at `0x00488800` after 20,000,001 instructions** with `TS_CD`, depth
+19, inside `sub_0048875c +0xa4`; `GetMessage=1 PeekMessage=5 DispatchMessage=1
+CreateWindowExA=1`; coverage **55,798 / 4,767 of 45,947**; **0 unmapped calls,
 0 stack imbalances**; `--strict` exits 0.
 
 ### [x] The game is alive in a dialog-setup loop — fixed
@@ -946,7 +947,8 @@ handles (0 for an undeclared ID); `Set/GetWindowLongA` carry `DWLP_USER`;
 keep state; `DestroyWindow`/`EndDialog` free children; `EnumChildWindows`,
 `Set/GetDlgItemTextA`, `SendDlgItemMessageA`, `GetDlgCtrlID`, `GetClassNameA`
 are real. A CD drive model (`TS_CD` maps `D:` to a host root, `DRIVE_CDROM`,
-label `TS1`) was added, with a `win32-dialog` test (**71 checks**).
+label `TS1`) was added, with a `win32-dialog` test (**71 checks at that commit;
+now 72**).
 
 **The infinite loop had a second cause:** `SetViewportOrgEx`/`SetWindowOrgEx`
 take **4** arguments, and the stubs popped 3. Two calls leaked 8 bytes inside
@@ -960,36 +962,52 @@ shipped text ("Please insert a Tiberian Sun CD into the CD-ROM drive."), and
 what remains is the game's **genuine CD-absence retry**, which dispatches
 messages. The next root cause is the narrow-width flag defect below.
 
-### [ ] Narrow-width flag helpers are wrong
-**The next root cause, proven by the dialog lane.** `Machine.h`'s `f_sub`/
-`f_add`/`f_inc`/`f_dec`/`f_log` derive SF/OF from bit 31, while `cmp8/sub8/
-add8/inc8/dec8/test8` (and the 16-bit forms) pass a zero-extended result. Every
-`JLE`/`JG` on a byte is wrong. Two measured consequences:
-- `FUN_0068667c` (the game's own vsprintf) always takes the `jg` at `0x6866c1`
-  for `%`, so formats are copied literally: `GetDriveTypeA("%c:\")`,
-  `CreateFileA("EXPAND%02d.MIX")`, `MessageBoxA("%s\n\n%s")`.
-- `FUN_004a7600` (GetCDClass) scans `c:`..`z:` with `cmp8(BL,0x7a); jle`; it
-  exits after `c`, so the CD drive list is empty and `Force_CD_Available`
-  re-prompts forever.
+### [x] Narrow-width flag helpers are wrong — fixed
+**Was the next root cause after the dialog fix.** `Machine.h`'s `f_sub`/`f_add`/
+`f_inc`/`f_dec`/`f_log` derived SF/OF from bit 31, while the 8/16-bit operations
+passed a zero-extended result, so every `JLE`/`JG` on a byte was wrong. Two
+measured consequences: `FUN_0068667c` (the game's own vsprintf) copied formats
+literally (`GetDriveTypeA("%c:\")`, `CreateFileA("EXPAND%02d.MIX")`), and
+`FUN_004a7600` (GetCDClass) stopped its `c:`..`z:` scan after `c`, so
+`Force_CD_Available` re-prompted forever.
 
-Scratch proof: sign-extending the narrow results makes the CD prompt disappear,
-raises coverage **56,011 -> 61,792 / 5,166**, and moves the stop to the VQA movie
-decode loop in `FUN_00679360` (`0x0067961A` at 80M, `PeekMessage=314,392`).
+**Fixed in `f2e6ca9`.** `Machine.h` now has width-aware
+`f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`; all 8/16-bit
+arithmetic/comparison feeds the width, 32-bit is unchanged. `test_tools.py` is
+now **72** checks and compares every flag against the CPU's own flags via inline
+asm, including the `0x7f`/`0x80` boundary and the vsprintf `%` classification;
+mutation-proven (18 assertions fail with the old derivation).
 
-*Fix:* correct SF/OF/ZF/CF/AF/PF for 8/16-bit operations (sign-extend for flag
-derivation or pass the width), add byte/word comparison tests including the
-`0x7f`/`0x80` boundary and the vsprintf `%` case, and fix the generator's
-hard-coded `SetViewportOrgEx`/`SetWindowOrgEx` arity (4, not 3) so a regeneration
-does not restore the wrong table values.
-*Done when:* the flag vectors pass, the CD list scans correctly, and the boot with
-`TS_CD` reaches the next stop (expected the VQA movie decode loop).
+**`19ee16c`** then fixed the generator's hard-coded
+`SetViewportOrgEx`/`SetWindowOrgEx` arity (4, not 3); the regenerated table diff
+is exactly those two rows and `--stack-check` is 342/0.
 
-### [ ] The VQA movie decode loop
-**Expected next stop after the narrow-flag fix.** The scratch run reaches
-`FUN_00679360` (`0x0067961A`) with `PeekMessage=314,392` at an 80M budget. The
-game is playing/decoding `WWLOGO.VQA`/`STARTUP.VQA`; the model needs whatever
-that loop consumes (VQA decode, frame timing, surface presentation). Scope it
-after the flag fix lands; do not assume the movie path is the same as the menu.
+Measured with `TS_CD` (the modelled `D:`): the CD path is correct end-to-end —
+`CreateFileA("D:\TS1.dsk")` succeeds, `GetDriveTypeA` no longer receives `%c:\`,
+and the game enumerates `EXPAND99..EXPAND00` (100 files), proving `%02d`. At 20M
+the stop is `0x00488800` (`sub_0048875c +0xa4`), coverage **55,798 / 4,767**; at
+80M the stop is `0x0064e156` (`sub_0064e14d +0x9`), depth 24, `GetMessage=1
+PeekMessage=312,674 DispatchMessage=1 CreateWindowExA=1`, coverage **61,817 /
+5,171**; 0 unmapped, 0 imbalances, `--strict` exits 0.
+
+### [ ] The intro-movie playback pump — current blocker
+**The VQA decoder never executes.** At 80M the stop is `0x0064e156`
+(`sub_0064e14d +0x9`) inside the intro-movie playback pump `sub_0064dff0`
+(loop `0x64e0b8..0x64e242`). The VQA decoder (`0x679090`/`sub_00679360`) is never
+entered, and coverage freezes at **61,817 from 40M to 80M**.
+
+The stream object (`ESI=0x508991e0`) has `[+0x150]=0x18` (the initialized bit
+set), so `sub_0067c920` skips setup, reads the frame callback at `[+0x54]`
+(NULL), and returns **-1**; the pump treats -1/-10 as "retry". `TS_WATCH` on
+`+0x54` records no store. The stream is otherwise alive: read callback
+`+0x44=0x64e920`, buffer `+0x764`, dimensions 800x480.
+
+This is the **unreconstructed MS*/AVI layer**, not a missing import: all 341
+imports resolve, and only `WSOCK32!#116` and `OLEAUT32!#33` are generic,
+unrelated stubs. A movie-stream lane is investigating now. The movie path is
+**not working**; do not claim it or the menu is reached.
+*Done when:* the decoder executes, coverage advances past 61,817, and the next
+stop is named.
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and
@@ -1030,21 +1048,24 @@ First run: `CreateFileA("\\.\MONO")` -- the sound device name.
 *Note:* this did not itself move the stop; the instruction count rose from
 1,011,817 to 7,038,765 when the stack leak was fixed, to 20,000,001 (the
 budget, at the message loop) when COM registration was fixed, to the CRT exit
-path once message delivery and Blowfish landed, and now to the steady-state
-dialog-setup loop at `0x00422db9` after the MIX-read and teardown fixes.
+path once message delivery and Blowfish landed, to the dialog-setup loop after
+the MIX-read and teardown fixes, and now to the intro-movie playback pump
+(`0x00488800` at 20M, `0x0064e156` at 80M) once the dialog and narrow-flag fixes
+landed. Use `TS_CD` to model `D:`.
 
 ### [x] Make the boot a one-command measurement
 `tools/boot.py` builds (cached), runs with a budget and a timeout, and prints
 instructions, depth, stop/fault EIP with instruction bytes, import calls by name,
 the last N call targets, coverage and unmapped-target classification. Measured:
-`python3 tools/boot.py` builds (0 of 492 units compiled on a warm cache) and
-reports **20,000,001 instructions** (budget exhausted at `0x00422db9`, depth 28,
-inside `sub_00422d64 +0x55`), **message loop reached and dispatching**
-(`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`),
-**52,833 distinct instructions / 4,641 of 45,947 functions entered**, and **0
-unmapped calls, 0 stack imbalances**. `--no-build --strict` is the gate: it
-exits **0**. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild` and
-`--no-build` are documented in the tool's header.
+`python3 tools/boot.py` (with `TS_CD`) reports **20,000,001 instructions** (budget
+exhausted at `0x00488800`, depth 19, `sub_0048875c +0xa4`), **message loop
+reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`,
+`DispatchMessage=1`), **55,798 distinct instructions / 4,767 of 45,947 functions
+entered**, and **0 unmapped calls, 0 stack imbalances**. At `--budget 80000000`
+the stop is `0x0064e156`, coverage **61,817 / 5,171**, `PeekMessage=312,674`.
+`--no-build --strict` is the gate: it exits **0**. `--json`, `--watch`,
+`--imports N`, `--budget N`, `--rebuild`, `--no-build` and the `TS_CD` drive
+model are documented in the tool's header.
 *Done when:* `python3 tools/boot.py` reproduces the boot and reports it. **Met.**
 
 ## Standing caveats
@@ -1056,11 +1077,16 @@ exits **0**. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild` and
 - The link test now **passes** (exit 0, 492 TUs, 20,000,001 instructions,
   message loop reached and dispatching); the boot has **0 unmapped calls, 0
   stack imbalances**, and `boot.py --strict` exits 0.
-- **Message delivery is fixed** (`f3011ca`): `WM_ACTIVATEAPP` is queued, the
-  WndProc at `0x65ba70` runs, `DAT_007b2e50` becomes 1, and the game leaves the
-  `PeekMessage` spin. The game is now alive in a steady-state **dialog-setup
-  loop** (52,858 instructions / 4,643 functions at 200M), because the dialog
-  layer is fake — the current blocker queued above.
+- **Message delivery is fixed** (`f3011ca`) and the **dialog layer is real**
+  (`f576607` + `c81c1f5`): `CreateDialogIndirectParamA` reads LANGUAGE.DLL's own
+  dialog templates, sends `WM_INITDIALOG`, and `DispatchMessage` runs. The
+  narrow-width flag defect is fixed (`f2e6ca9`) and the CD path works end-to-end
+  with `TS_CD` (`D:\TS1.dsk`, `EXPAND99..00`).
+- **The current blocker is the intro-movie playback pump**
+  (`sub_0064dff0`, `0x0064e156` at 80M): the VQA decoder never executes because
+  the stream's frame callback `[+0x54]` is NULL and `sub_0067c920` returns -1,
+  which the pump retries. This is the unreconstructed MS*/AVI layer, not a
+  missing import. The movie path is **not working**; neither is the menu.
 - **The Blowfish cipher is implemented and proven** (`345aae7`), and the MIX
   index read is fixed: all 27 blocks are read and the 17 records match
   `tools/mix.py` 17/17.

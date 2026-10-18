@@ -20,26 +20,30 @@ The recovered **machine code is transcribed**, not stubbed: 45,947 functions
 instruction lines (100%, 0 unmodelled), rendered against the machine model in
 `src/handwritten/Machine.h`. The whole tree — 492 translation units — **links
 into a program**, and that program runs the original PE entry point against the
-model: **20,000,001 instructions** (the budget) ending at `0x00422db9`
-(`sub_00422d64 +0x55`), with **`CreateWindowExA=1`, `GetMessage=1`,
-`PeekMessage=827`, `DispatchMessage=1`** — the game's own **message loop**,
-reached and dispatching. Coverage is **52,833 distinct instructions; 4,641 of
-45,947 recovered functions entered**, freezing at 52,858 / 4,643 at a 200M
-budget. **0 unmapped calls, 0 stack imbalances**; `boot.py --strict` exits 0 and
+model: with `TS_CD` (the modelled `D:`), **20,000,001 instructions** (the budget)
+ending at `0x00488800` (`sub_0048875c +0xa4`), with **`CreateWindowExA=1`,
+`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`** — the game's own
+**message loop**, reached and dispatching. The CD path is correct
+(`D:\TS1.dsk`, `EXPAND99..00`), the dialogs are real (LANGUAGE.DLL's templates),
+and the narrow-width flag fix makes the vsprintf/CD-scan paths correct. Coverage
+is **55,798 distinct instructions; 4,767 of 45,947 recovered functions entered**
+at 20M, and **61,817 / 5,171** at an 80M budget, where the stop is `0x0064e156`.
+**0 unmapped calls, 0 stack imbalances**; `boot.py --strict` exits 0 and
 `tools/link_test.py` passes (exit 0). A full `./tools/pipeline.sh` ran exit 0 in
 the disasm-correction lane (8m51s, per `todo.md`); it was not re-run here.
 
-The game is **alive in a steady-state dialog-setup loop**: the dialog layer is
-fake (`CreateDialogIndirectParamA` creates no window and sends no
-`WM_INITDIALOG`, `GetDlgItem` returns a constant, `PeekMessageA` returns 0), so
-it repeats the same setup forever. That is the current blocker and the layer
-does **not** work yet.
+The game then reaches the **intro-movie playback pump** (`sub_0064dff0`), which
+is the current blocker: the VQA decoder never executes because the stream's
+frame callback `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump
+retries; coverage freezes at 61,817 / 5,171 from 40M. This is the unreconstructed
+MS*/AVI layer, not a missing import. The movie path is **not working**, and the
+menu is not reached.
 
 The **retail** binary, run under Wine with the CD and a 640x480x16 screen
 (`tools/wine_env.sh`), reaches its **main menu** (screenshot md5
 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s). That is the
-differential oracle: the model reaches message delivery and MIX reading, but not
-the menu.
+differential oracle: the model reaches message delivery, the CD/MIX path and
+real dialogs, but not the movie or the menu.
 
 The retail oracle also measured what `blowfish.dll` registers
 (`re/out/blowfish_oracle.md`, `tools/oracle_blowfish.py`,
@@ -301,14 +305,16 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   `link_test.py` reports `341 of 341 IAT slots written` and `0 with no stub`.
   The old "16,383 calls read 0" claim described the pre-`Image.h` model and is
   retracted.
-- **The game is alive in a steady-state dialog-setup loop.** The dialog layer is
-  fake (`CreateDialogIndirectParamA`, `GetDlgItem`, `PeekMessageA`), so
-  `DispatchMessage` stays 1 and coverage freezes at 52,858 / 4,643. This is the
-  current blocker; the layer does **not** work yet.
+- **The game reaches the intro-movie playback pump, and the movie does not
+  play.** The VQA decoder never executes because the stream's frame callback
+  `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump retries;
+  coverage freezes at 61,817 / 5,171. This is the unreconstructed MS*/AVI layer,
+  not a missing import. The movie path and the menu are **not reached**.
 - **The boot has 0 unmapped calls and 0 stack imbalances**; the link test passes
   and `boot.py --strict` exits 0.
-- **The Blowfish cipher and the MIX index read are fixed.** All 27 index blocks
-  are read and the 17 records match `tools/mix.py` 17/17.
+- **The Blowfish cipher, the MIX index read and the dialog layer are fixed.**
+  All 27 index blocks are read (17/17 records match `mix.py`), and the game
+  builds its real LANGUAGE.DLL dialogs. The CD path is correct with `TS_CD`.
 - **Shutdown corrupts ESP, but the path is dormant.** WinMain returned with ESP
   `0x11` before the MIX-read fix; the current run never reaches shutdown.
 - **Member layout is verified where expressible; types and ordering are not.**

@@ -45,8 +45,8 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   code (4,285 of 4,289 confirmed, 99.9%)
 - `link_test.py` — links all 492 translation units into a program and runs it;
   measured **OK, exit 0**, message loop reached and dispatching
-  (`GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`), 0 unmapped
-- `test_tools.py` — 70 unit tests for the tools themselves
+  (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped
+- `test_tools.py` — 72 unit tests for the tools themselves
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
   (`determinism`)
 - `gen_win32_stubs.py` — generates `Win32Stubs.h` from the PE import directory
@@ -54,14 +54,16 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   carries `COMCTL32!DllGetVersion`, reached through `GetProcAddress`). It
   refuses to write when a `TS_RET` body's argument count disagrees with `NARGS`;
   `--evidence` reports per-ordinal agreement.
-- `boot.py` — builds and runs the image against the model. Measured:
-  **20,000,001 instructions** (budget) at `0x00422db9` (`sub_00422d64 +0x55`,
-  dialog-setup loop), `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`,
-  `DispatchMessage=1` — message loop **reached and dispatching**; only
-  `MessageBoxA` is the DirectSound warning at `0x484456` (`type=0x30`); **0
-  unmapped calls, 0 stack imbalances**; coverage 52,833 distinct instructions /
-  4,641 of 45,947 functions (200M: 52,858 / 4,643); primary surface
-  `TS_PEEK=0x006beed8`=1. `--no-build --strict` exits **0**.
+- `boot.py` — builds and runs the image against the model. `TS_ROOT` selects the
+  ordinary file root; **`TS_CD`** models `D:` (`DRIVE_CDROM`, label `TS1`).
+  Measured with `TS_CD`: **20,000,001 instructions** (budget) at `0x00488800`
+  (`sub_0048875c +0xa4`, intro-movie pump), `CreateWindowExA=1`,
+  `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1` — message loop **reached
+  and dispatching**; CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA`
+  is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0
+  stack imbalances**; coverage 55,798 distinct instructions / 4,767 of 45,947
+  functions; at `--budget 80000000` the stop is `0x0064e156` and coverage is
+  61,817 / 5,171. `--no-build --strict` exits **0**.
 - `wine_run.sh` / `wine_env.sh` — run the **retail** binary under Wine.
   `wine_env.sh` supplies the CD (`d:`, label `TS1`, `TS1.DSK`) and a
   640x480x16 screen; measured, the retail game reaches its **main menu**
@@ -77,12 +79,13 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
   (`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416).
 
-**Current runtime blocker** (queued in `todo.md`): the dialog layer is fake —
-`CreateDialogIndirectParamA` creates no window and sends no `WM_INITDIALOG`,
-`GetDlgItem` returns a constant, and `PeekMessageA` returns 0 — so the game is
-alive in a steady-state dialog-setup loop and coverage freezes at 52,858 / 4,643.
-The shutdown ESP corruption is dormant (the run never reaches shutdown). The MIX
-index read is fixed (27/27 blocks, 17/17 records).
+**Current runtime blocker** (queued in `todo.md`): the **intro-movie playback
+pump** (`sub_0064dff0`). The VQA decoder never executes because the stream's
+frame callback `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump
+retries; coverage freezes at 61,817 / 5,171 from 40M. This is the unreconstructed
+MS*/AVI layer, not a missing import. The movie path and the menu are **not
+reached**. The dialog layer, CD path, narrow-width flags, MIX index read and
+Blowfish cipher are fixed; the shutdown ESP corruption is dormant.
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the

@@ -5,9 +5,9 @@ Written against HEAD `8ce1ebe`; the figures below were re-measured on
 instead of measured say so. Anything I could not verify says **unverified**.
 Re-measure before trusting this file: `python3 tools/harness.py metrics
 --no-append`. The boot, link-test and oracle figures were re-measured after the
-message-delivery and Blowfish-cipher merge (`boot.py`, `link_test.py`,
-`wine_env.sh`); the full `pipeline.sh` run recorded in `d23d1bf` predates the
-newly reachable shutdown code and was not re-run here.
+dialog, narrow-width-flag and generator-arity merges (`boot.py` with `TS_CD`,
+`link_test.py`, `wine_env.sh`); the full `pipeline.sh` run recorded in
+`todo.md` (exit 0, 8m51s) was not re-run here.
 
 This is not a status report (`PROGRESS.md` is). It is the argument about what to
 do next and what it costs.
@@ -48,8 +48,9 @@ documentation says cannot exist.
 | functions with no direct caller | **31,834 (73.1%)** | direct-edge graph from `callees` |
 | functions reachable from entry `0x6854e3` by direct edges | **69 (0.16%)** | BFS over `callees` |
 | functions declared by the reconstructed headers | **3,024 of 43,557 (6.9%)** | unique `sub_*` in `src/generated/*.cpp` |
-| boot | **20,000,001 instructions** (budget) at `0x00422db9` (`sub_00422d64 +0x55`, dialog-setup loop), **9,132 import calls, 104 distinct imports**, depth 28, **0 unmapped targets, 0 stack imbalances**, message loop **reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`), **52,833 distinct instructions / 4,641 of 45,947 functions entered** (200M: 52,858 / 4,643), primary surface `0x006beed8`=1 | `tools/boot.py` (default `../gamedir`) |
-| link test | **OK, exit 0**, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled | `tools/link_test.py` |
+| boot (20M, `TS_CD`) | **20,000,001 instructions** (budget) at `0x00488800` (`sub_0048875c +0xa4`, intro-movie pump), **3,451 import calls, 93 distinct imports**, depth 19, **0 unmapped targets, 0 stack imbalances**, message loop **reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), **55,798 distinct instructions / 4,767 of 45,947 functions entered**; CD read (`D:\TS1.dsk`, `EXPAND99..00`); primary surface `0x006beed8`=1 | `tools/boot.py` (`TS_CD=../work/cd1`) |
+| boot (80M, `TS_CD`) | **80,000,001 instructions** at `0x0064e156` (`sub_0064e14d +0x9`), depth 24, `PeekMessage=312,674`, coverage **61,817 / 5,171**, frozen from 40M | same |
+| link test | **OK, exit 0**, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled | `tools/link_test.py` |
 | boot strict gate | **exit 0**, 0 garbage call targets | `boot.py --no-build --strict` |
 | retail oracle | reaches the **main menu**, 640x480, screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s | `tools/wine_env.sh` |
 | Win32 surface | **341** PE import-directory thunks, all resolved; the stub table has **342** rows (the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`): **315 with a body, 27 generic** | `link_test.py` / boot |
@@ -63,15 +64,16 @@ In words:
    3,024 of 43,557 functions. Whatever "named" means in the metrics, the tree a
    reader can *call* is 6.9% of the program.
 3. **The runtime is the product.** What exists is a **20-million-instruction**
-   run of the game's own startup that **delivers messages and is alive in a
-   dialog-setup loop**: `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`,
-   `DispatchMessage=1`; the WndProc runs, `DAT_007b2e50` becomes 1, and the MIX
-   index is read correctly. COM registration, message delivery, the Blowfish
-   cipher, the stack tracker, the null teardown calls and signed `idiv` are all
-   fixed; the boot has **0 unmapped calls and 0 stack imbalances**. The current
-   blocker is the **fake dialog layer** (`CreateDialogIndirectParamA` creates no
-   window, `GetDlgItem` is a constant, `PeekMessageA` returns 0), so the game
-   repeats the same setup forever and coverage freezes at 52,858 / 4,643.
+   run of the game's own startup that **delivers messages, reads the CD and the
+   MIX index, and builds its real dialogs**: `CreateWindowExA=1`,
+   `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`. COM registration,
+   message delivery, the dialog layer, narrow-width flags, the Blowfish cipher,
+   the stack tracker, the teardown calls and signed `idiv` are all fixed; the
+   boot has **0 unmapped calls and 0 stack imbalances**. The current blocker is
+   the **intro-movie playback pump** (`sub_0064dff0`): the VQA decoder never
+   executes because the stream's frame callback `[+0x54]` is NULL, so coverage
+   freezes at 61,817 / 5,171 from 40M. That is the unreconstructed MS*/AVI
+   layer, not a missing import.
 4. **The Win32 layer is real where the game has been, and fiction where it has
    not** (`Win32Stubs.h`, read):
    - File I/O: **real** — a host root, case-insensitive paths, a 64-entry handle
@@ -86,10 +88,11 @@ In words:
      MessageBox text is empty because the string table is empty at that point.
 
 So: **structure recovered, instructions transcribed, layout compiler-confirmed,
-and a runtime that has executed 20,000,001 instructions through message delivery
-and MIX reading into a steady-state dialog loop, on a Win32 layer that can load a
-file, create a window, dispatch messages and read the MIX index but cannot yet
-create a real dialog, read a key, fire a timer, or show a pixel.**
+and a runtime that has executed 20,000,001 instructions through message delivery,
+the CD/MIX path and real dialogs into the intro-movie playback pump, on a Win32
+layer that can load a file, create a window, dispatch messages, read the MIX
+index and build dialogs but cannot yet decode a movie, read a key, fire a timer,
+or show a pixel.**
 
 ### The fact the docs do not contain
 
@@ -129,7 +132,7 @@ bytes.
    right). → everything. The retracted `PeekMessage=137,295` is proof: a model
    bug makes every downstream observation fiction. `gen_code.py` now emits
    `ts_tail` continuations — measured this session:
-   `46008 functions transcribed, 918438/918438 instructions modelled, 0
+   `45947 functions transcribed, 912879/912879 instruction lines modelled, 0
    unmodelled`; **12,383 spans continue by tail transfer**, 2 overlap another
    span's instruction and 13 land in unrecovered bytes. The control-flow gate
    now **fails** on a span that ends with neither a transfer nor a registered
@@ -162,6 +165,12 @@ bytes.
    and that includes image mapping, so treat it as an upper bound on cost, not a
    clean throughput. A 30 fps budget is ~330k instructions/frame. If a TS frame
    costs millions, the interpreter is 10–30× too slow. Measure before promising.
+9. **The MS*/AVI movie layer — the current blocker.** The intro pump
+   (`sub_0064dff0`) retries because the stream's frame callback `[+0x54]` is
+   NULL and `sub_0067c920` returns -1; the VQA decoder never executes and
+   coverage freezes at 61,817 / 5,171. The model needs the stream state, frame
+   callback, decode and presentation the movie path consumes. This is not a
+   missing import (all 341 resolve).
 
 **Not on the path:** naming the 2,458 `vfunc_N` slots, source-shaping 45,947
 transcriptions, the last 110 KB of `.text`, re-deriving member offsets. All four
@@ -211,11 +220,18 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
   Blowfish-ECB and proves it against four known-answer vectors and a
   byte-identical `tools/mix.py` cross-check. `1c0db7e` fixes the index read: all
   27 blocks are read and the 17 records match `mix.py` 17/17.
-- **The dialog layer is fake, and that is the current blocker.**
-  `CreateDialogIndirectParamA` creates no window and sends no `WM_INITDIALOG`,
-  `GetDlgItem` returns a constant, and `PeekMessageA` returns 0. The game is
-  alive but repeats the same dialog setup forever; coverage freezes at 52,858 /
-  4,643. Do not claim the dialog layer works.
+- **The dialog layer is real (`f576607` + `c81c1f5`), and the CD path works.**
+  `Win32Stubs.h` reads LANGUAGE.DLL's 60 dialog templates and string table from
+  the module's own `.rsrc`; `CreateDialogIndirectParamA` builds the record,
+  sends `WM_INITDIALOG`, and `DispatchMessage` runs. `TS_CD` models `D:`
+  (`DRIVE_CDROM`, label `TS1`), and the game reads `D:\TS1.dsk` and enumerates
+  `EXPAND99..00`. Narrow-width flags (`f2e6ca9`) and the generator's
+  `SetViewportOrgEx`/`SetWindowOrgEx` arity (`19ee16c`) are fixed too.
+- **The MS*/AVI movie layer is unreconstructed, and that is the current
+  blocker.** The intro pump (`sub_0064dff0`) retries because the stream's frame
+  callback `[+0x54]` is NULL and `sub_0067c920` returns -1; the VQA decoder
+  never executes and coverage freezes at 61,817 / 5,171. The movie path is **not
+  working**, and the menu is not reached.
 - **The shutdown ESP defect is dormant.** WinMain returned at ~7.66M
   instructions with ESP `0x11` (entry `0x2fff84`) before the MIX-read fix; the
   current run never reaches shutdown. It is the same class as the original
@@ -238,9 +254,9 @@ Each has an exit criterion a command can decide. **Units 1–5 are done** (the
 Wine oracle reaches the main menu, the stack leak is fixed, the control-flow gate
 is in `gen_code.py`, boot reports coverage and target classification, and file
 I/O is real); **message delivery, the Blowfish cipher, the MIX index read, the
-stack tracker, the teardown calls and signed `idiv` are also done** (units
-11–17 below). Units 6–10 remain, and **the dialog/input layer (unit 18) is the
-current blocker**.
+stack tracker, the teardown calls, signed `idiv`, the dialog layer, narrow-width
+flags and the generator arity are also done** (units 11–21 below). Units 6–10
+remain, and **the MS*/AVI movie layer (unit 22) is the current blocker**.
 
 1. **Wine oracle (`tools/oracle.py`).** `tools/wine_env.sh` runs the retail game
    with the CD and a 640x480x16 screen; `oracle.py` attaches gdb, breaks at an
@@ -255,9 +271,9 @@ current blocker**.
    **Done.**
 4. **Make the boot report coverage.** `boot.py` prints `coverage: N distinct
    instructions; N of 45,947 recovered functions entered` and classifies unmapped
-   targets (`below 0x1000`, `.rdata`, `elsewhere`). Measured now: 52,833 distinct
-   instructions / 4,641 functions, **0 unmapped**, `--strict` exits **0**.
-   **Done.**
+   targets (`below 0x1000`, `.rdata`, `elsewhere`). Measured now (with `TS_CD`):
+   55,798 distinct instructions / 4,767 functions at 20M, 61,817 / 5,171 at 80M,
+   **0 unmapped**, `--strict` exits **0**. **Done.**
 5. **Real file I/O.** Real `CreateFileA`/`ReadFile`/`WriteFile`/`SetFilePointer`/
    `GetFileSize`/`CloseHandle` over a host root, handles as real objects.
    **Done.**
@@ -307,12 +323,25 @@ only honest way to close the rest.
 16. **Fix the stack-imbalance tracker.** **Done (`d047496`):** 111,682 false
     imbalances -> 0.
 17. **Fix signed `idiv`.** **Done (`16e21fa`):** true signed x86 semantics.
-18. **Implement the dialog/input layer.** **Open — the current blocker.**
-    `CreateDialogIndirectParamA` creates no window and sends no `WM_INITDIALOG`,
-    `GetDlgItem` is a constant, and `PeekMessageA` returns 0, so the game
-    repeats the same dialog setup forever. *Exit:* `DispatchMessageA > 1`,
-    coverage advances past 52,858, the setup loop breaks, and the next stop is
-    named.
+18. **Implement the dialog layer.** **Done (`f576607` + `c81c1f5`):** LANGUAGE.DLL's
+    60 templates and string table are read from the module's `.rsrc`;
+    `CreateDialogIndirectParamA` builds the record and controls, sends
+    `WM_INITDIALOG`, and `DispatchMessage` runs. A CD drive model (`TS_CD`) was
+    added.
+19. **Fix the generator's `SetViewportOrgEx`/`SetWindowOrgEx` arity.** **Done
+    (`19ee16c`):** 4, not 3; `--stack-check` is 342/0.
+20. **Fix narrow-width flags.** **Done (`f2e6ca9`):** width-aware
+    `f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`; the vsprintf `%` and the
+    CD-drive scan are correct, and the flags are compared against the CPU's own.
+    `test_tools.py` is 72 checks.
+21. **Make the CD path work.** **Done:** with `TS_CD`, `CreateFileA("D:\TS1.dsk")`
+    succeeds, `GetDriveTypeA` no longer receives `%c:\`, and `EXPAND99..00` are
+    enumerated.
+22. **Implement the MS*/AVI movie layer.** **Open — the current blocker.** The
+    intro pump (`sub_0064dff0`) retries because the stream's frame callback
+    `[+0x54]` is NULL and `sub_0067c920` returns -1; the VQA decoder never
+    executes and coverage freezes at 61,817 / 5,171. *Exit:* the decoder
+    executes, coverage advances past 61,817, and the next stop is named.
 
 ---
 
@@ -377,7 +406,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     headerless = 1,216). Measured this session.
 11. **RESOLVED — `CONTEXT.md` called `verify.py` "the 8-check gate".** It now
     says nine, describes check 9, and lists `link_test.py` (492 TUs),
-    `test_tools.py` (now 70 checks) and the import distinction (`8467f84`).
+    `test_tools.py` (now 72 checks) and the import distinction (`8467f84`).
 12. **OPEN — the framing error, which is the expensive one.** `ROADMAP.md` §2.3
     used to close with "for a decompilation that is the difference between 'it
     builds' and 'it is the game'". The sentence is gone and §4 now cross-
@@ -452,15 +481,22 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     the five null teardown calls (`IDirectDrawSurface::Lock` popped 4, not 5).
     Measured: 0 unmapped, `--strict` exits 0, link test passes.
 23. **RESOLVED — signed `idiv` (`16e21fa`).** `divmod64` has true signed x86
-    semantics; the old divide-overflow stop is passed. `test_tools.py` is 70
-    checks.
-24. **OPEN (new) — the dialog layer is fake, and that is the current blocker.**
-    `CreateDialogIndirectParamA` creates no window and sends no `WM_INITDIALOG`,
-    `GetDlgItem` returns a constant, and `PeekMessageA` returns 0, so the game is
-    alive in a steady-state setup loop (`DispatchMessage` stays 1; coverage
-    freezes at 52,858 / 4,643). A dialog/input lane is implementing it; do not
-    claim it works.
-25. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
+    semantics; the old divide-overflow stop is passed.
+24. **RESOLVED — the dialog layer (`f576607` + `c81c1f5`).** LANGUAGE.DLL's 60
+    dialog templates and string table are read from the module's `.rsrc`;
+    `CreateDialogIndirectParamA` builds the record and controls, sends
+    `WM_INITDIALOG`, and `DispatchMessage` runs. A CD drive model (`TS_CD`) was
+    added.
+25. **RESOLVED — narrow-width flags (`f2e6ca9`) and generator arity
+    (`19ee16c`).** Width-aware flag derivation fixes the vsprintf `%` and the
+    CD-drive scan; `SetViewportOrgEx`/`SetWindowOrgEx` take 4 arguments and
+    `--stack-check` is 342/0. `test_tools.py` is 72 checks.
+26. **OPEN (new) — the intro-movie playback pump is the current blocker.** The
+    VQA decoder never executes because the stream's frame callback `[+0x54]` is
+    NULL and `sub_0067c920` returns -1; coverage freezes at 61,817 / 5,171. This
+    is the unreconstructed MS*/AVI layer, not a missing import. The movie path
+    and the menu are **not reached**.
+27. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
     `0x11` before the MIX-read fix; the current run never reaches shutdown.
 
 ---

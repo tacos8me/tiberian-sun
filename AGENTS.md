@@ -113,8 +113,8 @@ is generated too.
 | `tools/emit_x86.py` | the operand grammar and per-mnemonic rendering used by both generators; the only place that knows the disassembler's operand text |
 | `tools/link_test.py` | link the whole tree into a program and run it; the only check that can see an undefined symbol |
 | `tools/check_compile.py` | compile a set of generated TUs standalone and fail if any does |
-| `tools/gen_win32_stubs.py` | generates `Win32Stubs.h` from the image's own import directory, so the stub table cannot drift from the **341 PE thunks** across 13 DLLs (309 by name, 32 by ordinal). The table holds **342 rows**: the 341 imports plus `COMCTL32!DllGetVersion`, which the CRT reaches through `GetProcAddress`, not the import directory. Resolution is a property of the 341 IAT slots (`Image.h`: `341 of 341 IAT slots written`); do not write "342/342 resolved". `--evidence` derives argument counts from the recovered instruction stream and reports agreement per ordinal; `--stack-check` drives the table. It **refuses to write** when a `TS_RET` body's argument count and `NARGS` disagree, so an arity defect fails the generator instead of shipping |
-| `tools/boot.py` | one command that builds (cached), boots the image and reports it -- imports called by name, fault/stop EIP with instruction bytes, containing function and generated source line, message-loop state, **coverage** (`distinct instructions; N of 45,947 recovered functions entered`) and **unmapped-target classification** (`below 0x1000`, `.rdata`, `elsewhere`). `--strict` exits non-zero while any garbage call target remains (currently **0**; exit 0); `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild`, `--no-build` |
+| `tools/gen_win32_stubs.py` | generates `Win32Stubs.h` from the image's own import directory, so the stub table cannot drift from the **341 PE thunks** across 13 DLLs (309 by name, 32 by ordinal). The table holds **342 rows**: the 341 imports plus `COMCTL32!DllGetVersion`, which the CRT reaches through `GetProcAddress`, not the import directory. Resolution is a property of the 341 IAT slots (`Image.h`: `341 of 341 IAT slots written`); do not write "342/342 resolved". `--evidence` derives argument counts from the recovered instruction stream and reports agreement per ordinal; `--stack-check` drives the table. It **refuses to write** when a `TS_RET` body's argument count and `NARGS` disagree, so an arity defect fails the generator instead of shipping. `19ee16c` corrected `SetViewportOrgEx`/`SetWindowOrgEx` to 4 arguments; the regenerated table diff is exactly those two rows and `--stack-check` is 342/0 |
+| `tools/boot.py` | one command that builds (cached), boots the image and reports it -- imports called by name, fault/stop EIP with instruction bytes, containing function and generated source line, message-loop state, **coverage** (`distinct instructions; N of 45,947 recovered functions entered`) and **unmapped-target classification** (`below 0x1000`, `.rdata`, `elsewhere`). `--strict` exits non-zero while any garbage call target remains (currently **0**; exit 0); `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild`, `--no-build`. `TS_ROOT` selects the host root for ordinary files; **`TS_CD`** models `D:` (a `DRIVE_CDROM` labelled `TS1`) so the game can find `D:\TS1.dsk` and its MIX files |
 | `tools/ghidra.sh` | decompile the function containing each given address, from a saved Ghidra project (seconds, no re-analysis) |
 | `tools/wine_run.sh` | run the **retail** `GAME.EXE` under Wine, headless: `--trace CHANNEL`, `--dismiss` the startup dialog chain, `--shot PNG` with `--shot-delay N`, `--cd DIR` (maps `d:`, labels it `TS1`, sets the drive type to cdrom) and `--screen WxHxD`. The only oracle this project has |
 | `tools/wine_env.sh` | one command that runs the retail game in the environment it needs to reach its **main menu**: Xvfb at `640x480x16` and a `DRIVE_CDROM` `d:` labelled `TS1` holding `TS1.DSK`. Wraps `wine_run.sh --cd ... --screen 640x480x16 --dismiss --shot`. Measured: GDI/Nod title screen, 640x480, screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s |
@@ -217,27 +217,36 @@ address 0 and the run stops at the first one.
 What the boot does today, measured:
 
 ```
-$ python3 tools/boot.py
+$ TS_CD=../work/cd1 python3 tools/boot.py
 image:  3227799 bytes in 4 sections; 341 of 341 imports resolved, 341 traced
-stop:   instruction budget exhausted at 0x00422db9 after 20000001 instructions, depth 28
-why:    instruction budget exhausted (sub_00422d64 +0x55, a row-copy loop)
+stop:   instruction budget exhausted at 0x00488800 after 20000001 instructions, depth 19
+why:    instruction budget exhausted (sub_0048875c +0xa4)
+  CreateFileA("D:\TS1.dsk") -> .../TS1.DSK (19 bytes)
+  CreateFileA("EXPAND99.MIX") ... CreateFileA("EXPAND00.MIX")   (100 files)
   MessageBoxA(... type 0x00000030) called from 0x00484456 -> IDOK
-message loop: reached   (GetMessage=1 PeekMessage=827 DispatchMessage=1
+message loop: reached   (GetMessage=1 PeekMessage=5 DispatchMessage=1
                          CreateWindowExA=1)
 unmapped calls: 0
-coverage: 52833 distinct instructions; 4641 of 45947 recovered functions entered
+coverage: 55798 distinct instructions; 4767 of 45947 recovered functions entered
 ```
 
+At `--budget 80000000` the stop is `0x0064e156` (`sub_0064e14d +0x9`), depth 24,
+`GetMessage=1`, `PeekMessage=312,674`, `DispatchMessage=1`, `CreateWindowExA=1`,
+coverage **61,817 / 5,171**.
+
 So: the game starts, initialises, shows the expected DirectSound warning, creates
-its window, **delivers `WM_ACTIVATEAPP`**, and then stays **alive in a
-steady-state dialog-setup loop** — no fault, no `ExitProcess`, **0 unmapped
-calls and 0 stack imbalances**; `tools/boot.py --strict` exits **0**. At a 200M
-budget the counters scale (`PeekMessage` 827 → 39,443) while **coverage freezes
-at 52,858 instructions / 4,643 functions**, so the loop makes no progress. The
-dialog layer is fake (`CreateDialogIndirectParamA` creates no window and sends
-no `WM_INITDIALOG`, `GetDlgItem` returns a constant, `PeekMessageA` returns 0);
-that is the current blocker, queued in `todo.md`. The primary-surface check
-passes (`TS_PEEK=0x006beed8` → `1`).
+its window, **delivers `WM_ACTIVATEAPP`**, reads the CD (`TS_CD` models `D:`),
+builds its real dialogs from LANGUAGE.DLL's templates, and then reaches the
+**intro-movie playback pump** (`sub_0064dff0`, loop `0x64e0b8..0x64e242`) — no
+fault, no `ExitProcess`, **0 unmapped calls and 0 stack imbalances**;
+`tools/boot.py --strict` exits **0**. The **VQA decoder never executes**: the
+stream object (`ESI=0x508991e0`) has `[+0x150]=0x18`, so `sub_0067c920` skips
+setup, reads the frame callback `[+0x54]` (NULL), and returns -1; the pump treats
+-1/-10 as "retry". `TS_WATCH` on `+0x54` records no store. Coverage freezes at
+61,817 from 40M to 80M. This is the **unreconstructed MS*/AVI layer**, not a
+missing import (all 341 resolve). The movie path is **not working**, and the
+menu is not reached. The primary-surface check passes (`TS_PEEK=0x006beed8` →
+`1`).
 
 **A correction that matters more than any of this.** An earlier version of this
 file reported `message loop: reached` with `PeekMessage=137,295`. That was wrong,
@@ -294,7 +303,7 @@ eight-slot vtable was recovered from `BLOWFISH.DLL` (slots 3–7 are `SetKey`,
 returns `DSERR_NODRIVER` (no audio, matching retail). A
 `win32-module-exports` regression test covers handle identity, export isolation,
 `*ppv` being written, the IBlowfish methods and ESP balance. (`test_tools.py`
-runs **70** checks now; the module test was one of the additions.)
+runs **72** checks now; the module test was one of the additions.)
 
 **Message delivery is fixed (`f3011ca`).** `CreateWindowExA` queues
 `WM_ACTIVATEAPP` (`0x001c`, `wParam=1`) after the synchronous `WM_CREATE`;
@@ -348,19 +357,38 @@ each call leaked 4 bytes until EBP reached 0 and AlternateSurface was left null.
 
 **Signed `idiv` is fixed (`16e21fa`).** `divmod64` now has true signed x86
 semantics (magnitudes + signs, correct overflow/divide-by-zero, `INT64_MIN / -1`
-handled), so the old divide-overflow stop is passed. `test_tools.py` runs **70**
+handled), so the old divide-overflow stop is passed. `test_tools.py` runs **72**
 checks, including signed-division vectors, a 200,000-pair differential sweep and
 the `IDirectDrawSurface::Lock` 5-argument regression.
 
-**The current blocker is the fake dialog layer.** The game is alive in a
-steady-state dialog-setup loop at `0x00422db9` (`sub_00422d64 +0x55`):
-`CreateDialogIndirectParamA` is `TS_RET(..., 5, 0x00010002)` (no window, no
-`WM_INITDIALOG`), `GetDlgItem` returns the constant `0x00010003`, and
-`PeekMessageA` always returns 0, so `DispatchMessage` stays at 1. At 200M/400M
-budgets the counters scale while coverage freezes at **52,858 instructions /
-4,643 functions**. The CD check is ruled out (a `TS1`/`TS1.DSK` diagnostic
-changed nothing). A dialog/input lane is implementing real dialog creation and
-message delivery; the layer does **not** work yet.
+**The dialog layer is real (`f576607` + `c81c1f5`), and narrow-width flags are
+fixed (`f2e6ca9` + `19ee16c`).** `Win32Stubs.h` reads the module's own PE `.rsrc`
+from disk: `FindResourceA`/`LoadResource`/`LoadStringA` serve LANGUAGE.DLL's
+**60 dialog templates and string table**. `CreateDialogIndirectParamA` builds the
+dialog record and its template controls, sends `WM_INITDIALOG`, and queues a
+scripted `WM_COMMAND`; `GetDlgItem` returns stable per-control handles; the
+window-state calls are real. A CD drive model (`TS_CD` maps `D:` to a host root,
+`DRIVE_CDROM`, label `TS1`) was added. `SetViewportOrgEx`/`SetWindowOrgEx` take
+**4** arguments (the stubs popped 3, leaking 8 bytes and corrupting EBX);
+`19ee16c` fixes the generator's table so a regeneration cannot restore it
+(`--stack-check` 342/0). `Machine.h` now has width-aware
+`f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`, so all 8/16-bit
+arithmetic/comparison derives SF/OF/ZF/CF/AF/PF from the operand width. The
+tests compare every flag against the CPU's own flags via inline asm, including
+the `0x7f`/`0x80` boundary and the vsprintf `%` classification; mutation-proven
+(18 assertions fail with the old derivation). `test_tools.py` is **72** checks.
+
+**The current blocker is the intro-movie playback pump.** At 80M the stop is
+`0x0064e156` (`sub_0064e14d +0x9`) inside `sub_0064dff0` (loop
+`0x64e0b8..0x64e242`). The VQA decoder (`0x679090`/`sub_00679360`) never
+executes: the stream object (`ESI=0x508991e0`) has `[+0x150]=0x18`, so
+`sub_0067c920` skips setup, reads the frame callback `[+0x54]` (NULL), and
+returns -1; the pump treats -1/-10 as "retry". `TS_WATCH` on `+0x54` records no
+store. The stream is otherwise alive (read callback `+0x44=0x64e920`, buffer
+`+0x764`, dimensions 800x480). This is the **unreconstructed MS*/AVI layer**,
+not a missing import (all 341 resolve; only `WSOCK32!#116` and `OLEAUT32!#33` are
+generic and unrelated). A movie-stream lane is investigating; the movie path is
+**not working**.
 
 **Why it used to exit immediately, and the shape of the answer.** The CRT startup
 reads the comctl32 version and, if it is below 4.00.70, shows an error box and
@@ -529,21 +557,22 @@ measurable exit criterion rather than a percentage.
 | Binary recovery | **effectively closed** | **43,557** functions/spans, **95.86%** of `.text` as recovered code; **112,401 B (110 KB)** unattributed, classified in `out/text_data.json` as **213** static switch tables (6,388 B), **102** switch index tables (145 B), **105,492 B** of alignment padding, and **376 B in 46 runs** reported verbatim rather than forced into a category. 99.99% of `.text` is attributed as code or data. |
 | Structural reconstruction | **strong** | 749/749 classes, **9,810** vtable slots, 0 unseeded, every constructor a real entry point |
 | Code transcription | **complete** | **43,557** recovered function spans, transcribed as **45,947** functions (43,557 starts + **2,390** tail entries) and **912,879** instruction lines, 100% modelled, 0 unmodelled |
-| Verification | **9 checks green, link test green** | `verify.py` passes all nine (263/263, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS; about 6 s last timed). `link_test.py` exits **0** (`link: OK`, 492 TUs, message loop reached and dispatching, 0 unmapped). `test_tools.py` runs **70** checks. A full `./tools/pipeline.sh` ran **exit 0** in the disasm-correction lane (8m51s, per `todo.md`); it was not re-run in this worktree |
+| Verification | **9 checks green, link test green** | `verify.py` passes all nine (263/263, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS; about 6 s last timed). `link_test.py` exits **0** (`link: OK`, 492 TUs, message loop reached and dispatching, 0 unmapped). `test_tools.py` runs **72** checks. A full `./tools/pipeline.sh` ran **exit 0** in the disasm-correction lane (8m51s, per `todo.md`); it was not re-run in this worktree |
 | **Semantics** | **~9%** | 5,557 of 9,810 slots carry a name (56.6%), but only **917 distinct names** and **281 distinct semantic** ones — most of the coverage is shared-stub propagation. 291 members named across 20 classes; `e2e_rules.py` resolves 96.2% of them against the shipped `rules.ini` |
 | **Modifiability** | **minimal** | there is still no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is the hand-written headers |
-| **Behaviour** | **alive in a steady-state dialog-setup loop** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`). The game creates its window, **dispatches messages** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=827`, `DispatchMessage=1`), reads the MIX index correctly, and then repeats the same dialog setup. The run consumes the full **20,000,001-instruction budget** at `0x00422db9` (`sub_00422d64 +0x55`, depth 28); coverage **52,833 distinct instructions; 4,641 of 45,947 recovered functions entered**, freezing at 52,858 / 4,643 at 200M. **0 unmapped calls, 0 stack imbalances**; `boot.py --strict` exits **0**. The blocker is the **fake dialog layer** (`CreateDialogIndirectParamA` creates no window, `GetDlgItem` is a constant, `PeekMessageA` returns 0); it does **not** work yet. The only message box is the expected DirectSound warning at `0x484456` (`type=0x30`). The **retail binary reaches its main menu** under `tools/wine_env.sh` |
+| **Behaviour** | **reaches the intro-movie playback pump; the movie does not play** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`). With `TS_CD` the game reads the CD (`D:\TS1.dsk`, `EXPAND99..00`), builds its real LANGUAGE.DLL dialogs, dispatches messages (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), and reaches the intro-movie pump `sub_0064dff0`. At 20M the stop is `0x00488800` (`sub_0048875c +0xa4`), coverage **55,798 / 4,767**; at 80M it is `0x0064e156` (`sub_0064e14d +0x9`), depth 24, `PeekMessage=312,674`, coverage **61,817 / 5,171**, frozen from 40M. **0 unmapped calls, 0 stack imbalances**; `boot.py --strict` exits **0**. The VQA decoder never runs because the stream's frame callback `[+0x54]` is NULL and `sub_0067c920` returns -1; this is the unreconstructed MS*/AVI layer. The movie path and the menu are **not reached**. The **retail binary reaches its main menu** under `tools/wine_env.sh` |
 
 So: *the binary is explained, its instructions are transcribed, the layout is
-compiler-confirmed, and the game's own startup now runs cleanly into its own
-dialog loop.* The model creates a window, dispatches `WM_ACTIVATEAPP`, reads the
-MIX index, and is **alive with no fault and no unmapped calls** — but the dialog
-layer is fake, so it repeats the same setup forever without input. There is no
-renderer, and the retail binary gets to its main menu while the model does not.
-The binding constraint is no longer recovery, transcription or layout — all
-three are done. It is **semantics, source-shaping and the model's runtime (the
-dialog/input layer, rendering, timers)**, and the honest headline is that the
-source is still barely named and not editable as source.
+compiler-confirmed, and the game's own startup now runs cleanly through real
+dialogs and the CD check into the intro-movie pump.* The model creates a window,
+dispatches messages, reads the MIX index and the CD, and is **alive with no
+fault, no unmapped calls and no stack imbalances** — but the MS*/AVI movie layer
+is unreconstructed, so the decoder never runs and the game retries the pump.
+There is no renderer, and the retail binary gets to its main menu while the model
+does not. The binding constraint is no longer recovery, transcription or layout —
+all three are done. It is **semantics, source-shaping and the model's runtime
+(the MS*/AVI movie layer, rendering, timers)**, and the honest headline is that
+the source is still barely named and not editable as source.
 
 Two corrections that matter when sizing the rest:
 
@@ -626,7 +655,7 @@ header content, 220/220 inheritance, **1,317/1,317** member offsets across
 compiling `offsetof` assertions for the recovered member offsets at `-m32`,
 which confirms **3,073/3,073** asserted offsets. The transcription
 faithfulness gate verifies all **45,947** functions instruction-for-instruction,
-and `tools/test_tools.py` runs **70** checks with four mutation-proven.
+and `tools/test_tools.py` runs **72** checks with four mutation-proven.
 `tools/harness.py determinism --run` last measured **497** artifacts
 byte-identical across two clean runs — the recovered data *and* the generated
 C++ (*not re-run in this session*).
@@ -741,7 +770,7 @@ keep in mind:
   Wine" as "is playable under Wine", but do read it as "reaches its own menu".
 - **Test the tools, not only their output.** `tools/verify.py` checks artifacts;
   a tool can be wrong in a way that produces self-consistent output and nothing
-  notices. `tools/test_tools.py` holds 70 checks, each a regression test for a
+  notices. `tools/test_tools.py` holds 72 checks, each a regression test for a
   defect that shipped or a differential test against an independent
   implementation, and four of them are mutation-proven to fail when the defect
   is reintroduced. If a test cannot fail, it is not worth the runtime.
@@ -786,11 +815,12 @@ largest are **2,458 header virtual declarations remaining `vfunc_N`** (5,557
 `(class, slot)` pairs carry a name, but only 917 names are distinct), **3,235 of
 3,526 non-vptr members unnamed**, and **the transcription is not source-shaped**.
 
-The runtime blocker is **the fake dialog layer**: the game is alive in a
-steady-state dialog-setup loop because `CreateDialogIndirectParamA` creates no
-window and sends no `WM_INITDIALOG`, `GetDlgItem` returns a constant, and
-`PeekMessageA` returns 0, so `DispatchMessage` stays at 1. A dialog/input lane is
-implementing it now; the layer does **not** work yet.
+The runtime blocker is **the intro-movie playback pump** (`sub_0064dff0`, loop
+`0x64e0b8..0x64e242`): the VQA decoder never executes because the stream's frame
+callback `[+0x54]` is NULL and `sub_0067c920` returns -1, which the pump retries;
+coverage freezes at 61,817 from 40M to 80M. This is the unreconstructed MS*/AVI
+layer, not a missing import. The movie path is **not working**, and the menu is
+not reached. A movie-stream lane is investigating.
 
 The shutdown ESP corruption (WinMain returns with ESP `0x11`) is **dormant, not
 fixed**: the current run never reaches shutdown. Keep it queued for when it does.
