@@ -3408,7 +3408,7 @@ void sub_00524010(void)
     ts::insn(0x005240bdu); ts::test8(AH, 0x41u);   //   0x005240bd  test     ah, 0x41
     ts::insn(0x005240c0u); if (!M.zf) { goto L_005240ce; }   //   0x005240c0  jne      0x5240ce
     ts::insn(0x005240c2u); ts::f_push((long double)ts::ld_f64(6922600));   //   0x005240c2  fld      qword ptr [0x69a168]
-    ts::insn(0x005240c8u); ts::f_arith(1, 1, 0, false, false);   //   0x005240c8  fsub     st(1)
+    ts::insn(0x005240c8u); ts::f_arith(1, 0, 1, false, false);   //   0x005240c8  fsub     st(1)
     ts::insn(0x005240cau); ts::st_f64(ESP.d + 0x1c, (double)ts::f_pop());   //   0x005240ca  fstp     qword ptr [esp + 0x1c]
     L_005240ce:;
     ts::insn(0x005240ceu); ECX.d = 0x7d4850u;   //   0x005240ce  mov      ecx, 0x7d4850
@@ -3470,7 +3470,7 @@ void sub_0052409e(void)
     ts::insn(0x005240bdu); ts::test8(AH, 0x41u);   //   0x005240bd  test     ah, 0x41
     ts::insn(0x005240c0u); if (!M.zf) { goto L_005240ce; }   //   0x005240c0  jne      0x5240ce
     ts::insn(0x005240c2u); ts::f_push((long double)ts::ld_f64(6922600));   //   0x005240c2  fld      qword ptr [0x69a168]
-    ts::insn(0x005240c8u); ts::f_arith(1, 1, 0, false, false);   //   0x005240c8  fsub     st(1)
+    ts::insn(0x005240c8u); ts::f_arith(1, 0, 1, false, false);   //   0x005240c8  fsub     st(1)
     ts::insn(0x005240cau); ts::st_f64(ESP.d + 0x1c, (double)ts::f_pop());   //   0x005240ca  fstp     qword ptr [esp + 0x1c]
     L_005240ce:;
     ts::insn(0x005240ceu); ECX.d = 0x7d4850u;   //   0x005240ce  mov      ecx, 0x7d4850
@@ -3506,7 +3506,7 @@ void sub_005240b5(void)
     ts::insn(0x005240bdu); ts::test8(AH, 0x41u);   //   0x005240bd  test     ah, 0x41
     ts::insn(0x005240c0u); if (!M.zf) { goto L_005240ce; }   //   0x005240c0  jne      0x5240ce
     ts::insn(0x005240c2u); ts::f_push((long double)ts::ld_f64(6922600));   //   0x005240c2  fld      qword ptr [0x69a168]
-    ts::insn(0x005240c8u); ts::f_arith(1, 1, 0, false, false);   //   0x005240c8  fsub     st(1)
+    ts::insn(0x005240c8u); ts::f_arith(1, 0, 1, false, false);   //   0x005240c8  fsub     st(1)
     ts::insn(0x005240cau); ts::st_f64(ESP.d + 0x1c, (double)ts::f_pop());   //   0x005240ca  fstp     qword ptr [esp + 0x1c]
     L_005240ce:;
     ts::insn(0x005240ceu); ECX.d = 0x7d4850u;   //   0x005240ce  mov      ecx, 0x7d4850

@@ -13,6 +13,12 @@ adding one: if it cannot fail, it is not worth the runtime.
   emit_x86 masking        -- `cmp cx, -1` passed 0xffffffff to a u16 helper
   emit_x86 in/out order   -- every `in` emitted `0x5fu = ts::in_op(EAX.d)`
   emit_x86 loop tails     -- a `loop` out of span emitted a goto to no label
+  emit_x86 x87 one-operand-- D8 `fdiv st(1)` wrote ST(1), not ST(0): the zoom
+                             scale became 108 for every map, and the tactical
+                             renderer wrote a vptr out of bounds
+  gen_headers ownership   -- `ts::rnd::Surface` claimed the global Surface, so
+                             Surface.h was never emitted and three headers did
+                             not compile from a clean tree
   gen_bodies destructors  -- `\\b` before the name meant NO destructor matched
   gen_bodies slot VA      -- vtable-block addresses were not read
   reduce_bases            -- the numContainedBases walk, on a synthetic array
@@ -130,6 +136,66 @@ def test_emit_ret():
 # ---------------------------------------------------------------------------
 # gen_bodies: the declaration pattern and the vtable-block fallback
 # ---------------------------------------------------------------------------
+def test_emit_x87_one_operand():
+    """The D8 one-register form writes ST(0), not ST(i).
+
+    `fdiv st(1)` (D8 F1) is ST(0) = ST(0)/ST(1); the pop form `fdivp st(1)`
+    (DE F1) is ST(1) = ST(1)/ST(0) and pops. Capstone prints both with a single
+    register operand, and the emitter used to give both the pop form's
+    destination. FUN_005a1bd0 computes its zoom scale with `fdiv st(1)`, so the
+    wrong destination stored 140 (the numerator) as the scale instead of
+    140/map_w; the tactical renderer then indexed its 67x108 cell-seen bitmap
+    with a 2125x4176 map-pixel rect and overwrote a TerrainClass vptr.
+    """
+    import emit_x86 as E
+    ctx = E.Ctx(0x1000, 0x1002, 0x1000, 0x1002, None, "", set())
+    eq("x87-fdiv-d8",
+       E._render("fdiv", E.parse_operands("st(1)", 1), ctx),
+       "ts::f_arith(3, 0, 1, false, false);")
+    eq("x87-fsubr-d8",
+       E._render("fsubr", E.parse_operands("st(1)", 1), ctx),
+       "ts::f_arith(1, 0, 1, false, true);")
+    eq("x87-fdivp-de",
+       E._render("fdivp", E.parse_operands("st(1)", 1), ctx),
+       "ts::f_arith(3, 1, 0, true, false);")
+    eq("x87-faddp-de",
+       E._render("faddp", E.parse_operands("st(2)", 1), ctx),
+       "ts::f_arith(0, 2, 0, true, false);")
+
+
+def test_gen_headers_ownership():
+    """A namespace-scoped type must not claim the global class of that name.
+
+    Rendering.h defines `ts::rnd::Surface`; the manifest has a global
+    `class Surface`. The ownership scan matched `^struct Surface` anywhere in a
+    hand-written header, so gen_headers skipped Surface.h. BSurface, DSurface
+    and XSurface then failed to compile from a clean tree (the pipeline wipes
+    src/include), and the failure was invisible while the stale committed
+    Surface.h was still on disk.
+    """
+    import gen_headers as G
+    got = G._global_scope_types(
+        "class Global1 {\n};\n"
+        "namespace ts {\n"
+        "struct Scoped {\n"
+        "};\n"
+        "namespace rnd {\n"
+        "struct Surface {\n"
+        "};\n"
+        "}\n"
+        "}\n"
+        "template <class T> class Global2 {\n"
+        "};\n")
+    check("ownership-global", "Global1" in got and "Global2" in got, str(got))
+    check("ownership-namespaced", "Scoped" not in got and "Surface" not in got,
+          str(got))
+    # A brace inside a comment or a string must not shift the depth and make a
+    # later global type look scoped (or the reverse).
+    got = G._global_scope_types(
+        '// }\nconst char *s = "}";\nstruct AfterNoise {\n};\n')
+    check("ownership-noise", "AfterNoise" in got, str(got))
+
+
 def test_decl_destructor():
     import gen_bodies as G
     # This is the defect that left 214 destructors undefined and the tree
@@ -3546,7 +3612,9 @@ int main() {
 
 def main():
     for fn in (test_emit_masking, test_emit_in_out, test_emit_loop_tail,
-               test_emit_ret, test_decl_destructor, test_slot_va,
+               test_emit_ret, test_emit_x87_one_operand,
+               test_gen_headers_ownership,
+               test_decl_destructor, test_slot_va,
                test_slot0_shared, test_reduce_bases, test_tail_entries,
                test_indirect_tail_targets, test_jump_table_data,
                test_machine_mul, test_machine_div, test_machine_flags,

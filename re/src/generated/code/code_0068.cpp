@@ -2735,12 +2735,12 @@ void sub_004f5dd4(void)
     ts::insn(0x004f5dd4u); ts::st32(EDI.d, 0x3e8u);   //   0x004f5dd4  mov      dword ptr [edi], 0x3e8
     ts::insn(0x004f5ddau); ts::f_push((long double)(ts::i32)ts::ld32(EBP.d));   //   0x004f5dda  fild     dword ptr [ebp]
     ts::insn(0x004f5dddu); ts::f_arith_mem(2, (long double)ts::ld_f64(6952488), false);   //   0x004f5ddd  fmul     qword ptr [0x6a1628]
-    ts::insn(0x004f5de3u); ts::f_arith(3, 1, 0, false, false);   //   0x004f5de3  fdiv     st(1)
+    ts::insn(0x004f5de3u); ts::f_arith(3, 0, 1, false, false);   //   0x004f5de3  fdiv     st(1)
     ts::insn(0x004f5de5u); ts::ts_call_at(0x67faf0u, 0x4f5deau);   //   0x004f5de5  call     0x67faf0
     ts::insn(0x004f5deau); ts::st32(EBP.d, EAX.d);   //   0x004f5dea  mov      dword ptr [ebp], eax
     ts::insn(0x004f5dedu); ts::f_push((long double)(ts::i32)ts::ld32(EBX.d));   //   0x004f5ded  fild     dword ptr [ebx]
     ts::insn(0x004f5defu); ts::f_arith_mem(2, (long double)ts::ld_f64(6952488), false);   //   0x004f5def  fmul     qword ptr [0x6a1628]
-    ts::insn(0x004f5df5u); ts::f_arith(3, 1, 0, false, false);   //   0x004f5df5  fdiv     st(1)
+    ts::insn(0x004f5df5u); ts::f_arith(3, 0, 1, false, false);   //   0x004f5df5  fdiv     st(1)
     ts::insn(0x004f5df7u); ts::ts_call_at(0x67faf0u, 0x4f5dfcu);   //   0x004f5df7  call     0x67faf0
     ts::insn(0x004f5dfcu); { ts::f_set(0, ts::f_peek(0)); (void)ts::f_pop(); }   //   0x004f5dfc  fstp     st(0)
     ts::insn(0x004f5dfeu); ts::st32(EBX.d, EAX.d);   //   0x004f5dfe  mov      dword ptr [ebx], eax

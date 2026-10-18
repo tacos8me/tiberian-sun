@@ -1083,8 +1083,21 @@ def _x87(mnem, ops):
             raise Unmodelled('%s arity' % mnem)
         o = ops[0]
         if isinstance(o, St):
-            return 'ts::f_arith(%d, %d, 0, %s, %s);' % (
-                op, o.depth, 'true' if pop else 'false', 'true' if reverse else 'false')
+            # Two different encodings both print as one register operand:
+            #
+            #   D8 C0+i  fadd st(i)      ST(0) = ST(0) op ST(i)      (no pop)
+            #   DE C0+i  faddp st(i)     ST(i) = ST(i) op ST(0), pop
+            #
+            # The pop forms name their destination explicitly (ST(i)); the
+            # non-pop forms have an IMPLICIT ST(0) destination and st(i) is the
+            # source. Emitting the D8 form as if it wrote ST(i) left ST(0)
+            # holding the divisor, so `fdiv st(1)` stored 140 instead of
+            # 140/map_w and FUN_005a1bd0's zoom scale became 108 for every map.
+            if pop:
+                return 'ts::f_arith(%d, %d, 0, true, %s);' % (
+                    op, o.depth, 'true' if reverse else 'false')
+            return 'ts::f_arith(%d, 0, %d, false, %s);' % (
+                op, o.depth, 'true' if reverse else 'false')
         if isinstance(o, Mem):
             if mnem.startswith('fi'):
                 if o.size == 2:

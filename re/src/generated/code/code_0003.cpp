@@ -3137,9 +3137,9 @@ void sub_0040a6d2(void)
     ts::insn(0x0040a72bu); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x24));   //   0x0040a72b  fild     dword ptr [esp + 0x24]
     ts::insn(0x0040a72fu); ts::st32(ESP.d + 0x2c, EDX.d);   //   0x0040a72f  mov      dword ptr [esp + 0x2c], edx
     ts::insn(0x0040a733u); ts::f_push(ts::f_peek(0));   //   0x0040a733  fld      st(0)
-    ts::insn(0x0040a735u); ts::f_arith(2, 1, 0, false, false);   //   0x0040a735  fmul     st(1)
+    ts::insn(0x0040a735u); ts::f_arith(2, 0, 1, false, false);   //   0x0040a735  fmul     st(1)
     ts::insn(0x0040a737u); ts::f_push(ts::f_peek(2));   //   0x0040a737  fld      st(2)
-    ts::insn(0x0040a739u); ts::f_arith(2, 3, 0, false, false);   //   0x0040a739  fmul     st(3)
+    ts::insn(0x0040a739u); ts::f_arith(2, 0, 3, false, false);   //   0x0040a739  fmul     st(3)
     ts::insn(0x0040a73bu); ts::f_arith(0, 1, 0, true, false);   //   0x0040a73b  faddp    st(1)
     ts::insn(0x0040a73du); ts::st_f64(ESP.d, (double)ts::f_pop());   //   0x0040a73d  fstp     qword ptr [esp]
     ts::insn(0x0040a740u); { ts::f_set(0, ts::f_peek(0)); (void)ts::f_pop(); }   //   0x0040a740  fstp     st(0)
@@ -7411,9 +7411,9 @@ void sub_0040c6ab(void)
 void sub_0040c6d3(void)
 {
     ts::insn(0x0040c6d3u); ts::f_push(ts::f_peek(0));   //   0x0040c6d3  fld      st(0)
-    ts::insn(0x0040c6d5u); ts::f_arith(2, 1, 0, false, false);   //   0x0040c6d5  fmul     st(1)
+    ts::insn(0x0040c6d5u); ts::f_arith(2, 0, 1, false, false);   //   0x0040c6d5  fmul     st(1)
     ts::insn(0x0040c6d7u); ts::f_push(ts::f_peek(2));   //   0x0040c6d7  fld      st(2)
-    ts::insn(0x0040c6d9u); ts::f_arith(2, 3, 0, false, false);   //   0x0040c6d9  fmul     st(3)
+    ts::insn(0x0040c6d9u); ts::f_arith(2, 0, 3, false, false);   //   0x0040c6d9  fmul     st(3)
     ts::insn(0x0040c6dbu); ESP.d = ts::sub32(ESP.d, 0x8u);   //   0x0040c6db  sub      esp, 8
     ts::insn(0x0040c6deu); ts::f_arith(0, 1, 0, true, false);   //   0x0040c6de  faddp    st(1)
     ts::insn(0x0040c6e0u); ts::st_f64(ESP.d, (double)ts::f_pop());   //   0x0040c6e0  fstp     qword ptr [esp]

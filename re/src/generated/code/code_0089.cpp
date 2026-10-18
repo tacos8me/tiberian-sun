@@ -2213,7 +2213,7 @@ void sub_00550798(void)
     ts::insn(0x005507cfu); ts::st32(ESI.d + 0x3c, EAX.d);   //   0x005507cf  mov      dword ptr [esi + 0x3c], eax
     ts::insn(0x005507d2u); ts::f_arith_mem(3, (long double)(ts::i32)ts::ld32(ESP.d + 0x84), false);   //   0x005507d2  fidiv    dword ptr [esp + 0x84]
     ts::insn(0x005507d9u); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x10));   //   0x005507d9  fild     dword ptr [esp + 0x10]
-    ts::insn(0x005507ddu); ts::f_arith(2, 1, 0, false, false);   //   0x005507dd  fmul     st(1)
+    ts::insn(0x005507ddu); ts::f_arith(2, 0, 1, false, false);   //   0x005507dd  fmul     st(1)
     ts::insn(0x005507dfu); ts::ts_call_at(0x67faf0u, 0x5507e4u);   //   0x005507df  call     0x67faf0
     ts::insn(0x005507e4u); ECX.d = EAX.d;   //   0x005507e4  mov      ecx, eax
     ts::insn(0x005507e6u); ts::st32(ESI.d + 0x34, 0x0u);   //   0x005507e6  mov      dword ptr [esi + 0x34], 0

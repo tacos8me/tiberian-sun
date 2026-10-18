@@ -5365,7 +5365,7 @@ void sub_00685dae(void)
     ts::insn(0x00685dd8u); ts::nop();   //   0x00685dd8  wait     
     ts::insn(0x00685dd9u); DL = ts::ld8(EBP.d - 0x9f);   //   0x00685dd9  mov      dl, byte ptr [ebp - 0x9f]
     ts::insn(0x00685ddfu); ts::f_swap(1);   //   0x00685ddf  fxch     st(1)
-    ts::insn(0x00685de1u); ts::f_arith(1, 1, 0, false, false);   //   0x00685de1  fsub     st(1)
+    ts::insn(0x00685de1u); ts::f_arith(1, 0, 1, false, false);   //   0x00685de1  fsub     st(1)
     ts::insn(0x00685de3u); ts::f_test();   //   0x00685de3  ftst     
     ts::insn(0x00685de5u); ts::nop();   //   0x00685de5  wait     
     ts::insn(0x00685de6u); ts::st16(EBP.d - 0xa0, ts::mach().fpu_status);   //   0x00685de6  fnstsw   word ptr [ebp - 0xa0]

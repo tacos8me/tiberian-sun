@@ -4845,12 +4845,12 @@ void sub_00638019(void)
     ts::insn(0x006380bfu); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x34));   //   0x006380bf  fild     dword ptr [esp + 0x34]
     ts::insn(0x006380c3u); ESP.d = ts::sub32(ESP.d, 0x8u);   //   0x006380c3  sub      esp, 8
     ts::insn(0x006380c6u); ts::f_push(ts::f_peek(0));   //   0x006380c6  fld      st(0)
-    ts::insn(0x006380c8u); ts::f_arith(2, 1, 0, false, false);   //   0x006380c8  fmul     st(1)
+    ts::insn(0x006380c8u); ts::f_arith(2, 0, 1, false, false);   //   0x006380c8  fmul     st(1)
     ts::insn(0x006380cau); ts::f_push(ts::f_peek(2));   //   0x006380ca  fld      st(2)
-    ts::insn(0x006380ccu); ts::f_arith(2, 3, 0, false, false);   //   0x006380cc  fmul     st(3)
+    ts::insn(0x006380ccu); ts::f_arith(2, 0, 3, false, false);   //   0x006380cc  fmul     st(3)
     ts::insn(0x006380ceu); ts::f_arith(0, 1, 0, true, false);   //   0x006380ce  faddp    st(1)
     ts::insn(0x006380d0u); ts::f_push(ts::f_peek(3));   //   0x006380d0  fld      st(3)
-    ts::insn(0x006380d2u); ts::f_arith(2, 4, 0, false, false);   //   0x006380d2  fmul     st(4)
+    ts::insn(0x006380d2u); ts::f_arith(2, 0, 4, false, false);   //   0x006380d2  fmul     st(4)
     ts::insn(0x006380d4u); ts::f_arith(0, 1, 0, true, false);   //   0x006380d4  faddp    st(1)
     ts::insn(0x006380d6u); ts::st_f64(ESP.d, (double)ts::f_pop());   //   0x006380d6  fstp     qword ptr [esp]
     ts::insn(0x006380d9u); { ts::f_set(0, ts::f_peek(0)); (void)ts::f_pop(); }   //   0x006380d9  fstp     st(0)
@@ -6337,12 +6337,12 @@ void sub_00638b9c(void)
     ts::insn(0x00638cbeu); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x38));   //   0x00638cbe  fild     dword ptr [esp + 0x38]
     ts::insn(0x00638cc2u); ESP.d = ts::sub32(ESP.d, 0x8u);   //   0x00638cc2  sub      esp, 8
     ts::insn(0x00638cc5u); ts::f_push(ts::f_peek(0));   //   0x00638cc5  fld      st(0)
-    ts::insn(0x00638cc7u); ts::f_arith(2, 1, 0, false, false);   //   0x00638cc7  fmul     st(1)
+    ts::insn(0x00638cc7u); ts::f_arith(2, 0, 1, false, false);   //   0x00638cc7  fmul     st(1)
     ts::insn(0x00638cc9u); ts::f_push(ts::f_peek(2));   //   0x00638cc9  fld      st(2)
-    ts::insn(0x00638ccbu); ts::f_arith(2, 3, 0, false, false);   //   0x00638ccb  fmul     st(3)
+    ts::insn(0x00638ccbu); ts::f_arith(2, 0, 3, false, false);   //   0x00638ccb  fmul     st(3)
     ts::insn(0x00638ccdu); ts::f_arith(0, 1, 0, true, false);   //   0x00638ccd  faddp    st(1)
     ts::insn(0x00638ccfu); ts::f_push(ts::f_peek(3));   //   0x00638ccf  fld      st(3)
-    ts::insn(0x00638cd1u); ts::f_arith(2, 4, 0, false, false);   //   0x00638cd1  fmul     st(4)
+    ts::insn(0x00638cd1u); ts::f_arith(2, 0, 4, false, false);   //   0x00638cd1  fmul     st(4)
     ts::insn(0x00638cd3u); ts::f_arith(0, 1, 0, true, false);   //   0x00638cd3  faddp    st(1)
     ts::insn(0x00638cd5u); ts::st_f64(ESP.d, (double)ts::f_pop());   //   0x00638cd5  fstp     qword ptr [esp]
     ts::insn(0x00638cd8u); { ts::f_set(0, ts::f_peek(0)); (void)ts::f_pop(); }   //   0x00638cd8  fstp     st(0)

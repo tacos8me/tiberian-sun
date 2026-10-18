@@ -1293,17 +1293,17 @@ void sub_00520367(void)
     ts::insn(0x0052037du); ts::st32(ESP.d + 0x20, EDX.d);   //   0x0052037d  mov      dword ptr [esp + 0x20], edx
     ts::insn(0x00520381u); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x20));   //   0x00520381  fild     dword ptr [esp + 0x20]
     ts::insn(0x00520385u); ts::st32(ESP.d + 0x20, ESI.d);   //   0x00520385  mov      dword ptr [esp + 0x20], esi
-    ts::insn(0x00520389u); ts::f_arith(3, 1, 0, false, false);   //   0x00520389  fdiv     st(1)
+    ts::insn(0x00520389u); ts::f_arith(3, 0, 1, false, false);   //   0x00520389  fdiv     st(1)
     ts::insn(0x0052038bu); ts::st_f64(ESP.d + 0x28, (double)ts::f_pop());   //   0x0052038b  fstp     qword ptr [esp + 0x28]
     ts::insn(0x0052038fu); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x20));   //   0x0052038f  fild     dword ptr [esp + 0x20]
     ts::insn(0x00520393u); ts::st32(ESP.d + 0x20, EAX.d);   //   0x00520393  mov      dword ptr [esp + 0x20], eax
     ts::insn(0x00520397u); ts::st_f64(ESP.d + 0x10, (double)ts::f_peek(0));   //   0x00520397  fst      qword ptr [esp + 0x10]
     ts::insn(0x0052039bu); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x20));   //   0x0052039b  fild     dword ptr [esp + 0x20]
-    ts::insn(0x0052039fu); ts::f_arith(3, 1, 0, false, false);   //   0x0052039f  fdiv     st(1)
+    ts::insn(0x0052039fu); ts::f_arith(3, 0, 1, false, false);   //   0x0052039f  fdiv     st(1)
     ts::insn(0x005203a1u); ts::st_f64(ESP.d + 0x30, (double)ts::f_pop());   //   0x005203a1  fstp     qword ptr [esp + 0x30]
     ts::insn(0x005203a5u); { ts::f_set(0, ts::f_peek(0)); (void)ts::f_pop(); }   //   0x005203a5  fstp     st(0)
     ts::insn(0x005203a7u); ts::f_push((long double)ts::ld_f64(6920296));   //   0x005203a7  fld      qword ptr [0x699868]
-    ts::insn(0x005203adu); ts::f_arith(3, 1, 0, false, false);   //   0x005203ad  fdiv     st(1)
+    ts::insn(0x005203adu); ts::f_arith(3, 0, 1, false, false);   //   0x005203ad  fdiv     st(1)
     ts::insn(0x005203afu); ts::st_f64(ESP.d + 0x38, (double)ts::f_pop());   //   0x005203af  fstp     qword ptr [esp + 0x38]
     ts::insn(0x005203b3u); { ts::f_set(0, ts::f_peek(0)); (void)ts::f_pop(); }   //   0x005203b3  fstp     st(0)
     ts::insn(0x005203b5u); ts::f_push((long double)ts::ld_f64(6920296));   //   0x005203b5  fld      qword ptr [0x699868]

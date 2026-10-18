@@ -160,7 +160,7 @@ void sub_005aad87(void)
     ts::insn(0x005aada7u); ts::st32(ESP.d + 0x14, ECX.d);   //   0x005aada7  mov      dword ptr [esp + 0x14], ecx
     ts::insn(0x005aadabu); ts::f_arith_mem(2, (long double)ts::ld_f32(ESP.d + 0x18), false);   //   0x005aadab  fmul     dword ptr [esp + 0x18]
     ts::insn(0x005aadafu); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x14));   //   0x005aadaf  fild     dword ptr [esp + 0x14]
-    ts::insn(0x005aadb3u); ts::f_arith(2, 2, 0, false, false);   //   0x005aadb3  fmul     st(2)
+    ts::insn(0x005aadb3u); ts::f_arith(2, 0, 2, false, false);   //   0x005aadb3  fmul     st(2)
     ts::insn(0x005aadb5u); ts::f_arith(0, 1, 0, true, false);   //   0x005aadb5  faddp    st(1)
     ts::insn(0x005aadb7u); ts::f_push((long double)ts::ld_f32(6962032));   //   0x005aadb7  fld      dword ptr [0x6a3b70]
     ts::insn(0x005aadbdu); ts::f_compare(1, true, false);   //   0x005aadbd  fcomp    st(1)
@@ -211,7 +211,7 @@ void sub_005aadf6(void)
     ts::insn(0x005aae07u); ts::st32(ESP.d + 0x14, EDX.d);   //   0x005aae07  mov      dword ptr [esp + 0x14], edx
     ts::insn(0x005aae0bu); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x14));   //   0x005aae0b  fild     dword ptr [esp + 0x14]
     ts::insn(0x005aae0fu); ts::st32(ESP.d + 0x14, EAX.d);   //   0x005aae0f  mov      dword ptr [esp + 0x14], eax
-    ts::insn(0x005aae13u); ts::f_arith(2, 1, 0, false, false);   //   0x005aae13  fmul     st(1)
+    ts::insn(0x005aae13u); ts::f_arith(2, 0, 1, false, false);   //   0x005aae13  fmul     st(1)
     ts::insn(0x005aae15u); ts::f_push((long double)(ts::i32)ts::ld32(ESP.d + 0x14));   //   0x005aae15  fild     dword ptr [esp + 0x14]
     ts::insn(0x005aae19u); ts::f_arith_mem(2, (long double)ts::ld_f32(ESP.d + 0x18), false);   //   0x005aae19  fmul     dword ptr [esp + 0x18]
     ts::insn(0x005aae1du); ts::f_arith(0, 1, 0, true, false);   //   0x005aae1d  faddp    st(1)
