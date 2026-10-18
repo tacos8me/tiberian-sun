@@ -53,7 +53,7 @@ documentation says cannot exist.
 | boot (2.1B, default timeline) | New Campaign, NOD1, GDI1, OK; `GDI1A.MAP` read; GDI intro plays; stop `0x0067dc4f` (LCW decoder), depth 28, `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage **84,130 / 6,431**, `pages-used 9,029/32,768`; frame 194,131 non-black | same (`--timeout 600`) |
 | boot (4B, ESC skip) | stop `0x0055b0bb` (budget) after 4,000,000,001 instructions, depth 29; coverage **139,250 / 8,682**; pages **12,809/32,768**; 8 surfaces, 12 blits, 769 locks, 0 flips; frame 290,399 non-black (loading screen, md5 `6cb0e1ff…` = `re/out/render_2_6b.png`); **11.7 s wall** | same |
 | boot (100B, ESC skip) | stop `0x0055b0bc` (budget); pages **16,343/32,768**; loader on vector 7/22 with **160,070 entries**; **243.9 s wall** | same |
-| boot (1.2e12, ESC skip) | **fault at `0x00422de0` after 478,970,534,425 instructions**; `page table exhausted: page allocation failed`, pages **1,024,211/2,097,152** (1 refused); **7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere); coverage 158,971 / 9,630; **black frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips); tactical phase **not reached**. A 500B-budget reproduction faulted at the same EIP after 478,968,556,708 instructions (1,023,748 pages; 7,734,028 unmapped, 7 in `.text`), so the flood reproduces in character, not bit-for-bit in length | same |
+| boot (1.2e12, ESC skip) | first wild call **deterministic at step 478,300,935,316** (three runs): `call [edx+0x2c]` at `0x005fa96b` → `0x46000062`, EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2; `FUN_005a34e0`'s bitmap setter wrote 34,062 B before its bitmap (index `67*(-4068)+65 = -272,491`) at `0x005a3558`, corrupting the vptr; `FUN_005a4080` passed a map-pixel rect (`2125x4176`) into the scaled 67x108 surface space. Then **fault at `0x00422de0` after 478,970,534,425 instructions**; pages **1,024,211/2,097,152** (1 refused; ~4.2 GB = the 32-bit VA limit, not a table cap); **7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere); coverage 158,971 / 9,630; **black frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips); tactical phase **not reached** | same |
 | interpreter | **~400M instructions/s** (12-14x the old ~28.6M/s), byte-identical machine state; 4B 11.7 s, 20B 50.2 s, 100B 243.9 s | `test_machine_perf` + boot |
 | frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; vs retail: 102,836 pixels differ (33.48%), mean abs channel diff **1.06/255** over differing pixels (0.35 over frame), 506 pixels >8 | `tools/boot.py --frame` |
 | link test | **OK, exit 0**, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled | `tools/link_test.py` |
@@ -83,7 +83,10 @@ In words:
    faster** (~400M instructions/s) with byte-identical state, so the mission
    load now runs to **479B instructions** before failing: ESC skips the movie,
    the loader's own O(n²) vector growth dominates (at 100B it is on vector 7/22
-   with 160,070 entries), and a 1.2e12-budget run faulted at `0x00422de0` with
+   with 160,070 entries), and the first wild call is deterministic at step
+   478,300,935,316 — `FUN_005a34e0`'s bitmap setter wrote 34,062 bytes before its
+   bitmap because `FUN_005a4080` passed a map-pixel rect into the scaled 67x108
+   surface index space, overwriting a TerrainClass vptr; the resulting flood made
    **7,771,444 unmapped calls** and a black frame. The **tactical phase is not
    reached** and the mission load does **not** complete.
 4. **The Win32 layer is real where the game has been, and fiction where it has
@@ -109,7 +112,8 @@ selectable main menu, the campaign list, and into the GDI campaign's intro movie
 on a Win32 layer that can load a file, create a window, dispatch messages, read
 the MIX index, build dialogs, take scripted input, hit-test a real button,
 populate a listbox, start a mission and show a frame — but cannot yet complete
-the mission load (it reaches 479B instructions and faults on a wild-call flood),
+the mission load (it reaches 479B instructions and faults on a diagnosed
+out-of-bounds bitmap write),
 fire a timer, or play a sound.**
 
 ### The fact the docs do not contain
@@ -198,17 +202,24 @@ bytes.
     (`[Battles] 1=GDI1, 2=NOD1`) feeds listbox 1109 through the model's full
     listbox/trackbar layer; OK selects GDI, `GDI1A.MAP` is read from MAPS01.MIX,
     and the GDI intro movie plays (2.1B stop `0x0067dc4f`, 84,130 / 6,431).
-12. **The 479B wild-call fault — the current blocker.** ESC skips the movie and
-    the loader runs; its own O(n²) vector growth dominates (at 100B it is on
-    vector 7/22 with 160,070 entries). A 1.2e12-budget run reached
-    478,970,534,425 instructions and faulted at `0x00422de0` with the page table
-    refusing a page (1,024,211/2,097,152) and **7,771,444 unmapped calls** (7 in
-    `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`;
-    98,202 elsewhere), wild registers and a black frame. The loader got far past
-    100B, so this is a new pointer-table/stack defect, not the O(n²) estimate.
+12. **The 479B wild call — diagnosed.** ESC skips the movie and the loader runs;
+    its own O(n²) vector growth dominates (at 100B it is on vector 7/22 with
+    160,070 entries). The first wild call is deterministic at step 478,300,935,316
+    (three runs agree): `call [edx+0x2c]` at `0x005fa96b` → `0x46000062`, with
+    EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2. `FUN_005a34e0`'s
+    cell-seen bitmap setter wrote 34,062 bytes before its bitmap (index
+    `67*(-4068)+65 = -272,491`) at `0x005a3558`, corrupting the vptr. The page
+    refusal is the 32-bit process's ~4.2 GB address space, not a table cap. The
+    model executes the game faithfully.
+13. **The visible rect's coordinate space — the current blocker.** `FUN_005a4080`
+    passes a map-pixel rect (`x=-2008, y=28, w=2125, h=4176`) into the scaled
+    67x108 surface index space (scale `[0x710d28+0x1490]`, set in `FUN_005a1bd0`
+    from `min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the screen rect). The
+    divergence to find is the zoom/scale math (x87 rounding, integer conversion,
+    map dimensions, or a transcription); a clamp or wider bitmap would mask it.
     The **tactical phase is not reached** and the mission load does **not**
     complete.
-13. **The interpreter — done.** 12-14x faster (~400M instructions/s vs
+14. **The interpreter — done.** 12-14x faster (~400M instructions/s vs
     ~28.6M/s) with byte-identical machine state; `test_machine_perf` pins the
     hot path and is mutation-proven.
 
@@ -276,11 +287,14 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
   and OK starts the GDI campaign: `GDI1A.MAP` is read and the GDI intro movie
   plays (2.1B stop `0x0067dc4f`, 194,131 non-black frame). ESC skips the movie
   and the loader runs: its own O(n²) vector growth dominates (at 100B it is on
-  vector 7/22 with 160,070 entries), and a 1.2e12-budget run faulted at 479B
-  instructions at `0x00422de0` with **7,771,444 unmapped calls** and a black
-  frame. **The tactical phase is not reached and no mission is rendered.** The
-  nested MIX (`0xa8548fd9`, 317 entries) is mounted and read; the button art is
-  not painted (no `WM_PAINT` to children; retail does not draw it either).
+  vector 7/22 with 160,070 entries). The first wild call is deterministic at
+  step 478,300,935,316: `FUN_005a34e0`'s bitmap setter wrote 34,062 bytes before
+  its bitmap because `FUN_005a4080` passed a map-pixel rect into the scaled
+  67x108 surface index space, overwriting a TerrainClass vptr; the resulting
+  flood made **7,771,444 unmapped calls** and a black frame. **The tactical
+  phase is not reached and no mission is rendered.** The nested MIX
+  (`0xa8548fd9`, 317 entries) is mounted and read; the button art is not painted
+  (no `WM_PAINT` to children; retail does not draw it either).
 - **The VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls in 600 s, so
   model time barely advances during movies; ESC is the practical route to the
   mission load until the clock/pacing model is improved.
@@ -310,8 +324,8 @@ stack tracker, the teardown calls, signed `idiv`, the dialog layer, narrow-width
 flags, the generator arity, the MS*/AVI movie path, rendering, input, menu
 selection and the campaign list/mission start are also done** (units 11–25
 below), as are **the growable page table, the heap reuse, the interpreter
-speedup and the 479B run (units 26–28)**. Units 6–10 remain, and **the 479B
-wild-call fault (unit 29) is the current blocker**.
+speedup, the 479B run and its diagnosis (units 26–29)**. Units 6–10 remain, and
+**the visible rect's coordinate space (unit 30) is the current blocker**.
 
 1. **Wine oracle (`tools/oracle.py`).** `tools/wine_env.sh` runs the retail game
    with the CD and a 640x480x16 screen; `oracle.py` attaches gdb, breaks at an
@@ -425,12 +439,21 @@ only honest way to close the rest.
     table refusing a page (1,024,211/2,097,152), 7,771,444 unmapped calls and a
     black frame. The loader got far past 100B; the tactical phase was **not**
     reached.
-29. **Find the first wild call in the 479B run.** **Open — the current
-    blocker.** `TS_TRACE` the first `0x606060` call from `sub_004f3b40`, the
-    below-`0x1000` targets, and the page-table refusal address; decide whether a
-    jump-table target is unregistered, a loader buffer overflows, or the address
-    space is exhausted. *Exit:* the wild-call flood is explained and gone, and
-    the run reaches the tactical phase or a new named stop.
+29. **Find the first wild call in the 479B run.** **Done (`6a31165`):** it is
+    deterministic at step 478,300,935,316 — `call [edx+0x2c]` at `0x005fa96b` →
+    `0x46000062`, EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2.
+    `FUN_005a34e0`'s cell-seen bitmap setter wrote 34,062 B before its bitmap
+    (index `67*(-4068)+65 = -272,491`) at `0x005a3558`, corrupting the vptr. The
+    page refusal is the 32-bit process's ~4.2 GB address space, not a table cap.
+30. **Find the zoom/scale divergence behind the coordinate-space mismatch.**
+    **Open — the current blocker.** `FUN_005a4080` passes a map-pixel rect
+    (`x=-2008, y=28, w=2125, h=4176`) into the scaled 67x108 surface index space
+    (scale `[0x710d28+0x1490]`, set in `FUN_005a1bd0` from
+    `min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the screen rect).
+    Decompile those functions and check x87 rounding, integer conversion, map
+    dimensions and the transcription against retail. Do not clamp or widen the
+    bitmap. *Exit:* the out-of-bounds write is gone, the vptr is intact, and the
+    run reaches the tactical phase or a new named stop.
 
 ---
 
@@ -605,15 +628,23 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
 30. **RESOLVED — the interpreter is 12-14x faster (`9243e93` … `6421f30`).**
     ~400M instructions/s with byte-identical machine state; 4B in 11.7 s, 100B
     in 243.9 s. `test_machine_perf` pins the hot path.
-31. **OPEN (new) — the 479B mission-load run goes wild.** A 1.2e12-budget run
-    reached 478,970,534,425 instructions and faulted at `0x00422de0` with
-    1,024,211/2,097,152 pages, **7,771,444 unmapped calls** (7 in `.text`, all
-    `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere)
-    and a black frame. The loader got far past 100B; this is a new
-    pointer-table/stack defect. The tactical phase is **not** reached.
-32. **OPEN (new) — the VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls
+31. **RESOLVED — the 479B wild call is diagnosed (`6a31165`).** The first wild
+    call is deterministic at step 478,300,935,316: `call [edx+0x2c]` at
+    `0x005fa96b` → `0x46000062`, EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc`
+    + 2. `FUN_005a34e0`'s cell-seen bitmap setter wrote 34,062 B before its
+    bitmap (index `67*(-4068)+65 = -272,491`) at `0x005a3558`, corrupting the
+    vptr. The page refusal is the 32-bit process's ~4.2 GB address space, not a
+    table cap; the flood's termination varies between runs, the game state does
+    not. The tactical phase is **not** reached.
+32. **OPEN (new) — the visible rect is in map-pixel space, not surface space.**
+    `FUN_005a4080` passes `x=-2008, y=28, w=2125, h=4176` into the scaled 67x108
+    surface index space (scale `[0x710d28+0x1490]`, set in `FUN_005a1bd0` from
+    `min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the screen rect). The
+    divergence is in the zoom/scale math; do not clamp or widen the bitmap.
+    **The current blocker.**
+33. **OPEN (new) — the VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls
     in 600 s; ESC is the practical route to the mission load meanwhile.
-33. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
+34. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
     `0x11` before the MIX-read fix; the current run never reaches shutdown.
 
 ---

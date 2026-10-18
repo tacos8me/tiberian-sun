@@ -319,15 +319,21 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
   `re/out/render_2_6b.png`). 11.7 s wall.
 - ESC skip at 100B: stop `0x0055b0bc` (budget), pages **16,343 / 32,768**; the
   loader is on vector 7/22 with **160,070 entries** (`TS_PEEK 0x712068`). 243.9 s.
-- ESC skip at a 1.2e12 budget: **fault at `0x00422de0` after 478,970,534,425
-  instructions**, `page table exhausted: page allocation failed` (1,024,211 /
-  2,097,152 pages, 1 refused), **7,771,444 unmapped calls** (7 in `.text`, all
-  `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere),
-  coverage 158,971 / 9,630, **black frame** (9 surfaces, 171 blits, 10,484 locks,
-  0 fills/flips). A 500B-budget reproduction faulted at the same EIP after
-  478,968,556,708 instructions with 1,023,748 pages and 7,734,028 unmapped calls
-  (7 in `.text`, same call sites); the flood reproduces in character, not
-  bit-for-bit in length. The **tactical phase is not reached**.
+- ESC skip at a 1.2e12 budget: the first wild call is **deterministic at step
+  478,300,935,316** (three runs agree): `call dword ptr [edx+0x2c]` at
+  `0x005fa96b` → `0x46000062`, EDX=`0x006a5dfe` = **TerrainClass vtable
+  `0x6a5dfc` + 2**. At step 478,300,008,280, `mov byte ptr [edx], cl` at
+  `0x005a3558` (`FUN_005a34e0`, the "cell seen" bitmap setter) wrote to
+  `0x526dbdc0`: target `0x526d6072` minus bitmap base `[0x711fa4]=0x526de580`
+  gives index `67*(-4068)+65 = -272,491`, landing **34,062 bytes before the
+  bitmap**, on the vptr. The run then **faults at `0x00422de0` after
+  478,970,534,425 instructions**, pages 1,024,211 / 2,097,152 (1 refused;
+  ~4.2 GB is the 32-bit process's own address space, not a table cap),
+  **7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from
+  `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere), coverage
+  158,971 / 9,630, **black frame** (9 surfaces, 171 blits, 10,484 locks,
+  0 fills/flips). The flood's termination varies between runs; the game state is
+  deterministic. The **tactical phase is not reached**.
 
 The interpreter is **12-14x faster** than it was (~400M instructions/s vs
 ~28.6M/s) with byte-identical machine state: `-O2 -fno-pie`, a positive-hit page
@@ -360,8 +366,8 @@ runs and the game leaves the spin. `IBlowfish` is standard Blowfish-ECB, proven
 by four known-answer vectors and a byte-identical `tools/mix.py` cross-check on
 the shipped TIBSUN.MIX index (`2ce3171bdbecb40e` → `110090d97904849a`, count 17,
 body 75,094,416); the Blowfish-era page-table exhaustion at `0x00a006b0` is
-gone (the table now grows; the mission load instead reaches 479B and faults on a
-wild-call flood; see below). The stack
+gone (the table now grows; the mission load instead reaches 479B and faults on
+the diagnosed out-of-bounds bitmap write; see below). The stack
 tracker went from **111,682 false imbalances to 0**, and the five null teardown
 calls had one root cause — `IDirectDrawSurface::Lock` popped 4 arguments instead
 of 5 — now fixed, so the boot has **0 unmapped calls** and `--strict` exits 0.
@@ -404,21 +410,27 @@ intro movie plays. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and
 read; the button art is not painted (no `WM_PAINT` to children; retail does not
 draw it either).
 
-**The current blocker is a wild-call fault at 479B instructions.** ESC at
-model-ms 192,000 skips the movie and the loader runs. The page table is now
+**The current blocker is a coordinate-space mismatch in the mission loader.**
+ESC at model-ms 192,000 skips the movie and the loader runs. The page table is now
 dynamically growable (2,097,152-page cap), so the old fixed 32,768-slot
 exhaustion is gone; the cost is the game's own O(n²) `DynamicVectorClass` growth
 (22 vectors at `this+0x1280` in `sub_005a35b0`, each append through `SetCount`
-`0x55b050` → `0x55b09a`; at 100B it is on vector 7/22 with 160,070 entries). A
-1.2e12-budget run reached **478,970,534,425 instructions** and faulted at
-`0x00422de0` with the page table refusing a page (1,024,211 / 2,097,152) and
-**7,771,444 unmapped calls** — 7 in `.text`, all `0x606060` from
-`sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere — with wild
-registers and a black frame. The loader got far past 100B, so this is a new
-defect (a pointer table or stack going wild), not the O(n²) estimate. **The
-tactical phase is not reached and no mission is rendered.** The VQA frame-wait
-is stub-bound (~68M `PeekMessageA` in 600 s), so ESC is the practical route
-meanwhile.
+`0x55b050` → `0x55b09a`; at 100B it is on vector 7/22 with 160,070 entries). The
+479B fault is diagnosed: the first wild call is deterministic at step
+478,300,935,316, where `FUN_005a34e0`'s cell-seen bitmap setter wrote 34,062
+bytes before its bitmap (index `67*(-4068)+65 = -272,491`) at `0x005a3558`,
+overwriting a TerrainClass vptr (`0x6a5dfc` → `0x6a5dfe`) and sending execution
+through `0x46000062`. The visible rect arrived in **map-pixel space**
+(`x=-2008, y=28, w=2125, h=4176`) from `FUN_005a4080` instead of in the scaled
+67x108 surface index space (scale `[0x710d28+0x1490]`, set in `FUN_005a1bd0`
+from `min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the screen rect). The
+model executes the game faithfully; the divergence to find is the zoom/scale
+math. The resulting 1.2e12-budget run made **7,771,444 unmapped calls** (7 in
+`.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202
+elsewhere) and a black frame; the page refusal is the 32-bit process's ~4.2 GB
+address space, not a table cap. **The tactical phase is not reached and no
+mission is rendered.** The VQA frame-wait is stub-bound (~68M `PeekMessageA` in
+600 s), so ESC is the practical route meanwhile.
 
 **The oracle premise is now inverted.** `tools/wine_env.sh` gives the retail
 binary an X screen at 640x480x16 and a `DRIVE_CDROM` `d:` labelled `TS1` holding
@@ -432,12 +444,14 @@ campaign, and plays the GDI intro; the oracle remains the target for the mission
 UI.
 
 Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
-  1. Find the **first** wild call in the 479B mission-load run, not the flood.
-     Diagnose the page-table refusal address and `sub_004f3b40`; `TS_TRACE` the
-     first `0x606060` call and the below-`0x1000` targets; determine whether the
-     loader is overflowing a buffer, a jump-table target is unregistered, or the
-     address space is exhausted. Exit: the wild-call flood is explained and gone,
-     and the run reaches the tactical phase or a new named stop.
+  1. Find the zoom/scale divergence behind the coordinate-space mismatch.
+     Decompile `FUN_005a1bd0`, `FUN_005a4080`, `FUN_0067faf0` and
+     `FUN_005a34e0`; check the x87 rounding, integer conversion, map dimensions
+     and the transcription against retail. The visible rect must be scaled into
+     surface space before the bitmap index is computed; do **not** ship a clamp
+     or widen the bitmap, which would mask the divergence. Exit: the
+     out-of-bounds write is gone, the vptr is intact, and the run reaches the
+     tactical phase or a new named stop.
   2. Improve the VQA frame pacing: the frame-wait makes ~68M `PeekMessageA` calls
      in 600 s, so model time barely advances during movies. Exit: the movie
      advances on the clock, not the message count, and ESC is optional.
@@ -462,9 +476,11 @@ game's own code it gets before it needs something we have not modelled**. The
 default timeline reaches **2,100,000,001 instructions** (the budget) in the LCW
 video decoder at `0x0067dc4f` during the GDI campaign's intro movie; with ESC the
 mission load runs to **478,970,534,425 instructions (479B)** before faulting at
-`0x00422de0` on a wild-call flood (7,771,444 unmapped calls; the tactical phase
-is not reached). The 20M stop is still `0x00488800`. Before the stack-leak fix
-it was 1,011,817 instructions ending in `ExitProcess(1)`.
+`0x00422de0` on a wild-call flood whose first call is deterministic at step
+478,300,935,316 — an out-of-bounds bitmap write corrupting a TerrainClass vptr
+(7,771,444 unmapped calls; the tactical phase is not reached). The 20M stop is
+still `0x00488800`. Before the stack-leak fix it was 1,011,817 instructions
+ending in `ExitProcess(1)`.
 Each stop is a precise, actionable finding rather than a wall, because the
 harness reports the stop EIP, the instruction bytes there, the containing
 function and generated source line, and the ordered import calls -- and

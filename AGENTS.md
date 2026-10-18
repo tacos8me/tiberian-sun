@@ -277,20 +277,47 @@ After ESC, the mission load runs far past the intro: the loader's own O(n²)
 `DynamicVectorClass` growth (22 vectors at `this+0x1280`, `sub_005a35b0`, each
 append through `SetCount` `0x55b050` → `0x55b09a`) dominates the cost. At a 100B
 budget it is on vector 7/22 with **160,070 entries** (`TS_PEEK` at `0x712068`:
-count and capacity both `0x27146`, growth step 10) and has not finished. A
-1.2e12-budget run reached **478,970,534,425 instructions (479B)** and then
-**faulted at `0x00422de0`** with `page table exhausted: page allocation failed`
-(1,024,211 / 2,097,152 pages, 1 refused) and **7,771,444 unmapped calls** — 7 in
-`.text`, all `0x606060` from `sub_004f3b40`, 7,673,235 below `0x1000`, 98,202
-elsewhere — with wild registers across the top of the 4 GiB space and a **black
-frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips). That is a new
-defect (a pointer table or stack going wild), not the O(n²) estimate: the loader
-got far past 100B before it happened. A 500B-budget reproduction this session
-faulted at the same EIP after **478,968,556,708** instructions with 1,023,748
-pages and 7,734,028 unmapped calls (7 in `.text`, same `0x606060` call sites),
-so the flood reproduces in character but the exact length varies slightly
-between runs. **The tactical phase is not reached and no mission frame is
-rendered.** `tools/boot.py --strict` exits **0** and the link test passes.
+count and capacity both `0x27146`, growth step 10) and has not finished.
+
+**The first wild call is deterministic and diagnosed.** At step
+**478,300,935,316** (three independent runs agree exactly) the game executes
+`call dword ptr [edx+0x2c]` at `0x005fa96b` → `0x46000062` with
+EDX=`0x006a5dfe` = **TerrainClass vtable `0x6a5dfc` + 2** (COL `0x6b6f38`,
+`.?AVTerrainClass@@`). The correct slot `0x2c` is `0x624610`; the misaligned read
+`[0x6a5e2a]` yields `0x46000062`. The vptr byte was corrupted at step
+**478,300,008,280**: `mov byte ptr [edx], cl` at **`0x005a3558`**
+(`FUN_005a34e0`, the "cell seen" bitmap setter) wrote to `0x526dbdc0`, changing
+`0xfc` to `0xfe`. Its target was `0x526d6072`; the bitmap base is
+`[0x711fa4] = 0x526de580`; the index is `67*(-4068)+65 = -272,491` — a negative
+map y — so the write lands **34,062 bytes before the bitmap**, on the object's
+vptr. The 7 in-text `0x606060` calls are the same mechanism on another
+TerrainClass (`0x6a5dfc | 0x00200000 = 0x6a7dfc`, `[0x6a7dfc+0xb4] =
+[0x6a7eb0] = 0x606060`).
+
+**The cause is a coordinate-space mismatch.** `FUN_005a4080` passes a visible
+rect in **map-pixel space** (`x=-2008, y=28, w=2125, h=4176`) into the index
+space of the **scaled 67x108 surface**. The scale lives at `[0x710d28+0x1490]`,
+set in `FUN_005a1bd0` from `min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the
+screen rect. `FUN_005a34e0`'s y check is ineffective (`jge` skips the height
+check when y>=0, and the negative branch can never reject). The model executes
+the game faithfully; the divergence to investigate is the zoom/scale math (x87
+rounding, integer conversion, map dimensions, or a transcription).
+
+The 1.2e12-budget run then produced **7,771,444 unmapped calls** (7 in `.text`,
+all `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere),
+wild registers and a **black frame** (9 surfaces, 171 blits, 10,484 locks, 0
+fills/flips), faulting at `0x00422de0` after 478,970,534,425 instructions. The
+page refusal (1,024,211 / 2,097,152 slots) is the **32-bit process's own address
+space** (~4.2 GB), not a table cap. The flood's exact termination varies between
+runs because the refusal is a host `calloc` at the VA limit; the game state is
+deterministic (three runs stop at the identical first-unmapped step). **The
+tactical phase is not reached and no mission frame is rendered.**
+`tools/boot.py --strict` exits **0** and the link test passes.
+
+**Secondary, unreachable:** the switch index table at `0x48e43c` is classified
+as 1 byte because the gap seeder already created a span at `0x48e43d`; that span
+decodes table data as code. No dword or branch references `0x48e43d`, so it
+never executes; fix it with the next disassembly pass.
 
 **The menu is selectable, and the game leaves it.** LANGUAGE.DLL `RT_DIALOG` 226
 is the menu (306x239 at (167,187)); its six `BS_OWNERDRAW` buttons are:
@@ -337,15 +364,18 @@ files, including the button art. The art is not painted because the model never
 sends `WM_PAINT` to child controls; the retail also draws no buttons in this
 environment, so this is separate and non-blocking.
 
-**The current blocker is the 479B wild-call fault during the mission load.** ESC
-at model-ms 192,000 skips the movie and the loader runs; the page table is now
-dynamically growable (2,097,152-page cap) and no longer the fixed 32,768-slot
+**The current blocker is the coordinate-space mismatch in the mission loader.**
+ESC at model-ms 192,000 skips the movie and the loader runs; the page table is
+now dynamically growable (2,097,152-page cap) and no longer the fixed 32,768-slot
 limit. At 4B the load is clean (`0x0055b0bb`, 12,809 pages, 12 blits, loading
-screen); at 100B it is still on vector 7/22; the 1.2e12-budget run faulted at
-`0x00422de0` after 478,970,534,425 instructions with the wild-call flood above.
-A diagnosis lane is finding the **first** wild call, not the flood. The
-**mission load does not complete**, the tactical phase is not reached, and no
-mission is rendered.
+screen); at 100B it is still on vector 7/22. The 479B fault is diagnosed: the
+first wild call is deterministic at step 478,300,935,316, caused by
+`FUN_005a34e0`'s bitmap setter writing 34,062 bytes before its bitmap because
+`FUN_005a4080` passes a map-pixel rect (`2125x4176`) into the scaled 67x108
+surface index space, overwriting a TerrainClass vptr. The zoom/scale math
+(`[0x710d28+0x1490]`, `FUN_005a1bd0`, `FUN_0067faf0`) is where the divergence
+must be found; a clamp or a wider bitmap would mask it. The **mission load does
+not complete**, the tactical phase is not reached, and no mission is rendered.
 
 **A correction that matters more than any of this.** An earlier version of this
 file reported `message loop: reached` with `PeekMessage=137,295`. That was wrong,
@@ -428,8 +458,8 @@ known-answer vectors and a byte-identical cross-check against `tools/mix.py` on
 the shipped TIBSUN.MIX index: key `82060323...`, ciphertext
 `2ce3171bdbecb40e` decrypts to `110090d97904849a` (count 17, body 75,094,416).
 The Blowfish-era page-table exhaustion at `0x00a006b0` is gone; the table now
-grows, and the mission load instead reaches 479B and faults on a wild-call flood
-(see below).
+grows, and the mission load instead reaches 479B and faults on the diagnosed
+bitmap/vptr overwrite (see below).
 
 **The MIX index read is fixed (`1c0db7e`), and the fix exposed a disasm defect
 (`9e5703f` + `ad62afc`).** The short read was not the pipe or the cipher: the
@@ -546,11 +576,15 @@ to find:
   address; `TS_PEEK=0xADDR[,..]` reads globals at the end of a run (which state is
   the game in?); `TS_SCAN=start,count` reports table entries that are not `.text`
   VAs (a corrupted table); `TS_WATCH=0xADDR` gives the EIP of the first non-zero
-  byte store to an address. `bad_calls` names calls whose target is outside `.text`
-  with no stub, plus the call site; `stack_imbalances` catches a stub whose
-  argument count is wrong; the leak tracker names callees that leave ESP moved.
-  "Is ESP right at this push?" is a question the machine answers in one run and
-  counting pushes by hand answers wrongly.
+  byte store to an address, `TS_WATCH_RING=addr[,..]` the last few;
+  `TS_STOP_UNMAPPED=1` halts at the first unregistered target with registers and
+  target, `TS_HEAP_AT=addr[,..]` names the heap block holding an address,
+  `TS_FOLLOW=addr,count` walks a pointer, and `TS_FUNC_ENTERED=addr[,..]` says
+  whether a function ran. `bad_calls` names calls whose target is outside
+  `.text` with no stub, plus the call site; `stack_imbalances` catches a stub
+  whose argument count is wrong; the leak tracker names callees that leave ESP
+  moved. "Is ESP right at this push?" is a question the machine answers in one
+  run and counting pushes by hand answers wrongly.
 - **Know which gate is slow.** `tools/verify.py` is **6 seconds**; `pipeline.sh`
   is **471 seconds** and the cost is the whole-tree compile and link. Iterate with
   `tools/boot.py` (sub-second after a cached build) and `verify.py`, and spend the
@@ -657,8 +691,8 @@ to find:
 
 ## Current status
 
-Last updated after the interpreter-speed and 479B-fault work. Every figure here
-was re-measured on 2026-10-18 with `python3 tools/harness.py metrics --no-append`,
+Last updated after the 479B diagnosis. Every figure here was re-measured on
+2026-10-18 with `python3 tools/harness.py metrics --no-append`,
 `python3 tools/verify.py src/include build/shim`,
 `python3 tools/verify_members_binary.py`, `python3 tools/test_tools.py`,
 `python3 tools/test_runtime.py`,
@@ -670,8 +704,10 @@ with the default timeline; 4B, 20B and 100B with the ESC-skip script),
 render counters are printed by `boot.py`; the vector fields at 100B are read
 with `TS_PEEK` through `./build/boot_driver`. Re-run these rather than trusting
 this list. The boot and frame figures below were re-measured after the
-interpreter-speed merge; the 479B fault figures are the coordinator's
-1.2e12-budget run, recorded in `todo.md`.
+interpreter-speed merge; the 479B fault figures and the deterministic
+first-wild-call step are the diagnosis lane's three agreeing runs and the
+1.2e12-budget run, recorded in `todo.md`; the 500B reproduction is this
+session's.
 
 **How far off "complete" is this project.** The layers are far apart. Read this
 before quoting any single number. `ROADMAP.md` states each of these as a
@@ -686,7 +722,7 @@ measurable exit criterion rather than a percentage.
 | Verification | **9 checks green, link test green** | `verify.py` passes all nine (265/265, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS; about 6 s last timed). `link_test.py` exits **0** (`link: OK`, 492 TUs, message loop reached and dispatching with the data roots set, 0 unmapped). `test_tools.py` runs **94** checks and `test_runtime.py` **101** (mutation-proven). A full `./tools/pipeline.sh` ran **exit 0** in the disasm-correction lane (8m51s, per `todo.md`); it was not re-run in this worktree |
 | **Semantics** | **~9%** | 5,557 of 9,810 slots carry a name (56.6%), but only **917 distinct names** and **281 distinct semantic** ones — most of the coverage is shared-stub propagation. 291 members named across 20 classes; `e2e_rules.py` resolves 96.2% of them against the shipped `rules.ini` |
 | **Modifiability** | **minimal** | there is still no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is the hand-written headers |
-| **Behaviour** | **starts the GDI campaign and plays the intro; the mission load runs to 479B and faults on a wild-call flood** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`). With `TS_CD`/`TS_DATA` the game reads the CD, builds its real LANGUAGE.DLL dialogs, plays past the intro, **renders the main menu**, and the default timeline clicks New Campaign (six `BS_OWNERDRAW` buttons, real rectangles) → `RT_DIALOG` 148 "Select Campaign:" at step 1,688,503,557. The campaign list comes from shipped `BATTLE.INI` (`[Battles] 1=GDI1, 2=NOD1`); the model's listbox/trackbar layer feeds it and OK selects GDI. `GDI1A.MAP` is read from MAPS01.MIX and the **GDI intro movie plays**: at 2.1e9 the stop is the LCW decoder `0x0067dc4f`, `pages-used 9029/32768`, frame `re/out/mission.png` (194,131 non-black, the GDI title). The interpreter runs at ~400M instructions/s (12-14x faster, byte-identical state). ESC skips the movie; the loader's own O(n²) vector growth dominates (at 100B it is on vector 7/22 with 160,070 entries), and a 1.2e12-budget run **faulted at 479B instructions at `0x00422de0`** with 7,771,444 unmapped calls (7 in `.text`, all `0x606060` from `sub_004f3b40`), 1,024,211/2,097,152 pages and a black frame. **0 unmapped calls and 0 stack imbalances at 20M/2.1B/4B/100B**; `boot.py --strict` exits **0**. **The tactical phase is not reached and no mission is rendered.** The retail binary reaches its main menu under `tools/wine_env.sh` |
+| **Behaviour** | **starts the GDI campaign and plays the intro; the mission load runs to 479B and faults on a diagnosed out-of-bounds bitmap write** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`). With `TS_CD`/`TS_DATA` the game reads the CD, builds its real LANGUAGE.DLL dialogs, plays past the intro, **renders the main menu**, and the default timeline clicks New Campaign (six `BS_OWNERDRAW` buttons, real rectangles) → `RT_DIALOG` 148 "Select Campaign:" at step 1,688,503,557. The campaign list comes from shipped `BATTLE.INI` (`[Battles] 1=GDI1, 2=NOD1`); the model's listbox/trackbar layer feeds it and OK selects GDI. `GDI1A.MAP` is read from MAPS01.MIX and the **GDI intro movie plays**: at 2.1e9 the stop is the LCW decoder `0x0067dc4f`, `pages-used 9029/32768`, frame `re/out/mission.png` (194,131 non-black, the GDI title). The interpreter runs at ~400M instructions/s (12-14x faster, byte-identical state). ESC skips the movie; the loader's own O(n²) vector growth dominates (at 100B it is on vector 7/22 with 160,070 entries), and a 1.2e12-budget run **faulted at 479B instructions at `0x00422de0`** with 7,771,444 unmapped calls (7 in `.text`, all `0x606060` from `sub_004f3b40`), 1,024,211/2,097,152 pages and a black frame. The first wild call is deterministic at step 478,300,935,316: `FUN_005a34e0`'s cell-seen bitmap setter wrote 34,062 bytes before its bitmap (index -272,491) because `FUN_005a4080` passed a map-pixel rect (`2125x4176`) into the scaled 67x108 surface space, overwriting a TerrainClass vptr (`0x6a5dfc` → `0x6a5dfe`). **0 unmapped calls and 0 stack imbalances at 20M/2.1B/4B/100B**; `boot.py --strict` exits **0**. **The tactical phase is not reached and no mission is rendered.** The retail binary reaches its main menu under `tools/wine_env.sh` |
 
 So: *the binary is explained, its instructions are transcribed, the layout is
 compiler-confirmed, and the game's own startup now runs cleanly through real
@@ -696,13 +732,15 @@ window, dispatches messages, reads the MIX index and the CD, renders the menu
 (`out/frame.png`, within 1.06/255 of retail on the pixels that differ), clicks
 New Campaign and OK through the game's own hit-test, reads `GDI1A.MAP`, and
 plays the GDI intro (`re/out/mission.png`, 194,131 non-black). But the mission
-load runs to 479B instructions and then **faults on a wild-call flood at
-`0x00422de0`**, so **the tactical phase is not reached and no mission is
-rendered**. The binding constraint is no longer recovery, transcription or
-layout — all three are done. It is **semantics, source-shaping and the model's
-runtime (the mission loader, the wild pointer/stack, dialog painting, timers,
-input-driven play)**, and the honest headline is that the source is still barely
-named and not editable as source.
+load runs to 479B instructions and then **faults on a diagnosed out-of-bounds
+bitmap write**: a map-pixel rect fed into the scaled surface index space makes
+`FUN_005a34e0` write 34,062 bytes before its bitmap, overwriting a TerrainClass
+vptr and sending execution through `0x46000062`. So **the tactical phase is not
+reached and no mission is rendered**. The binding constraint is no longer
+recovery, transcription or layout — all three are done. It is **semantics,
+source-shaping and the model's runtime (the zoom/scale math, dialog painting,
+timers, input-driven play)**, and the honest headline is that the source is still
+barely named and not editable as source.
 
 Two corrections that matter when sizing the rest:
 
@@ -945,19 +983,20 @@ largest are **2,458 header virtual declarations remaining `vfunc_N`** (5,557
 `(class, slot)` pairs carry a name, but only 917 names are distinct), **3,235 of
 3,526 non-vptr members unnamed**, and **the transcription is not source-shaped**.
 
-The runtime blocker is the **479B wild-call fault during the mission load**. The
-campaign list works and the mission starts (GDI, from `BATTLE.INI`), and the GDI
-intro movie plays. ESC skips it and the loader runs: the page table is now
+The runtime blocker is the **coordinate-space mismatch in the mission loader**.
+The campaign list works and the mission starts (GDI, from `BATTLE.INI`), and the
+GDI intro movie plays. ESC skips it and the loader runs: the page table is now
 dynamically growable, and the cost is the game's own O(n²) vector growth (at 100B
-it is on vector 7/22 with 160,070 entries). A 1.2e12-budget run reached
-478,970,534,425 instructions and faulted at `0x00422de0` with 1,024,211 /
-2,097,152 pages, **7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from
-`sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere) and a **black
-frame**. The loader got far past 100B; the fault is a new defect (a pointer
-table/stack going wild), and a diagnosis lane is finding the first wild call.
-The **tactical phase is not reached and no mission is rendered.** The VQA
-frame-wait is stub-bound (~68M `PeekMessageA` in 600 s), so ESC is the practical
-route meanwhile; it is secondary.
+it is on vector 7/22 with 160,070 entries). The 479B fault is diagnosed: the
+first wild call is deterministic at step 478,300,935,316, where
+`FUN_005a34e0`'s bitmap setter wrote 34,062 bytes before its bitmap (index
+-272,491) because `FUN_005a4080` passed a map-pixel rect (`2125x4176`) into the
+scaled 67x108 surface index space, overwriting a TerrainClass vptr. The
+zoom/scale math (`[0x710d28+0x1490]`, `FUN_005a1bd0`, `FUN_0067faf0`) is the
+divergence to find; a clamp or wider bitmap would mask it. The **tactical phase
+is not reached and no mission is rendered.** The VQA frame-wait is stub-bound
+(~68M `PeekMessageA` in 600 s), so ESC is the practical route meanwhile; it is
+secondary.
 
 The shutdown ESP corruption (WinMain returns with ESP `0x11`) is **dormant, not
 fixed**: the current run never reaches shutdown. Keep it queued for when it does.

@@ -1204,7 +1204,8 @@ game's own `MixFileClass` lookup, `GDI1A.MAP` is in **MAPS01.MIX on CD1** and
 - ESC at model-ms 192,000 skips the movie. At that time the load then faulted at
   step **2,580,698,410** at `0x00a006b0` with the fixed table exhausted
   (32768/32768); the growable page table and heap fix supersede that fault — the
-  load now runs to 479B and fails on the wild-call defect recorded above.
+  load now runs to 479B and fails on the diagnosed out-of-bounds bitmap write
+  recorded above.
 - Frames: `/tmp/default_mission.png` (GDI intro), `/tmp/gdi_mission.png`
   (live-action briefing), `/tmp/gdi_skip.png` (290,399 non-black).
 - Gates: `verify.py` PASSED, `test_tools.py` **94**, `test_runtime.py` 101,
@@ -1474,7 +1475,7 @@ the MIX-read and teardown fixes, to the intro-movie pump after the dialog and
 narrow-flag fixes, through the **rendered main menu** and the campaign dialog,
 and now into the **GDI intro movie** after the listbox/mission-start work
 landed, then (with ESC) into the mission loader, which runs to **479B**
-instructions before a wild-call fault. Use `TS_CD` to model `D:`.
+instructions before the diagnosed bitmap/vptr fault. Use `TS_CD` to model `D:`.
 
 ### [x] Make the boot a one-command measurement
 `tools/boot.py` builds (cached), runs with a budget and a timeout, and prints

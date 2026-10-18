@@ -71,21 +71,41 @@ its own O(n²) `DynamicVectorClass` growth (22 vectors at `this+0x1280`,
 `sub_005a35b0`, each append through `SetCount` `0x55b050` → `0x55b09a`) dominates
 the cost. At a 100B budget it is on vector **7/22** with **160,070 entries**
 (`TS_PEEK 0x712068`: count and capacity `0x27146`, growth step 10) and has not
-finished. A 1.2e12-budget run reached **478,970,534,425 instructions (479B)** and
-then **faulted at `0x00422de0`** with `page table exhausted: page allocation
+finished. **The 479B wild call is diagnosed.** The first wild call is
+deterministic at step **478,300,935,316** (three runs agree): `call dword ptr
+[edx+0x2c]` at `0x005fa96b` → `0x46000062`, with EDX=`0x006a5dfe` =
+**TerrainClass vtable `0x6a5dfc` + 2** (COL `0x6b6f38`, `.?AVTerrainClass@@`).
+The correct slot `0x2c` is `0x624610`; the misaligned read `[0x6a5e2a]` yields
+`0x46000062`. The vptr byte was corrupted at step **478,300,008,280** by
+`mov byte ptr [edx], cl` at **`0x005a3558`** (`FUN_005a34e0`, the "cell seen"
+bitmap setter): target `0x526d6072`, bitmap base `[0x711fa4] = 0x526de580`,
+index `67*(-4068)+65 = -272,491` (a negative map y), so the write lands **34,062
+bytes before the bitmap**, on the object's vptr (`0xfc` → `0xfe`). The 7 in-text
+`0x606060` calls are the same mechanism on another TerrainClass
+(`0x6a5dfc | 0x00200000 = 0x6a7dfc`, `[0x6a7dfc+0xb4] = [0x6a7eb0] = 0x606060`).
+The cause is a **coordinate-space mismatch**: `FUN_005a4080` passes a visible
+rect in **map-pixel space** (`x=-2008, y=28, w=2125, h=4176`) into the index
+space of the **scaled 67x108 surface**. The scale lives at `[0x710d28+0x1490]`,
+set in `FUN_005a1bd0` from `min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the
+screen rect. `FUN_005a34e0`'s y check is ineffective (`jge` skips the height
+check when y>=0, and the negative branch can never reject). The model executes
+the game faithfully; the divergence to investigate is the zoom/scale math (x87
+rounding, integer conversion, map dimensions, or a transcription).
+
+The resulting 1.2e12-budget run reached **478,970,534,425 instructions (479B)**
+and then **faulted at `0x00422de0`** with `page table exhausted: page allocation
 failed` (1,024,211 / 2,097,152 pages, 1 refused) and **7,771,444 unmapped
 calls** — 7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below
 `0x1000`; 98,202 elsewhere — with wild registers across the top of the 4 GiB
 space and a **black frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips;
-coverage 158,971 / 9,630). The loader got far past 100B, so this is a new defect
-(a pointer table or stack going wild), not the O(n²) estimate. A 500B-budget
-reproduction this session faulted at the same EIP after **478,968,556,708**
-instructions with 1,023,748 pages and 7,734,028 unmapped calls (7 in `.text`,
-same `0x606060` call sites), so the flood reproduces in character but the exact
-length varies slightly between runs. **The tactical phase is not reached and no
-mission is rendered.** Separately, the VQA frame-wait path is stub-bound: the
-movie advances only as fast as the model services its wait, so playback pacing
-is not yet the retail pacing.
+coverage 158,971 / 9,630). The page refusal is the **32-bit process's own address
+space** (~4.2 GB), not a table cap; the flood's exact termination varies between
+runs, but the game state is deterministic. **The tactical phase is not reached
+and no mission is rendered.** Separately, the VQA frame-wait path is stub-bound:
+the movie advances only as fast as the model services its wait, so playback
+pacing is not yet the retail pacing. **Secondary, unreachable:** the switch index
+table at `0x48e43c` is classified as 1 byte because the gap seeder created a
+span at `0x48e43d`; no dword or branch references it, so it never executes.
 
 Boot states, all with **0 unmapped calls and 0 stack imbalances**:
 - 20M: stop `0x00488800`, coverage **55,774 / 4,764**, pages **3,538 / 32,768**.
@@ -99,9 +119,11 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
   **290,399** non-black, md5 `6cb0e1fff05f9250adda298e644f1266` = committed
   `re/out/render_2_6b.png` (the GDI loading screen).
 - ESC-skip script, 100B: stop `0x0055b0bc` (budget), pages **16,343 / 32,768**.
-- ESC-skip script, 1.2e12: fault at `0x00422de0` after 478,970,534,425
-  instructions, pages **1,024,211 / 2,097,152**, **7,771,444 unmapped calls**,
-  black frame; tactical phase **not reached**.
+- ESC-skip script, 1.2e12: first wild call deterministic at step
+  **478,300,935,316** (`call [edx+0x2c]` at `0x005fa96b` → `0x46000062`,
+  EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2); fault at `0x00422de0`
+  after 478,970,534,425 instructions, pages **1,024,211 / 2,097,152**,
+  **7,771,444 unmapped calls**, black frame; tactical phase **not reached**.
 `boot.py --strict` exits 0 and `tools/link_test.py` passes (exit 0). A full
 `./tools/pipeline.sh` ran exit 0 in the disasm-correction lane (8m51s, per
 `todo.md`); it was not re-run here. The nested MIX (`0xa8548fd9`, 317 entries,
@@ -390,16 +412,21 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   machine state.** Measured on the mission-load run: 4B in 11.7 s (341.9M/s),
   20B in 50.2 s (398.4M/s), 100B in 243.9 s (410.0M/s); the old rate was
   ~28.6M/s. `test_machine_perf` pins the hot path.
-- **The mission load does not complete: the 479B run goes wild.** The page table
-  is growable now (2,097,152-page cap) and the heap reuses freed blocks, so at 4B
-  the load uses 12,809 pages (50 MB) instead of 377,796 (1.44 GiB) and presents
-  the GDI loading screen (`re/out/render_2_6b.png`, 290,399 non-black). The
-  loader's own O(n²) vector growth dominates (at 100B it is on vector 7/22 with
-  160,070 entries). A 1.2e12-budget run reached 478,970,534,425 instructions and
-  faulted at `0x00422de0` with 1,024,211 / 2,097,152 pages, **7,771,444 unmapped
-  calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below
-  `0x1000`; 98,202 elsewhere) and a black frame. The tactical phase is **not
-  reached** and no mission is rendered. The VQA frame-wait path is also
+- **The mission load does not complete: the 479B wild call is a diagnosed
+  out-of-bounds bitmap write.** The page table is growable now (2,097,152-page
+  cap) and the heap reuses freed blocks, so at 4B the load uses 12,809 pages
+  (50 MB) instead of 377,796 (1.44 GiB) and presents the GDI loading screen
+  (`re/out/render_2_6b.png`, 290,399 non-black). The loader's own O(n²) vector
+  growth dominates (at 100B it is on vector 7/22 with 160,070 entries). The
+  first wild call is deterministic at step 478,300,935,316: `FUN_005a34e0`'s
+  cell-seen bitmap setter wrote 34,062 B before its bitmap (index -272,491)
+  because `FUN_005a4080` passed a map-pixel rect (`2125x4176`) into the scaled
+  67x108 surface space, overwriting a TerrainClass vptr (`0x6a5dfc` →
+  `0x6a5dfe`). The flood then made 7,771,444 unmapped calls (7 in `.text`, all
+  `0x606060`; 7,673,235 below `0x1000`; 98,202 elsewhere) and a black frame;
+  the page refusal is the 32-bit VA limit, not a table cap. The zoom/scale math
+  is the divergence to find. The tactical phase is **not reached** and no
+  mission is rendered. The VQA frame-wait path is also
   stub-bound, so playback pacing is not the retail pacing. The button art is not
   painted (no `WM_PAINT` to children; retail does not draw it either).
 - **The boot has 0 unmapped calls and 0 stack imbalances**; the link test passes
