@@ -5643,11 +5643,23 @@ inline const ImportDef *imports(unsigned *count) {
 }
 
 inline unsigned long &count_of(const char *fn) {
+    // Every stub invocation counts itself, and one stub is usually called
+    // millions of times in a row (PeekMessageA 13.5M times in the 4B run). A
+    // linear strcmp scan of all 342 rows per call measured 14% of that run.
+    // Remember the last name in a COPY: ord_name() returns a rotating static
+    // buffer, so the pointer alone is not a key. A change of name rescans.
+    static char last[64];
+    static unsigned long *slot = 0;
+    if (slot && !std::strcmp(last, fn)) return *slot;
     unsigned n = 0;
     const ImportDef *t = imports(&n);
+    unsigned long *found = &counts()[n];   // everything unnamed shares this bucket
     for (unsigned i = 0; i < n; ++i)
-        if (!std::strcmp(t[i].fn, fn)) return counts()[i];
-    return counts()[n];   // everything unnamed shares the last bucket
+        if (!std::strcmp(t[i].fn, fn)) { found = &counts()[i]; break; }
+    std::strncpy(last, fn, sizeof(last) - 1);
+    last[sizeof(last) - 1] = 0;
+    slot = found;
+    return *found;
 }
 
 inline bool same_dll(const char *a, const char *b);

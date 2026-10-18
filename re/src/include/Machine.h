@@ -367,16 +367,16 @@ inline void mark_map(u8 *map, u32 lo, u32 hi, u32 va) {
     }
 }
 
-// One call per transcribed instruction, emitted by tools/gen_code.py. It is the
-// only per-instruction hook in the model: it keeps eip, counts instructions, and
-// enforces the step budget. When the model has faulted and the caller asked to
-// be halted, it longjmps back so the run stops at the fault instead of walking
-// on with a broken machine.
-inline void insn(u32 va) {
+// Cold half of insn(): tracing, budget enforcement and the halt longjmp. Kept
+// out of line (noinline) so the per-instruction body -- emitted at every one of
+// the 912,879 instruction sites -- stays small enough for the compiler to
+// inline. The order matches the old single body exactly, so a trace recorded on
+// the instruction that exhausts the budget is still taken before the halt.
+#if defined(__GNUC__)
+__attribute__((noinline))
+#endif
+inline void insn_slow(u32 va) {
     Machine &m = mach();
-    m.eip = va;
-    ++m.steps;
-    mark_map(m.exec_map, m.exec_map_lo, m.exec_map_hi, va);
     if (m.trace_va && va == m.trace_va && m.trace_n < 8u) {
         m.trace_esp[m.trace_n] = ESP.d;
         m.trace_eax[m.trace_n] = EAX.d;
@@ -390,6 +390,19 @@ inline void insn(u32 va) {
         if (!m.faulted) { m.step_limit_hit = true; fault("instruction budget exhausted"); }
     }
     if (m.faulted && m.halt) longjmp(*m.halt, 1);
+}
+
+// One call per transcribed instruction, emitted by tools/gen_code.py. It is the
+// only per-instruction hook in the model: it keeps eip, counts instructions,
+// and marks coverage. Anything that only happens on a trace, a budget stop or a
+// halt goes to insn_slow().
+inline void insn(u32 va) {
+    Machine &m = mach();
+    m.eip = va;
+    ++m.steps;
+    mark_map(m.exec_map, m.exec_map_lo, m.exec_map_hi, va);
+    if (m.trace_va || m.faulted || (m.step_limit && m.steps > m.step_limit))
+        insn_slow(va);
 }
 
 inline void unmodelled(u32 va, const char *mnem) {
@@ -438,6 +451,16 @@ struct PageTable {
     u32 peak;       // high-water mark of `used`
     u32 growths;    // rehashes performed
     u32 refused;    // insertions that could not be served (reported as a fault)
+    // A direct-mapped cache of recent page-number -> block hits. The hash probe
+    // is the model's hottest operation: a single `mov eax,[esi+4]` costs one
+    // lookup per byte, and the recovered code's tight copy loops touch a
+    // handful of pages over and over. Measured at 4B, page_in() was 30% of the
+    // run. Only POSITIVE hits are cached, and a page's host block never moves
+    // (resize() rehashes the index, not the blocks), so a hit here is always
+    // the same answer the probe would give. CACHE_SLOTS is a power of two.
+    enum { CACHE_SLOTS = 256 };
+    u32 ckey[CACHE_SLOTS];
+    u8 *cval[CACHE_SLOTS];
     // `initial` and `max` exist so a test -- or a memory-constrained run -- can
     // use a smaller table and reach the refusal path deliberately. Both are
     // rounded down to a power of two; the default is the full 4 GiB space.
@@ -445,6 +468,7 @@ struct PageTable {
                        u32 max = (u32)MAX_SLOTS)
         : key(0), val(0), cap(0), max_slots(0), used(0), peak(0),
           growths(0), refused(0) {
+        for (u32 i = 0; i < (u32)CACHE_SLOTS; ++i) { ckey[i] = EMPTY; cval[i] = 0; }
         max_slots = pow2_floor(max ? max : 1u);
         initial = pow2_floor(initial ? initial : 1u);
         if (initial > max_slots) initial = max_slots;
@@ -482,10 +506,13 @@ inline PageTable &pages() { static PageTable t; return t; }
 // page_in() takes the table explicitly so a test can drive an independent one.
 inline u8 *page_in(PageTable &t, u32 addr) {
     u32 p = addr >> 12;
+    u32 off = addr & 0xfffu;
+    u32 ci = p & (PageTable::CACHE_SLOTS - 1u);
+    if (t.ckey[ci] == p) return t.cval[ci] + off;
     static u8 dummy[4096 + 8];   // only ever reached after fault() has halted
     if (!t.cap) {
         fault("page table exhausted: index allocation failed");
-        return dummy + (addr & 0xfffu);
+        return dummy + off;
     }
     for (;;) {
         u32 mask = t.cap - 1u;
@@ -494,13 +521,16 @@ inline u8 *page_in(PageTable &t, u32 addr) {
         bool empty = false;
         for (u32 probe = 0; probe < t.cap; ++probe) {
             i = (h + probe) & mask;
-            if (t.key[i] == p) return t.val[i] + (addr & 0xfffu);
+            if (t.key[i] == p) {
+                t.ckey[ci] = p; t.cval[ci] = t.val[i];
+                return t.val[i] + off;
+            }
             if (t.key[i] == PageTable::EMPTY) { empty = true; break; }
         }
         if (!empty) {
             ++t.refused;
             fault("page table exhausted: no free slot");
-            return dummy + (addr & 0xfffu);
+            return dummy + off;
         }
         // Grow before the table fills. A full table is not merely slow: with no
         // empty slot every miss becomes a cap-length probe, and the old code's
@@ -510,7 +540,7 @@ inline u8 *page_in(PageTable &t, u32 addr) {
             if (t.cap >= t.max_slots || !t.resize(t.cap << 1)) {
                 ++t.refused;
                 fault("page table exhausted: host allocation failed");
-                return dummy + (addr & 0xfffu);
+                return dummy + off;
             }
             ++t.growths;
             continue;                 // re-probe in the larger index
@@ -519,12 +549,13 @@ inline u8 *page_in(PageTable &t, u32 addr) {
         if (!blk) {
             ++t.refused;
             fault("page table exhausted: page allocation failed");
-            return dummy + (addr & 0xfffu);
+            return dummy + off;
         }
         t.key[i] = p; t.val[i] = blk;
+        t.ckey[ci] = p; t.cval[ci] = blk;
         ++t.used;
         if (t.used > t.peak) t.peak = t.used;
-        return blk + (addr & 0xfffu);
+        return blk + off;
     }
 }
 
@@ -550,13 +581,33 @@ inline void st8 (u32 a, u8 v) {
     }
     std::memcpy(page(a), &v, 1);
 }
-inline u16 ld16(u32 a) { return (u16)((u16)ld8(a) | ((u16)ld8(a + 1) << 8)); }
-inline void st16(u32 a, u16 v) { st8(a, (u8)v); st8(a + 1, (u8)(v >> 8)); }
+// A multi-byte access that does not cross a page boundary is one page lookup
+// and one memcpy instead of one lookup per byte. The byte-wise form stays as
+// the fallback because a straddling access is still correct, and the host is
+// little-endian like the target, so memcpy of the native value is the same
+// bytes the composition would produce. A store whose range contains the write
+// watchpoint still takes the byte path so the watch sees the same EIP and byte.
+inline u16 ld16(u32 a) {
+    if ((a & 0xfffu) <= 0xffeu) { u16 v; std::memcpy(&v, page(a), 2); return v; }
+    return (u16)((u16)ld8(a) | ((u16)ld8(a + 1) << 8));
+}
+inline void st16(u32 a, u16 v) {
+    Machine &m = mach();
+    if ((a & 0xfffu) <= 0xffeu && !(m.watch_va && (u32)(m.watch_va - a) < 2u)) {
+        std::memcpy(page(a), &v, 2); return;
+    }
+    st8(a, (u8)v); st8(a + 1, (u8)(v >> 8));
+}
 inline u32 ld32(u32 a) {
+    if ((a & 0xfffu) <= 0xffcu) { u32 v; std::memcpy(&v, page(a), 4); return v; }
     return (u32)ld8(a) | ((u32)ld8(a + 1) << 8) |
            ((u32)ld8(a + 2) << 16) | ((u32)ld8(a + 3) << 24);
 }
 inline void st32(u32 a, u32 v) {
+    Machine &m = mach();
+    if ((a & 0xfffu) <= 0xffcu && !(m.watch_va && (u32)(m.watch_va - a) < 4u)) {
+        std::memcpy(page(a), &v, 4); return;
+    }
     st8(a, (u8)v); st8(a + 1, (u8)(v >> 8));
     st8(a + 2, (u8)(v >> 16)); st8(a + 3, (u8)(v >> 24));
 }
