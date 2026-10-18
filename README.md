@@ -7,13 +7,16 @@ instruction stream against a model of the x86 machine it was written for.
 
 ## Progress screenshot
 
-![The reconstructed model rendering the Tiberian Sun tactical map and HUD](re/out/frame_500b_centered.png)
+![The reconstructed model rendering the Tiberian Sun tactical map with a selected unit and its move order](re/out/tactical_move_after_7b.png)
 
 *The model's own 640x480 render of the GDI mission: terrain, structures, units
-and a Tiberium field, with the tactical HUD and the mouse cursor. The black at
+and a Tiberium field, with the tactical HUD. The infantry under the green
+bracket is selected, and the red ring is the move order issued by a scripted
+left-click; its `CoordStruct` moves from cell (53,69) to (48,68). The black at
 the top and right is unexplored shroud. The main menu (`re/out/frame.png`), the
-GDI intro (`re/out/mission.png`) and the loading screen
-(`re/out/render_2_6b.png`) are committed alongside it.*
+GDI intro (`re/out/mission.png`), the loading screen
+(`re/out/render_2_6b.png`) and the unselected view
+(`re/out/frame_500b_centered.png`) are committed alongside it.*
 
 ## Status
 
