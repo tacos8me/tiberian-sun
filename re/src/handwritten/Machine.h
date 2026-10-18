@@ -34,6 +34,16 @@
 
 namespace ts {
 
+// Force the per-instruction helpers inline. At -O2 GCC's inliner declines them
+// at many of the thousands of generated call sites, leaving a real call per
+// arithmetic instruction; the 4B profile put ~10% in five flag helpers that are
+// a dozen instructions each. This is a code-generation hint only.
+#if defined(__GNUC__)
+#define TS_HOT_INLINE inline __attribute__((always_inline))
+#else
+#define TS_HOT_INLINE inline
+#endif
+
 typedef unsigned char  u8;
 typedef unsigned short u16;
 typedef unsigned int   u32;
@@ -504,11 +514,16 @@ inline PageTable &pages() { static PageTable t; return t; }
 
 // The one page-table lookup. `page()` is this against the model's single table;
 // page_in() takes the table explicitly so a test can drive an independent one.
-inline u8 *page_in(PageTable &t, u32 addr) {
+// The cache hit is the hot path and stays inline; a miss (probe, growth or the
+// first touch of a page) goes out of line so the inline body is a handful of
+// instructions at every load and store in the transcription.
+#if defined(__GNUC__)
+__attribute__((noinline))
+#endif
+inline u8 *page_in_slow(PageTable &t, u32 addr) {
     u32 p = addr >> 12;
     u32 off = addr & 0xfffu;
     u32 ci = p & (PageTable::CACHE_SLOTS - 1u);
-    if (t.ckey[ci] == p) return t.cval[ci] + off;
     static u8 dummy[4096 + 8];   // only ever reached after fault() has halted
     if (!t.cap) {
         fault("page table exhausted: index allocation failed");
@@ -557,6 +572,13 @@ inline u8 *page_in(PageTable &t, u32 addr) {
         if (t.used > t.peak) t.peak = t.used;
         return blk + off;
     }
+}
+
+TS_HOT_INLINE u8 *page_in(PageTable &t, u32 addr) {
+    u32 p = addr >> 12;
+    u32 ci = p & (PageTable::CACHE_SLOTS - 1u);
+    if (t.ckey[ci] == p) return t.cval[ci] + (addr & 0xfffu);
+    return page_in_slow(t, addr);
 }
 
 inline u8 *page(u32 addr) { return page_in(pages(), addr); }
@@ -634,7 +656,7 @@ inline u8 parity8(u32 r) {
 inline u32 width_mask(int w) { return (w >= 32) ? 0xffffffffu : ((1u << w) - 1u); }
 inline u32 width_sign(int w) { return 1u << (w - 1); }
 
-inline void f_log_w(u32 r, int w) {
+TS_HOT_INLINE void f_log_w(u32 r, int w) {
     Machine &m = mach();
     r &= width_mask(w);
     m.cf = 0; m.of = 0; m.af = 0;   // AF is undefined after a logical op; model 0.
@@ -642,7 +664,7 @@ inline void f_log_w(u32 r, int w) {
     m.sf = (u8)((r & width_sign(w)) ? 1 : 0);
     m.pf = parity8(r);
 }
-inline void f_add_w(u32 a, u32 b, u32 r, int w) {
+TS_HOT_INLINE void f_add_w(u32 a, u32 b, u32 r, int w) {
     Machine &m = mach();
     u32 mask = width_mask(w), sign = width_sign(w);
     a &= mask; b &= mask; r &= mask;
@@ -653,7 +675,7 @@ inline void f_add_w(u32 a, u32 b, u32 r, int w) {
     m.af = (u8)(((a ^ b ^ r) >> 4) & 1);
     m.pf = parity8(r);
 }
-inline void f_sub_w(u32 a, u32 b, u32 r, int w) {
+TS_HOT_INLINE void f_sub_w(u32 a, u32 b, u32 r, int w) {
     Machine &m = mach();
     u32 mask = width_mask(w), sign = width_sign(w);
     a &= mask; b &= mask; r &= mask;
@@ -664,7 +686,7 @@ inline void f_sub_w(u32 a, u32 b, u32 r, int w) {
     m.af = (u8)(((a ^ b ^ r) >> 4) & 1);
     m.pf = parity8(r);
 }
-inline void f_inc_w(u32 a, u32 r, int w) {
+TS_HOT_INLINE void f_inc_w(u32 a, u32 r, int w) {
     Machine &m = mach();
     u32 mask = width_mask(w), sign = width_sign(w);
     a &= mask; r &= mask;
@@ -674,7 +696,7 @@ inline void f_inc_w(u32 a, u32 r, int w) {
     m.af = (u8)(((a ^ 1u ^ r) >> 4) & 1);
     m.pf = parity8(r);
 }
-inline void f_dec_w(u32 a, u32 r, int w) {
+TS_HOT_INLINE void f_dec_w(u32 a, u32 r, int w) {
     Machine &m = mach();
     u32 mask = width_mask(w), sign = width_sign(w);
     a &= mask; r &= mask;
