@@ -147,6 +147,32 @@ struct Machine {
     u32 watch_hits;
     u32 watch_from[8];
     u32 watch_val[8];
+    // TS_WATCH_RING=addr[,addr...] -- the LAST few non-zero byte stores to each
+    // address, with the EIP that made them. The watch above keeps the FIRST
+    // eight, which is the constructor; when an object's vptr is corrupt the
+    // question is what wrote it after the constructor, and only a ring of the
+    // most recent stores answers that.
+    enum { WATCH_RING_ADDRS = 4, WATCH_RING_HITS = 8 };
+    u32 watch_ring_va[WATCH_RING_ADDRS];
+    unsigned watch_ring_n;
+    u32 watch_ring_eip[WATCH_RING_ADDRS][WATCH_RING_HITS];
+    u8  watch_ring_val[WATCH_RING_ADDRS][WATCH_RING_HITS];
+    unsigned long long watch_ring_steps[WATCH_RING_ADDRS][WATCH_RING_HITS];
+    unsigned watch_ring_count[WATCH_RING_ADDRS];
+    // TS_WRITE_GUARD=eip,ptr_addr -- at that instruction, check every byte store
+    // against the heap block whose user pointer is stored at ptr_addr (its
+    // requested size is the heap header's size field). The first store outside
+    // that block is an out-of-bounds write, and naming it beats waiting for the
+    // corrupted object to be called millions of instructions later.
+    u32 write_guard_eip;
+    u32 write_guard_ptr_addr;
+    u32 write_guard_stop;
+    u32 write_guard_bad;
+    u32 write_guard_addr;
+    u32 write_guard_base;
+    u32 write_guard_size;
+    unsigned long long write_guard_step;
+    u32 write_guard_esp, write_guard_eax, write_guard_ecx, write_guard_edx;
     // STACK BALANCE at stub calls. A __stdcall stub owns its arguments: it pops
     // the return address AND them, so ESP after the stub must equal ESP before the
     // call pushed anything. Any stub whose row under- or over-states its argument
@@ -175,6 +201,15 @@ struct Machine {
     unsigned leak_n;
     u32 trace_esi[8];
     u32 trace_edi[8];
+    // The LAST few executions of trace_va, with the first stack argument read
+    // from [esp+4]. A render entry called every frame has thousands of hits;
+    // the first eight are startup, and the one that matters is the last one
+    // before a stop. The argument is what a caller passed (a redraw flag).
+    u32 trace_ring_esp[8];
+    u32 trace_ring_arg[8];
+    u32 trace_ring_eax[8];
+    u32 trace_ring_count;
+    unsigned long long trace_ring_step[8];
     unsigned long stub_dispatches;
     // The argument count the most recent stub popped, recorded by stub_done in
     // Win32Stubs.h. A __stdcall stub owns its arguments, so a correct call ends
@@ -222,12 +257,63 @@ struct Machine {
     // counted separately.
     unsigned long unmapped_in_text;
     unsigned long unmapped_in_gap;
+    // First-N unmapped calls with the register state at the call site. The
+    // 16-slot samples above are target-only, and a flood of garbage (7.7M calls
+    // on the 479B mission-load run) buries the first one. The first calls are
+    // the only ones that say what went wrong: by the time the flood is running
+    // the state is already lost. `kind` is 0 for a `call` and 1 for a tail
+    // transfer. `steps` places the event in the run so a later one can be
+    // bisected to.
+    enum { UNMAPPED_RECS = 64 };
+    struct UnmappedRec {
+        u32 to, from, kind, depth;
+        unsigned long long steps;
+        u32 esp, ebp, eax, ebx, ecx, edx, esi, edi;
+    };
+    UnmappedRec unmapped_rec[UNMAPPED_RECS];
+    unsigned unmapped_rec_n;
+    // In-.text unmapped calls carry the same register state: that is the case
+    // where the target is real code and the pointer chain to it is the defect.
+    struct TextUnmappedRec {
+        u32 to, from, depth;
+        unsigned long long steps;
+        u32 esp, ebp, eax, ecx, edx, esi, edi;
+    };
+    TextUnmappedRec unmapped_text_rec[16];
+    unsigned unmapped_text_rec_n;
+    // TS_STOP_UNMAPPED=1 halts at the first unregistered target with the
+    // machine intact, so a long run ends where the defect starts instead of
+    // where the flood exhausts the page table.
+    u32 stop_on_unmapped;
+    // TS_ESP_GUARD=1 checks ESP at every instruction against the game's stack
+    // range and records the instruction that left it. A wild ESP turns every
+    // later push/ret into a page allocation and an unregistered call; the
+    // interesting event is the instruction that moved it, not the flood.
+    u32 esp_guard;
+    u32 esp_guard_stop;
+    u32 esp_prev;
+    struct EspRec {
+        u32 prev_eip, eip, esp, ebp, eax, ecx, edx;
+        unsigned long long steps;
+    };
+    EspRec esp_bad[8];
+    unsigned esp_bad_n;
+    // Why the page table refused an insertion. `fault_addr` is the address whose
+    // page was demanded; the rest is the table state at that moment, which
+    // separates a wild address from a host allocation failure.
+    u32 fault_addr;
+    u32 fault_page;
+    u32 fault_used;
+    u32 fault_cap;
     // A tail transfer in flight: the VA a transcribed span continues at after
     // it returns. A recovered `jmp` to another span, and a span whose last
     // instruction does not transfer control, both continue the SAME invocation
     // -- the original pushes no return address -- so the dispatcher in ts_call
     // picks this up in place instead of nesting another host frame.
     u32 tail;
+    // The instruction that set `tail`, so an unregistered tail target can name
+    // the `jmp` that produced it rather than the call that started the frame.
+    u32 tail_from;
     u16 fpu_status;
     // Segment registers and the interrupt-enable flag. This model is flat, so
     // segments never affect an address, but the recovered code does push, pop
@@ -330,17 +416,28 @@ inline void reset() {
     m.unmapped_below_1000 = 0;
     m.unmapped_in_rdata = 0;
     m.unmapped_elsewhere = 0;
-    m.tail = 0;
+    m.tail = 0; m.tail_from = 0;
     m.unmodelled_insns = 0;
     m.call_depth = 0;
     m.depth_exceeded = 0;
     m.unmapped_sample_n = 0;
     m.unmapped_text_sample_n = 0;
+    m.unmapped_rec_n = 0;
+    m.unmapped_text_rec_n = 0;
+    m.esp_guard = 0; m.esp_guard_stop = 0; m.esp_bad_n = 0; m.esp_prev = 0;
+    m.stop_on_unmapped = 0;
+    m.fault_addr = 0; m.fault_page = 0; m.fault_used = 0; m.fault_cap = 0;
     m.bad_call_n = 0;
     m.watch_va = 0; m.watch_hits = 0;
+    m.watch_ring_n = 0;
+    for (unsigned wi = 0; wi < (unsigned)Machine::WATCH_RING_ADDRS; ++wi)
+        m.watch_ring_count[wi] = 0;
+    m.write_guard_eip = 0; m.write_guard_ptr_addr = 0; m.write_guard_stop = 0;
+    m.write_guard_bad = 0; m.write_guard_addr = 0; m.write_guard_base = 0;
+    m.write_guard_size = 0; m.write_guard_step = 0;
     m.stub_dispatches = 0; m.stub_last_nargs = 0; m.stub_last_depth = 0;
     m.stack_imbalances = 0; m.stack_imbalance_n = 0;
-    m.trace_va = 0; m.trace_n = 0; m.leak_n = 0;
+    m.trace_va = 0; m.trace_n = 0; m.trace_ring_count = 0; m.leak_n = 0;
     m.bad_calls = 0;
     if (m.exec_map && m.exec_map_hi > m.exec_map_lo)
         std::memset(m.exec_map, 0, (m.exec_map_hi - m.exec_map_lo + 7u) / 8u);
@@ -382,24 +479,59 @@ inline void mark_map(u8 *map, u32 lo, u32 hi, u32 va) {
 // the 912,879 instruction sites -- stays small enough for the compiler to
 // inline. The order matches the old single body exactly, so a trace recorded on
 // the instruction that exhausts the budget is still taken before the halt.
+// Defined with the memory helpers below; declared here because the trace ring
+// reads the caller's stack argument.
+inline u32 ld32(u32 a);
+
 #if defined(__GNUC__)
 __attribute__((noinline))
 #endif
 inline void insn_slow(u32 va) {
     Machine &m = mach();
-    if (m.trace_va && va == m.trace_va && m.trace_n < 8u) {
-        m.trace_esp[m.trace_n] = ESP.d;
-        m.trace_eax[m.trace_n] = EAX.d;
-        m.trace_ecx[m.trace_n] = ECX.d;
-        m.trace_edx[m.trace_n] = EDX.d;
-        m.trace_esi[m.trace_n] = ESI.d;
-        m.trace_edi[m.trace_n] = EDI.d;
-        ++m.trace_n;
+    if (m.trace_va && va == m.trace_va) {
+        if (m.trace_n < 8u) {
+            m.trace_esp[m.trace_n] = ESP.d;
+            m.trace_eax[m.trace_n] = EAX.d;
+            m.trace_ecx[m.trace_n] = ECX.d;
+            m.trace_edx[m.trace_n] = EDX.d;
+            m.trace_esi[m.trace_n] = ESI.d;
+            m.trace_edi[m.trace_n] = EDI.d;
+            ++m.trace_n;
+        }
+        unsigned k = m.trace_ring_count & 7u;
+        m.trace_ring_esp[k] = ESP.d;
+        m.trace_ring_arg[k] = ld32(ESP.d + 4u);
+        m.trace_ring_eax[k] = EAX.d;
+        m.trace_ring_step[k] = m.steps;
+        ++m.trace_ring_count;
     }
     if (m.step_limit && m.steps > m.step_limit) {
         if (!m.faulted) { m.step_limit_hit = true; fault("instruction budget exhausted"); }
     }
     if (m.faulted && m.halt) longjmp(*m.halt, 1);
+}
+
+// ESP left the stack region, or moved further in one instruction than any real
+// prologue/epilogue does. `prev` is the instruction that made the move (insn()
+// is called at the START of each instruction, so the register state here is
+// what that instruction left behind). Recording it is the whole point: after a
+// wild ESP every later push/ret is garbage, and the flood is not the defect.
+#if defined(__GNUC__)
+__attribute__((noinline))
+#endif
+inline void esp_guard_hit(u32 prev, u32 va) {
+    Machine &m = mach();
+    if (m.esp_bad_n < 8u) {
+        Machine::EspRec &r = m.esp_bad[m.esp_bad_n++];
+        r.prev_eip = prev; r.eip = va; r.esp = ESP.d; r.ebp = EBP.d;
+        r.eax = EAX.d; r.ecx = ECX.d; r.edx = EDX.d;
+        r.steps = m.steps;
+    }
+    if (m.esp_guard_stop && !m.faulted) {
+        m.eip = prev;
+        fault("ESP outside the modelled stack");
+        if (m.halt) longjmp(*m.halt, 1);
+    }
 }
 
 // One call per transcribed instruction, emitted by tools/gen_code.py. It is the
@@ -408,9 +540,21 @@ inline void insn_slow(u32 va) {
 // halt goes to insn_slow().
 inline void insn(u32 va) {
     Machine &m = mach();
+    u32 prev = m.eip;          // the instruction that just executed
     m.eip = va;
     ++m.steps;
     mark_map(m.exec_map, m.exec_map_lo, m.exec_map_hi, va);
+    // Off by default, so a normal run pays one predictable branch. When on, the
+    // range is the game's own stack (ESP starts at 0x300000 and grows down) and
+    // the delta catches a jump that stays inside the range. The largest real
+    // frame adjustment in the transcription is under 0x8000.
+    if (m.esp_guard && m.steps > 1u) {
+        i32 delta = (i32)(ESP.d - m.esp_prev);
+        if (ESP.d < 0x00100000u || ESP.d >= 0x00400000u ||
+            delta > 0x10000 || delta < -0x10000)
+            esp_guard_hit(prev, va);
+        m.esp_prev = ESP.d;
+    }
     if (m.trace_va || m.faulted || (m.step_limit && m.steps > m.step_limit))
         insn_slow(va);
 }
@@ -517,6 +661,20 @@ inline PageTable &pages() { static PageTable t; return t; }
 // The cache hit is the hot path and stays inline; a miss (probe, growth or the
 // first touch of a page) goes out of line so the inline body is a handful of
 // instructions at every load and store in the transcription.
+// A refusal is a report about an ADDRESS, not just a table. "page allocation
+// failed" at 1,024,211 of 2,097,152 slots is not a full table: it is the host
+// refusing the 4 KB block for one page, and which page decides whether the
+// demand is legitimate (a heap/stack working set) or a wild pointer walking the
+// address space. Record both the address and the table state before faulting.
+inline void page_fault(PageTable &t, u32 addr, u32 p, const char *why) {
+    Machine &m = mach();
+    m.fault_addr = addr;
+    m.fault_page = p;
+    m.fault_used = t.used;
+    m.fault_cap = t.cap;
+    fault(why);
+}
+
 #if defined(__GNUC__)
 __attribute__((noinline))
 #endif
@@ -526,7 +684,7 @@ inline u8 *page_in_slow(PageTable &t, u32 addr) {
     u32 ci = p & (PageTable::CACHE_SLOTS - 1u);
     static u8 dummy[4096 + 8];   // only ever reached after fault() has halted
     if (!t.cap) {
-        fault("page table exhausted: index allocation failed");
+        page_fault(t, addr, p, "page table exhausted: index allocation failed");
         return dummy + off;
     }
     for (;;) {
@@ -544,7 +702,7 @@ inline u8 *page_in_slow(PageTable &t, u32 addr) {
         }
         if (!empty) {
             ++t.refused;
-            fault("page table exhausted: no free slot");
+            page_fault(t, addr, p, "page table exhausted: no free slot");
             return dummy + off;
         }
         // Grow before the table fills. A full table is not merely slow: with no
@@ -554,7 +712,7 @@ inline u8 *page_in_slow(PageTable &t, u32 addr) {
         if (t.used + 1u > t.cap - (t.cap >> 2)) {
             if (t.cap >= t.max_slots || !t.resize(t.cap << 1)) {
                 ++t.refused;
-                fault("page table exhausted: host allocation failed");
+                page_fault(t, addr, p, "page table exhausted: host allocation failed");
                 return dummy + off;
             }
             ++t.growths;
@@ -563,7 +721,7 @@ inline u8 *page_in_slow(PageTable &t, u32 addr) {
         u8 *blk = (u8 *)std::calloc(4096 + 8, 1);
         if (!blk) {
             ++t.refused;
-            fault("page table exhausted: page allocation failed");
+            page_fault(t, addr, p, "page table exhausted: page allocation failed");
             return dummy + off;
         }
         t.key[i] = p; t.val[i] = blk;
@@ -594,12 +752,59 @@ inline u8  ld8 (u32 a) { u8 v; std::memcpy(&v, page(a), 1); return v; }
 // hardest question to answer by reading code and the easiest by recording the EIP
 // of the store. st8 is the primitive every wider store funnels through, so the
 // hook lives here; putting it in st32 missed every byte-wise write.
+// The ring form of the write watch. Called only when a ring is armed, so an
+// ordinary run pays one predictable branch per byte store.
+inline void watch_ring_note(u32 a, u8 v) {
+    Machine &m = mach();
+    for (unsigned i = 0; i < m.watch_ring_n; ++i) {
+        if (a != m.watch_ring_va[i]) continue;
+        unsigned k = m.watch_ring_count[i] & (Machine::WATCH_RING_HITS - 1u);
+        m.watch_ring_eip[i][k] = m.eip;
+        m.watch_ring_val[i][k] = v;
+        m.watch_ring_steps[i][k] = m.steps;
+        ++m.watch_ring_count[i];
+    }
+}
+// A wide store must take the byte path when any ring address falls inside it,
+// or the ring would miss a 32-bit write to the watched field.
+inline bool watch_ring_overlaps(u32 a, u32 w) {
+    Machine &m = mach();
+    for (unsigned i = 0; i < m.watch_ring_n; ++i)
+        if ((u32)(m.watch_ring_va[i] - a) < w) return true;
+    return false;
+}
+
 inline void st8 (u32 a, u8 v) {
     Machine &m = mach();
     if (m.watch_va && a == m.watch_va && v && m.watch_hits < 8u) {
         m.watch_from[m.watch_hits] = m.eip;
         m.watch_val[m.watch_hits] = v;
         ++m.watch_hits;
+    }
+    if (m.watch_ring_n) watch_ring_note(a, v);
+    if (m.write_guard_eip && m.eip == m.write_guard_eip) {
+        u32 pa = m.write_guard_ptr_addr;
+        u32 base = (u32)ld8(pa) | ((u32)ld8(pa + 1u) << 8) |
+                   ((u32)ld8(pa + 2u) << 16) | ((u32)ld8(pa + 3u) << 24);
+        u32 sz = 0;
+        if (base)
+            sz = (u32)ld8(base - 16u) | ((u32)ld8(base - 15u) << 8) |
+                 ((u32)ld8(base - 14u) << 16) | ((u32)ld8(base - 13u) << 24);
+        if (!base || a < base || a >= base + sz) {
+            if (!m.write_guard_bad) {
+                m.write_guard_addr = a;
+                m.write_guard_base = base;
+                m.write_guard_size = sz;
+                m.write_guard_step = m.steps;
+                m.write_guard_esp = ESP.d; m.write_guard_eax = EAX.d;
+                m.write_guard_ecx = ECX.d; m.write_guard_edx = EDX.d;
+            }
+            ++m.write_guard_bad;
+            if (m.write_guard_stop && !m.faulted) {
+                fault("write outside the guarded heap block");
+                if (m.halt) longjmp(*m.halt, 1);
+            }
+        }
     }
     std::memcpy(page(a), &v, 1);
 }
@@ -615,7 +820,8 @@ inline u16 ld16(u32 a) {
 }
 inline void st16(u32 a, u16 v) {
     Machine &m = mach();
-    if ((a & 0xfffu) <= 0xffeu && !(m.watch_va && (u32)(m.watch_va - a) < 2u)) {
+    if ((a & 0xfffu) <= 0xffeu && !(m.watch_va && (u32)(m.watch_va - a) < 2u) &&
+        !(m.watch_ring_n && watch_ring_overlaps(a, 2u))) {
         std::memcpy(page(a), &v, 2); return;
     }
     st8(a, (u8)v); st8(a + 1, (u8)(v >> 8));
@@ -627,7 +833,8 @@ inline u32 ld32(u32 a) {
 }
 inline void st32(u32 a, u32 v) {
     Machine &m = mach();
-    if ((a & 0xfffu) <= 0xffcu && !(m.watch_va && (u32)(m.watch_va - a) < 4u)) {
+    if ((a & 0xfffu) <= 0xffcu && !(m.watch_va && (u32)(m.watch_va - a) < 4u) &&
+        !(m.watch_ring_n && watch_ring_overlaps(a, 4u))) {
         std::memcpy(page(a), &v, 4); return;
     }
     st8(a, (u8)v); st8(a + 1, (u8)(v >> 8));
@@ -965,6 +1172,51 @@ inline void count_unmapped_target(Machine &m, u32 va, u32 from) {
     }
 }
 
+// All the accounting for one unregistered target, in one place: the existing
+// samples and per-region counters, the first-N records with register state, and
+// the optional stop-at-first. `kind` is 0 for a `call`, 1 for a tail transfer.
+// The first records are what identify the defect; a run can produce millions of
+// these and only the first few carry the state that produced them.
+inline void note_unmapped(Machine &m, u32 va, u32 from, u32 kind) {
+    if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
+    m.unmapped_calls++;
+    if (!m.text_hi || va < m.text_lo || va >= m.text_hi) {
+        ++m.bad_calls;
+        if (va < 0x1000u) ++m.unmapped_below_1000;
+        else if (va >= 0x698000u && va < 0x6bb000u) ++m.unmapped_in_rdata;
+        else ++m.unmapped_elsewhere;
+        if (m.bad_call_n < 16) {
+            m.bad_call_from[m.bad_call_n] = from;
+            m.bad_call_to[m.bad_call_n] = va;
+            ++m.bad_call_n;
+        }
+    }
+    count_unmapped_target(m, va, from);
+    if (m.unmapped_rec_n < (unsigned)Machine::UNMAPPED_RECS) {
+        Machine::UnmappedRec &r = m.unmapped_rec[m.unmapped_rec_n++];
+        r.to = va; r.from = from; r.kind = kind; r.depth = (u32)m.call_depth;
+        r.steps = m.steps;
+        r.esp = ESP.d; r.ebp = EBP.d; r.eax = EAX.d; r.ebx = EBX.d;
+        r.ecx = ECX.d; r.edx = EDX.d; r.esi = ESI.d; r.edi = EDI.d;
+    }
+    if (m.text_hi && va >= m.text_lo && va < m.text_hi &&
+        m.unmapped_text_rec_n < 16u) {
+        Machine::TextUnmappedRec &r =
+            m.unmapped_text_rec[m.unmapped_text_rec_n++];
+        r.to = va; r.from = from; r.depth = (u32)m.call_depth;
+        r.steps = m.steps;
+        r.esp = ESP.d; r.ebp = EBP.d; r.eax = EAX.d; r.ecx = ECX.d;
+        r.edx = EDX.d; r.esi = ESI.d; r.edi = EDI.d;
+    }
+    if (m.stop_on_unmapped && !m.faulted) {
+        // Halt AT the call site with the registers untouched, so the report
+        // names the instruction that made the call and the pointer it used.
+        m.eip = from;
+        fault("first unmapped call");
+        if (m.halt) longjmp(*m.halt, 1);
+    }
+}
+
 inline void ts_call(u32 va) {
     Machine &m = mach();
     u32 from = m.eip;      // the call site, before eip is overwritten
@@ -973,20 +1225,7 @@ inline void ts_call(u32 va) {
     ++m.recent_call_n;
     Fn f = ts_lookup(va);
     if (!f) {
-        if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
-        m.unmapped_calls++;
-        if (!m.text_hi || va < m.text_lo || va >= m.text_hi) {
-            ++m.bad_calls;
-            if (va < 0x1000u) ++m.unmapped_below_1000;
-            else if (va >= 0x698000u && va < 0x6bb000u) ++m.unmapped_in_rdata;
-            else ++m.unmapped_elsewhere;
-            if (m.bad_call_n < 16) {
-                m.bad_call_from[m.bad_call_n] = from;
-                m.bad_call_to[m.bad_call_n] = va;
-                ++m.bad_call_n;
-            }
-        }
-        count_unmapped_target(m, va, from);
+        note_unmapped(m, va, from, 0u);
         return;
     }
     mark_map(m.func_map, m.func_map_lo, m.func_map_hi, va);
@@ -1010,25 +1249,13 @@ inline void ts_call(u32 va) {
         if (!m.tail) break;
         va = m.tail;
         m.tail = 0;
+        if (m.tail_from) from = m.tail_from;
         m.eip = va;
         m.recent_calls[m.recent_call_n & 7u] = va;
         ++m.recent_call_n;
         f = ts_lookup(va);
         if (!f) {
-            if (m.unmapped_sample_n < 16) m.unmapped_sample[m.unmapped_sample_n++] = va;
-            m.unmapped_calls++;
-            if (!m.text_hi || va < m.text_lo || va >= m.text_hi) {
-                ++m.bad_calls;
-                if (va < 0x1000u) ++m.unmapped_below_1000;
-                else if (va >= 0x698000u && va < 0x6bb000u) ++m.unmapped_in_rdata;
-                else ++m.unmapped_elsewhere;
-                if (m.bad_call_n < 16) {
-                    m.bad_call_from[m.bad_call_n] = from;
-                    m.bad_call_to[m.bad_call_n] = va;
-                    ++m.bad_call_n;
-                }
-            }
-            count_unmapped_target(m, va, from);
+            note_unmapped(m, va, from, 1u);
             break;
         }
         mark_map(m.func_map, m.func_map_lo, m.func_map_hi, va);
@@ -1099,7 +1326,11 @@ inline void ts_call_at(u32 target, u32 ret) {
 // span, and the end of a span whose last instruction is not a transfer (the
 // original simply continues at the next address). Both name where to continue
 // and return; ts_call dispatches it in the frame already running.
-inline void ts_tail(u32 target) { mach().tail = target; }
+inline void ts_tail(u32 target) {
+    Machine &m = mach();
+    m.tail = target;
+    m.tail_from = m.eip;
+}
 
 // Invoke a recovered function from hand-written code.
 //
