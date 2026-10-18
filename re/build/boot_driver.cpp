@@ -1226,29 +1226,33 @@ void objects_report() {
     // registries: ObjectClass (0x77bbd0 and 0x77bbb0), InfantryClass
     // (0x7b0bf8), BuildingClass (0x7b2c38) and the live houses (0x7afce0).
     //
-    // These are DynamicVectorClass instances, so the count is at +8 and the
-    // data pointer at +4; +0x10 is CAPACITY, not count. An earlier version
-    // read +0x10 as n and, for infantry, +0x24 (a different vector) as the
-    // array, which printed "infantry: n=21 array=0" while 21 infantry were
-    // alive. The layout is fixed by the constructors: 0x4a80f0 (ObjectClass
-    // vector A), 0x4a8270 (vector B), 0x4a7f70 (InfantryClass), 0x4a7ff0
+    // These are DynamicVectorClass instances. The game's own append
+    // (FUN_004cb520) compares [base+0x10] with [base+8] and increments
+    // [base+0x10] after storing at data[old [base+0x10]], and Find
+    // (0x445540) loops over [base+0x10]: the CURRENT COUNT is at +0x10 and
+    // the capacity at +8. (The hand-written VectorClass.h names those two
+    // the other way round; the binary is the authority here.) An earlier
+    // version read +0x10 as n but took infantry's array from +0x24 of a
+    // different vector, printing "infantry: n=21 array=0" while 21 infantry
+    // were alive. The base objects are fixed by the constructors: 0x4a80f0
+    // (ObjectClass A), 0x4a8270 (B), 0x4a7f70 (InfantryClass), 0x4a7ff0
     // (BuildingClass).
     std::printf("  world: objectclass.A=%u/%u objectclass.B=%u/%u "
-                "infantry=%u/%u buildings=%u/%u houses=%u\n",
-                (unsigned)ts::ld32(0x0077bbd8u), (unsigned)ts::ld32(0x0077bbe0u),
-                (unsigned)ts::ld32(0x0077bbb8u), (unsigned)ts::ld32(0x0077bbc0u),
-                (unsigned)ts::ld32(0x007b0c00u), (unsigned)ts::ld32(0x007b0c08u),
-                (unsigned)ts::ld32(0x007b2c40u), (unsigned)ts::ld32(0x007b2c48u),
+                "infantry=%u/%u buildings=%u/%u houses=%u (count/capacity)\n",
+                (unsigned)ts::ld32(0x0077bbe0u), (unsigned)ts::ld32(0x0077bbd8u),
+                (unsigned)ts::ld32(0x0077bbc0u), (unsigned)ts::ld32(0x0077bbb8u),
+                (unsigned)ts::ld32(0x007b0c08u), (unsigned)ts::ld32(0x007b0c00u),
+                (unsigned)ts::ld32(0x007b2c48u), (unsigned)ts::ld32(0x007b2c40u),
                 (unsigned)ts::ld32(0x007afce0u));
     // Where each world object actually is. The reveal pass walks these
     // registries and reveals around +0x14, so a wrong packed position here is
     // exactly what puts the revealed patch in the wrong place.
     {
         static const struct { const char *name; u32 data_va, count_va; } regs[4] = {
-            { "objectclass.A", 0x0077bbd4u, 0x0077bbd8u },
-            { "objectclass.B", 0x0077bbb4u, 0x0077bbb8u },
-            { "infantry",      0x007b0bfcu, 0x007b0c00u },
-            { "buildings",     0x007b2c3cu, 0x007b2c40u },
+            { "objectclass.A", 0x0077bbd4u, 0x0077bbe0u },
+            { "objectclass.B", 0x0077bbb4u, 0x0077bbc0u },
+            { "infantry",      0x007b0bfcu, 0x007b0c08u },
+            { "buildings",     0x007b2c3cu, 0x007b2c48u },
         };
         for (unsigned r = 0; r < 4u; ++r) {
             u32 cnt = ts::ld32(regs[r].count_va);
