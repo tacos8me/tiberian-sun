@@ -1356,6 +1356,25 @@ cause, then re-run at ~500B (about 20 min at 400M/s).
 *Done when:* the 479B wild-call flood is explained and gone, and the run reaches
 the tactical phase or a new named stop with a non-black frame if it renders.
 
+### [ ] The 479B flood is not bit-identical between runs
+**Measured, and it matters for every diagnosis at this scale.** Two independent
+500B-budget runs faulted at the same EIP (`0x00422de0`) and in the same
+character, but with different counts: 478,968,556,708 vs 478,970,534,425
+instructions; 1,023,748 vs 1,024,211 pages; 7,734,028 vs 7,771,444 unmapped
+calls (same 7 in-text `0x606060` sites; 7,635,819 vs 7,673,235 below `0x1000`;
+98,202 elsewhere). The difference is ~0.0004%, but the model is supposed to be
+deterministic.
+
+*Candidate sources:* `FindFirstFileA`/directory enumeration order (real host
+enumeration was added for `BATTLE.INI`), host `time()`/`rand()`/
+`GetTickCount`/`QueryPerformanceCounter` stubs, uninitialised memory whose
+value leaks into a pointer, or host allocation addresses used as model values.
+*Next:* run the same budget twice with a deterministic harness and diff the
+first divergence; identify and remove the host-dependent input, or document why
+it is unavoidable.
+*Done when:* two runs at the same budget produce identical counts/state, or the
+source is identified and justified.
+
 ### [x] The mission writes pixels but never presents a frame — explained and fixed
 **The blue banded/grid frame was raw heap memory.** The game *does* present the
 mission **loading screen** at 2.6e9 (`out/render_2_6b.png`, md5 `6cb0e1ff…`,
