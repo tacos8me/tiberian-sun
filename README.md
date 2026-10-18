@@ -25,11 +25,16 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
   absolute channel difference is **1.06/255** on the pixels that differ, and only
   506 pixels differ by more than 8 (the retail version text). The run has **0
   unmapped calls and 0 stack imbalances**, and `boot.py --strict` exits 0.
-- **The menu is not selectable yet.** Scripted input is delivered and consumed,
-  but exit needs `0x5898f0` to return 1 (`[0x7b0d38]` nonzero and != 5, currently
-  0) and `0x7b2ab8` has only its menu-init store; the button/text PCX assets are
-  in the nested MIX entry `0xa8548fd9` (317 entries), so the click points are
-  probes. The game does **not** leave the menu.
+- **The menu is selectable, and the game leaves it.** `DLGTEMPLATEEX` is parsed;
+  the six `BS_OWNERDRAW` buttons have real rectangles and the click goes through
+  the game's own hit-test and `WM_COMMAND` path. New Campaign exits the menu with
+  result 1 and opens `RT_DIALOG` **148, "Select Campaign:"** at step
+  **1,688,503,557**; Exit Game reaches **`ExitProcess(0)`** after 1,707,666,895
+  instructions. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read.
+- **The "Select Campaign:" listbox is empty.** The model implements no
+  listbox/combobox/trackbar content (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops),
+  so no campaign can be selected and **no mission starts**. The button art is not
+  painted (no `WM_PAINT` to children; retail does not draw it either).
 - The **retail** game reaches its **main menu** under Wine on this host; that is
   the project's external oracle.
 - Every function body is generated machine transcription, one instruction per
@@ -47,8 +52,8 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 | virtuals named | 5,557 of 9,810 slot pairs (56.6%); 917 distinct names (281 semantic) |
 | headers | 266 total, 265 compile standalone at `-m32` |
 | verification gate | 9 checks, fail-closed, passing; check 9 confirms 3,073/3,073 offsets |
-| tool tests | 75 checks, several mutation-proven; `test_runtime.py` 101 more (rendering/input) |
-| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders the main menu**; 20M stop `0x00488800` (55,774 / 4,764), 1.65B no input `0x0045fa8b` (77,619 / 6,132), 1.9B scripted `0x0055f78e` (77,982 / 6,150); 0 unmapped, 0 stack imbalances; current blocker is menu selection |
+| tool tests | 77 checks, several mutation-proven; `test_runtime.py` 101 more (rendering/input) |
+| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders and selects the main menu**; 20M stop `0x00488800` (55,774 / 4,764), 1.9B New Campaign opens dialog 148 and stops at `0x0045fa8e` (78,504 / 6,191), Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions (86,400 / 6,654); 0 unmapped, 0 stack imbalances; current blocker is the empty campaign listbox |
 | frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; 1.06/255 mean channel difference from retail on differing pixels |
 
 **Measure, don't trust prose.** `python3 tools/harness.py metrics` prints the
@@ -98,12 +103,14 @@ coverage: 55,774 distinct instructions; 4,764 of 45,947 recovered functions
 unmapped calls: 0 (0 inside .text); stack imbalances: 0
 ```
 
-At larger budgets the model reaches the menu: no input at `--budget 1650000000`
-stops at `0x0045fa8b` (77,619 / 6,132); the default scripted input at
-`--budget 1900000000 --timeout 600` stops in the menu message pump `0x0055f78e`
-with `GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11` (77,982 /
-6,150). `--frame out/frame.png` dumps the rendered menu; the committed frame is
-640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, with 254,610 / 307,200
+At `--budget 1900000000 --timeout 600` the default scripted input clicks New
+Campaign: the menu exits with result 1, `RT_DIALOG` **148, "Select Campaign:"**
+is created at step **1,688,503,557**, and the stop is that dialog's modal loop at
+`0x0045fa8e` (`GetMessage=7`, `PeekMessage=14,572,933`, `DispatchMessage=7`;
+78,504 / 6,191). A script that clicks Exit Game instead reaches
+**`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instructions
+(86,400 / 6,654). `--frame out/frame.png` dumps the rendered menu; the committed
+frame is 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, with 254,610 / 307,200
 non-black pixels, and differs from the retail screenshot by a mean channel
 difference of 1.06/255 on the pixels that differ.
 
@@ -111,10 +118,13 @@ Real Blowfish-ECB is implemented and proven against `tools/mix.py` (the shipped
 TIBSUN.MIX first index block decrypts byte-identically), the MIX index read is
 fixed (27/27 blocks, 17/17 records), the dialog layer reads LANGUAGE.DLL's own
 templates, and narrow-width flags are derived from the operand width. The menu
-renders but is **not selectable**: `0x5898f0` needs `[0x7b0d38]` nonzero and
-!= 5 (currently 0), `0x7b2ab8` has only its menu-init store, and the button PCX
-assets are in the nested MIX entry `0xa8548fd9`, so the scripted clicks are
-probes. The game does not leave the menu. The shutdown ESP defect is dormant.
+renders and is selectable through the game's own hit-test and `WM_COMMAND` path;
+the nested MIX (`0xa8548fd9`, 317 entries) is mounted and read. **The current
+blocker is the empty "Select Campaign:" listbox**: no listbox/combobox/trackbar
+content is implemented (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so no
+campaign can be selected and **no mission starts**. The button art is not painted
+(no `WM_PAINT` to children; retail does not draw it either). The shutdown ESP
+defect is dormant.
 
 The model has diagnostics for this work: `TS_TRACE=0xADDR`, `TS_PEEK=0xADDR`,
 `TS_SCAN=start,count`, `TS_WATCH=0xADDR`, `TS_FILE_TRACE=1`, plus `bad_calls`,

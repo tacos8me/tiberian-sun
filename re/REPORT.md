@@ -31,29 +31,43 @@ the mean absolute channel difference is **1.06/255 over the differing pixels**
 in the bottom-right retail version text the model does not draw; the rest is
 RGB565 quantization.
 
+**The menu is selectable, and the game leaves it.** LANGUAGE.DLL `RT_DIALOG` 226
+is the menu with six `BS_OWNERDRAW` buttons: New Campaign (1559, result 1), Load
+Mission (1561, 2), Multiplayer Game (1562, 3), Intro/Sneak Peek (1003, 4),
+Options (1372, 5), Exit Game (1006, 6). `DLGTEMPLATEEX` is parsed and the model
+performs press/release → `BN_CLICKED` in `dialog_mouse`, so the click reaches the
+game's own hit-test and `WM_COMMAND` path. The default timeline clicks New
+Campaign: the menu exits with result 1 and `RT_DIALOG` **148, "Select
+Campaign:"** is created at step **1,688,503,557**. Clicking Exit Game instead
+reaches **`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instructions.
+`0x7b2ab8` (front-end-active) and `0x7b0d38` (game mode) do not change; the
+selection signal is the dialog procedure's result code through `GWL_USERDATA`.
+
 Boot states, all with **0 unmapped calls and 0 stack imbalances**:
 - 20M: stop `0x00488800`, coverage **55,774 / 4,764**.
-- no input, 1.65B: stop `0x0045fa8b` (menu frame/animation path), coverage
-  **77,619 / 6,132**.
-- default scripted input, 1.9B: stop `0x0055f78e` (menu message pump),
-  `GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`, coverage
-  **77,982 / 6,150**.
+- default scripted input, 1.9B: stop `0x0045fa8e` in the Select Campaign dialog's
+  modal loop, `GetMessage=7`, `PeekMessage=14,572,933`, `DispatchMessage=7`,
+  coverage **78,504 / 6,191**.
+- Exit Game script, 1.9B: `ExitProcess(0)` at `0x00684529` after 1,707,666,895
+  instructions, `GetMessage=6`, `PeekMessage=11,216,667`, `DispatchMessage=6`,
+  coverage **86,400 / 6,654**.
 `boot.py --strict` exits 0 and `tools/link_test.py` passes (exit 0). A full
 `./tools/pipeline.sh` ran exit 0 in the disasm-correction lane (8m51s, per
 `todo.md`); it was not re-run here.
 
-The **current blocker is menu-item selection**: scripted input is delivered and
-the key queue consumes it, but exit needs `0x5898f0` to return 1 (`[0x7b0d38]`
-nonzero and != 5, currently 0), and `0x7b2ab8` has only its menu-init store. The
-buttons/text are not drawn because their PCX assets live in `TIBSUN.MIX`'s
-nested MIX entry `0xa8548fd9` (317 entries), so the scripted click points are
-probes. The menu is **not selectable**, and the game does **not** leave it.
+The **current blocker is the empty "Select Campaign:" listbox**. Dialog 148 is
+up (135,187 370x243) with listbox 1109, Cancel, OK, Slider3, Difficulty and
+Harder, but the model implements no listbox/combobox/trackbar content
+(`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so nothing can be selected and **no
+mission starts**. The nested MIX (`0xa8548fd9`, 317 entries, 111 PCX) is mounted
+and read, but the button art is not painted because no `WM_PAINT` reaches the
+child controls; the retail also draws no buttons here.
 
 The **retail** binary, run under Wine with the CD and a 640x480x16 screen
 (`tools/wine_env.sh`), reaches its **main menu** (screenshot md5
 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s). That is the
-differential oracle: the model now renders the same menu frame, but its menu is
-not selectable.
+differential oracle: the model renders and selects the same menu and reaches the
+campaign dialog.
 
 The retail oracle also measured what `blowfish.dll` registers
 (`re/out/blowfish_oracle.md`, `tools/oracle_blowfish.py`,
@@ -315,15 +329,17 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   `link_test.py` reports `341 of 341 IAT slots written` and `0 with no stub`.
   The old "16,383 calls read 0" claim described the pre-`Image.h` model and is
   retracted.
-- **The model renders the real main menu, but it is not selectable.** The frame
-  is `re/out/frame.png` (md5 `0fdf2636…`, 254,610 / 307,200 non-black; versus
-  retail, 102,836 pixels differ (33.48%), mean absolute channel difference
-  1.06/255 over the differing pixels, 506 pixels >8). Scripted input is
-  delivered and consumed, but exit needs `0x5898f0` to return 1
-  (`[0x7b0d38]` nonzero and != 5, currently 0) and `0x7b2ab8` has only its
-  menu-init store. The button/text PCX assets are in the nested MIX entry
-  `0xa8548fd9` (317 entries), so the click points are probes. The game does
-  **not** leave the menu.
+- **The model renders and selects the main menu, and opens "Select Campaign:".**
+  The frame is `re/out/frame.png` (md5 `0fdf2636…`, 254,610 / 307,200 non-black;
+  versus retail, 102,836 pixels differ (33.48%), mean absolute channel
+  difference 1.06/255 over the differing pixels, 506 pixels >8). New Campaign
+  exits the menu with result 1 and creates `RT_DIALOG` 148 at step 1,688,503,557;
+  Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions. The
+  nested MIX (`0xa8548fd9`, 317 entries) is mounted and read.
+- **The "Select Campaign:" listbox is empty.** No listbox/combobox/trackbar
+  content is implemented (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so no
+  campaign can be selected and **no mission starts**. The button art is not
+  painted (no `WM_PAINT` to children; retail does not draw it either).
 - **The boot has 0 unmapped calls and 0 stack imbalances**; the link test passes
   and `boot.py --strict` exits 0.
 - **The Blowfish cipher, the MIX index read and the dialog layer are fixed.**

@@ -46,7 +46,7 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
 - `link_test.py` — links all 492 translation units into a program and runs it;
   measured **OK, exit 0**, message loop reached and dispatching
   (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped
-- `test_tools.py` — 75 unit tests for the tools themselves
+- `test_tools.py` — 77 unit tests for the tools themselves
 - `test_runtime.py` — 101 checks for the rendering/input layers (`Rendering.h`,
   `Input.h`), mutation-proven; includes a standalone frame selftest
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
@@ -60,14 +60,17 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   ordinary file root; **`TS_CD`** models `D:` (`DRIVE_CDROM`, label `TS1`);
   `--frame` dumps the primary surface and `--input-script` selects a timeline
   (the default timeline is built in; `TS_INPUT_SCRIPT=` disables it). Measured
-  with `TS_CD`: 20M stops at `0x00488800` (55,774 / 4,764); no input at 1.65B
-  stops at `0x0045fa8b` in the menu frame/animation path (77,619 / 6,132); the
-  default script at 1.9B stops at `0x0055f78e` in the menu message pump
-  (`GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`; 77,982 /
-  6,150). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA` is the
-  DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0 stack
-  imbalances**; `--no-build --strict` exits **0**. `re/out/frame.png` is the
-  rendered main menu (640x480, md5 `0fdf2636…`, 254,610 / 307,200 non-black).
+  with `TS_CD`: 20M stops at `0x00488800` (55,774 / 4,764); the default script at
+  1.9B clicks New Campaign, the menu exits with result 1, `RT_DIALOG` 148
+  "Select Campaign:" is created at step 1,688,503,557, and the stop is its modal
+  loop at `0x0045fa8e` (`GetMessage=7`, `PeekMessage=14,572,933`,
+  `DispatchMessage=7`; 78,504 / 6,191). The Exit Game script reaches
+  `ExitProcess(0)` at `0x00684529` after 1,707,666,895 instructions
+  (86,400 / 6,654). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA`
+  is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0
+  stack imbalances**; `--no-build --strict` exits **0**. `re/out/frame.png` is
+  the rendered main menu (640x480, md5 `0fdf2636…`, 254,610 / 307,200
+  non-black).
 - `wine_run.sh` / `wine_env.sh` — run the **retail** binary under Wine.
   `wine_env.sh` supplies the CD (`d:`, label `TS1`, `TS1.DSK`) and a
   640x480x16 screen; measured, the retail game reaches its **main menu**
@@ -83,14 +86,17 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
   (`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416).
 
-**Current runtime blocker** (queued in `todo.md`): **menu-item selection**. The
-model renders the real main menu, but no item is selected: `0x5898f0` needs
-`[0x7b0d38]` nonzero and != 5 (currently 0), `0x7b2ab8` has only its menu-init
-store, and the button/text PCX assets are in `TIBSUN.MIX`'s nested MIX entry
-`0xa8548fd9` (317 entries), so the scripted clicks are probes. The menu is **not
-selectable** and the game does **not** leave it. Rendering, input, the movie
-path, the dialog layer, CD path, narrow-width flags, MIX index read and Blowfish
-cipher are fixed; the shutdown ESP corruption is dormant.
+**Current runtime blocker** (queued in `todo.md`): the **empty "Select Campaign:"
+listbox**. The model renders and selects the main menu (the six `BS_OWNERDRAW`
+buttons have real rectangles; press/release → `BN_CLICKED` reaches the game's own
+hit-test), New Campaign opens `RT_DIALOG` 148 at step 1,688,503,557, and Exit Game
+reaches `ExitProcess(0)`. But the model implements no listbox/combobox/trackbar
+content (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so listbox 1109 is empty and
+**no mission starts**. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and
+read; the button art is not painted (no `WM_PAINT` to children; retail does not
+draw it either). Rendering, input, the movie path, the dialog layer, CD path,
+narrow-width flags, MIX index read, Blowfish cipher and menu selection are
+fixed; the shutdown ESP corruption is dormant.
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the

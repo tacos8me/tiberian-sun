@@ -1,11 +1,11 @@
 # PROGRESS — Tiberian Sun reconstruction
 
 All figures below were re-measured on 2026-10-18, after merging the
-rendering/input integration, with `python3 tools/harness.py metrics --no-append`,
+menu-selection work, with `python3 tools/harness.py metrics --no-append`,
 `python3 tools/verify.py src/include build/shim`,
 `python3 tools/verify_members_binary.py`, `python3 tools/test_tools.py`,
 `python3 tools/test_runtime.py`, `python3 tools/boot.py` with `TS_CD` (20M,
-1.65B with input disabled, 1.9B with the default script, and `--strict`),
+1.9B with the default script, the Exit Game script, and `--strict`),
 `python3 tools/link_test.py`, `tools/wine_env.sh`, and direct counts over `out/`
 and `src/generated/`. `TS_ROOT` selects the ordinary file root; `TS_CD` models
 the `D:` CD drive (`DRIVE_CDROM`, label `TS1`). Re-run those rather than trusting
@@ -23,23 +23,23 @@ the one that matters most: it makes the compiler confirm every recovered member
 offset it can express, and it passes 3,073/3,073. **The link stage is green**:
 measured this session, `link: OK (492 translation units)`, `ts_link_test: OK`,
 exit **0**, 20,000,001 instructions, `MESSAGE LOOP: reached -- GetMessage 1,
-PeekMessage 5, DispatchMessage 1`, 0 unmapped. `test_tools.py` runs **75**
+PeekMessage 5, DispatchMessage 1`, 0 unmapped. `test_tools.py` runs **77**
 checks and `test_runtime.py` **101** (mutation-proven). A full
 `./tools/pipeline.sh` ran **exit 0** in the disasm-correction lane (8m51s,
 recorded in `todo.md`); it was not re-run in this worktree. The link was the
 expensive stage when last timed (about 471 s).
 
-**The model renders the real main menu.** The image maps at its real VAs and all
-**341/341** PE import-directory thunks are written to stubs (`link_test.py`:
-`imports: 341 across 13 DLLs`, `resolve_imports() ... 341 of 341 IAT slots
-written`, `traced thunks: 341 imports bound, 0 with no stub`). With `TS_CD` (the
-modelled `D:`), the CD path is correct end-to-end (`D:\TS1.dsk`,
-`EXPAND99..EXPAND00`, 100 files). The dialogs are real (LANGUAGE.DLL's 60
-templates and string table). Rendering and input are integrated through
-`ts::rnd` (`Rendering.h`) and `ts::input` (`Input.h`): surfaces are per-surface
-RGB565 memory, `Blt`/`BltFast`/`Fill`/`Flip`/`Lock` are real, `SCREEN_W/H` are
-640x480, and `--frame` dumps the primary surface. The committed
-`re/out/frame.png` is 640x480, md5
+**The model renders the real main menu, and the menu is selectable.** The image
+maps at its real VAs and all **341/341** PE import-directory thunks are written
+to stubs (`link_test.py`: `imports: 341 across 13 DLLs`, `resolve_imports() ...
+341 of 341 IAT slots written`, `traced thunks: 341 imports bound, 0 with no
+stub`). With `TS_CD` (the modelled `D:`), the CD path is correct end-to-end
+(`D:\TS1.dsk`, `EXPAND99..EXPAND00`, 100 files). The dialogs are real
+(LANGUAGE.DLL's 60 templates and string table), and rendering/input are
+integrated through `ts::rnd` (`Rendering.h`) and `ts::input` (`Input.h`):
+surfaces are per-surface RGB565 memory, `Blt`/`BltFast`/`Fill`/`Flip`/`Lock` are
+real, `SCREEN_W/H` are 640x480, and `--frame` dumps the primary surface. The
+committed `re/out/frame.png` is 640x480, md5
 `0fdf2636c2643ce2510ae67fb9ca9e26`, with **254,610 / 307,200 non-black pixels**;
 it shows the title logo, GDI/Nod wheel and emblems. Against the retail screenshot
 (`/tmp/retail.png`, md5 `58cb9c0b…`), **102,836 pixels differ at all (33.48%)**,
@@ -48,27 +48,41 @@ the mean absolute channel difference is **1.06/255 over the differing pixels**
 in the bottom-right retail version text the model does not draw; the rest is
 RGB565 quantization.
 
+**The model leaves the menu and opens "Select Campaign:".** LANGUAGE.DLL
+`RT_DIALOG` 226 is the menu (306x239 at (167,187)) with six `BS_OWNERDRAW`
+buttons: New Campaign (1559, result 1), Load Mission (1561, 2), Multiplayer Game
+(1562, 3), Intro/Sneak Peek (1003, 4), Options (1372, 5), Exit Game (1006, 6).
+The model performs press/release → `BN_CLICKED` in `dialog_mouse`, so the click
+goes through the game's own hit-test and `WM_COMMAND` path. The default timeline
+clicks New Campaign: the menu exits with result 1 and the game creates
+`RT_DIALOG` **148, "Select Campaign:"** at step **1,688,503,557**. Clicking Exit
+Game instead reaches **`ExitProcess(0)`** at `0x00684529` after **1,707,666,895**
+instructions. **Correction:** `0x7b2ab8` (front-end-active) and `0x7b0d38` (game
+mode) do not change; the selection signal is the dialog procedure's result code
+through `GWL_USERDATA`.
+
 Boot states, all with **0 unmapped calls and 0 stack imbalances**:
 - 20M: stop `0x00488800`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`,
   coverage **55,774 / 4,764**.
-- no input (`TS_INPUT_SCRIPT=`), 1.65B: stop `0x0045fa8b` in the menu
-  frame/animation path, `GetMessage=1`, `PeekMessage=10,490,282`,
-  `DispatchMessage=1`, coverage **77,619 / 6,132**.
-- default scripted input, 1.9B (`--timeout 600`): stop `0x0055f78e` in the
-  message pump, `GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`,
-  coverage **77,982 / 6,150**.
+- default scripted input, 1.9B (`--timeout 600`): stop `0x0045fa8e` in the
+  Select Campaign dialog's modal loop, `GetMessage=7`,
+  `PeekMessage=14,572,933`, `DispatchMessage=7`, coverage **78,504 / 6,191**.
+- Exit Game script, 1.9B: `ExitProcess(0)` at `0x00684529` after
+  **1,707,666,895** instructions, `GetMessage=6`, `PeekMessage=11,216,667`,
+  `DispatchMessage=6`, coverage **86,400 / 6,654**.
 `boot.py --strict` exits **0**. The only message box is the expected DirectSound
 warning at `0x484456` (`type=0x30`); the primary-surface check passes
 (`TS_PEEK=0x006beed8` → `1`).
 
-**The current blocker is menu-item selection.** Scripted input is delivered and
-the key queue consumes it, but no item is selected: exit needs `0x5898f0` to
-return 1 (`[0x7b0d38]` nonzero and != 5, currently 0), and the selection flag
-`0x7b2ab8` has only its menu-init store (`0x4da7b8`). The buttons/text are not
-drawn because their PCX assets live in `TIBSUN.MIX`'s nested MIX entry
-`0xa8548fd9` (317 entries), so the scripted click points are probes. The menu is
-**not selectable**, and the game does **not** leave it. A menu-selection lane is
-investigating.
+**The current blocker is the empty "Select Campaign:" listbox.** Dialog 148 is
+up (135,187 370x243) with listbox 1109, Cancel, OK, Slider3, Difficulty and
+Harder, but the model's control-message layer implements no listbox/combobox/
+trackbar content (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so the list is empty
+and nothing can be selected. **No mission starts.** The nested MIX is mounted and
+read (`TIBSUN.MIX` entry `0xa8548fd9`, 317 entries, 111 PCX), but the button art
+is not painted because no `WM_PAINT` reaches the child controls; the retail also
+draws no buttons here, so that is separate and non-blocking. A lane is
+implementing the listbox and the campaign list source.
 
 **The recovery was corrected (`9e5703f` + `ad62afc`).** 213 static switch tables
 are now data (was 12), including three hole tables (`0x683c10`, `0x683d98`,
@@ -103,7 +117,7 @@ CPU's own flags via inline asm, including the `0x7f`/`0x80` boundary and the
 vsprintf `%` classification; mutation-proven (18 assertions fail with the old
 derivation). `19ee16c` then fixed the generator's `SetViewportOrgEx`/
 `SetWindowOrgEx` arity (4, not 3); the regenerated table diff is exactly those
-two rows and `--stack-check` is 342/0. `test_tools.py` runs **75** checks,
+two rows and `--stack-check` is 342/0. `test_tools.py` runs **77** checks,
 including signed-division vectors, a 200,000-pair differential sweep and the
 `IDirectDrawSurface::Lock` 5-argument regression.
 
@@ -163,8 +177,8 @@ let `ExitProcess` return, so execution continued past a fatal exit and the
 genuinely reached and dispatching, and the claim is backed by a run that never
 calls `ExitProcess`:** `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`,
 `DispatchMessage=1`; the run now ends on the 20,000,001-instruction budget at
-`0x00488800` (the 20M stop; at 1.65B/1.9B the model reaches and renders the main
-menu). The old retracted
+`0x00488800` (the 20M stop; at 1.9B the model renders the menu, selects New
+Campaign, and reaches the "Select Campaign:" dialog). The old retracted
 `PeekMessage=137,295` is
 kept as history, not as evidence. The corrupted-argument defect that the first
 halt exposed is also fixed: the atexit walk leaked **108 bytes (27 dwords)**, so
@@ -199,8 +213,8 @@ Measured state:
 | forwarder definitions | 6,962 across 310 class translation units; 3,024 distinct machine functions, 3,938 aliases (`src/generated/README.md`) |
 | destructor stubs (declared, no recovered address) | 229 |
 | **boot (20M, TS_CD)** | **20,000,001 instructions** (budget exhausted) at `0x00488800` (`sub_0048875c +0xa4`), depth 19; `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`; CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA` is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0 stack imbalances**; coverage **55,774 distinct instructions / 4,764 of 45,947 functions**; primary surface `TS_PEEK=0x006beed8` → 1 |
-| **boot (1.65B, no input)** | **1,650,000,001 instructions** at `0x0045fa8b` (menu frame/animation path), depth 28; `GetMessage=1`, `PeekMessage=10,490,282`, `DispatchMessage=1`; coverage **77,619 / 6,132**; render 7 surfaces, 1 blit, 686 locks, 0 flips |
-| **boot (1.9B, default script)** | **1,900,000,001 instructions** at `0x0055f78e` (message pump), depth 28; `GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`; coverage **77,982 / 6,150**; 10 scripted input messages |
+| **boot (1.9B, default script)** | **1,900,000,001 instructions** at `0x0045fa8e` (Select Campaign dialog's modal loop), depth 28; `GetMessage=7`, `PeekMessage=14,572,933`, `DispatchMessage=7`; coverage **78,504 / 6,191**; New Campaign clicked, dialog 148 created at step 1,688,503,557 |
+| **boot (1.9B, Exit Game script)** | **`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instructions, depth 28; `GetMessage=6`, `PeekMessage=11,216,667`, `DispatchMessage=6`; coverage **86,400 / 6,654** |
 | **frame** | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, **254,610 / 307,200 non-black**; vs retail `/tmp/retail.png`: 102,836 pixels differ (33.48%), mean abs channel diff **1.06/255** over differing pixels (0.35 over frame), 506 pixels differ by >8 (retail version text) |
 | boot strict gate | exits **0**: 0 garbage call targets (`boot.py --no-build --strict`) |
 | link test | **OK**, exit 0, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled (`link_test.py`) |
@@ -252,7 +266,7 @@ Coverage is achieved in three tiers:
 | Class forwarders emitted | 6,962 | done |
 | Whole-tree link + entry-point run | 492 TUs | done |
 | Binary-anchored member verification | 4,285/4,289 (99.9%), gated | done |
-| Tool unit tests | 75 checks, mutation-proven | done |
+| Tool unit tests | 77 checks, mutation-proven | done |
 | Runtime tests | 101 checks (rendering/input), mutation-proven | done |
 
 ### Verification performed
@@ -261,12 +275,14 @@ Coverage is achieved in three tiers:
   **fail-closed**: a missing artifact exits non-zero naming what is missing,
   rather than running a subset and printing PASSED.
 - `tools/boot.py` (with `TS_CD`) runs the image for **20,000,001 instructions**
-  (the budget, at `0x00488800`, the intro-movie pump), reports the stop, import
-  calls, coverage and unmapped-target classification, and **reaches the message
-  loop with dispatch** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`,
-  `DispatchMessage=1`). `--strict` exits **0** with 0 garbage targets and 0
-  stack imbalances. At `--budget 80000000` the stop is `0x0064e156`, coverage
-  61,817 / 5,171.
+  (the budget, at `0x00488800`), reports the stop, import calls, coverage and
+  unmapped-target classification, and **reaches the message loop with dispatch**
+  (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`).
+  `--strict` exits **0** with 0 garbage targets and 0 stack imbalances. At
+  `--budget 1900000000` the default script clicks New Campaign and stops in the
+  Select Campaign dialog's modal loop at `0x0045fa8e` (78,504 / 6,191); the Exit
+  Game script reaches `ExitProcess(0)` at `0x00684529` after 1,707,666,895
+  instructions (86,400 / 6,654).
 - `tools/link_test.py` links **492** translation units, runs the entry point,
   and **passes** (exit 0); the message loop is reached and dispatching, with 0
   unmapped calls.
@@ -283,7 +299,7 @@ Coverage is achieved in three tiers:
   catches a corrupted statement whose evidence comment is intact.
 - `tools/link_test.py` links the whole tree and runs it. See "defects found by
   the link" below for what it caught.
-- `tools/test_tools.py` runs **75** unit checks, each a regression test for a
+- `tools/test_tools.py` runs **77** unit checks, each a regression test for a
   shipped defect or a differential test against an independent implementation.
   Four of them are mutation-proven to fail when the defect is reintroduced.
 - Determinism: two clean pipeline runs produce **497 byte-identical artifacts**
@@ -396,12 +412,17 @@ Coverage is achieved in three tiers:
       and `--frame` dumps the primary surface. The model renders the real main
       menu: `re/out/frame.png` (md5 `0fdf2636…`, 254,610 / 307,200 non-black;
       1.06/255 mean difference from retail on the pixels that differ).
-- [ ] **Menu-item selection — the current blocker.** The menu renders but is not
-      selectable: exit needs `0x5898f0` to return 1 (`[0x7b0d38]` nonzero and
-      != 5, currently 0), and `0x7b2ab8` has only its menu-init store. The
-      button/text PCX assets are in the nested MIX entry `0xa8548fd9` (317
-      entries), so the scripted click points are probes. The game does **not**
-      leave the menu.
+- [x] **Menu-item selection (`8474345` … `fa3e2a0`).** `DLGTEMPLATEEX` is parsed;
+      the menu's six `BS_OWNERDRAW` buttons have real rectangles and the click
+      goes through the game's own hit-test and `WM_COMMAND` path. New Campaign
+      opens `RT_DIALOG` 148 "Select Campaign:" at step 1,688,503,557; Exit Game
+      reaches `ExitProcess(0)` at `0x00684529` after 1,707,666,895 instructions.
+      The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read.
+- [ ] **The "Select Campaign:" listbox is empty — the current blocker.** Dialog
+      148 is up with listbox 1109, but the model implements no listbox/combobox/
+      trackbar content (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so nothing can
+      be selected and **no mission starts**. A lane is implementing the listbox
+      and campaign list source.
 - [ ] **Shutdown corrupts ESP — dormant.** WinMain returned with ESP `0x11`
       before the MIX-read fix; the current run never reaches shutdown. Keep it
       queued.
@@ -420,15 +441,20 @@ Coverage is achieved in three tiers:
   machine does and is not claimed to be the shape the original source had.
 - **The boot has 0 unmapped calls and 0 stack imbalances**; `boot.py --strict`
   exits 0 and the link test passes.
-- **The model renders the real main menu, but it is not selectable.** The frame
-  is `re/out/frame.png` (640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`,
-  254,610 / 307,200 non-black; versus retail, 102,836 pixels differ (33.48%),
-  mean absolute channel difference 1.06/255 over the differing pixels, 506
-  pixels differ by >8 in the retail version text). Scripted input is delivered
-  and consumed, but exit needs `0x5898f0` to return 1 (`[0x7b0d38]` nonzero and
-  != 5, currently 0) and `0x7b2ab8` has only its menu-init store. The button/text
-  PCX assets are in the nested MIX entry `0xa8548fd9` (317 entries), so the
-  click points are probes. The game does **not** leave the menu.
+- **The model renders and selects the main menu, and opens "Select Campaign:".**
+  The frame is `re/out/frame.png` (640x480, md5
+  `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; versus
+  retail, 102,836 pixels differ (33.48%), mean absolute channel difference
+  1.06/255 over the differing pixels, 506 pixels >8 in the retail version text).
+  New Campaign exits the menu with result 1 and creates `RT_DIALOG` 148 at step
+  1,688,503,557; Exit Game reaches `ExitProcess(0)` at `0x00684529` after
+  1,707,666,895 instructions. The nested MIX (`0xa8548fd9`, 317 entries) is
+  mounted and read.
+- **The "Select Campaign:" listbox is empty.** The model implements no
+  listbox/combobox/trackbar content (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops),
+  so no campaign can be selected and **no mission starts**. The button art is
+  not painted because no `WM_PAINT` reaches the child controls; the retail also
+  draws no buttons here.
 - **Shutdown corrupts ESP, but the path is dormant.** WinMain returned with ESP
   `0x11` before the MIX-read fix; the current run never reaches shutdown.
 - **The Blowfish cipher, the MIX index read and the dialog layer are fixed.**
@@ -548,9 +574,11 @@ tools/boot.py  (TS_CD=../work/cd1)
   coverage: 55,774 distinct instructions; 4,764 of 45,947 recovered functions entered
   primary surface: TS_PEEK 0x006beed8 = 1
   --no-build --strict: exit 0
-  --budget 1650000000, no input: stop 0x0045fa8b; 77,619 / 6,132
-  --budget 1900000000, default script: stop 0x0055f78e;
-    GetMessage=11 PeekMessage=15,207,219 DispatchMessage=11; 77,982 / 6,150
+  --budget 1900000000, default script (New Campaign): stop 0x0045fa8e;
+    GetMessage=7 PeekMessage=14,572,933 DispatchMessage=7; 78,504 / 6,191;
+    RT_DIALOG 148 "Select Campaign:" created at step 1,688,503,557
+  --budget 1900000000, Exit Game script: ExitProcess(0) at 0x00684529
+    after 1,707,666,895 instructions; 86,400 / 6,654
 
 tools/test_runtime.py
   RUNTIME TEST PASSED (101 checks, mutation-proven); frame dump produced

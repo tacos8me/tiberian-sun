@@ -245,9 +245,13 @@ no input, --budget 1650000000:
   coverage 77619 / 6132
 
 default scripted input, --budget 1900000000 --timeout 600:
-  stop 0x0055f78e (message pump), depth 28
-  GetMessage=11 PeekMessage=15207219 DispatchMessage=11 CreateWindowExA=1
-  coverage 77982 / 6150
+  stop 0x0045fa8e (Select Campaign dialog's modal loop), depth 28
+  GetMessage=7 PeekMessage=14572933 DispatchMessage=7 CreateWindowExA=1
+  coverage 78504 / 6191
+
+Exit Game script (mousemove 320 391 + click):
+  ExitProcess(0) at 0x00684529 after 1707666895 instructions
+  coverage 86400 / 6654
 ```
 
 So: the game starts, initialises, shows the expected DirectSound warning, creates
@@ -263,12 +267,41 @@ difference is **1.06/255 over the differing pixels** (0.35 over the whole frame)
 and only **506 pixels differ by more than 8**, all in the bottom-right retail
 version text the model does not draw; the rest is RGB565 quantization.
 
-The menu is **rendered but not selectable**. Scripted input is delivered and the
-key queue consumes it, but exit needs `0x5898f0` to return 1 (`[0x7b0d38]`
-nonzero and != 5, currently 0), and the selection flag `0x7b2ab8` has only its
-menu-init store (`0x4da7b8`). The buttons/text are not drawn because their PCX
-assets live in `TIBSUN.MIX`'s nested MIX entry `0xa8548fd9` (317 entries), so the
-scripted click points are probes. The game does **not** leave the menu.
+**The menu is selectable, and the game leaves it.** LANGUAGE.DLL `RT_DIALOG` 226
+is the menu (306x239 at (167,187)); its six `BS_OWNERDRAW` buttons are:
+
+| id | control | screen rect | result |
+|---|---|---|---|
+| 0x617 (1559) | New Campaign | (223,207)-(418,236) | 1 |
+| 0x619 (1561) | Load Mission | (223,241)-(418,270) | 2 |
+| 0x61A (1562) | Multiplayer Game | (223,275)-(418,304) | 3 |
+| 0x3EB (1003) | Intro / Sneak Peek | (223,309)-(418,338) | 4 |
+| 0x55C (1372) | Options | (223,343)-(418,372) | 5 |
+| 0x3EE (1006) | Exit Game | (223,377)-(418,406) | 6 |
+
+The model performs press/release → `BN_CLICKED` in `dialog_mouse`, so the click
+reaches the game's own hit-test and `WM_COMMAND` path. The default timeline
+clicks New Campaign: the menu exits with result 1 and the game creates
+`RT_DIALOG` **148, "Select Campaign:"** at step **1,688,503,557**. At 1.9e9 the
+stop is that dialog's modal loop at `0x0045fa8e`. Clicking Exit Game instead
+reaches **`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instructions.
+
+**Correction to an earlier claim:** `0x7b2ab8` and `0x7b0d38` do **not** change.
+`0x7b2ab8` is the front-end-active flag (still 1) and `0x7b0d38` the game mode
+(still 0 because the game is still in the front-end). The selection signal is the
+dialog procedure's result code through `GWL_USERDATA`.
+
+**The nested MIX is mounted and read.** `TIBSUN.MIX` entry `0xa8548fd9`
+(18,044,736 B at offset 22,111,980) is a 317-entry archive containing 111 PCX
+files, including the button art. The art is not painted because the model never
+sends `WM_PAINT` to child controls; the retail also draws no buttons in this
+environment, so this is separate and non-blocking.
+
+**The current blocker is the "Select Campaign:" listbox.** Dialog 148 is up
+(135,187 370x243) with listbox 1109, Cancel, OK, Slider3, Difficulty and Harder,
+but the model's control-message layer implements no listbox/combobox/trackbar
+content (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so the list is empty and
+nothing can be selected. A mission does **not** start.
 
 **A correction that matters more than any of this.** An earlier version of this
 file reported `message loop: reached` with `PeekMessage=137,295`. That was wrong,
@@ -325,7 +358,7 @@ eight-slot vtable was recovered from `BLOWFISH.DLL` (slots 3–7 are `SetKey`,
 returns `DSERR_NODRIVER` (no audio, matching retail). A
 `win32-module-exports` regression test covers handle identity, export isolation,
 `*ppv` being written, the IBlowfish methods and ESP balance. (`test_tools.py`
-runs **75** checks now; the module test was one of the additions.)
+runs **77** checks now; the module test was one of the additions.)
 
 **Message delivery is fixed (`f3011ca`).** `CreateWindowExA` queues
 `WM_ACTIVATEAPP` (`0x001c`, `wParam=1`) after the synchronous `WM_CREATE`;
@@ -379,7 +412,7 @@ each call leaked 4 bytes until EBP reached 0 and AlternateSurface was left null.
 
 **Signed `idiv` is fixed (`16e21fa`).** `divmod64` now has true signed x86
 semantics (magnitudes + signs, correct overflow/divide-by-zero, `INT64_MIN / -1`
-handled), so the old divide-overflow stop is passed. `test_tools.py` runs **75**
+handled), so the old divide-overflow stop is passed. `test_tools.py` runs **77**
 checks, including signed-division vectors, a 200,000-pair differential sweep and
 the `IDirectDrawSurface::Lock` 5-argument regression.
 
@@ -415,14 +448,15 @@ the mean absolute channel difference is **1.06/255 over the differing pixels**
 in the bottom-right retail version text the model does not draw; the rest is
 RGB565 quantization. `test_runtime.py` runs **101** checks, mutation-proven.
 
-**The current blocker is menu-item selection.** Scripted input is delivered and
-the key queue consumes it, but no item is selected: exit needs `0x5898f0` to
-return 1 (`[0x7b0d38]` nonzero and != 5, currently 0), and the selection flag
-`0x7b2ab8` has only its menu-init store (`0x4da7b8`). The buttons/text are not
-drawn because their PCX assets live in `TIBSUN.MIX`'s nested MIX entry
-`0xa8548fd9` (317 entries), so the scripted click points are probes. The menu is
-**not selectable**, and the game does **not** leave it. A menu-selection lane is
-investigating.
+**The current blocker is the "Select Campaign:" listbox.** The menu is
+selectable and the game leaves it: the default timeline clicks New Campaign, the
+menu exits with result 1, and `RT_DIALOG` 148 "Select Campaign:" is created at
+step 1,688,503,557 (the 1.9e9 stop is its modal loop at `0x0045fa8e`). Clicking
+Exit Game reaches `ExitProcess(0)` at `0x00684529` after 1,707,666,895
+instructions. But the campaign listbox (1109) is empty: the model implements no
+listbox/combobox/trackbar content (`LB_ADDSTRING`/`LB_GETCURSEL` are no-ops), so
+nothing can be selected and **no mission starts**. A lane is implementing the
+listbox and the campaign list source. `test_tools.py` is **77** checks.
 
 **Why it used to exit immediately, and the shape of the answer.** The CRT startup
 reads the comctl32 version and, if it is below 4.00.70, shows an error box and
@@ -570,16 +604,16 @@ to find:
 
 ## Current status
 
-Last updated after the transcription, whole-tree-link and gap-closing work.
-Every figure here was re-measured on 2026-10-17 with `python3 tools/harness.py
-metrics --no-append`, `python3 tools/verify.py src/include build/shim`,
+Last updated after the menu-selection work. Every figure here was re-measured on
+2026-10-18 with `python3 tools/harness.py metrics --no-append`,
+`python3 tools/verify.py src/include build/shim`,
 `python3 tools/verify_members_binary.py`, `python3 tools/test_tools.py`,
-`python3 tools/gen_code.py ... --check`, `python3 tools/link_test.py`, and
-direct counts over `out/` and `src/generated/`, plus `python3 tools/boot.py`,
-`python3 tools/boot.py --no-build --strict`, `python3 tools/link_test.py` and
-`tools/wine_env.sh`. Re-run them rather than trusting this list. The boot and
-oracle figures below were re-measured after the message-delivery and
-Blowfish-cipher merge.
+`python3 tools/test_runtime.py`, `python3 tools/gen_code.py ... --check`,
+`python3 tools/link_test.py`, and direct counts over `out/` and
+`src/generated/`, plus `python3 tools/boot.py` (20M, 1.9B with the default
+timeline and with the Exit Game script), `python3 tools/boot.py --no-build
+--strict`, and `tools/wine_env.sh`. Re-run them rather than trusting this list. The boot and
+frame figures below were re-measured after the menu-selection merge.
 
 **How far off "complete" is this project.** The layers are far apart. Read this
 before quoting any single number. `ROADMAP.md` states each of these as a
@@ -591,24 +625,25 @@ measurable exit criterion rather than a percentage.
 | Binary recovery | **effectively closed** | **43,557** functions/spans, **95.86%** of `.text` as recovered code; **112,401 B (110 KB)** unattributed, classified in `out/text_data.json` as **213** static switch tables (6,388 B), **102** switch index tables (145 B), **105,492 B** of alignment padding, and **376 B in 46 runs** reported verbatim rather than forced into a category. 99.99% of `.text` is attributed as code or data. |
 | Structural reconstruction | **strong** | 749/749 classes, **9,810** vtable slots, 0 unseeded, every constructor a real entry point |
 | Code transcription | **complete** | **43,557** recovered function spans, transcribed as **45,947** functions (43,557 starts + **2,390** tail entries) and **912,879** instruction lines, 100% modelled, 0 unmodelled |
-| Verification | **9 checks green, link test green** | `verify.py` passes all nine (265/265, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS; about 6 s last timed). `link_test.py` exits **0** (`link: OK`, 492 TUs, message loop reached and dispatching, 0 unmapped). `test_tools.py` runs **75** checks and `test_runtime.py` **101** (mutation-proven). A full `./tools/pipeline.sh` ran **exit 0** in the disasm-correction lane (8m51s, per `todo.md`); it was not re-run in this worktree |
+| Verification | **9 checks green, link test green** | `verify.py` passes all nine (265/265, 749/749, 749/749, 219/219, 220/220, 1317/1317, check 9 PASS; about 6 s last timed). `link_test.py` exits **0** (`link: OK`, 492 TUs, message loop reached and dispatching, 0 unmapped). `test_tools.py` runs **77** checks and `test_runtime.py` **101** (mutation-proven). A full `./tools/pipeline.sh` ran **exit 0** in the disasm-correction lane (8m51s, per `todo.md`); it was not re-run in this worktree |
 | **Semantics** | **~9%** | 5,557 of 9,810 slots carry a name (56.6%), but only **917 distinct names** and **281 distinct semantic** ones — most of the coverage is shared-stub propagation. 291 members named across 20 classes; `e2e_rules.py` resolves 96.2% of them against the shipped `rules.ini` |
 | **Modifiability** | **minimal** | there is still no hand-written `.cpp` in the tree; every function is generated machine transcription, so the editable surface is the hand-written headers |
-| **Behaviour** | **renders the real main menu; not selectable yet** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`). With `TS_CD` the game reads the CD (`D:\TS1.dsk`, `EXPAND99..00`), builds its real LANGUAGE.DLL dialogs, dispatches messages, and **renders the main menu**: `re/out/frame.png` is 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; versus retail, 102,836 pixels differ (33.48%), mean absolute channel difference **1.06/255 over the differing pixels**, only 506 pixels differ by >8 (retail version text). Boot states: 20M stop `0x00488800` (55,774 / 4,764); no input at 1.65B stop `0x0045fa8b` (77,619 / 6,132); default scripted input at 1.9B stop `0x0055f78e` (`GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`; 77,982 / 6,150). **0 unmapped calls, 0 stack imbalances**; `boot.py --strict` exits **0**. **The menu is not selectable**: `0x5898f0` needs `[0x7b0d38]` nonzero and != 5 (currently 0), `0x7b2ab8` has only its menu-init store, and the button/text PCX assets are in the nested MIX entry `0xa8548fd9` (317 entries), so the click points are probes. The game does **not** leave the menu. The **retail binary reaches its main menu** under `tools/wine_env.sh` |
+| **Behaviour** | **renders the main menu, selects it, and opens "Select Campaign:"; the campaign list is empty** | the image maps at its real VAs, **341/341** PE import-directory thunks resolve (the stub table has 342 rows; the extra is `COMCTL32!DllGetVersion`, reached through `GetProcAddress`). With `TS_CD` the game reads the CD, builds its real LANGUAGE.DLL dialogs, plays past the intro, and **renders the main menu** (`re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; versus retail, 102,836 pixels differ (33.48%), mean absolute channel difference **1.06/255 over the differing pixels**, only 506 pixels >8). **The menu is selectable**: the default timeline clicks New Campaign (one of six `BS_OWNERDRAW` buttons), the menu exits with result 1, and `RT_DIALOG` **148 "Select Campaign:"** is created at step **1,688,503,557**; the 1.9e9 stop is that dialog's modal loop at `0x0045fa8e` (`GetMessage=7`, `PeekMessage=14,572,933`, `DispatchMessage=7`; 78,504 / 6,191). Clicking Exit Game reaches **`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instructions. **0 unmapped calls, 0 stack imbalances**; `boot.py --strict` exits **0**. **The current blocker is the empty listbox (1109)**: no listbox/combobox/trackbar messages are implemented, so no campaign can be selected and **no mission starts**. The button PCX art is mounted and read from the nested MIX (`0xa8548fd9`, 317 entries) but not painted. The **retail binary reaches its main menu** under `tools/wine_env.sh` |
 
 So: *the binary is explained, its instructions are transcribed, the layout is
 compiler-confirmed, and the game's own startup now runs cleanly through real
-dialogs, the CD check and the intro movie to a rendered main menu.* The model
-creates a window, dispatches messages, reads the MIX index and the CD, renders
-the menu (`out/frame.png`, within 1.06/255 of retail on the pixels that differ),
-and is **alive with no fault, no unmapped calls and no stack imbalances** — but
-the menu is not selectable, because the hit-test/selection flag is never set and
-the button PCX assets are still inside a nested MIX entry. The retail binary
-reaches a selectable main menu; the model does not. The binding constraint is no
-longer recovery, transcription or layout — all three are done. It is
-**semantics, source-shaping and the model's runtime (menu selection, the nested
-MIX art, timers, input-driven play)**, and the honest headline is that the source
-is still barely named and not editable as source.
+dialogs, the CD check and the intro movie to a rendered, selectable main menu,
+then into the "Select Campaign:" dialog.* The model creates a window, dispatches
+messages, reads the MIX index and the CD, renders the menu (`out/frame.png`,
+within 1.06/255 of retail on the pixels that differ), clicks New Campaign
+through the game's own hit-test, and reaches dialog 148 — with no fault, no
+unmapped calls and no stack imbalances. Clicking Exit Game exits 0. But the
+campaign listbox is empty (no listbox messages are modelled), so **no mission
+starts**. The binding constraint is no longer recovery, transcription or layout —
+all three are done. It is **semantics, source-shaping and the model's runtime
+(the listbox/campaign source, dialog painting, timers, input-driven play)**, and
+the honest headline is that the source is still barely named and not editable as
+source.
 
 Two corrections that matter when sizing the rest:
 
@@ -691,7 +726,7 @@ header content, 220/220 inheritance, **1,317/1,317** member offsets across
 compiling `offsetof` assertions for the recovered member offsets at `-m32`,
 which confirms **3,073/3,073** asserted offsets. The transcription
 faithfulness gate verifies all **45,947** functions instruction-for-instruction,
-and `tools/test_tools.py` runs **75** checks with four mutation-proven.
+and `tools/test_tools.py` runs **77** checks with four mutation-proven.
 `tools/harness.py determinism --run` last measured **497** artifacts
 byte-identical across two clean runs — the recovered data *and* the generated
 C++ (*not re-run in this session*).
@@ -806,7 +841,7 @@ keep in mind:
   Wine" as "is playable under Wine", but do read it as "reaches its own menu".
 - **Test the tools, not only their output.** `tools/verify.py` checks artifacts;
   a tool can be wrong in a way that produces self-consistent output and nothing
-  notices. `tools/test_tools.py` holds 75 checks, each a regression test for a
+  notices. `tools/test_tools.py` holds 77 checks, each a regression test for a
   defect that shipped or a differential test against an independent
   implementation, and four of them are mutation-proven to fail when the defect
   is reintroduced. If a test cannot fail, it is not worth the runtime.
@@ -851,13 +886,14 @@ largest are **2,458 header virtual declarations remaining `vfunc_N`** (5,557
 `(class, slot)` pairs carry a name, but only 917 names are distinct), **3,235 of
 3,526 non-vptr members unnamed**, and **the transcription is not source-shaped**.
 
-The runtime blocker is **menu-item selection**: the model renders the real main
-menu, but scripted input does not select an item. Exit needs `0x5898f0` to
-return 1 (`[0x7b0d38]` nonzero and != 5, currently 0), and `0x7b2ab8` has only
-its menu-init store. The buttons/text are not drawn because their PCX assets live
-in `TIBSUN.MIX`'s nested MIX entry `0xa8548fd9` (317 entries), so the scripted
-click points are probes. The menu is **not selectable**, and the game does
-**not** leave it. A menu-selection lane is investigating.
+The runtime blocker is the **empty "Select Campaign:" listbox**. The menu is
+selectable and the game leaves it (New Campaign → `RT_DIALOG` 148 at step
+1,688,503,557; Exit Game → `ExitProcess(0)` after 1,707,666,895 instructions),
+but the listbox (1109) has no content because the model implements no
+listbox/combobox/trackbar messages. Nothing can be selected, and **no mission
+starts**. The button PCX art is mounted and read from the nested MIX
+(`0xa8548fd9`, 317 entries) but not painted (no `WM_PAINT` to children; retail
+does not draw it either). A lane is implementing the listbox and campaign list.
 
 The shutdown ESP corruption (WinMain returns with ESP `0x11`) is **dormant, not
 fixed**: the current run never reaches shutdown. Keep it queued for when it does.

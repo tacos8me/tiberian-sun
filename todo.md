@@ -393,7 +393,7 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: **75 checks passed** (measured this session). Not
+`tools/test_tools.py`: **77 checks passed** (measured this session). Not
 golden-count assertions -- every one is a regression test for a defect that
 actually shipped, or a differential test against an independent implementation.
 Four are proven to fail when the defect is reintroduced (mutating
@@ -920,7 +920,7 @@ recovered stream contains only 32-bit `div`/`idiv` (no 8/16-bit forms), so there
 is no live 8/16-bit defect. Tests: `test_machine_div` (the boot case, sign
 combinations, overflow, divide-by-zero, and a 200,000-pair differential sweep)
 and `test_win32_surface_lock` (slot 25, five arguments, ESP returns at
-`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **75 checks**.
+`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **77 checks**.
 
 Measured with `TS_ROOT=.../gamedir`: the idiv is passed. New stop is **budget
 exhaustion at `0x00488800` after 20,000,001 instructions** with `TS_CD`, depth
@@ -1094,11 +1094,12 @@ Measured:
   at all (33.48%) but the **mean absolute channel difference is 1.06/255**;
   only **506 pixels differ by more than 8**, all in the bottom-right retail
   version text the model does not draw. The rest is RGB565 quantization.
-- Boot, no input, 1.65B: stop `0x0045fa8b` in the menu frame/animation path;
-  77,619 / 6,132; 0 unmapped, 0 imbalances.
-- Boot, default scripted input, 1.9B: stop `0x0055f78e` in the message pump;
-  `GetMessage=11 PeekMessage=15,207,219 DispatchMessage=11`; 77,982 / 6,150.
-- Gates: `VERIFICATION PASSED`, **75** tool tests, 101 runtime checks,
+- Boot, default scripted input, 1.9B: New Campaign clicked, menu exits result 1,
+  `RT_DIALOG` 148 created at step 1,688,503,557; stop `0x0045fa8e` in its modal
+  loop; `GetMessage=7 PeekMessage=14,572,933 DispatchMessage=7`; 78,504 / 6,191.
+- Exit Game script, 1.9B: `ExitProcess(0)` at `0x00684529` after 1,707,666,895
+  instructions; 86,400 / 6,654; 0 unmapped, 0 imbalances.
+- Gates: `VERIFICATION PASSED`, **77** tool tests, 101 runtime checks,
   `--strict` exits 0.
 
 **Scripted input is delivered but does not leave the menu.** Ten messages are
@@ -1232,12 +1233,13 @@ counters. Measured:
 exhausted at `0x00488800`, depth 19, `sub_0048875c +0xa4`), **message loop
 reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`,
 `DispatchMessage=1`), **55,774 distinct instructions / 4,764 of 45,947 functions
-entered**, and **0 unmapped calls, 0 stack imbalances**. With no input at
-`--budget 1650000000` the stop is `0x0045fa8b` in the menu frame/animation path
-(77,619 / 6,132); with the default scripted input at `--budget 1900000000`
-(`--timeout 600`) the stop is `0x0055f78e` in the message pump
-(`GetMessage=11`, `PeekMessage=15,207,219`, `DispatchMessage=11`; 77,982 /
-6,150). `--frame` dumps the primary surface. `--no-build --strict` is the gate:
+entered**, and **0 unmapped calls, 0 stack imbalances**. With the default
+scripted input at `--budget 1900000000` (`--timeout 600`) the timeline clicks New
+Campaign, the menu exits with result 1, `RT_DIALOG` 148 is created at step
+1,688,503,557, and the stop is its modal loop at `0x0045fa8e` (`GetMessage=7`,
+`PeekMessage=14,572,933`, `DispatchMessage=7`; 78,504 / 6,191). The Exit Game
+script reaches `ExitProcess(0)` at `0x00684529` after 1,707,666,895 instructions
+(86,400 / 6,654). `--frame` dumps the primary surface. `--no-build --strict` is the gate:
 it exits **0**. `--json`, `--watch`, `--imports N`, `--budget N`, `--rebuild`,
 `--no-build`, `--input-script` and the `TS_CD` drive model are documented in the
 tool's header.
@@ -1264,13 +1266,16 @@ tool's header.
   pixels** (0.35 over the whole frame), and only 506 pixels differ by more than
   8, all in the retail version text the model does not draw. The rest is RGB565
   quantization.
-- **The current blocker is menu-item selection.** Scripted input is delivered
-  and the key queue consumes it, but no item is selected: exit needs `0x5898f0`
-  to return 1 (`[0x7b0d38]` nonzero and != 5, currently 0), and `0x7b2ab8` has
-  only its menu-init store. The buttons/text are not drawn because their PCX
-  assets live in `TIBSUN.MIX`'s nested MIX entry `0xa8548fd9` (317 entries), so
-  the scripted click points are probes. The menu is **not selectable** and the
-  game does **not** leave it.
+- **The menu is selectable and the game leaves it.** `DLGTEMPLATEEX` is parsed,
+  the six `BS_OWNERDRAW` buttons have real rectangles, and press/release →
+  `BN_CLICKED` reaches the game's own hit-test and `WM_COMMAND` path. New
+  Campaign opens `RT_DIALOG` 148 "Select Campaign:" at step 1,688,503,557; Exit
+  Game reaches `ExitProcess(0)` after 1,707,666,895 instructions.
+- **The current blocker is the empty "Select Campaign:" listbox.** No
+  listbox/combobox/trackbar content is implemented (`LB_ADDSTRING`/`LB_GETCURSEL`
+  are no-ops), so nothing can be selected and **no mission starts**. The nested
+  MIX (`0xa8548fd9`, 317 entries) is mounted and read; the button art is not
+  painted (no `WM_PAINT` to children; retail does not draw it either).
 - **The Blowfish cipher is implemented and proven** (`345aae7`), and the MIX
   index read is fixed: all 27 blocks are read and the 17 records match
   `tools/mix.py` 17/17.
