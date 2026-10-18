@@ -1445,8 +1445,9 @@ hand-painted. Run: 500B at `0x00543669`, depth 100, 2,412.8 s; frame
 
 **Superseded (kept as the diagnostic record).** The world is no longer empty:
 `c61f060` and `8163162` fixed the two stubs behind scenario object creation, and
-the registries now hold 4 ObjectClass / 21 infantry / 36 buildings / 7 houses
-with 34 cells seen. The renderer conclusion above still stands.
+the registries now hold 4 ObjectClass / 21 infantry / 36 buildings / 7 houses.
+The "34 cells seen" figure above was a `TS_MAPCELLS` windowing defect; the whole
+512x512 grid shows 1,124 seen. The renderer conclusion above still stands.
 
 ### [x] Scenario object creation produced zero objects — fixed (two lying stubs)
 **Was the blocker.** `FUN_0063b470` (the `[Units]` reader/creator) and the
@@ -1480,19 +1481,46 @@ shows terrain, the GDI construction yard and a unit in the viewport.
 *Done when:* the world has objects and cells are revealed — met. Tests:
 `win32-tls` and `win32-clsid`, both mutation-proven (`test_tools.py` 103).
 
-### [ ] The shroud reveals only 34 cells and the base sits at the viewport edge
-**The current blocker.** The world is populated, but only 34 of 1,681 cells are
-seen and the revealed patch is clipped to the **bottom edge** of the 472x480
-viewport rather than centred on the base. The black is therefore shroud, not a
-missing render: the map surface is blitted to the primary every frame and every
-tactical pass executes.
+### [ ] The viewport draws the revealed area at its bottom-right corner
+**The current blocker.** Two earlier readings were wrong and are corrected here.
 
-*Next:* the shroud-reveal radius (cell `+0xa4` seen/fog bits, the reveal/sight
-updates `0x476000`, `0x4760f0`, `0x477670`, `0x513bf0`, `0x476180`) and the
-tactical camera origin / visible-rect computation (`35,28,23,43`). Compare
-against the retail oracle where useful; do not paint the map by hand.
-*Done when:* the revealed area is centred on the base and the viewport shows the
-terrain around it.
+**The reveal is not the problem.** `TS_MAPCELLS` scanned only the INI's 48x63
+`[Map] Size` window and reported 34 seen cells. The cell grid is a 512x512
+pointer array (`n=262144`); scanning it gives **5,985 allocated, 193 tiles,
+1,124 seen**, seen bbox **(34,57)-(83,102)**. The reveal pass runs:
+`0x4732b0` (DisplayClass slot 35, "reveal this cell") executed **1,634 times**,
+every one from `0x503dce` in the per-object reveal pass (`0x503cea` →
+`0x503da7` → `0x5a0fd0`). The fog-reveal and shroud-regrow passes do not run,
+which is correct: the shipped `rules.ini` has `FogOfWar=no`, `ShroudGrow=no`.
+
+**The camera target is scenario data, not a defect.** `[Basic] HomeCell=98` and
+`[Waypoints] 98=76068`; the game's parser (`0x5c802a`) decodes (68,76), and
+`0x47661d` centres the view on it through `0x5f7ee0`. Measured
+`Tactical+0x1d70/0x1d74/0x1d78 = 0x004C0044` = cell (68,76). The GDI
+construction yard is at (28,59), ~30 cells away, and is not itself revealed;
+14 of 36 buildings around the home cell are. The `HomeCell` fallback branch
+(`0x4765cd`) did not execute. Do not override the shipped waypoint.
+
+**What is still wrong is the render offset.** 1,124 seen cells span ~50x46
+cells around (68,76), which is larger than the 472x480 viewport, so a correctly
+centred view should be almost entirely terrain. The frame instead draws the
+revealed area as a patch at the **bottom-right corner** (primary bbox roughly
+x 370-470, y 380-470), which places the camera target at the corner rather than
+the centre. The map surface is 472x480 with 12,703-12,800 non-black; the
+primary's 93,404 is the HUD plus that patch.
+
+*Next:* the scroll/origin computation that turns the camera cell into a source
+rect — `FUN_005a4080` (visible rect, previously `35,28,23,43`), the Display
+scroll fields (`Display+0xd18/-0xd1c = (-820,988)` at 20B), and the map-surface
+blit source rect. Compute the expected screen position of a known cell (the
+GACNST at (28,59) or the HomeCell) and compare it with the rendered patch.
+Do not paint the map by hand and do not move the camera target.
+*Done when:* the revealed area is centred in the 472x480 viewport.
+
+**Diagnostics added by the investigation:** `TS_OBJECTS` now prints each
+registry object's `CoordStruct` (`ObjectClass +0x40`, 256 leptons/cell) and
+whether its own cell is seen; `TS_MAPCELLS` scans the whole array and prints
+alloc/seen bounding boxes and the seen-cell list (`71c526b`..`5edef1d`).
 
 **Diagnostics now available:** `--surfaces`, `--surface-dump`, `TS_BLITLOG`,
 `TS_EXEC_CHECK`, `TS_OBJECTS`, `TS_MAPCELLS` (commits `b883a10`, `693d3fb`).

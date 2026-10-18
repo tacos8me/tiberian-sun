@@ -9,11 +9,13 @@ instruction stream against a model of the x86 machine it was written for.
 
 ![The reconstructed model rendering the Tiberian Sun tactical HUD and the revealed base area](re/out/frame_500b_objects.png)
 
-*The model's own 640x480 render: the in-game tactical HUD plus the revealed base
-area — terrain, the GDI construction yard and a unit. The rest of the viewport
-is shroud; widening the reveal is the current work item. The main menu
-(`re/out/frame.png`), the GDI intro (`re/out/mission.png`) and the loading
-screen (`re/out/render_2_6b.png`) are committed alongside it.*
+*The model's own 640x480 render: the in-game tactical HUD plus a revealed area
+of terrain, the GDI construction yard and a unit. The map reveals 1,124 cells
+around the scenario's `HomeCell`, but the viewport draws that area at its
+bottom-right corner instead of centring it; fixing the render offset is the
+current work item. The main menu (`re/out/frame.png`), the GDI intro
+(`re/out/mission.png`) and the loading screen (`re/out/render_2_6b.png`) are
+committed alongside it.*
 
 ## Status
 
@@ -36,9 +38,10 @@ It is **not yet a playable game**, and the source is not yet source-shaped.
   from the shipped `BATTLE.INI`, the GDI mission loads `GDI1A.MAP`, the intro
   plays, and the game reaches the **in-game tactical HUD** with a populated
   world: 3 units, 17 infantry and 36 structures, plus 7 houses.
-- The map is mostly unexplored shroud (34 of 1,681 cells seen) and the revealed
-  patch sits at the viewport edge. That is the current blocker: the shroud-reveal
-  radius and the tactical camera origin, not the renderer.
+- The map reveals 1,124 cells around the scenario's `HomeCell` (cell 68,76), but
+  the viewport draws that area at its bottom-right corner instead of centring
+  it. That is the current blocker: the tactical camera origin/render offset, not
+  the reveal pipeline and not the renderer.
 
 **What is recovered**
 
