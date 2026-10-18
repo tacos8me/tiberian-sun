@@ -1077,20 +1077,51 @@ PNG decoded independently, PPM pixel checked, two mutations caught). Synthetic
 640x480 frame: `out/frame_selftest.png` md5 `4e2d4e579162a2a669caa2f49b75b16d`.
 The exact integration patch is in `tools/test_runtime.py`'s docstring.
 
-### [~] Integrate Rendering.h/Input.h into Win32Stubs.h — in progress
-**The list-cycle lane is done; this is now the active work.** The patch is
-documented in `tools/test_runtime.py`: include the two headers; route
-`make_surface`/`dd_CreateSurface`/`dd_GetDisplayMode` into `ts::rnd`; override
-surface slots 5 (Blt, **6 words**), 7 (BltFast, 6), 11 (Flip, 3), 14 (GetCaps),
-21 (GetPixelFormat), 22 (GetSurfaceDesc), 25 (Lock), 29 (SetColorKey), 31
-(SetPalette), 32 (Unlock); route the input functions and `PeekMessageA` through
-`ts::input`; dump `ts::rnd::dump_primary_png("out/frame.png")` after a run.
+### [x] Integrate Rendering.h/Input.h into Win32Stubs.h — done
+**The model renders the game's main menu.** The layer is wired through
+`Win32Stubs.h`: `make_surface`/`dd_CreateSurface`/`dd_GetDisplayMode` go through
+`ts::rnd`; surface slots 5 (Blt, 6 words), 7 (BltFast, 6), 11 (Flip, 3), 14
+(GetCaps), 21 (GetPixelFormat), 22 (GetSurfaceDesc), 25 (Lock), 29
+(SetColorKey), 31 (SetPalette), 32 (Unlock) have real bodies; input functions
+and `PeekMessageA` go through `ts::input`; `SCREEN_W/H` are 640x480; `--frame`
+dumps the primary surface.
 
-Also fix while integrating: `SCREEN_W/H` are 800x600 while the retail mode is
-640x480 (the `dd_GetDisplayMode` offset is already fixed).
-*Done when:* the boot with `TS_CD` reaches the menu (or the next named stop),
-`out/frame.png` shows the menu art rather than a blank frame, and the frame is
-diffed against the retail screenshot (`tools/wine_env.sh`). Keep `--strict` at 0.
+Measured:
+- `out/frame.png` (and `out/frame_input.png`): 640x480, md5
+  `0fdf2636c2643ce2510ae67fb9ca9e26`, **254,610 / 307,200 non-black pixels**.
+  It is the real main-menu art (title logo, GDI/Nod wheel, emblems).
+- Retail comparison (`/tmp/retail.png`, md5 `58cb9c0b…`): 102,836 pixels differ
+  at all (33.48%) but the **mean absolute channel difference is 1.06/255**;
+  only **506 pixels differ by more than 8**, all in the bottom-right retail
+  version text the model does not draw. The rest is RGB565 quantization.
+- Boot, no input, 1.65B: stop `0x0045fa8b` in the menu frame/animation path;
+  77,619 / 6,132; 0 unmapped, 0 imbalances.
+- Boot, default scripted input, 1.9B: stop `0x0055f78e` in the message pump;
+  `GetMessage=11 PeekMessage=15,207,219 DispatchMessage=11`; 77,982 / 6,150.
+- Gates: `VERIFICATION PASSED`, **75** tool tests, 101 runtime checks,
+  `--strict` exits 0.
+
+**Scripted input is delivered but does not leave the menu.** Ten messages are
+synthesized and dispatched; the WndProc feeds the game's key queue
+(`0x710ca0`) and the menu loop consumes them. But exit needs `0x5898f0` to
+return 1, which requires `[0x7b0d38]` nonzero and != 5 (it is 0), and the
+selection flag `0x7b2ab8` has only its menu-init store (`0x4da7b8`). No menu
+item was selected.
+
+### [ ] Menu-item selection and the nested-MIX button art
+**The current blocker.** The model renders the menu, but its scripted clicks
+are probes: neither the model nor the retail draws the menu's buttons/text in
+this environment, because their PCX assets live inside `TIBSUN.MIX`'s **nested
+MIX entry `0xa8548fd9` (317 entries)**. There is no visible target, and the
+hit-test/selection flag is never set.
+
+*Next:* locate the menu screen's button control list/rectangles — the object
+that hit-tests the mouse and sets `0x7b2ab8` — or load the nested-MIX PCX assets
+and draw the buttons. Trace the MIX/PCX load path with `TS_FILE_TRACE` and the
+Ghidra MCP (`0x4da7b8` init, `0x5898f0` exit check, `0x7b0d38`, `0x7b2ab8`).
+Then aim a scripted click at a real button.
+*Done when:* a scripted click changes `0x7b2ab8`/`0x7b0d38`, the game leaves the
+menu, and the next screen or stop is named (with a frame dump if it renders).
 
 ### [x] The first unmapped calls — fixed
 **The two in-`.text` targets from the leak era are gone.** `0x6844df` and
