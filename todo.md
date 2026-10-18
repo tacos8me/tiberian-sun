@@ -1290,9 +1290,13 @@ primary plus `surface_update_frontbuffer` in retail.
 
 **Fixed:** `Rendering.h`'s arena now starts at `0x10000000` (worst case 64
 surfaces ends at `0x14b00000`), clear of the image, stack, heap and stub VAs.
-The heap lane is adding a durable reservation of `[0x60000000,0x68000000)` in
-`alloc_block` plus a >256 MB allocation test that asserts the primary pixels are
-unchanged.
+**Verified:** the 2.7227e9 run after the arena move stops at `0x0055b0b8` with
+67,169 / 131,072 pages (2 growths), 12 blits, 769 locks, and a frame whose md5
+is **`6cb0e1ff…`** — byte-identical to the committed `out/render_2_6b.png`
+loading screen (290,399 non-black). The heap no longer overwrites the
+framebuffer. The heap lane is adding a durable reservation of
+`[0x60000000,0x68000000)` in `alloc_block` plus a >256 MB allocation test that
+asserts the primary pixels are unchanged.
 
 **Measurement defect fixed:** `Machine.steps`/`step_limit`/`fault_steps` were
 32-bit on the `-m32` build, so budgets ≥2^32 never fired and long runs reported
