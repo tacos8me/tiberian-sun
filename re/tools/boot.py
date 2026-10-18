@@ -657,6 +657,16 @@ def print_report(keys, lists, entries, build_note, elapsed):
                       keys.get("frame-nonblack", "?")))
     out.append("depth guard: %s truncations, unmodelled instructions: %s"
                % (keys.get("depth-exceeded", "?"), keys.get("unmodelled", "?")))
+    # Diagnostics emitted after the run. The summary has no fixed slot for
+    # them, so a run's TS_PROBE / TS_PEEK / TS_MAPCELLS / TS_OBJECTS output
+    # used to be parsed and then dropped -- the measurement existed and nobody
+    # could read it. Echo both the `key: value` line and its indented rows.
+    for key in ("objects", "mapcells", "probes", "peek", "exec-check",
+                "ini-lookup", "strtok-test"):
+        if key in keys:
+            out.append("%s: %s" % (key, keys[key]))
+        for row in lists.get(key, []):
+            out.append("  " + row)
     print("\n".join(out))
 
 
