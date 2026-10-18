@@ -482,6 +482,22 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
             p = (*end == ',') ? end + 1 : end;
         }
     }
+    // TS_WINDOWS=1 -- the model's live window and control table at the end of
+    // the run. A dialog's controls carry the rectangles the button hit-test
+    // uses; without this, "the click missed" is indistinguishable from "the
+    // dialog was never created" or "it was created at another position".
+    if (std::getenv("TS_WINDOWS")) {
+        std::printf("windows:\n");
+        for (unsigned i = 0; i < (unsigned)ts::w32::MAX_WINDOWS; ++i) {
+            const ts::w32::WinRec &w = ts::w32::wins()[i];
+            if (!w.hwnd) continue;
+            std::printf("  0x%08x parent=0x%08x id=%u atom=0x%02x dialog=%u "
+                        "shown=%u enabled=%u rect=(%d,%d %dx%d) text=\"%s\"\n",
+                        w.hwnd, w.parent, w.id, w.atom, w.is_dialog, w.shown,
+                        w.enabled, w.x, w.y, w.cx, w.cy, w.text);
+        }
+        std::printf("  input-target=0x%08x\n", ts::w32::input_target());
+    }
     if (m.bad_calls) {
         std::printf("calls outside .text (not a stub, not code): %u\n", m.bad_calls);
         for (unsigned i = 0; i < m.bad_call_n; ++i)

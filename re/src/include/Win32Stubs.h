@@ -1491,6 +1491,74 @@ inline WinRec *win_alloc() {
     return 0;
 }
 
+// TS_WIN_TRACE=1 -- every geometry call that touches a dialog or one of its
+// controls. A dialog's clickable area is the controls' rectangles, and those
+// are set by the game's own layout pass; when a click misses, this says which
+// call put the rectangle where it is.
+inline bool win_trace_on() {
+    static int on = -1;
+    if (on < 0) on = std::getenv("TS_WIN_TRACE") ? 1 : 0;
+    return on != 0;
+}
+inline bool win_is_dialog_control(const WinRec *w) {
+    if (!w) return false;
+    if (w->is_dialog) return true;
+    const WinRec *p = w->parent ? win_find(w->parent) : 0;
+    return p && p->is_dialog;
+}
+
+// The window scripted input is delivered to. A real mouse message goes to the
+// window under the cursor, which for the game's menus is the dialog it created,
+// not the main window; and the dialog's controls are what turn a press into a
+// WM_COMMAND. The model therefore remembers the most recently created dialog
+// and falls back to the primary window when none is alive. (The game's own
+// message loop reads whatever PeekMessageA returns and DispatchMessageA sends
+// it to the window the MSG names, so this is the only place the choice is
+// made.) A dialog becomes the target when it is created and stops being one
+// when DestroyWindow/EndDialog frees it.
+inline u32 &input_target_hwnd() { static u32 h = 0; return h; }
+inline u32 input_target() {
+    u32 h = input_target_hwnd();
+    if (h && win_find(h)) return h;
+    // A destroyed dialog hands input back to the newest dialog still alive (a
+    // dialog handle is allocated in creation order), then to the main window.
+    // A shown dialog wins over an unshown one: a measurement popup is not a
+    // screen the user can click.
+    u32 newest = 0u, newest_shown = 0u;
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i) {
+        if (!wins()[i].hwnd || !wins()[i].is_dialog) continue;
+        if (wins()[i].hwnd > newest) newest = wins()[i].hwnd;
+        if (wins()[i].shown && wins()[i].hwnd > newest_shown)
+            newest_shown = wins()[i].hwnd;
+    }
+    if (newest_shown) return newest_shown;
+    return newest ? newest : wnd_handle();
+}
+
+// The control a left button went down on. Windows captures the mouse on the
+// control and only turns the release into a WM_COMMAND when it happens over
+// the same control; a press on the dialog background cancels it.
+inline u32 &pressed_dialog() { static u32 h = 0; return h; }
+inline u32 &pressed_control() { static u32 h = 0; return h; }
+
+// A window's screen origin: its own position plus every ancestor's. A child's
+// x/y are client coordinates of its parent, so GetWindowRect must walk the
+// chain -- a dialog at (167,187) with a button at (56,20) puts the button at
+// (223,207) on the screen. Returning the raw x/y is the difference between the
+// game laying its controls out correctly and laying them out from the wrong
+// origin, which is exactly what the retail +win trace shows it doing.
+inline void win_screen_origin(const WinRec *w, i32 *ox, i32 *oy) {
+    i32 x = 0, y = 0;
+    const WinRec *c = w;
+    for (unsigned guard = 0; c && guard < (unsigned)MAX_WINDOWS; ++guard) {
+        x += c->x;
+        y += c->y;
+        c = c->parent ? win_find(c->parent) : 0;
+    }
+    *ox = x;
+    *oy = y;
+}
+
 inline void win_copy(char *dst, unsigned cap, u32 src) {
     unsigned i = 0;
     if (src) for (; i + 1u < cap && ld8(src + i); ++i) dst[i] = (char)ld8(src + i);
@@ -1770,34 +1838,23 @@ inline unsigned long input_messages() { return input_msg_count(); }
 // The default timeline. The retail game reaches its main menu after the two
 // intro movies; in the model that is ~159,000 model-ms (the clock advances 1 ms
 // per 10,000 executed instructions, so the menu is up around instruction
-// 1.58e9). The events start just after that and repeat across a wide window so
-// that a small shift in the reach time still lands input on the menu rather
-// than in a movie. The coordinates are PROBES -- the centre and two points in
-// the left-hand third -- not recovered button rectangles: neither the retail
-// oracle's screenshot nor the model's draws the menu's buttons (their PCX
-// assets live inside a nested MIX entry), so there is no visible target to aim
-// at yet. Return is the conventional "activate" key.
+// 1.58e9). The events start just after that so a small shift in the reach time
+// still lands input on the menu rather than in a movie.
+//
+// The click is aimed at a real control, not a probe. LANGUAGE.DLL RT_DIALOG 226
+// declares six owner-draw buttons; the retail +win trace puts the dialog at
+// (167,187) and "New Campaign" (id 0x617) at client (56,20,195,29), so its
+// screen rectangle is (223,207)-(418,236) and (320,220) is inside it. The
+// dialog procedure turns the WM_COMMAND this produces into result code 1,
+// which is what makes the game's menu loop return.
 inline const char *default_input_script() {
     return
-        "# Default timeline: menu input once the intro movies are over.\n"
-        "@162000 keydown 0x0d\n"
-        "@162050 keyup   0x0d\n"
-        "@170000 mousemove 320 240\n"
+        "# Default timeline: click New Campaign once the intro movies are over.\n"
+        "@170000 mousemove 320 220\n"
         "@170100 lbuttondown\n"
         "@170150 lbuttonup\n"
-        "@180000 mousemove 96 200\n"
-        "@180100 lbuttondown\n"
-        "@180150 lbuttonup\n"
-        "@190000 keydown 0x0d\n"
-        "@190050 keyup   0x0d\n"
-        "@200000 mousemove 96 260\n"
-        "@200100 lbuttondown\n"
-        "@200150 lbuttonup\n"
-        "@220000 mousemove 320 240\n"
-        "@220100 lbuttondown\n"
-        "@220150 lbuttonup\n"
-        "@240000 keydown 0x0d\n"
-        "@240050 keyup   0x0d\n";
+        "@180000 keydown 0x0d\n"
+        "@180050 keyup   0x0d\n";
 }
 
 inline void input_init_once() {
@@ -1827,12 +1884,32 @@ inline void input_init_once() {
 // Move every due scripted event into the window queue. Called from PeekMessageA
 // (the game's own pump) so a message is never queued before the program is
 // ready to read it.
+//
+// The script gives a screen point; a mouse message carries the client
+// coordinates of the window that receives it. For the primary window (at 0,0)
+// those are the same, but the menu is a dialog at (167,187), so a click at
+// screen (320,220) must arrive as (153,33) or the button hit-test looks at the
+// wrong place. The translation is done here, once, where the target is chosen.
+inline bool is_mouse_message(u32 m) {
+    return (m >= 0x0200u && m <= 0x020eu) || m == 0x020au;
+}
+
 inline void input_pump() {
     input_init_once();
     ts::input::advance(tick());
+    u32 target = input_target();
+    WinRec *tw = win_find(target);
     u32 m, w, l;
     while (ts::input::pop_message(&m, &w, &l)) {
-        msg_push(wnd_handle(), m, w, l);
+        if (tw && is_mouse_message(m)) {
+            i32 x = (i32)(i16)(l & 0xffffu);
+            i32 y = (i32)(i16)(l >> 16);
+            l = ((u32)(u16)(x - tw->x)) | ((u32)(u16)(y - tw->y) << 16);
+        }
+        if (std::getenv("TS_INPUT_TRACE"))
+            std::fprintf(stderr, "input: step=%lu target=0x%08x msg=0x%04x w=0x%08x l=0x%08x\n",
+                         (unsigned long)mach().steps, target, m, w, l);
+        msg_push(target, m, w, l);
         ++input_msg_count();
     }
 }
@@ -1927,12 +2004,66 @@ TS_BEGIN(CallWindowProcA)
     stub_done(5, call_wndproc(arg(0), arg(1), arg(2), arg(3), arg(4)));
 TS_END
 
+// The standard Button control's half of a click. The game's menu dialog is six
+// owner-draw BS_OWNERDRAW buttons (LANGUAGE.DLL RT_DIALOG 226, ids 0x617/0x619/
+// 0x61A/0x3EB/0x55C/0x3EE); the dialog procedure handles WM_COMMAND and nothing
+// else, so the press/release -> BN_CLICKED translation USER32 performs for a
+// button is what turns a click into a selection. A press is only a click when
+// the release lands on the same control, which is the behaviour a user relies
+// on when they drag off a button to cancel.
+inline bool win_is_button(const WinRec *w) {
+    return w && w->hwnd && w->atom == 0x80u;   // 0x80 = the "Button" class atom
+}
+
+inline WinRec *button_at(u32 hdlg, i32 x, i32 y) {
+    for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i) {
+        WinRec &w = wins()[i];
+        if (!w.hwnd || w.parent != hdlg || !win_is_button(&w)) continue;
+        if (!w.enabled || !w.shown) continue;
+        if (x >= w.x && x < w.x + w.cx && y >= w.y && y < w.y + w.cy)
+            return &w;
+    }
+    return 0;
+}
+
+// MSG coordinates are client coordinates of the window that receives them, so
+// the caller has already translated the script's screen point (input_pump).
+inline void dialog_mouse(u32 hwnd, u32 msg, u32 lparam) {
+    WinRec *d = win_find(hwnd);
+    if (!d || !d->is_dialog) return;
+    i32 x = (i32)(i16)(lparam & 0xffffu);
+    i32 y = (i32)(i16)(lparam >> 16);
+    if (msg == 0x0201u) {                       // WM_LBUTTONDOWN
+        WinRec *b = button_at(hwnd, x, y);
+        pressed_dialog() = hwnd;
+        pressed_control() = b ? b->hwnd : 0u;
+        if (b) focus_handle() = b->hwnd;        // a button takes the focus
+        if (std::getenv("TS_INPUT_TRACE"))
+            std::fprintf(stderr, "input: LBUTTONDOWN at (%d,%d) in 0x%08x -> %s 0x%08x\n",
+                         x, y, hwnd, b ? "button" : "no button", b ? b->hwnd : 0u);
+    } else if (msg == 0x0202u) {                // WM_LBUTTONUP
+        if (pressed_dialog() != hwnd) return;
+        WinRec *b = button_at(hwnd, x, y);
+        if (b && b->hwnd == pressed_control()) {
+            msg_push(hwnd, 0x0111u, b->id, b->hwnd);   // WM_COMMAND, BN_CLICKED
+            if (std::getenv("TS_INPUT_TRACE"))
+                std::fprintf(stderr, "input: LBUTTONUP at (%d,%d) -> WM_COMMAND id=%u\n",
+                             x, y, b->id);
+        } else if (std::getenv("TS_INPUT_TRACE")) {
+            std::fprintf(stderr, "input: LBUTTONUP at (%d,%d) -> no click\n", x, y);
+        }
+        pressed_dialog() = 0u;
+        pressed_control() = 0u;
+    }
+}
+
 TS_BEGIN(DispatchMessageA)
     // MSG: +0 hwnd, +4 message, +8 wParam, +12 lParam. The procedure is looked
     // up through the window the message names, so a message posted to a second
     // window reaches that window's procedure and not the main one.
     u32 p = arg(0);
     u32 hwnd = ld32(p + 0u), msg = ld32(p + 4u);
+    dialog_mouse(hwnd, msg, ld32(p + 12u));
     WinRec *w = win_find(hwnd);
     u32 proc = w ? w->proc : wnd_proc();
     stub_done(1, call_wndproc(proc, hwnd, msg, ld32(p + 8u), ld32(p + 12u)));
@@ -1960,6 +2091,9 @@ TS_BEGIN(GetClientRect)
     // its back buffers for the wrong area.
     u32 p = arg(1);
     WinRec *w = win_find(arg(0));
+    if (win_trace_on() && win_is_dialog_control(w))
+        std::fprintf(stderr, "win: GetClientRect(0x%08x) -> (0,0 %dx%d)\n",
+                     arg(0), w ? w->cx : 0, w ? w->cy : 0);
     st32(p + 0u, 0u);
     st32(p + 4u, 0u);
     st32(p + 8u, w ? (u32)w->cx : (u32)SCREEN_W);
@@ -1968,12 +2102,19 @@ TS_BEGIN(GetClientRect)
 TS_END
 
 TS_BEGIN(GetWindowRect)
+    // Screen coordinates, ancestors included: a control's rectangle is what a
+    // caller converts with ScreenToClient, so the two must agree on the origin.
     u32 p = arg(1);
     WinRec *w = win_find(arg(0));
-    st32(p + 0u, w ? (u32)w->x : 0u);
-    st32(p + 4u, w ? (u32)w->y : 0u);
-    st32(p + 8u, w ? (u32)(w->x + w->cx) : (u32)SCREEN_W);
-    st32(p + 12u, w ? (u32)(w->y + w->cy) : (u32)SCREEN_H);
+    i32 ox = 0, oy = 0;
+    if (w) win_screen_origin(w, &ox, &oy);
+    if (win_trace_on() && win_is_dialog_control(w))
+        std::fprintf(stderr, "win: GetWindowRect(0x%08x) -> (%d,%d %dx%d)\n",
+                     arg(0), ox, oy, w->cx, w->cy);
+    st32(p + 0u, (u32)ox);
+    st32(p + 4u, (u32)oy);
+    st32(p + 8u, w ? (u32)(ox + w->cx) : (u32)SCREEN_W);
+    st32(p + 12u, w ? (u32)(oy + w->cy) : (u32)SCREEN_H);
     stub_done(2, 1u);
 TS_END
 
@@ -2066,6 +2207,8 @@ TS_BEGIN(DestroyWindow)
         if (wnd_handle() == hwnd) wnd_handle() = 0u;
         if (focus_handle() == hwnd) focus_handle() = 0u;
         if (foreground_handle() == hwnd) foreground_handle() = 0u;
+        if (input_target_hwnd() == hwnd) input_target_hwnd() = 0u;
+        if (pressed_dialog() == hwnd) { pressed_dialog() = 0u; pressed_control() = 0u; }
         stub_done(1, 1u);
     } else {
         stub_done(1, 0u);
@@ -2079,6 +2222,10 @@ TS_BEGIN(MoveWindow)
     u32 hwnd = arg(0);
     WinRec *w = win_find(hwnd);
     if (w) {
+        if (win_trace_on() && win_is_dialog_control(w))
+            std::fprintf(stderr, "win: MoveWindow(0x%08x, %d,%d %dx%d) was (%d,%d %dx%d)\n",
+                         hwnd, (i32)arg(1), (i32)arg(2), (i32)arg(3), (i32)arg(4),
+                         w->x, w->y, w->cx, w->cy);
         w->x = (i32)arg(1); w->y = (i32)arg(2);
         w->cx = (i32)arg(3); w->cy = (i32)arg(4);
     }
@@ -2090,6 +2237,10 @@ TS_BEGIN(SetWindowPos)
     u32 hwnd = arg(0), flags = arg(6);
     WinRec *w = win_find(hwnd);
     if (w) {
+        if (win_trace_on() && win_is_dialog_control(w))
+            std::fprintf(stderr, "win: SetWindowPos(0x%08x, %d,%d %dx%d flags=0x%x) was (%d,%d %dx%d)\n",
+                         hwnd, (i32)arg(2), (i32)arg(3), (i32)arg(4), (i32)arg(5), flags,
+                         w->x, w->y, w->cx, w->cy);
         if (!(flags & 0x0002u)) { w->x = (i32)arg(2); w->y = (i32)arg(3); }
         if (!(flags & 0x0001u)) { w->cx = (i32)arg(4); w->cy = (i32)arg(5); }
     }
@@ -2278,6 +2429,19 @@ inline u32 dlg_var_end(u32 p) {
     return p + 2u;
 }
 
+// Dialog units. A DLGTEMPLATE's rectangles are in dialog base units, and the
+// retail binary pins the mapping for this game: Wine's +win trace created the
+// main-menu dialog (LANGUAGE.DLL RT_DIALOG 226, template 204x147) at 306x239
+// and its 130x18 buttons at 195x29, i.e. MulDiv(x, 6, 4) and MulDiv(y, 13, 8)
+// -- the 6x13 base unit of the template's "MS Sans Serif" 8pt font. Without
+// DS_SETFONT Windows uses the system font's 8x16. Getting this wrong does not
+// just misplace the art: the button rectangles are the only clickable target,
+// so a template treated as pixels puts every hit-test in the wrong place.
+inline i32 dlg_muldiv(i32 v, i32 num, i32 den) {
+    if (v >= 0) return (v * num + den / 2) / den;
+    return -(((-v) * num + den / 2) / den);
+}
+
 // Create the dialog's window record and the controls its DLGTEMPLATE declares.
 // The template is the shipped RT_DIALOG resource (see the resource reader), so
 // the IDs, classes and styles are the original ones. Returns 0 when the window
@@ -2287,14 +2451,53 @@ inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
     if (!d) return 0u;
     u32 style = 0x40u, exstyle = 0u, cdit = 0u;
     i32 x = 0, y = 0, cx = 0, cy = 0;
+    i32 base_x = 8, base_y = 16;         // system font, no DS_SETFONT
+    // Two on-disk forms reach this function. RT_DIALOG resources are the
+    // classic DLGTEMPLATE (18-byte header, WORD control ids). The game also
+    // builds a DLGTEMPLATEEX in .data -- the "known size" dialog it creates to
+    // measure dialog base units -- which starts with dlgVer=1, signature=0xffff,
+    // carries a help id and 32-bit control ids, and has a 26-byte header. The
+    // parser used to read only the classic form, so that probe dialog came out
+    // as 32 garbage controls with a -65536x4 client rect; the game then scaled
+    // the whole menu by the bogus ratio, moving every button off its rectangle.
+    bool ex = tpl && ld16(tpl) == 1u && ld16(tpl + 2u) == 0xffffu;
+    u32 hdr = ex ? 26u : 18u;
     if (tpl) {
-        style = ld32(tpl);
-        exstyle = ld32(tpl + 4u);
-        cdit = ld16(tpl + 8u);
-        x = (i32)(i16)ld16(tpl + 10u);
-        y = (i32)(i16)ld16(tpl + 12u);
-        cx = (i32)(i16)ld16(tpl + 14u);
-        cy = (i32)(i16)ld16(tpl + 16u);
+        if (ex) {
+            style = ld32(tpl + 12u);
+            exstyle = ld32(tpl + 8u);
+            cdit = ld16(tpl + 16u);
+            x = (i32)(i16)ld16(tpl + 18u);
+            y = (i32)(i16)ld16(tpl + 20u);
+            cx = (i32)(i16)ld16(tpl + 22u);
+            cy = (i32)(i16)ld16(tpl + 24u);
+        } else {
+            style = ld32(tpl);
+            exstyle = ld32(tpl + 4u);
+            cdit = ld16(tpl + 8u);
+            x = (i32)(i16)ld16(tpl + 10u);
+            y = (i32)(i16)ld16(tpl + 12u);
+            cx = (i32)(i16)ld16(tpl + 14u);
+            cy = (i32)(i16)ld16(tpl + 16u);
+        }
+        if (style & 0x40u) { base_x = 6; base_y = 13; }   // DS_SETFONT
+    }
+    x = dlg_muldiv(x, base_x, 4);
+    y = dlg_muldiv(y, base_y, 8);
+    cx = dlg_muldiv(cx, base_x, 4);
+    cy = dlg_muldiv(cy, base_y, 8);
+    // A dialog whose template places it at (0,0) is centred in its parent.
+    // Measured, not assumed: the retail menu dialog is created at 306x239 and
+    // the +win trace shows it at (167,120) -- exactly ((640-306)/2,(480-239)/2)
+    // -- before the game moves it to (167,187). The game's own MoveWindow call
+    // keeps x and sets only y, so without this the menu would sit at x=0 and a
+    // click on the retail rectangle would miss.
+    if (tpl && parent && x == 0 && y == 0) {
+        WinRec *pw = win_find(parent);
+        if (pw) {
+            x = (pw->cx - cx) / 2;
+            y = (pw->cy - cy) / 2;
+        }
     }
     d->hwnd = new_win_handle();
     d->proc = proc;
@@ -2314,25 +2517,51 @@ inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
     u32 h = d->hwnd;
 
     if (tpl && cdit) {
-        u32 p = tpl + 18u;
+        u32 p = tpl + hdr;
         p = dlg_var_end(p);          // menu
         p = dlg_var_end(p);          // window class
         p = dlg_var_end(p);          // title
         if (style & 0x40u) {         // DS_SETFONT: point size + typeface
-            p += 2u;
-            while (ld16(p)) p += 2u;
-            p += 2u;
+            if (ex) {
+                // The extended font block the game writes is pointsize(2),
+                // weight(2), typeface, then italic(1)+charset(1). The retail
+                // +win trace pins the typeface at 0x3133c4 ("MS Sans Serif",
+                // not "Sans Serif"), and the first control starts at 0x3133e4
+                // -- four bytes past the face terminator, which is the two
+                // bytes below plus DWORD alignment.
+                p += 4u;
+                while (ld16(p)) p += 2u;
+                p += 4u;
+            } else {
+                p += 2u;
+                while (ld16(p)) p += 2u;
+                p += 2u;
+            }
         }
         for (u32 k = 0; k < cdit; ++k) {
             p = (p + 3u) & ~3u;
-            u32 cstyle = ld32(p);
-            u32 cexstyle = ld32(p + 4u);
-            i32 ccx = (i32)(i16)ld16(p + 8u);
-            i32 ccy = (i32)(i16)ld16(p + 10u);
-            i32 ccxx = (i32)(i16)ld16(p + 12u);
-            i32 ccyy = (i32)(i16)ld16(p + 14u);
-            u32 cid = ld16(p + 16u);
-            u32 q = p + 18u;
+            u32 cstyle, cexstyle;
+            i32 ccx, ccy, ccxx, ccyy;
+            u32 cid;
+            if (ex) {
+                // DLGITEMTEMPLATEEX: helpID, exStyle, style, rect, 32-bit id.
+                cexstyle = ld32(p + 4u);
+                cstyle = ld32(p + 8u);
+                ccx = (i32)(i16)ld16(p + 12u);
+                ccy = (i32)(i16)ld16(p + 14u);
+                ccxx = (i32)(i16)ld16(p + 16u);
+                ccyy = (i32)(i16)ld16(p + 18u);
+                cid = ld32(p + 20u);
+            } else {
+                cstyle = ld32(p);
+                cexstyle = ld32(p + 4u);
+                ccx = (i32)(i16)ld16(p + 8u);
+                ccy = (i32)(i16)ld16(p + 10u);
+                ccxx = (i32)(i16)ld16(p + 12u);
+                ccyy = (i32)(i16)ld16(p + 14u);
+                cid = ld16(p + 16u);
+            }
+            u32 q = p + (ex ? 24u : 18u);
             u32 catom = 0u;
             u16 cv = (u16)ld16(q);
             if (cv == 0xffffu) { catom = ld16(q + 2u); q += 4u; }
@@ -2352,9 +2581,25 @@ inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
             c->exstyle = cexstyle;
             c->atom = catom;
             c->shown = (cstyle & 0x10000000u) ? 1u : 0u;   // WS_VISIBLE
-            c->x = ccx; c->y = ccy; c->cx = ccxx; c->cy = ccyy;
-            for (unsigned t = 0; t + 1u < sizeof(c->text) && ctext[t]; ++t)
+            c->x = dlg_muldiv(ccx, base_x, 4);
+            c->y = dlg_muldiv(ccy, base_y, 8);
+            c->cx = dlg_muldiv(ccxx, base_x, 4);
+            c->cy = dlg_muldiv(ccyy, base_y, 8);
+            unsigned t = 0;
+            for (; t + 1u < sizeof(c->text) && ctext[t]; ++t)
                 c->text[t] = ctext[t];
+            c->text[t] = 0;   // the slot may have held a longer string
+        }
+    }
+
+    if (win_trace_on()) {
+        std::fprintf(stderr, "win: dialog 0x%08x created at (%d,%d %dx%d) step=%lu\n",
+                     h, d->x, d->y, d->cx, d->cy, (unsigned long)mach().steps);
+        for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i) {
+            WinRec &c = wins()[i];
+            if (!c.hwnd || c.parent != h) continue;
+            std::fprintf(stderr, "win:   control 0x%08x id=%u (%d,%d %dx%d) \"%s\"\n",
+                         c.hwnd, c.id, c.x, c.y, c.cx, c.cy, c.text);
         }
     }
 
@@ -2363,11 +2608,21 @@ inline u32 dialog_create(u32 tpl, u32 parent, u32 proc, u32 init) {
     // that takes the default focus (0 here) and lParam is dwInitParam.
     call_wndproc(proc, h, 0x0110u, 0u, init);
 
-    // A scripted input source: press the dialog's default button. The command
-    // is queued, not delivered here, so the game's own PeekMessage/GetMessage/
-    // DispatchMessage loop carries it to the dialog procedure.
-    u32 btn = dlg_default_button(h);
-    if (btn) msg_push(h, 0x0111u, btn, dlg_item(h, btn));
+    // No button is pressed here. An earlier version queued a WM_COMMAND for
+    // the dialog's default button as a "scripted input source"; that is a fake
+    // selection, and it dismissed the game's real screens the instant they
+    // appeared (the "Select Campaign:" dialog 148 has an OK button, so it
+    // closed in 57,000 instructions and the menu came back). Input now comes
+    // from Input.h and is turned into a WM_COMMAND only when a press and
+    // release land on the same control (dialog_mouse).
+    // Input belongs to this dialog (see input_target). The game's menu
+    // dialog has no default button -- its six controls are owner-draw -- so the
+    // only way it can be answered is a mouse click, which is what dialog_mouse
+    // turns into the WM_COMMAND its procedure expects. A parentless dialog is
+    // not a screen: the game's dialog-unit probe is a popup created with no
+    // parent and never shown, and letting it take the input target would send
+    // the menu's clicks to it.
+    if (parent) input_target_hwnd() = h;
     return h;
 }
 
@@ -2430,6 +2685,8 @@ TS_BEGIN(EndDialog)
         for (unsigned i = 0; i < (unsigned)MAX_WINDOWS; ++i)
             if (wins()[i].hwnd && wins()[i].parent == h) wins()[i].hwnd = 0u;
         w->hwnd = 0u;
+        if (input_target_hwnd() == h) input_target_hwnd() = 0u;
+        if (pressed_dialog() == h) { pressed_dialog() = 0u; pressed_control() = 0u; }
     }
     stub_done(2, 1u);
 TS_END
@@ -2674,9 +2931,11 @@ TS_END
 TS_BEGIN(ClientToScreen)
     u32 p = arg(1);
     WinRec *w = win_find(arg(0));
+    i32 ox = 0, oy = 0;
+    if (w) win_screen_origin(w, &ox, &oy);
     if (p) {
-        st32(p + 0u, ld32(p + 0u) + (u32)(w ? w->x : 0));
-        st32(p + 4u, ld32(p + 4u) + (u32)(w ? w->y : 0));
+        st32(p + 0u, ld32(p + 0u) + (u32)ox);
+        st32(p + 4u, ld32(p + 4u) + (u32)oy);
     }
     stub_done(2, 1u);
 TS_END
@@ -2684,9 +2943,11 @@ TS_END
 TS_BEGIN(ScreenToClient)
     u32 p = arg(1);
     WinRec *w = win_find(arg(0));
+    i32 ox = 0, oy = 0;
+    if (w) win_screen_origin(w, &ox, &oy);
     if (p) {
-        st32(p + 0u, ld32(p + 0u) - (u32)(w ? w->x : 0));
-        st32(p + 4u, ld32(p + 4u) - (u32)(w ? w->y : 0));
+        st32(p + 0u, ld32(p + 0u) - (u32)ox);
+        st32(p + 4u, ld32(p + 4u) - (u32)oy);
     }
     stub_done(2, 1u);
 TS_END
