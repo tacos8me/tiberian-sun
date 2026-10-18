@@ -1163,8 +1163,11 @@ binary and corroborating them across instantiations:
 
 - `VectorClass.h` — `VectorClass<T>`, `DynamicVectorClass<T>`, `TypeList<T>`.
   Layout confirmed from ctor `0x445640` and dtor `0x445570` (offsets +4 data,
-  +8 count, +0xc active, +0xd allocated gating the free; +0x10 capacity,
-  +0x14 growth step default 10). Covers 309 manifest instantiations.
+  +8 allocated size, +0xc active, +0xd allocated gating the free; +0x10 live
+  element count, +0x14 growth step default 10). `Find` (0x445540) loops the
+  dword at +0x10 and the dynamic constructor stores 0 there, so +0x10 is the
+  count and +8 the capacity -- the two were once named the other way round.
+  Covers 309 manifest instantiations.
 - `Blitter.h` — the `Blit*`/`RLEBlit*` family, 110 instantiations across 97
   template names, with the `<E>`/`<G>` pixel-format split proven from operand
   width (stride 1 vs 2).

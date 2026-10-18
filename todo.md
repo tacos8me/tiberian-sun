@@ -1543,6 +1543,16 @@ Also check whether the sidebar build buttons respond.
 and after, with a committed frame.
 Do not move units by hand.
 
+### [x] VectorClass's count and capacity were named the wrong way round
+`VectorClass.h` called `+0x10` `m_nCapacity` and described `+8` as the count.
+The binary says the opposite: `Find` (`0x445540`) loops the dword at `+0x10`
+over the data array, and the dynamic constructor (`0x49c0f0`) stores **0** at
+`+0x10` and **10** at `+0x14` -- a live count starts empty, a capacity does not.
+So `+8` is the allocated size (`VectorMax`) and `+0x10` the live element count.
+Offsets were already right; the names and comments are corrected in
+`src/handwritten/VectorClass.h` (`m_nActiveCount`), with the same correction in
+`AGENTS.md`. No generated file or offset changed; `verify.py` still passes.
+
 **Diagnostics added by the investigation:** `TS_OBJECTS` now prints each
 registry object's `CoordStruct` (`ObjectClass +0x40`, 256 leptons/cell) and
 whether its own cell is seen; `TS_MAPCELLS` scans the whole array and prints

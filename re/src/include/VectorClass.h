@@ -23,7 +23,7 @@
 //
 // Constructor 0x445640 (VectorClass) disassembles to:
 //     mov dword ptr [esi + 4], edx      ; m_pData = 0
-//     mov dword ptr [esi + 8], eax      ; m_nCount = arg
+//     mov dword ptr [esi + 8], eax      ; m_nVectorMax = arg (capacity)
 //     mov byte  ptr [esi + 0xc], 1      ; m_bIsActive = true
 //     mov byte  ptr [esi + 0xd], dl     ; m_bIsAllocated = false
 //     mov dword ptr [esi], 0x69aa3c     ; vftable
@@ -40,10 +40,14 @@
 // is set true at construction and is the "IsActive" flag. Both names follow
 // the Westwood convention and match the observed behaviour exactly.
 //
-// DynamicVectorClass adds +0x10 (capacity) and +0x14 (growth step, default 10).
+// DynamicVectorClass adds +0x10 (the live element count) and +0x14 (growth
+// step, default 10). The two are easy to swap: `Find` (0x445540) loops the
+// dword at +0x10 over the data array, and the dynamic constructor stores 0 at
+// +0x10 and 10 at +0x14 -- a live count starts empty, a capacity would not.
+// The base's +8 is the allocated size (Westwood's `VectorMax`), not the count.
 // The default is visible in the static initialiser of a global instance:
 //     mov dword ptr [0x7b2a9c], 0xa     ; growth step = 10
-//     mov dword ptr [0x7b2a98], eax     ; capacity
+//     mov dword ptr [0x7b2a98], eax     ; live count
 // ==========================================================================
 
 #include "ts_prelude.h"
@@ -96,8 +100,8 @@ public:
 // --------------------------------------------------------------------------
 // DynamicVectorClass<T>
 //
-// VectorClass plus a capacity and a growth step. The growth step defaults to
-// 10 (see the static initialiser evidence above).
+// VectorClass plus a live element count and a growth step. The count starts at
+// 0 and the growth step defaults to 10 (see the constructor evidence above).
 // --------------------------------------------------------------------------
 template <class T>
 class DynamicVectorClass : public VectorClass<T>
@@ -110,8 +114,8 @@ public:
     // [0] ~DynamicVectorClass 0x4455c0 (scalar deleting dtor)
     // [1] operator==          0x445310
     // [2] operator=           0x445490
-    // [3] Clear               0x4452a0   also zeroes m_nCapacity
-    // [4] Find                0x445540   loops m_nCapacity over m_pData
+    // [3] Clear               0x4452a0   also zeroes m_nActiveCount
+    // [4] Find                0x445540   loops m_nActiveCount over m_pData
     // [5] vfunc_5             0x445470
     virtual bool operator==(const DynamicVectorClass<T> &that) const;
     virtual DynamicVectorClass<T> &operator=(const DynamicVectorClass<T> &that);
@@ -120,7 +124,7 @@ public:
     virtual bool vfunc_5() const;            // /* ? */
 
     // ---- data members (offsets from ctor 0x49c0f0) ----
-    int m_nCapacity;      // +0x10  allocated capacity
+    int m_nActiveCount;   // +0x10  live element count (zeroed at construction)
     int m_nGrowthStep;    // +0x14  growth increment, default 10
 };
 
@@ -267,7 +271,7 @@ DynamicVectorClass<T>::operator=(const DynamicVectorClass<T> &that)
 template <class T>
 inline void DynamicVectorClass<T>::Clear() { ts::ts_invoke(0x004452a0u); }
 
-// Linear scan over m_nCapacity comparing the first word of each element;
+// Linear scan over m_nActiveCount comparing the first word of each element;
 // returns the index or -1.
 template <class T>
 inline int DynamicVectorClass<T>::Find(const T &item) const
