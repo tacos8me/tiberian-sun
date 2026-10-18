@@ -45,10 +45,11 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   code (4,285 of 4,289 confirmed, 99.9%)
 - `link_test.py` — links all 492 translation units into a program and runs it;
   measured **OK, exit 0**, message loop reached, 0 unmapped
-- `test_tools.py` — 94 unit tests for the tools themselves, including
+- `test_tools.py` — 101 unit tests for the tools themselves, including
   `test_machine_perf`, which pins the interpreter hot path (40M-iteration
   workload, wide-vs-byte checksum `88188416`, page straddles, a 20M/s floor, a
-  cached-path ratio of 1.73-1.78, and the `-O2`/`-fno-pie` build flags)
+  cached-path ratio of 1.73-1.78, and the `-O2`/`-fno-pie` build flags), and
+  the x87-form tests that caught the D8 one-register emitter bug
 - `test_runtime.py` — 101 checks for the rendering/input layers (`Rendering.h`,
   `Input.h`), mutation-proven; includes a standalone frame selftest
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
@@ -77,14 +78,11 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   100B in 243.9 s, byte-identical state. At 4B the stop is `0x0055b0bb` (budget)
   with 12,809 pages and the GDI loading screen (290,399 non-black, md5
   `6cb0e1fff05f9250adda298e644f1266` = `re/out/render_2_6b.png`); at 100B it is
-  on vector 7/22 with 160,070 entries. The first wild call is deterministic at
-  step 478,300,935,316 (confirmed by an independent `TS_STOP_UNMAPPED=1` run):
-  `call [edx+0x2c]` at `0x005fa96b` → `0x46000062`,
-  EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2, after `FUN_005a34e0`'s
-  bitmap setter wrote 34,062 B before its bitmap at `0x005a3558`. At a 1.2e12
-  budget it faults at `0x00422de0` after 478,970,534,425 instructions with
-  1,024,211 / 2,097,152 pages (the 32-bit VA limit, not a table cap) and
-  7,771,444 unmapped calls. The Exit Game script reaches
+  on vector 7/22 with 160,070 entries. At 500B it stops at the budget after
+  500,000,000,001 instructions at `0x00543669`, with 0 unmapped calls, pages
+  12,637/32,768, coverage 158,667/9,607, 18,691,958 blits and 46,753,350 locks,
+  and renders the **tactical HUD** (`re/out/frame_500b.png`, 87,794 non-black);
+  the map viewport is still black. The Exit Game script reaches
   `ExitProcess(0)` at `0x00684529` after 1,707,666,895 instructions
   (86,400 / 6,654). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA`
   is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0
@@ -106,34 +104,28 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
   (`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416).
 
-**Current runtime blocker** (queued in `todo.md`): the **coordinate-space
-mismatch** in the mission loader. The model renders and selects the main menu
-(the six `BS_OWNERDRAW` buttons have real rectangles; press/release →
-`BN_CLICKED` reaches the game's own hit-test), New Campaign opens `RT_DIALOG` 148
-at step 1,688,503,557, the listbox is populated from the shipped `BATTLE.INI`
-`[Battles]`, GDI1 is selected, and the game reads `GDI1A.MAP` from `MAPS01.MIX`
-and plays the GDI intro. ESC skips the movie and the loader runs; its own O(n²)
-`DynamicVectorClass` growth dominates (at 100B it is on vector 7/22 with 160,070
-entries). The 479B wild call is diagnosed: the first wild call is deterministic
-at step 478,300,935,316 — `call [edx+0x2c]` at `0x005fa96b` → `0x46000062`,
-EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2 — after `FUN_005a34e0`'s
-cell-seen bitmap setter wrote 34,062 B before its bitmap (index
-`67*(-4068)+65 = -272,491`) at `0x005a3558`, corrupting the vptr. `FUN_005a4080`
-passed a map-pixel rect (`x=-2008, y=28, w=2125, h=4176`) into the scaled 67x108
-surface index space (scale `[0x710d28+0x1490]`, set in `FUN_005a1bd0` from
-`min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the screen rect). The model
-executes the game faithfully; the divergence to investigate is the zoom/scale
-math. The resulting flood made **7,771,444 unmapped calls** (7 in `.text`, all
-`0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere) and
-a black frame; the page refusal (1,024,211 / 2,097,152) is the 32-bit process's
-~4.2 GB address space, not a table cap. **The tactical phase is not reached and
-no mission is rendered.** The VQA frame-wait path is also stub-bound, so movie
+**Current runtime blocker** (queued in `todo.md`): the **black map viewport**.
+The model renders and selects the main menu (the six `BS_OWNERDRAW` buttons have
+real rectangles; press/release → `BN_CLICKED` reaches the game's own hit-test),
+New Campaign opens `RT_DIALOG` 148 at step 1,688,503,557, the listbox is
+populated from the shipped `BATTLE.INI` `[Battles]`, GDI1 is selected, and the
+game reads `GDI1A.MAP` from `MAPS01.MIX` and plays the GDI intro. The 479B
+out-of-bounds write was the **x87 emitter** (D8 one-register forms rendered as
+pop forms; 901 instructions), fixed in `e5d7039`; after the fix the tactical
+zoom is 1.125, the map surface 99x108, the visible rect `35,28,23,43`, the vptr
+`0x006a5dfc`, and there are 0 OOB stores. A 500B run renders the **tactical
+HUD** (`re/out/frame_500b.png`, 87,794 non-black: Options, credits 5000, GDI
+radar eagle, build tabs/grid) with 0 unmapped calls, 12,637 pages, 18,691,958
+blits and 46,753,350 locks. **The map viewport is still black**, so the mission
+map does not render; the next step is tracing the terrain/map blits (destination
+surfaces, primary map rectangle) with per-surface counters and dumps, not
+painting the map by hand. The VQA frame-wait path is also stub-bound, so movie
 pacing is not retail pacing. The nested MIX (`0xa8548fd9`, 317 entries) is
 mounted and read; the button art is not painted (no `WM_PAINT` to children;
 retail does not draw it either). Rendering, input, the movie path, the dialog
 layer, CD path, narrow-width flags, MIX index read, Blowfish cipher, menu
-selection, the campaign list and mission start are fixed; the interpreter is
-12-14x faster; the shutdown ESP corruption is dormant.
+selection, the campaign list, the mission start and the x87 fix are done; the
+interpreter is 12-14x faster; the shutdown ESP corruption is dormant.
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the

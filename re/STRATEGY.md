@@ -53,7 +53,8 @@ documentation says cannot exist.
 | boot (2.1B, default timeline) | New Campaign, NOD1, GDI1, OK; `GDI1A.MAP` read; GDI intro plays; stop `0x0067dc4f` (LCW decoder), depth 28, `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage **84,130 / 6,431**, `pages-used 9,029/32,768`; frame 194,131 non-black | same (`--timeout 600`) |
 | boot (4B, ESC skip) | stop `0x0055b0bb` (budget) after 4,000,000,001 instructions, depth 29; coverage **139,250 / 8,682**; pages **12,809/32,768**; 8 surfaces, 12 blits, 769 locks, 0 flips; frame 290,399 non-black (loading screen, md5 `6cb0e1ff…` = `re/out/render_2_6b.png`); **11.7 s wall** | same |
 | boot (100B, ESC skip) | stop `0x0055b0bc` (budget); pages **16,343/32,768**; loader on vector 7/22 with **160,070 entries**; **243.9 s wall** | same |
-| boot (1.2e12, ESC skip) | first wild call **deterministic at step 478,300,935,316** (three runs; an independent `TS_STOP_UNMAPPED=1` run stops at the same step): `call [edx+0x2c]` at `0x005fa96b` → `0x46000062`, EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2; `FUN_005a34e0`'s bitmap setter wrote 34,062 B before its bitmap (index `67*(-4068)+65 = -272,491`) at `0x005a3558`, corrupting the vptr; `FUN_005a4080` passed a map-pixel rect (`2125x4176`) into the scaled 67x108 surface space. Then **fault at `0x00422de0` after 478,970,534,425 instructions**; pages **1,024,211/2,097,152** (1 refused; ~4.2 GB = the 32-bit VA limit, not a table cap); **7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere); coverage 158,971 / 9,630; **black frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips); tactical phase **not reached** | same |
+| boot (500B, ESC skip) | **tactical HUD renders**: budget at **500,000,000,001** instructions, EIP `0x00543669` (3x4 matrix·vector transform), depth 100; pages **12,637/32,768** (refused 0); **0 unmapped**; coverage **158,667 / 9,607**; `GetMessage=19`, `DispatchMessage=19`, `PeekMessage=23,117,313`; 8 surfaces, **18,691,958 blits, 46,753,350 locks**; frame `re/out/frame_500b.png` md5 `4fc1cec7…`, **87,794 non-black** (Options, credits 5000, GDI radar eagle, build tabs/grid); **map viewport still black** | same |
+| boot (1.2e12, ESC skip) | historical, pre-`e5d7039`: fault at `0x00422de0` after 478,970,534,425 instructions, 1,024,211/2,097,152 pages, 7,771,444 unmapped calls, black frame; caused by the x87 D8 emitter bug (scale 108 instead of 1.125) and **does not reproduce** after the fix | same |
 | interpreter | **~400M instructions/s** (12-14x the old ~28.6M/s), byte-identical machine state; 4B 11.7 s, 20B 50.2 s, 100B 243.9 s | `test_machine_perf` + boot |
 | frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; vs retail: 102,836 pixels differ (33.48%), mean abs channel diff **1.06/255** over differing pixels (0.35 over frame), 506 pixels >8 | `tools/boot.py --frame` |
 | link test | **OK, exit 0**, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled | `tools/link_test.py` |
@@ -80,15 +81,15 @@ In words:
    narrow-width flags, the Blowfish cipher, the stack tracker, the teardown
    calls, signed `idiv`, rendering, input, menu selection, the listbox/trackbar
    layer and the mission start are all fixed. The interpreter is **12-14x
-   faster** (~400M instructions/s) with byte-identical state, so the mission
-   load now runs to **479B instructions** before failing: ESC skips the movie,
-   the loader's own O(n²) vector growth dominates (at 100B it is on vector 7/22
-   with 160,070 entries), and the first wild call is deterministic at step
-   478,300,935,316 — `FUN_005a34e0`'s bitmap setter wrote 34,062 bytes before its
-   bitmap because `FUN_005a4080` passed a map-pixel rect into the scaled 67x108
-   surface index space, overwriting a TerrainClass vptr; the resulting flood made
-   **7,771,444 unmapped calls** and a black frame. The **tactical phase is not
-   reached** and the mission load does **not** complete.
+   faster** (~400M instructions/s) with byte-identical state. The 479B
+   out-of-bounds write was the **x87 emitter** (D8 one-register forms rendered
+   as pop forms; 901 instructions), fixed in `e5d7039`; after the fix the
+   tactical zoom is 1.125, the map surface 99x108, the visible rect
+   `35,28,23,43`, and there are 0 OOB stores. A 500B run now **renders the
+   tactical HUD** (`re/out/frame_500b.png`, 87,794 non-black) with 0 unmapped
+   calls, 12,637 pages, 18,691,958 blits and 46,753,350 locks. The **map
+   viewport is still black**; only the HUD renders, so the mission map does
+   **not** render yet.
 4. **The Win32 layer is real where the game has been, and fiction where it has
    not** (`Win32Stubs.h`, read):
    - File I/O: **real** — a host root, case-insensitive paths, a 64-entry handle
@@ -111,10 +112,9 @@ delivery, the CD/MIX path, real dialogs, the intro movie, a rendered and
 selectable main menu, the campaign list, and into the GDI campaign's intro movie,
 on a Win32 layer that can load a file, create a window, dispatch messages, read
 the MIX index, build dialogs, take scripted input, hit-test a real button,
-populate a listbox, start a mission and show a frame — but cannot yet complete
-the mission load (it reaches 479B instructions and faults on a diagnosed
-out-of-bounds bitmap write),
-fire a timer, or play a sound.**
+populate a listbox, start a mission, and render the in-game tactical HUD — but
+cannot yet render the map viewport (it is still black), fire a timer, or play a
+sound.**
 
 ### The fact the docs do not contain
 
@@ -202,24 +202,25 @@ bytes.
     (`[Battles] 1=GDI1, 2=NOD1`) feeds listbox 1109 through the model's full
     listbox/trackbar layer; OK selects GDI, `GDI1A.MAP` is read from MAPS01.MIX,
     and the GDI intro movie plays (2.1B stop `0x0067dc4f`, 84,130 / 6,431).
-12. **The 479B wild call — diagnosed.** ESC skips the movie and the loader runs;
-    its own O(n²) vector growth dominates (at 100B it is on vector 7/22 with
-    160,070 entries). The first wild call is deterministic at step 478,300,935,316
-    (three runs agree): `call [edx+0x2c]` at `0x005fa96b` → `0x46000062`, with
-    EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2. `FUN_005a34e0`'s
-    cell-seen bitmap setter wrote 34,062 bytes before its bitmap (index
-    `67*(-4068)+65 = -272,491`) at `0x005a3558`, corrupting the vptr. The page
-    refusal is the 32-bit process's ~4.2 GB address space, not a table cap. The
-    model executes the game faithfully.
-13. **The visible rect's coordinate space — the current blocker.** `FUN_005a4080`
-    passes a map-pixel rect (`x=-2008, y=28, w=2125, h=4176`) into the scaled
-    67x108 surface index space (scale `[0x710d28+0x1490]`, set in `FUN_005a1bd0`
-    from `min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the screen rect). The
-    divergence to find is the zoom/scale math (x87 rounding, integer conversion,
-    map dimensions, or a transcription); a clamp or wider bitmap would mask it.
-    The **tactical phase is not reached** and the mission load does **not**
-    complete.
-14. **The interpreter — done.** 12-14x faster (~400M instructions/s vs
+12. **The 479B wild call — root-caused to the x87 emitter and fixed
+    (`e5d7039`).** `tools/emit_x86.py` rendered the D8 one-register forms as pop
+    forms, so `fdiv st(1)` wrote `ST(1)=ST(1)/ST(0)` instead of
+    `ST(0)=ST(0)/ST(1)`; 901 non-pop one-operand x87 instructions were affected.
+    `FUN_005a1bd0`'s tactical zoom became 108 instead of 1.125, producing the
+    bogus `2125x4176` visible rect and the out-of-bounds vptr write. After the
+    fix: scale 1.125 (`0x3f900000`), map surface 99x108, visible rect
+    `35,28,23,43`, vptr `0x006a5dfc`, 0 OOB stores.
+13. **The tactical HUD renders — first in-game frame.** The 500B run stops at the
+    budget at `0x00543669`, depth 100, pages 12,637/32,768 (refused 0), **0
+    unmapped calls**, coverage 158,667/9,607, 8 surfaces with 18,691,958 blits
+    and 46,753,350 locks. `re/out/frame_500b.png` (87,794 non-black) shows
+    Options, credits 5000, the GDI radar eagle, and the build tabs/grid.
+14. **The black map viewport — the current blocker.** Only the HUD renders; the
+    map does not. Trace the terrain/map blits (destination surfaces, the primary
+    map rectangle now that the visible rect is `35,28,23,43` on a 99x108
+    surface) with per-surface counters and dumps; do not paint the map by hand.
+    The mission map does **not** render yet.
+15. **The interpreter — done.** 12-14x faster (~400M instructions/s vs
     ~28.6M/s) with byte-identical machine state; `test_machine_perf` pins the
     hot path and is mutation-proven.
 
@@ -281,20 +282,17 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
   (`DRIVE_CDROM`, label `TS1`), and the game reads `D:\TS1.dsk` and enumerates
   `EXPAND99..00`. Narrow-width flags (`f2e6ca9`) and the generator's
   `SetViewportOrgEx`/`SetWindowOrgEx` arity (`19ee16c`) are fixed too.
-- **Rendering, input, the movie path, menu selection and the mission start
-  work; the mission load does not.** The model plays past the intro, renders and
-  selects the real menu, populates the campaign list from shipped `BATTLE.INI`,
-  and OK starts the GDI campaign: `GDI1A.MAP` is read and the GDI intro movie
-  plays (2.1B stop `0x0067dc4f`, 194,131 non-black frame). ESC skips the movie
-  and the loader runs: its own O(n²) vector growth dominates (at 100B it is on
-  vector 7/22 with 160,070 entries). The first wild call is deterministic at
-  step 478,300,935,316: `FUN_005a34e0`'s bitmap setter wrote 34,062 bytes before
-  its bitmap because `FUN_005a4080` passed a map-pixel rect into the scaled
-  67x108 surface index space, overwriting a TerrainClass vptr; the resulting
-  flood made **7,771,444 unmapped calls** and a black frame. **The tactical
-  phase is not reached and no mission is rendered.** The nested MIX
-  (`0xa8548fd9`, 317 entries) is mounted and read; the button art is not painted
-  (no `WM_PAINT` to children; retail does not draw it either).
+- **Rendering, input, the movie path, menu selection, the mission start and the
+  tactical HUD work; the map viewport does not.** The model plays past the intro,
+  renders and selects the real menu, populates the campaign list from shipped
+  `BATTLE.INI`, and OK starts the GDI campaign: `GDI1A.MAP` is read and the GDI
+  intro movie plays (2.1B stop `0x0067dc4f`, 194,131 non-black frame). The 479B
+  out-of-bounds write was the x87 emitter (D8 one-register forms; 901
+  instructions), fixed in `e5d7039`; the 500B run then renders the **tactical
+  HUD** (`re/out/frame_500b.png`, 87,794 non-black) with 0 unmapped calls. **The
+  map viewport is still black**, so the mission map does not render. The nested
+  MIX (`0xa8548fd9`, 317 entries) is mounted and read; the button art is not
+  painted (no `WM_PAINT` to children; retail does not draw it either).
 - **The VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls in 600 s, so
   model time barely advances during movies; ESC is the practical route to the
   mission load until the clock/pacing model is improved.
@@ -324,8 +322,9 @@ stack tracker, the teardown calls, signed `idiv`, the dialog layer, narrow-width
 flags, the generator arity, the MS*/AVI movie path, rendering, input, menu
 selection and the campaign list/mission start are also done** (units 11–25
 below), as are **the growable page table, the heap reuse, the interpreter
-speedup, the 479B run and its diagnosis (units 26–29)**. Units 6–10 remain, and
-**the visible rect's coordinate space (unit 30) is the current blocker**.
+speedup, the 479B run, its diagnosis and the x87 fix, and the tactical HUD (units
+26–30)**. Units 6–10 remain, and **the black map viewport (unit 31) is the
+current blocker**.
 
 1. **Wine oracle (`tools/oracle.py`).** `tools/wine_env.sh` runs the retail game
    with the CD and a 640x480x16 screen; `oracle.py` attaches gdb, breaks at an
@@ -402,7 +401,7 @@ only honest way to close the rest.
 20. **Fix narrow-width flags.** **Done (`f2e6ca9`):** width-aware
     `f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`; the vsprintf `%` and the
     CD-drive scan are correct, and the flags are compared against the CPU's own.
-    `test_tools.py` is 94 checks.
+    `test_tools.py` is 101 checks.
 21. **Make the CD path work.** **Done:** with `TS_CD`, `CreateFileA("D:\TS1.dsk")`
     succeeds, `GetDriveTypeA` no longer receives `%c:\`, and `EXPAND99..00` are
     enumerated.
@@ -445,15 +444,20 @@ only honest way to close the rest.
     `FUN_005a34e0`'s cell-seen bitmap setter wrote 34,062 B before its bitmap
     (index `67*(-4068)+65 = -272,491`) at `0x005a3558`, corrupting the vptr. The
     page refusal is the 32-bit process's ~4.2 GB address space, not a table cap.
-30. **Find the zoom/scale divergence behind the coordinate-space mismatch.**
-    **Open — the current blocker.** `FUN_005a4080` passes a map-pixel rect
-    (`x=-2008, y=28, w=2125, h=4176`) into the scaled 67x108 surface index space
-    (scale `[0x710d28+0x1490]`, set in `FUN_005a1bd0` from
-    `min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the screen rect).
-    Decompile those functions and check x87 rounding, integer conversion, map
-    dimensions and the transcription against retail. Do not clamp or widen the
-    bitmap. *Exit:* the out-of-bounds write is gone, the vptr is intact, and the
-    run reaches the tactical phase or a new named stop.
+30. **Find the zoom/scale divergence.** **Done (`e5d7039`):** the x87 emitter
+    rendered D8 one-register forms as pop forms, so `fdiv st(1)` computed the
+    wrong destination; `FUN_005a1bd0`'s tactical zoom became 108 instead of
+    1.125. The fix covers 901 non-pop one-operand x87 instructions and 951
+    regenerated lines. After: scale 1.125, map surface 99x108, visible rect
+    `35,28,23,43`, vptr intact, 0 OOB stores.
+31. **Render the map viewport.** **Open — the current blocker.** The 500B run
+    renders the tactical HUD (`re/out/frame_500b.png`, 87,794 non-black) with 0
+    unmapped calls, but the map area is black. Add per-surface blit/lock
+    counters and surface dumps; find the terrain blits' destination and whether
+    the map is an offscreen surface never composited, or the primary map
+    rectangle is clipped/scrolled wrongly. *Exit:* the map viewport renders
+    terrain/tiles in the dumped frame, or the next precise renderer defect is
+    named.
 
 ---
 
@@ -518,7 +522,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     headerless = 1,216). Measured this session.
 11. **RESOLVED — `CONTEXT.md` called `verify.py` "the 8-check gate".** It now
     says nine, describes check 9, and lists `link_test.py` (492 TUs),
-    `test_tools.py` (now 94 checks) and the import distinction (`8467f84`).
+    `test_tools.py` (now 101 checks) and the import distinction (`8467f84`).
 12. **OPEN — the framing error, which is the expensive one.** `ROADMAP.md` §2.3
     used to close with "for a decompilation that is the difference between 'it
     builds' and 'it is the game'". The sentence is gone and §4 now cross-
@@ -602,7 +606,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
 25. **RESOLVED — narrow-width flags (`f2e6ca9`) and generator arity
     (`19ee16c`).** Width-aware flag derivation fixes the vsprintf `%` and the
     CD-drive scan; `SetViewportOrgEx`/`SetWindowOrgEx` take 4 arguments and
-    `--stack-check` is 342/0. `test_tools.py` is 94 checks.
+    `--stack-check` is 342/0. `test_tools.py` is 101 checks.
 26. **RESOLVED — the intro-movie path and the rendered main menu.** The model
     plays past the intro and renders the menu: `re/out/frame.png` (md5
     `0fdf2636…`, 254,610 / 307,200 non-black) differs from the retail screenshot
@@ -635,16 +639,25 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     bitmap (index `67*(-4068)+65 = -272,491`) at `0x005a3558`, corrupting the
     vptr. The page refusal is the 32-bit process's ~4.2 GB address space, not a
     table cap; the flood's termination varies between runs, the game state does
-    not. The tactical phase is **not** reached.
-32. **OPEN (new) — the visible rect is in map-pixel space, not surface space.**
-    `FUN_005a4080` passes `x=-2008, y=28, w=2125, h=4176` into the scaled 67x108
-    surface index space (scale `[0x710d28+0x1490]`, set in `FUN_005a1bd0` from
-    `min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the screen rect). The
-    divergence is in the zoom/scale math; do not clamp or widen the bitmap.
-    **The current blocker.**
-33. **OPEN (new) — the VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls
+    not. This was the pre-fix state; the flood no longer reproduces after
+    `e5d7039`, and the 500B run reaches the tactical HUD.
+32. **RESOLVED — the visible rect's coordinate space (`e5d7039`).** The x87
+    emitter rendered D8 one-register forms as pop forms, so `fdiv st(1)`
+    computed `ST(1)=ST(1)/ST(0)`; the tactical zoom became 108 instead of 1.125,
+    producing the bogus `2125x4176` rect and the OOB vptr write. 901 non-pop
+    one-operand x87 instructions were affected. After: scale 1.125, map surface
+    99x108, visible rect `35,28,23,43`, vptr intact, 0 OOB stores.
+33. **RESOLVED — the tactical HUD renders (500B).** Budget at 500,000,000,001,
+    EIP `0x00543669`, 0 unmapped, pages 12,637/32,768, coverage 158,667/9,607,
+    18,691,958 blits, 46,753,350 locks; `re/out/frame_500b.png` (87,794
+    non-black) shows the HUD.
+34. **OPEN (new) — the map viewport is black.** Only the HUD renders; the
+    mission map does not. Trace the terrain/map blits (destination surfaces,
+    primary map rectangle) with per-surface counters and dumps; do not paint the
+    map by hand. **The current blocker.**
+35. **OPEN (new) — the VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls
     in 600 s; ESC is the practical route to the mission load meanwhile.
-34. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
+36. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
     `0x11` before the MIX-read fix; the current run never reaches shutdown.
 
 ---

@@ -393,7 +393,7 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: **94 checks passed** (re-measured for this pass). Not
+`tools/test_tools.py`: **101 checks passed** (re-measured for this pass). Not
 golden-count assertions -- every one is a regression test for a defect that
 actually shipped, or a differential test against an independent implementation.
 Four are proven to fail when the defect is reintroduced (mutating
@@ -737,7 +737,7 @@ round-trip/block/tail/stack tests, and — the strongest evidence — a
 byte-identical cross-check against `tools/mix.py` on the shipped TIBSUN.MIX
 index: key `82060323...`, ciphertext `2ce3171bdbecb40e` decrypts to
 `110090d97904849a` (count 17, body 75,094,416). That vector is now a permanent
-regression test; `tools/test_tools.py` now runs **70** checks.
+regression test; `tools/test_tools.py` now runs **101** checks.
 
 Measured at that commit: the page-table exhaustion at `0x00a006b0` was
 **gone**. The later MIX-read, disasm, tracker, `idiv`, dialog and narrow-flag
@@ -920,7 +920,7 @@ recovered stream contains only 32-bit `div`/`idiv` (no 8/16-bit forms), so there
 is no live 8/16-bit defect. Tests: `test_machine_div` (the boot case, sign
 combinations, overflow, divide-by-zero, and a 200,000-pair differential sweep)
 and `test_win32_surface_lock` (slot 25, five arguments, ESP returns at
-`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **94 checks**.
+`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **101 checks**.
 
 Measured with `TS_ROOT=.../gamedir`: the idiv is passed. New stop is **budget
 exhaustion at `0x00488800` after 20,000,001 instructions** with `TS_CD`, depth
@@ -1208,7 +1208,7 @@ game's own `MixFileClass` lookup, `GDI1A.MAP` is in **MAPS01.MIX on CD1** and
   recorded above.
 - Frames: `/tmp/default_mission.png` (GDI intro), `/tmp/gdi_mission.png`
   (live-action briefing), `/tmp/gdi_skip.png` (290,399 non-black).
-- Gates: `verify.py` PASSED, `test_tools.py` **94**, `test_runtime.py` 101,
+- Gates: `verify.py` PASSED, `test_tools.py` **101**, `test_runtime.py` 101,
   `--strict` 0, link OK.
 
 ### [x] The page table is exhausted during the mission load — fixed
@@ -1243,7 +1243,7 @@ tests; `page()` wraps the singleton. `boot_driver`/`boot.py` report
 `used/cap/peak/growths/refused`. `test_page_table` covers growth past 32,768
 with a byte-exact 40,000-page round-trip, reported exhaustion with live pages
 untouched, stable identity across rehash, distinct host pages, and deterministic
-layout; mutation-proven both ways. `test_tools.py` is **84 checks**.
+layout; mutation-proven both ways. `test_tools.py` is **101 checks**.
 
 Measured on committed code (4B budget, ESC at 192,000): stop `0x0055b0b8` in
 `sub_0055b09a`, depth 29; **pages 377,796 of 524,288 (peak 377,796, growths 4,
@@ -1305,7 +1305,7 @@ A perf regression test (`test_machine_perf`) pins the hot path: a 40M-iteration
 workload, wide-vs-byte checksum `88188416`, page straddles, the watchpoint path,
 a 20M/s floor, a cached-path >=1.4x `page_in_slow` ratio (measured 1.73-1.78),
 and that `boot.py` keeps `-O2`/`-fno-pie`; mutation-proven. `test_tools.py` is
-**94 checks**; `verify.py` PASSED, `test_runtime.py` 101, link OK, `--strict` 0.
+**101 checks**; `verify.py` PASSED, `test_runtime.py` 101, link OK, `--strict` 0.
 
 ### [x] The 479B mission-load run goes wild — diagnosed
 **The first wild call is deterministic and fully explained.** It occurs at
@@ -1526,7 +1526,7 @@ the MIX-read and teardown fixes, to the intro-movie pump after the dialog and
 narrow-flag fixes, through the **rendered main menu** and the campaign dialog,
 and now into the **GDI intro movie** after the listbox/mission-start work
 landed, then (with ESC) into the mission loader, which runs to **479B**
-instructions before the diagnosed bitmap/vptr fault. Use `TS_CD` to model `D:`.
+instructions before the x87-fixed tactical HUD. Use `TS_CD` to model `D:`.
 
 ### [x] Make the boot a one-command measurement
 `tools/boot.py` builds (cached), runs with a budget and a timeout, and prints

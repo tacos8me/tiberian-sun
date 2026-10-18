@@ -66,48 +66,41 @@ and is mutation-proven. The page table also grows now (2,097,152-page cap) and
 the heap reuses freed blocks, so at 4B the mission load uses **12,809** pages
 (50 MB) instead of 377,796 (1.44 GiB).
 
-**The mission load does not complete.** ESC skips the intro and the loader runs;
-its own O(n²) `DynamicVectorClass` growth (22 vectors at `this+0x1280`,
-`sub_005a35b0`, each append through `SetCount` `0x55b050` → `0x55b09a`) dominates
-the cost. At a 100B budget it is on vector **7/22** with **160,070 entries**
-(`TS_PEEK 0x712068`: count and capacity `0x27146`, growth step 10) and has not
-finished. **The 479B wild call is diagnosed.** The first wild call is
-deterministic at step **478,300,935,316** (three runs agree, and this session's
-independent `TS_STOP_UNMAPPED=1` run stops at the same step with EIP
-`0x005fa96b`, EDX=`0x6a5dfe`, ECX=ESI=`0x526dbdc0`): `call dword ptr [edx+0x2c]`
-at `0x005fa96b` → `0x46000062`, with EDX=`0x006a5dfe` = **TerrainClass vtable
-`0x6a5dfc` + 2** (COL `0x6b6f38`, `.?AVTerrainClass@@`).
-The correct slot `0x2c` is `0x624610`; the misaligned read `[0x6a5e2a]` yields
-`0x46000062`. The vptr byte was corrupted at step **478,300,008,280** by
-`mov byte ptr [edx], cl` at **`0x005a3558`** (`FUN_005a34e0`, the "cell seen"
-bitmap setter): target `0x526d6072`, bitmap base `[0x711fa4] = 0x526de580`,
-index `67*(-4068)+65 = -272,491` (a negative map y), so the write lands **34,062
-bytes before the bitmap**, on the object's vptr (`0xfc` → `0xfe`). The 7 in-text
-`0x606060` calls are the same mechanism on another TerrainClass
-(`0x6a5dfc | 0x00200000 = 0x6a7dfc`, `[0x6a7dfc+0xb4] = [0x6a7eb0] = 0x606060`).
-The cause is a **coordinate-space mismatch**: `FUN_005a4080` passes a visible
-rect in **map-pixel space** (`x=-2008, y=28, w=2125, h=4176`) into the index
-space of the **scaled 67x108 surface**. The scale lives at `[0x710d28+0x1490]`,
-set in `FUN_005a1bd0` from `min(140/map_w, 108/map_h)`; `FUN_0067faf0` scales the
-screen rect. `FUN_005a34e0`'s y check is ineffective (`jge` skips the height
-check when y>=0, and the negative branch can never reject). The model executes
-the game faithfully; the divergence to investigate is the zoom/scale math (x87
-rounding, integer conversion, map dimensions, or a transcription).
+**The tactical HUD renders — the first in-game frame.** The 479B out-of-bounds
+write was the **x87 emitter**: `tools/emit_x86.py` rendered the D8 one-register
+forms as pop forms, so `fdiv st(1)` wrote `ST(1)=ST(1)/ST(0)` instead of
+`ST(0)=ST(0)/ST(1)` (901 non-pop one-operand x87 instructions affected; the 692
+pop forms were right). `FUN_005a1bd0`'s tactical zoom used it and produced scale
+**108** instead of **1.125**, so `FUN_005a4080` built the bogus `2125x4176`
+visible rect and `FUN_005a34e0` wrote 34,062 bytes before its bitmap, on a
+TerrainClass vptr. **Fixed in `e5d7039`** (emitter + 951 regenerated x87 lines +
+tests + a clean-tree `gen_headers` unblock). After the fix: scale **1.125**
+(`0x3f900000`), map surface **99x108**, visible rect **35, 28, 23, 43**, vptr
+**`0x006a5dfc`**, **0** out-of-bounds stores.
 
-The resulting 1.2e12-budget run reached **478,970,534,425 instructions (479B)**
-and then **faulted at `0x00422de0`** with `page table exhausted: page allocation
-failed` (1,024,211 / 2,097,152 pages, 1 refused) and **7,771,444 unmapped
-calls** — 7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below
-`0x1000`; 98,202 elsewhere — with wild registers across the top of the 4 GiB
-space and a **black frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips;
-coverage 158,971 / 9,630). The page refusal is the **32-bit process's own address
-space** (~4.2 GB), not a table cap; the flood's exact termination varies between
-runs, but the game state is deterministic. **The tactical phase is not reached
-and no mission is rendered.** Separately, the VQA frame-wait path is stub-bound:
-the movie advances only as fast as the model services its wait, so playback
-pacing is not yet the retail pacing. **Secondary, unreachable:** the switch index
-table at `0x48e43c` is classified as 1 byte because the gap seeder created a
-span at `0x48e43d`; no dword or branch references it, so it never executes.
+**The 500B run renders the tactical HUD.** ESC skips the intro; the loader's own
+O(n²) `DynamicVectorClass` growth still dominates the cost (at 100B it is on
+vector 7/22 with 160,070 entries). At a 500B budget the run stops at the budget
+after **500,000,000,001 instructions** at `0x00543669` (`sub_00543620`, a 3x4
+matrix·vector transform in the renderer), depth 100, with **12,637 / 32,768
+pages** (refused 0), **0 unmapped calls**, coverage **158,667 / 9,607**, the
+message loop dispatching (`GetMessage=19`, `DispatchMessage=19`,
+`PeekMessage=23,117,313`) and 8 surfaces with **18,691,958 blits and 46,753,350
+locks**. `re/out/frame_500b.png` (640x480, md5 `4fc1cec7…`, **87,794
+non-black**) shows Options, credits 5000, the GDI radar eagle, and the build
+tabs/grid. **The map viewport is still black** — only the HUD renders, so the
+mission map does not render. The next step is tracing the terrain/map blits
+(destination surfaces, the primary map rectangle now that the visible rect is
+`35,28,23,43` on a 99x108 surface); do not paint the map by hand.
+
+The earlier 1.2e12-budget flood (7,771,444 unmapped calls, 1,024,211 / 2,097,152
+pages, black frame, fault at `0x00422de0` after 478,970,534,425 instructions) is
+historical and does not reproduce after the x87 fix. The VQA frame-wait path is
+still stub-bound: the movie advances only as fast as the model services its
+wait, so playback pacing is not yet the retail pacing. **Secondary,
+unreachable:** the switch index table at `0x48e43c` is classified as 1 byte
+because the gap seeder created a span at `0x48e43d`; no dword or branch
+references it, so it never executes.
 
 Boot states, all with **0 unmapped calls and 0 stack imbalances**:
 - 20M: stop `0x00488800`, coverage **55,774 / 4,764**, pages **3,538 / 32,768**.
@@ -121,11 +114,17 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
   **290,399** non-black, md5 `6cb0e1fff05f9250adda298e644f1266` = committed
   `re/out/render_2_6b.png` (the GDI loading screen).
 - ESC-skip script, 100B: stop `0x0055b0bc` (budget), pages **16,343 / 32,768**.
-- ESC-skip script, 1.2e12: first wild call deterministic at step
-  **478,300,935,316** (`call [edx+0x2c]` at `0x005fa96b` → `0x46000062`,
-  EDX=`0x6a5dfe` = TerrainClass vtable `0x6a5dfc` + 2); fault at `0x00422de0`
+- ESC-skip script, 500B: budget at **500,000,000,001** instructions, EIP
+  `0x00543669` (3x4 matrix·vector transform), depth 100; pages **12,637 /
+  32,768** (refused 0); **0 unmapped calls**; coverage **158,667 / 9,607**;
+  `GetMessage=19`, `DispatchMessage=19`, `PeekMessage=23,117,313`; 8 surfaces,
+  **18,691,958 blits, 46,753,350 locks**; frame `re/out/frame_500b.png` (md5
+  `4fc1cec7…`, **87,794** non-black) — the tactical HUD; **map viewport still
+  black**.
+- ESC-skip script, 1.2e12 (historical, pre-`e5d7039`): fault at `0x00422de0`
   after 478,970,534,425 instructions, pages **1,024,211 / 2,097,152**,
-  **7,771,444 unmapped calls**, black frame; tactical phase **not reached**.
+  **7,771,444 unmapped calls**, black frame; does not reproduce after the x87
+  fix.
 `boot.py --strict` exits 0 and `tools/link_test.py` passes (exit 0). A full
 `./tools/pipeline.sh` ran exit 0 in the disasm-correction lane (8m51s, per
 `todo.md`); it was not re-run here. The nested MIX (`0xa8548fd9`, 317 entries,
@@ -414,23 +413,21 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   machine state.** Measured on the mission-load run: 4B in 11.7 s (341.9M/s),
   20B in 50.2 s (398.4M/s), 100B in 243.9 s (410.0M/s); the old rate was
   ~28.6M/s. `test_machine_perf` pins the hot path.
-- **The mission load does not complete: the 479B wild call is a diagnosed
-  out-of-bounds bitmap write.** The page table is growable now (2,097,152-page
-  cap) and the heap reuses freed blocks, so at 4B the load uses 12,809 pages
-  (50 MB) instead of 377,796 (1.44 GiB) and presents the GDI loading screen
-  (`re/out/render_2_6b.png`, 290,399 non-black). The loader's own O(n²) vector
-  growth dominates (at 100B it is on vector 7/22 with 160,070 entries). The
-  first wild call is deterministic at step 478,300,935,316: `FUN_005a34e0`'s
-  cell-seen bitmap setter wrote 34,062 B before its bitmap (index -272,491)
-  because `FUN_005a4080` passed a map-pixel rect (`2125x4176`) into the scaled
-  67x108 surface space, overwriting a TerrainClass vptr (`0x6a5dfc` →
-  `0x6a5dfe`). The flood then made 7,771,444 unmapped calls (7 in `.text`, all
-  `0x606060`; 7,673,235 below `0x1000`; 98,202 elsewhere) and a black frame;
-  the page refusal is the 32-bit VA limit, not a table cap. The zoom/scale math
-  is the divergence to find. The tactical phase is **not reached** and no
-  mission is rendered. The VQA frame-wait path is also
-  stub-bound, so playback pacing is not the retail pacing. The button art is not
-  painted (no `WM_PAINT` to children; retail does not draw it either).
+- **The tactical HUD renders; the map viewport does not.** The page table is
+  growable (2,097,152-page cap) and the heap reuses freed blocks, so at 4B the
+  load uses 12,809 pages (50 MB) instead of 377,796 (1.44 GiB) and presents the
+  GDI loading screen (`re/out/render_2_6b.png`, 290,399 non-black). The 479B
+  out-of-bounds write was the **x87 emitter** (D8 one-register forms rendered as
+  pop forms; 901 instructions affected), fixed in `e5d7039`; after the fix the
+  tactical zoom is 1.125, the map surface 99x108, the visible rect
+  `35,28,23,43`, the vptr `0x006a5dfc`, and there are 0 OOB stores. The 500B run
+  renders `re/out/frame_500b.png` (87,794 non-black: Options, credits 5000, GDI
+  radar eagle, build tabs/grid) with 0 unmapped calls, 12,637 pages, 18,691,958
+  blits and 46,753,350 locks. **The map viewport is still black**, so the
+  mission map does not render; tracing the terrain/map blits is the next step.
+  The VQA frame-wait path is also stub-bound, so playback pacing is not the
+  retail pacing. The button art is not painted (no `WM_PAINT` to children;
+  retail does not draw it either).
 - **The boot has 0 unmapped calls and 0 stack imbalances**; the link test passes
   and `boot.py --strict` exits 0.
 - **The Blowfish cipher, the MIX index read and the dialog layer are fixed.**
