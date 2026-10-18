@@ -222,8 +222,23 @@ inline void print_escaped(const char *label, u32 p, unsigned max) {
 // A monotonic millisecond counter. The original reads the real clock; a
 // monotonic counter is what every caller actually depends on, and it makes a
 // run deterministic, which a real clock would not.
-inline u32 &tick() { static u32 t = 1000u; return t; }
-inline u32 tick_advance(u32 ms) { tick() += ms; return tick(); }
+//
+// It must advance with EXECUTED WORK, not only with Sleep. The movie pump
+// (sub_0064dff0) polls timeGetTime in a busy loop and never sleeps while a
+// movie is playing, so a counter advanced only by Sleep is frozen for the whole
+// playback. The VQA stream pacer (sub_006786a0) compares timeGetTime() with
+// (frame+1)*60/fps and returns -10 ("too early") until that time is reached;
+// with a frozen clock it is never reached, the audio descriptor's done bit is
+// never cleared, and the decoder returns -9 forever. Measured before this fix:
+// the "time reached" path at 0x678811 was hit once and the "too early" path at
+// 0x678804 hundreds of thousands of times.
+//
+// 1 ms per 10,000 retired instructions is ~3x real time on this host and keeps
+// a 15 fps movie inside a bounded instruction budget. Sleep still advances the
+// base directly, so a caller that does sleep sees the time it asked for.
+inline u32 &tick_base() { static u32 t = 1000u; return t; }
+inline u32 tick() { return tick_base() + (u32)(mach().steps / 10000u); }
+inline u32 tick_advance(u32 ms) { tick_base() += ms; return tick(); }
 
 // Defined with the table: name -> stub VA, ignoring the DLL.
 inline u32 find_by_name(const char *fn);
