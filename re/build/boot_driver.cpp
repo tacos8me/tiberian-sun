@@ -364,6 +364,95 @@ unsigned long distinct_imports() {
     return n;
 }
 
+// TS_HEAP_AT=0xADDR[,0xADDR...] -- which heap block holds this address, and
+// whether the block chain itself is intact. An address that is the user pointer
+// of a LIVE block is a legitimate allocation; an address inside another block's
+// payload is an overflow or an aliased pointer, and the difference decides
+// whether the defect is the game's data or this heap.
+void print_heap_at(const char *list) {
+    ts::u32 p = ts::w32::heap_first();
+    unsigned long blocks = 0, live = 0, freeb = 0, bytes = 0;
+    ts::u32 prev = 0, break_at = 0, break_next = 0;
+    bool links = true, adjacent = true;
+    while (p && blocks < 2000000ul) {
+        ts::u32 cap = ts::w32::heap_cap(p);
+        if (ts::w32::heap_prev(p) != prev) links = false;
+        if (prev && adjacent && prev + (ts::u32)ts::w32::HEAP_HDR +
+                        ts::w32::heap_cap(prev) != p) {
+            adjacent = false;
+            break_at = prev;
+            break_next = p;
+        }
+        if (ts::w32::heap_is_free(p)) ++freeb; else ++live;
+        bytes += cap;
+        prev = p;
+        p = ts::w32::heap_next(p);
+        ++blocks;
+    }
+    std::printf("heap-chain: %lu blocks, %lu live, %lu free, %lu payload bytes, "
+                "prev-links=%s physically-adjacent=%s\n",
+                blocks, live, freeb, bytes,
+                links ? "ok" : "BROKEN", adjacent ? "ok" : "BROKEN");
+    if (break_at) {
+        ts::u32 cap = ts::w32::heap_cap(break_at);
+        std::printf("  break: hdr=0x%08x user=0x%08x size=0x%x cap=0x%x free=%u "
+                    "next=0x%08x; expected physical next 0x%08x\n",
+                    break_at, break_at + (ts::u32)ts::w32::HEAP_HDR,
+                    (unsigned)ts::ld32(break_at), cap,
+                    ts::w32::heap_is_free(break_at) ? 1u : 0u,
+                    ts::w32::heap_next(break_at),
+                    break_at + (ts::u32)ts::w32::HEAP_HDR + cap);
+        std::printf("         block there: hdr=0x%08x size=0x%x cap=0x%x free=%u "
+                    "next=0x%08x\n", break_next, (unsigned)ts::ld32(break_next),
+                    ts::w32::heap_cap(break_next),
+                    ts::w32::heap_is_free(break_next) ? 1u : 0u,
+                    ts::w32::heap_next(break_next));
+    }
+    const char *q = list;
+    while (*q) {
+        while (*q == ' ' || *q == ',') ++q;
+        if (!*q) break;
+        bool deref = (*q == '*');
+        if (deref) ++q;
+        char *end = 0;
+        unsigned long addr = std::strtoul(q, &end, 0);
+        if (end == q) break;
+        q = end;
+        if (deref) {
+            ts::u32 v = (ts::u32)ts::ld32((ts::u32)addr);
+            std::printf("  *0x%08lx = 0x%08x\n", addr, v);
+            addr = v;
+        }
+        // Walk the chain by the next pointer first; if that misses, walk by
+        // physical adjacency (a broken next pointer must not hide the block).
+        bool found = false;
+        for (int mode = 0; mode < 2 && !found; ++mode) {
+            ts::u32 b = ts::w32::heap_first();
+            unsigned long guard = 0;
+            while (b && guard++ < 2000000ul) {
+                ts::u32 cap = ts::w32::heap_cap(b);
+                ts::u32 user = b + (ts::u32)ts::w32::HEAP_HDR;
+                if ((ts::u32)addr >= user && (ts::u32)addr < user + cap) {
+                    std::printf("  0x%08lx -> hdr=0x%08x user=0x%08x size=0x%x "
+                                "cap=0x%x free=%u offset=0x%x%s\n", addr, b, user,
+                                (unsigned)ts::ld32(b), cap,
+                                ts::w32::heap_is_free(b) ? 1u : 0u,
+                                (unsigned)((ts::u32)addr - user),
+                                mode ? " (physical walk)" : "");
+                    found = true;
+                    break;
+                }
+                b = mode ? b + (ts::u32)ts::w32::HEAP_HDR + cap
+                         : ts::w32::heap_next(b);
+                if (mode && (b >= ts::w32::bump() || cap > 0x08000000u))
+                    break;
+            }
+        }
+        if (!found)
+            std::printf("  0x%08lx -> not inside any heap block\n", addr);
+    }
+}
+
 void print_report(const Options &o, bool returned, unsigned long esp0) {
     ts::Machine &m = ts::mach();
     ts::pe::ImageState &img = ts::pe::image();
@@ -460,6 +549,18 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
                         m.trace_esp[i], m.trace_esi[i], m.trace_edi[i],
                         m.trace_eax[i], m.trace_ecx[i], m.trace_edx[i]);
     }
+    if (m.trace_ring_count) {
+        unsigned long cnt = m.trace_ring_count;
+        unsigned show = cnt < 8ul ? (unsigned)cnt : 8u;
+        std::printf("trace-ring 0x%08x: %lu hit(s), last %u:\n",
+                    m.trace_va, cnt, show);
+        for (unsigned k = 0; k < show; ++k) {
+            unsigned idx = (unsigned)((cnt - show + k) & 7u);
+            std::printf("  step=%llu esp=0x%08x arg=[esp+4]=0x%08x eax=0x%08x\n",
+                        m.trace_ring_step[idx], m.trace_ring_esp[idx],
+                        m.trace_ring_arg[idx], m.trace_ring_eax[idx]);
+        }
+    }
     if (m.stack_imbalances) {
         std::printf("STACK IMBALANCE at %lu stub call(s)\n", m.stack_imbalances);
         for (u32 i = 0; i < m.stack_imbalance_n; ++i)
@@ -471,6 +572,35 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
         for (unsigned i = 0; i < m.watch_hits; ++i)
             std::printf("  wrote 0x%08x from 0x%08x\n", m.watch_val[i], m.watch_from[i]);
     }
+    // The LAST writes to each ring address, oldest first. A corrupt vptr is the
+    // constructor (first writes) followed by something else; only the tail of
+    // the write history names that something.
+    for (unsigned i = 0; i < m.watch_ring_n; ++i) {
+        unsigned long cnt = m.watch_ring_count[i];
+        std::printf("watch-ring 0x%08x: %lu write(s)\n", m.watch_ring_va[i], cnt);
+        unsigned show = cnt < (unsigned long)ts::Machine::WATCH_RING_HITS
+                            ? (unsigned)cnt : (unsigned)ts::Machine::WATCH_RING_HITS;
+        for (unsigned k = 0; k < show; ++k) {
+            unsigned idx = (unsigned)((cnt - show + k) &
+                                      (ts::Machine::WATCH_RING_HITS - 1u));
+            std::printf("  byte 0x%02x from 0x%08x step=%llu\n",
+                        m.watch_ring_val[i][idx], m.watch_ring_eip[i][idx],
+                        m.watch_ring_steps[i][idx]);
+        }
+    }
+    if (m.write_guard_eip) {
+        std::printf("write-guard 0x%08x: %u store(s) outside the block at "
+                    "*0x%08x\n", m.write_guard_eip, m.write_guard_bad,
+                    m.write_guard_ptr_addr);
+        if (m.write_guard_bad)
+            std::printf("  first at 0x%08x step=%llu base=0x%08x size=0x%x "
+                        "esp=0x%08x eax=0x%08x ecx=0x%08x edx=0x%08x\n",
+                        m.write_guard_addr, m.write_guard_step,
+                        m.write_guard_base, m.write_guard_size,
+                        m.write_guard_esp, m.write_guard_eax,
+                        m.write_guard_ecx, m.write_guard_edx);
+    }
+    if (const char *ha = std::getenv("TS_HEAP_AT")) print_heap_at(ha);
     if (const char *peek = std::getenv("TS_PEEK")) {
         std::printf("peek:\n");
         const char *p = peek;
@@ -479,6 +609,52 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
             unsigned long va = std::strtoul(p, &end, 0);
             if (end == p) break;
             std::printf("  0x%08lx = 0x%08x\n", va, (unsigned)ts::ld32((ts::u32)va));
+            p = (*end == ',') ? end + 1 : end;
+        }
+    }
+    // TS_FOLLOW=0xADDR,count -- read the pointer stored at ADDR, then dump
+    // `count` dwords from where it points. A vector's data pointer is only
+    // known at run time, so this is the way to read the array it names after a
+    // stop: TS_PEEK can name the object, TS_FOLLOW can read its contents.
+    if (const char *fol = std::getenv("TS_FOLLOW")) {
+        std::printf("follow:\n");
+        const char *p = fol;
+        while (*p) {
+            while (*p == ' ' || *p == ',') ++p;
+            if (!*p) break;
+            char *end = 0;
+            unsigned long va = std::strtoul(p, &end, 0);
+            if (end == p) break;
+            p = end;
+            unsigned count = 0;
+            if (*p == ',') {
+                ++p;
+                count = (unsigned)std::strtoul(p, &end, 0);
+                if (end != p) p = end;
+            }
+            ts::u32 base = (ts::u32)ts::ld32((ts::u32)va);
+            std::printf("  [0x%08lx]=0x%08x", va, base);
+            for (unsigned i = 0; i < count; ++i)
+                std::printf(" [%u]=0x%08x", i, (unsigned)ts::ld32(base + i * 4u));
+            std::printf("\n");
+        }
+    }
+    // TS_FUNC_ENTERED=0xADDR[,0xADDR...] -- did the run enter this function?
+    // Coverage counts distinct functions; this answers the one question a
+    // bisect needs: was a suspect span executed at all?
+    if (const char *fe = std::getenv("TS_FUNC_ENTERED")) {
+        std::printf("func-entered:\n");
+        const char *p = fe;
+        while (*p) {
+            char *end = 0;
+            unsigned long va = std::strtoul(p, &end, 0);
+            if (end == p) break;
+            unsigned hit = 0;
+            if (m.func_map && va >= m.func_map_lo && va < m.func_map_hi) {
+                unsigned off = (unsigned)(va - m.func_map_lo);
+                hit = (m.func_map[off >> 3] >> (off & 7u)) & 1u;
+            }
+            std::printf("  0x%08lx %s\n", va, hit ? "entered" : "not-entered");
             p = (*end == ',') ? end + 1 : end;
         }
     }
@@ -730,11 +906,31 @@ int main(int argc, char **argv) {
     ts::Machine &m = ts::mach();
     if (const char *t = std::getenv("TS_TRACE")) m.trace_va = (ts::u32)std::strtoul(t, 0, 0);
     if (const char *w = std::getenv("TS_WATCH")) m.watch_va = (ts::u32)std::strtoul(w, 0, 0);
+    if (const char *wr = std::getenv("TS_WATCH_RING")) {
+        const char *p = wr;
+        while (*p && m.watch_ring_n < (unsigned)ts::Machine::WATCH_RING_ADDRS) {
+            char *end = 0;
+            unsigned long va = std::strtoul(p, &end, 0);
+            if (end == p) break;
+            m.watch_ring_va[m.watch_ring_n++] = (ts::u32)va;
+            p = (*end == ',') ? end + 1 : end;
+        }
+    }
     // Diagnostics that stop at the FIRST defect instead of at the flood it
     // causes. TS_STOP_UNMAPPED halts at the first unregistered target with the
     // registers at the call site; TS_ESP_GUARD records the instruction that
     // leaves the stack region and TS_ESP_STOP halts there.
     if (std::getenv("TS_STOP_UNMAPPED")) m.stop_on_unmapped = 1;
+    if (const char *wg = std::getenv("TS_WRITE_GUARD")) {
+        char *end = 0;
+        unsigned long eip = std::strtoul(wg, &end, 0);
+        if (end != wg) {
+            m.write_guard_eip = (ts::u32)eip;
+            const char *p = (*end == ',') ? end + 1 : end;
+            m.write_guard_ptr_addr = (ts::u32)std::strtoul(p, 0, 0);
+        }
+    }
+    if (std::getenv("TS_WRITE_GUARD_STOP")) m.write_guard_stop = 1;
     if (std::getenv("TS_ESP_GUARD")) m.esp_guard = 1;
     if (std::getenv("TS_ESP_STOP")) { m.esp_guard = 1; m.esp_guard_stop = 1; }
     m.text_lo = kTextLo;

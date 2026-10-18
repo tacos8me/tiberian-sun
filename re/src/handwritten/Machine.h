@@ -147,6 +147,32 @@ struct Machine {
     u32 watch_hits;
     u32 watch_from[8];
     u32 watch_val[8];
+    // TS_WATCH_RING=addr[,addr...] -- the LAST few non-zero byte stores to each
+    // address, with the EIP that made them. The watch above keeps the FIRST
+    // eight, which is the constructor; when an object's vptr is corrupt the
+    // question is what wrote it after the constructor, and only a ring of the
+    // most recent stores answers that.
+    enum { WATCH_RING_ADDRS = 4, WATCH_RING_HITS = 8 };
+    u32 watch_ring_va[WATCH_RING_ADDRS];
+    unsigned watch_ring_n;
+    u32 watch_ring_eip[WATCH_RING_ADDRS][WATCH_RING_HITS];
+    u8  watch_ring_val[WATCH_RING_ADDRS][WATCH_RING_HITS];
+    unsigned long long watch_ring_steps[WATCH_RING_ADDRS][WATCH_RING_HITS];
+    unsigned watch_ring_count[WATCH_RING_ADDRS];
+    // TS_WRITE_GUARD=eip,ptr_addr -- at that instruction, check every byte store
+    // against the heap block whose user pointer is stored at ptr_addr (its
+    // requested size is the heap header's size field). The first store outside
+    // that block is an out-of-bounds write, and naming it beats waiting for the
+    // corrupted object to be called millions of instructions later.
+    u32 write_guard_eip;
+    u32 write_guard_ptr_addr;
+    u32 write_guard_stop;
+    u32 write_guard_bad;
+    u32 write_guard_addr;
+    u32 write_guard_base;
+    u32 write_guard_size;
+    unsigned long long write_guard_step;
+    u32 write_guard_esp, write_guard_eax, write_guard_ecx, write_guard_edx;
     // STACK BALANCE at stub calls. A __stdcall stub owns its arguments: it pops
     // the return address AND them, so ESP after the stub must equal ESP before the
     // call pushed anything. Any stub whose row under- or over-states its argument
@@ -175,6 +201,15 @@ struct Machine {
     unsigned leak_n;
     u32 trace_esi[8];
     u32 trace_edi[8];
+    // The LAST few executions of trace_va, with the first stack argument read
+    // from [esp+4]. A render entry called every frame has thousands of hits;
+    // the first eight are startup, and the one that matters is the last one
+    // before a stop. The argument is what a caller passed (a redraw flag).
+    u32 trace_ring_esp[8];
+    u32 trace_ring_arg[8];
+    u32 trace_ring_eax[8];
+    u32 trace_ring_count;
+    unsigned long long trace_ring_step[8];
     unsigned long stub_dispatches;
     // The argument count the most recent stub popped, recorded by stub_done in
     // Win32Stubs.h. A __stdcall stub owns its arguments, so a correct call ends
@@ -394,9 +429,15 @@ inline void reset() {
     m.fault_addr = 0; m.fault_page = 0; m.fault_used = 0; m.fault_cap = 0;
     m.bad_call_n = 0;
     m.watch_va = 0; m.watch_hits = 0;
+    m.watch_ring_n = 0;
+    for (unsigned wi = 0; wi < (unsigned)Machine::WATCH_RING_ADDRS; ++wi)
+        m.watch_ring_count[wi] = 0;
+    m.write_guard_eip = 0; m.write_guard_ptr_addr = 0; m.write_guard_stop = 0;
+    m.write_guard_bad = 0; m.write_guard_addr = 0; m.write_guard_base = 0;
+    m.write_guard_size = 0; m.write_guard_step = 0;
     m.stub_dispatches = 0; m.stub_last_nargs = 0; m.stub_last_depth = 0;
     m.stack_imbalances = 0; m.stack_imbalance_n = 0;
-    m.trace_va = 0; m.trace_n = 0; m.leak_n = 0;
+    m.trace_va = 0; m.trace_n = 0; m.trace_ring_count = 0; m.leak_n = 0;
     m.bad_calls = 0;
     if (m.exec_map && m.exec_map_hi > m.exec_map_lo)
         std::memset(m.exec_map, 0, (m.exec_map_hi - m.exec_map_lo + 7u) / 8u);
@@ -438,19 +479,31 @@ inline void mark_map(u8 *map, u32 lo, u32 hi, u32 va) {
 // the 912,879 instruction sites -- stays small enough for the compiler to
 // inline. The order matches the old single body exactly, so a trace recorded on
 // the instruction that exhausts the budget is still taken before the halt.
+// Defined with the memory helpers below; declared here because the trace ring
+// reads the caller's stack argument.
+inline u32 ld32(u32 a);
+
 #if defined(__GNUC__)
 __attribute__((noinline))
 #endif
 inline void insn_slow(u32 va) {
     Machine &m = mach();
-    if (m.trace_va && va == m.trace_va && m.trace_n < 8u) {
-        m.trace_esp[m.trace_n] = ESP.d;
-        m.trace_eax[m.trace_n] = EAX.d;
-        m.trace_ecx[m.trace_n] = ECX.d;
-        m.trace_edx[m.trace_n] = EDX.d;
-        m.trace_esi[m.trace_n] = ESI.d;
-        m.trace_edi[m.trace_n] = EDI.d;
-        ++m.trace_n;
+    if (m.trace_va && va == m.trace_va) {
+        if (m.trace_n < 8u) {
+            m.trace_esp[m.trace_n] = ESP.d;
+            m.trace_eax[m.trace_n] = EAX.d;
+            m.trace_ecx[m.trace_n] = ECX.d;
+            m.trace_edx[m.trace_n] = EDX.d;
+            m.trace_esi[m.trace_n] = ESI.d;
+            m.trace_edi[m.trace_n] = EDI.d;
+            ++m.trace_n;
+        }
+        unsigned k = m.trace_ring_count & 7u;
+        m.trace_ring_esp[k] = ESP.d;
+        m.trace_ring_arg[k] = ld32(ESP.d + 4u);
+        m.trace_ring_eax[k] = EAX.d;
+        m.trace_ring_step[k] = m.steps;
+        ++m.trace_ring_count;
     }
     if (m.step_limit && m.steps > m.step_limit) {
         if (!m.faulted) { m.step_limit_hit = true; fault("instruction budget exhausted"); }
@@ -699,12 +752,59 @@ inline u8  ld8 (u32 a) { u8 v; std::memcpy(&v, page(a), 1); return v; }
 // hardest question to answer by reading code and the easiest by recording the EIP
 // of the store. st8 is the primitive every wider store funnels through, so the
 // hook lives here; putting it in st32 missed every byte-wise write.
+// The ring form of the write watch. Called only when a ring is armed, so an
+// ordinary run pays one predictable branch per byte store.
+inline void watch_ring_note(u32 a, u8 v) {
+    Machine &m = mach();
+    for (unsigned i = 0; i < m.watch_ring_n; ++i) {
+        if (a != m.watch_ring_va[i]) continue;
+        unsigned k = m.watch_ring_count[i] & (Machine::WATCH_RING_HITS - 1u);
+        m.watch_ring_eip[i][k] = m.eip;
+        m.watch_ring_val[i][k] = v;
+        m.watch_ring_steps[i][k] = m.steps;
+        ++m.watch_ring_count[i];
+    }
+}
+// A wide store must take the byte path when any ring address falls inside it,
+// or the ring would miss a 32-bit write to the watched field.
+inline bool watch_ring_overlaps(u32 a, u32 w) {
+    Machine &m = mach();
+    for (unsigned i = 0; i < m.watch_ring_n; ++i)
+        if ((u32)(m.watch_ring_va[i] - a) < w) return true;
+    return false;
+}
+
 inline void st8 (u32 a, u8 v) {
     Machine &m = mach();
     if (m.watch_va && a == m.watch_va && v && m.watch_hits < 8u) {
         m.watch_from[m.watch_hits] = m.eip;
         m.watch_val[m.watch_hits] = v;
         ++m.watch_hits;
+    }
+    if (m.watch_ring_n) watch_ring_note(a, v);
+    if (m.write_guard_eip && m.eip == m.write_guard_eip) {
+        u32 pa = m.write_guard_ptr_addr;
+        u32 base = (u32)ld8(pa) | ((u32)ld8(pa + 1u) << 8) |
+                   ((u32)ld8(pa + 2u) << 16) | ((u32)ld8(pa + 3u) << 24);
+        u32 sz = 0;
+        if (base)
+            sz = (u32)ld8(base - 16u) | ((u32)ld8(base - 15u) << 8) |
+                 ((u32)ld8(base - 14u) << 16) | ((u32)ld8(base - 13u) << 24);
+        if (!base || a < base || a >= base + sz) {
+            if (!m.write_guard_bad) {
+                m.write_guard_addr = a;
+                m.write_guard_base = base;
+                m.write_guard_size = sz;
+                m.write_guard_step = m.steps;
+                m.write_guard_esp = ESP.d; m.write_guard_eax = EAX.d;
+                m.write_guard_ecx = ECX.d; m.write_guard_edx = EDX.d;
+            }
+            ++m.write_guard_bad;
+            if (m.write_guard_stop && !m.faulted) {
+                fault("write outside the guarded heap block");
+                if (m.halt) longjmp(*m.halt, 1);
+            }
+        }
     }
     std::memcpy(page(a), &v, 1);
 }
@@ -720,7 +820,8 @@ inline u16 ld16(u32 a) {
 }
 inline void st16(u32 a, u16 v) {
     Machine &m = mach();
-    if ((a & 0xfffu) <= 0xffeu && !(m.watch_va && (u32)(m.watch_va - a) < 2u)) {
+    if ((a & 0xfffu) <= 0xffeu && !(m.watch_va && (u32)(m.watch_va - a) < 2u) &&
+        !(m.watch_ring_n && watch_ring_overlaps(a, 2u))) {
         std::memcpy(page(a), &v, 2); return;
     }
     st8(a, (u8)v); st8(a + 1, (u8)(v >> 8));
@@ -732,7 +833,8 @@ inline u32 ld32(u32 a) {
 }
 inline void st32(u32 a, u32 v) {
     Machine &m = mach();
-    if ((a & 0xfffu) <= 0xffcu && !(m.watch_va && (u32)(m.watch_va - a) < 4u)) {
+    if ((a & 0xfffu) <= 0xffcu && !(m.watch_va && (u32)(m.watch_va - a) < 4u) &&
+        !(m.watch_ring_n && watch_ring_overlaps(a, 4u))) {
         std::memcpy(page(a), &v, 4); return;
     }
     st8(a, (u8)v); st8(a + 1, (u8)(v >> 8));
