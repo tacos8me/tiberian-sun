@@ -257,6 +257,66 @@ inline u32 &tick_base() { static u32 t = 1000u; return t; }
 inline u32 tick() { return tick_base() + (u32)(mach().steps / 10000u); }
 inline u32 tick_advance(u32 ms) { tick_base() += ms; return tick(); }
 
+// -- multimedia timers -------------------------------------------------------
+// timeSetEvent is how WWMouseClass polls the pointer. Its constructor installs
+// a 16 ms periodic callback (0x6725d0) that reads GetCursorPos and stores the
+// result in the mouse object at +0x18/+0x1c. The stub used to return a timer id
+// and never call the callback, so the position stayed (0,0). The tactical input
+// handler (FUN_005cf850) reads (0,0) as "the pointer is outside the screen" and
+// issues an up-left scroll command every frame; the display scroll then ran to
+// the map-boundary clamp and the revealed base sat in the viewport's
+// bottom-right corner instead of under the camera. A real multimedia timer runs
+// its callback on another thread; the model has one thread, so the callback is
+// dispatched from the message pump, which is the only point the game always
+// reaches.
+struct TimerRec {
+    u32 id, delay, proc, user, event, active, due;
+};
+inline TimerRec *timers() { static TimerRec t[8]; return t; }
+inline u32 &timer_pumping() { static u32 p = 0u; return p; }
+
+inline u32 timer_set(u32 delay, u32 proc, u32 user, u32 event) {
+    TimerRec *t = timers();
+    for (unsigned i = 0; i < 8u; ++i) {
+        if (t[i].active) continue;
+        t[i].id = 0x00070001u + i;
+        t[i].delay = delay ? delay : 1u;
+        t[i].proc = proc;
+        t[i].user = user;
+        t[i].event = event;
+        t[i].due = tick() + t[i].delay;
+        t[i].active = 1u;
+        return t[i].id;
+    }
+    return 0u;
+}
+inline u32 timer_kill(u32 id) {
+    TimerRec *t = timers();
+    for (unsigned i = 0; i < 8u; ++i)
+        if (t[i].active && t[i].id == id) { t[i].active = 0u; return 0u; }
+    return 0u;
+}
+inline void timer_pump() {
+    if (timer_pumping()) return;   // a callback that pumps must not recurse
+    timer_pumping() = 1u;
+    TimerRec *t = timers();
+    const u32 now = tick();
+    for (unsigned i = 0; i < 8u; ++i) {
+        if (!t[i].active || (i32)(now - t[i].due) < 0) continue;
+        u32 sp = ESP.d;
+        push32(0u);            // dw2
+        push32(0u);            // dw1
+        push32(t[i].user);     // dwUser
+        push32(0u);            // uMsg
+        push32(t[i].id);       // uTimerID
+        ts_call_at(t[i].proc, 0x00fed100u);
+        ESP.d = sp;
+        if (t[i].event & 1u) t[i].due += t[i].delay;   // TIME_PERIODIC
+        else t[i].active = 0u;                         // TIME_ONESHOT
+    }
+    timer_pumping() = 0u;
+}
+
 // Defined with the table: name -> stub VA, ignoring the DLL.
 inline u32 find_by_name(const char *fn);
 
@@ -2535,6 +2595,7 @@ TS_BEGIN(GetMessageA)
     // its loop. So an empty queue is answered with a benign WM_NULL for a
     // bounded number of idle polls and only then with 0, which terminates a run
     // without telling the loop on its first iteration that the program is over.
+    timer_pump();
     u32 p = arg(0);
     MsgRec m;
     if (msg_pop(&m, arg(1), arg(2), arg(3), true)) {
@@ -2661,6 +2722,7 @@ TS_BEGIN(PeekMessageA)
     // that is the return value that keeps a game loop running: it says "carry
     // on with this frame", not "quit".
     input_pump();
+    timer_pump();
     u32 p = arg(0);
     MsgRec m;
     if (msg_pop(&m, arg(1), arg(2), arg(3), (arg(4) & 1u) != 0u)) {
@@ -4340,8 +4402,15 @@ TS_ORD_END
 TS_RET(timeBeginPeriod, 1, 0u)
 TS_RET(timeEndPeriod, 1, 0u)
 TS_RET(timeGetDevCaps, 2, 0u)
-TS_RET(timeKillEvent, 1, 1u)
-TS_RET(timeSetEvent, 5, 1u)
+TS_BEGIN(timeKillEvent)
+    stub_done(1, timer_kill(arg(0)));
+TS_END
+TS_BEGIN(timeSetEvent)
+    // (uDelay, uResolution, lpTimeProc, dwUser, fuEvent). fuEvent bit 0 is
+    // TIME_PERIODIC; bit 4 would be TIME_CALLBACK_EVENT_SET, which no caller
+    // here uses.
+    stub_done(5, timer_set(arg(0), arg(2), arg(3), arg(4)));
+TS_END
 
 // -- COMCTL32 ----------------------------------------------------------------
 TS_RET(ImageList_Destroy, 1, 1u)

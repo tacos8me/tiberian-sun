@@ -224,11 +224,20 @@ struct Machine {
         unsigned long long step;
         u32 esp, ebp, eax, ebx, ecx, edx, esi, edi;
         u32 a0, a1;          // [esp+4], [esp+8]: the first two stack arguments
+        // TS_PROBE_DEREF=1 -- the two dwords a0 points at. A probe at a
+        // transform's entry sees the *address* of the coordinate pair in a0,
+        // and the pair itself is what decides the answer; reading it here
+        // saves a second run and a stack-address guess.
+        u32 d0, d1;
+        // [esp]: the return address, i.e. the call site. A probe on a function
+        // with many callers (a command dispatch) needs to name which one.
+        u32 ret;
         char eax_str[PROBE_STR];
         char ecx_str[PROBE_STR];
     };
     u32 probe_va[PROBE_MAX];
     u32 probe_n;
+    u32 probe_deref;
     u32 probe_hits[PROBE_MAX];
     ProbeHit probe_rec[PROBE_MAX][PROBE_HITS];
     // 4096-bit Bloom filter over the probe addresses. insn() runs 500 billion
@@ -468,7 +477,7 @@ inline void reset() {
     m.stub_dispatches = 0; m.stub_last_nargs = 0; m.stub_last_depth = 0;
     m.stack_imbalances = 0; m.stack_imbalance_n = 0;
     m.trace_va = 0; m.trace_n = 0; m.trace_ring_count = 0; m.leak_n = 0;
-    m.probe_n = 0; m.probe_hook = 0;
+    m.probe_n = 0; m.probe_hook = 0; m.probe_deref = 0;
     for (unsigned pi = 0; pi < (unsigned)Machine::PROBE_MAX; ++pi)
         m.probe_hits[pi] = 0;
     for (unsigned pi = 0; pi < 128u; ++pi) m.probe_filter[pi] = 0;
@@ -550,8 +559,15 @@ inline void probe_slow(u32 va) {
             r.step = m.steps;
             r.esp = ESP.d; r.ebp = EBP.d; r.eax = EAX.d; r.ebx = EBX.d;
             r.ecx = ECX.d; r.edx = EDX.d; r.esi = ESI.d; r.edi = EDI.d;
+            r.ret = ld32(ESP.d);
             r.a0 = ld32(ESP.d + 4u);
             r.a1 = ld32(ESP.d + 8u);
+            if (m.probe_deref) {
+                r.d0 = ld32(r.a0);
+                r.d1 = ld32(r.a0 + 4u);
+            } else {
+                r.d0 = 0; r.d1 = 0;
+            }
             probe_snapshot(r.eax_str, EAX.d);
             probe_snapshot(r.ecx_str, ECX.d);
         }

@@ -577,9 +577,10 @@ void print_report(const Options &o, bool returned, unsigned long esp0) {
                 const ts::Machine::ProbeHit &r = m.probe_rec[i][k];
                 std::printf("    step=%llu esp=0x%08x ebp=0x%08x eax=0x%08x "
                             "ebx=0x%08x ecx=0x%08x edx=0x%08x esi=0x%08x "
-                            "edi=0x%08x a0=0x%08x a1=0x%08x\n",
+                            "edi=0x%08x a0=0x%08x a1=0x%08x d0=0x%08x d1=0x%08x "
+                            "ret=0x%08x\n",
                             r.step, r.esp, r.ebp, r.eax, r.ebx, r.ecx, r.edx,
-                            r.esi, r.edi, r.a0, r.a1);
+                            r.esi, r.edi, r.a0, r.a1, r.d0, r.d1, r.ret);
                 if (r.eax_str[0]) std::printf("      eax: \"%s\"\n", r.eax_str);
                 if (r.ecx_str[0]) std::printf("      ecx: \"%s\"\n", r.ecx_str);
             }
@@ -1349,6 +1350,7 @@ int main(int argc, char **argv) {
     // TS_PROBE=0xADDR,... -- record registers and the EAX/ECX strings at up to
     // eight addresses. The creation path is a chain of decisions, and one run
     // can read the whole chain.
+    if (std::getenv("TS_PROBE_DEREF")) m.probe_deref = 1;
     if (const char *pr = std::getenv("TS_PROBE")) {
         const char *p = pr;
         while (*p && m.probe_n < (unsigned)ts::Machine::PROBE_MAX) {
