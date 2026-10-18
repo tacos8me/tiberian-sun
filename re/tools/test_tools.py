@@ -1865,6 +1865,59 @@ int main() {
         eq("win32-surface-lock", out.splitlines()[-1] if out else "", "0")
 
 
+def test_win32_clock():
+    """The clock must advance with executed work, not only with Sleep.
+
+    Regression test for the VQA movie stall: tick() was a static counter that
+    only Sleep advanced, but the movie pump polls timeGetTime in a busy loop
+    and never sleeps. Time froze, the stream pacer (sub_006786a0) returned -10
+    ("too early") forever, the audio descriptor's done bit was never cleared,
+    and the decoder returned -9 without decoding a frame. Before the fix this
+    test's first check failed (the clock did not move at all).
+    """
+    import subprocess
+    src = r'''
+#include <cstdio>
+#include "Win32Stubs.h"
+
+static int fails = 0;
+static void ck(const char *what, bool ok) {
+    if (!ok) { std::printf("FAIL %s\n", what); ++fails; }
+}
+
+int main() {
+    ts::mach().steps = 0;
+    ts::u32 t0 = ts::w32::tick();
+    ts::mach().steps = 20000;
+    ts::u32 t1 = ts::w32::tick();
+    ck("clock advances with executed work", t1 == t0 + 2u);
+
+    ts::u32 t2 = ts::w32::tick_advance(33u);
+    ck("Sleep advances the clock", t2 == t1 + 33u);
+
+    ts::mach().steps = 40000;
+    ck("clock keeps advancing after Sleep", ts::w32::tick() == t2 + 2u);
+
+    std::printf("%d\n", fails);
+    return fails ? 1 : 0;
+}
+'''
+    open("/tmp/ts_win32_clock.cpp", "w").write(src)
+    r = subprocess.run(["g++", "-std=c++03", "-O0", "-Isrc/include",
+                        "-Ibuild/shim", "-o", "/tmp/ts_win32_clock",
+                        "/tmp/ts_win32_clock.cpp"], capture_output=True)
+    if r.returncode != 0:
+        check("win32-clock-build", False,
+              r.stderr.decode("utf-8", "replace")[:300])
+        return
+    r = subprocess.run(["/tmp/ts_win32_clock"], capture_output=True)
+    out = r.stdout.decode("utf-8", "replace").strip()
+    if out and out.splitlines()[-1] != "0":
+        check("win32-clock", False, out)
+    else:
+        eq("win32-clock", out.splitlines()[-1] if out else "", "0")
+
+
 def test_win32_blowfish():
     """IBlowfish is a real Blowfish-ECB cipher, not an identity copy.
 
@@ -2085,7 +2138,7 @@ def main():
                test_machine_depth_guard, test_machine_boot_regressions,
                test_win32_module_exports, test_win32_message_queue,
                test_win32_dialog,
-               test_win32_surface_lock, test_win32_blowfish):
+               test_win32_surface_lock, test_win32_clock, test_win32_blowfish):
         try:
             fn()
         except Exception as exc:  # a tool that raises is a failure, not a skip
