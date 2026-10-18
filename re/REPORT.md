@@ -78,44 +78,63 @@ tests + a clean-tree `gen_headers` unblock). After the fix: scale **1.125**
 (`0x3f900000`), map surface **99x108**, visible rect **35, 28, 23, 43**, vptr
 **`0x006a5dfc`**, **0** out-of-bounds stores.
 
-**The 500B run renders the tactical HUD.** ESC skips the intro; the loader's own
-O(n²) `DynamicVectorClass` growth still dominates the cost (at 100B it is on
-vector 7/22 with 160,070 entries). At a 500B budget the run stops at the budget
-after **500,000,000,001 instructions** at `0x00543669` (`sub_00543620`, a 3x4
-matrix·vector transform in the renderer), depth 100, with **12,637 / 32,768
-pages** (refused 0), **0 unmapped calls**, coverage **158,667 / 9,607**, the
-message loop dispatching (`GetMessage=19`, `DispatchMessage=19`,
-`PeekMessage=23,117,313`) and 8 surfaces with **18,691,958 blits and 46,753,350
-locks**. `re/out/frame_500b.png` (640x480, md5 `4fc1cec7…`, **87,794
-non-black**) shows Options, credits 5000, the GDI radar eagle, and the build
-tabs/grid. An independent 500B-budget reproduction was stopped by its watchdog
-at 372,912,291,926 instructions under host contention but matched the pages,
-coverage, 0 unmapped calls and a byte-identical frame.
+**The 500B run renders the tactical HUD and, after the object-creation fixes, the
+revealed base area.** ESC skips the intro; the loader's own O(n²)
+`DynamicVectorClass` growth still dominates the cost (at 100B it is on vector
+7/22 with 160,070 entries). The first 500B run (pre-TLS/CLSID) stopped at the
+budget after **500,000,000,001 instructions** at `0x00543669` with 12,637 pages,
+coverage 158,667 / 9,607, 18,691,958 blits and 46,753,350 locks;
+`re/out/frame_500b.png` (87,794 non-black) showed the HUD alone. After the TLS
+(`c61f060`) and CLSID/class-factory (`8163162`) fixes the same budget stops at
+`0x0042322c` after **500,000,000,001 instructions** (2,201 s) with **0 unmapped
+calls**, coverage **230,658 / 13,417**, 8 surfaces and **1,942,509 blits /
+5,971,443 locks**; `re/out/frame_500b_objects.png` (640x480, md5
+`e788f40b2db184885b9f25dab79380b0`, **93,404 non-black**) shows the tactical HUD
+plus terrain, the GDI construction yard and a unit. A 20B run stops at
+`0x0041398c` with coverage 230,640 / 13,415 and 0 unmapped. An independent
+pre-fix 500B reproduction was stopped by its watchdog at 372,912,291,926
+instructions under host contention but matched the pages, coverage, 0 unmapped
+calls and a byte-identical frame.
 
-**The black map is not a renderer defect — the world is empty and fully
-shrouded.** The per-surface trace shows the 472x480 map surface blitted to the
-primary once per frame (`last_src=0x5060c4e4`; the two map surfaces swap on
-scroll), the sidebar composited, and the radar 99x108 surface **0 non-black**;
-the primary's 87,794 non-black pixels are the HUD, and the map surface is black
-below row 23. `TS_EXEC_CHECK` shows every tactical pass executing (`0x4b2ff0`
+**The black map is not a renderer defect — the world is populated and the black
+is unexplored shroud.** The per-surface trace shows the 472x480 map surface
+blitted to the primary once per frame (`last_src=0x5060c4e4`; the two map
+surfaces swap on scroll), the sidebar composited, and the radar 99x108 surface
+**0 non-black**. `TS_EXEC_CHECK` shows every tactical pass executing (`0x4b2ff0`
 map render, `0x5f6e50`, `0x5f6360`/`0x5f8c00` terrain, `0x452ab0` tile draw,
 `0x478f00` shape blit, `0x5f90e0`/`0x452330`/`0x5fa220` shroud, `0x5a0b90`/
-`0x5a4080` radar), while the reveal/sight updates (`0x476000`, `0x4760f0`,
-`0x477670`, `0x513bf0`, `0x476180`) do **not** execute. `TS_OBJECTS` is **n=0,
-array=NULL**; `TS_MAPCELLS` shows **1,681 cells allocated, 12 with a
-tile/overlay index, 0 revealed, 0 fogged**, with heights decoded (604/671/562),
-so `IsoMapPack5` works and the terrain template/object layer is absent. The
-shroud therefore paints the viewport black and the terrain loop has only 12
-cells to draw. `FUN_00543620` runs with sane callers; no frame was hand-painted.
+`0x5a4080` radar). `TS_MAPCELLS` shows **1,681 cells allocated, 34 seen, 34
+fogged, 12 tile entries**, with heights decoded (604/671/562), so `IsoMapPack5`
+works. `FUN_00543620` runs with sane callers; no frame was hand-painted.
 
-**Scenario object creation produces zero objects — the current blocker.**
-`FUN_0063b470` (`[Units]`) and `FUN_0063b8f0` (structures) ran, but **every
-entry was rejected**: owner-house `FUN_004c7470` → -1, type `FUN_0063e650` → -1,
-`FUN_00630cc0` returning null, or placement slot `0xc4` returning 0 (which
-destroys the object). The shipped `GDI1A.MAP` has 3 Nod buggies, 17 infantry
-(3 GDI) and ~20 structures including the GDI construction yard at (28,59). A lane
-is tracing the creation path; do not inject objects by hand. **The mission map
-and units do not render.**
+**The scenario now creates its objects (`c61f060` + `8163162`).** At mission
+init the scenario INI holds `[Houses] 7`, `[Units] 3`, `[Infantry] 17`,
+`[Structures] 36`. The first unit resolves owner `"Nod"` → house 1, type
+`"BGGY"` → `0x18`, and placement slot `0xc4` → 1; all 3 unit and all 17 infantry
+placements return 1. The authoritative registries after the run hold **4
+ObjectClass (`0x77bbe0`), 21 infantry (`0x7b0c08`), 36 buildings (`0x7b2c48`)
+and 7 houses (`0x7afce0`)**. `TS_OBJECTS` also prints `n=0` because it reads
+`0x7b2d98`, a per-frame renderer list that is legitimately empty at an arbitrary
+stop — that number is **not** the world. Two constant-return stubs had prevented
+creation: `TlsGetValue`/`TlsSetValue` never persisted the CRT's `_getptd` block,
+so `FUN_006837ea` (strtok) returned only the first token and every scenario entry
+lost its type; `CLSIDFromString` wrote 16 zero bytes, so every `Locomotor={...}`
+became `CLSID_NULL` and `CoCreateInstance` returned a generic 3-slot `IUnknown`
+whose slot-3 call at `0x630e2d` was 0, leaking `0x54` bytes of arguments over
+`FUN_0063b470`'s saved EBP (`this` became `0x9a80`). `CoRegisterClassObject` was
+also a no-op; `CoCreateInstance` now delegates to the game's own
+`IClassFactory`. The 500B frame `re/out/frame_500b_objects.png` (640x480, md5
+`e788f40b2db184885b9f25dab79380b0`, **93,404 non-black**) shows the tactical HUD
+plus the revealed base area (terrain, the GDI construction yard, a unit).
+
+**The current blocker is the shroud reveal and the tactical camera origin.**
+Only **34 of 1,681 cells** are seen, and the revealed patch is **clipped to the
+bottom edge of the 472x480 viewport** instead of centred on the base. The black
+is shroud, not a missing render. The next work is the reveal radius (the seen/fog
+bits at cell `+0xa4`, and the reveal/sight updates `0x476000`, `0x4760f0`,
+`0x477670`, `0x513bf0`, `0x476180`) and the camera origin / visible-rect
+computation (`35,28,23,43`). Do not hand-paint the map or inject cells. **The
+mission map and units render only inside the 34 revealed cells.**
 
 The earlier 1.2e12-budget flood (7,771,444 unmapped calls, 1,024,211 / 2,097,152
 pages, black frame, fault at `0x00422de0` after 478,970,534,425 instructions) is
@@ -138,18 +157,28 @@ Boot states, all with **0 unmapped calls and 0 stack imbalances**:
   **290,399** non-black, md5 `6cb0e1fff05f9250adda298e644f1266` = committed
   `re/out/render_2_6b.png` (the GDI loading screen).
 - ESC-skip script, 100B: stop `0x0055b0bc` (budget), pages **16,343 / 32,768**.
-- ESC-skip script, 500B: budget at **500,000,000,001** instructions, EIP
-  `0x00543669` (3x4 matrix·vector transform), depth 100; pages **12,637 /
-  32,768** (refused 0); **0 unmapped calls**; coverage **158,667 / 9,607**;
-  `GetMessage=19`, `DispatchMessage=19`, `PeekMessage=23,117,313`; 8 surfaces,
-  **18,691,958 blits, 46,753,350 locks**; frame `re/out/frame_500b.png` (md5
-  `4fc1cec7…`, **87,794** non-black) — the tactical HUD; **map viewport still
-  black**.
-- World state (6B, ESC skip): `TS_OBJECTS` **n=0, array=NULL**; `TS_MAPCELLS`
-  **alloc=1,681, tiles=12, seen=0, fog=0** (heights 604/671/562); per-surface
-  primary non-black 87,794 (HUD), map 472x480 non-black 7,080 (rows 0-22),
-  radar 99x108 **0**; `TS_EXEC_CHECK` all 11 tactical passes executed, all 5
-  reveal/sight updates not executed.
+- ESC-skip script, 20B (after the TLS/CLSID fixes): stop `0x0041398c` (budget)
+  after **20,000,000,001** instructions, depth 100; `GetMessage=19`,
+  `PeekMessage=13,797,235`, `DispatchMessage=19`; pages **13,698 / 32,768**;
+  coverage **230,640 / 13,415**; 8 surfaces, **57,074 blits / 254,041 locks**;
+  **0 unmapped calls**.
+- ESC-skip script, 500B (after the TLS/CLSID fixes): budget at
+  **500,000,000,001** instructions, EIP `0x0042322c`, **2,201 s**; coverage
+  **230,658 / 13,417**; 8 surfaces, **1,942,509 blits, 5,971,443 locks**;
+  **0 unmapped calls**; frame `re/out/frame_500b_objects.png` (md5
+  `e788f40b…`, **93,404** non-black) — the tactical HUD plus the revealed base
+  area (terrain, the GDI construction yard, a unit).
+- World state (after the TLS/CLSID fixes): registries **ObjectClass 4, infantry
+  21, buildings 36, houses 7**; scenario INI at mission init `[Houses] 7`,
+  `[Units] 3`, `[Infantry] 17`, `[Structures] 36`; `TS_MAPCELLS`
+  **alloc=1,681, tiles=12, seen=34, fog=34** (heights 604/671/562). The revealed
+  patch is clipped to the bottom edge of the 472x480 viewport; the rest is
+  shroud.
+- Historical (pre-TLS/CLSID): ESC-skip 500B stopped at `0x00543669`, coverage
+  158,667 / 9,607, 18,691,958 blits, frame `re/out/frame_500b.png` (87,794
+  non-black); 6B world state read `TS_OBJECTS` **n=0** (the per-frame renderer
+  list, not the world), `TS_MAPCELLS` **seen=0, fog=0**, all
+  `[Units]`/`[Structures]` entries rejected.
 - ESC-skip script, 1.2e12 (historical, pre-`e5d7039`): fault at `0x00422de0`
   after 478,970,534,425 instructions, pages **1,024,211 / 2,097,152**,
   **7,771,444 unmapped calls**, black frame; does not reproduce after the x87
@@ -442,25 +471,30 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   machine state.** Measured on the mission-load run: 4B in 11.7 s (341.9M/s),
   20B in 50.2 s (398.4M/s), 100B in 243.9 s (410.0M/s); the old rate was
   ~28.6M/s. `test_machine_perf` pins the hot path.
-- **The tactical HUD renders; the world is empty and fully shrouded.** The page
-  table is growable (2,097,152-page cap) and the heap reuses freed blocks, so at
-  4B the load uses 12,809 pages (50 MB) instead of 377,796 (1.44 GiB) and
-  presents the GDI loading screen (`re/out/render_2_6b.png`, 290,399 non-black).
-  The 479B out-of-bounds write was the **x87 emitter** (D8 one-register forms
-  rendered as pop forms; 901 instructions affected), fixed in `e5d7039`; after
-  the fix the tactical zoom is 1.125, the map surface 99x108, the visible rect
-  `35,28,23,43`, the vptr `0x006a5dfc`, and there are 0 OOB stores. The 500B run
-  renders `re/out/frame_500b.png` (87,794 non-black: Options, credits 5000, GDI
-  radar eagle, build tabs/grid) with 0 unmapped calls, 12,637 pages, 18,691,958
-  blits and 46,753,350 locks. **The black map is not a renderer defect**: the
-  map surface is blitted every frame and every tactical pass executes, but
-  `TS_OBJECTS` is n=0 and `TS_MAPCELLS` shows 1,681 cells allocated with 12 tile
-  entries and 0 revealed, so the shroud paints it black. Scenario object
-  creation rejected every `[Units]`/`[Structures]` entry (owner/type -1,
-  factory null, placement `0xc4` → 0). **The mission map and units do not
-  render.** The VQA frame-wait path is also stub-bound, so playback pacing is
-  not the retail pacing. The button art is not painted (no `WM_PAINT` to
-  children; retail does not draw it either).
+- **The tactical HUD renders, the scenario creates its world, and the remaining
+  black is shroud.** The page table is growable (2,097,152-page cap) and the
+  heap reuses freed blocks, so at 4B the load uses 12,809 pages (50 MB) instead
+  of 377,796 (1.44 GiB) and presents the GDI loading screen
+  (`re/out/render_2_6b.png`, 290,399 non-black). The 479B out-of-bounds write was
+  the **x87 emitter** (D8 one-register forms rendered as pop forms; 901
+  instructions affected), fixed in `e5d7039`; after the fix the tactical zoom is
+  1.125, the map surface 99x108, the visible rect `35,28,23,43`, the vptr
+  `0x006a5dfc`, and there are 0 OOB stores. The TLS (`c61f060`) and
+  CLSID/class-factory (`8163162`) fixes create the scenario's 3 units, 17
+  infantry and 36 structures (registries: 4 ObjectClass, 21 infantry, 36
+  buildings, 7 houses). The 500B run renders
+  `re/out/frame_500b_objects.png` (93,404 non-black: the tactical HUD plus the
+  revealed base area — terrain, the GDI construction yard, a unit) with 0
+  unmapped calls, 8 surfaces, 1,942,509 blits and 5,971,443 locks. **The black
+  map is not a renderer defect**: the map surface is blitted every frame and
+  every tactical pass executes. `TS_MAPCELLS` shows 1,681 cells allocated with
+  **34 seen, 34 fogged** and 12 tile entries, and the revealed patch is clipped
+  to the bottom edge of the 472x480 viewport instead of centred on the base.
+  **The map renders only the 34 revealed cells; the rest is shroud.**
+  `TS_OBJECTS` n=0 is the per-frame renderer list `0x7b2d98`, not the world. The
+  VQA frame-wait path is also stub-bound, so playback pacing is not the retail
+  pacing. The button art is not painted (no `WM_PAINT` to children; retail does
+  not draw it either).
 - **The boot has 0 unmapped calls and 0 stack imbalances**; the link test passes
   and `boot.py --strict` exits 0.
 - **The Blowfish cipher, the MIX index read and the dialog layer are fixed.**
