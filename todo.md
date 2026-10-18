@@ -393,7 +393,7 @@ Not reconstructed. Both are large surfaces; scope them before starting.
 ## P3 — verification and validation
 
 ### [x] Unit tests for the load-bearing tools
-`tools/test_tools.py`: **79 checks passed** (re-measured for this pass). Not
+`tools/test_tools.py`: **94 checks passed** (re-measured for this pass). Not
 golden-count assertions -- every one is a regression test for a defect that
 actually shipped, or a differential test against an independent implementation.
 Four are proven to fail when the defect is reintroduced (mutating
@@ -920,7 +920,7 @@ recovered stream contains only 32-bit `div`/`idiv` (no 8/16-bit forms), so there
 is no live 8/16-bit defect. Tests: `test_machine_div` (the boot case, sign
 combinations, overflow, divide-by-zero, and a 200,000-pair differential sweep)
 and `test_win32_surface_lock` (slot 25, five arguments, ESP returns at
-`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **79 checks**.
+`caller_ESP + 0x14`), both mutation-proven. `test_tools.py` is now **94 checks**.
 
 Measured with `TS_ROOT=.../gamedir`: the idiv is passed. New stop is **budget
 exhaustion at `0x00488800` after 20,000,001 instructions** with `TS_CD`, depth
@@ -1099,7 +1099,7 @@ Measured:
   loop; `GetMessage=7 PeekMessage=14,572,933 DispatchMessage=7`; 78,504 / 6,191.
 - Exit Game script, 1.9B: `ExitProcess(0)` at `0x00684529` after 1,707,666,895
   instructions; 86,400 / 6,654; 0 unmapped, 0 imbalances.
-- Gates: `VERIFICATION PASSED`, **79** tool tests, 101 runtime checks,
+- Gates: `VERIFICATION PASSED`, **94** tool tests, 101 runtime checks,
   `--strict` exits 0.
 
 **Scripted input is delivered but does not leave the menu.** Ten messages are
@@ -1198,15 +1198,16 @@ game's own `MixFileClass` lookup, `GDI1A.MAP` is in **MAPS01.MIX on CD1** and
 `NOD1A.MAP` in **MAPS02.MIX on CD2**, so the default ends on GDI):
 - After OK the campaign dialog is destroyed, `GDI1A.MAP` is read, and the **GDI
   campaign intro movie plays**. At 2.1e9 the stop is the budget inside the LCW
-  video decoder (`0x0067dc4f`, `sub_0067daa0`), `pages-used 11058/32768`.
+  video decoder (`0x0067dc4f`, `sub_0067daa0`), `pages-used 9029/32768`.
 - The frame is the GDI intro title ("SEPTEMBER 2, 2030 / GDI SPACE STATION
   PHILADELPHIA"), **194,131 non-black pixels**.
-- ESC at model-ms 192,000 skips the movie; the mission load continues and then
-  faults at step **2,580,698,410** at `0x00a006b0` (the `HeapAlloc` thunk) with
-  **page table exhausted, 32768/32768**.
+- ESC at model-ms 192,000 skips the movie. At that time the load then faulted at
+  step **2,580,698,410** at `0x00a006b0` with the fixed table exhausted
+  (32768/32768); the growable page table and heap fix supersede that fault — the
+  load now runs to 479B and fails on the wild-call defect recorded above.
 - Frames: `/tmp/default_mission.png` (GDI intro), `/tmp/gdi_mission.png`
   (live-action briefing), `/tmp/gdi_skip.png` (290,399 non-black).
-- Gates: `verify.py` PASSED, `test_tools.py` **79**, `test_runtime.py` 101,
+- Gates: `verify.py` PASSED, `test_tools.py` **94**, `test_runtime.py` 101,
   `--strict` 0, link OK.
 
 ### [x] The page table is exhausted during the mission load — fixed
@@ -1450,8 +1451,8 @@ path once message delivery and Blowfish landed, to the dialog-setup loop after
 the MIX-read and teardown fixes, to the intro-movie pump after the dialog and
 narrow-flag fixes, through the **rendered main menu** and the campaign dialog,
 and now into the **GDI intro movie** after the listbox/mission-start work
-landed; the page table exhausts on the way to the mission proper. Use `TS_CD`
-to model `D:`.
+landed, then (with ESC) into the mission loader, which runs to **479B**
+instructions before a wild-call fault. Use `TS_CD` to model `D:`.
 
 ### [x] Make the boot a one-command measurement
 `tools/boot.py` builds (cached), runs with a budget and a timeout, and prints

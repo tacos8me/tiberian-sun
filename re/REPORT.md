@@ -55,25 +55,49 @@ STATION PHILADELPHIA"). That frame was captured to
 `ccdb46d448a90e487e513bc1daf2ff8b`); the committed `re/out/frame.png` remains the
 main-menu evidence.
 
-**The mission load does not complete.** The current blocker is the machine
-model's **page table**, not a missing game feature: with the default timeline the
-run stops at `0x0067dc4f` (the LCW decoder inside intro playback) with
-**11,058 of 32,768** pages used, and an ESC-skip script that tries to leave the
-movie faults at `0x00a006b0` (the `HeapAlloc` thunk) after **2,580,698,410**
-instructions with the table exhausted at **32,768 / 32,768**. Widening
-`PageTable::SLOTS` is the next fix. Separately, the VQA frame-wait path is
-stub-bound: the movie advances only as fast as the model services its wait, so
-playback pacing is not yet the retail pacing.
+**The interpreter is 12-14x faster, with byte-identical machine state.** The
+model runs at **~400M instructions/s** (was ~28.6M/s): measured on the
+mission-load run, 4B in **11.7 s** (341.9M/s), 20B in **50.2 s** (398.4M/s),
+100B in **243.9 s** (410.0M/s). The changes are semantics-preserving (`-O2
+-fno-pie`/`-no-pie`, a 256-entry positive-hit page cache, wide single-page
+`ld16/st16/ld32/st32`, a `noinline insn_slow()` cold path, inlined page and flag
+helpers, a cached import-name lookup), and `test_machine_perf` pins the hot path
+and is mutation-proven. The page table also grows now (2,097,152-page cap) and
+the heap reuses freed blocks, so at 4B the mission load uses **12,809** pages
+(50 MB) instead of 377,796 (1.44 GiB).
+
+**The mission load does not complete.** ESC skips the intro and the loader runs;
+its own O(n²) `DynamicVectorClass` growth (22 vectors at `this+0x1280`,
+`sub_005a35b0`, each append through `SetCount` `0x55b050` → `0x55b09a`) dominates
+the cost. At a 100B budget it is on vector **7/22** with **160,070 entries**
+(`TS_PEEK 0x712068`: count and capacity `0x27146`, growth step 10) and has not
+finished. A 1.2e12-budget run reached **478,970,534,425 instructions (479B)** and
+then **faulted at `0x00422de0`** with `page table exhausted: page allocation
+failed` (1,024,211 / 2,097,152 pages, 1 refused) and **7,771,444 unmapped
+calls** — 7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below
+`0x1000`; 98,202 elsewhere — with wild registers across the top of the 4 GiB
+space and a **black frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips;
+coverage 158,971 / 9,630). The loader got far past 100B, so this is a new defect
+(a pointer table or stack going wild), not the O(n²) estimate. **The tactical
+phase is not reached and no mission is rendered.** Separately, the VQA
+frame-wait path is stub-bound: the movie advances only as fast as the model
+services its wait, so playback pacing is not yet the retail pacing.
 
 Boot states, all with **0 unmapped calls and 0 stack imbalances**:
-- 20M: stop `0x00488800`, coverage **55,774 / 4,764**.
+- 20M: stop `0x00488800`, coverage **55,774 / 4,764**, pages **3,538 / 32,768**.
 - default timeline, 2.1B: stop `0x0067dc4f` (LCW decode during intro playback),
   `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage
-  **84,130 / 6,431**, pages used **11,058 / 32,768**, frame
+  **84,130 / 6,431**, pages used **9,029 / 32,768**, frame
   `re/out/mission.png` **194,131** non-black.
-- ESC-skip script, 3.0B: fault at `0x00a006b0` after **2,580,698,410**
-  instructions, `why: page table exhausted`, pages **32,768 / 32,768**, coverage
-  **139,223 / 8,678**.
+- ESC-skip script, 4B: stop `0x0055b0bb` (budget) after 4,000,000,001
+  instructions, coverage **139,250 / 8,682**, pages **12,809 / 32,768**, 8
+  surfaces / 12 blits / 769 locks / 0 flips; frame `/tmp/mission_4b.png`
+  **290,399** non-black, md5 `6cb0e1fff05f9250adda298e644f1266` = committed
+  `re/out/render_2_6b.png` (the GDI loading screen).
+- ESC-skip script, 100B: stop `0x0055b0bc` (budget), pages **16,343 / 32,768**.
+- ESC-skip script, 1.2e12: fault at `0x00422de0` after 478,970,534,425
+  instructions, pages **1,024,211 / 2,097,152**, **7,771,444 unmapped calls**,
+  black frame; tactical phase **not reached**.
 `boot.py --strict` exits 0 and `tools/link_test.py` passes (exit 0). A full
 `./tools/pipeline.sh` ran exit 0 in the disasm-correction lane (8m51s, per
 `todo.md`); it was not re-run here. The nested MIX (`0xa8548fd9`, 317 entries,
@@ -358,14 +382,22 @@ grep -rh 'virtual' src/include/*.h | grep -c 'vfunc_'              # 2458
   and plays the GDI intro. The intro frame is `re/out/mission.png` (640x480,
   194,131 non-black, md5 `ccdb46d448a90e487e513bc1daf2ff8b`). The nested MIX
   (`0xa8548fd9`, 317 entries) is mounted and read.
-- **The mission load does not complete: the page table exhausts.** With the
-  default timeline the run stops at `0x0067dc4f` (LCW decode during intro
-  playback) with 11,058 / 32,768 pages used; an ESC-skip script faults at
-  `0x00a006b0` (the `HeapAlloc` thunk) after 2,580,698,410 instructions with the
-  table exhausted at 32,768 / 32,768. This is a model limit
-  (`PageTable::SLOTS`), not a missing game feature. The VQA frame-wait path is
-  also stub-bound, so playback pacing is not the retail pacing. The button art is
-  not painted (no `WM_PAINT` to children; retail does not draw it either).
+- **The interpreter is 12-14x faster (~400M instructions/s) with byte-identical
+  machine state.** Measured on the mission-load run: 4B in 11.7 s (341.9M/s),
+  20B in 50.2 s (398.4M/s), 100B in 243.9 s (410.0M/s); the old rate was
+  ~28.6M/s. `test_machine_perf` pins the hot path.
+- **The mission load does not complete: the 479B run goes wild.** The page table
+  is growable now (2,097,152-page cap) and the heap reuses freed blocks, so at 4B
+  the load uses 12,809 pages (50 MB) instead of 377,796 (1.44 GiB) and presents
+  the GDI loading screen (`re/out/render_2_6b.png`, 290,399 non-black). The
+  loader's own O(n²) vector growth dominates (at 100B it is on vector 7/22 with
+  160,070 entries). A 1.2e12-budget run reached 478,970,534,425 instructions and
+  faulted at `0x00422de0` with 1,024,211 / 2,097,152 pages, **7,771,444 unmapped
+  calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below
+  `0x1000`; 98,202 elsewhere) and a black frame. The tactical phase is **not
+  reached** and no mission is rendered. The VQA frame-wait path is also
+  stub-bound, so playback pacing is not the retail pacing. The button art is not
+  painted (no `WM_PAINT` to children; retail does not draw it either).
 - **The boot has 0 unmapped calls and 0 stack imbalances**; the link test passes
   and `boot.py --strict` exits 0.
 - **The Blowfish cipher, the MIX index read and the dialog layer are fixed.**

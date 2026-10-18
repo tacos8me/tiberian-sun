@@ -50,8 +50,11 @@ documentation says cannot exist.
 | functions reachable from entry `0x6854e3` by direct edges | **69 (0.16%)** | BFS over `callees` |
 | functions declared by the reconstructed headers | **3,024 of 43,557 (6.9%)** | unique `sub_*` in `src/generated/*.cpp` |
 | boot (20M, `TS_CD`) | **20,000,001 instructions** (budget) at `0x00488800` (`sub_0048875c +0xa4`), depth 19, **0 unmapped targets, 0 stack imbalances**, message loop **reached and dispatching** (`CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), **55,774 distinct instructions / 4,764 of 45,947 functions entered**; CD read (`D:\TS1.dsk`, `EXPAND99..00`); primary surface `0x006beed8`=1 | `tools/boot.py` (`TS_CD=../work/cd1`) |
-| boot (2.1B, default timeline) | New Campaign, NOD1, GDI1, OK; `GDI1A.MAP` read; GDI intro plays; stop `0x0067dc4f` (LCW decoder), depth 28, `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage **84,130 / 6,431**, `pages-used 11,058/32,768`; frame 194,131 non-black | same (`--timeout 600`) |
-| boot (3.0B, ESC skip) | fault at `0x00a006b0` (HeapAlloc thunk) after **2,580,698,410** instructions, depth 29; **page table exhausted 32768/32768**; coverage 139,223 / 8,678; mission load does **not** complete | same |
+| boot (2.1B, default timeline) | New Campaign, NOD1, GDI1, OK; `GDI1A.MAP` read; GDI intro plays; stop `0x0067dc4f` (LCW decoder), depth 28, `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage **84,130 / 6,431**, `pages-used 9,029/32,768`; frame 194,131 non-black | same (`--timeout 600`) |
+| boot (4B, ESC skip) | stop `0x0055b0bb` (budget) after 4,000,000,001 instructions, depth 29; coverage **139,250 / 8,682**; pages **12,809/32,768**; 8 surfaces, 12 blits, 769 locks, 0 flips; frame 290,399 non-black (loading screen, md5 `6cb0e1ff…` = `re/out/render_2_6b.png`); **11.7 s wall** | same |
+| boot (100B, ESC skip) | stop `0x0055b0bc` (budget); pages **16,343/32,768**; loader on vector 7/22 with **160,070 entries**; **243.9 s wall** | same |
+| boot (1.2e12, ESC skip) | **fault at `0x00422de0` after 478,970,534,425 instructions**; `page table exhausted: page allocation failed`, pages **1,024,211/2,097,152** (1 refused); **7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere); coverage 158,971 / 9,630; **black frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips); tactical phase **not reached** | same |
+| interpreter | **~400M instructions/s** (12-14x the old ~28.6M/s), byte-identical machine state; 4B 11.7 s, 20B 50.2 s, 100B 243.9 s | `test_machine_perf` + boot |
 | frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; vs retail: 102,836 pixels differ (33.48%), mean abs channel diff **1.06/255** over differing pixels (0.35 over frame), 506 pixels >8 | `tools/boot.py --frame` |
 | link test | **OK, exit 0**, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled | `tools/link_test.py` |
 | boot strict gate | **exit 0**, 0 garbage call targets | `boot.py --no-build --strict` |
@@ -70,16 +73,19 @@ In words:
    startup that **delivers messages, reads the CD and the MIX index, builds its
    real dialogs, renders and selects the main menu, populates the campaign list,
    starts the GDI campaign, and plays its intro movie**: at 2.1B the stop is the
-   LCW decoder `0x0067dc4f` (`pages-used 11,058/32,768`), with the GDI title
+   LCW decoder `0x0067dc4f` (`pages-used 9,029/32,768`), with the GDI title
    frame (194,131 non-black). `re/out/frame.png` is 640x480 and within
    **1.06/255** mean channel difference of the retail screenshot on the pixels
    that differ. COM registration, message delivery, the dialog layer,
    narrow-width flags, the Blowfish cipher, the stack tracker, the teardown
    calls, signed `idiv`, rendering, input, menu selection, the listbox/trackbar
-   layer and the mission start are all fixed. The current blocker is the **page
-   table during the mission load**: ESC skips the movie, the loader touches every
-   slot, and the run faults at `0x00a006b0` with 32,768/32,768 pages used. The
-   mission load does **not** complete.
+   layer and the mission start are all fixed. The interpreter is **12-14x
+   faster** (~400M instructions/s) with byte-identical state, so the mission
+   load now runs to **479B instructions** before failing: ESC skips the movie,
+   the loader's own O(n²) vector growth dominates (at 100B it is on vector 7/22
+   with 160,070 entries), and a 1.2e12-budget run faulted at `0x00422de0` with
+   **7,771,444 unmapped calls** and a black frame. The **tactical phase is not
+   reached** and the mission load does **not** complete.
 4. **The Win32 layer is real where the game has been, and fiction where it has
    not** (`Win32Stubs.h`, read):
    - File I/O: **real** — a host root, case-insensitive paths, a 64-entry handle
@@ -103,8 +109,8 @@ selectable main menu, the campaign list, and into the GDI campaign's intro movie
 on a Win32 layer that can load a file, create a window, dispatch messages, read
 the MIX index, build dialogs, take scripted input, hit-test a real button,
 populate a listbox, start a mission and show a frame — but cannot yet complete
-the mission load (the fixed page table is exhausted), fire a timer, or play a
-sound.**
+the mission load (it reaches 479B instructions and faults on a wild-call flood),
+fire a timer, or play a sound.**
 
 ### The fact the docs do not contain
 
@@ -180,7 +186,7 @@ bytes.
 9. **The MS*/AVI movie layer — done.** The model plays past the intro, reaches
    the menu, starts the GDI campaign, and plays the GDI intro movie: at 2.1B the
    stop is the LCW decoder `0x0067dc4f` (84,130 / 6,431, `pages-used
-   11,058/32,768`, 194,131 non-black frame). The rendering/input integration
+   9,029/32,768`, 194,131 non-black frame). The rendering/input integration
    (`Rendering.h`, `Input.h`) is what made the menu visible and clickable.
 10. **Menu-item selection — done.** `DLGTEMPLATEEX` is parsed, the six
     `BS_OWNERDRAW` buttons have real rectangles, and press/release →
@@ -192,10 +198,19 @@ bytes.
     (`[Battles] 1=GDI1, 2=NOD1`) feeds listbox 1109 through the model's full
     listbox/trackbar layer; OK selects GDI, `GDI1A.MAP` is read from MAPS01.MIX,
     and the GDI intro movie plays (2.1B stop `0x0067dc4f`, 84,130 / 6,431).
-12. **The page table — the current blocker.** ESC skips the movie, the loader
-    touches every slot, and the run faults at `0x00a006b0` after 2,580,698,410
-    instructions with 32,768/32,768 pages used. The mission load does **not**
+12. **The 479B wild-call fault — the current blocker.** ESC skips the movie and
+    the loader runs; its own O(n²) vector growth dominates (at 100B it is on
+    vector 7/22 with 160,070 entries). A 1.2e12-budget run reached
+    478,970,534,425 instructions and faulted at `0x00422de0` with the page table
+    refusing a page (1,024,211/2,097,152) and **7,771,444 unmapped calls** (7 in
+    `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`;
+    98,202 elsewhere), wild registers and a black frame. The loader got far past
+    100B, so this is a new pointer-table/stack defect, not the O(n²) estimate.
+    The **tactical phase is not reached** and the mission load does **not**
     complete.
+13. **The interpreter — done.** 12-14x faster (~400M instructions/s vs
+    ~28.6M/s) with byte-identical machine state; `test_machine_perf` pins the
+    hot path and is mutation-proven.
 
 **Not on the path:** naming the 2,458 `vfunc_N` slots, source-shaping 45,947
 transcriptions, the last 110 KB of `.text`, re-deriving member offsets. All four
@@ -259,12 +274,13 @@ documented source; ROADMAP P2 and P3 have no consumer in the playability goal.
   work; the mission load does not.** The model plays past the intro, renders and
   selects the real menu, populates the campaign list from shipped `BATTLE.INI`,
   and OK starts the GDI campaign: `GDI1A.MAP` is read and the GDI intro movie
-  plays (2.1B stop `0x0067dc4f`, 194,131 non-black frame). ESC skips the movie,
-  but the mission loader then exhausts the fixed page table at `0x00a006b0`
-  (32,768/32,768). **The mission load does not complete and no mission is
-  rendered.** The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read;
-  the button art is not painted (no `WM_PAINT` to children; retail does not draw
-  it either).
+  plays (2.1B stop `0x0067dc4f`, 194,131 non-black frame). ESC skips the movie
+  and the loader runs: its own O(n²) vector growth dominates (at 100B it is on
+  vector 7/22 with 160,070 entries), and a 1.2e12-budget run faulted at 479B
+  instructions at `0x00422de0` with **7,771,444 unmapped calls** and a black
+  frame. **The tactical phase is not reached and no mission is rendered.** The
+  nested MIX (`0xa8548fd9`, 317 entries) is mounted and read; the button art is
+  not painted (no `WM_PAINT` to children; retail does not draw it either).
 - **The VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls in 600 s, so
   model time barely advances during movies; ESC is the practical route to the
   mission load until the clock/pacing model is improved.
@@ -293,8 +309,9 @@ I/O is real); **message delivery, the Blowfish cipher, the MIX index read, the
 stack tracker, the teardown calls, signed `idiv`, the dialog layer, narrow-width
 flags, the generator arity, the MS*/AVI movie path, rendering, input, menu
 selection and the campaign list/mission start are also done** (units 11–25
-below). Units 6–10 remain, and **the page table during the mission load (unit
-26) is the current blocker**.
+below), as are **the growable page table, the heap reuse, the interpreter
+speedup and the 479B run (units 26–28)**. Units 6–10 remain, and **the 479B
+wild-call fault (unit 29) is the current blocker**.
 
 1. **Wine oracle (`tools/oracle.py`).** `tools/wine_env.sh` runs the retail game
    with the CD and a 640x480x16 screen; `oracle.py` attaches gdb, breaks at an
@@ -371,7 +388,7 @@ only honest way to close the rest.
 20. **Fix narrow-width flags.** **Done (`f2e6ca9`):** width-aware
     `f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`; the vsprintf `%` and the
     CD-drive scan are correct, and the flags are compared against the CPU's own.
-    `test_tools.py` is 79 checks.
+    `test_tools.py` is 94 checks.
 21. **Make the CD path work.** **Done:** with `TS_CD`, `CreateFileA("D:\TS1.dsk")`
     succeeds, `GetDriveTypeA` no longer receives `%c:\`, and `EXPAND99..00` are
     enumerated.
@@ -394,12 +411,26 @@ only honest way to close the rest.
     enumeration and a read-only `TS_DATA` root. OK selects GDI, `GDI1A.MAP` is
     read, and the GDI intro movie plays (2.1B stop `0x0067dc4f`, 84,130 / 6,431,
     194,131 non-black frame).
-26. **Fix the page-table exhaustion during the mission load.** **Open — the
-    current blocker.** ESC skips the movie; the loader touches every slot and
-    faults at `0x00a006b0` after 2,580,698,410 instructions with
-    32,768/32,768 pages used. *Exit:* the load passes `0x00a006b0`, peak
-    pages-used is recorded, and the next stop is named (ideally mission
-    rendering).
+26. **Make the page table growable and reuse freed heap blocks.** **Done:** the
+    table grows past 32,768 (2,097,152-page cap) with stable page identity, and
+    the heap coalesces/reallocs in place. At 4B the mission load uses 12,809
+    pages instead of 377,796 (50 MB instead of 1.44 GiB), 95.5% of allocations
+    reused.
+27. **Speed up the interpreter.** **Done (`9243e93` … `6421f30`):** 12-14x
+    faster (~400M instructions/s) with byte-identical machine state; 4B in
+    11.7 s, 20B in 50.2 s, 100B in 243.9 s. `test_machine_perf` pins the hot
+    path.
+28. **Run the load past 100B.** **Done:** a 1.2e12-budget run reached
+    478,970,534,425 instructions and faulted at `0x00422de0` with the page
+    table refusing a page (1,024,211/2,097,152), 7,771,444 unmapped calls and a
+    black frame. The loader got far past 100B; the tactical phase was **not**
+    reached.
+29. **Find the first wild call in the 479B run.** **Open — the current
+    blocker.** `TS_TRACE` the first `0x606060` call from `sub_004f3b40`, the
+    below-`0x1000` targets, and the page-table refusal address; decide whether a
+    jump-table target is unregistered, a loader buffer overflows, or the address
+    space is exhausted. *Exit:* the wild-call flood is explained and gone, and
+    the run reaches the tactical phase or a new named stop.
 
 ---
 
@@ -464,7 +495,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     headerless = 1,216). Measured this session.
 11. **RESOLVED — `CONTEXT.md` called `verify.py` "the 8-check gate".** It now
     says nine, describes check 9, and lists `link_test.py` (492 TUs),
-    `test_tools.py` (now 79 checks) and the import distinction (`8467f84`).
+    `test_tools.py` (now 94 checks) and the import distinction (`8467f84`).
 12. **OPEN — the framing error, which is the expensive one.** `ROADMAP.md` §2.3
     used to close with "for a decompilation that is the difference between 'it
     builds' and 'it is the game'". The sentence is gone and §4 now cross-
@@ -548,7 +579,7 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
 25. **RESOLVED — narrow-width flags (`f2e6ca9`) and generator arity
     (`19ee16c`).** Width-aware flag derivation fixes the vsprintf `%` and the
     CD-drive scan; `SetViewportOrgEx`/`SetWindowOrgEx` take 4 arguments and
-    `--stack-check` is 342/0. `test_tools.py` is 79 checks.
+    `--stack-check` is 342/0. `test_tools.py` is 94 checks.
 26. **RESOLVED — the intro-movie path and the rendered main menu.** The model
     plays past the intro and renders the menu: `re/out/frame.png` (md5
     `0fdf2636…`, 254,610 / 307,200 non-black) differs from the retail screenshot
@@ -566,15 +597,23 @@ this section are carried by `be04940`; the AGENTS.md figure sweep is `27e7f59`
     model implements the full listbox/trackbar layer, `FindFirstFileA` host
     enumeration and a read-only `TS_DATA` root. OK selects GDI, `GDI1A.MAP` is
     read from MAPS01.MIX, and the GDI intro movie plays (2.1B stop
-    `0x0067dc4f`, `pages-used 11,058/32,768`, 194,131 non-black frame).
-29. **OPEN (new) — the page table is exhausted during the mission load.** ESC
-    skips the movie; the loader touches every slot and faults at `0x00a006b0`
-    after 2,580,698,410 instructions with 32,768/32,768 pages used.
-    `PageTable::SLOTS` is 32,768 (128 MB); the demand may be legitimate or a
-    leak. The mission load does **not** complete.
-30. **OPEN (new) — the VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls
+    `0x0067dc4f`, `pages-used 9,029/32,768`, 194,131 non-black frame).
+29. **RESOLVED — the page table and the heap.** The table grows (2,097,152-page
+    cap) with stable page identity; the heap coalesces and reallocs in place.
+    At 4B the mission load uses 12,809 pages instead of 377,796, 95.5% of
+    allocations reused.
+30. **RESOLVED — the interpreter is 12-14x faster (`9243e93` … `6421f30`).**
+    ~400M instructions/s with byte-identical machine state; 4B in 11.7 s, 100B
+    in 243.9 s. `test_machine_perf` pins the hot path.
+31. **OPEN (new) — the 479B mission-load run goes wild.** A 1.2e12-budget run
+    reached 478,970,534,425 instructions and faulted at `0x00422de0` with
+    1,024,211/2,097,152 pages, **7,771,444 unmapped calls** (7 in `.text`, all
+    `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere)
+    and a black frame. The loader got far past 100B; this is a new
+    pointer-table/stack defect. The tactical phase is **not** reached.
+32. **OPEN (new) — the VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls
     in 600 s; ESC is the practical route to the mission load meanwhile.
-31. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
+33. **OPEN (new) — shutdown corrupts ESP, dormant.** WinMain returned with ESP
     `0x11` before the MIX-read fix; the current run never reaches shutdown.
 
 ---

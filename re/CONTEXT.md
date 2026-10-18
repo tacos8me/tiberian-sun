@@ -45,7 +45,10 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   code (4,285 of 4,289 confirmed, 99.9%)
 - `link_test.py` — links all 492 translation units into a program and runs it;
   measured **OK, exit 0**, message loop reached, 0 unmapped
-- `test_tools.py` — 79 unit tests for the tools themselves
+- `test_tools.py` — 94 unit tests for the tools themselves, including
+  `test_machine_perf`, which pins the interpreter hot path (40M-iteration
+  workload, wide-vs-byte checksum `88188416`, page straddles, a 20M/s floor, a
+  cached-path ratio of 1.73-1.78, and the `-O2`/`-fno-pie` build flags)
 - `test_runtime.py` — 101 checks for the rendering/input layers (`Rendering.h`,
   `Input.h`), mutation-proven; includes a standalone frame selftest
 - `harness.py` — measures real state (`metrics`) and proves reproducibility
@@ -66,15 +69,21 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   and OK starts the mission: the game reads `GDI1A.MAP` from `MAPS01.MIX` and
   plays the GDI intro. The stop is `0x0067dc4f` (LCW decode during intro
   playback; `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`;
-  84,130 / 6,431; pages used **11,058 / 32,768**). The intro frame is
+  84,130 / 6,431; pages used **9,029 / 32,768**). The intro frame is
   `re/out/mission.png` (640x480, 194,131 non-black, md5
-  `ccdb46d448a90e487e513bc1daf2ff8b`). An ESC-skip script at 3.0B faults at
-  `0x00a006b0` (the `HeapAlloc` thunk) after 2,580,698,410 instructions with the
-  page table exhausted at **32,768 / 32,768** (139,223 / 8,678). The Exit Game
-  script reaches `ExitProcess(0)` at `0x00684529` after 1,707,666,895
-  instructions (86,400 / 6,654). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only
-  `MessageBoxA` is the DirectSound warning at `0x484456` (`type=0x30`); **0
-  unmapped calls, 0 stack imbalances**; `--no-build --strict` exits **0**.
+  `ccdb46d448a90e487e513bc1daf2ff8b`). The ESC-skip script
+  (`tools/input_scripts/esc_skip.txt`) skips the movie and loads the mission at
+  **~400M instructions/s** (12-14x the old rate): 4B in 11.7 s, 20B in 50.2 s,
+  100B in 243.9 s, byte-identical state. At 4B the stop is `0x0055b0bb` (budget)
+  with 12,809 pages and the GDI loading screen (290,399 non-black, md5
+  `6cb0e1fff05f9250adda298e644f1266` = `re/out/render_2_6b.png`); at 100B it is
+  on vector 7/22 with 160,070 entries. At a 1.2e12 budget it faults at
+  `0x00422de0` after 478,970,534,425 instructions with 1,024,211 / 2,097,152
+  pages and 7,771,444 unmapped calls. The Exit Game script reaches
+  `ExitProcess(0)` at `0x00684529` after 1,707,666,895 instructions
+  (86,400 / 6,654). CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA`
+  is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0
+  stack imbalances** at 20M/2.1B/4B/100B; `--no-build --strict` exits **0**.
   `re/out/frame.png` is the rendered main menu (640x480, md5 `0fdf2636…`,
   254,610 / 307,200 non-black).
 - `wine_run.sh` / `wine_env.sh` — run the **retail** binary under Wine.
@@ -92,22 +101,27 @@ The full pipeline is `./tools/pipeline.sh`. The main tools:
   byte-identical `tools/mix.py` cross-check on the shipped TIBSUN.MIX index
   (`2ce3171bdbecb40e` → `110090d97904849a`, count 17, body 75,094,416).
 
-**Current runtime blocker** (queued in `todo.md`): the **page table**, which
-exhausts during mission load and stops the run. The model renders and selects the
-main menu (the six `BS_OWNERDRAW` buttons have real rectangles; press/release →
-`BN_CLICKED` reaches the game's own hit-test), New Campaign opens `RT_DIALOG` 148
-at step 1,688,503,557, the listbox is populated from the shipped `BATTLE.INI`
+**Current runtime blocker** (queued in `todo.md`): the **479B wild-call fault**
+during the mission load. The model renders and selects the main menu (the six
+`BS_OWNERDRAW` buttons have real rectangles; press/release → `BN_CLICKED`
+reaches the game's own hit-test), New Campaign opens `RT_DIALOG` 148 at step
+1,688,503,557, the listbox is populated from the shipped `BATTLE.INI`
 `[Battles]`, GDI1 is selected, and the game reads `GDI1A.MAP` from `MAPS01.MIX`
-and plays the GDI intro. **The mission load does not complete**: the default
-timeline stops at `0x0067dc4f` with 11,058 / 32,768 pages used, and an ESC-skip
-script faults at `0x00a006b0` with the table exhausted at 32,768 / 32,768.
-Widening `PageTable::SLOTS` is the fix; the VQA frame-wait path is also
-stub-bound, so movie pacing is not retail pacing. The nested MIX (`0xa8548fd9`,
-317 entries) is mounted and read; the button art is not painted (no `WM_PAINT` to
-children; retail does not draw it either). Rendering, input, the movie path, the
-dialog layer, CD path, narrow-width flags, MIX index read, Blowfish cipher, menu
-selection, the campaign list and mission start are fixed; the shutdown ESP
-corruption is dormant.
+and plays the GDI intro. ESC skips the movie and the loader runs; its own O(n²)
+`DynamicVectorClass` growth dominates (at 100B it is on vector 7/22 with 160,070
+entries). A 1.2e12-budget run reached 478,970,534,425 instructions and faulted at
+`0x00422de0` with the page table refusing a page (1,024,211 / 2,097,152) and
+**7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`;
+7,673,235 below `0x1000`; 98,202 elsewhere), wild registers and a black frame.
+The page table is growable now, so this is a new pointer-table/stack defect, not
+the O(n²) estimate. **The tactical phase is not reached and no mission is
+rendered.** The VQA frame-wait path is also stub-bound, so movie pacing is not
+retail pacing. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read;
+the button art is not painted (no `WM_PAINT` to children; retail does not draw it
+either). Rendering, input, the movie path, the dialog layer, CD path,
+narrow-width flags, MIX index read, Blowfish cipher, menu selection, the campaign
+list and mission start are fixed; the interpreter is 12-14x faster; the shutdown
+ESP corruption is dormant.
 
 **Measure, do not trust prose.** `python3 tools/harness.py metrics --no-append`
 reports the real state; `python3 tools/verify.py src/include build/shim` is the

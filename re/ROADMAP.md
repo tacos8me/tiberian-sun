@@ -303,19 +303,35 @@ pixels differ at all (33.48%)**, the mean absolute channel difference is
 does not draw; the rest is RGB565 quantization.
 
 Boot states, all with **0 unmapped calls and 0 stack imbalances**:
-- 20M: stop `0x00488800` (`sub_0048875c +0xa4`), coverage **55,774 / 4,764**.
+- 20M: stop `0x00488800` (`sub_0048875c +0xa4`), coverage **55,774 / 4,764**,
+  pages **3,538 / 32,768**.
 - default timeline, 2.1B (`--timeout 600`): New Campaign, NOD1, GDI1, OK. The
   campaign dialog is destroyed, `GDI1A.MAP` is read, and the **GDI intro movie
   plays**; the stop is the LCW decoder at `0x0067dc4f` (`sub_0067daa0`),
   `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`, coverage
-  **84,130 / 6,431**, `pages-used 11,058/32,768`. The frame is the GDI title
+  **84,130 / 6,431**, `pages-used 9,029/32,768`. The frame is the GDI title
   (`re/out/mission.png`, 194,131 non-black).
-- same timeline + ESC at model-ms 192,000, 3.0B: the movie is skipped and the
-  mission load **faults at `0x00a006b0` (HeapAlloc thunk) after 2,580,698,410
-  instructions** with **page table exhausted 32768/32768**; coverage 139,223 /
-  8,678. The mission load does **not** complete.
-`boot.py --strict` exits **0** and the link test passes. The only message box is
-the expected DirectSound warning at `0x484456` (`type=0x30`), and the
+- same timeline + ESC at model-ms 192,000, 4B: the movie is skipped and the
+  mission load runs. Stop `0x0055b0bb` (budget) after 4,000,000,001 instructions,
+  coverage **139,250 / 8,682**, pages **12,809 / 32,768**, 8 surfaces / 12 blits /
+  769 locks / 0 flips; the frame is the GDI loading screen
+  (`/tmp/mission_4b.png`, 290,399 non-black, md5 `6cb0e1ff…` =
+  `re/out/render_2_6b.png`). 11.7 s wall.
+- ESC skip at 100B: stop `0x0055b0bc` (budget), pages **16,343 / 32,768**; the
+  loader is on vector 7/22 with **160,070 entries** (`TS_PEEK 0x712068`). 243.9 s.
+- ESC skip at a 1.2e12 budget: **fault at `0x00422de0` after 478,970,534,425
+  instructions**, `page table exhausted: page allocation failed` (1,024,211 /
+  2,097,152 pages, 1 refused), **7,771,444 unmapped calls** (7 in `.text`, all
+  `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere),
+  coverage 158,971 / 9,630, **black frame** (9 surfaces, 171 blits, 10,484 locks,
+  0 fills/flips). The **tactical phase is not reached**.
+
+The interpreter is **12-14x faster** than it was (~400M instructions/s vs
+~28.6M/s) with byte-identical machine state: `-O2 -fno-pie`, a positive-hit page
+cache, wide single-page loads/stores, an out-of-line cold path, inlined page and
+flag helpers, and a cached import-name lookup. `test_machine_perf` pins the hot
+path. `boot.py --strict` exits **0** and the link test passes. The only message
+box is the expected DirectSound warning at `0x484456` (`type=0x30`), and the
 primary-surface check passes (`TS_PEEK=0x006beed8` → 1).
 
 **The recovery was corrected (`9e5703f` + `ad62afc`).** 213 static switch tables
@@ -341,7 +357,8 @@ runs and the game leaves the spin. `IBlowfish` is standard Blowfish-ECB, proven
 by four known-answer vectors and a byte-identical `tools/mix.py` cross-check on
 the shipped TIBSUN.MIX index (`2ce3171bdbecb40e` → `110090d97904849a`, count 17,
 body 75,094,416); the Blowfish-era page-table exhaustion at `0x00a006b0` is
-gone (a new one occurs during the mission load; see below). The stack
+gone (the table now grows; the mission load instead reaches 479B and faults on a
+wild-call flood; see below). The stack
 tracker went from **111,682 false imbalances to 0**, and the five null teardown
 calls had one root cause — `IDirectDrawSurface::Lock` popped 4 arguments instead
 of 5 — now fixed, so the boot has **0 unmapped calls** and `--strict` exits 0.
@@ -354,7 +371,7 @@ runs. A CD drive model (`TS_CD`) was added. `SetViewportOrgEx`/`SetWindowOrgEx`
 take 4 arguments (the stubs popped 3, leaking 8 bytes); `19ee16c` fixes the
 generator table (`--stack-check` 342/0). `Machine.h` has width-aware
 `f_add_w`/`f_sub_w`/`f_inc_w`/`f_dec_w`/`f_log_w`, so 8/16-bit flags are correct;
-the tests compare them against the CPU's own flags. `test_tools.py` is 79 checks.
+the tests compare them against the CPU's own flags. `test_tools.py` is 94 checks.
 
 **Rendering and input are integrated (`5031e44` etc.).** `Win32Stubs.h` routes
 surfaces through `ts::rnd` (`Rendering.h`) and input through `ts::input`
@@ -384,14 +401,21 @@ intro movie plays. The nested MIX (`0xa8548fd9`, 317 entries) is mounted and
 read; the button art is not painted (no `WM_PAINT` to children; retail does not
 draw it either).
 
-**The current blocker is the page table during the mission load.** ESC at
-model-ms 192,000 skips the movie; the loader touches every slot and faults at
-`0x00a006b0` with `pages-used 32768/32768`. `PageTable::SLOTS` is 32,768 (128 MB).
-`HeapFree` now reuses freed blocks, but this path grows through the game's own
-arena. A lane is measuring whether the demand is legitimate or a leak, then
-making the table dynamically growable or fixing the leak. **The mission load does
-not complete and no mission is rendered.** The VQA frame-wait is stub-bound
-(~68M `PeekMessageA` in 600 s), so ESC is the practical route meanwhile.
+**The current blocker is a wild-call fault at 479B instructions.** ESC at
+model-ms 192,000 skips the movie and the loader runs. The page table is now
+dynamically growable (2,097,152-page cap), so the old fixed 32,768-slot
+exhaustion is gone; the cost is the game's own O(n²) `DynamicVectorClass` growth
+(22 vectors at `this+0x1280` in `sub_005a35b0`, each append through `SetCount`
+`0x55b050` → `0x55b09a`; at 100B it is on vector 7/22 with 160,070 entries). A
+1.2e12-budget run reached **478,970,534,425 instructions** and faulted at
+`0x00422de0` with the page table refusing a page (1,024,211 / 2,097,152) and
+**7,771,444 unmapped calls** — 7 in `.text`, all `0x606060` from
+`sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere — with wild
+registers and a black frame. The loader got far past 100B, so this is a new
+defect (a pointer table or stack going wild), not the O(n²) estimate. **The
+tactical phase is not reached and no mission is rendered.** The VQA frame-wait
+is stub-bound (~68M `PeekMessageA` in 600 s), so ESC is the practical route
+meanwhile.
 
 **The oracle premise is now inverted.** `tools/wine_env.sh` gives the retail
 binary an X screen at 640x480x16 and a `DRIVE_CDROM` `d:` labelled `TS1` holding
@@ -405,12 +429,12 @@ campaign, and plays the GDI intro; the oracle remains the target for the mission
 UI.
 
 Ranked next steps (see `STRATEGY.md` for the full plan and exit criteria):
-  1. Fix the page-table exhaustion during the mission load. Measure the peak
-     demand over the `GDI1A.MAP` load; if it is legitimate, make the page table
-     dynamically growable (or hash-based) while keeping exhaustion a **reported
-     fault**; if it is a leak, fix the leak. Exit: the load passes `0x00a006b0`,
-     peak pages-used is recorded, and the next stop is named (ideally mission
-     rendering).
+  1. Find the **first** wild call in the 479B mission-load run, not the flood.
+     Diagnose the page-table refusal address and `sub_004f3b40`; `TS_TRACE` the
+     first `0x606060` call and the below-`0x1000` targets; determine whether the
+     loader is overflowing a buffer, a jump-table target is unregistered, or the
+     address space is exhausted. Exit: the wild-call flood is explained and gone,
+     and the run reaches the tactical phase or a new named stop.
   2. Improve the VQA frame pacing: the frame-wait makes ~68M `PeekMessageA` calls
      in 600 s, so model time barely advances during movies. Exit: the movie
      advances on the clock, not the message count, and ESC is optional.
@@ -432,11 +456,12 @@ wrong value is harder to diagnose than one that fails loudly.
 
 The honest measure of progress here is not "does it run" but **how far into the
 game's own code it gets before it needs something we have not modelled**. The
-measured figure is **2,100,000,001 instructions** (the budget) ending in the LCW
+default timeline reaches **2,100,000,001 instructions** (the budget) in the LCW
 video decoder at `0x0067dc4f` during the GDI campaign's intro movie; with ESC the
-mission load faults at `0x00a006b0` after 2,580,698,410 instructions with the
-page table exhausted. The 20M stop is still `0x00488800`. Before the stack-leak
-fix it was 1,011,817 instructions ending in `ExitProcess(1)`.
+mission load runs to **478,970,534,425 instructions (479B)** before faulting at
+`0x00422de0` on a wild-call flood (7,771,444 unmapped calls; the tactical phase
+is not reached). The 20M stop is still `0x00488800`. Before the stack-leak fix
+it was 1,011,817 instructions ending in `ExitProcess(1)`.
 Each stop is a precise, actionable finding rather than a wall, because the
 harness reports the stop EIP, the instruction bytes there, the containing
 function and generated source line, and the ordered import calls -- and

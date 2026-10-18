@@ -38,12 +38,29 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
   `re/out/mission.png`, 640x480, 194,131 non-black, md5
   `ccdb46d448a90e487e513bc1daf2ff8b`). The button art is not painted (no
   `WM_PAINT` to children; retail does not draw it either).
-- **The mission load does not complete: the page table exhausts.** The default
-  timeline stops at `0x0067dc4f` (LCW decode during intro playback) with
-  11,058 / 32,768 pages used; an ESC-skip script faults at `0x00a006b0` (the
-  `HeapAlloc` thunk) after 2,580,698,410 instructions with the table exhausted at
-  32,768 / 32,768. This is a model limit (`PageTable::SLOTS`). The VQA frame-wait
+- **The interpreter is 12-14x faster (~400M instructions/s) with byte-identical
+  machine state.** Measured on the mission-load run: 11.7 s at 4B (341.9M/s),
+  50.2 s at 20B (398.4M/s), 243.9 s at 100B (410.0M/s); the old rate was ~28.6M/s.
+  The changes are semantics-preserving (`-O2 -fno-pie`, a positive-hit page
+  cache, wide single-page loads/stores, an out-of-line cold path, inlined
+  page/flag helpers, a cached import-name lookup), and `test_machine_perf` pins
+  the hot path.
+- **The mission load does not complete: it reaches 479B instructions and goes
+  wild.** ESC skips the intro and the loader runs; its own O(n²)
+  `DynamicVectorClass` growth dominates (at 100B it is on vector 7/22 with
+  160,070 entries). A 1.2e12-budget run reached **478,970,534,425 instructions**
+  and faulted at `0x00422de0` with `page table exhausted` (1,024,211 / 2,097,152
+  pages, 1 refused) and **7,771,444 unmapped calls** — 7 in `.text`, all
+  `0x606060` from `sub_004f3b40`, 7,673,235 below `0x1000`, 98,202 elsewhere —
+  with wild registers and a **black frame** (9 surfaces, 171 blits, 10,484 locks,
+  0 fills/flips). The page table is now dynamically growable; the fault is a new
+  defect (a pointer table or stack going wild), not the O(n²) estimate. **The
+  tactical phase is not reached and no mission is rendered.** The VQA frame-wait
   path is also stub-bound, so movie pacing is not retail pacing.
+- **The GDI loading screen renders.** At a 4B budget the ESC-skip run stops at
+  `0x0055b0bb` with 12,809 pages, 12 blits and 769 locks; the frame is 640x480,
+  290,399 non-black, md5 `6cb0e1fff05f9250adda298e644f1266`, byte-identical to
+  the committed `re/out/render_2_6b.png`.
 - The **retail** game reaches its **main menu** under Wine on this host; that is
   the project's external oracle.
 - Every function body is generated machine transcription, one instruction per
@@ -61,9 +78,10 @@ It is **not yet a playable game**, and the source is not yet source-shaped:
 | virtuals named | 5,557 of 9,810 slot pairs (56.6%); 917 distinct names (281 semantic) |
 | headers | 266 total, 265 compile standalone at `-m32` |
 | verification gate | 9 checks, fail-closed, passing; check 9 confirms 3,073/3,073 offsets |
-| tool tests | 79 checks, several mutation-proven; `test_runtime.py` 101 more (rendering/input) |
-| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders and selects the main menu**; campaign list from `BATTLE.INI`; **starts the GDI mission and plays its intro**; 20M stop `0x00488800` (55,774 / 4,764), 2.1B stop `0x0067dc4f` (84,130 / 6,431; pages 11,058 / 32,768), ESC-skip faults at `0x00a006b0` after 2,580,698,410 instructions (139,223 / 8,678; pages 32,768 / 32,768), Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions (86,400 / 6,654); 0 unmapped, 0 stack imbalances; current blocker is the page table, so the mission load does not complete |
-| frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; 1.06/255 mean channel difference from retail on differing pixels |
+| tool tests | 94 checks, several mutation-proven; `test_runtime.py` 101 more (rendering/input) |
+| interpreter | ~400M instructions/s (12-14x the old ~28.6M/s), byte-identical state; 4B in 11.7 s, 100B in 243.9 s |
+| boot (`TS_CD`) | message loop reached and dispatching; real Blowfish-ECB; MIX/CD path correct; real LANGUAGE.DLL dialogs; **renders and selects the main menu**; campaign list from `BATTLE.INI`; **starts the GDI mission and plays its intro**; 20M stop `0x00488800` (55,774 / 4,764), 2.1B stop `0x0067dc4f` (84,130 / 6,431; pages 9,029 / 32,768), 4B ESC-skip stop `0x0055b0bb` (139,250 / 8,682; pages 12,809), 100B ESC-skip stop `0x0055b0bc` (pages 16,343), 479B fault at `0x00422de0` (1,024,211 / 2,097,152 pages; 7,771,444 unmapped; black frame), Exit Game reaches `ExitProcess(0)` after 1,707,666,895 instructions (86,400 / 6,654); 0 unmapped at 20M/2.1B/4B/100B; current blocker is the 479B wild-call fault, so the tactical phase is not reached |
+| frame | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, 254,610 / 307,200 non-black; 1.06/255 mean channel difference from retail on differing pixels. `re/out/mission.png` (GDI intro title, 194,131 non-black) and `re/out/render_2_6b.png` (loading screen, 290,399 non-black, md5 `6cb0e1ff…`) |
 
 **Measure, don't trust prose.** `python3 tools/harness.py metrics` prints the
 real state; these figures drift as the tools improve. `AGENTS.md` records the
@@ -119,7 +137,7 @@ is created at step **1,688,503,557**, its listbox is populated from the shipped
 mission, and the game reads `GDI1A.MAP` from `MAPS01.MIX` and plays the GDI
 intro. The stop is `0x0067dc4f` (LCW decode during playback) at the
 2.1-billion-instruction budget (`GetMessage=17`, `PeekMessage=13,565,102`,
-`DispatchMessage=17`; 84,130 / 6,431; pages used **11,058 / 32,768**). The intro
+`DispatchMessage=17`; 84,130 / 6,431; pages used **9,029 / 32,768**). The intro
 frame captured to `re/out/mission.png` is 640x480, 194,131 non-black, md5
 `ccdb46d448a90e487e513bc1daf2ff8b`. A script that clicks Exit Game instead
 reaches **`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instructions
@@ -127,6 +145,18 @@ reaches **`ExitProcess(0)`** at `0x00684529` after **1,707,666,895** instruction
 frame is 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, with 254,610 / 307,200
 non-black pixels, and differs from the retail screenshot by a mean channel
 difference of 1.06/255 on the pixels that differ.
+
+With `--input-script tools/input_scripts/esc_skip.txt` the intro is skipped and
+the mission load runs. At `--budget 4000000000` it stops at `0x0055b0bb` after
+4,000,000,001 instructions (11.7 s wall) with 12,809 pages, 12 blits, 769 locks
+and a 640x480 loading screen (290,399 non-black, md5
+`6cb0e1fff05f9250adda298e644f1266` = `re/out/render_2_6b.png`). At 100B it is
+still on the loader's vector 7/22 (160,070 entries) after 243.9 s. At a
+1.2e12 budget the run reached **478,970,534,425 instructions** and faulted at
+`0x00422de0`: page table exhausted (1,024,211 / 2,097,152 pages, 1 refused),
+**7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`;
+7,673,235 below `0x1000`; 98,202 elsewhere), wild registers, black frame
+(9 surfaces, 171 blits, 10,484 locks, 0 fills/flips).
 
 Real Blowfish-ECB is implemented and proven against `tools/mix.py` (the shipped
 TIBSUN.MIX first index block decrypts byte-identically), the MIX index read is
@@ -136,13 +166,14 @@ renders and is selectable through the game's own hit-test and `WM_COMMAND` path;
 the nested MIX (`0xa8548fd9`, 317 entries) is mounted and read. The campaign
 list is populated from the shipped `BATTLE.INI`, GDI1 is selected, and the game
 starts the mission and plays the GDI intro. **The mission load does not
-complete: the current blocker is the page table.** The default timeline stops at
-`0x0067dc4f` with 11,058 / 32,768 pages used, and an ESC-skip script faults at
-`0x00a006b0` (the `HeapAlloc` thunk) after **2,580,698,410** instructions with the
-table exhausted at **32,768 / 32,768** (139,223 / 8,678). `PageTable::SLOTS` is
-the limit. The VQA frame-wait path is also stub-bound, so movie pacing is not
-retail pacing; the button art is not painted (no `WM_PAINT` to children; retail
-does not draw it either). The shutdown ESP defect is dormant.
+complete: the current blocker is a wild-call fault at 479B instructions.** The
+page table is dynamically growable now; the loader's own O(n²) vector growth
+dominates the cost (at 100B it is on vector 7/22 with 160,070 entries), and the
+1.2e12-budget run faulted at `0x00422de0` with 7,771,444 unmapped calls and a
+black frame. **The tactical phase is not reached and no mission is rendered.**
+The VQA frame-wait path is also stub-bound, so movie pacing is not retail
+pacing; the button art is not painted (no `WM_PAINT` to children; retail does
+not draw it either). The shutdown ESP defect is dormant.
 
 The model has diagnostics for this work: `TS_TRACE=0xADDR`, `TS_PEEK=0xADDR`,
 `TS_SCAN=start,count`, `TS_WATCH=0xADDR`, `TS_FILE_TRACE=1`, plus `bad_calls`,

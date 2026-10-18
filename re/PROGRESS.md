@@ -24,7 +24,7 @@ the one that matters most: it makes the compiler confirm every recovered member
 offset it can express, and it passes 3,073/3,073. **The link stage is green**:
 measured this session, `link: OK (492 translation units)`, `ts_link_test: OK`,
 exit **0**, 20,000,001 instructions, `MESSAGE LOOP: reached -- GetMessage 1,
-PeekMessage 5, DispatchMessage 1`, 0 unmapped. `test_tools.py` runs **79**
+PeekMessage 5, DispatchMessage 1`, 0 unmapped. `test_tools.py` runs **94**
 checks and `test_runtime.py` **101** (mutation-proven). A full
 `./tools/pipeline.sh` ran **exit 0** in the disasm-correction lane (8m51s,
 recorded in `todo.md`); it was not re-run in this worktree. The link was the
@@ -73,32 +73,55 @@ host enumeration, and a read-only `TS_DATA` root (default `realdata`) serving
 campaign dialog is destroyed, **`GDI1A.MAP`** is read from **MAPS01.MIX on CD1**
 (`NOD1A.MAP` is in MAPS02.MIX on CD2), and the **GDI intro movie plays**. At 2.1e9
 the stop is the LCW video decoder at `0x0067dc4f` (`sub_0067daa0`),
-`pages-used 11058/32768`; the frame is the GDI intro title ("SEPTEMBER 2, 2030 /
+`pages-used 9029/32768`; the frame is the GDI intro title ("SEPTEMBER 2, 2030 /
 GDI SPACE STATION PHILADELPHIA"), **194,131 non-black pixels**
 (`re/out/mission.png`). The nested MIX (`TIBSUN.MIX` entry `0xa8548fd9`,
 317 entries, 111 PCX) is mounted and read; the button art is not painted because
 no `WM_PAINT` reaches the child controls (retail does not draw it either).
 
+**The interpreter is 12-14x faster, with byte-identical machine state.**
+Measured on the mission-load run (ESC-skip): 4B in **11.7 s** (341.9M
+instructions/s), 20B in **50.2 s** (398.4M/s), 100B in **243.9 s** (410.0M/s);
+the old rate was ~28.6M/s. The changes are semantics-preserving: `-O2
+-fno-pie`/`-no-pie`, a 256-entry positive-hit page cache, wide single-page
+`ld16/st16/ld32/st32`, a `noinline insn_slow()` cold path, inlined page and flag
+helpers, and a cached import-name lookup. `test_machine_perf` pins the hot path
+and is mutation-proven.
+
 Boot states, all with **0 unmapped calls and 0 stack imbalances**:
 - 20M: stop `0x00488800`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`,
-  coverage **55,774 / 4,764**.
+  coverage **55,774 / 4,764**, pages **3,538 / 32,768**.
 - 2.1B default timeline (New Campaign, NOD1, GDI1, OK): stop `0x0067dc4f` (LCW
   decoder), `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`,
-  coverage **84,130 / 6,431**, `pages-used 11,058/32,768`.
-- 3.0B with ESC at model-ms 192,000: **fault at `0x00a006b0` (HeapAlloc thunk)
-  after 2,580,698,410 instructions**, `why: page table exhausted, 32768 of
-  32768`, coverage **139,223 / 8,678**.
+  coverage **84,130 / 6,431**, `pages-used 9,029/32,768`.
+- 4B with ESC at model-ms 192,000: stop `0x0055b0bb` (budget) after 4,000,000,001
+  instructions, depth 29, coverage **139,250 / 8,682**, pages **12,809 / 32,768**;
+  render 8 surfaces, 12 blits, 0 fills, 769 locks, 0 flips; frame
+  `/tmp/mission_4b.png` 640x480, **290,399 non-black**, md5
+  `6cb0e1fff05f9250adda298e644f1266` = committed `re/out/render_2_6b.png` (the GDI
+  loading screen).
+- 100B with ESC: stop `0x0055b0bc` (budget), pages **16,343 / 32,768**, coverage
+  unchanged; the loader is on vector 7/22 with **160,070 entries** (`TS_PEEK`
+  `0x712068`: count and capacity `0x27146`, growth step 10).
 `boot.py --strict` exits **0**. The only message box is the expected DirectSound
 warning at `0x484456` (`type=0x30`); the primary-surface check passes
 (`TS_PEEK=0x006beed8` → `1`).
 
-**The current blocker is the page table during the mission load.** `PageTable::
-SLOTS` is 32,768 (128 MB); the `GDI1A.MAP` loader touches every slot and faults
-at `0x00a006b0` with `pages-used 32768/32768`. `HeapFree` now reuses freed
-blocks, but this path grows through the game's own arena. A lane is measuring
-whether the demand is legitimate or a leak, then making the table dynamically
-growable or fixing the leak. **The mission load does not complete and no mission
-is rendered.** The VQA frame-wait is stub-bound (~68M `PeekMessageA` in 600 s),
+**The current blocker is a wild-call fault at 479B instructions.** The page table
+is dynamically growable now (2,097,152-page cap), so the old fixed 32,768-slot
+exhaustion at `0x00a006b0` is gone. The loader's own O(n²) `DynamicVectorClass`
+growth (22 vectors at `this+0x1280`, `sub_005a35b0`; each append through
+`SetCount` `0x55b050` → `0x55b09a`) dominates the cost. A 1.2e12-budget run
+reached **478,970,534,425 instructions** and faulted at `0x00422de0` with
+`page table exhausted: page allocation failed` (**1,024,211 / 2,097,152** pages,
+1 refused) and **7,771,444 unmapped calls** — 7 in `.text`, all `0x606060` from
+`sub_004f3b40` (`0x004f3b5f`/`0x004f3b6d`); 7,673,235 below `0x1000`; 98,202
+elsewhere — with wild registers across the top of the 4 GiB space and a **black
+frame** (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips; coverage
+158,971 / 9,630). The loader got far past 100B, so this is a new defect (a
+pointer table or stack going wild), not the O(n²) estimate. **The tactical phase
+is not reached and no mission is rendered.** A diagnosis lane is finding the
+first wild call. The VQA frame-wait is stub-bound (~68M `PeekMessageA` in 600 s),
 so ESC is the practical route meanwhile; it is secondary.
 
 **The recovery was corrected (`9e5703f` + `ad62afc`).** 213 static switch tables
@@ -134,7 +157,7 @@ CPU's own flags via inline asm, including the `0x7f`/`0x80` boundary and the
 vsprintf `%` classification; mutation-proven (18 assertions fail with the old
 derivation). `19ee16c` then fixed the generator's `SetViewportOrgEx`/
 `SetWindowOrgEx` arity (4, not 3); the regenerated table diff is exactly those
-two rows and `--stack-check` is 342/0. `test_tools.py` runs **79** checks,
+two rows and `--stack-check` is 342/0. `test_tools.py` runs **94** checks,
 including signed-division vectors, a 200,000-pair differential sweep and the
 `IDirectDrawSurface::Lock` 5-argument regression.
 
@@ -230,8 +253,11 @@ Measured state:
 | forwarder definitions | 6,962 across 310 class translation units; 3,024 distinct machine functions, 3,938 aliases (`src/generated/README.md`) |
 | destructor stubs (declared, no recovered address) | 229 |
 | **boot (20M, TS_CD)** | **20,000,001 instructions** (budget exhausted) at `0x00488800` (`sub_0048875c +0xa4`), depth 19; `CreateWindowExA=1`, `GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`; CD read (`D:\TS1.dsk`, `EXPAND99..00`); only `MessageBoxA` is the DirectSound warning at `0x484456` (`type=0x30`); **0 unmapped calls, 0 stack imbalances**; coverage **55,774 distinct instructions / 4,764 of 45,947 functions**; primary surface `TS_PEEK=0x006beed8` → 1 |
-| **boot (2.1B, default timeline)** | **2,100,000,001 instructions** at `0x0067dc4f` (LCW video decoder), depth 28; `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`; coverage **84,130 / 6,431**; `pages-used 11,058/32,768`; GDI intro frame 194,131 non-black |
-| **boot (3.0B, ESC skip)** | **fault at `0x00a006b0` (HeapAlloc thunk) after 2,580,698,410 instructions**, depth 29; `why: page table exhausted, 32768 of 32768`; coverage **139,223 / 8,678**; **mission load does not complete** |
+| **boot (2.1B, default timeline)** | **2,100,000,001 instructions** at `0x0067dc4f` (LCW video decoder), depth 28; `GetMessage=17`, `PeekMessage=13,565,102`, `DispatchMessage=17`; coverage **84,130 / 6,431**; `pages-used 9,029/32,768`; GDI intro frame 194,131 non-black |
+| **boot (4B, ESC skip)** | **4,000,000,001 instructions** (budget) at `0x0055b0bb`, depth 29; coverage **139,250 / 8,682**; pages **12,809 / 32,768**; 8 surfaces, 12 blits, 769 locks, 0 flips; frame `/tmp/mission_4b.png` **290,399 non-black**, md5 `6cb0e1ff…` = `re/out/render_2_6b.png` (loading screen); **11.7 s wall** |
+| **boot (100B, ESC skip)** | **100,000,000,001 instructions** (budget) at `0x0055b0bc`; pages **16,343 / 32,768**; loader on vector 7/22 with **160,070 entries** (`TS_PEEK` `0x712068`); **243.9 s wall** |
+| **boot (1.2e12 budget, ESC skip)** | **fault at `0x00422de0` after 478,970,534,425 instructions**; `why: page table exhausted: page allocation failed`; pages **1,024,211 / 2,097,152** (1 refused); **7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere); coverage 158,971 / 9,630; black frame (9 surfaces, 171 blits, 10,484 locks, 0 fills/flips); **tactical phase not reached** |
+| **interpreter speed** | **~400M instructions/s** (12-14x the old ~28.6M/s), byte-identical state; 4B 11.7 s, 20B 50.2 s, 100B 243.9 s |
 | **frame** | `re/out/frame.png`: 640x480, md5 `0fdf2636c2643ce2510ae67fb9ca9e26`, **254,610 / 307,200 non-black**; vs retail `/tmp/retail.png`: 102,836 pixels differ (33.48%), mean abs channel diff **1.06/255** over differing pixels (0.35 over frame), 506 pixels differ by >8 (retail version text) |
 | boot strict gate | exits **0**: 0 garbage call targets (`boot.py --no-build --strict`) |
 | link test | **OK**, exit 0, 492 TUs, 20,000,001 instructions, **message loop reached** (`GetMessage=1`, `PeekMessage=5`, `DispatchMessage=1`), 0 unmapped, 0 unmodelled (`link_test.py`) |
@@ -283,7 +309,7 @@ Coverage is achieved in three tiers:
 | Class forwarders emitted | 6,962 | done |
 | Whole-tree link + entry-point run | 492 TUs | done |
 | Binary-anchored member verification | 4,285/4,289 (99.9%), gated | done |
-| Tool unit tests | 79 checks, mutation-proven | done |
+| Tool unit tests | 94 checks, mutation-proven | done |
 | Runtime tests | 101 checks (rendering/input), mutation-proven | done |
 
 ### Verification performed
@@ -298,12 +324,16 @@ Coverage is achieved in three tiers:
   `--strict` exits **0** with 0 garbage targets and 0 stack imbalances. At
   `--budget 2100000000` the default timeline selects the GDI campaign, reads
   `GDI1A.MAP`, and plays the GDI intro: stop `0x0067dc4f` (LCW decoder),
-  coverage 84,130 / 6,431, `pages-used 11,058/32,768`, frame 194,131 non-black.
-  With ESC at model-ms 192,000 the mission load faults at `0x00a006b0` after
-  2,580,698,410 instructions with the page table exhausted (32,768/32,768).
+  coverage 84,130 / 6,431, `pages-used 9,029/32,768`, frame 194,131 non-black.
+  With ESC at model-ms 192,000 the mission load runs at **~400M instructions/s**
+  (12-14x faster, byte-identical state); at 4B it stops at `0x0055b0bb` with
+  12,809 pages and a 290,399-non-black loading screen (`re/out/render_2_6b.png`),
+  and at 100B it is still on loader vector 7/22 (160,070 entries). A 1.2e12
+  budget run faulted at 479B instructions at `0x00422de0` with 7,771,444 unmapped
+  calls and a black frame; the tactical phase is not reached.
 - `tools/link_test.py` links **492** translation units, runs the entry point,
-  and **passes** (exit 0); the message loop is reached and dispatching, with 0
-  unmapped calls.
+  and **passes** (exit 0); with `TS_ROOT`/`TS_CD`/`TS_DATA` the message loop is
+  reached and dispatching, with 0 unmapped calls.
 - `tools/wine_env.sh` runs the **retail** binary to its main menu (640x480,
   screenshot md5 `58cb9c0bb64a1bf11c6e9b28e96eca11`, still running after 60 s).
 - Check 4 re-resolves **all 749** manifest vtables through the binary's own COL
@@ -317,9 +347,10 @@ Coverage is achieved in three tiers:
   catches a corrupted statement whose evidence comment is intact.
 - `tools/link_test.py` links the whole tree and runs it. See "defects found by
   the link" below for what it caught.
-- `tools/test_tools.py` runs **79** unit checks, each a regression test for a
+- `tools/test_tools.py` runs **94** unit checks, each a regression test for a
   shipped defect or a differential test against an independent implementation.
-  Four of them are mutation-proven to fail when the defect is reintroduced.
+  Several are mutation-proven to fail when the defect is reintroduced,
+  including the interpreter hot-path checksum and page-cache ratio.
 - Determinism: two clean pipeline runs produce **497 byte-identical artifacts**
   (the recovered data *and* the generated C++). *Not re-run in this session
   (it costs two full pipeline runs); 497 is the last measured value.*
@@ -441,13 +472,24 @@ Coverage is achieved in three tiers:
       implements the full listbox/trackbar layer, `FindFirstFileA` host
       enumeration and a read-only `TS_DATA` root. OK selects GDI, `GDI1A.MAP` is
       read from MAPS01.MIX, and the GDI intro movie plays (2.1B stop
-      `0x0067dc4f`, `pages-used 11,058/32,768`, frame 194,131 non-black).
-- [ ] **The page table is exhausted during the mission load — the current
-      blocker.** `PageTable::SLOTS` is 32,768 (128 MB). ESC skips the movie; the
-      loader touches every slot and faults at `0x00a006b0` after 2,580,698,410
-      instructions with `pages-used 32768/32768`. The mission load does **not**
-      complete and no mission is rendered. A lane is measuring the demand and
-      will either make the table growable or fix the leak.
+      `0x0067dc4f`, `pages-used 9,029/32,768`, frame 194,131 non-black).
+- [x] **The page table grows and the heap reuses freed blocks.** `PageTable`
+      grows past 32,768 (2,097,152-page cap) with stable page identity; the heap
+      coalesces and reallocs in place. At 4B the mission load uses **12,809**
+      pages instead of 377,796 (50 MB instead of 1.44 GiB), 11,696 of 12,253
+      allocations reused (95.5%).
+- [x] **The interpreter is 12-14x faster (`9243e93` … `6421f30`).** ~400M
+      instructions/s with byte-identical machine state; 4B in 11.7 s, 20B in
+      50.2 s, 100B in 243.9 s. `test_machine_perf` pins the hot path.
+- [ ] **The 479B mission-load run goes wild — the current blocker.** A 1.2e12
+      budget run reached 478,970,534,425 instructions and faulted at
+      `0x00422de0` with the page table refusing a page (1,024,211 / 2,097,152)
+      and **7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from
+      `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere), wild
+      registers and a black frame. The loader got far past 100B; this is a new
+      defect (a pointer table/stack going wild). The tactical phase is **not
+      reached** and no mission is rendered. A diagnosis lane is finding the
+      first wild call.
 - [ ] **The VQA player's frame-wait is stub-bound — secondary.** ~68M
       `PeekMessageA` calls in 600 s; ESC is the practical route to the mission
       load meanwhile.
@@ -477,11 +519,14 @@ Coverage is achieved in three tiers:
   list comes from shipped `BATTLE.INI` and OK selects GDI. `GDI1A.MAP` is read
   from MAPS01.MIX and the GDI intro plays (stop `0x0067dc4f`, frame 194,131
   non-black). The nested MIX (`0xa8548fd9`, 317 entries) is mounted and read.
-- **The mission load does not complete: the page table is exhausted.** ESC
-  skips the movie; the loader faults at `0x00a006b0` after 2,580,698,410
-  instructions with 32,768/32,768 pages used. `PageTable::SLOTS` is 32,768
-  (128 MB); a lane is measuring whether the demand is legitimate or a leak and
-  will make the table growable or fix the leak. No mission is rendered.
+- **The mission load does not complete: the 479B run goes wild.** ESC skips the
+  movie; the loader's own O(n²) vector growth dominates (at 100B it is on vector
+  7/22 with 160,070 entries). A 1.2e12-budget run reached 478,970,534,425
+  instructions and faulted at `0x00422de0` with 1,024,211 / 2,097,152 pages,
+  **7,771,444 unmapped calls** (7 in `.text`, all `0x606060` from
+  `sub_004f3b40`; 7,673,235 below `0x1000`; 98,202 elsewhere) and a black
+  frame. The page table is growable; this is a new pointer-table/stack defect.
+  The tactical phase is not reached and no mission is rendered.
 - **The VQA frame-wait is stub-bound.** ~68M `PeekMessageA` calls in 600 s, so
   ESC is the practical route to the mission load meanwhile.
 - **Shutdown corrupts ESP, but the path is dormant.** WinMain returned with ESP
@@ -605,11 +650,18 @@ tools/boot.py  (TS_CD=../work/cd1)
   --no-build --strict: exit 0
   --budget 2100000000, default timeline (New Campaign, NOD1, GDI1, OK):
     stop 0x0067dc4f (LCW decoder); GetMessage=17 PeekMessage=13,565,102
-    DispatchMessage=17; 84,130 / 6,431; pages-used 11,058/32,768
+    DispatchMessage=17; 84,130 / 6,431; pages-used 9,029/32,768
     frame: re/out/mission.png, 640x480, 194,131 non-black
-  --budget 3000000000, same timeline + ESC at model-ms 192000:
-    fault at 0x00a006b0 (HeapAlloc thunk) after 2,580,698,410 instructions
-    why: page table exhausted, 32768 of 32768; coverage 139,223 / 8,678
+  --budget 4000000000, same timeline + ESC at model-ms 192000:
+    stop 0x0055b0bb (budget) after 4,000,000,001 instructions; 11.7 s wall
+    coverage 139,250 / 8,682; pages 12,809/32,768; 12 blits, 769 locks
+    frame: /tmp/mission_4b.png, 290,399 non-black, md5 6cb0e1ff...
+          = re/out/render_2_6b.png (GDI loading screen)
+  --budget 100000000000, ESC skip: stop 0x0055b0bc; pages 16,343/32,768;
+    loader on vector 7/22 with 160,070 entries (TS_PEEK 0x712068); 243.9 s
+  --budget 1200000000000, ESC skip (1.2e12): fault at 0x00422de0 after
+    478,970,534,425 instructions; pages 1,024,211/2,097,152 (1 refused);
+    7,771,444 unmapped calls; black frame; tactical phase NOT reached
 
 tools/test_runtime.py
   RUNTIME TEST PASSED (101 checks, mutation-proven); frame dump produced
