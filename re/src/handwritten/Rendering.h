@@ -425,6 +425,31 @@ inline bool write_desc(u32 obj, u32 va) {
     return true;
 }
 
+// The display-mode descriptor IDirectDraw::GetDisplayMode returns. The
+// existing stub writes dwRGBBitCount at +0x68, which is ddsCaps.dwCaps; the
+// game's own wrapper (0x4874c0) reads the bit count at +0x54. The retail trace
+// shows GetDisplayMode returning height 480, width 640, pitch 1280 and
+// RGB565, so this writes the whole descriptor the wrapper reads.
+inline void write_mode_desc(u32 va, u32 w, u32 h, u16 bpp) {
+    if (!va) return;
+    for (u32 i = 0; i < 108u; ++i) st8(va + i, 0);
+    u32 rm = 0x0000f800u, gm = 0x000007e0u, bm = 0x0000001fu;
+    if (bpp == 8u) { rm = gm = bm = 0u; }
+    else if (bpp == 32u) { rm = 0x00ff0000u; gm = 0x0000ff00u; bm = 0x000000ffu; }
+    st32(va + 0x00u, 108u);
+    st32(va + 0x04u, DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PITCH |
+                      DDSD_PIXELFORMAT);
+    st32(va + 0x08u, h);
+    st32(va + 0x0cu, w);
+    st32(va + 0x10u, w * (u32)(bpp >> 3));
+    st32(va + 0x48u, 32u);
+    st32(va + 0x4cu, bpp == 8u ? DDPF_PALETTEINDEXED8 : DDPF_RGB);
+    st32(va + 0x54u, bpp);
+    st32(va + 0x58u, rm);
+    st32(va + 0x5cu, gm);
+    st32(va + 0x60u, bm);
+}
+
 inline u32 write_pixel_format(u32 obj, u32 va) {
     Surface *s = find(obj);
     if (!va) return DDERR_INVALIDPARAMS;
@@ -522,6 +547,10 @@ inline u32 blt(u32 dst_obj, u32 dst_rect_va, u32 src_obj, u32 src_rect_va,
     if (!d) return DDERR_INVALIDOBJECT;
 
     if (flags & DDBLT_COLORFILL) {
+        // Measured on the retail binary with gdb at its own Blt call site
+        // (0x4883f5): all 11 startup colour fills carry dwFillColor = 0 (the
+        // whole DDBLTFX is zero except dwSize and a transient word at +0x50),
+        // so the game clears surfaces to black and blits art over them.
         u32 color = fx_va ? ld32(fx_va + DDBLTFX_FILLCOLOR) : 0u;
         Rect q = dst_rect_va ? rect_from(dst_rect_va) : whole(d);
         return fill_rect_obj(dst_obj, q, color);

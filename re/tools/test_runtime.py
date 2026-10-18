@@ -26,7 +26,17 @@ INTEGRATION POINTS (the exact lines to add to Win32Stubs.h, not applied here):
       void k_sfs_SetPalette(); void k_sfs_SetColorKey(); void k_sfs_GetCaps();
 
   dd_CreateSurface
-      if (out) st32(out, make_surface(arg(1)));
+      if (out) st32(out, make_surface(arg(1), 640u, 480u));
+      // 640x480 is the mode the retail game sets (SetDisplayMode 640x400 then
+      // 640x480, measured). A primary request carries no width/height, so the
+      // defaults decide the front buffer's size.
+
+  dd_GetDisplayMode (the existing body writes dwRGBBitCount at +0x68, which is
+  ddsCaps.dwCaps; the game's wrapper reads it at +0x54)
+      TS_BEGIN(dd_GetDisplayMode)
+          ts::rnd::write_mode_desc(arg(1), SCREEN_W, SCREEN_H, SCREEN_BPP);
+          stub_done(2, 0u);
+      TS_END
 
   make_surface's definition
       inline u32 make_surface(u32 desc_va, u32 def_w, u32 def_h) { ...
@@ -35,7 +45,7 @@ INTEGRATION POINTS (the exact lines to add to Win32Stubs.h, not applied here):
           return obj; }
 
   make_com_vtable overrides
-      over[5]  = &k_sfs_Blt;             // nargs 5
+      over[5]  = &k_sfs_Blt;             // nargs 6 -- see the defect note below
       over[7]  = &k_sfs_BltFast;         // nargs 6
       over[11] = &k_sfs_Flip;            // nargs 3
       over[14] = &k_sfs_GetCaps;         // nargs 2
@@ -49,7 +59,7 @@ INTEGRATION POINTS (the exact lines to add to Win32Stubs.h, not applied here):
       TS_BEGIN(sfs_GetSurfaceDesc) stub_done(2, ts::rnd::get_surface_desc(arg(0), arg(1))); TS_END
       TS_BEGIN(sfs_Lock)           stub_done(4, ts::rnd::lock(arg(0), arg(1), arg(2), arg(3))); TS_END
       TS_BEGIN(sfs_Unlock)         stub_done(2, ts::rnd::unlock(arg(0), arg(1))); TS_END
-      TS_BEGIN(sfs_Blt)            stub_done(5, ts::rnd::blt(arg(0), arg(1), arg(2), arg(3), arg(4), arg(5))); TS_END
+      TS_BEGIN(sfs_Blt)            stub_done(6, ts::rnd::blt(arg(0), arg(1), arg(2), arg(3), arg(4), arg(5))); TS_END
       TS_BEGIN(sfs_BltFast)        stub_done(6, ts::rnd::blt_fast(arg(0), arg(1), arg(2), arg(3), arg(4), arg(5))); TS_END
       TS_BEGIN(sfs_Flip)           stub_done(3, ts::rnd::flip(arg(0), arg(1), arg(2))); TS_END
       TS_BEGIN(sfs_GetCaps)        stub_done(2, ts::rnd::write_caps(arg(0), arg(1))); TS_END
@@ -71,6 +81,31 @@ INTEGRATION POINTS (the exact lines to add to Win32Stubs.h, not applied here):
           while (ts::input::pop_message(&im, &iw, &il))
               msg_push(wnd_handle(), im, iw, il);
           ... existing body ...
+
+DEFECT FOUND WHILE VALIDATING THE PATCH. make_surface()'s nargs table says
+Blt (slot 5) takes 5 words. GAME.EXE's own colour-fill call site pushes SIX
+before `call *0x14(%edx)` at 0x4883f5:
+
+    4883cc: push %eax          ; lpDDBltFx
+    4883d4: push $0x1000400    ; dwFlags (WAIT|COLORFILL)
+    4883d9: push $0x0          ; lpSrcRect
+    4883f1: push $0x0          ; lpDDSrcSurface
+    4883f3: push %ecx          ; lpDestRect
+    4883f4: push %ebx          ; this
+
+so the generic slot stub pops one word too few and leaves 4 bytes on the stack
+per Blt (210 Blt calls before the main menu). The body above pops 6 and fixes
+it. The other overridden slots agree with the game's call sites (BltFast 6,
+Flip 3, GetCaps 2, GetPixelFormat 2, Lock 4, SetColorKey 3, SetPalette 2,
+Unlock 2, GetSurfaceDesc 2).
+
+FILL COLOUR, measured rather than assumed. gdb attached to the retail
+GAME.EXE, breakpoint at its own `call *0x14(%edx)` (0x4883f5), captured all 11
+startup colour fills: dwSize 100, dst rectangles (0,0)-(64,64), (0,0)-(640,480),
+(0,0)-(472,480), (0,0)-(168,480), and every DDBLTFX field from +0x40 to +0x60
+zero except a transient 1 at +0x50. dwFillColor (the DirectX 6 layout's +0x40)
+is therefore 0 for every fill on this path: the game clears to black and blits
+art over it. Rendering.h reads +0x40.
 """
 
 import os

@@ -196,6 +196,15 @@ bool test_surfaces(const char *png_path, const char *ppm_path) {
           "DDPIXELFORMAT size/bit count");
     check(ts::ld32(pf + 0x10u) == 0x0000f800u, "DDPIXELFORMAT red mask");
 
+    // The display-mode descriptor: bit count at +0x54, not at the caps offset.
+    u32 md = scratch(108u);
+    ts::rnd::write_mode_desc(md, 640u, 480u, 16u);
+    check(ts::ld32(md + 0x08u) == 480u && ts::ld32(md + 0x0cu) == 640u,
+          "display mode height/width");
+    check(ts::ld32(md + 0x10u) == 1280u, "display mode pitch 1280");
+    check(ts::ld32(md + 0x54u) == 16u, "display mode bit count at +0x54");
+    check(ts::ld32(md + 0x58u) == 0x0000f800u, "display mode red mask");
+
     // A front/back pair: Flip swaps the pixel buffers, so the frame the game
     // drew into the back buffer becomes the one primary() reads.
     ts::rnd::Surface *back = ts::rnd::create_simple(BACK, 640, 480, 16, false);
