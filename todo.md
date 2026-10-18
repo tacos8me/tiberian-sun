@@ -1392,6 +1392,14 @@ coverage 158,667 instructions / 9,607 functions; message loop dispatching
 **tactical HUD** (Options, radar with the GDI eagle, credits 5000, build tabs
 and build grid). This is the first in-game frame the model has rendered.
 
+An independent 500B-budget reproduction (2026-10-18) was stopped by its 1800 s
+watchdog at **372,912,291,926 instructions** under host contention, but matched
+the deterministic state: pages 12,637/32,768 (growths 0, refused 0), coverage
+158,667 / 9,607, 0 unmapped, `GetMessage=19`/`DispatchMessage=19`, and a
+**byte-identical frame** (md5 `4fc1cec772a0481f400db82efa226953`, 87,794
+non-black). Its blit/lock counts (13,915,030 / 34,810,395) are lower only
+because it ran fewer instructions.
+
 Pipeline exit 0, `VERIFICATION PASSED`, link OK (492 TUs), tool tests **101**
 (was 94; new x87-form and header-ownership tests), runtime 101, `--strict` 0.
 

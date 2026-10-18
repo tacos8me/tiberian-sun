@@ -322,10 +322,13 @@ coverage **158,667 / 9,607**, the message loop dispatching (`GetMessage=19`,
 **18,691,958 blits and 46,753,350 locks**. The frame `re/out/frame_500b.png`
 (640x480, md5 `4fc1cec7…`, **87,794 non-black**) shows the real **tactical
 HUD**: Options, credits 5000, the GDI radar eagle, build tabs and the build
-grid. **The map viewport is still black** — only the HUD renders. That is the
-current blocker: trace where the terrain/map blits go (destination surfaces,
-primary map rectangle) with per-surface counters and surface dumps, and do not
-paint the map by hand.
+grid. An independent 500B-budget reproduction was stopped by the 1800 s
+watchdog at 372,912,291,926 instructions (host contention) but matched the
+pages, coverage, 0 unmapped and a **byte-identical frame**; its blit/lock counts
+are lower only because it ran fewer instructions. **The map viewport is still
+black** — only the HUD renders. That is the current blocker: trace where the
+terrain/map blits go (destination surfaces, primary map rectangle) with
+per-surface counters and surface dumps, and do not paint the map by hand.
 
 The earlier 1.2e12-budget flood is historical (pre-fix): **7,771,444 unmapped
 calls** (7 in `.text`, all `0x606060` from `sub_004f3b40`; 7,673,235 below
